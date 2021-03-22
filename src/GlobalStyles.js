@@ -249,12 +249,12 @@ const makeGlobalStyles = (theme) => css`
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
     border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    box-shadow: ${theme.inputs.boxShadow};
     border-radius: ${theme.inputs.radius};
+    color: ${theme.inputs.color};
+    background-color: ${theme.inputs.bgColor};
+    box-shadow: ${theme.inputs.boxShadow};
     font-family: ${theme.fonts.body.family};
     font-size: ${theme.fonts.sizes.main};
-    color: ${theme.fonts.headings.color};
-    background-color: ${theme.bgColors.primary};
     transition: ${theme.links.transition};
 
     &::placeholder {

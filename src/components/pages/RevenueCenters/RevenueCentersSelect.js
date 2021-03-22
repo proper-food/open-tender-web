@@ -191,7 +191,6 @@ const RevenueCentersSelect = () => {
                   <li key={revenueCenter.revenue_center_id}>
                     <RevenueCenter
                       revenueCenter={revenueCenter}
-                      classes="rc--card"
                       showImage={!isMobileOnly}
                     />
                   </li>
