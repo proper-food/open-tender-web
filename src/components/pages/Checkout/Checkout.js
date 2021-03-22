@@ -32,6 +32,7 @@ import {
   resetCompletedOrder,
   setConfirmationOrder,
   logoutCustomer,
+  setSubmitting,
 } from '@open-tender/redux'
 import { CheckoutForm, FormError } from '@open-tender/components'
 
@@ -102,6 +103,7 @@ const Checkout = () => {
   }, [windowRef, formError, submitting])
 
   useEffect(() => {
+    dispatch(setSubmitting(false))
     return () => {
       dispatch(resetErrors())
       dispatch(resetTip())
