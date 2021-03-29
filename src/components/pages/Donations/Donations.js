@@ -41,6 +41,7 @@ const Donations = () => {
   )
   const reset = useCallback(() => dispatch(resetDonation()), [dispatch])
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
+  // console.log(process.env.REACT_APP_RECAPTCHA_KEY)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -51,6 +52,25 @@ const Donations = () => {
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())
   }, [dispatch, customer])
+
+  // const handlePurchase = (data, callback) => {
+  //   window.grecaptcha.ready(() => {
+  //     window.grecaptcha
+  //       .execute(process.env.REACT_APP_RECAPTCHA_KEY, { action: 'submit' })
+  //       .then((token) => {
+  //         console.log(token)
+  //         const dataWithToken = { ...data, token }
+  //         dispatch(purchaseDonation(dataWithToken, callback))
+  //       })
+  //   })
+  // }
+
+  // const handlePurchase = (data, callback) => {
+  //   const token = window.grecaptcha.getResponse()
+  //   console.log(token)
+  //   const dataWithToken = { ...data, token }
+  //   dispatch(purchaseDonation(dataWithToken, callback))
+  // }
 
   return (
     <>
@@ -77,6 +97,7 @@ const Donations = () => {
                 loading={loading}
                 error={error}
                 windowRef={windowRef}
+                recaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
               />
               {success && (
                 <p>
