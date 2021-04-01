@@ -32,6 +32,7 @@ import {
   resetCompletedOrder,
   setConfirmationOrder,
   logoutCustomer,
+  setSubmitting,
   setDeviceType,
 } from '@open-tender/redux'
 import { CheckoutForm, FormError } from '@open-tender/components'
@@ -116,6 +117,7 @@ const Checkout = () => {
   }, [windowRef, formError, submitting])
 
   useEffect(() => {
+    dispatch(setSubmitting(false))
     dispatch(setDeviceType(deviceTypeName))
     return () => {
       dispatch(resetErrors())

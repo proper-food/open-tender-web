@@ -8,11 +8,14 @@ import {
 } from '@open-tender/redux'
 import { CreditCardForm } from '@open-tender/components'
 
-import { closeModal } from '../../slices'
+import { closeModal, selectRecaptcha } from '../../slices'
 import { ModalContent, ModalView } from '..'
+
+const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
 const CreditCard = ({ windowRef }) => {
   const dispatch = useDispatch()
+  const { addCard: includeRecaptcha } = useSelector(selectRecaptcha)
   const { loading, error } = useSelector(selectCustomerCreditCards)
   const addCard = useCallback(
     (data, callback) => dispatch(addCustomerCreditCard(data, callback)),
@@ -45,6 +48,7 @@ const CreditCard = ({ windowRef }) => {
           error={error}
           addCard={addCard}
           callback={callback}
+          recaptchaKey={includeRecaptcha ? recaptchaKey : null}
         />
       </ModalContent>
     </ModalView>

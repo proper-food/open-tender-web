@@ -15,7 +15,7 @@ import {
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -26,9 +26,12 @@ import {
   PageContainer,
 } from '../..'
 
+const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
+
 const Donations = () => {
   const dispatch = useDispatch()
   const { donations: config } = useSelector(selectConfig)
+  const { donations: includeRecaptcha } = useSelector(selectRecaptcha)
   const { title: siteTitle } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
@@ -75,6 +78,7 @@ const Donations = () => {
                 loading={loading}
                 error={error}
                 windowRef={windowRef}
+                recaptchaKey={includeRecaptcha ? recaptchaKey : null}
               />
             </FormWrapper>
             {success && (

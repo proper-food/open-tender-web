@@ -16,7 +16,7 @@ import {
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -32,9 +32,12 @@ const iconMap = {
   minus: <Minus size={null} />,
 }
 
+const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
+
 const GiftCards = () => {
   const dispatch = useDispatch()
   const { giftCards: config } = useSelector(selectConfig)
+  const { giftCards: includeRecaptcha } = useSelector(selectRecaptcha)
   const { title } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
@@ -85,6 +88,7 @@ const GiftCards = () => {
                 error={error}
                 iconMap={iconMap}
                 windowRef={windowRef}
+                recaptchaKey={includeRecaptcha ? recaptchaKey : null}
               />
             </FormWrapper>
             {success && (

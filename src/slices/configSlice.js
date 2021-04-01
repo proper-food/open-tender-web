@@ -119,5 +119,6 @@ export const selectOptIns = (state) => {
   return { accepts_marketing, order_notifications }
 }
 export const selectFulfillment = (state) => state.config.brand.fulfillment
+export const selectRecaptcha = (state) => state.config.settings.recaptcha
 
 export default configSlice.reducer
