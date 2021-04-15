@@ -25,7 +25,7 @@ const BackgroundContentView = styled('div')`
 `
 
 const BackgroundContentText = styled('div')`
-  max-width: 44rem;
+  max-width: 108rem;
 
   p {
     color: ${(props) => props.color || props.theme.colors.light};
@@ -33,8 +33,8 @@ const BackgroundContentText = styled('div')`
   }
 
   p:first-of-type {
-    line-height: 1.2;
-    font-size: ${(props) => props.theme.fonts.sizes.h2};
+    line-height: 0.9;
+    font-size: ${(props) => props.theme.fonts.sizes.mega};
     color: ${(props) => props.color || props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.xBig};
@@ -42,9 +42,9 @@ const BackgroundContentText = styled('div')`
   }
 
   p + p {
-    line-height: ${(props) => props.theme.lineHeight};
-    margin: 0.3rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    line-height: 1.2;
+    margin: 2rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
     // font-weight: ${(props) => props.theme.boldWeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 0.2rem 0 0;

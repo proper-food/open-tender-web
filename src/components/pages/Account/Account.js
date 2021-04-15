@@ -24,7 +24,7 @@ import {
   PageHero,
   PageView,
 } from '../..'
-import { Logout } from '../../buttons'
+import { Logout, OrderNow } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
@@ -85,7 +85,10 @@ const Account = () => {
           left={<HeaderLogo />}
           right={
             isBrowser ? (
-              <AccountTabs />
+              <>
+                <AccountTabs />
+                <OrderNow />
+              </>
             ) : (
               <>
                 <AccountScan />
