@@ -11,13 +11,13 @@ const MainView = styled('main')`
   background-repeat: no-repeat;
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   padding-top: ${(props) => props.theme.layout.navHeight};
+  ${(props) =>
+    props.imageUrl
+      ? `background-image: url(${props.imageUrl});
+    background-color: ${props.theme.bgColors.dark};`
+      : null}
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding-top: ${(props) => props.theme.layout.navHeightMobile};
-    ${(props) =>
-      props.imageUrl
-        ? `background-image: url(${props.imageUrl});
-    background-color: ${props.theme.bgColors.dark};`
-        : null}
   }
 `
 

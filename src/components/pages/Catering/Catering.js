@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -23,35 +22,104 @@ import {
   makeLocalDateStr,
   todayDate,
   makeWeekdayIndices,
+  getMinutesfromDate,
+  makeRequestedAtStr,
 } from '@open-tender/js'
-import { Box, ButtonLink, ButtonStyled, Message } from '@open-tender/components'
+import {
+  ButtonLink,
+  ButtonStyled,
+  RequestedAtPicker,
+  Text,
+} from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
-import {
-  Content,
-  Header,
-  Loading,
-  Main,
-  PageTitle,
-  PageContainer,
-  PageContent,
-} from '../..'
+import { Content, Header, Loading, Main, PageTitle } from '../..'
 import { Account, StartOver } from '../../buttons'
 import styled from '@emotion/styled'
 
-const CateringDatepicker = styled(Box)`
-  max-width: 48rem;
-  margin: 0 auto;
+const CateringView = styled('div')`
+  width: 100%;
+  flex-grow: 1;
+  min-height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    display: block;
+    padding: 0;
+  }
+`
+
+const CateringContent = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  width: 108rem;
+  max-width: 100%;
+  padding: 4.5rem;
+  margin: ${(props) => props.theme.layout.margin} auto;
+  background-color: ${(props) => props.theme.overlay.light};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex-direction: column;
+    background-color: ${(props) => props.theme.bgColors.primary};
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    // margin: ${(props) => props.theme.layout.marginMobile} auto;
+    margin: 0;
+  }
+`
+const CateringMessage = styled('div')`
+  flex: 1 1 auto;
+  padding: 0 3rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 0;
+  }
+
+  div:first-of-type {
+    text-align: left;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      text-align: center;
+    }
+  }
+`
+
+const CateringCalendar = styled('div')`
+  flex: 0 0 37rem;
+  min-height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
+const CateringError = styled('div')`
+  padding: 0 3rem;
+  text-align: center;
+
+  p:first-of-type {
+    color: ${(props) => props.theme.colors.error};
+    margin: 0 0 2rem;
+  }
+`
+
+const RequestedAtMessage = styled('p')`
+  margin: 2rem 0;
+  text-align: center;
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: ${(props) => props.theme.lineHeight};
+
+  span {
+    font-weight: 600;
+  }
 `
 
 const CateringButtons = styled('div')`
-  margin: 3rem 0 1.5rem;
+  // margin: 3rem 0 1.5rem;
+
   button {
-    margin: 0 1rem 1rem 0;
+    margin: 0 1rem 0 0;
     &:last-child {
       margin: 0;
     }
@@ -62,31 +130,74 @@ const CateringPolicy = styled('div')`
   margin: 3rem 0;
 
   h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      width: 100%;
+      text-align: center;
+    }
   }
 
-  h2 + p {
-    margin: 0.5rem 0 2rem;
-    // font-size: ${(props) => props.theme.fonts.sizes.main};
-  }
+  // h2 + p {
+  //   margin: 0.5rem 0 2rem;
+  //   // font-size: ${(props) => props.theme.fonts.sizes.main};
+  // }
 
-  div {
-    text-align: left;
-  }
+  // div {
+  //   text-align: left;
+  // }
 
   div p {
     margin: 1em 0;
-    // font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
   }
 `
 
+const CateringDesktop = styled('div')`
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    display: none;
+  }
+`
+
+const CateringMobile = styled('div')`
+  display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    display: block;
+    text-align: center;
+    margin: 0 auto 3rem;
+  }
+`
+
+const CateringContentSection = ({ policy, startOver }) => {
+  return (
+    <>
+      <CateringPolicy>
+        {policy.title && <h2>{policy.title}</h2>}
+        {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
+        {policy.content.length > 0 && (
+          <div>
+            {policy.content.map((i, index) => (
+              <p key={index}>{i}</p>
+            ))}
+          </div>
+        )}
+      </CateringPolicy>
+      <div>
+        <ButtonLink onClick={startOver}>
+          Switch to a regular Pickup or Delivery order
+        </ButtonLink>
+      </div>
+    </>
+  )
+}
+
 const CateringPage = () => {
+  const { windowRef } = useContext(AppContext)
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
-  const { policy } = config
+  const { title, subtitle, background, policy } = config
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -98,7 +209,9 @@ const CateringPage = () => {
   const [settings, setSettings] = useState(null)
   const { entity: validTimes, loading, error } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
+  const requestedTime = requestedAt
+    ? makeRequestedAtStr(requestedAt, tz, true)
+    : null
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -112,9 +225,46 @@ const CateringPage = () => {
     dispatch(fetchValidTimes('CATERING'))
   }, [hasTypes, dispatch])
 
+  // useEffect(() => {
+  //   const requestedAtDate =
+  //     !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
+  //   if (validTimes) {
+  //     const {
+  //       first_time,
+  //       holidays,
+  //       hours,
+  //       interval,
+  //       closed_weekdays,
+  //     } = validTimes
+  //     if (!first_time) {
+  //       setDate(requestedAtDate)
+  //     } else {
+  //       const firstDate = isoToDate(first_time.utc, tz)
+  //       const newDate =
+  //         !requestedAtDate || firstDate > requestedAtDate
+  //           ? firstDate
+  //           : requestedAtDate
+  //       setDate(newDate)
+  //       const closedWeekdays = makeWeekdayIndices(closed_weekdays)
+  //       const isClosed = (date) => {
+  //         return !closedWeekdays.includes(date.getDay())
+  //       }
+  //       const newSettings = {
+  //         minDate: firstDate,
+  //         minTime: time24ToDate(hours.open),
+  //         maxTime: time24ToDate(hours.close),
+  //         excludeDates: holidays.map((i) => makeLocalDate(i)),
+  //         interval: interval,
+  //         isClosed: isClosed,
+  //       }
+  //       setSettings(newSettings)
+  //     }
+  //   } else {
+  //     setDate(requestedAtDate)
+  //   }
+  // }, [validTimes, requestedAt, tz])
+
   useEffect(() => {
-    const requestedAtDate =
-      !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
     if (validTimes) {
       const {
         first_time,
@@ -123,31 +273,20 @@ const CateringPage = () => {
         interval,
         closed_weekdays,
       } = validTimes
-      if (!first_time) {
-        setDate(requestedAtDate)
-      } else {
-        const firstDate = isoToDate(first_time.utc, tz)
-        const newDate =
-          !requestedAtDate || firstDate > requestedAtDate
-            ? firstDate
-            : requestedAtDate
-        setDate(newDate)
-        const closedWeekdays = makeWeekdayIndices(closed_weekdays)
-        const isClosed = (date) => {
-          return !closedWeekdays.includes(date.getDay())
-        }
-        const newSettings = {
-          minDate: firstDate,
-          minTime: time24ToDate(hours.open),
-          maxTime: time24ToDate(hours.close),
-          excludeDates: holidays.map((i) => makeLocalDate(i)),
-          interval: interval,
-          isClosed: isClosed,
-        }
-        setSettings(newSettings)
+      const firstDate = isoToDate(first_time.utc, tz)
+      const closedWeekdays = makeWeekdayIndices(closed_weekdays)
+      const isClosed = (date) => {
+        return !closedWeekdays.includes(date.getDay())
       }
-    } else {
-      setDate(requestedAtDate)
+      const newSettings = {
+        minDate: firstDate,
+        minTime: time24ToDate(hours.open),
+        maxTime: time24ToDate(hours.close),
+        excludeDates: holidays.map((i) => makeLocalDate(i)),
+        interval: interval,
+        isClosed: isClosed,
+      }
+      setSettings(newSettings)
     }
   }, [validTimes, requestedAt, tz])
 
@@ -168,8 +307,6 @@ const CateringPage = () => {
 
   const chooseServiceType = (serviceType) => {
     dispatch(setServiceType(serviceType))
-    const reqestedAtIso = date ? dateToIso(date, tz) : 'asap'
-    dispatch(setRequestedAt(reqestedAtIso))
     history.push('/locations')
   }
 
@@ -178,11 +315,22 @@ const CateringPage = () => {
     history.push(`/order-type`)
   }
 
+  const selectTime = (time) => {
+    setDate(null)
+    setTimeout(() => {
+      const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
+      dispatch(setRequestedAt(reqestedAtIso))
+    }, 300)
+  }
+
+  const startMin = getMinutesfromDate(minTime || settings.minTime)
+  const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
+
   return (
     <>
       <Helmet>
         <title>
-          {config.title} | {siteTitle}
+          {title} | {siteTitle}
         </title>
       </Helmet>
       <Content>
@@ -191,85 +339,89 @@ const CateringPage = () => {
           left={<StartOver />}
           right={<Account />}
         />
-        <Main>
-          <PageContainer>
-            <PageTitle {...config} />
-            <PageContent>
-              {isLoading ? (
-                <Loading text="Loading calendar..." />
-              ) : error ? (
-                <>
-                  <Message color="error" style={{ width: '100%' }}>
-                    {error}
-                  </Message>
-                  <p>
+        <Main
+          imageUrl={isBrowser ? background : null}
+          // style={{ backgroundPosition: 'center top' }}
+        >
+          <CateringView>
+            <CateringContent>
+              <CateringMessage>
+                <PageTitle title={title} subtitle={subtitle} />
+                <CateringDesktop>
+                  <CateringContentSection
+                    policy={policy}
+                    startOver={startOver}
+                  />
+                </CateringDesktop>
+              </CateringMessage>
+              <CateringCalendar>
+                {error ? (
+                  <CateringError>
+                    <p>{error}</p>
                     <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
                       Start Over
                     </ButtonStyled>
-                  </p>
-                </>
-              ) : settings ? (
-                <>
-                  <CateringDatepicker>
-                    <DatePicker
-                      showPopperArrow={false}
-                      showTimeSelect
-                      timeCaption="Time"
-                      timeFormat="h:mm aa"
-                      dateFormat="yyyy-MM-dd h:mm aa"
-                      timeIntervals={settings.interval || 15}
+                  </CateringError>
+                ) : isLoading ? (
+                  <Loading type="Clip" size={50} />
+                ) : settings ? (
+                  <>
+                    <RequestedAtPicker
+                      date={date}
+                      setDate={(date) => setDate(date)}
+                      selectTime={selectTime}
                       minDate={settings.minDate}
-                      minTime={minTime || settings.minTime}
-                      maxTime={settings.maxTime}
+                      maxDate={null}
                       excludeDates={settings.excludeDates}
-                      // excludeTimes={excludeTimes}
                       filterDate={settings.isClosed}
-                      selected={date}
-                      onChange={(date) => setDate(date)}
-                      inline
-                      shouldCloseOnSelect={false}
+                      interval={settings.interval || 15}
+                      excludeTimes={[]}
+                      minTime={startMin}
+                      maxTime={endMin}
                     />
-                  </CateringDatepicker>
-                  <CateringButtons>
-                    <ButtonStyled
-                      icon={iconMap.Truck}
-                      onClick={() => chooseServiceType('DELIVERY')}
-                      disabled={!date}
-                    >
-                      Order Delivery
+                    {requestedTime ? (
+                      <RequestedAtMessage>
+                        Your current order time is <span>{requestedTime}</span>.
+                        Change this above or choose an order type to proceed.
+                      </RequestedAtMessage>
+                    ) : (
+                      <RequestedAtMessage>
+                        <Text color="error">
+                          Please choose a date & time above.
+                        </Text>
+                      </RequestedAtMessage>
+                    )}
+                    <CateringButtons>
+                      <ButtonStyled
+                        icon={iconMap.Truck}
+                        onClick={() => chooseServiceType('DELIVERY')}
+                        disabled={!requestedTime}
+                      >
+                        Order Delivery
+                      </ButtonStyled>
+                      <ButtonStyled
+                        icon={iconMap.ShoppingBag}
+                        onClick={() => chooseServiceType('PICKUP')}
+                        disabled={!requestedTime}
+                      >
+                        Order Pickup
+                      </ButtonStyled>
+                    </CateringButtons>
+                  </>
+                ) : (
+                  <CateringError>
+                    <p>This order type isn't currently available</p>
+                    <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                      Start Over
                     </ButtonStyled>
-                    <ButtonStyled
-                      icon={iconMap.ShoppingBag}
-                      onClick={() => chooseServiceType('PICKUP')}
-                      disabled={!date}
-                    >
-                      Order Pickup
-                    </ButtonStyled>
-                  </CateringButtons>
-                  <div>
-                    <ButtonLink onClick={startOver}>
-                      Or switch to a regular Pickup or Delivery order
-                    </ButtonLink>
-                  </div>
-                </>
-              ) : (
-                <Message color="error" style={{ width: '100%' }}>
-                  This order type isn't currently available
-                </Message>
-              )}
-              <CateringPolicy>
-                {policy.title && <h2>{policy.title}</h2>}
-                {policy.subtitle && <p>{policy.subtitle}</p>}
-                {policy.content.length > 0 && (
-                  <div>
-                    {policy.content.map((i, index) => (
-                      <p key={index}>{i}</p>
-                    ))}
-                  </div>
+                  </CateringError>
                 )}
-              </CateringPolicy>
-            </PageContent>
-          </PageContainer>
+              </CateringCalendar>
+              <CateringMobile>
+                <CateringContentSection policy={policy} startOver={startOver} />
+              </CateringMobile>
+            </CateringContent>
+          </CateringView>
         </Main>
       </Content>
     </>

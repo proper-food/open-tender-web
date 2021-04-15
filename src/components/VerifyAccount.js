@@ -28,7 +28,6 @@ const VerifyAccount = ({ style }) => {
   const dispatch = useDispatch()
   const { has_deals } = useSelector(selectBrand)
   const { profile } = useSelector(selectCustomer)
-  console.log(has_deals, profile)
 
   const verifyAccount = () => {
     const linkUrl = `${window.location.origin}/verify`

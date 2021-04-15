@@ -2,7 +2,6 @@ $color: #000;
 $color-light: #fff;
 $color-disabled: #ccc;
 $color-hover: #efefef;
-$arrow-size: 0.8rem;
 
 .react-datepicker {
   position: relative;
@@ -21,29 +20,33 @@ $arrow-size: 0.8rem;
     cursor: pointer;
     position: absolute;
     z-index: 1;
-    top: 10px;
-    width: 0;
-    height: 0;
+    top: 1.4rem;
+    width: 1rem;
+    height: 1rem;
     text-align: center;
 
+    &:focus {
+      outline: none;
+    }
+
     &--previous {
-      margin-left: 1rem;
-      border-top: $arrow-size solid transparent;
-      border-bottom: $arrow-size solid transparent;
-      border-right: $arrow-size solid $color;
+      margin-left: 2.3rem;
+      border-top: 0.1rem solid $color;
+      border-left: 0.1rem solid $color;
+      transform: rotate(-45deg);
     }
 
     &--next {
-      right: 22.5%;
-      margin-right: 1rem;
-      border-top: $arrow-size solid transparent;
-      border-bottom: $arrow-size solid transparent;
-      border-left: $arrow-size solid $color;
+      right: 0;
+      margin-right: 2.3rem;
+      border-top: 0.1rem solid $color;
+      border-right: 0.1rem solid $color;
+      transform: rotate(45deg);
     }
   }
 
   &__header {
-    padding: 0.8rem 0 0;
+    padding: 0;
     text-align: center;
 
     &--time {
@@ -52,13 +55,17 @@ $arrow-size: 0.8rem;
     }
   }
 
-  &__month-container {
-    float: left;
-    width: 77.5%;
-  }
+  // &__month-container {
+  //   float: left;
+  //   width: 77.5%;
+  // }
 
   &__month {
     text-align: center;
+  }
+
+  &__current-month {
+    padding: 0.2rem 0;
   }
 
   &__week,
@@ -70,11 +77,27 @@ $arrow-size: 0.8rem;
   &__day-name {
     cursor: pointer;
     display: inline-block;
-    width: 14.28571%;
+    width: 3.6rem;
+    height: 3.3rem;
+    line-height: 3.3rem;
     padding: 0;
-    margin: 0;
-    line-height: 2.8;
+    margin: 0 0.7rem;
     text-align: center;
+    @media (max-width: 420px) {
+      width: 3.4rem;
+      margin: 0 0.5rem;
+    }
+  }
+
+  &__day {
+    height: 3.6rem;
+    line-height: 3.6rem;
+    border-radius: 1.8rem;
+    margin: 0.3rem 0.7rem;
+    @media (max-width: 420px) {
+      width: 3.4rem;
+      margin: 0.3rem 0.5rem;
+    }
   }
 
   &__day {

@@ -30,10 +30,10 @@ import {
 import RevenueCentersSelect from './RevenueCentersSelect'
 import {
   Account,
+  Back,
   RequestedAt,
   RevenueCenter,
   ServiceType,
-  StartOver,
 } from '../../buttons'
 
 const RevenueCenters = () => {
@@ -86,7 +86,13 @@ const RevenueCenters = () => {
           borderColor={isMobile ? 'transparent' : 'primary'}
           style={{ boxShadow: 'none' }}
           title={isMobile ? navTitle : null}
-          left={<StartOver />}
+          left={
+            orderType === 'CATERING' ? (
+              <Back text="Catering" path="/catering" />
+            ) : (
+              <Back text="Order Type" path="/order-type" />
+            )
+          }
           right={
             isMobile ? (
               <Account />

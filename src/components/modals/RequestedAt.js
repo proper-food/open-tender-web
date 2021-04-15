@@ -8,15 +8,38 @@ import {
   serviceTypeNamesMap,
 } from '@open-tender/js'
 import { selectOrder, setRequestedAt } from '@open-tender/redux'
-import {
-  ButtonLink,
-  RequestedAtCalendar,
-  RequestedAtTimes,
-  Text,
-} from '@open-tender/components'
+import { RequestedAtCalendar, RequestedAtTimes } from '@open-tender/components'
 
 import { closeModal, toggleSidebar } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { ModalContent } from '..'
+import styled from '@emotion/styled'
+import ModalView from '../Modal/ModalView'
+
+const RequestedAtModalView = styled(ModalView)`
+  width: 44rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  & > div {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+    }
+  }
+`
+
+const RequestedAtMessage = styled('p')`
+  margin: 0 0 2rem;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: ${(props) => props.theme.lineHeight};
+
+  span {
+    font-weight: 600;
+  }
+`
 
 const RequestedAt = ({
   forcedUpdate = false,
@@ -44,14 +67,21 @@ const RequestedAt = ({
   const serviceTypeName = serviceTypeNamesMap[serviceType].toLowerCase()
 
   const handleRequestedAt = (requestedAt) => {
-    dispatch(setRequestedAt(requestedAt))
     dispatch(closeModal())
+    dispatch(setRequestedAt(requestedAt))
+    if (onCloseAction) dispatch(onCloseAction())
+    if (openSidebar) dispatch(toggleSidebar())
+  }
+
+  const handleKeepCurrent = () => {
+    dispatch(closeModal())
+    dispatch(setRequestedAt(requestedAt))
     if (onCloseAction) dispatch(onCloseAction())
     if (openSidebar) dispatch(toggleSidebar())
   }
 
   return (
-    <ModalView>
+    <RequestedAtModalView>
       {firstTimes ? (
         <ModalContent
           title={
@@ -59,28 +89,24 @@ const RequestedAt = ({
               ? 'Order date & time updated'
               : 'Choose an order date & time'
           }
-          subtitle={
-            <Text as="p" color="alert" bold={true}>
-              {forcedUpdate
-                ? `Your previous order time is no longer available and has been updated
-            to ${requestedTime}.`
-                : `Your current order time is ${requestedTime}.`}
-            </Text>
-          }
         >
-          <div>
-            <Text as="p" size="small">
-              <ButtonLink onClick={() => dispatch(closeModal())}>
-                Keep this time
-              </ButtonLink>{' '}
-              or use the calendar below to choose a different day & time.
-            </Text>
-          </div>
+          {forcedUpdate ? (
+            <RequestedAtMessage>
+              Your previous order time is no longer available and has been
+              updated to <span>{requestedTime}</span>. Use the calendar below to
+              change this.
+            </RequestedAtMessage>
+          ) : (
+            <RequestedAtMessage>
+              Your current order time is <span>{requestedTime}</span>. Use the
+              calendar below to change this.
+            </RequestedAtMessage>
+          )}
           <RequestedAtCalendar
-            requestedAt={requestedAt}
             serviceType={serviceType}
             revenueCenter={revenueCenter}
             setRequestedAt={handleRequestedAt}
+            keepCurrent={handleKeepCurrent}
           />
         </ModalContent>
       ) : orderTimes ? (
@@ -100,7 +126,7 @@ const RequestedAt = ({
           />
         </ModalContent>
       ) : null}
-    </ModalView>
+    </RequestedAtModalView>
   )
 }
 
