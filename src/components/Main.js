@@ -4,14 +4,15 @@ import styled from '@emotion/styled'
 const MainView = styled('main')`
   width: 100%;
   min-height: 100%;
-  padding: ${(props) => props.padding};
   display: flex;
   flex-direction: column;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
+  padding-top: ${(props) => props.theme.layout.navHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding-top: ${(props) => props.theme.layout.navHeightMobile};
     ${(props) =>
       props.imageUrl
         ? `background-image: url(${props.imageUrl});
@@ -20,24 +21,19 @@ const MainView = styled('main')`
   }
 `
 
-const Main = ({
-  padding = '6rem 0 0',
-  bgColor = 'primary',
-  imageUrl,
-  style,
-  children,
-}) => (
-  <MainView
-    role="main"
-    id="main"
-    padding={padding}
-    bgColor={bgColor}
-    imageUrl={imageUrl}
-    style={style}
-  >
-    {children}
-  </MainView>
-)
+const Main = ({ bgColor = 'primary', imageUrl, style, children }) => {
+  return (
+    <MainView
+      role="main"
+      id="main"
+      bgColor={bgColor}
+      imageUrl={imageUrl}
+      style={style}
+    >
+      {children}
+    </MainView>
+  )
+}
 
 Main.displayName = 'Main'
 Main.propTypes = {

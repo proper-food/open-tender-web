@@ -12,6 +12,9 @@ import { NavScroll } from '.'
 const NavStickyView = styled('div')`
   width: 100%;
   height: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
 const NavStickyInner = styled('div')`
@@ -24,6 +27,15 @@ const NavStickyInner = styled('div')`
       top: ${props.theme.layout.navHeight};
       left: 0;
       right: 0;`}
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    ${(props) =>
+      props.stuck &&
+      `position: fixed;
+      z-index: 10;
+      top: ${props.theme.layout.navHeightMobile};
+      left: 0;
+      right: 0;`}
+  }
 `
 
 const NavStickyContainer = styled('div')`

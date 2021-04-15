@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectCustomer, selectOrder } from '@open-tender/redux'
+import { selectOrder, selectCustomerOrders } from '@open-tender/redux'
+import { getLastOrder } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../iconMap'
@@ -13,19 +14,24 @@ const OrderNow = ({
   color = 'primary',
 }) => {
   const history = useHistory()
-  const { auth } = useSelector(selectCustomer)
+  // const { auth } = useSelector(selectCustomer)
   const currentOrder = useSelector(selectOrder)
-  const { revenueCenter } = currentOrder
+  const { revenueCenter, serviceType, cart } = currentOrder
+  const { entities: orders } = useSelector(selectCustomerOrders)
+  const lastOrder = useMemo(() => getLastOrder(orders), [orders])
+  const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
 
   const order = () => {
-    history.push(
-      auth && revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-types'
-    )
+    const slug =
+      revenueCenter && (lastOrder || isCurrentOrder)
+        ? `/menu/${revenueCenter.slug}`
+        : '/order-type'
+    history.push(slug)
   }
 
   return (
     <ButtonStyled onClick={order} icon={icon} color={color} size="small">
-      {text}
+      {isCurrentOrder ? 'Continue Order' : text}
     </ButtonStyled>
   )
 }

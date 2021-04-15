@@ -5,7 +5,8 @@ import { slugify } from '@open-tender/js'
 
 import { AppContext } from '../App'
 import styled from '@emotion/styled'
-import { isMobile } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 
 const getActiveElement = (elements, topOffset) => {
   return elements
@@ -71,7 +72,10 @@ const NavScrollView = styled('div')`
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
-    height: 6rem;
+    height: ${(props) => props.theme.layout.navHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      height: ${(props) => props.theme.layout.navHeightMobile};
+    }
 
     li {
       display: block;
@@ -115,7 +119,12 @@ const NavScroll = ({ items, offset = 0 }) => {
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
-  const topOffset = 121
+  const theme = useTheme()
+  const { navHeight, navHeightMobile } = theme.layout
+  const height = isBrowser ? navHeight : navHeightMobile
+  const heightInPixels = parseInt(height.replace('rem', '')) * 10
+  const topOffset = heightInPixels * 2 + 1
+  // const topOffset = 121
   const elements = Array.from(document.getElementsByName('section'))
   const navOffset = offset + (isMobile ? -30 : -30)
 

@@ -17,7 +17,7 @@ const BackgroundContentView = styled('div')`
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 2.5rem;
+    padding: 2.5rem ${(props) => props.theme.layout.paddingMobile} 3.5rem;
     justify-content: center;
     align-items: flex-end;
     text-align: center;
@@ -37,7 +37,7 @@ const BackgroundContentText = styled('div')`
     font-size: ${(props) => props.theme.fonts.sizes.mega};
     color: ${(props) => props.color || props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.xBig};
+      font-size: ${(props) => props.theme.fonts.sizes.h1};
     }
   }
 
@@ -45,10 +45,9 @@ const BackgroundContentText = styled('div')`
     line-height: 1.2;
     margin: 2rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.h3};
-    // font-weight: ${(props) => props.theme.boldWeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.2rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
+      margin: 1rem 0 0;
+      font-size: ${(props) => props.theme.fonts.sizes.big};
     }
   }
 `

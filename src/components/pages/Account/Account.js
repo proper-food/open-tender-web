@@ -22,7 +22,6 @@ import {
   Main,
   PageContainer,
   PageHero,
-  PageView,
 } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 import AccountActions from './AccountActions'
@@ -32,6 +31,7 @@ import AccountOrders from './AccountOrders'
 import AccountLoyalty from './AccountLoyalty'
 import AccountGroupOrders from './AccountGroupOrders'
 import AccountDeals from './AccountDeals'
+import { useTheme } from '@emotion/react'
 
 const AccountLinks = () => (
   <p>
@@ -44,6 +44,8 @@ const AccountLinks = () => (
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const theme = useTheme()
+  const { navHeightMobile } = theme.layout
   const announcements = useSelector(selectAnnouncements)
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
@@ -99,27 +101,32 @@ const Account = () => {
         />
         <Main>
           {!isBrowser && <AccountTabs />}
-          <PageView>
-            <PageHero
-              announcements={announcements}
-              imageUrl={isBrowser ? background : mobile}
-              showHero={showHero}
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+            showHero={showHero}
+            style={isBrowser ? null : { paddingBottom: navHeightMobile }}
+          >
+            <Greeting
+              title={pageTitle}
+              subtitle={subtitle}
+              actions={<AccountActions />}
             >
-              <Greeting
-                title={pageTitle}
-                subtitle={subtitle}
-                actions={<AccountActions />}
-              >
-                <AccountLinks />
-              </Greeting>
-            </PageHero>
-            <PageContainer style={{ marginTop: '0' }}>
-              <AccountGroupOrders />
-              <AccountOrders />
-              <AccountDeals />
-              <AccountLoyalty />
-            </PageContainer>
-          </PageView>
+              <AccountLinks />
+            </Greeting>
+          </PageHero>
+          <PageContainer
+            style={
+              isBrowser
+                ? { marginTop: '0' }
+                : { marginTop: `-${navHeightMobile}` }
+            }
+          >
+            <AccountLoyalty />
+            <AccountGroupOrders />
+            <AccountOrders />
+            <AccountDeals />
+          </PageContainer>
         </Main>
       </Content>
     </>

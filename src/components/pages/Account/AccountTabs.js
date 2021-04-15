@@ -15,14 +15,17 @@ const AccountTabsView = styled('div')`
   bottom: 0;
   right: 0;
   width: 100%;
-  max-width: ${(props) => props.maxWidth};
-  height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.bgColors.primary};
-  // border-top: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
-  border-top: 0.1rem solid #d4dce8;
+  border-top: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
+  // border-top: 0.1rem solid #d4dce8;
+  max-width: ${(props) => props.maxWidth};
+  height: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
 const navTabs = [

@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { SkipLink, Footer } from '.'
 
-const ContentContainer = styled('div')`
+const ContentView = styled('div')`
   width: 100%;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
@@ -14,25 +14,29 @@ const Content = ({
   hasRouter = true,
   hasFooter = true,
   children,
+  style = null,
 }) => {
   return (
-    <ContentContainer maxWidth={maxWidth}>
+    <ContentView maxWidth={maxWidth} style={style}>
       <>
         <SkipLink />
         {children}
         {hasFooter && <Footer hasRouter={hasRouter} />}
       </>
-    </ContentContainer>
+    </ContentView>
   )
 }
 
 Content.displayName = 'Content'
 Content.propTypes = {
   maxWidth: propTypes.string,
+  hasRouter: propTypes.bool,
+  hasFooter: propTypes.bool,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,
   ]),
+  style: propTypes.object,
 }
 
 export default Content

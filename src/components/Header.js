@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 
 const HeaderView = styled('div')`
   position: fixed;
@@ -11,7 +12,7 @@ const HeaderView = styled('div')`
   right: 0;
   width: 100%;
   max-width: ${(props) => props.maxWidth};
-  height: 6rem;
+  height: ${(props) => props.theme.layout.navHeight};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,6 +26,7 @@ const HeaderView = styled('div')`
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: ${(props) => props.theme.layout.navHeightMobile};
     padding: ${(props) =>
       props.isMobile ? '0' : props.theme.layout.paddingMobile};
   }
@@ -87,6 +89,9 @@ const Header = ({
   style = null,
 }) => {
   const header = useRef(null)
+  const theme = useTheme()
+  const { navHeight, navHeightMobile } = theme.layout
+  const height = isBrowser ? navHeight : navHeightMobile
   const [stuck, setStuck] = useState(false)
   const { windowRef } = useContext(AppContext)
 
@@ -109,6 +114,7 @@ const Header = ({
   return (
     <nav ref={header} role="navigation" aria-label="Primary Navigation">
       <HeaderView
+        height={height}
         stuck={stuck}
         bgColor={bgColor}
         borderColor={adjustedBorderColor}

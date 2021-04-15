@@ -5,22 +5,33 @@ import { BackgroundImage, BackgroundLoading, Slider } from '.'
 import { isBrowser } from 'react-device-detect'
 
 const PageHeroView = styled('div')`
-  flex-grow: 1;
   position: relative;
   display: flex;
   flex-direction: column;
-  // min-height: 42rem;
-  // max-height: ${(props) => props.maxHeight || '100%'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-direction: column;
-    // max-height: 100%;
-    // min-height: 0;
+    ${(props) =>
+      props.hasImage
+        ? `
+    min-height: 100vh;
+    min-height: -webkit-fill-available;`
+        : ''}
+  }
+`
+
+const PageHeroContent = styled('div')`
+  flex: 1 0 auto;
+  position: relative;
+  display: flex;
+  height: 50vh;
+  min-height: 44rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: auto;
+    min-height: 32rem;
   }
 `
 
 const PageHeroGreeting = styled('div')`
-  flex-grow: 0;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -28,18 +39,6 @@ const PageHeroGreeting = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    background-color: ${(props) => props.theme.bgColors.primary};
-  }
-`
-
-const PageHeroContent = styled('div')`
-  flex-grow: 1;
-  position: relative;
-  display: flex;
-  min-height: 44rem;
-  // min-height: 50vh;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    min-height: 32rem;
   }
 `
 
@@ -57,21 +56,16 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({
-  announcements,
-  imageUrl,
-  showHero,
-  maxHeight,
-  children,
-}) => {
+const PageHero = ({ announcements, imageUrl, showHero, style, children }) => {
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
   const hasHero = imageUrl && showHero
+  const hasImage = slides || hasHero
 
   return (
-    <PageHeroView maxHeight={maxHeight}>
-      {(slides || hasHero) && (
+    <PageHeroView style={style} hasImage={hasImage}>
+      {hasImage && (
         <PageHeroContent>
           {isLoading ? (
             <BackgroundLoading />
@@ -93,6 +87,7 @@ PageHero.propTypes = {
   announcements: propTypes.object,
   showHero: propTypes.bool,
   maxHeight: propTypes.string,
+  style: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

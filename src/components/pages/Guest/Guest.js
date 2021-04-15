@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -9,7 +9,7 @@ import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Account, Deals as DealsButton } from '../../buttons'
+import { Account, Deals as DealsButton, OrderNow } from '../../buttons'
 import {
   Content,
   DealsSection,
@@ -19,7 +19,6 @@ import {
   Main,
   PageContainer,
   PageHero,
-  PageView,
 } from '../..'
 import GuestActions from './GuestActions'
 
@@ -51,13 +50,13 @@ const GuestContent = styled('div')`
   }
 `
 
-const GuestLinks = () => (
-  <p>
-    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-    <Link to="/donations">make a donation</Link>
-    {/* <Link to="/contact">get in touch</Link> */}
-  </p>
-)
+// const GuestLinks = () => (
+//   <p>
+//     <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+//     <Link to="/donations">make a donation</Link>
+//     {/* <Link to="/contact">get in touch</Link> */}
+//   </p>
+// )
 
 const Guest = () => {
   const dispatch = useDispatch()
@@ -93,39 +92,37 @@ const Guest = () => {
             <>
               {isBrowser && has_deals && <DealsButton />}
               <Account />
+              {isBrowser && <OrderNow />}
             </>
           }
         />
         <Main>
-          <PageView>
-            <PageHero
-              announcements={announcements}
-              imageUrl={isBrowser ? background : mobile}
-              showHero={showHero}
-              maxHeight={hasPageContent ? '48rem' : null}
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+            showHero={showHero}
+          >
+            <Greeting
+              title={title}
+              subtitle={subtitle}
+              actions={<GuestActions />}
+              footnote={footnote}
             >
-              <Greeting
-                title={title}
-                subtitle={subtitle}
-                actions={<GuestActions />}
-                footnote={footnote}
-              >
-                <GuestLinks />
-              </Greeting>
-            </PageHero>
-            {hasPageContent && (
-              <PageContainer style={{ marginTop: '0' }}>
-                {has_deals && <DealsSection />}
-                {hasContent && (
-                  <GuestContent hasDeals={has_deals}>
-                    {content.map((i, index) => (
-                      <p key={index}>{i}</p>
-                    ))}
-                  </GuestContent>
-                )}
-              </PageContainer>
-            )}
-          </PageView>
+              {/* <GuestLinks /> */}
+            </Greeting>
+          </PageHero>
+          {hasPageContent && (
+            <PageContainer style={{ marginTop: '0' }}>
+              {has_deals && <DealsSection />}
+              {hasContent && (
+                <GuestContent hasDeals={has_deals}>
+                  {content.map((i, index) => (
+                    <p key={index}>{i}</p>
+                  ))}
+                </GuestContent>
+              )}
+            </PageContainer>
+          )}
         </Main>
       </Content>
     </>
