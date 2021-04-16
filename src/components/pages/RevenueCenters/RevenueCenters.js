@@ -88,9 +88,12 @@ const RevenueCenters = () => {
           title={isMobile ? navTitle : null}
           left={
             orderType === 'CATERING' ? (
-              <Back text="Catering" path="/catering" />
+              <Back text="Catering" onClick={() => history.push('/catering')} />
             ) : (
-              <Back text="Order Type" path="/order-type" />
+              <Back
+                text="Order Type"
+                onClick={() => history.push('/order-type')}
+              />
             )
           }
           right={

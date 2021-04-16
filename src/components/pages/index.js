@@ -23,6 +23,7 @@ import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
+import MenuItem from './MenuItem'
 import NotFound from './NotFound'
 import Order from './Order'
 import Orders from './Orders'
@@ -64,6 +65,7 @@ export {
   HouseAccounts,
   LevelUp,
   Menu,
+  MenuItem,
   NotFound,
   Order,
   Orders,

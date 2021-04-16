@@ -48,7 +48,7 @@ const NavScrollButton = ({ container, name, active, offset = 0 }) => {
       container,
       duration: 500,
       smooth: true,
-      offset: -30,
+      offset: -60,
     })
     const items = element.querySelectorAll('button')
     const firstItem = items.length ? items[0] : null

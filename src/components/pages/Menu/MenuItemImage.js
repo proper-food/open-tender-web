@@ -35,8 +35,8 @@ const MenuItemBackgroundImage = styled(BgImage)`
   bottom: 0;
   left: 0;
   right: 0;
-  opacity: 1;
-  animation: fade-in 0.25s ease-in-out 0s forwards;
+  // opacity: 1;
+  // animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
 const MenuItemImage = ({ imageUrl, children }) => {

@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isMobile } from 'react-device-detect'
+import { animateScroll as scroll } from 'react-scroll'
 import {
   selectOrder,
   selectMenuVars,
@@ -48,6 +49,7 @@ const MenuPage = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
   const topOffset = useSelector(selectTopOffset)
+  const [init, setInit] = useState(true)
   const [showMenu, setShowMenu] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
@@ -75,9 +77,16 @@ const MenuPage = () => {
   )
 
   useEffect(() => {
-    windowRef.current.scrollTop = topOffset || 0
+    if (init) {
+      // windowRef.current.scrollTop = topOffset || 0
+      scroll.scrollTo(topOffset || 0, {
+        container: windowRef.current,
+        duration: 0,
+        smooth: false,
+      })
+    }
     maybeRefreshVersion()
-  }, [windowRef, topOffset])
+  }, [windowRef, topOffset, init])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -86,7 +95,8 @@ const MenuPage = () => {
       return history.push('/review')
     } else if (topOffset) {
       dispatch(setTopOffset(null))
-    } else {
+      setInit(false)
+    } else if (init) {
       dispatch(fetchAllergens())
       dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
@@ -101,6 +111,7 @@ const MenuPage = () => {
     history,
     groupOrderClosed,
     topOffset,
+    init,
   ])
 
   useEffect(() => {

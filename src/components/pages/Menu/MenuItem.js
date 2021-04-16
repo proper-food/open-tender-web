@@ -2,15 +2,24 @@ import React, { useContext } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
-import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
+import {
+  setCurrentItem,
+  selectCartCounts,
+  selectMenuSlug,
+} from '@open-tender/redux'
+import {
+  convertStringToArray,
+  makeDisplayPrice,
+  slugify,
+} from '@open-tender/js'
 import { Box, Heading } from '@open-tender/components'
 
-import { selectDisplaySettings, openModal } from '../../../slices'
+import { selectDisplaySettings, openModal, setTopOffset } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -184,6 +193,7 @@ const MenuItemTags = styled('span')`
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
   const {
     menuImages: showImage,
@@ -191,6 +201,7 @@ const MenuItem = ({ item }) => {
     tags: showTags,
     allergens: showAllergens,
   } = useSelector(selectDisplaySettings)
+  const menuSlug = useSelector(selectMenuSlug)
   const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
   const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut.includes(item.id)
@@ -209,12 +220,20 @@ const MenuItem = ({ item }) => {
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
   const hasAllergens = allergenAlert.length > 0
+  const useModal = false
 
   const handleClick = (evt) => {
     evt.preventDefault()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+      if (useModal) {
+        dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+      } else {
+        const mainElement = document.getElementById('main')
+        const mainOffset = mainElement.getBoundingClientRect().top
+        dispatch(setTopOffset(-mainOffset))
+        history.push(`${menuSlug}/item/${slugify(item.name)}`)
+      }
     }
   }
 

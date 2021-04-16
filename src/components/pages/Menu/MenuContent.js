@@ -95,7 +95,7 @@ const MenuContent = () => {
   return (
     <>
       {hasAnnouncements ? (
-        <MenuAnnouncements>
+        <MenuAnnouncements ref={heroRef}>
           <PageHero announcements={announcements} />
         </MenuAnnouncements>
       ) : selected && showHeroChild ? (

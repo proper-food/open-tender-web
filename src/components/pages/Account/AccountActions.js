@@ -72,18 +72,18 @@ const AccountActions = () => {
   const { revenueCenter, orderType, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
   const cartQuantity = useSelector(selectCartQuantity)
+  const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   let orderTypeName = null
   let orderTypeIcon = iconMap.ShoppingBag
-  if (lastOrder) {
+  if (isCurrentOrder) {
+    orderTypeIcon = makeOrderTypeIcon(orderType, serviceType)
+  } else if (lastOrder) {
     const { order_type, service_type } = lastOrder
     orderTypeName = makeOrderTypeName(order_type, service_type)
     orderTypeIcon = makeOrderTypeIcon(order_type, service_type)
   }
-  const isCurrentOrder = revenueCenter && serviceType && cart.length
-  if (isCurrentOrder) {
-    orderTypeIcon = makeOrderTypeIcon(orderType, serviceType)
-  }
+  const reloadLast = lastOrder && !isCurrentOrder
   const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
   const buttonSize = isBrowser ? 'default' : 'small'
 
@@ -93,7 +93,7 @@ const AccountActions = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (lastOrder) {
+    if (reloadLast) {
       const {
         revenue_center,
         service_type: serviceType,
@@ -108,7 +108,7 @@ const AccountActions = () => {
       }
       dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
     }
-  }, [lastOrder, cartQuantity, dispatch])
+  }, [reloadLast, lastOrder, cartQuantity, dispatch])
 
   const startNewOrder = () => {
     dispatch(resetOrder())

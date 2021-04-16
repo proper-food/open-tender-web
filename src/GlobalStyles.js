@@ -378,6 +378,7 @@ const makeGlobalStyles = (theme) => css`
   .sidebar-enter,
   .sidebar-exit.sidebar-exit-active {
     transition: all 250ms ease;
+    // transition: all 400ms cubic-bezier(0.17, 0.67, 0.12, 1);
     opacity: 0;
     visibility: hidden;
     transform: translateX(100%);
