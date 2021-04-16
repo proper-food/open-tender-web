@@ -37,7 +37,7 @@ const RewardHeader = styled('div')`
 
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: 1.2;
+    line-height: ${(props) => props.theme.lineHeight};
     margin: 0.5rem 0;
   }
 `

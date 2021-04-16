@@ -19,7 +19,7 @@ import {
   CancelEdit,
   GroupGuest,
   GroupOrder,
-  // Home,
+  Home,
   LeaveGroup,
   // Locations,
   RequestedAt,
@@ -124,7 +124,7 @@ const MenuHeader = ({
   //   <StartOver />
   // )
 
-  const left = cartGuest ? <LeaveGroup /> : <Account />
+  const left = cartGuest ? <LeaveGroup /> : <Home />
 
   return (
     <Header
@@ -152,7 +152,7 @@ const MenuHeader = ({
                 </>
               ) : (
                 <>
-                  {/* <Account /> */}
+                  <Account />
                   <RevenueCenter />
                   <ServiceType />
                   <RequestedAt />
