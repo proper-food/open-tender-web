@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
-  selectAutoSelect,
-  selectRevenueCenterCount,
+  // selectAutoSelect,
+  // selectRevenueCenterCount,
   selectGroupOrder,
   selectOrder,
 } from '@open-tender/redux'
@@ -19,12 +19,13 @@ import {
   CancelEdit,
   GroupGuest,
   GroupOrder,
+  // Home,
   LeaveGroup,
-  Locations,
+  // Locations,
   RequestedAt,
   RevenueCenter,
   ServiceType,
-  StartOver,
+  // StartOver,
 } from '../../buttons'
 import iconMap from '../../iconMap'
 
@@ -109,19 +110,21 @@ const MenuHeader = ({
   showMenu,
   setShowMenu,
 }) => {
-  const autoSelect = useSelector(selectAutoSelect)
+  // const autoSelect = useSelector(selectAutoSelect)
+  // const count = useSelector(selectRevenueCenterCount)
+  // const showLocations = !autoSelect && count !== 1
   const order = useSelector(selectOrder)
-  const count = useSelector(selectRevenueCenterCount)
-  const showLocations = !autoSelect && count !== 1
   const { cartGuest } = useSelector(selectGroupOrder)
 
-  const left = cartGuest ? (
-    <LeaveGroup />
-  ) : showLocations ? (
-    <Locations />
-  ) : (
-    <StartOver />
-  )
+  // const left = cartGuest ? (
+  //   <LeaveGroup />
+  // ) : showLocations ? (
+  //   <Locations />
+  // ) : (
+  //   <StartOver />
+  // )
+
+  const left = cartGuest ? <LeaveGroup /> : <Account />
 
   return (
     <Header
@@ -149,7 +152,7 @@ const MenuHeader = ({
                 </>
               ) : (
                 <>
-                  <Account />
+                  {/* <Account /> */}
                   <RevenueCenter />
                   <ServiceType />
                   <RequestedAt />

@@ -23,11 +23,18 @@ import {
   fetchMenu,
   fetchAllergens,
   fetchDeals,
+  fetchAnnouncementPage,
+  selectAnnouncementsPage,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import {
+  selectBrand,
+  selectConfig,
+  selectTopOffset,
+  setTopOffset,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
@@ -40,10 +47,12 @@ const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
+  const topOffset = useSelector(selectTopOffset)
   const [showMenu, setShowMenu] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
+  const announcements = useSelector(selectAnnouncementsPage('MENU'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
@@ -66,20 +75,22 @@ const MenuPage = () => {
   )
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
+    windowRef.current.scrollTop = topOffset || 0
     maybeRefreshVersion()
-  }, [windowRef])
+  }, [windowRef, topOffset])
 
   useEffect(() => {
     if (!revenueCenterId) {
       return history.push('/locations')
     } else if (groupOrderClosed) {
       return history.push('/review')
+    } else if (topOffset) {
+      dispatch(setTopOffset(null))
     } else {
-      const requested = orderType === 'CATERING' ? requestedAt : null
       dispatch(fetchAllergens())
-      dispatch(fetchRevenueCenter(revenueCenterId, requested))
+      dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
+      dispatch(fetchAnnouncementPage('MENU'))
     }
   }, [
     revenueCenterId,
@@ -89,6 +100,7 @@ const MenuPage = () => {
     dispatch,
     history,
     groupOrderClosed,
+    topOffset,
   ])
 
   useEffect(() => {
@@ -122,6 +134,7 @@ const MenuPage = () => {
               loadingMessage,
               error,
               deals: validDeals,
+              announcements,
             }}
           >
             {isMobile && (

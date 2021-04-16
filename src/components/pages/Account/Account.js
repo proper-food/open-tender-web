@@ -7,7 +7,7 @@ import {
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
-  selectAnnouncements,
+  selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
 
@@ -46,7 +46,7 @@ const Account = () => {
   const dispatch = useDispatch()
   const theme = useTheme()
   const { navHeightMobile } = theme.layout
-  const announcements = useSelector(selectAnnouncements)
+  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, showHero } = accountConfig
@@ -67,15 +67,6 @@ const Account = () => {
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
   }, [token, dispatch, history])
-
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log(error)
-  //     dispatch(logoutCustomer())
-  //     dispatch(addMessage(error))
-  //     return history.push('/')
-  //   }
-  // }, [error, dispatch, history])
 
   return profile ? (
     <>

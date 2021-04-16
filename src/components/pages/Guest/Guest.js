@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
+import {
+  selectAnnouncementsPage,
+  fetchAnnouncementPage,
+} from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
@@ -61,7 +64,7 @@ const GuestContent = styled('div')`
 const Guest = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
-  const announcements = useSelector(selectAnnouncements)
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)

@@ -4,11 +4,17 @@ import { isMobile } from 'react-device-detect'
 import { selectGroupOrder } from '@open-tender/redux'
 
 import { selectDisplaySettings } from '../../../slices'
-import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
+import {
+  RevenueCenter,
+  RevenueCenterChild,
+  NavSticky,
+  Loading,
+  PageHero,
+} from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
 import MenuCategories from './MenuCategories'
-import MenuLoading from './MenuLoading'
+// import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
@@ -19,15 +25,23 @@ const MenuView = styled('div')`
   position: relative;
 `
 
+const MenuAnnouncements = styled('div')`
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-height: 32rem;
+  }
+`
+
 const MenuContent = () => {
   const {
     revenueCenter,
     categories,
     revenueCenters,
     isLoading,
+    loadingMessage,
     error,
     menuConfig,
     deals,
+    announcements,
   } = useContext(MenuContext)
   const {
     menuHero,
@@ -54,6 +68,7 @@ const MenuContent = () => {
     ? heroRef.current.getBoundingClientRect().height
     : 0
   const { windowRef } = useContext(AppContext)
+  const hasAnnouncements = announcements && announcements.entities.length > 0
 
   useEffect(() => {
     if (revenueCenters) {
@@ -79,7 +94,11 @@ const MenuContent = () => {
 
   return (
     <>
-      {selected && showHeroChild && (
+      {hasAnnouncements ? (
+        <MenuAnnouncements>
+          <PageHero announcements={announcements} />
+        </MenuAnnouncements>
+      ) : selected && showHeroChild ? (
         <div ref={heroRef}>
           <MenuHero imageUrl={selected.large_image_url}>
             <RevenueCenterChild
@@ -88,28 +107,31 @@ const MenuContent = () => {
             />
           </MenuHero>
         </div>
-      )}
-      {!selected && revenueCenter && showHero && (
-        <div ref={heroRef}>
-          <MenuHero imageUrl={menuConfig.background}>
-            <RevenueCenter
-              revenueCenter={revenueCenter}
-              isMenu={true}
-              style={{ maxWidth: '44rem' }}
-            />
-          </MenuHero>
-        </div>
+      ) : (
+        !selected &&
+        revenueCenter &&
+        showHero && (
+          <div ref={heroRef}>
+            <MenuHero imageUrl={menuConfig.background}>
+              <RevenueCenter
+                revenueCenter={revenueCenter}
+                isMenu={true}
+                style={{ maxWidth: '44rem' }}
+              />
+            </MenuHero>
+          </div>
+        )
       )}
       {!error ? (
         <MenuView>
-          <MenuLoading />
+          {/* <MenuLoading /> */}
           <div ref={topRef}>
             <MenuRevenueCenters
               revenueCenters={revenueCenters}
               selected={selected}
               change={change}
             />
-            {visible.length > 0 && (
+            {visible.length > 0 ? (
               <>
                 <NavSticky
                   items={navItems}
@@ -120,7 +142,9 @@ const MenuContent = () => {
                 {!cartGuest && <MenuDeals deals={deals} />}
                 <MenuCategories categories={visible} />
               </>
-            )}
+            ) : isLoading ? (
+              <Loading text={loadingMessage} style={{ margin: '5rem 0 0' }} />
+            ) : null}
           </div>
         </MenuView>
       ) : !isLoading ? (
