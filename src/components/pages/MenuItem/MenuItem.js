@@ -91,7 +91,10 @@ const MenuItem = () => {
   const displaySettings = useSelector(selectDisplaySettings)
   const { cartId } = useSelector(selectGroupOrder)
   const imageUrl = item
-    ? item.large_image_url || item.small_image_url || item.app_image_url
+    ? item.large_image_url ||
+      item.small_image_url ||
+      item.app_image_url ||
+      item.imageUrl
     : null
 
   useEffect(() => {
@@ -111,6 +114,7 @@ const MenuItem = () => {
     dispatch(addItemToCart(item))
     dispatch(showNotification(`${item.name} added to cart`))
     dispatch(setCurrentItem(null))
+    // if (item.index) dispatch(toggleSidebar())
   }
 
   if (!item) return null

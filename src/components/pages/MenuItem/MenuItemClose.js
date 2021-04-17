@@ -9,18 +9,20 @@ import { closeModal } from '../../../slices'
 import iconMap from '../../iconMap'
 
 const MenuItemCloseX = styled('button')`
-  position: absolute;
+  position: fixed;
   z-index: 2;
   top: 1.5rem;
-  right: 1.7rem;
+  right: 1.5rem;
   display: inline;
   font-size: inherit;
   color: ${(props) => props.theme.links.primary.color};
+
   &:hover,
   &:active,
   &:focus {
     color: ${(props) => props.theme.links.primary.hover};
   }
+
   &:disabled {
     color: ${(props) => props.theme.links.primary.color};
     opacity: 0.5;

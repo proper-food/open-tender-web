@@ -25,7 +25,7 @@ const MenuMobileMenuView = styled('div')`
   transition: all 0.125s ease;
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   transform: translateY(${(props) => (props.show ? '0' : '-100%')});
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.primary};
 `
 
 const MenuMobileMenuOverlay = styled('div')`
@@ -54,7 +54,7 @@ const MenuMobileMenuButtons = styled('div')`
   }
 
   button + button {
-    margin-left: 1rem;
+    margin-left: 3rem;
   }
 `
 
@@ -88,7 +88,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
                 label={<Preface size="xSmall">Location</Preface>}
                 input={
                   <RevenueCenter
-                    style={{ position: 'relative', right: '-1.3rem' }}
+                    style={{ position: 'relative' }}
                     useButton={true}
                   />
                 }
@@ -100,7 +100,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
                 label={<Preface size="xSmall">Service Type</Preface>}
                 input={
                   <ServiceType
-                    style={{ position: 'relative', right: '-1.3rem' }}
+                    style={{ position: 'relative' }}
                     useButton={true}
                   />
                 }
@@ -112,7 +112,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
                 label={<Preface size="xSmall">Requested Time</Preface>}
                 input={
                   <RequestedAt
-                    style={{ position: 'relative', right: '-1.3rem' }}
+                    style={{ position: 'relative' }}
                     useButton={true}
                   />
                 }

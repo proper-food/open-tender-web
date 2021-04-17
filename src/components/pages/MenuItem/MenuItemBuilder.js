@@ -37,7 +37,6 @@ const MenuItemBuilderFooterContainer = styled('div')`
   right: 0;
   width: 64rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
   height: ${footerHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
@@ -46,6 +45,10 @@ const MenuItemBuilderFooterContainer = styled('div')`
 
   & > div {
     height: 100%;
+    box-shadow: 1.5rem -0.3rem 1.5rem rgba(0, 0, 0, 0.1);
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      box-shadow: 0 -0.3rem 1.5rem rgba(0, 0, 0, 0.1);
+    }
   }
 `
 

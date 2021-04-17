@@ -200,6 +200,7 @@ const MenuItem = ({ item }) => {
     calories: showCals,
     tags: showTags,
     allergens: showAllergens,
+    builderType,
   } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
@@ -220,19 +221,18 @@ const MenuItem = ({ item }) => {
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
   const hasAllergens = allergenAlert.length > 0
-  const useModal = false
 
-  const handleClick = (evt) => {
+  const view = (evt) => {
     evt.preventDefault()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
-      if (useModal) {
-        dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
-      } else {
+      if (builderType === 'PAGE') {
         const mainElement = document.getElementById('main')
         const mainOffset = mainElement.getBoundingClientRect().top
         dispatch(setTopOffset(-mainOffset))
         history.push(`${menuSlug}/item/${slugify(item.name)}`)
+      } else {
+        dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
       }
     }
   }
@@ -254,7 +254,7 @@ const MenuItem = ({ item }) => {
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
         ) : null}
-        <MenuItemButton onClick={handleClick} isSoldOut={isSoldOut}>
+        <MenuItemButton onClick={view} isSoldOut={isSoldOut}>
           {showImage && (
             <MenuItemImage imageUrl={imageUrl}>
               {itemTag && (
