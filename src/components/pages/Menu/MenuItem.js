@@ -6,13 +6,15 @@ import {
   setCurrentItem,
   selectCartCounts,
   selectMenuSlug,
+  addItemToCart,
+  showNotification,
 } from '@open-tender/redux'
 import {
   convertStringToArray,
   makeDisplayPrice,
   slugify,
 } from '@open-tender/js'
-import { Box, Heading } from '@open-tender/components'
+import { Box, Heading, useBuilder } from '@open-tender/components'
 
 import {
   selectDisplaySettings,
@@ -78,6 +80,43 @@ export const MenuItemOverlay = styled('div')`
   border-bottom-right-radius: 0 !important;
   background-color: ${(props) =>
     props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
+`
+
+const MenuItemAdd = styled('button')`
+  position: absolute;
+  z-index: 3;
+  top: -1.3rem;
+  left: -1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 1.3em;
+  padding: 0.3rem 0.3rem 0.3rem;
+  border-width: 0.2rem;
+  border-style: solid;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.primary};
+  border-color: ${(props) => props.theme.colors.light};
+  font-weight: ${(props) => props.theme.boldWeight};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: -1rem;
+    right: -0.9rem;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  &:hover:enabled,
+  &:active:enabled,
+  &:focus:enabled {
+    background-color: ${(props) => props.theme.links.primary.color};
+  }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.colors.primary};
+    opacity: 0.5;
+  }
 `
 
 const MenuItemCount = styled('div')`
@@ -226,6 +265,11 @@ const MenuItem = ({ item }) => {
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
   const hasAllergens = allergenAlert.length > 0
+  const { item: builtItem } = useBuilder(item, soldOut)
+  const { groups, totalPrice } = builtItem
+  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
+  const isIncomplete =
+    totalPrice === 0 || item.quantity === '' || groupsBelowMin
 
   const view = (evt) => {
     evt.preventDefault()
@@ -244,6 +288,15 @@ const MenuItem = ({ item }) => {
     }
   }
 
+  const add = (evt) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    if (!isSoldOut && !isIncomplete) {
+      dispatch(addItemToCart(builtItem))
+      dispatch(showNotification(`${builtItem.name} added to cart!`))
+    }
+  }
+
   const itemTag = isSoldOut ? (
     <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
   ) : hasAllergens ? (
@@ -257,6 +310,11 @@ const MenuItem = ({ item }) => {
   return (
     <MenuItemView>
       <MenuItemContainer>
+        {!isIncomplete && (
+          <MenuItemAdd onClick={add} disabled={isIncomplete}>
+            {iconMap.Plus}
+          </MenuItemAdd>
+        )}
         {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
