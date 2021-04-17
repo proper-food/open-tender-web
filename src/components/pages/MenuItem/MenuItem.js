@@ -2,6 +2,8 @@ import React, { useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
 import {
   selectCurrentItem,
   setCurrentItem,
@@ -12,19 +14,71 @@ import {
   selectMenuSlug,
   showNotification,
 } from '@open-tender/redux'
-import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectDisplaySettings } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, Header, ImageSpinner, Main, ScreenreaderTitle } from '../..'
-import { Back } from '../../buttons'
+import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
+import MenuItemBuilder from './MenuItemBuilder'
 import iconMap from '../../iconMap'
+import MenuItemClose from './MenuItemClose'
 
-const menuItemsIconMap = {
-  plus: iconMap.Plus,
-  minus: iconMap.Minus,
-}
+const MenuItemView = styled('div')`
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+`
+
+const MenuItemBuilderView = styled('div')`
+  width: 64rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    margin: 24rem 0 0;
+  }
+`
+
+const MenuItemImage = styled('div')`
+  position: fixed;
+  display: flex;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 64rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    right: 0;
+    bottom: auto;
+    height: 24rem;
+  }
+`
+
+const MenuItemBack = styled('div')`
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  align-items: center;
+  left: ${(props) => props.theme.layout.padding};
+  height: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: none;
+  }
+
+  button {
+    color: ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme.bgColors.primary};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.bgColors.secondary};
+    }
+  }
+`
 
 const MenuItem = () => {
   const history = useHistory()
@@ -36,6 +90,9 @@ const MenuItem = () => {
   const allergens = useSelector(selectSelectedAllergenNames)
   const displaySettings = useSelector(selectDisplaySettings)
   const { cartId } = useSelector(selectGroupOrder)
+  const imageUrl = item
+    ? item.large_image_url || item.small_image_url || item.app_image_url
+    : null
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -64,38 +121,37 @@ const MenuItem = () => {
         <title>Menu | {item.name}</title>
       </Helmet>
       <Content hasFooter={false}>
-        <Header
-          // style={isBrowser ? null : { position: 'absolute' }}
-          left={<Back text="Back to Menu" onClick={cancel} />}
-          // right={<Cart />}
-        />
-        <Main>
+        {isBrowser && (
+          <MenuItemBack>
+            <ButtonStyled
+              onClick={cancel}
+              icon={iconMap.ArrowLeft}
+              color="header"
+              size="small"
+            >
+              Back to Menu
+            </ButtonStyled>
+          </MenuItemBack>
+        )}
+        <Main style={{ padding: '0' }}>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
-          {/* <Builder
-            menuItem={item}
-            addItemToCart={addItem}
-            cancel={cancel}
-            soldOut={soldOut}
-            allergenAlerts={allergenAlerts}
-            showImage={true}
-            displaySettings={displaySettings}
-            cartId={cartId}
-            windowRef={windowRef}
-          /> */}
-          <Builder
-            menuItem={item}
-            soldOut={soldOut}
-            allergens={allergens}
-            addItemToCart={addItem}
-            renderHeader={(props) => <BuilderHeader {...props} />}
-            renderOption={(props) => <BuilderOption {...props} />}
-            showImage={true}
-            displaySettings={displaySettings}
-            iconMap={menuItemsIconMap}
-            closeModal={cancel}
-            cartId={cartId}
-            spinner={<ImageSpinner />}
-          />
+          <MenuItemImage>
+            <BackgroundImage imageUrl={imageUrl} />
+          </MenuItemImage>
+          <MenuItemView>
+            <MenuItemClose onClick={cancel} isButton={!isBrowser} />
+            <MenuItemBuilderView>
+              <MenuItemBuilder
+                menuItem={item}
+                addItemToCart={addItem}
+                cancel={cancel}
+                soldOut={soldOut}
+                allergenAlerts={allergens}
+                displaySettings={displaySettings}
+                cartId={cartId}
+              />
+            </MenuItemBuilderView>
+          </MenuItemView>
         </Main>
       </Content>
     </>

@@ -10,8 +10,8 @@ import { toggleSidebar } from '../../slices'
 const SidebarCloseView = styled('div')`
   position: absolute;
   z-index: 1;
-  top: 7px;
-  right: 7px;
+  top: 0.7rem;
+  right: 0.7rem;
 `
 
 const SidebarClose = () => {

@@ -13,33 +13,34 @@ import iconMap from '../../iconMap'
 const footerHeight = '8rem'
 const footerHeightMobile = '7rem'
 
+const menuItemsIconMap = {
+  plus: iconMap.Plus,
+  minus: iconMap.Minus,
+}
+
 const MenuItemBuilderView = styled('form')`
   position: relative;
   display: block;
-  width: 50rem;
-  height: 100%;
-  margin: 0;
+  width: 100%;
   padding: 0 0 ${footerHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 0 ${footerHeightMobile};
   }
 `
 
-const MenuItemBuilderContent = styled('div')`
-  // width: 100%;
-  // height: 100%;
-  // overflow-y: scroll;
-`
+const MenuItemBuilderContent = styled('div')``
 
 const MenuItemBuilderFooterContainer = styled('div')`
-  // position: absolute;
-  // z-index: 1;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-  // background-color: ${(props) => props.theme.bgColors.primary};
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  width: 64rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
   height: ${footerHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
     height: ${footerHeightMobile};
   }
 
@@ -69,7 +70,7 @@ const MenuItemBuilder = ({
     decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
-  const headerDisplaySettings = { ...displaySettings, showImage: false }
+  const headerDisplaySettings = { ...displaySettings, builderImages: false }
   return (
     <MenuItemBuilderView>
       <MenuItemBuilderContent>
@@ -77,7 +78,7 @@ const MenuItemBuilder = ({
         <BuilderBody
           allergens={allergenAlerts}
           renderOption={(props) => <BuilderOption {...props} />}
-          iconMap={iconMap}
+          iconMap={menuItemsIconMap}
           displaySettings={displaySettings}
           cartId={cartId}
           item={item}
@@ -92,7 +93,7 @@ const MenuItemBuilder = ({
       <MenuItemBuilderFooterContainer>
         <BuilderFooter
           item={item}
-          iconMap={iconMap}
+          iconMap={menuItemsIconMap}
           addItemToCart={addItemToCart}
           setQuantity={setQuantity}
           increment={increment}
