@@ -1,7 +1,5 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
-import { isMobile } from 'react-device-detect'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import {
   selectCurrentItem,
@@ -14,42 +12,40 @@ import {
 } from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
-import { closeModal, selectDisplaySettings } from '../../slices'
-import iconMap from '../iconMap'
-import { ModalClose, ImageSpinner } from '..'
+import { toggleSidebarModal, selectDisplaySettings } from '../../../slices'
+
+import iconMap from '../../iconMap'
+import { ImageSpinner } from '../..'
+import SidebarModalClose from '../../SidebarModal/SidebarModalClose'
+import { isMobile } from 'react-device-detect'
 
 const menuItemsIconMap = {
   plus: iconMap.Plus,
   minus: iconMap.Minus,
 }
 
-const MenuItemModalView = styled('div')`
-  position: relative;
-  width: 90%;
-  max-width: 64rem;
-  height: 90%;
-  overflow: hidden;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  border-radius: ${(props) => props.theme.border.radius};
-  margin: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+const BuilderView = styled('aside')`
+  position: fixed;
+  z-index: 18;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 64rem;
+  max-width: 100%;
+  background-color: ${(props) => props.theme.bgColors.light};
+
+  > div {
+    position: relative;
     width: 100%;
-    max-width: 100%;
     height: 100%;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 `
 
-const MenuItemModalContent = styled('div')`
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0;
-  }
-`
-
-const MenuItem = () => {
+const MenuItem = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
@@ -57,8 +53,12 @@ const MenuItem = () => {
   const displaySettings = useSelector(selectDisplaySettings)
   const { cartId } = useSelector(selectGroupOrder)
 
+  useEffect(() => {
+    return () => dispatch(setCurrentItem(null))
+  }, [dispatch])
+
   const cancel = () => {
-    dispatch(closeModal())
+    dispatch(toggleSidebarModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
     }, 275)
@@ -67,16 +67,20 @@ const MenuItem = () => {
   const addItem = (item) => {
     dispatch(addItemToCart(item))
     dispatch(showNotification(`${item.name} added to cart`))
-    dispatch(closeModal())
+    dispatch(toggleSidebarModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
     }, 275)
   }
 
   return (
-    <MenuItemModalView>
-      <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        <ModalClose onClick={cancel} isButton={isMobile} />
+    <BuilderView ref={ref}>
+      <div>
+        <SidebarModalClose
+          label="Cancel"
+          onClick={cancel}
+          isButton={isMobile}
+        />
         {item && (
           <Builder
             menuItem={item}
@@ -93,14 +97,11 @@ const MenuItem = () => {
             spinner={<ImageSpinner />}
           />
         )}
-      </MenuItemModalContent>
-    </MenuItemModalView>
+      </div>
+    </BuilderView>
   )
-}
+})
 
 MenuItem.displayName = 'MenuItem'
-MenuItem.propTypes = {
-  close: propTypes.func,
-}
 
 export default MenuItem

@@ -27,7 +27,7 @@ const SidebarView = styled('aside')`
   top: 0;
   bottom: 0;
   right: 0;
-  width: 44rem;
+  width: 48rem;
   max-width: 100%;
   background-color: ${(props) => props.theme.bgColors.primary};
 

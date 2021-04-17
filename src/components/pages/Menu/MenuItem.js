@@ -14,7 +14,12 @@ import {
 } from '@open-tender/js'
 import { Box, Heading } from '@open-tender/components'
 
-import { selectDisplaySettings, openModal, setTopOffset } from '../../../slices'
+import {
+  selectDisplaySettings,
+  openModal,
+  setTopOffset,
+  toggleSidebarModal,
+} from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
 import { MenuContext } from './Menu'
@@ -231,6 +236,8 @@ const MenuItem = ({ item }) => {
         const mainOffset = mainElement.getBoundingClientRect().top
         dispatch(setTopOffset(-mainOffset))
         history.push(`${menuSlug}/item/${slugify(item.name)}`)
+      } else if (builderType === 'SIDEBAR') {
+        dispatch(toggleSidebarModal())
       } else {
         dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
       }

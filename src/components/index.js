@@ -77,6 +77,7 @@ import Section from './Section'
 import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
+import SidebarModal from './SidebarModal'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
 import SliderKeen from './SliderKeen'
@@ -167,6 +168,7 @@ export {
   SectionHeader,
   SectionTitle,
   Sidebar,
+  SidebarModal,
   SkipLink,
   Slider,
   SliderKeen,

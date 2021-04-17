@@ -1,34 +1,15 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { selectCartQuantity } from '@open-tender/redux'
-import { contains } from '@open-tender/js'
 
-import {
-  selectModal,
-  selectSidebar,
-  selectSidebarModal,
-  toggleSidebar,
-} from '../../slices'
-import SidebarOverlay from './SidebarOverlay'
-import SidebarContent from './SidebarContent'
+import { selectSidebarModal } from '../../slices'
+import SidebarModalOverlay from './SidebarModalOverlay'
 
-const Sidebar = () => {
-  const dispatch = useDispatch()
-  const { pathname } = useLocation()
+const SidebarModal = ({ children }) => {
   const sidebarRef = useRef(null)
   const [active, setActive] = useState(null)
   const [elements, setElements] = useState([])
-  const { type } = useSelector(selectModal)
-  const { isOpen: sidebarModalOpen } = useSelector(selectSidebarModal)
-  const { isOpen } = useSelector(selectSidebar)
-  const cartQuantity = useSelector(selectCartQuantity)
-  const showEmptyCart = contains(pathname, ['menu', 'checkout'])
-  const hideCart =
-    (cartQuantity === 0 && !showEmptyCart) ||
-    contains(pathname, ['review', 'gift-cards'])
-  const canToggle = !type && !hideCart && !sidebarModalOpen
+  const { isOpen } = useSelector(selectSidebarModal)
 
   const handleExit = () => {
     if (active) active.focus()
@@ -63,11 +44,9 @@ const Sidebar = () => {
           lastElement.focus()
           evt.preventDefault()
         }
-      } else if (evt.keyCode === 27 && canToggle) {
-        dispatch(toggleSidebar())
       }
     },
-    [elements, canToggle, dispatch]
+    [elements]
   )
 
   useEffect(() => {
@@ -77,17 +56,17 @@ const Sidebar = () => {
 
   return (
     <>
-      <SidebarOverlay />
+      <SidebarModalOverlay />
       <TransitionGroup component={null}>
         {isOpen ? (
           <CSSTransition
             key="sidebar"
             classNames="sidebar"
-            timeout={{ enter: 250, exit: 250 }}
+            timeout={{ enter: 500, exit: 500 }}
             onEntered={handleFocus}
             onExited={handleExit}
           >
-            <SidebarContent ref={sidebarRef} />
+            {React.cloneElement(children, { ref: sidebarRef })}
           </CSSTransition>
         ) : null}
       </TransitionGroup>
@@ -95,6 +74,6 @@ const Sidebar = () => {
   )
 }
 
-Sidebar.displayName = 'Sidebar'
+SidebarModal.displayName = 'SidebarModal'
 
-export default Sidebar
+export default SidebarModal

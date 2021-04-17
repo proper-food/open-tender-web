@@ -10,6 +10,7 @@ import {
   NavSticky,
   Loading,
   PageHero,
+  SidebarModal,
 } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
@@ -20,6 +21,7 @@ import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
 import { AppContext } from '../../../App'
 import MenuDeals from './MenuDeals'
+import { MenuItem } from '../../sidebarModals'
 
 const MenuView = styled('div')`
   position: relative;
@@ -123,30 +125,34 @@ const MenuContent = () => {
         )
       )}
       {!error ? (
-        <MenuView>
-          {/* <MenuLoading /> */}
-          <div ref={topRef}>
-            <MenuRevenueCenters
-              revenueCenters={revenueCenters}
-              selected={selected}
-              change={change}
-            />
-            {visible.length > 0 ? (
-              <>
-                <NavSticky
-                  items={navItems}
-                  offset={heroHeight}
-                  revenueCenter={selected}
-                  change={change}
-                />
-                {!cartGuest && <MenuDeals deals={deals} />}
-                <MenuCategories categories={visible} />
-              </>
-            ) : isLoading ? (
-              <Loading text={loadingMessage} style={{ margin: '5rem 0 0' }} />
-            ) : null}
-          </div>
-        </MenuView>
+        <>
+          <MenuView>
+            <div ref={topRef}>
+              <MenuRevenueCenters
+                revenueCenters={revenueCenters}
+                selected={selected}
+                change={change}
+              />
+              {visible.length > 0 ? (
+                <>
+                  <NavSticky
+                    items={navItems}
+                    offset={heroHeight}
+                    revenueCenter={selected}
+                    change={change}
+                  />
+                  {!cartGuest && <MenuDeals deals={deals} />}
+                  <MenuCategories categories={visible} />
+                </>
+              ) : isLoading ? (
+                <Loading text={loadingMessage} style={{ margin: '5rem 0 0' }} />
+              ) : null}
+            </div>
+          </MenuView>
+          <SidebarModal>
+            <MenuItem />
+          </SidebarModal>
+        </>
       ) : !isLoading ? (
         <MenuError />
       ) : null}

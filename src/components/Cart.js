@@ -17,6 +17,7 @@ import {
   selectDisplaySettings,
   setTopOffset,
   toggleSidebar,
+  toggleSidebarModal,
 } from '../slices'
 import { useHistory } from 'react-router-dom'
 
@@ -41,6 +42,8 @@ const Cart = () => {
       const mainOffset = mainElement.getBoundingClientRect().top
       dispatch(setTopOffset(-mainOffset))
       history.push(`${menuSlug}/item/${slugify(item.name)}`)
+    } else if (builderType === 'SIDEBAR') {
+      dispatch(toggleSidebarModal())
     } else {
       dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
