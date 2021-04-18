@@ -19,17 +19,22 @@ const CheckoutTotalView = styled('header')`
   height: ${(props) => props.theme.layout.navHeight};
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.bgColors.dark};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: ${(props) => props.theme.layout.navHeightMobile};
+    height: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
 const CheckoutTotalContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${(props) => props.theme.layout.navHeight};
-  max-width: 36rem;
   margin: 0 auto;
+  max-width: 36rem;
+  height: ${(props) => props.theme.layout.navHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: 100%;
+    height: ${(props) => props.theme.layout.navHeightMobile};
   }
 `
 
