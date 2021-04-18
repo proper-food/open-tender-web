@@ -102,8 +102,6 @@ const MenuItemAdd = styled('button')`
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -1rem;
-    right: -0.9rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
@@ -139,7 +137,6 @@ const MenuItemCount = styled('div')`
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -1rem;
     right: -0.9rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
