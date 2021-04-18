@@ -17,7 +17,9 @@ const PageButtons = styled('div')`
       display: block;
       max-width: 50%;
       flex: 1 1 50%;
-      padding: 1.1rem 1rem;
+      // padding: 1.1rem 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
       margin: 0 0.5rem;
       line-height: 1.2;
       overflow: hidden;

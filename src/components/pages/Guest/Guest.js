@@ -69,7 +69,7 @@ const Guest = () => {
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, content, title, subtitle, showHero } = home
-  const footnote = "Hint: you don't need an account to place an order."
+  // const footnote = "Hint: you don't need an account to place an order."
   const hasContent = !!(content && content.length && content[0].length)
   const hasPageContent = hasContent || has_deals
 
@@ -109,7 +109,7 @@ const Guest = () => {
               title={title}
               subtitle={subtitle}
               actions={<GuestActions />}
-              footnote={footnote}
+              // footnote={footnote}
             >
               {/* <GuestLinks /> */}
             </Greeting>

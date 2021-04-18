@@ -121,7 +121,7 @@ const AccountActions = () => {
   }
 
   const continueCurrent = () => {
-    history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/')
+    history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
   }
 
   return (
