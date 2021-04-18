@@ -27,6 +27,7 @@ import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { Plus } from 'react-feather'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -93,16 +94,15 @@ const MenuItemAdd = styled('button')`
   min-width: 2.6rem;
   height: 2.6rem;
   border-radius: 1.3em;
-  padding: 0.3rem 0.3rem 0.3rem;
+  padding: 0.3rem;
   border-width: 0.2rem;
   border-style: solid;
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors.primary};
   border-color: ${(props) => props.theme.colors.light};
-  font-weight: ${(props) => props.theme.boldWeight};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    // top: -1rem;
+    left: -0.9rem;
   }
 
   &:hover:enabled,
@@ -137,6 +137,7 @@ const MenuItemCount = styled('div')`
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    // top: -1rem;
     right: -0.9rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
@@ -309,7 +310,7 @@ const MenuItem = ({ item }) => {
       <MenuItemContainer>
         {!isIncomplete && (
           <MenuItemAdd onClick={add} disabled={isIncomplete}>
-            {iconMap.Plus}
+            <Plus size={16} />
           </MenuItemAdd>
         )}
         {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
