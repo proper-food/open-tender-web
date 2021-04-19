@@ -177,7 +177,10 @@ const Reward = ({ item }) => {
     : null
 
   const redeem = () => {
-    dispatch(openModal({ type: 'reward', args: { reward } }))
+    const rewardForModal = { ...reward }
+    delete rewardForModal.limitations
+    const args = { reward: rewardForModal }
+    dispatch(openModal({ type: 'reward', args }))
   }
 
   return (

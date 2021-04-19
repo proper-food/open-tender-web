@@ -92,6 +92,7 @@ const containerStyleMap = {
   cartCounts: { alignItems: 'flex-start' },
   groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
+  reward: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`

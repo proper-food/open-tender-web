@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Preface } from '@open-tender/components'
+import { isBrowser } from 'react-device-detect'
 
 // https://kimmobrunfeldt.github.io/progressbar.js/
 // https://github.com/kimmobrunfeldt/progressbar.js/tree/master/src
@@ -56,7 +57,7 @@ const ProgressPercentage = styled('div')`
       }
     }
 
-    span:last-of-type {
+    span + span {
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
@@ -125,7 +126,7 @@ const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
       <ProgressPercentage>
         <div>
           <Heading>{progress}%</Heading>
-          <Preface size="xSmall">complete</Preface>
+          {isBrowser && <Preface size="xSmall">Complete</Preface>}
         </div>
       </ProgressPercentage>
     </ProgressCirlceView>

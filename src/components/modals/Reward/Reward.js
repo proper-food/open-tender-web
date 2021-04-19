@@ -151,7 +151,6 @@ const Reward = ({ reward }) => {
               </Text>
             )}
           </RewardFinePrint>
-
           <RewardContent>
             {qrCodeUrl ? (
               <>
