@@ -68,6 +68,7 @@ const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
   const offsetRef = useRef()
   const [length, setLength] = useState(null)
   const [offset, setOffset] = useState(null)
+  const [backupStyle, setBackupStyle] = useState(null)
   const radius = 50 - strokeWidth / 2
   const dimensions = `M 50,50 m 0,-${radius} a ${radius},${radius} 0 1 1 0,${
     radius * 2
@@ -90,19 +91,26 @@ const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
 
   useEffect(() => {
     if (length && offset && !isLoading) {
-      const duration = 2000 * (progress / 100)
-      const strokeDasharray = `${length.toFixed(3)} ${length.toFixed(3)}`
-      offsetRef.current.animate(
-        [
-          { strokeDasharray, strokeDashoffset: length },
-          { strokeDasharray, strokeDashoffset: offset },
-        ],
-        {
-          delay: 500,
-          duration,
-          fill: 'forwards',
-        }
-      )
+      try {
+        const duration = 2000 * (progress / 100)
+        const strokeDasharray = `${length.toFixed(3)} ${length.toFixed(3)}`
+        offsetRef.current.animate(
+          [
+            { strokeDasharray, strokeDashoffset: length },
+            { strokeDasharray, strokeDashoffset: offset },
+          ],
+          {
+            delay: 500,
+            duration,
+            fill: 'forwards',
+          }
+        )
+      } catch (err) {
+        setBackupStyle({
+          strokeDasharray: `${length.toFixed(3)} ${length.toFixed(3)}`,
+          strokeDashoffset: offset,
+        })
+      }
     }
   }, [length, offset, progress, isLoading])
 
@@ -120,7 +128,7 @@ const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
           d={dimensions}
           strokeWidth={`${strokeWidth}`}
           fillOpacity="0"
-          style={style}
+          style={backupStyle || style}
         ></path>
       </svg>
       <ProgressPercentage>
