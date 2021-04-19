@@ -250,37 +250,40 @@ const makeGlobalStyles = (theme) => css`
     padding: ${theme.inputs.padding};
     border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
+    font-family: ${theme.inputs.family};
+    font-size: ${theme.inputs.fontSize};
+    font-weight: ${theme.inputs.weight};
+    letter-spacing: ${theme.inputs.letterSpacing};
+    text-transform: ${theme.inputs.textTransform};
+    font-smoothing: ${theme.inputs.fontSmoothing};
     color: ${theme.inputs.color};
     background-color: ${theme.inputs.bgColor};
     box-shadow: ${theme.inputs.boxShadow};
-    font-family: ${theme.fonts.body.family};
-    font-size: ${theme.fonts.sizes.main};
     transition: ${theme.links.transition};
 
     &::placeholder {
-      color: ${theme.fonts.headings.color};
-      opacity: 0.5;
+      color: ${theme.inputs.placeholderColor};
     }
 
     &::selection {
-      color: ${theme.bgColors.primary};
-      background-color: ${theme.fonts.body.color};
+      color: ${theme.inputs.bgColor};
+      background-color: ${theme.inputs.color};
     }
 
     &:active,
     &:focus {
-      color: ${theme.colors.primary};
-      background-color: ${theme.bgColors.primary};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.primary};
+      color: ${theme.inputs.color};
+      background-color: ${theme.inputs.bgColor};
+      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColor};
     }
 
     &:disabled,
     &:read-only {
       cursor: default;
       opacity: 0.5;
-      color: ${theme.fonts.headings.color};
-      background-color: ${theme.bgColors.secondary};
-      border: ${theme.inputs.borderWidth} solid ${theme.bgColors.secondary};
+      color: ${theme.inputs.color};
+      background-color: ${theme.inputs.bgColor};
+      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColor};
     }
   }
 
@@ -310,7 +313,7 @@ const makeGlobalStyles = (theme) => css`
     opacity: 1;
     cursor: pointer;
     border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    background-color: ${theme.bgColors.primary};
+    background-color: ${theme.inputs.bgColor};
   }
 
   @keyframes fade-in {
