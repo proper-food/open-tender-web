@@ -209,7 +209,7 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
           </LoyaltyProgramStatus>
         )}
       </LoyaltyProgramSummary>
-      {currentProgress && (
+      {!!currentProgress && (
         <LoyaltyProgramProgress>
           <Heading as="p">Current Progress</Heading>
           <ProgressCircle progress={currentProgress} isLoading={isLoading} />

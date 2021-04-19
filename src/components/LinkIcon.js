@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const LinkIconView = styled('span')`
   display: inline-block;
-  margin: 0 0.5rem 0 0;
+  margin: ${(props) => (props.isBefore ? '0 1.5rem 0 0' : '0 0 0 1.5rem')};
 
   a {
     display: flex;

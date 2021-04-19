@@ -87,11 +87,11 @@ const MenuItemAdd = styled('button')`
   position: absolute;
   z-index: 3;
   top: -1.3rem;
-  left: -1.2rem;
+  right: -1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 2.6rem;
+  width: 2.6rem;
   height: 2.6rem;
   border-radius: 1.3em;
   padding: 0.3rem;
@@ -101,8 +101,11 @@ const MenuItemAdd = styled('button')`
   background-color: ${(props) => props.theme.colors.primary};
   border-color: ${(props) => props.theme.colors.light};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    // top: -1rem;
-    left: -0.9rem;
+    top: -0.9rem;
+    right: -0.8rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.2rem 0.2rem;
   }
 
   &:hover:enabled,
@@ -121,7 +124,7 @@ const MenuItemCount = styled('div')`
   position: absolute;
   z-index: 3;
   top: -1.3rem;
-  right: -1.2rem;
+  left: -1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,8 +140,10 @@ const MenuItemCount = styled('div')`
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    // top: -1rem;
-    right: -0.9rem;
+    top: -0.9rem;
+    left: -0.8rem;
+    min-width: 2.1rem;
+    height: 2.1rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `

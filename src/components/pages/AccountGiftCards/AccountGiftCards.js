@@ -22,6 +22,7 @@ import {
   PageContainer,
   PageContent,
   PageTitleButtons,
+  AccountBack,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
 import AccountTabs from '../Account/AccountTabs'
@@ -61,7 +62,7 @@ const AccountGiftCards = () => {
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config.giftCards}>
+            <PageTitle {...config.giftCards} preface={<AccountBack />}>
               <PageTitleButtons>
                 <ButtonStyled
                   onClick={() => dispatch(openModal({ type: 'giftCard' }))}
@@ -81,7 +82,12 @@ const AccountGiftCards = () => {
               </PageTitleButtons>
             </PageTitle>
             {entities.length ? (
-              <GiftCardsList giftCards={entities} isLoading={isLoading} />
+              <>
+                <GiftCardsList giftCards={entities} isLoading={isLoading} />
+                <PageContent>
+                  <AccountBack />
+                </PageContent>
+              </>
             ) : (
               <PageContent>
                 {isLoading ? (

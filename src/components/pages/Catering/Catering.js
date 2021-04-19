@@ -393,18 +393,18 @@ const CateringPage = () => {
                     )}
                     <CateringButtons>
                       <ButtonStyled
-                        icon={iconMap.Truck}
-                        onClick={() => chooseServiceType('DELIVERY')}
-                        disabled={!requestedTime}
-                      >
-                        Order Delivery
-                      </ButtonStyled>
-                      <ButtonStyled
                         icon={iconMap.ShoppingBag}
                         onClick={() => chooseServiceType('PICKUP')}
                         disabled={!requestedTime}
                       >
                         Order Pickup
+                      </ButtonStyled>
+                      <ButtonStyled
+                        icon={iconMap.Truck}
+                        onClick={() => chooseServiceType('DELIVERY')}
+                        disabled={!requestedTime}
+                      >
+                        Order Delivery
                       </ButtonStyled>
                     </CateringButtons>
                   </>

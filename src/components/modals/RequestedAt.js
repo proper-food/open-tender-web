@@ -35,6 +35,7 @@ const RequestedAtMessage = styled('p')`
   margin: 0 0 2rem;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   line-height: ${(props) => props.theme.lineHeight};
+  color: ${(props) => props.theme.colors.alert};
 
   span {
     font-weight: 600;
@@ -103,6 +104,7 @@ const RequestedAt = ({
             </RequestedAtMessage>
           )}
           <RequestedAtCalendar
+            requestedAt={requestedAt}
             serviceType={serviceType}
             revenueCenter={revenueCenter}
             setRequestedAt={handleRequestedAt}

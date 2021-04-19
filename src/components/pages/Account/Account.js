@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
@@ -33,13 +33,13 @@ import AccountGroupOrders from './AccountGroupOrders'
 import AccountDeals from './AccountDeals'
 import { useTheme } from '@emotion/react'
 
-const AccountLinks = () => (
-  <p>
-    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-    <Link to="/donations">make a donation</Link>
-    {/* <Link to="/contact">get in touch</Link> */}
-  </p>
-)
+// const AccountLinks = () => (
+//   <p>
+//     <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+//     <Link to="/donations">make a donation</Link>
+//     {/* <Link to="/contact">get in touch</Link> */}
+//   </p>
+// )
 
 const Account = () => {
   const history = useHistory()
@@ -103,7 +103,7 @@ const Account = () => {
               subtitle={subtitle}
               actions={<AccountActions />}
             >
-              <AccountLinks />
+              {/* <AccountLinks /> */}
             </Greeting>
           </PageHero>
           <PageContainer

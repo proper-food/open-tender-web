@@ -37,9 +37,17 @@ const PageTitleView = styled('div')`
   }
 `
 
-const PageTitle = ({ title, subtitle, children, style = null }) => {
+const PageTitlePreface = styled('div')`
+  margin: -3rem 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: -2rem 0 2rem;
+  }
+`
+
+const PageTitle = ({ title, subtitle, preface, children, style = null }) => {
   return (
     <PageTitleView style={style}>
+      {preface && <PageTitlePreface>{preface}</PageTitlePreface>}
       {title && <h1>{title}</h1>}
       {subtitle && <p>{subtitle}</p>}
       {children}
@@ -51,6 +59,7 @@ PageTitle.displayName = 'PageTitle'
 PageTitle.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
+  preface: propTypes.element,
   style: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),

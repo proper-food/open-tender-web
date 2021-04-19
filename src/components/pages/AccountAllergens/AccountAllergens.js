@@ -17,6 +17,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -86,21 +87,24 @@ const AccountAllergens = () => {
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...account.allergens} />
+            <PageTitle {...account.allergens} preface={<AccountBack />} />
             <PageContent>
               {brandAllergens.entities.length ? (
-                <FormWrapper>
-                  <AllergenFormView>
-                    <AllergenForm
-                      allergens={brandAllergens.entities}
-                      selectedAllergens={customerAllergens.entities}
-                      isLoading={isLoading}
-                      error={error}
-                      setAllergens={setAllergens}
-                      updateAllergens={updateAllergens}
-                    />
-                  </AllergenFormView>
-                </FormWrapper>
+                <>
+                  <FormWrapper>
+                    <AllergenFormView>
+                      <AllergenForm
+                        allergens={brandAllergens.entities}
+                        selectedAllergens={customerAllergens.entities}
+                        isLoading={isLoading}
+                        error={error}
+                        setAllergens={setAllergens}
+                        updateAllergens={updateAllergens}
+                      />
+                    </AllergenFormView>
+                  </FormWrapper>
+                  <AccountBack />
+                </>
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
               ) : (

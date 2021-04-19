@@ -13,6 +13,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
+  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -60,10 +61,14 @@ const AccountAddresses = () => {
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config.addresses} />
-
+            <PageTitle {...config.addresses} preface={<AccountBack />} />
             {entities.length ? (
-              <Addresses addresses={entities} isLoading={isLoading} />
+              <>
+                <Addresses addresses={entities} isLoading={isLoading} />
+                <PageContent>
+                  <AccountBack />
+                </PageContent>
+              </>
             ) : (
               <PageContent>
                 {isLoading ? (
