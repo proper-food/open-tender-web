@@ -39,10 +39,10 @@ const RevenueCentersSelectView = styled('div')`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 7.2rem 0 ${(props) => (props.showMap ? '24rem' : '0')};
+    margin: 7.2rem 0 ${(props) => (props.showMap ? '25rem' : '0')};
     padding: 1rem 0 0;
     transition: all 0.25s ease;
-    transform: translateY(${(props) => (props.showMap ? '24rem' : '0')});
+    transform: translateY(${(props) => (props.showMap ? '25rem' : '0')});
   }
 `
 

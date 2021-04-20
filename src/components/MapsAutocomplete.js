@@ -11,7 +11,7 @@ const MapsAutocompleteView = styled('div')`
   position: relative;
   z-index: 2;
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: 0 0 ${(props) => props.theme.layout.padding};
+  margin: 0.2rem 0 ${(props) => props.theme.layout.padding};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: fixed;
