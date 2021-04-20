@@ -9,6 +9,7 @@ import { BgImage, Box } from '@open-tender/components'
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
+import { selectDisplaySettings } from '../../slices'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
@@ -133,6 +134,7 @@ const RevenueCenter = ({
   style = null,
 }) => {
   const { cartGuest } = useSelector(selectGroupOrder)
+  const { storePhone = true } = useSelector(selectDisplaySettings)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -169,7 +171,7 @@ const RevenueCenter = ({
                 text={address.street}
               />
             </a>
-            {phoneUrl && (
+            {storePhone && phoneUrl && (
               <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
                 <RevenueCenterAction
                   icon={iconMap.Phone}

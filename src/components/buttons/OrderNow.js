@@ -62,13 +62,11 @@ const OrderNow = ({
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
   const cartQuantity = useSelector(selectCartQuantity)
+  const showMenu = revenueCenter && (lastOrder || isCurrentOrder)
 
   const order = () => {
-    const slug =
-      revenueCenter && (lastOrder || isCurrentOrder)
-        ? `/menu/${revenueCenter.slug}`
-        : '/order-type'
-    history.push(slug)
+    const path = showMenu ? `/menu/${revenueCenter.slug}` : '/order-type'
+    history.push(path)
   }
 
   return isBrowser ? (
