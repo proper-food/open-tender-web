@@ -14,7 +14,6 @@ export const MenuCategoryView = styled('div')`
 `
 
 export const MenuCategoryHeader = styled('div')`
-  // text-align: center;
   margin: 0 0 1rem;
 
   h2,

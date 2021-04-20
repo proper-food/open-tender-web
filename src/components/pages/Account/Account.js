@@ -85,6 +85,7 @@ const Account = () => {
             ) : (
               <>
                 <AccountScan />
+                <OrderNow />
                 <Logout />
               </>
             )

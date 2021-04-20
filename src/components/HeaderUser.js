@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { Header } from '.'
-import { Home, NavMenu } from './buttons'
+import { Home, NavMenu, OrderNow } from './buttons'
 import { isBrowser } from 'react-device-detect'
 import AccountTabs from './pages/Account/AccountTabs'
 
@@ -21,7 +21,19 @@ const HeaderUser = ({
       bgColor={bgColor}
       borderColor={borderColor}
       left={<Home text={text} path={path} />}
-      right={isBrowser ? <AccountTabs /> : <NavMenu />}
+      right={
+        isBrowser ? (
+          <>
+            <AccountTabs />
+            <OrderNow />
+          </>
+        ) : (
+          <>
+            <OrderNow />
+            <NavMenu />
+          </>
+        )
+      }
     />
   )
 }
