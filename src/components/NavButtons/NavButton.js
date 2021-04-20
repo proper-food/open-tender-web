@@ -17,10 +17,7 @@ const NavButtonView = styled('button')`
   transition: ${(props) => props.theme.links.transition};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
-
   font-size: ${(props) => props.theme.fonts.sizes.big};
-  // font-family: ${(props) => props.theme.buttons.sizes.default.bgColor};
-
   border-style: solid;
   border-width: ${(props) => props.theme.border.width};
   border-color: ${(props) => props.theme.border.color};
@@ -38,15 +35,11 @@ const NavButtonView = styled('button')`
     border-width: ${(props) => props.theme.border.width};
     border-color: ${(props) => props.theme.border.color};
     border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) =>
-      props.theme.buttons.colors.secondary.bgColor};
+    background-color: ${(props) => props.theme.bgColors.tertiary};
   }
 
   &:last-of-type {
     margin-bottom: 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      border-bottom: 0;
-    }
   }
 `
 

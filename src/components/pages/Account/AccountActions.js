@@ -19,13 +19,13 @@ import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
-import { ButtonText, Loading, PageButtons } from '../..'
+import { Loading, PageButtons } from '../..'
 
 const Continue = ({ size, icon, current, startNew }) => {
   return (
     <>
       <ButtonStyled icon={icon} onClick={current} size={size}>
-        <ButtonText>Continue Current Order</ButtonText>
+        Continue Order
       </ButtonStyled>
       <ButtonStyled
         icon={iconMap.RefreshCw}
@@ -33,7 +33,7 @@ const Continue = ({ size, icon, current, startNew }) => {
         size={size}
         color="secondary"
       >
-        <ButtonText>Start a New Order</ButtonText>
+        New Order
       </ButtonStyled>
     </>
   )
@@ -43,7 +43,8 @@ const Reorder = ({ size, icon, orderTypeName, reorder, switchType }) => {
   return (
     <>
       <ButtonStyled icon={icon} onClick={reorder} size={size}>
-        <ButtonText>Order {orderTypeName} Again</ButtonText>
+        Order {orderTypeName}
+        {isBrowser && ' Again'}
       </ButtonStyled>
       <ButtonStyled
         icon={iconMap.RefreshCw}
@@ -51,7 +52,7 @@ const Reorder = ({ size, icon, orderTypeName, reorder, switchType }) => {
         size={size}
         color="secondary"
       >
-        <ButtonText>Switch Order Type</ButtonText>
+        Change Order Type
       </ButtonStyled>
     </>
   )
@@ -149,7 +150,7 @@ const AccountActions = () => {
           onClick={startNewOrder}
           size={buttonSize}
         >
-          <ButtonText>Start a New Order</ButtonText>
+          Start a New Order
         </ButtonStyled>
       )}
     </PageButtons>

@@ -7,7 +7,7 @@ import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 import { openModal } from '../../../slices'
-import { ButtonText, PageButtons } from '../..'
+import { PageButtons } from '../..'
 
 const GuestActions = () => {
   const history = useHistory()
@@ -29,9 +29,8 @@ const GuestActions = () => {
         icon={iconMap.ShoppingBag}
         onClick={startNewOrder}
         size={buttonSize}
-        // color="cart"
       >
-        <ButtonText>Start New Order</ButtonText>
+        Start New Order
       </ButtonStyled>
       <ButtonStyled
         icon={iconMap.User}
@@ -39,7 +38,7 @@ const GuestActions = () => {
         size={buttonSize}
         color="secondary"
       >
-        <ButtonText>Log In / Sign Up</ButtonText>
+        Log In / Sign Up
       </ButtonStyled>
     </PageButtons>
   )

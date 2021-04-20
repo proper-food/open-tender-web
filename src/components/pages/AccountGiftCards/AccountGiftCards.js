@@ -64,18 +64,20 @@ const AccountGiftCards = () => {
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config.giftCards} preface={<AccountBack />}>
               <PageTitleButtons>
-                <ButtonStyled
-                  onClick={() => dispatch(openModal({ type: 'giftCard' }))}
-                >
-                  Buy a New Gift Card
-                </ButtonStyled>
                 <ButtonStyled onClick={() => history.push('/gift-cards')}>
                   Buy Gift Cards For Others
+                </ButtonStyled>
+                <ButtonStyled
+                  onClick={() => dispatch(openModal({ type: 'giftCard' }))}
+                  color="secondary"
+                >
+                  Buy a New Gift Card
                 </ButtonStyled>
                 <ButtonStyled
                   onClick={() =>
                     dispatch(openModal({ type: 'giftCardAssign' }))
                   }
+                  color="secondary"
                 >
                   Add Gift Card To Account
                 </ButtonStyled>
