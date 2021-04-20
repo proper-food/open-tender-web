@@ -39,7 +39,7 @@ const CheckoutTotalContainer = styled('div')`
 `
 
 const CheckoutTotalLabel = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  // font-size: ${(props) => props.theme.fonts.sizes.small};
   color: ${(props) => props.theme.colors.light};
 `
 

@@ -32,7 +32,8 @@ const Cart = () => {
   const cart = useSelector(selectCart)
   const menuSlug = useSelector(selectMenuSlug)
   const displaySettings = useSelector(selectDisplaySettings)
-  const { builderType } = useSelector(selectDisplaySettings)
+  const { builderType } = displaySettings
+  const cartDisplaySettings = { ...displaySettings, modifierImage: true }
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
@@ -63,7 +64,7 @@ const Cart = () => {
               showModifiers={true}
               editItem={() => editItem(item)}
               removeItem={() => removeItem(item)}
-              displaySettings={displaySettings}
+              displaySettings={cartDisplaySettings}
             >
               <BuilderQuantity
                 item={item}

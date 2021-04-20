@@ -75,14 +75,10 @@ const ThanxRewardView = styled(Box)`
   height: 100%;
   min-height: 6rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
-`
-
-const ThanxRewardTitle = styled('p')`
-  // color: ${(props) => props.theme.colors.primary};
-  // font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
 const ThanxRewardDescription = styled('p')`
@@ -94,9 +90,9 @@ const ThanxReward = ({ reward }) => {
   const { name, description } = reward
   return (
     <ThanxRewardView>
-      <ThanxRewardTitle>
+      <p>
         <Heading>{name}</Heading>
-      </ThanxRewardTitle>
+      </p>
       {description && (
         <ThanxRewardDescription>{description}</ThanxRewardDescription>
       )}
