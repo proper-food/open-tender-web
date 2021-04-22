@@ -28,6 +28,7 @@ import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { Plus } from 'react-feather'
+import { isBrowser } from 'react-device-detect'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -72,6 +73,7 @@ export const MenuItemOverlay = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
+  padding: 0 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +88,7 @@ export const MenuItemOverlay = styled('div')`
 const MenuItemAdd = styled('button')`
   position: absolute;
   z-index: 3;
-  top: -1.3rem;
+  bottom: -1.3rem;
   right: -1.2rem;
   display: flex;
   justify-content: center;
@@ -101,8 +103,8 @@ const MenuItemAdd = styled('button')`
   background-color: ${(props) => props.theme.colors.primary};
   border-color: ${(props) => props.theme.colors.light};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -0.9rem;
-    right: -0.8rem;
+    bottom: -0.7rem;
+    right: -0.7rem;
     width: 2.2rem;
     height: 2.2rem;
     padding: 0.2rem 0.2rem;
@@ -124,7 +126,7 @@ const MenuItemCount = styled('div')`
   position: absolute;
   z-index: 3;
   top: -1.3rem;
-  left: -1.2rem;
+  right: -1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,10 +142,10 @@ const MenuItemCount = styled('div')`
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -0.9rem;
-    left: -0.8rem;
-    min-width: 2.1rem;
-    height: 2.1rem;
+    top: -0.7rem;
+    right: -0.7rem;
+    min-width: 2.2rem;
+    height: 2.2rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -248,6 +250,8 @@ const MenuItem = ({ item }) => {
     tags: showTags,
     allergens: showAllergens,
     builderType,
+    quickAdd = true,
+    quickAddMobile = true,
   } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
@@ -273,6 +277,8 @@ const MenuItem = ({ item }) => {
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
+  const hasQuickAdd = isBrowser ? quickAdd : quickAddMobile
+  const showQuickAdd = hasQuickAdd && !isIncomplete && !isSoldOut
 
   const view = (evt) => {
     evt.preventDefault()
@@ -313,8 +319,8 @@ const MenuItem = ({ item }) => {
   return (
     <MenuItemView>
       <MenuItemContainer>
-        {!isIncomplete && (
-          <MenuItemAdd onClick={add} disabled={isIncomplete}>
+        {showQuickAdd && (
+          <MenuItemAdd onClick={add} disabled={isIncomplete} title="Quick Add">
             <Plus size={16} />
           </MenuItemAdd>
         )}
