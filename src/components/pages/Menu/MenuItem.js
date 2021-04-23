@@ -139,14 +139,19 @@ const MenuItemCount = styled('div')`
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors.error};
   border-color: ${(props) => props.theme.colors.light};
-  font-weight: ${(props) => props.theme.boldWeight};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     top: -0.7rem;
     right: -0.7rem;
     min-width: 2.2rem;
     height: 2.2rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  span {
+    display: block;
+    line-height: 0;
+    font-weight: ${(props) => props.theme.boldWeight};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 
@@ -324,7 +329,11 @@ const MenuItem = ({ item }) => {
             <Plus size={16} />
           </MenuItemAdd>
         )}
-        {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
+        {cartCount > 0 && (
+          <MenuItemCount>
+            <span>{cartCount}</span>
+          </MenuItemCount>
+        )}
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
         ) : null}
