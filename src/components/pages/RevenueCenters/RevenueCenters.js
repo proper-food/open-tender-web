@@ -87,13 +87,15 @@ const RevenueCenters = () => {
         setActiveMarker(revenue_center_id)
         setCenter({ lat: address.lat, lng: address.lng })
         const element = document.getElementById(slug)
-        const position = element.offsetTop + offset
-        scroll.scrollTo(position, {
-          container: windowRef.current,
-          duration: 500,
-          smooth: true,
-          offset: 0,
-        })
+        if (element) {
+          const position = element.offsetTop + offset
+          scroll.scrollTo(position, {
+            container: windowRef.current,
+            duration: 500,
+            smooth: true,
+            offset: 0,
+          })
+        }
       } else {
         // windowRef.current.scrollTop = 0
         setActiveMarker(null)
