@@ -188,7 +188,10 @@ const RevenueCentersSelect = () => {
             {showRevenueCenters ? (
               <RevenueCentersSelectList>
                 {displayedRevenueCenters.map((revenueCenter) => (
-                  <li key={revenueCenter.revenue_center_id}>
+                  <li
+                    id={revenueCenter.slug}
+                    key={revenueCenter.revenue_center_id}
+                  >
                     <RevenueCenter
                       revenueCenter={revenueCenter}
                       showImage={!isMobileOnly}

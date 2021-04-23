@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
+import { isBrowser } from 'react-device-detect'
 
 // for testing
 // const baseUrl = 'http://httpstat.us'
@@ -120,5 +121,12 @@ export const selectOptIns = (state) => {
 }
 export const selectFulfillment = (state) => state.config.brand.fulfillment
 export const selectRecaptcha = (state) => state.config.settings.recaptcha
+
+export const selectHeaderHeight = (state) => {
+  if (!state.config.theme) return 0
+  const { navHeight, navHeightMobile } = state.config.theme.layout
+  const height = isBrowser ? navHeight : navHeightMobile
+  return parseInt(height.replace('rem', '')) * 10
+}
 
 export default configSlice.reducer
