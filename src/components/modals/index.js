@@ -15,6 +15,7 @@ import Login from './Login'
 import MenuItem from './MenuItem'
 import OrderRating from './OrderRating'
 import OrderType from './OrderType'
+import Points from './Points'
 import QRCode from './QRCode'
 import RequestedAt from './RequestedAt'
 import Reward from './Reward'
@@ -39,6 +40,7 @@ export {
   MenuItem,
   OrderRating,
   OrderType,
+  Points,
   QRCode,
   RequestedAt,
   Reward,

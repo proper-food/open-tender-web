@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { loyaltyType, formatDollars } from '@open-tender/js'
 import { Box, Heading, Text } from '@open-tender/components'
-import { ProgressBar, ProgressCircle } from '.'
+import { PointsBalance, ProgressBar, ProgressCircle } from '.'
 
 const LoyaltyProgramView = styled(Box)`
   margin: 0 auto;
@@ -74,7 +74,6 @@ const LoyaltyProgramStatusHeader = styled('div')`
 
 const LoyaltyProgramProgress = styled('div')`
   flex: 0 0 16rem;
-  // width: 16rem;
 
   & > div {
     margin: 1rem auto;
@@ -92,6 +91,13 @@ const LoyaltyProgramProgress = styled('div')`
     line-height: 1.4;
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
+`
+
+const LoyaltyProgramPoints = styled('div')`
+  flex: 0 0 16rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 // const tiers = [
@@ -151,6 +157,7 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
     name,
     description,
     loyalty_type,
+    points,
     spend,
     redemption,
     credit,
@@ -181,14 +188,14 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
               </Text>
               <p>Apply to your next order when you checkout.</p>
             </LoyaltyProgramCredit>
-          ) : (
+          ) : !points ? (
             <LoyaltyProgramCredit>
               <Text color="primary" bold={true} as="p">
                 $0.00 credit balance
               </Text>
               <p>Make progress towards your next credit with every order.</p>
             </LoyaltyProgramCredit>
-          )}
+          ) : null}
         </div>
         {currentStatus && (
           <LoyaltyProgramStatus>
@@ -209,7 +216,7 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
           </LoyaltyProgramStatus>
         )}
       </LoyaltyProgramSummary>
-      {!!currentProgress && (
+      {!!currentProgress ? (
         <LoyaltyProgramProgress>
           <Heading as="p">Current Progress</Heading>
           <ProgressCircle progress={currentProgress} isLoading={isLoading} />
@@ -223,7 +230,11 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
             <p>Make your first purchase to start earning rewards!</p>
           )}
         </LoyaltyProgramProgress>
-      )}
+      ) : points ? (
+        <LoyaltyProgramPoints>
+          <PointsBalance {...points} />
+        </LoyaltyProgramPoints>
+      ) : null}
     </LoyaltyProgramView>
   )
 }

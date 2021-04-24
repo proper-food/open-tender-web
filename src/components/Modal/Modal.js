@@ -25,6 +25,7 @@ import {
   MenuItem,
   OrderRating,
   OrderType,
+  Points,
   QRCode,
   RequestedAt,
   Reward,
@@ -68,6 +69,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <OrderType {...args} />
     case 'qrCode':
       return <QRCode {...args} />
+    case 'points':
+      return <Points {...args} />
     case 'rating':
       return <OrderRating {...args} />
     case 'requestedAt':
