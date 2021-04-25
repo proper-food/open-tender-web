@@ -23,7 +23,7 @@ import {
   toggleSidebarModal,
 } from '../../../slices'
 import iconMap from '../../iconMap'
-import { Tag } from '../..'
+import { Points, Tag } from '../..'
 import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
@@ -248,7 +248,9 @@ const MenuItemTags = styled('span')`
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
+  const { soldOut, menuConfig, allergenAlerts, pointsProgram } = useContext(
+    MenuContext
+  )
   const {
     menuImages: showImage,
     calories: showCals,
@@ -267,6 +269,7 @@ const MenuItem = ({ item }) => {
     item.small_image_url || item.app_image_url || item.big_image_url
   const imageUrl = showImage ? smallImg : null
   const price = makeDisplayPrice(item)
+  const points = pointsProgram && item.points
   const cals =
     showCals && item.nutritional_info
       ? parseInt(item.nutritional_info.calories) || null
@@ -357,6 +360,7 @@ const MenuItem = ({ item }) => {
             <MenuItemDetails>
               {price && <MenuItemPrice>{price}</MenuItemPrice>}
               {cals && <MenuItemCals>{cals} cals</MenuItemCals>}
+              {points && <Points points={points} icon={iconMap.Star} />}
               {allergens.length > 0 && (
                 <MenuItemAllergens>{allergens.join(', ')}</MenuItemAllergens>
               )}

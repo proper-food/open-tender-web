@@ -18,6 +18,7 @@ import {
   Home,
   Coffee,
   Smartphone,
+  Star,
 } from 'react-feather'
 import {
   selectCustomer,
@@ -103,6 +104,7 @@ const Checkout = () => {
     house_account: <Home size={null} />,
     apple_pay: <Smartphone size={null} />,
     google_pay: <Smartphone size={null} />,
+    points: <Star size={null} />,
   }
   const { windowRef } = useContext(AppContext)
   const deviceTypeName = makeDeviceType(deviceType)

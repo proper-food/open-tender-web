@@ -26,6 +26,7 @@ import {
   fetchDeals,
   fetchAnnouncementPage,
   selectAnnouncementsPage,
+  selectCustomerPointsProgram,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 
@@ -57,6 +58,7 @@ const MenuPage = () => {
   const announcements = useSelector(selectAnnouncementsPage('MENU'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
+  const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
@@ -146,6 +148,7 @@ const MenuPage = () => {
               error,
               deals: validDeals,
               announcements,
+              pointsProgram,
             }}
           >
             {isMobile && (
