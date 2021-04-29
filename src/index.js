@@ -17,6 +17,7 @@ Sentry.init({
     'TypeError: Failed to fetch',
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: Cancelled',
+    'ReferenceError: fbq is not defined',
   ],
 })
 
