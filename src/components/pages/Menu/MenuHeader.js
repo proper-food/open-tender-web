@@ -3,12 +3,17 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-import { selectGroupOrder, selectOrder } from '@open-tender/redux'
+import {
+  selectGroupOrder,
+  selectOrder,
+  selectCustomer,
+} from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
 
 import { Header } from '../..'
 import {
+  Account,
   Allergens,
   CancelEdit,
   GroupGuest,
@@ -103,6 +108,7 @@ const MenuHeader = ({
   showMenu,
   setShowMenu,
 }) => {
+  const { auth } = useSelector(selectCustomer)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
   const left = cartGuest ? <LeaveGroup /> : <Home />
@@ -133,7 +139,7 @@ const MenuHeader = ({
                 </>
               ) : (
                 <>
-                  <Points />
+                  {auth ? <Points /> : <Account />}
                   <RevenueCenter />
                   <ServiceType />
                   <RequestedAt />

@@ -71,12 +71,13 @@ const BackgroundContent = ({
   text_color = 'ffffff',
   vertical = 'BOTTOM',
   horizontal = 'CENTER',
+  hide_text = false,
 }) => {
   if (!title && !subtitle) return null
   const justifyContent = makeAlignment(horizontal)
   const alignItems = makeAlignment(vertical)
 
-  return (
+  return hide_text ? null : (
     <BackgroundContentView
       justifyContent={justifyContent}
       alignItems={alignItems}
