@@ -89,7 +89,7 @@ const CateringCalendar = styled('div')`
   flex-grow: 0;
   flex-shrink: 0;
   width: 37rem;
-  min-height: 50rem;
+  min-height: 43rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
