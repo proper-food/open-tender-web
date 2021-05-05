@@ -87,11 +87,16 @@ const CateringMessage = styled('div')`
 
 const CateringCalendar = styled('div')`
   flex: 0 0 37rem;
-  min-height: 50rem;
+  // min-height: 50rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
+`
+
+const CateringCalendarView = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
 
 const CateringError = styled('div')`
@@ -105,13 +110,15 @@ const CateringError = styled('div')`
 `
 
 const RequestedAtMessage = styled('p')`
+  width: 100%;
   margin: 2rem 0;
   text-align: center;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   line-height: ${(props) => props.theme.lineHeight};
 
-  span {
-    font-weight: 600;
+  span,
+  button {
+    font-weight: ${(props) => props.theme.boldWeight};
   }
 `
 
@@ -305,6 +312,10 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
+  const resetTime = () => {
+    dispatch(setRequestedAt(null))
+  }
+
   const chooseServiceType = (serviceType) => {
     dispatch(setServiceType(serviceType))
     history.push('/locations')
@@ -366,47 +377,57 @@ const CateringPage = () => {
                   <Loading type="Clip" size={50} />
                 ) : settings ? (
                   <>
-                    <RequestedAtPicker
-                      date={date}
-                      setDate={(date) => setDate(date)}
-                      selectTime={selectTime}
-                      minDate={settings.minDate}
-                      maxDate={null}
-                      excludeDates={settings.excludeDates}
-                      filterDate={settings.isClosed}
-                      interval={settings.interval || 15}
-                      excludeTimes={[]}
-                      minTime={startMin}
-                      maxTime={endMin}
-                    />
                     {requestedTime ? (
-                      <RequestedAtMessage>
-                        Your current order time is <span>{requestedTime}</span>.
-                        Change this above or choose an order type to proceed.
-                      </RequestedAtMessage>
+                      <CateringCalendarView key="one">
+                        <RequestedAtMessage>
+                          Your selected order time is{' '}
+                          <span>{requestedTime}</span>. Choose an order type to
+                          proceed.
+                        </RequestedAtMessage>
+                        <CateringButtons>
+                          <ButtonStyled
+                            icon={iconMap.ShoppingBag}
+                            onClick={() => chooseServiceType('PICKUP')}
+                            disabled={!requestedTime}
+                          >
+                            Order Pickup
+                          </ButtonStyled>
+                          <ButtonStyled
+                            icon={iconMap.Truck}
+                            onClick={() => chooseServiceType('DELIVERY')}
+                            disabled={!requestedTime}
+                          >
+                            Order Delivery
+                          </ButtonStyled>
+                        </CateringButtons>
+                        <RequestedAtMessage>
+                          <ButtonLink onClick={resetTime}>
+                            Click here to choose a different time.
+                          </ButtonLink>
+                        </RequestedAtMessage>
+                      </CateringCalendarView>
                     ) : (
-                      <RequestedAtMessage>
-                        <Text color="error">
-                          Please choose a date & time above.
-                        </Text>
-                      </RequestedAtMessage>
+                      <CateringCalendarView key="two">
+                        <RequestedAtMessage>
+                          <Text>
+                            Please choose a date & time to get started.
+                          </Text>
+                        </RequestedAtMessage>
+                        <RequestedAtPicker
+                          date={date}
+                          setDate={(date) => setDate(date)}
+                          selectTime={selectTime}
+                          minDate={settings.minDate}
+                          maxDate={null}
+                          excludeDates={settings.excludeDates}
+                          filterDate={settings.isClosed}
+                          interval={settings.interval || 15}
+                          excludeTimes={[]}
+                          minTime={startMin}
+                          maxTime={endMin}
+                        />
+                      </CateringCalendarView>
                     )}
-                    <CateringButtons>
-                      <ButtonStyled
-                        icon={iconMap.ShoppingBag}
-                        onClick={() => chooseServiceType('PICKUP')}
-                        disabled={!requestedTime}
-                      >
-                        Order Pickup
-                      </ButtonStyled>
-                      <ButtonStyled
-                        icon={iconMap.Truck}
-                        onClick={() => chooseServiceType('DELIVERY')}
-                        disabled={!requestedTime}
-                      >
-                        Order Delivery
-                      </ButtonStyled>
-                    </CateringButtons>
                   </>
                 ) : (
                   <CateringError>
