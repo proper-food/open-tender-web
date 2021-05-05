@@ -86,15 +86,30 @@ const CateringMessage = styled('div')`
 `
 
 const CateringCalendar = styled('div')`
-  flex: 0 0 37rem;
-  // min-height: 50rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 37rem;
+  min-height: 50rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 100%;
+    min-height: 0;
+  }
 `
 
-const CateringCalendarView = styled('div')`
+const CateringCalendarSelected = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: 5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: 0;
+  }
+`
+
+const CateringCalendarDatepicker = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
@@ -124,6 +139,9 @@ const RequestedAtMessage = styled('p')`
 
 const CateringButtons = styled('div')`
   // margin: 3rem 0 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 
   button {
     margin: 0 1rem 0 0;
@@ -378,7 +396,7 @@ const CateringPage = () => {
                 ) : settings ? (
                   <>
                     {requestedTime ? (
-                      <CateringCalendarView key="one">
+                      <CateringCalendarSelected>
                         <RequestedAtMessage>
                           Your selected order time is{' '}
                           <span>{requestedTime}</span>. Choose an order type to
@@ -405,9 +423,9 @@ const CateringPage = () => {
                             Click here to choose a different time.
                           </ButtonLink>
                         </RequestedAtMessage>
-                      </CateringCalendarView>
+                      </CateringCalendarSelected>
                     ) : (
-                      <CateringCalendarView key="two">
+                      <CateringCalendarDatepicker>
                         <RequestedAtMessage>
                           <Text>
                             Please choose a date & time to get started.
@@ -426,7 +444,7 @@ const CateringPage = () => {
                           minTime={startMin}
                           maxTime={endMin}
                         />
-                      </CateringCalendarView>
+                      </CateringCalendarDatepicker>
                     )}
                   </>
                 ) : (
