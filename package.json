@@ -36,6 +36,7 @@
     "react-scripts": "4.0.1",
     "react-scroll": "^1.8.1",
     "react-spinners": "^0.9.0",
+    "react-swipeable": "^6.1.0",
     "react-transition-group": "^4.4.1"
   },
   "scripts": {
