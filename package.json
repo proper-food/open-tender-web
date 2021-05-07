@@ -1,11 +1,11 @@
 {
   "name": "open-tender-web",
-  "version": "2.0.17",
+  "version": "2.0.19",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@open-tender/components": "^3.2.13",
+    "@open-tender/components": "^3.2.14",
     "@open-tender/js": "^1.5.1",
     "@open-tender/redux": "^2.0.7",
     "@reduxjs/toolkit": "^1.5.0",
@@ -36,6 +36,7 @@
     "react-scripts": "4.0.1",
     "react-scroll": "^1.8.1",
     "react-spinners": "^0.9.0",
+    "react-swipeable": "^6.1.0",
     "react-transition-group": "^4.4.1"
   },
   "scripts": {
