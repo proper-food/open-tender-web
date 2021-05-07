@@ -14,7 +14,7 @@ import {
   makeDisplayPrice,
   slugify,
 } from '@open-tender/js'
-import { Box, Heading } from '@open-tender/components'
+import { Box, Heading, Points } from '@open-tender/components'
 
 import {
   selectDisplaySettings,
@@ -23,7 +23,7 @@ import {
   toggleSidebarModal,
 } from '../../../slices'
 import iconMap from '../../iconMap'
-import { Points, Tag } from '../..'
+import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
@@ -198,7 +198,7 @@ const MenuItemDetails = styled('p')`
     margin: 0.3rem 0 0;
   }
 
-  span {
+  & > span {
     display: inline-block;
     margin: 0 1.5rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

@@ -26,6 +26,7 @@ import {
   fetchDeals,
   fetchAnnouncementPage,
   selectAnnouncementsPage,
+  fetchCustomerLoyalty,
   selectCustomerPointsProgram,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
@@ -121,6 +122,12 @@ const MenuPage = () => {
       dispatch(fetchDeals())
     }
   }, [has_deals, customer_id, isLoading, dispatch, cartGuest])
+
+  useEffect(() => {
+    if (init && !topOffset && customer_id) {
+      dispatch(fetchCustomerLoyalty())
+    }
+  }, [init, topOffset, customer_id, dispatch])
 
   const changeRevenueCenter = () => {
     dispatch(resetRevenueCenter())
