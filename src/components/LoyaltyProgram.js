@@ -27,8 +27,8 @@ const LoyaltyProgramSummary = styled('div')`
   justify-content: space-between;
   padding: 0 6rem 2.5rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 2.5rem;
-    margin: 0 0 3rem;
+    padding: 0;
+    // margin: 0 0 3rem;
   }
 
   & > div:first-of-type {
@@ -73,7 +73,13 @@ const LoyaltyProgramStatusHeader = styled('div')`
 `
 
 const LoyaltyProgramProgress = styled('div')`
-  flex: 0 0 16rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 20rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    margin: 1rem 0 0;
+  }
 
   & > div {
     margin: 1rem auto;
@@ -94,10 +100,15 @@ const LoyaltyProgramProgress = styled('div')`
 `
 
 const LoyaltyProgramPoints = styled('div')`
-  flex: 0 0 16rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 20rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+  }
 `
 
 // const tiers = [
