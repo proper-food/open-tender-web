@@ -200,7 +200,7 @@ const RevenueCentersSelect = () => {
                 ))}
               </RevenueCentersSelectList>
             ) : (
-              <div style={{ margin: '3rem 0 0' }}>
+              <div style={{ margin: '3rem auto 0', textAlign: 'center' }}>
                 <ButtonStyled
                   icon={iconMap.RefreshCw}
                   onClick={handleStartOver}

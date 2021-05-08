@@ -138,16 +138,11 @@ const RequestedAtMessage = styled('p')`
 `
 
 const CateringButtons = styled('div')`
-  // margin: 3rem 0 1.5rem;
-  width: 100%;
-  margin: 0 auto;
+  margin: -1rem -0.5rem 0;
   text-align: center;
 
   button {
-    margin: 0 1rem 0 0;
-    &:last-child {
-      margin: 0;
-    }
+    margin: 1rem 0.5rem 0;
   }
 `
 

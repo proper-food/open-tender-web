@@ -1567,10 +1567,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@open-tender/components@^3.2.14":
-  version "3.2.14"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.2.14.tgz#221421be18170c368d85e49ddfb62ab5cf077727"
-  integrity sha512-0wcN2fhlK1ufbgzxHegMBxC1jrkMxZ40f0ePAi9PxRGNsQYjVjQyc7VjGsRawv7aJw5g68INegdtwi5Poz3l4g==
+"@open-tender/components@^3.2.16":
+  version "3.2.16"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.2.16.tgz#f1d215371287ad90927aa41578c2cf2b21921f59"
+  integrity sha512-OL/wrdhiAnou/g+0diy4MHbR8yVLRsS9HSPZKyc5n+tDnBJozj9gsuiiY/H8nxjXpY76O/fERrfVj3liwv2JgA==
   dependencies:
     "@google-pay/button-react" "^2.1.5"
     react-google-recaptcha "^2.1.0"
