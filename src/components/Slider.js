@@ -83,6 +83,11 @@ const SliderView = styled('div')`
   // display: flex;
 `
 
+const SliderSwipeWrapper = styled('div')`
+  display: flex;
+  height: 100%;
+`
+
 const Slide = styled('div')`
   position: absolute;
   z-index: ${(props) => props.index};
@@ -110,7 +115,7 @@ const defaultSettings = {
 
 const SliderNew = ({ settings = {}, slides }) => {
   const timer = useRef(null)
-  const slider = useRef()
+  const slider = useRef(null)
   const [pause, setPause] = useState(false)
   const [index, setIndex] = useState(0)
   const [lastIndex, setLastIndex] = useState(0)
@@ -163,7 +168,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   }, [index, count, interval, pause, autoplay])
 
   useEffect(() => {
-    if (autoplay) {
+    if (autoplay && slider.current) {
       slider.current.addEventListener('mouseover', () => {
         setPause(true)
       })
@@ -191,27 +196,29 @@ const SliderNew = ({ settings = {}, slides }) => {
   })
 
   return (
-    <SliderView ref={slider} {...handlers}>
-      {slides.map((slide, idx) => {
-        const shift = idx === index ? 0 : idx === prevIndex ? -100 : 100
-        const active =
-          idx === index ||
-          (moveLeft && idx === prevIndex) ||
-          (moveRight && idx === nextIndex)
-        return (
-          <Slide
-            key={slide.imageUrl}
-            transition={transitionSpeed}
-            index={idx}
-            shift={shift}
-            active={active}
-          >
-            <BackgroundImage {...slide}>
-              <BackgroundContent {...slide} />
-            </BackgroundImage>
-          </Slide>
-        )
-      })}
+    <SliderView ref={slider}>
+      <SliderSwipeWrapper {...handlers}>
+        {slides.map((slide, idx) => {
+          const shift = idx === index ? 0 : idx === prevIndex ? -100 : 100
+          const active =
+            idx === index ||
+            (moveLeft && idx === prevIndex) ||
+            (moveRight && idx === nextIndex)
+          return (
+            <Slide
+              key={slide.imageUrl}
+              transition={transitionSpeed}
+              index={idx}
+              shift={shift}
+              active={active}
+            >
+              <BackgroundImage {...slide}>
+                <BackgroundContent {...slide} />
+              </BackgroundImage>
+            </Slide>
+          )
+        })}
+      </SliderSwipeWrapper>
       {showArrows && (
         <>
           <Arrow
