@@ -45,16 +45,21 @@ const RewardHeader = styled('div')`
 const RewardFinePrint = styled('div')`
   & > p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    line-height: 1.2;
-    margin: 0 !important;
+    line-height: ${(props) => props.theme.lineHeight};
+    // margin: 0 !important;
   }
 `
 
 const RewardContent = styled('div')`
-  margin: 1.5rem 0 0;
+  margin: 1.5rem 0 1rem;
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+
+    button {
+      margin: 1rem 0 0;
+    }
   }
 `
 

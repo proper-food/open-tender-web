@@ -17,7 +17,7 @@ const PointsBalancePoints = styled('div')`
     display: block;
     font-size: ${(props) => props.theme.fonts.sizes.h1};
     margin: 0;
-    line-height: 1;
+    // line-height: 1;
   }
 
   span {
@@ -25,6 +25,8 @@ const PointsBalancePoints = styled('div')`
     width: 3rem;
     height: 3rem;
     margin: 0 0 0 0.5rem;
+    line-height: 0;
+    color: ${(props) => props.theme.colors.primary};
   }
 `
 
