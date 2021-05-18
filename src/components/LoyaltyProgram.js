@@ -40,7 +40,7 @@ const LoyaltyProgramHeader = styled('div')`
   margin: 0 0 1.5rem;
 
   h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h5};
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
   }
 
   p {

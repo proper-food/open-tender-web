@@ -70,11 +70,13 @@ const RewardNote = styled('div')`
 const RewardTitle = styled('p')`
   color: ${(props) => props.theme.colors.primary};
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: 1.2;
 `
 
 const RewardDescription = styled('p')`
   margin: 0.3rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  line-height: 1.2;
 `
 
 const RewardExpiration = styled('div')`

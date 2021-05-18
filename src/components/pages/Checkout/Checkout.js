@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import { isBrowser, deviceType } from 'react-device-detect'
 import {
   User,
@@ -66,6 +67,15 @@ const makeDeviceType = (deviceType) => {
       return 'DESKTOP'
   }
 }
+
+const CheckoutContainer = styled(PageContainer)`
+  padding: ${(props) => props.theme.layout.navHeight}
+    ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.navHeightMobile}
+      ${(props) => props.theme.layout.paddingMobile} 0;
+  }
+`
 
 const Checkout = () => {
   const formRef = useRef()
@@ -162,12 +172,12 @@ const Checkout = () => {
       <Content>
         <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
         <CheckoutTotal checkout={checkout} />
-        <Main style={{ padding: '12rem 0 0' }}>
-          <PageContainer>
+        <Main>
+          <CheckoutContainer>
             <PageTitle {...config} style={{ marginBottom: '0' }}>
               <CheckoutCancelEdit />
             </PageTitle>
-          </PageContainer>
+          </CheckoutContainer>
           {!check && (
             <PageContent style={{ marginTop: '0' }}>
               {formError ? (

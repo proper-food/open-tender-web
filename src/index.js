@@ -17,7 +17,10 @@ Sentry.init({
     'TypeError: Failed to fetch',
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: Cancelled',
+    'TypeError: cancelled',
+    'TypeError: Illegal invocation',
     'ReferenceError: fbq is not defined',
+    'Error: Extension context invalidated',
   ],
 })
 

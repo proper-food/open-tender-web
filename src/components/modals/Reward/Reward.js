@@ -11,7 +11,7 @@ import {
   Message,
 } from '@open-tender/components'
 
-import { closeModal, openModal, selectAPI } from '../../../slices'
+import { closeModal, openModal, selectAPI, selectBrand } from '../../../slices'
 import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
 
@@ -25,6 +25,8 @@ const RewardView = styled('div')`
 `
 
 const RewardHeader = styled('div')`
+  margin: 0 0 1rem;
+
   & > p {
     margin: 0;
   }
@@ -38,7 +40,7 @@ const RewardHeader = styled('div')`
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
-    margin: 0.5rem 0;
+    margin: 1rem 0 0;
   }
 `
 
@@ -83,8 +85,9 @@ const Reward = ({ reward }) => {
   const { title, description, imageUrl, expiration, service_type } = reward
   const api = useSelector(selectAPI)
   const { profile } = useSelector(selectCustomer)
+  const { has_pos } = useSelector(selectBrand)
   const { customer_id, is_verified } = profile || {}
-  const hasQRCode = !service_type || service_type === 'WALKIN'
+  const hasQRCode = has_pos && (!service_type || service_type === 'WALKIN')
 
   const scan = async () => {
     setFetching(true)

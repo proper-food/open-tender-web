@@ -167,7 +167,7 @@ const MenuItemAlert = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
-  padding: 1.2rem 1.4rem 0.9rem;
+  padding: 1.5rem 1.5rem 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0.9rem 0.9rem 0.6rem;
   }
@@ -192,7 +192,7 @@ const MenuItemDescription = styled('p')`
 `
 
 const MenuItemDetails = styled('p')`
-  margin: 0.5rem 0 0;
+  margin: 1rem 0 0;
   line-height: ${(props) => props.theme.lineHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0.3rem 0 0;
