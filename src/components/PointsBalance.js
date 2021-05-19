@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
+import { formatQuantity } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
 
 import iconMap from './iconMap'
@@ -34,7 +35,7 @@ const PointsBalance = ({ name, points }) => {
   return (
     <PointsBalanceView>
       <PointsBalancePoints>
-        <Heading as="p">{points}</Heading>
+        <Heading as="p">{formatQuantity(points)}</Heading>
         <span>{iconMap.Star}</span>
       </PointsBalancePoints>
       <p>{name} Balance</p>

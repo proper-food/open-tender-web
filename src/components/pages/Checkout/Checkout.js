@@ -187,7 +187,7 @@ const Checkout = () => {
               )}
             </PageContent>
           )}
-          <div ref={formRef} style={{ margin: '0 0 4rem' }}>
+          <div ref={formRef}>
             <CheckoutForm
               dispatch={dispatch}
               history={history}

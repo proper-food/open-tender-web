@@ -2,6 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectCustomerPoints } from '@open-tender/redux'
+import { formatQuantity } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../slices'
@@ -42,7 +43,7 @@ const Points = ({ color = 'cart', size = 'small', style = defaultStyle }) => {
       size={size}
       style={style}
     >
-      <PointsTitle>{points}</PointsTitle>
+      <PointsTitle>{formatQuantity(points)}</PointsTitle>
       <PointsIcon>{iconMap.Star}</PointsIcon>
     </ButtonStyled>
   ) : null

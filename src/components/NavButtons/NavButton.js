@@ -15,6 +15,7 @@ const NavButtonView = styled('button')`
   margin: 0 0 1rem;
   font-size: ${(props) => props.theme.fonts.sizes.big};
   font-family: ${(props) => props.theme.fonts.headings.family};
+  font-weight: ${(props) => props.theme.fonts.headings.weight};
   color: ${(props) => props.theme.fonts.headings.color};
   transition: ${(props) => props.theme.links.transition};
   opacity: 0;
