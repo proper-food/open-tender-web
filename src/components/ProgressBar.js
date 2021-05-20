@@ -38,20 +38,23 @@ const ProgressAmount = styled('div')`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const ProgressBar = ({ progress, points = [] }) => {
+const ProgressBar = ({ progress, tiers = [] }) => {
   const style = { width: `${progress || 0}%` }
   return (
     <ProgressView>
       <div style={style}>
         <ProgressBarFill />
       </div>
-      {points.map((point) => (
+      {tiers.map((point) => (
         <ProgressPoint
           key={point.percentage}
-          style={{ left: `${point.percentage.toFixed(5)}%` }}
+          style={{
+            left: `${point.percentage.toFixed(5)}%`,
+            backgroundColor: point.color,
+          }}
         />
       ))}
-      {points.map((point) => (
+      {tiers.map((point) => (
         <ProgressAmount
           key={point.percentage}
           style={{ left: `${point.percentage.toFixed(5)}%` }}

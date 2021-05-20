@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { loyaltyType, formatDollars } from '@open-tender/js'
+import { loyaltyType, formatDollars, formatQuantity } from '@open-tender/js'
 import { Box, Heading, Text } from '@open-tender/components'
 import { PointsBalance, ProgressBar, ProgressCircle } from '.'
 
@@ -138,18 +138,22 @@ const LoyaltyProgramPoints = styled('div')`
 //   progress: 1500,
 // }
 
-const makeStatus = (tiers, status, isDollars = true) => {
+const makeStatus = (tiers, status, points) => {
   if (!tiers) return null
   const highest = tiers[tiers.length - 1].threshold
   const total = highest * 1.2
-  const progress = (status.progress / total) * 100
-  const points = tiers.map((i) => ({
+  const progress = Math.min((status.progress / total) * 100, 100)
+  const progressTiers = tiers.map((i) => ({
     percentage: (i.threshold / total) * 100,
-    value: isDollars
+    color: `#${i.hex_code}`,
+    value: !points
       ? `${formatDollars(i.threshold, '', 0)}`
-      : `${parseInt(i.threshold)}`,
+      : `${formatQuantity(i.threshold)}`,
   }))
-  return { progress, points }
+  const progressMsg = !points
+    ? `${formatDollars(status.progress, '', 0)} spent`
+    : `${formatQuantity(status.progress)} ${points.name.toLowerCase()} earned`
+  return { progress, progressMsg, tiers: progressTiers }
 }
 
 const makeProgress = (loyalty_type, spend, redemption) => {
@@ -182,7 +186,8 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
     progress || makeProgress(loyalty_type, spend, redemption)
   const currentCredit = credit ? parseFloat(credit.current) : 0
   const hasCredit = currentCredit > 0
-  const currentStatus = tiers && status ? makeStatus(tiers, status) : null
+  const currentStatus =
+    tiers && status ? makeStatus(tiers, status, points) : null
 
   return (
     <LoyaltyProgramView>
@@ -211,16 +216,23 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
         {currentStatus && (
           <LoyaltyProgramStatus>
             <LoyaltyProgramStatusHeader>
+              {status.tier ? (
+                <p>
+                  You're currently at{' '}
+                  <Text
+                    color="primary"
+                    bold={true}
+                    style={{ color: `#${status.tier.hex_code}` }}
+                  >
+                    {status.tier.name}
+                  </Text>{' '}
+                  status
+                </p>
+              ) : currentStatus.progress ? (
+                <p>You're making progress!</p>
+              ) : null}
               <p>
-                You're currently at{' '}
-                <Text color="primary" bold={true}>
-                  {status.name}
-                </Text>{' '}
-                status
-              </p>
-              <p>
-                {formatDollars(status.progress, '', 0)} spent in the last 365
-                days
+                {currentStatus.progressMsg} in the last {status.days} days
               </p>
             </LoyaltyProgramStatusHeader>
             <ProgressBar {...currentStatus} />
