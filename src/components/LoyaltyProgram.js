@@ -144,6 +144,7 @@ const makeStatus = (tiers, status, points) => {
   const total = highest * 1.2
   const progress = Math.min((status.progress / total) * 100, 100)
   const progressTiers = tiers.map((i) => ({
+    ...i,
     percentage: (i.threshold / total) * 100,
     color: `#${i.hex_code}`,
     value: !points

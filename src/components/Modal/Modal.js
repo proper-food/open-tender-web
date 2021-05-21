@@ -22,6 +22,7 @@ import {
   GroupOrder,
   LevelUp,
   Login,
+  LoyaltyTier,
   MenuItem,
   OrderRating,
   OrderType,
@@ -65,6 +66,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <LevelUp windowRef={windowRef} {...args} />
     case 'login':
       return <Login {...args} />
+    case 'loyaltyTier':
+      return <LoyaltyTier {...args} />
     case 'orderType':
       return <OrderType {...args} />
     case 'qrCode':
@@ -96,6 +99,7 @@ const containerStyleMap = {
   groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
   reward: { alignItems: 'flex-start' },
+  loyaltyTier: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
