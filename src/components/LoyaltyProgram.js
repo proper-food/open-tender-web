@@ -154,9 +154,14 @@ const makeStatus = (tiers, status, points) => {
       ? `${formatDollars(i.threshold, '', 0)}`
       : `${formatQuantity(i.threshold)}`,
   }))
+  const daysMsg =
+    status.days === 7300 ? 'all-time' : `in the last ${status.days} days`
+  const progressAmt = !points
+    ? formatDollars(status.progress, '', 0)
+    : formatQuantity(status.progress)
   const progressMsg = !points
-    ? `${formatDollars(status.progress, '', 0)} spent`
-    : `${formatQuantity(status.progress)} ${points.name.toLowerCase()} earned`
+    ? `${progressAmt} spent ${daysMsg}`
+    : `${progressAmt} ${points.name.toLowerCase()} earned ${daysMsg}`
   return { progress, progressMsg, tiers: progressTiers }
 }
 
@@ -235,9 +240,7 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
               ) : currentStatus.progress ? (
                 <p>You're making progress!</p>
               ) : null}
-              <p>
-                {currentStatus.progressMsg} in the last {status.days} days
-              </p>
+              <p>{currentStatus.progressMsg}</p>
             </LoyaltyProgramStatusHeader>
             <ProgressBar {...currentStatus} />
           </LoyaltyProgramStatus>
