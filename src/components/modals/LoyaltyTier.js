@@ -2,13 +2,34 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonStyled } from '@open-tender/components'
+import { Box, ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
+import iconMap from '../iconMap'
 import { ModalContent, ModalView } from '..'
+import Tag from '../Tag'
 
-const TierDiscount = styled('p')`
-  font-weight: ${(props) => props.theme.boldWeight};
+const TierDiscount = styled(Box)`
+  position: relative;
+  padding: 1rem 1.5rem;
+  margin: 0 0 2rem;
+
+  & > p {
+    margin: 0 !important;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+
+  & > p:first-of-type {
+    font-weight: ${(props) => props.theme.boldWeight};
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+    // padding: 0 0 0.5rem;
+  }
+`
+
+const TierTagView = styled('div')`
+  position: absolute;
+  top: -1.1rem;
+  right: 1.5rem;
 `
 
 const TierDescription = styled('div')`
@@ -19,7 +40,11 @@ const TierDescription = styled('div')`
 `
 
 const LoyaltyTier = ({ tier }) => {
+  console.log(tier)
   const dispatch = useDispatch()
+  const threshold = tier.points
+    ? `${tier.value} ${tier.points.name}`
+    : tier.value
   const paragraphs = tier.description
     ? tier.description.split('\n').filter((i) => i)
     : null
@@ -32,11 +57,7 @@ const LoyaltyTier = ({ tier }) => {
             <span style={{ color: `${tier.color}` }}>{tier.name} Tier</span>
           </span>
         }
-        subtitle={
-          tier.discount ? (
-            <TierDiscount>Reward: {tier.discount.title}</TierDiscount>
-          ) : null
-        }
+        subtitle={<p>Threshold: {threshold}</p>}
         footer={
           <div>
             <ButtonStyled onClick={() => dispatch(closeModal())}>
@@ -45,13 +66,24 @@ const LoyaltyTier = ({ tier }) => {
           </div>
         }
       >
-        {paragraphs && (
-          <TierDescription>
-            {paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </TierDescription>
-        )}
+        <>
+          {tier.discount ? (
+            <TierDiscount>
+              <TierTagView>
+                <Tag icon={iconMap.Award} text="Reward" bgColor="dark" />
+              </TierTagView>
+              <p>{tier.discount.title}</p>
+              <p>{tier.discount.description}</p>
+            </TierDiscount>
+          ) : null}
+          {paragraphs && (
+            <TierDescription>
+              {paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </TierDescription>
+          )}
+        </>
       </ModalContent>
     </ModalView>
   )

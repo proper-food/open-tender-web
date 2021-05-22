@@ -66,6 +66,9 @@ const ProgressPointHover = styled('div')`
   opacity: 0;
   visiblity: hidden;
   transform: translateY(1rem);
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: none;
+  }
 
   & > span {
     display: block;
