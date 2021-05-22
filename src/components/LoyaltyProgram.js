@@ -61,6 +61,9 @@ const LoyaltyProgramCredit = styled('div')`
 const LoyaltyProgramStatus = styled('div')`
   flex-grow: 0;
   margin: 1rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 1rem 0 3.5rem;
+  }
 `
 
 const LoyaltyProgramStatusHeader = styled('div')`
