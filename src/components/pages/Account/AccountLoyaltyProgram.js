@@ -1,38 +1,36 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchCustomerRewards,
-  selectCustomerRewards,
-  selectCustomerRewardsLoading,
+  fetchCustomerLoyalty,
+  selectCustomerLoyaltyProgram,
 } from '@open-tender/redux'
 
 import { Loading, LoyaltyProgram, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
 
-const AccountRewards = () => {
+const AccountLoyaltyProgram = () => {
   const dispatch = useDispatch()
   const { account } = useSelector(selectConfig)
-  const loyalty = useSelector(selectCustomerRewards)
-  const isLoading = useSelector(selectCustomerRewardsLoading)
+  const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
   const { title, subtitle } = account.loyalty
 
   useEffect(() => {
-    dispatch(fetchCustomerRewards())
+    dispatch(fetchCustomerLoyalty())
   }, [dispatch])
 
-  if (!loyalty) return null
+  if (!program) return null
 
   return (
     <PageSection title={title} subtitle={subtitle} to="/rewards">
-      {isLoading ? (
+      {loading === 'pending' ? (
         <Loading text="Retrieving your loyalty status..." />
       ) : (
-        <LoyaltyProgram program={loyalty} />
+        <LoyaltyProgram program={program} />
       )}
     </PageSection>
   )
 }
 
-AccountRewards.displayName = 'AccountRewards'
+AccountLoyaltyProgram.displayName = 'AccountLoyaltyProgram'
 
-export default AccountRewards
+export default AccountLoyaltyProgram

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { PageSection } from '../..'
-import AccountRewards from './AccountRewards'
+import AccountLoyaltyProgram from './AccountLoyaltyProgram'
 import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
@@ -13,7 +13,7 @@ const AccountLoyalty = () => {
   const { title, subtitle } = account.loyalty
 
   return has_rewards ? (
-    <AccountRewards />
+    <AccountLoyaltyProgram />
   ) : has_thanx ? (
     <>
       <PageSection

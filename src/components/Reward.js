@@ -31,7 +31,7 @@ const RewardTag = styled('div')`
 const RewardImage = styled(BgImage)`
   flex: 0 0 25%;
   height: 100%;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
 `
 
 const RewardDetails = styled('div')`

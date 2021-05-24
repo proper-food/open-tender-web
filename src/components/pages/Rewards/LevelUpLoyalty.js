@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchCustomerRewards,
-  selectCustomerRewards,
-  selectCustomerRewardsLoading,
+  fetchCustomerLevelUp,
+  selectCustomerLevelUpProgram,
 } from '@open-tender/redux'
 
 import { Loading, LoyaltyProgram, PageContent } from '../..'
@@ -11,24 +10,25 @@ import LevelUpConnect from './LevelUpConnect'
 
 const LevelUpLoyalty = () => {
   const dispatch = useDispatch()
-  const isLoading = useSelector(selectCustomerRewardsLoading)
-  const loyalty = useSelector(selectCustomerRewards)
-  const { credit } = loyalty || {}
+  const { program, loading, error } = useSelector(selectCustomerLevelUpProgram)
+  const { credit } = program || {}
   const extLoyalty = credit
-    ? { ...loyalty, credit: { current: credit } }
-    : loyalty
+    ? { ...program, credit: { current: credit } }
+    : program
 
   useEffect(() => {
-    dispatch(fetchCustomerRewards())
+    dispatch(fetchCustomerLevelUp())
   }, [dispatch])
 
   return (
     <PageContent style={{ maxWidth: '76.8rem', textAlign: 'left' }}>
-      {isLoading ? (
+      {loading === 'pending' ? (
         <Loading text="Retrieving your loyalty status..." />
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <>
-          {loyalty && <LoyaltyProgram program={extLoyalty} />}
+          {program && <LoyaltyProgram program={extLoyalty} />}
           <LevelUpConnect />
         </>
       )}

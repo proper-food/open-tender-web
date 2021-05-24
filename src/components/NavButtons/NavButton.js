@@ -14,8 +14,9 @@ const NavButtonView = styled('button')`
   padding: 2rem 2rem 2rem 2.5rem;
   margin: 0 0 1rem;
   font-size: ${(props) => props.theme.fonts.sizes.big};
-  font-family: ${(props) => props.theme.fonts.headings.family};
-  font-weight: ${(props) => props.theme.fonts.headings.weight};
+  // font-family: ${(props) => props.theme.fonts.headings.family};
+  // font-weight: ${(props) => props.theme.fonts.headings.weight};
+  font-weight: ${(props) => props.theme.boldWeight};
   color: ${(props) => props.theme.fonts.headings.color};
   transition: ${(props) => props.theme.links.transition};
   opacity: 0;

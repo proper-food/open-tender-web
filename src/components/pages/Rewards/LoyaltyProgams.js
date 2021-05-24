@@ -2,7 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerLoyalty, selectCustomerLoyalty } from '@open-tender/redux'
 
-import { Loading, LoyaltyProgram, PageContent, PageError } from '../..'
+import {
+  Loading,
+  LoyaltyProgram,
+  PageContent,
+  PageError,
+  PageSection,
+} from '../..'
 import styled from '@emotion/styled'
 
 const LoyaltyProgamsView = styled('div')`
@@ -11,7 +17,7 @@ const LoyaltyProgamsView = styled('div')`
   }
 `
 
-const RewardsPrograms = () => {
+const LoyaltyPrograms = () => {
   const dispatch = useDispatch()
   const { entities, loading, error } = useSelector(selectCustomerLoyalty)
   const isLoading = loading === 'pending'
@@ -25,17 +31,22 @@ const RewardsPrograms = () => {
       {error ? (
         <PageError error={error} />
       ) : entities.length ? (
-        <LoyaltyProgamsView>
-          {entities.map((program) => {
-            return (
-              <LoyaltyProgram
-                key={program.name}
-                program={program}
-                isLoading={isLoading}
-              />
-            )
-          })}
-        </LoyaltyProgamsView>
+        <PageSection
+          title="Your loyalty status"
+          subtitle="Your current status across all available loyalty programs"
+        >
+          <LoyaltyProgamsView>
+            {entities.map((program) => {
+              return (
+                <LoyaltyProgram
+                  key={program.name}
+                  program={program}
+                  isLoading={isLoading}
+                />
+              )
+            })}
+          </LoyaltyProgamsView>
+        </PageSection>
       ) : (
         <PageContent>
           {isLoading ? (
@@ -49,6 +60,6 @@ const RewardsPrograms = () => {
   )
 }
 
-RewardsPrograms.displayName = 'RewardsPrograms'
+LoyaltyPrograms.displayName = 'LoyaltyPrograms'
 
-export default RewardsPrograms
+export default LoyaltyPrograms
