@@ -10,6 +10,7 @@ import {
   PageSection,
 } from '../..'
 import styled from '@emotion/styled'
+import { selectConfig } from '../../../slices'
 
 const LoyaltyProgamsView = styled('div')`
   & > div + div {
@@ -19,6 +20,7 @@ const LoyaltyProgamsView = styled('div')`
 
 const LoyaltyPrograms = () => {
   const dispatch = useDispatch()
+  const { rewards: rewardsConfig } = useSelector(selectConfig)
   const { entities, loading, error } = useSelector(selectCustomerLoyalty)
   const isLoading = loading === 'pending'
 
@@ -31,10 +33,7 @@ const LoyaltyPrograms = () => {
       {error ? (
         <PageError error={error} />
       ) : entities.length ? (
-        <PageSection
-          title="Your loyalty status"
-          subtitle="Your current status across all available loyalty programs"
-        >
+        <PageSection {...rewardsConfig.loyalty}>
           <LoyaltyProgamsView>
             {entities.map((program) => {
               return (

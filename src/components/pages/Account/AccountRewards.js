@@ -3,15 +3,12 @@ import propTypes from 'prop-types'
 import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Loading, PageSection, Rewards } from '.'
+import { Loading, PageSection, Rewards } from '../..'
+import { selectConfig } from '../../../slices'
 
-const RewardsSection = ({
-  title = 'Available Rewards',
-  subtitle = 'These discounts can be applied either in-store or online',
-  empty = "Looks like you haven't earned any rewards yet. It's only a matter of time!",
-  limit = 3,
-}) => {
+const AccountRewards = ({ limit = 3 }) => {
   const dispatch = useDispatch()
+  const { account } = useSelector(selectConfig)
   const {
     entities: rewards,
     loading,
@@ -25,29 +22,20 @@ const RewardsSection = ({
     dispatch(fetchCustomerRewards())
   }, [dispatch])
 
-  return (
-    <PageSection
-      title={title}
-      subtitle={subtitle}
-      to={isMore ? '/deals' : null}
-    >
+  return hasRewards ? (
+    <PageSection {...account.rewards} to={isMore ? '/rewards' : null}>
       {loading === 'pending' ? (
         <Loading text="Checking for rewards..." />
       ) : hasRewards ? (
         <Rewards rewards={displayed} />
-      ) : (
-        <p>{empty}</p>
-      )}
+      ) : null}
     </PageSection>
-  )
+  ) : null
 }
 
-RewardsSection.displayName = 'RewardsSection'
-RewardsSection.propTypes = {
-  title: propTypes.string,
-  subtitle: propTypes.string,
-  empty: propTypes.string,
+AccountRewards.displayName = 'AccountRewards'
+AccountRewards.propTypes = {
   limit: propTypes.number,
 }
 
-export default RewardsSection
+export default AccountRewards

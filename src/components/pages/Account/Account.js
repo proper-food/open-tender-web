@@ -32,6 +32,7 @@ import AccountLoyalty from './AccountLoyalty'
 import AccountGroupOrders from './AccountGroupOrders'
 import AccountDeals from './AccountDeals'
 import { useTheme } from '@emotion/react'
+import AccountRewards from './AccountRewards'
 
 // const AccountLinks = () => (
 //   <p>
@@ -115,6 +116,7 @@ const Account = () => {
             }
           >
             <AccountLoyalty />
+            <AccountRewards />
             <AccountGroupOrders />
             <AccountOrders />
             <AccountDeals />

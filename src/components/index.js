@@ -71,7 +71,6 @@ import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Reward from './Reward'
 import Rewards from './Rewards'
-import RewardsSection from './RewardsSection'
 import Routes from './Routes'
 import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
@@ -164,7 +163,6 @@ export {
   RevenueCenterChild,
   Reward,
   Rewards,
-  RewardsSection,
   Routes,
   Row,
   ScreenreaderTitle,

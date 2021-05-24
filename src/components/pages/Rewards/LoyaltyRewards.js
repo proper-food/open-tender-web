@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
 import LoyaltyPrograms from './LoyaltyProgams'
 import { Loading, PageSection, Rewards } from '../..'
+import { selectConfig } from '../../../slices'
 
 const LoyaltyRewards = () => {
   const dispatch = useDispatch()
+  const { rewards: rewardsConfig } = useSelector(selectConfig)
   const {
     entities: rewards,
     loading,
@@ -22,10 +24,7 @@ const LoyaltyRewards = () => {
       {loading === 'pending' ? (
         <Loading text="Checking for rewards..." />
       ) : hasRewards ? (
-        <PageSection
-          title="You've got rewards!"
-          subtitle="Below is a list of rewards that can be applied either in-store or online"
-        >
+        <PageSection {...rewardsConfig.rewards}>
           <Rewards rewards={rewards} />
         </PageSection>
       ) : null}

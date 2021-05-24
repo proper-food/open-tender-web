@@ -17,8 +17,8 @@ import LoyaltyRewards from './LoyaltyRewards'
 const Rewards = () => {
   const history = useHistory()
   const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
-  const { account } = useSelector(selectConfig)
-  const config = has_levelup ? account.levelup : account.loyalty
+  const { account, rewards } = useSelector(selectConfig)
+  const config = has_levelup ? account.levelup : rewards
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
