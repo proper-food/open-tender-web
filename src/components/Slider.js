@@ -43,7 +43,7 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
-  z-index: 100;
+  z-index: 11;
   bottom: 0;
   left: 0;
   right: 0;
