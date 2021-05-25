@@ -40,7 +40,6 @@ const TierDescription = styled('div')`
 `
 
 const LoyaltyTier = ({ tier }) => {
-  console.log(tier)
   const dispatch = useDispatch()
   const threshold = tier.points
     ? `${tier.value} ${tier.points.name}`

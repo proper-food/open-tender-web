@@ -108,7 +108,6 @@ const ProgressBar = ({ progress, tiers = [] }) => {
   const style = { width: `${progress || 0}%` }
 
   const showTier = (evt, tier) => {
-    console.log(tier)
     evt.preventDefault()
     dispatch(openModal({ type: 'loyaltyTier', args: { tier } }))
   }
