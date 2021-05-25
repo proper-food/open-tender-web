@@ -248,9 +248,8 @@ const MenuItemTags = styled('span')`
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { soldOut, menuConfig, allergenAlerts, pointsProgram } = useContext(
-    MenuContext
-  )
+  const { soldOut, menuConfig, allergenAlerts, pointsProgram } =
+    useContext(MenuContext)
   const {
     menuImages: showImage,
     calories: showCals,

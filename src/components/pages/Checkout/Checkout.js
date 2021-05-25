@@ -20,6 +20,8 @@ import {
   Coffee,
   Smartphone,
   Star,
+  Heart,
+  Award,
 } from 'react-feather'
 import {
   selectCustomer,
@@ -115,6 +117,9 @@ const Checkout = () => {
     apple_pay: <Smartphone size={null} />,
     google_pay: <Smartphone size={null} />,
     points: <Star size={null} />,
+    loyalty: <Heart size={null} />,
+    deal: <DollarSign size={null} />,
+    reward: <Award size={null} />,
   }
   const { windowRef } = useContext(AppContext)
   const deviceTypeName = makeDeviceType(deviceType)

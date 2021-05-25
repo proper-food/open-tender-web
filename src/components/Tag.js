@@ -51,7 +51,7 @@ const Tag = ({ text, icon, bgColor = 'secondary' }) => {
 }
 
 Tag.displayName = 'Tag'
-Tag.prototypes = {
+Tag.propTypes = {
   text: propTypes.string,
   icon: propTypes.string,
   bgColor: propTypes.string,

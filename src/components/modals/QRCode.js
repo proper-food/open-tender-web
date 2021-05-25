@@ -83,7 +83,7 @@ const QRCode = ({ src, alt, title, description, alert, footnote }) => {
 }
 
 QRCode.displayName = 'QRCode'
-QRCode.prototypes = {
+QRCode.propTypes = {
   src: propTypes.string,
   alt: propTypes.string,
   title: propTypes.string,

@@ -201,7 +201,7 @@ const Reward = ({ reward }) => {
 }
 
 Reward.displayName = 'Reward'
-Reward.prototypes = {
+Reward.propTypes = {
   reward: propTypes.object,
 }
 
