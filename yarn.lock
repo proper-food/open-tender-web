@@ -1580,10 +1580,10 @@
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.6.0.tgz#1958606f550ed3ee559d197aba8981bfa062b420"
   integrity sha512-4MS5+7PVQDYQM5mVezkgKJkmBg5NkyWHGudgWjkwnr2D97WEv3LKY5phRXWkBNykAM8aUjO5eOzRP98sJLMUwg==
 
-"@open-tender/redux@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.1.0.tgz#e63ac01fe1a57c7bb13e2167b98244027eaf8003"
-  integrity sha512-/uEbuVYyJT6mZtzKVnDMkpcpFXLMwIu5zPI/jaFeuXZWKPQjfdGaCDuj+8f3dFWh5ozv/6j3vXBwxBlmlIGbAQ==
+"@open-tender/redux@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.1.1.tgz#dd13bb3abca886ba1bfe05e92b6fec4779229248"
+  integrity sha512-C6AYuAgQIy6V3/eKegZw/IFeSjm6d+SqwBQfYq9TpoqLSne7Wwlb6KWJlR8FX1EYz0KibouerNDeOIGP0wtCqw==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
