@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import {
   fetchCustomerThanx,
   resetCustomerThanx,
-  selectCustomerThanxProgram,
+  selectCustomerThanx,
   logoutCustomer,
   addMessage,
 } from '@open-tender/redux'
@@ -86,8 +86,9 @@ const ThanxRewardDescription = styled('p')`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const ThanxReward = ({ reward }) => {
-  const { name, description } = reward
+const ThanxReward = ({ item }) => {
+  const { name, description } = item || {}
+  if (!name) return null
   return (
     <ThanxRewardView>
       <p>
@@ -107,9 +108,9 @@ ThanxReward.propTypes = {
 
 const ThanxLoyalty = () => {
   const dispatch = useDispatch()
-  const { program, loading, error } = useSelector(selectCustomerThanxProgram)
+  const { thanx, loading, error } = useSelector(selectCustomerThanx)
   const isLoading = loading === 'pending'
-  const { progress, rewards } = program || {}
+  const { progress, rewards } = thanx || {}
   const thanxRewards =
     rewards &&
     rewards.map((i) => ({
@@ -132,7 +133,7 @@ const ThanxLoyalty = () => {
 
   return (
     <>
-      {program ? (
+      {thanx ? (
         <>
           <ThanxProgress progress={progress} />
           {thanxRewards.length > 0 && (
