@@ -119,7 +119,7 @@ const ThanxLoyalty = () => {
 
   useEffect(() => {
     dispatch(fetchCustomerThanx())
-    return () => dispatch(resetCustomerThanx())
+    // return () => dispatch(resetCustomerThanx())
   }, [dispatch])
 
   useEffect(() => {
