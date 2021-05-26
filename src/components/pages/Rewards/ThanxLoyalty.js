@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import {
   fetchCustomerThanx,
   resetCustomerThanx,
-  selectCustomerThanx,
+  selectCustomerThanxProgram,
   logoutCustomer,
   addMessage,
 } from '@open-tender/redux'
@@ -107,9 +107,9 @@ ThanxReward.propTypes = {
 
 const ThanxLoyalty = () => {
   const dispatch = useDispatch()
-  const { thanx, loading, error } = useSelector(selectCustomerThanx)
+  const { program, loading, error } = useSelector(selectCustomerThanxProgram)
   const isLoading = loading === 'pending'
-  const { progress, rewards } = thanx || {}
+  const { progress, rewards } = program || {}
   const thanxRewards =
     rewards &&
     rewards.map((i) => ({
@@ -119,7 +119,7 @@ const ThanxLoyalty = () => {
 
   useEffect(() => {
     dispatch(fetchCustomerThanx())
-    // return () => dispatch(resetCustomerThanx())
+    return () => dispatch(resetCustomerThanx())
   }, [dispatch])
 
   useEffect(() => {
@@ -132,7 +132,7 @@ const ThanxLoyalty = () => {
 
   return (
     <>
-      {thanx ? (
+      {program ? (
         <>
           <ThanxProgress progress={progress} />
           {thanxRewards.length > 0 && (
