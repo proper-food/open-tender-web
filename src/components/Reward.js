@@ -196,16 +196,9 @@ const Reward = ({ item }) => {
           <RewardContent>
             <RewardNote>{reward.limitations}</RewardNote>
             <RewardTitle>{reward.title}</RewardTitle>
-            {reward.description && (
-              <RewardDescription>{reward.description}</RewardDescription>
+            {reward.short_description && (
+              <RewardDescription>{reward.short_description}</RewardDescription>
             )}
-            {/* {reward.per_order === 1 && (
-              <RewardDescription>
-                <Text color="alert">
-                  Cannot be used with any other discounts
-                </Text>
-              </RewardDescription>
-            )} */}
           </RewardContent>
           <RewardExpiration>
             {reward.end_date === today ? (
