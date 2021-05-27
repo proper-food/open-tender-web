@@ -6,15 +6,15 @@ import {
   setCurrentItem,
   selectCartCounts,
   selectMenuSlug,
-  // addItemToCart,
-  // showNotification,
+  addItemToCart,
+  showNotification,
 } from '@open-tender/redux'
 import {
   convertStringToArray,
   makeDisplayPrice,
   slugify,
 } from '@open-tender/js'
-import { Box, Heading, Points } from '@open-tender/components'
+import { Box, Heading, Points, useBuilder } from '@open-tender/components'
 
 import {
   selectDisplaySettings,
@@ -27,8 +27,8 @@ import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-// import { Plus } from 'react-feather'
-// import { isBrowser } from 'react-device-detect'
+import { Plus } from 'react-feather'
+import { isBrowser } from 'react-device-detect'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -85,42 +85,46 @@ export const MenuItemOverlay = styled('div')`
     props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
 `
 
-// const MenuItemAdd = styled('button')`
-//   position: absolute;
-//   z-index: 3;
-//   bottom: -1.3rem;
-//   right: -1.2rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 2.6rem;
-//   height: 2.6rem;
-//   border-radius: 1.3em;
-//   padding: 0.3rem;
-//   border-width: 0.2rem;
-//   border-style: solid;
-//   color: ${(props) => props.theme.colors.light};
-//   background-color: ${(props) => props.theme.colors.primary};
-//   border-color: ${(props) => props.theme.colors.light};
-//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-//     bottom: -0.7rem;
-//     right: -0.7rem;
-//     width: 2.2rem;
-//     height: 2.2rem;
-//     padding: 0.2rem 0.2rem;
-//   }
+const MenuItemAdd = styled('button')`
+  position: absolute;
+  z-index: 3;
+  bottom: 1.1rem;
+  right: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 1.3rem;
+  padding: 0.2rem;
+  border-width: 0.2rem;
+  border-style: solid;
+  color: ${(props) => props.theme.colors.primary};
+  background-color: transparent;
+  // background-color: ${(props) => props.theme.colors.primary};
+  border-color: ${(props) => props.theme.colors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    bottom: 0.6rem;
+    right: 0.6rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.2rem;
+    border-width: 0.1rem;
+  }
 
-//   &:hover:enabled,
-//   &:active:enabled,
-//   &:focus:enabled {
-//     background-color: ${(props) => props.theme.links.primary.color};
-//   }
+  &:hover:enabled,
+  &:active:enabled {
+    color: ${(props) => props.theme.colors.light};
+    // background-color: ${(props) => props.theme.links.primary.color};
+    background-color: ${(props) => props.theme.colors.primary};
+  }
 
-//   &:disabled {
-//     background-color: ${(props) => props.theme.colors.primary};
-//     opacity: 0.5;
-//   }
-// `
+  &:disabled {
+    // background-color: ${(props) => props.theme.colors.primary};
+    background-color: transparent;
+    opacity: 0.5;
+  }
+`
 
 const MenuItemCount = styled('div')`
   position: absolute;
@@ -132,7 +136,7 @@ const MenuItemCount = styled('div')`
   align-items: center;
   min-width: 2.6rem;
   height: 2.6rem;
-  border-radius: 1.3em;
+  border-radius: 1.3rem;
   padding-bottom: 0.1rem;
   border-width: 0.2rem;
   border-style: solid;
@@ -167,6 +171,7 @@ const MenuItemAlert = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
+  position: relative;
   padding: 1.5rem 1.5rem 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0.9rem 0.9rem 0.6rem;
@@ -192,9 +197,11 @@ const MenuItemDescription = styled('p')`
 `
 
 const MenuItemDetails = styled('p')`
+  padding: ${(props) => (props.showQuickAdd ? '0 3rem 0 0' : '0')};
   margin: 1rem 0 0;
   line-height: ${(props) => props.theme.lineHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => (props.showQuickAdd ? '0 2rem 0 0' : '0')};
     margin: 0.3rem 0 0;
   }
 
@@ -256,8 +263,8 @@ const MenuItem = ({ item }) => {
     tags: showTags,
     allergens: showAllergens,
     builderType,
-    // quickAdd = true,
-    // quickAddMobile = true,
+    quickAdd = true,
+    quickAddMobile = true,
   } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
@@ -279,13 +286,13 @@ const MenuItem = ({ item }) => {
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
   const hasAllergens = allergenAlert.length > 0
-  // const { item: builtItem } = useBuilder(item, soldOut)
-  // const { groups, totalPrice } = builtItem
-  // const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
-  // const isIncomplete =
-  //   totalPrice === 0 || item.quantity === '' || groupsBelowMin
-  // const hasQuickAdd = isBrowser ? quickAdd : quickAddMobile
-  // const showQuickAdd = hasQuickAdd && !isIncomplete && !isSoldOut
+  const { item: builtItem } = useBuilder(item, soldOut)
+  const { groups, totalPrice } = builtItem
+  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
+  const isIncomplete =
+    totalPrice === 0 || item.quantity === '' || groupsBelowMin
+  const hasQuickAdd = isBrowser ? quickAdd : quickAddMobile
+  const showQuickAdd = hasQuickAdd && !isIncomplete && !isSoldOut
 
   const view = (evt) => {
     evt.preventDefault()
@@ -304,14 +311,14 @@ const MenuItem = ({ item }) => {
     }
   }
 
-  // const add = (evt) => {
-  //   evt.preventDefault()
-  //   evt.stopPropagation()
-  //   if (!isSoldOut && !isIncomplete) {
-  //     dispatch(addItemToCart(builtItem))
-  //     dispatch(showNotification(`${builtItem.name} added to cart!`))
-  //   }
-  // }
+  const add = (evt) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    if (!isSoldOut && !isIncomplete) {
+      dispatch(addItemToCart(builtItem))
+      dispatch(showNotification(`${builtItem.name} added to cart!`))
+    }
+  }
 
   const itemTag = isSoldOut ? (
     <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
@@ -326,11 +333,6 @@ const MenuItem = ({ item }) => {
   return (
     <MenuItemView>
       <MenuItemContainer>
-        {/* {showQuickAdd && (
-          <MenuItemAdd onClick={add} disabled={isIncomplete} title="Quick Add">
-            <Plus size={16} />
-          </MenuItemAdd>
-        )} */}
         {cartCount > 0 && (
           <MenuItemCount>
             <span>{cartCount}</span>
@@ -356,7 +358,7 @@ const MenuItem = ({ item }) => {
             {item.description && (
               <MenuItemDescription>{item.description}</MenuItemDescription>
             )}
-            <MenuItemDetails>
+            <MenuItemDetails showQuickAdd={showQuickAdd}>
               {price && <MenuItemPrice>{price}</MenuItemPrice>}
               {cals && <MenuItemCals>{cals} cals</MenuItemCals>}
               {points && <Points points={points} icon={iconMap.Star} />}
@@ -369,6 +371,11 @@ const MenuItem = ({ item }) => {
             </MenuItemDetails>
           </MenuItemContent>
         </MenuItemButton>
+        {showQuickAdd && (
+          <MenuItemAdd onClick={add} disabled={isIncomplete} title="Quick Add">
+            <Plus size={18} />
+          </MenuItemAdd>
+        )}
       </MenuItemContainer>
     </MenuItemView>
   )

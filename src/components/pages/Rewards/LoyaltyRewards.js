@@ -28,7 +28,7 @@ const LoyaltyRewards = () => {
           <Rewards rewards={rewards} />
         </PageSection>
       ) : null}
-      <LoyaltyPrograms />
+      <LoyaltyPrograms showHeader={hasRewards} />
     </>
   )
 }

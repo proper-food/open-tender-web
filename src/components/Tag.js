@@ -53,7 +53,7 @@ const Tag = ({ text, icon, bgColor = 'secondary' }) => {
 Tag.displayName = 'Tag'
 Tag.propTypes = {
   text: propTypes.string,
-  icon: propTypes.string,
+  icon: propTypes.element,
   bgColor: propTypes.string,
 }
 export default Tag

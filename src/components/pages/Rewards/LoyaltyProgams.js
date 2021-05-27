@@ -18,11 +18,12 @@ const LoyaltyProgamsView = styled('div')`
   }
 `
 
-const LoyaltyPrograms = () => {
+const LoyaltyPrograms = ({ showHeader = false }) => {
   const dispatch = useDispatch()
   const { rewards: rewardsConfig } = useSelector(selectConfig)
   const { entities, loading, error } = useSelector(selectCustomerLoyalty)
   const isLoading = loading === 'pending'
+  const title = showHeader ? rewardsConfig.loyalty : {}
 
   useEffect(() => {
     dispatch(fetchCustomerLoyalty())
@@ -33,7 +34,7 @@ const LoyaltyPrograms = () => {
       {error ? (
         <PageError error={error} />
       ) : entities.length ? (
-        <PageSection {...rewardsConfig.loyalty}>
+        <PageSection {...title}>
           <LoyaltyProgamsView>
             {entities.map((program) => {
               return (
