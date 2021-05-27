@@ -97,7 +97,7 @@ const CartButtonCount = styled('div')`
   border-style: solid;
   border-width: ${(props) => props.theme.counts.alerts.borderWidth};
   padding-top: ${(props) => props.theme.counts.alerts.paddingTop};
-  padding-bottom: ${(props) => props.theme.counts.alerts.paddingTop};
+  padding-bottom: ${(props) => props.theme.counts.alerts.paddingBottom};
   color: ${(props) => props.theme.counts.alerts.color};
   background-color: ${(props) => props.theme.counts.alerts.bgColor};
   border-color: ${(props) => props.theme.counts.alerts.borderColor};
