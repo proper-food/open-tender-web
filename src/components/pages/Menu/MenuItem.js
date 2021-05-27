@@ -129,33 +129,39 @@ const MenuItemAdd = styled('button')`
 const MenuItemCount = styled('div')`
   position: absolute;
   z-index: 3;
-  top: -1.3rem;
-  right: -1.2rem;
+  top: -1.1rem;
+  right: -1.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 1.3rem;
-  padding-bottom: 0.1rem;
-  border-width: 0.2rem;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 1.2rem;
   border-style: solid;
-  color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.colors.error};
-  border-color: ${(props) => props.theme.colors.light};
+  border-width: ${(props) => props.theme.counts.alerts.borderWidth};
+  padding-top: ${(props) => props.theme.counts.alerts.paddingTop};
+  padding-bottom: ${(props) => props.theme.counts.alerts.paddingTop};
+  color: ${(props) => props.theme.counts.alerts.color};
+  background-color: ${(props) => props.theme.counts.alerts.bgColor};
+  border-color: ${(props) => props.theme.counts.alerts.borderColor};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -0.7rem;
-    right: -0.7rem;
+    top: -1rem;
+    right: -0.9rem;
     min-width: 2.2rem;
     height: 2.2rem;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
   span {
     display: block;
     line-height: 0;
-    font-weight: ${(props) => props.theme.boldWeight};
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-family: ${(props) => props.theme.counts.alerts.family};
+    font-weight: ${(props) => props.theme.counts.alerts.weight};
+    font-size: ${(props) => props.theme.counts.alerts.fontSize};
+    -webkit-font-smoothing: ${(props) =>
+      props.theme.counts.alerts.fontSmoothing};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.counts.alerts.fontSizeMobile};
+    }
   }
 `
 
