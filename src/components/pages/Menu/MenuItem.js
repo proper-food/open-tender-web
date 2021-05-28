@@ -95,34 +95,52 @@ const MenuItemAdd = styled('button')`
   align-items: center;
   width: 2.6rem;
   height: 2.6rem;
-  border-radius: 1.3rem;
-  padding: 0.2rem;
-  border-width: 0.2rem;
-  border-style: solid;
-  color: ${(props) => props.theme.colors.primary};
-  background-color: transparent;
-  // background-color: ${(props) => props.theme.colors.primary};
-  border-color: ${(props) => props.theme.colors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     bottom: 0.6rem;
     right: 0.6rem;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.8rem;
+    height: 3.2rem;
+    align-items: flex-end;
+  }
+
+  span {
+    display: block;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 1.3rem;
     padding: 0.2rem;
-    border-width: 0.1rem;
+    border-width: 0.2rem;
+    border-style: solid;
+    transition: ${(props) => props.theme.links.transition};
+    color: ${(props) => props.theme.colors.primary};
+    background-color: transparent;
+    border-color: ${(props) => props.theme.colors.primary};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 1.4rem;
+      padding: 0.2rem;
+      border-width: 0.2rem;
+    }
   }
 
   &:hover:enabled,
   &:active:enabled {
-    color: ${(props) => props.theme.colors.light};
-    // background-color: ${(props) => props.theme.links.primary.color};
-    background-color: ${(props) => props.theme.colors.primary};
+    span {
+      color: ${(props) => props.theme.colors.light};
+      background-color: ${(props) => props.theme.colors.primary};
+      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+        color: ${(props) => props.theme.colors.primary};
+        background-color: transparent;
+      }
+    }
   }
 
   &:disabled {
-    // background-color: ${(props) => props.theme.colors.primary};
-    background-color: transparent;
-    opacity: 0.5;
+    span {
+      background-color: transparent;
+      opacity: 0.5;
+    }
   }
 `
 
@@ -379,7 +397,9 @@ const MenuItem = ({ item }) => {
         </MenuItemButton>
         {showQuickAdd && (
           <MenuItemAdd onClick={add} disabled={isIncomplete} title="Quick Add">
-            <Plus size={18} />
+            <span>
+              <Plus size={18} />
+            </span>
           </MenuItemAdd>
         )}
       </MenuItemContainer>
