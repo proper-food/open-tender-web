@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { isBrowser, deviceType } from 'react-device-detect'
+import { deviceType } from 'react-device-detect'
 import {
   User,
   ShoppingBag,
@@ -175,7 +175,7 @@ const Checkout = () => {
         <title>Checkout | {title}</title>
       </Helmet>
       <Content>
-        <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
+        <CheckoutHeader />
         <CheckoutTotal checkout={checkout} />
         <Main>
           <CheckoutContainer>

@@ -58,7 +58,7 @@ const AccountGiftCards = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Gift Cards'} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

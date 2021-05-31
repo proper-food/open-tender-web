@@ -57,7 +57,7 @@ const AccountAddresses = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : config.title} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

@@ -55,11 +55,7 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        {auth ? (
-          <HeaderUser title={isBrowser ? null : config.title} />
-        ) : (
-          <HeaderDefault title={isBrowser ? null : config.title} />
-        )}
+        {auth ? <HeaderUser /> : <HeaderDefault />}
         <Main>
           {!isBrowser && auth && <AccountTabs />}
           <PageContainer>

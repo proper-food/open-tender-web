@@ -45,7 +45,7 @@ const AccountSettings = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Account'} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

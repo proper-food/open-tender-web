@@ -94,7 +94,7 @@ const Orders = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Order History'} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>

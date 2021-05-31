@@ -37,7 +37,7 @@ const Rewards = () => {
         <title>Rewards | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Rewards'} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer>

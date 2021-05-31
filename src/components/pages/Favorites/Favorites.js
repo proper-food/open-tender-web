@@ -81,7 +81,7 @@ const Favorites = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Favorites'} />
+        <HeaderUser />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>

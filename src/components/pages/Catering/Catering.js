@@ -218,9 +218,8 @@ const CateringPage = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
   const { title, subtitle, background, policy } = config
-  const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
-    selectOrder
-  )
+  const { orderType, serviceType, requestedAt, revenueCenter } =
+    useSelector(selectOrder)
   const hasTypes = orderType && serviceType
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : getUserTimezone()
@@ -286,13 +285,8 @@ const CateringPage = () => {
 
   useEffect(() => {
     if (validTimes) {
-      const {
-        first_time,
-        holidays,
-        hours,
-        interval,
-        closed_weekdays,
-      } = validTimes
+      const { first_time, holidays, hours, interval, closed_weekdays } =
+        validTimes
       const firstDate = isoToDate(first_time.utc, tz)
       const closedWeekdays = makeWeekdayIndices(closed_weekdays)
       const isClosed = (date) => {
@@ -358,11 +352,7 @@ const CateringPage = () => {
         </title>
       </Helmet>
       <Content>
-        <Header
-          title={isBrowser ? null : 'Catering'}
-          left={<StartOver />}
-          right={<Account />}
-        />
+        <Header left={<StartOver />} right={<Account />} />
         <Main
           imageUrl={isBrowser ? background : null}
           // style={{ backgroundPosition: 'center top' }}

@@ -18,7 +18,6 @@ import {
   selectBrand,
   selectSettings,
   selectGeoLatLng,
-  selectConfig,
   selectHeaderHeight,
 } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -45,7 +44,9 @@ const RevenueCenters = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const headerHeight = useSelector(selectHeaderHeight)
   const offset = headerHeight + 20
-  const { revenueCenters: config } = useSelector(selectConfig)
+  // const { revenueCenters: config } = useSelector(selectConfig)
+  // const navTitle =
+  //   config.title && config.title.length < 20 ? config.title : 'Find a Store'
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps } = useSelector(selectSettings)
   const { apiKey, defaultCenter, zoom, styles, icons } = googleMaps
@@ -59,8 +60,6 @@ const RevenueCenters = () => {
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
   const { windowRef } = useContext(AppContext)
-  const navTitle =
-    config.title && config.title.length < 20 ? config.title : 'Find a Store'
   const missingAddress = serviceType === 'DELIVERY' && !address
 
   useEffect(() => {
@@ -118,7 +117,6 @@ const RevenueCenters = () => {
           maxWidth="76.8rem"
           borderColor={isMobile ? 'transparent' : 'primary'}
           style={{ boxShadow: 'none' }}
-          title={isMobile ? navTitle : null}
           left={
             orderType === 'CATERING' ? (
               <Back text="Catering" onClick={() => history.push('/catering')} />

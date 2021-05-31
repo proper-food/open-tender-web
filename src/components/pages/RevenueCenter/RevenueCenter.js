@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
@@ -94,10 +93,7 @@ const RevenueCenter = () => {
       </Helmet>
       <Background imageUrl={imageUrl || config.background} />
       <Content maxWidth="76.8rem">
-        <HeaderDefault
-          maxWidth="76.8rem"
-          title={isBrowser ? null : config.title}
-        />
+        <HeaderDefault maxWidth="76.8rem" />
         <Main>
           <Container>
             <ScreenreaderTitle>{title}</ScreenreaderTitle>
