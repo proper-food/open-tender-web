@@ -81,7 +81,6 @@ import Sidebar from './Sidebar'
 import SidebarModal from './SidebarModal'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
-import SliderKeen from './SliderKeen'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
 
@@ -173,7 +172,6 @@ export {
   SidebarModal,
   SkipLink,
   Slider,
-  SliderKeen,
   Tag,
   VerifyAccount,
 }

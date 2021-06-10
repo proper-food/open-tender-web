@@ -93,11 +93,8 @@ const configSlice = createSlice({
   },
 })
 
-export const {
-  resetConfig,
-  resetRetries,
-  incrementRetries,
-} = configSlice.actions
+export const { resetConfig, resetRetries, incrementRetries } =
+  configSlice.actions
 
 export const selectBrand = (state) => state.config.brand
 export const selectTheme = (state) => state.config.theme

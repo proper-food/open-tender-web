@@ -105,7 +105,7 @@ const Account = () => {
                 : { marginTop: `-${navHeightMobile}` }
             }
           >
-            <AccountLoyalty />
+            <AccountLoyalty showTitle={false} />
             <AccountRewards />
             <AccountGroupOrders />
             <AccountOrders />

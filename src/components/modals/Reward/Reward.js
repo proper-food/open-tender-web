@@ -190,7 +190,10 @@ const Reward = ({ reward }) => {
             )}
           </RewardContent>
           <div>
-            <ButtonStyled onClick={() => dispatch(closeModal())}>
+            <ButtonStyled
+              color="secondary"
+              onClick={() => dispatch(closeModal())}
+            >
               Close
             </ButtonStyled>
           </div>

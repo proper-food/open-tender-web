@@ -72,7 +72,10 @@ const QRCode = ({ src, alt, title, description, alert, footnote }) => {
             {footnote && <p>{footnote}</p>}
           </QRCodeContent>
           <div>
-            <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
+            <ButtonStyled
+              color="secondary"
+              onClick={() => dispatch(closeModal())}
+            >
               Close
             </ButtonStyled>
           </div>

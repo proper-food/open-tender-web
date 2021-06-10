@@ -7,12 +7,12 @@ import AccountLoyaltyProgram from './AccountLoyaltyProgram'
 import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
-const AccountLoyalty = () => {
+const AccountLoyalty = ({ showTitle = true }) => {
   const { has_rewards, has_thanx, has_levelup } = useSelector(selectBrand)
   const { account } = useSelector(selectConfig)
 
   return has_rewards ? (
-    <AccountLoyaltyProgram />
+    <AccountLoyaltyProgram showTitle={showTitle} />
   ) : has_thanx ? (
     <>
       <PageSection {...account.loyalty} style={{ marginBottom: '2.5rem' }} />

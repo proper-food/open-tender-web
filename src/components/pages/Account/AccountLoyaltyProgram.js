@@ -8,7 +8,7 @@ import {
 import { Loading, LoyaltyProgram, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
 
-const AccountLoyaltyProgram = () => {
+const AccountLoyaltyProgram = ({ showTitle = true }) => {
   const dispatch = useDispatch()
   const { account } = useSelector(selectConfig)
   const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
@@ -21,7 +21,11 @@ const AccountLoyaltyProgram = () => {
   if (!program) return null
 
   return (
-    <PageSection title={title} subtitle={subtitle} to="/rewards">
+    <PageSection
+      title={showTitle ? title : null}
+      subtitle={showTitle ? subtitle : null}
+      to="/rewards"
+    >
       {loading === 'pending' ? (
         <Loading text="Retrieving your loyalty status..." />
       ) : (

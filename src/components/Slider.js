@@ -15,9 +15,14 @@ const ArrowView = styled('div')`
   height: ${(props) => props.size};
   color: ${(props) => props.theme.colors.light};
   cursor: pointer;
+  transition: ${(props) => props.theme.links.transition};
   left: ${(props) => (props.direction === 'left' ? '0.5rem' : 'auto')};
   right: ${(props) => (props.direction === 'right' ? '0.5rem' : 'auto')};
   opacity: ${(props) => (props.disabled ? '0.5' : '1.0')};
+
+  &:hover {
+    opacity: 0.5;
+  }
 `
 
 const Arrow = ({ direction, size, disabled, onClick }) => {
