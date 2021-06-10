@@ -21,14 +21,14 @@ const LoyaltyRewards = () => {
 
   return (
     <>
+      <LoyaltyPrograms hasRewards={hasRewards} />
       {loading === 'pending' ? (
         <Loading text="Checking for rewards..." />
       ) : hasRewards ? (
-        <PageSection {...rewardsConfig.rewards}>
+        <PageSection id="rewards" {...rewardsConfig.rewards}>
           <Rewards rewards={rewards} />
         </PageSection>
       ) : null}
-      <LoyaltyPrograms showHeader={hasRewards} />
     </>
   )
 }
