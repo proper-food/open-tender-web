@@ -92,13 +92,13 @@ const makeModal = (type, windowRef, args = {}) => {
 const containerStyleMap = {
   address: { alignItems: 'flex-start' },
   creditCard: { alignItems: 'flex-start' },
-  requestedAt: { alignItems: 'flex-start' },
-  allergens: { alignItems: 'flex-start' },
+  // requestedAt: { alignItems: 'flex-start' },
+  // allergens: { alignItems: 'flex-start' },
   cartErrors: { alignItems: 'flex-start' },
   cartCounts: { alignItems: 'flex-start' },
-  groupOrder: { alignItems: 'flex-start' },
+  // groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
-  reward: { alignItems: 'flex-start' },
+  // reward: { alignItems: 'flex-start' },
   loyaltyTier: { alignItems: 'flex-start' },
 }
 
