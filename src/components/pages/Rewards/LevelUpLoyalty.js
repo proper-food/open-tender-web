@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isObject } from '@open-tender/js'
 import {
   fetchCustomerLevelUp,
   selectCustomerLevelUpProgram,
@@ -11,6 +12,7 @@ import LevelUpConnect from './LevelUpConnect'
 const LevelUpLoyalty = () => {
   const dispatch = useDispatch()
   const { program, loading, error } = useSelector(selectCustomerLevelUpProgram)
+  const errMsg = isObject(error) ? null : error
   const { credit } = program || {}
   const extLoyalty = credit
     ? { ...program, credit: { current: credit } }
@@ -24,8 +26,8 @@ const LevelUpLoyalty = () => {
     <PageContent style={{ maxWidth: '76.8rem', textAlign: 'left' }}>
       {loading === 'pending' ? (
         <Loading text="Retrieving your loyalty status..." />
-      ) : error ? (
-        <p>{error}</p>
+      ) : errMsg ? (
+        <p>{errMsg}</p>
       ) : (
         <>
           {program && <LoyaltyProgram program={extLoyalty} />}
