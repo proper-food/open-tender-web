@@ -151,9 +151,7 @@ const GuestOrderType = ({ title, subtitle, cta, finePrint, onClick }) => (
         <p>{subtitle}</p>
         {finePrint && <p>{finePrint}</p>}
       </GuestOrderTypeHeader>
-      <ButtonStyled onClick={onClick} size="small">
-        {cta}
-      </ButtonStyled>
+      <ButtonStyled onClick={onClick}>{cta}</ButtonStyled>
     </GuestOrderTypeContainer>
   </GuestOrderTypeView>
 )
