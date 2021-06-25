@@ -32,6 +32,7 @@ import RevenueCentersSelect from './RevenueCentersSelect'
 import {
   Account,
   Back,
+  Home,
   RequestedAt,
   RevenueCenter,
   ServiceType,
@@ -121,10 +122,7 @@ const RevenueCenters = () => {
             orderType === 'CATERING' ? (
               <Back text="Catering" onClick={() => history.push('/catering')} />
             ) : (
-              <Back
-                text="Order Type"
-                onClick={() => history.push('/order-type')}
-              />
+              <Home />
             )
           }
           right={

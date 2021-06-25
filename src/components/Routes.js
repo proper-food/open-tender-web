@@ -26,7 +26,6 @@ import {
   NotFound,
   Order,
   Orders,
-  OrderType,
   Profile,
   Rating,
   Refunds,
@@ -38,6 +37,7 @@ import {
   Thanx,
   VerifyAccount,
   MenuItem,
+  Guest,
 } from './pages'
 
 // <TransitionGroup component={null}>
@@ -70,7 +70,8 @@ const Routes = () => {
         <Thanx />
       </Route>
       <Route exact path="/order-type">
-        <OrderType />
+        {/* <OrderType /> */}
+        <Guest />
       </Route>
       <Route exact path="/signup">
         <SignUp />

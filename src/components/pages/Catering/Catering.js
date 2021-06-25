@@ -37,7 +37,7 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import { Content, Header, Loading, Main, PageTitle } from '../..'
-import { Account, StartOver } from '../../buttons'
+import { Account, Home } from '../../buttons'
 import styled from '@emotion/styled'
 
 const CateringView = styled('div')`
@@ -352,7 +352,7 @@ const CateringPage = () => {
         </title>
       </Helmet>
       <Content>
-        <Header left={<StartOver />} right={<Account />} />
+        <Header left={<Home />} right={<Account />} />
         <Main
           imageUrl={isBrowser ? background : null}
           // style={{ backgroundPosition: 'center top' }}
