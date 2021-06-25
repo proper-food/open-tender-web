@@ -24,7 +24,7 @@ import {
   PageContainer,
   PageHero,
 } from '../..'
-import { Logout, OrderNow } from '../../buttons'
+import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
@@ -73,12 +73,12 @@ const Account = () => {
             isBrowser ? (
               <>
                 <AccountTabs />
-                <OrderNow />
+                {/* <OrderNow /> */}
               </>
             ) : (
               <>
                 <AccountScan />
-                <OrderNow />
+                {/* <OrderNow /> */}
                 <Logout />
               </>
             )
