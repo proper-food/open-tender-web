@@ -13,7 +13,13 @@ import {
 import { Box, ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectConfig, closeModal, selectBrand } from '../../../slices'
+import {
+  selectConfig,
+  closeModal,
+  selectBrand,
+  selectPosts,
+  fetchPosts,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account } from '../../buttons'
 import { Content, HeaderLogo, Header, Main, PageHero } from '../..'
@@ -92,7 +98,7 @@ const GuestOrderTypeContainer = styled(Box)`
     flex-grow: 0;
     width: 24rem;
     max-width: 100%;
-    margin: 2rem 0 0;
+    margin: 2rem auto 2rem;
   }
 `
 const GuestOrderTypeHeader = styled('div')`
@@ -115,7 +121,7 @@ const GuestOrderTypeHeader = styled('div')`
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 
-  p + p {
+  div p {
     margin: 1rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
@@ -143,18 +149,20 @@ const GuestFooter = styled('div')`
   }
 `
 
-const GuestOrderType = ({ title, subtitle, cta, finePrint, onClick }) => (
-  <GuestOrderTypeView>
-    <GuestOrderTypeContainer>
-      <GuestOrderTypeHeader>
-        <h3>{title}</h3>
-        <p>{subtitle}</p>
-        {finePrint && <p>{finePrint}</p>}
-      </GuestOrderTypeHeader>
-      <ButtonStyled onClick={onClick}>{cta}</ButtonStyled>
-    </GuestOrderTypeContainer>
-  </GuestOrderTypeView>
-)
+const GuestOrderType = ({ title, subtitle, cta, finePrint, onClick }) => {
+  return (
+    <GuestOrderTypeView>
+      <GuestOrderTypeContainer>
+        <GuestOrderTypeHeader>
+          <h3>{title}</h3>
+          <p>{subtitle}</p>
+          {finePrint && <p>{finePrint}</p>}
+        </GuestOrderTypeHeader>
+        <ButtonStyled onClick={onClick}>{cta}</ButtonStyled>
+      </GuestOrderTypeContainer>
+    </GuestOrderTypeView>
+  )
+}
 
 GuestOrderType.displayName = 'GuestOrderType'
 GuestOrderType.propTypes = {
@@ -164,15 +172,48 @@ GuestOrderType.propTypes = {
   onClick: propTypes.func,
 }
 
+const GuestOrderTypePost = ({
+  title,
+  subtitle,
+  excerpt,
+  content,
+  files,
+  onClick,
+}) => {
+  // const image = files.find((i) => i.type === 'FEATURED_IMAGE')
+  return (
+    <GuestOrderTypeView>
+      <GuestOrderTypeContainer>
+        <GuestOrderTypeHeader>
+          <h3>{title}</h3>
+          <ButtonStyled onClick={onClick}>{subtitle}</ButtonStyled>
+          <p>{excerpt}</p>
+          {content && <div dangerouslySetInnerHTML={{ __html: content }}></div>}
+        </GuestOrderTypeHeader>
+      </GuestOrderTypeContainer>
+    </GuestOrderTypeView>
+  )
+}
+
+GuestOrderTypePost.displayName = 'GuestOrderTypePost'
+GuestOrderTypePost.propTypes = {
+  title: propTypes.string,
+  subtitle: propTypes.string,
+  excerpt: propTypes.string,
+  content: propTypes.string,
+  files: propTypes.array,
+  onClick: propTypes.func,
+}
+
 const Guest = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { windowRef } = useContext(AppContext)
   const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const { posts } = useSelector(selectPosts)
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
-  const { background, mobile, content, title, subtitle, showHero, orderTypes } =
-    home
+  const { background, mobile, title, subtitle, showHero, orderTypes } = home
   // const footnote = "Hint: you don't need an account to place an order."
   // const hasContent = !!(content && content.length && content[0].length)
 
@@ -184,6 +225,7 @@ const Guest = () => {
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('HOME'))
+    dispatch(fetchPosts('order-types'))
   }, [dispatch])
 
   const handleOutpost = () => {
@@ -204,6 +246,13 @@ const Guest = () => {
   const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     history.push('/catering')
+  }
+
+  const handlers = {
+    'order-types/pickup': handlePickup,
+    'order-types/delivery': handleDelivery,
+    'order-types/catering': handleCatering,
+    'order-types/outpost': handleOutpost,
   }
 
   return (
@@ -234,7 +283,14 @@ const Guest = () => {
                 <h2>{title}</h2>
               </GuestTitle>
               <GuestOrderTypes>
-                <GuestOrderType
+                {posts.map((post) => (
+                  <GuestOrderTypePost
+                    key={post.slug}
+                    {...post}
+                    onClick={handlers[post.slug]}
+                  />
+                ))}
+                {/* <GuestOrderType
                   {...orderTypes.PICKUP}
                   cta="Order Pickup"
                   onClick={handlePickup}
@@ -254,7 +310,7 @@ const Guest = () => {
                   {...orderTypes.OUTPOST}
                   cta="Find Pick-up Point"
                   onClick={handleOutpost}
-                />
+                /> */}
               </GuestOrderTypes>
               <GuestLinks>
                 <h3>Other Stuff...</h3>
