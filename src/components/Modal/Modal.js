@@ -99,7 +99,7 @@ const containerStyleMap = {
   // groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
   // reward: { alignItems: 'flex-start' },
-  loyaltyTier: { alignItems: 'flex-start' },
+  // loyaltyTier: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
