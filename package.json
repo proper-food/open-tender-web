@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.3.0",
     "@open-tender/components": "^3.3.13",
     "@open-tender/js": "^1.6.0",
-    "@open-tender/redux": "^2.1.2",
+    "@open-tender/redux": "^2.1.3",
     "@reduxjs/toolkit": "^1.6.0",
     "@sentry/react": "^6.7.2",
     "@testing-library/jest-dom": "^5.14.1",
