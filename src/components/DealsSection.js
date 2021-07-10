@@ -6,7 +6,7 @@ import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 import { Deals, Loading, PageSection } from '.'
 import { selectBrand, selectConfig } from '../slices'
 
-const DealsSection = ({ title = null, subtitle = null, limit = 3 }) => {
+const DealsSection = ({ title = null, subtitle = null, limit = 4 }) => {
   const dispatch = useDispatch()
   const { has_deals } = useSelector(selectBrand)
   const { deals: config } = useSelector(selectConfig)

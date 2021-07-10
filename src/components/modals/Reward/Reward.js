@@ -14,6 +14,7 @@ import {
 import { closeModal, openModal, selectAPI, selectBrand } from '../../../slices'
 import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
+import { makeLimitations } from '../../Reward'
 
 const RewardView = styled('div')`
   display: flex;
@@ -33,7 +34,7 @@ const RewardHeader = styled('div')`
 
   p:first-of-type {
     font-size: ${(props) => props.theme.fonts.sizes.h3};
-    line-height: 1;
+    line-height: 1.1;
     margin: 0;
   }
 
@@ -53,10 +54,11 @@ const RewardFinePrint = styled('div')`
 `
 
 const RewardContent = styled('div')`
+  width: 100%;
   margin: 1.5rem 0 1rem;
 
   p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     line-height: ${(props) => props.theme.lineHeight};
 
     button {
@@ -67,7 +69,27 @@ const RewardContent = styled('div')`
 
 const RewardQRCodeView = styled('div')`
   width: 16rem;
-  margin: 0 auto;
+  margin: 1rem auto;
+`
+
+const RewardNote = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.5rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+
+  span {
+    display: block;
+    line-height: 1.4;
+  }
+
+  span:first-of-type {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 0.4rem 0 0;
+    // color: ${(props) => props.theme.links.primary.color};
 `
 
 const errors = {
@@ -83,6 +105,7 @@ const Reward = ({ reward }) => {
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(null)
   const { title, description, imageUrl, expiration, service_type } = reward
+  const limitations = makeLimitations(reward)
   const api = useSelector(selectAPI)
   const { profile } = useSelector(selectCustomer)
   const { has_pos } = useSelector(selectBrand)
@@ -170,10 +193,13 @@ const Reward = ({ reward }) => {
             ) : imageUrl ? (
               <RewardImage src={imageUrl} alt={title} />
             ) : null}
-            <p>
-              To redeem online, add the relevant items to your cart and apply
-              this reward on the Checkout page
-            </p>
+            <RewardNote>{limitations}</RewardNote>
+            {service_type !== 'WALKIN' && (
+              <p>
+                To redeem online, add the relevant items to your cart and apply
+                this reward on the Checkout page
+              </p>
+            )}
             {hasQRCode && !qrCodeUrl && (
               <>
                 {error && (
