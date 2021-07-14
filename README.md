@@ -45,6 +45,82 @@ In order to leverage this, each time you push a new version to staging or produc
 
 This will guarantee that your users always get the latest version of the app, even if they don't refresh the page or load a new window when coming back to the app after they've already visited it.
 
+## `@open-tender` libraries
+
+The Open Tender web app relies heavily on three Open Tender libraries:
+
+### `@open-tender/redux`
+
+This library handles nearly all of the state management for the app and all of the interactions with the Open Tender API.
+
+It provides a number of Redux reducers, actions, async action creators, and selectors that are used extensively throughout the Open Tender web app. All of the state that comes from `@open-tender/redux` lives under the `data` attribute of the Redux store (see `store.js` for details). This includes nearly 30 reducers as of July 2021. See [the `@open-tender/redux` repo](https://github.com/open-tender/open-tender-redux) for the details of each of these reducers or just check out the state using the Redux dev tools.
+
+As an example, to fetch a list of restaurant locations (we can them "revenue centers" in Open Tender), you would simply dispatch an action like so:
+
+```javascript
+dispatch(fetchRevenueCenters({ type: 'OLO' }))
+```
+
+This will make a request to the Open Tender API to retrieve the restaurants of the `OLO` type for your brand and then load the response into the `data.revenueCenters` reducer, which looks like this:
+
+```javascript
+{
+  revenueCenters: [],
+  loading: 'idle',
+  error: null,
+}
+```
+
+You can then use the `selectRevenueCenters` selector to use the fetched revenue centers in your component like this:
+
+```javascript
+const { revenueCenters, loading, error } = useSelector(selectRevenueCenters)
+```
+
+### `@open-tender/js`
+
+This library provides a large number of utility and helper functions that are used extensively throughout the Open Tender web app, as well as the `@open-tender/redux` and `@open-tender/components` libraries. This includes loads of datetime functions, as well as functions related to cart management, checkout, and normalizing data. See [the `@open-tender/js` repo](https://github.com/open-tender/open-tender-js) for details.
+
+### `@open-tender/components`
+
+This library provides a number of the most complex components used by the Open Tender web app, including several `GoogleMaps` components, the menu item `Builder` component, and all of the forms (including the massive `CheckoutForm`). Many of these components have been decoupled into custom hooks and presentational components so you can customize the presentation while getting all the complex functionality "for free" (the `useBuilder` custom hook is a prime example). Please see [the `@open-tender/components` repo](https://github.com/open-tender/open-tender-components) for details.
+
+## Styling via Emotion (for CSS-in-JS & theme support)
+
+The Open Tender web app uses [Emotion](https://emotion.sh/docs/introduction) for CSS-in-JS and theme support, specifically the `@emotion/react` and `@emotion/styled` packages (so we rely on Emotion's styled components implementation).
+
+The Open Tender Admin Portal allows each brand to establish a theme through configuration - they can choose their fonts, font sizes, colors, and customize the appearance of various elements such as buttons and links. Once you or your client has established an Open Tender account, you should take a tour of all the different settings and see if / how it can be helpful for you, but here's a quick glimpse:
+
+![image](https://s3.amazonaws.com/betterboh/u/img/prod/2/1626298622_open-tender-styles-config-example.png)
+
+There are A LOT of styles that can be set this way. Of course, you can choose to ignore it entirely and set all your styles in your version of the web app itself, but **we encourage you to read on to understand how the theme works, regardless of how it's being populated**. The reason being that the components coming from the `@open-tender/components` library leverage the built-in theme, so you'll need to embrace it in some way if you want to use any of these out-of-the-box components (the `CheckoutForm`, for instance, is very complex because Open Tender accommodates a large number of tender types, gift cards, disocunts, surcharges, etc.).
+
+When the app initially loads, the first thing it does is make a request to the Open Tender `/order-api/config` endpoint, which returns an object that includes a `theme` attribute. An example of the theme object which can be seen [here](https://github.com/open-tender/open-tender-web/blob/main/THEME.md).
+
+This theme object is provided to the Emotion `ThemeProvider` component in the `App.js` component, which makes the theme available to all styled components via `props.theme` (see [the Theming section of the Emotion docs](https://emotion.sh/docs/theming)).
+
+This theme is then used extensively in the `GlobalStyles` component to establish the global styles of the app, leveraging `css`, `Global` and `withTheme` from Emotion. It's also used throughout many of the components themselves, so it's very helpful to understand how it works.
+
+## Configuration
+
+When the app initially loads, it makes a requst to the Open Tender `/order-api/config` endpoint to retrieve the content, styles, and other settings that the brand has configured in the Open Tender Admin Portal (see `/src/slices/configSlice` for details of how this works). This configuration data is used extensively throughout the app, and it's important that this data is up to date.
+
+The config object looks like this:
+
+```javascript
+{
+  "brand": {},
+  "clientId": "string",
+  "content": {},
+  "settings": {},
+  "theme": {}
+}
+```
+
+It gets loaded into the app state via the `config` reducer, and then gets used by the app to populate content on most of the pages of the app. By leveraging the `content` attribute, you can allow your customers to customize the copy throughout the app and change it over time without needing your help.
+
+The `configSlice` also establishes an API instance using the `OpenTenderAPI` class from `@open-tender/redux` library, which leverages the brand's API credentials to make requests to the Open Tender API. This is how the `@open-tender/redux` library makes all its requests to the API and updates the state of the app accordingly.
+
 ## Deploying to Production and Staging Environments
 
 The repo contains example `.env.production` and `.env.staging` files that you can use for deploying to production and staging environments. The important differences include the following environment variables:
@@ -61,7 +137,7 @@ Two other env vars are worth noting:
 
 ### `REACT_APP_SENTRY_DSN`
 
-The Open Tender web app supports Sentry for bug tracking, a
+The Open Tender web app supports Sentry for bug tracking. You will need to create a Sentry account and acquire a Sentry DSN to make use of this.
 
 ### `REACT_APP_RECAPTCHA_KEY`
 
