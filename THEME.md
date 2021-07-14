@@ -1,6 +1,6 @@
 # Open Tender Theme Example
 
-Current as of July 14, 2021, but meant to be a guide only. Please rely on the `theme` object that gets populated in the `config` reducer when the app initially loads for the definitive structure of the object.
+Current as of July 14, 2021, but meant to be a guide only. Please rely on the `theme` object that gets populated in the `config` reducer when the app initially loads for the definitive structure.
 
 ```json
 {

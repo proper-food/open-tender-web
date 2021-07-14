@@ -93,17 +93,17 @@ This library provides a number of the most complex components used by the Open T
 
 The Open Tender web app uses [Emotion](https://emotion.sh/docs/introduction) for CSS-in-JS and theme support, specifically the `@emotion/react` and `@emotion/styled` packages (so we rely on Emotion's styled components implementation).
 
-The Open Tender Admin Portal allows each brand to establish a theme through configuration - they can choose their fonts, font sizes, colors, and customize the appearance of various elements such as buttons and links. Once you or your client has established an Open Tender account, you should take a tour of all the different settings and see if / how it can be helpful for you, but here's a quick glimpse:
+The Open Tender Admin Portal allows each brand to establish a theme through configuration - they can choose their fonts, font sizes, colors, and customize the appearance of various elements such as buttons and links. Once your restaurant company has established an Open Tender account, you should take a tour of all the different style settings available via the Admin Portal and see if / how it can be helpful for you. Here's a quick glimpse:
 
 ![image](https://s3.amazonaws.com/betterboh/u/img/prod/2/1626298622_open-tender-styles-config-example.png)
 
-There are A LOT of styles that can be set this way. Of course, you can choose to ignore it entirely and set all your styles in your version of the web app itself, but **we encourage you to read on to understand how the theme works, regardless of how it's being populated**. The reason being that the components coming from the `@open-tender/components` library leverage the built-in theme, so you'll need to embrace it in some way if you want to use any of these out-of-the-box components (the `CheckoutForm`, for instance, is very complex because Open Tender accommodates a large number of tender types, gift cards, disocunts, surcharges, etc.).
+There are A LOT of styles that can be set this way. Of course, you can choose to ignore it entirely and set all your styles in your version of the web app itself, but **we encourage you to read on to understand how the theme works, regardless of how it's being populated**. The reason being that the components coming from the `@open-tender/components` library leverage the built-in theme, so you'll need to embrace it in some way if you want to use any of these out-of-the-box components. The `CheckoutForm` component, for instance, is a very complex component that perhaps you don't want to have to think about - no need to reinvent the wheel if you don't have to.
 
-When the app initially loads, the first thing it does is make a request to the Open Tender `/order-api/config` endpoint, which returns an object that includes a `theme` attribute. An example of the theme object which can be seen [here](https://github.com/open-tender/open-tender-web/blob/main/THEME.md).
+When the app initially loads, the first thing it does is make a request to the Open Tender `/order-api/config` endpoint, which returns a payload that includes a `theme` attribute. An example of the theme object can be seen [here](https://github.com/open-tender/open-tender-web/blob/main/THEME.md).
 
-This theme object is provided to the Emotion `ThemeProvider` component in the `App.js` component, which makes the theme available to all styled components via `props.theme` (see [the Theming section of the Emotion docs](https://emotion.sh/docs/theming)).
+This theme object is then provided to the Emotion `ThemeProvider` component in the `App` component, which makes the theme available to all lower level styled components via `props.theme` ([see the Theming section of the Emotion docs](https://emotion.sh/docs/theming)).
 
-This theme is then used extensively in the `GlobalStyles` component to establish the global styles of the app, leveraging `css`, `Global` and `withTheme` from Emotion. It's also used throughout many of the components themselves, so it's very helpful to understand how it works.
+The theme is used extensively in the `GlobalStyles` component to establish the global styles of the app, leveraging `css`, `Global` and `withTheme` from Emotion. It's also used throughout many of the components themselves, so it's very helpful to understand how it works.
 
 ## Configuration
 
@@ -123,9 +123,28 @@ The config object looks like this:
 
 It gets loaded into the app state via the `config` reducer, and then gets used by the app to populate content on most of the pages of the app. By leveraging the `content` attribute, you can allow your customers to customize the copy throughout the app and change it over time without needing your help.
 
-The `configSlice` also establishes an API instance using the `OpenTenderAPI` class from `@open-tender/redux` library, which leverages the brand's API credentials to make requests to the Open Tender API. This is how the `@open-tender/redux` library makes all its requests to the API and updates the state of the app accordingly.
+The `configSlice` also establishes an API instance using the `OpenTenderAPI` class from the `@open-tender/redux` library, which leverages the brand's API credentials to make requests to the Open Tender API. This is how the `@open-tender/redux` library makes all of its requests to the API and updates the state of the app accordingly.
+
+## Testing Credit Cards
+
+You can use the following card numbers for testing credit card payments:
+
+- Visa: `4111111111111111`
+- MasterCard: `5431111111111111`
+- Discover: `6011601160116611`
+- American Express: `341111111111111`
+
+For all cards:
+
+- Expiration: `10/25`
+- CVV: `999`
+- Zip code: `77777`
+
+**Please note that any amounts less than $1.00 will generate a failure.** Amounts $1.00 or greater will result in a successful transaction.
 
 ## Deploying to Production and Staging Environments
+
+Open Tender supports testing vs. both production and sandbox environments.
 
 The repo contains example `.env.production` and `.env.staging` files that you can use for deploying to production and staging environments. The important differences include the following environment variables:
 
