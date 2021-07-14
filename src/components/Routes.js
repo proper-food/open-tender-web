@@ -1,6 +1,5 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-// import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import {
   Accessibility,
   AccountAddresses,
@@ -40,15 +39,7 @@ import {
   MenuItem,
 } from './pages'
 
-// <TransitionGroup component={null}>
-//   <CSSTransition timeout={10000} classNames="fade" key={location.key}>
-//     <Switch location={location}>
-//     </Switch>
-//   </CSSTransition>
-// </TransitionGroup>
-
 const Routes = () => {
-  // const location = useLocation()
   return (
     <Switch>
       <Route exact path="/">
