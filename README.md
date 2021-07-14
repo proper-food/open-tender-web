@@ -1,8 +1,12 @@
 # Open Tender Web App
 
-An open source web app powered by the Open Tender e-commerce platform for restaurants.
+An open source web app powered by the Open Tender unified commerce platform for restaurants.
 
-## Getting started with the Open Tender Web App
+This app provides extensive e-commerce functionality for Open Tender customers. [Check out our demo site](https://web.opentender.io/) to get a sense for what this app is capable of (once you start an order, a good address to use is `240 E Illinois St, Chicago, IL`).
+
+The details of all of the available functionality are available on the [Online Ordering](https://www.opentender.io/products/olo) and [Catering](https://www.opentender.io/products/catering) pages of [the Open Tender website](https://www.opentender.io/). This web app handles both order types out of the box, including all manners of ordering: pickup, delivery, outpost, dine-in, catering, etc.
+
+## Getting Started
 
 This project was originally bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux Toolkit](https://redux-toolkit.js.org/) template. See the "Available Scripts" section below for guidance on basic usage.
 
@@ -25,7 +29,7 @@ REACT_APP_BRAND_ID=[OPEN_TENDER_BRAND_ID]
 
 An Open Tender client ID and brand ID will be provided by the Open Tender dev team once your company (if you're a restaurant) or your client (if you're a design agency) has established an Open Tender account. For more information about this, please visit the Open Tender website.
 
-Once those files have been added, run `yarn start` to start the app. The app should open up at http://localhost:3000, and it should be able to make requests to the Open Tender Sandbox API. Please note that you can change your port by adding `PORT=[PORT_NUMBER]` to your `.env.development` file, such as `PORT=3010`.
+Once those `.env` files have been added, run `yarn start` to start the app. The app should open up at http://localhost:3000, and it should be able to make requests to the Open Tender Sandbox API. Please note that you can change your port by adding `PORT=[PORT_NUMBER]` to your `.env.development` file, such as `PORT=3010`.
 
 ## Available Scripts
 
@@ -41,7 +45,7 @@ This is used for versioning of the app, which allows for cache busting on the cl
 
 In short, the `yarn prebuild` script updates the `meta.json` file that lives in the `public` directory. Each time the `maybeRefreshVersion()` function runs (which runs on every page load by default), it checks to see if the version of the user's app matches this version. If not, it will automatically reload the page, which ensures that the user has the latest and greatest code.
 
-In order to leverage this, each time you push a new version to staging or production, you should increment the app version using `yarn version` (typically in conjunction with one of the `--patch`, `--minor`, or `--major` flags, see [the docs on `yarn version` for details](https://classic.yarnpkg.com/en/docs/cli/version/)), and then run the `yarn prebuild` script and commit the updated `meta.json` file).
+In order to leverage this, each time you push a new version to staging or production, you should increment the app version using `yarn version` (typically in conjunction with one of the `--patch`, `--minor`, or `--major` flags, see [the docs on `yarn version` for details](https://classic.yarnpkg.com/en/docs/cli/version/)), and then run the `yarn prebuild` script and commit the updated `meta.json` file.
 
 This will guarantee that your users always get the latest version of the app, even if they don't refresh the page or load a new window when coming back to the app after they've already visited it.
 
@@ -103,7 +107,7 @@ This theme is then used extensively in the `GlobalStyles` component to establish
 
 ## Configuration
 
-When the app initially loads, it makes a requst to the Open Tender `/order-api/config` endpoint to retrieve the content, styles, and other settings that the brand has configured in the Open Tender Admin Portal (see `/src/slices/configSlice` for details of how this works). This configuration data is used extensively throughout the app, and it's important that this data is up to date.
+When the app initially loads, it makes a requst to the Open Tender `/order-api/config` endpoint to retrieve the content, styles, and other settings that the brand has configured in the Open Tender Admin Portal (see `src/slices/configSlice` for details of how this works). This configuration data is used extensively throughout the app, and it's important that this data is up to date.
 
 The config object looks like this:
 
