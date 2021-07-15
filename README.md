@@ -4,7 +4,7 @@ An open source web app powered by the Open Tender unified commerce platform for 
 
 ![image](https://s3.amazonaws.com/betterboh/u/img/prod/2/1626303523_docs_open-tender-web_1800x1041.jpg)
 
-This app provides extensive e-commerce functionality for Open Tender customers. [Check out our demo site](https://web.opentender.io/) to get a sense for what this app is capable of (once you start an order, a good address to use is `240 E Illinois St, Chicago, IL`).
+This app provides extensive e-commerce functionality for Open Tender customers. [Check out our demo site](https://web.opentender.io/) to get a sense for what it's capable of (once you start an order, a good address to use is `240 E Illinois St, Chicago, IL`).
 
 The details of all of the available functionality are available on the [Online Ordering](https://www.opentender.io/products/olo) and [Catering](https://www.opentender.io/products/catering) pages of [the Open Tender website](https://www.opentender.io/). This web app handles both order types out of the box, including all manners of ordering: pickup, delivery, outpost, dine-in, catering, etc.
 
