@@ -14,7 +14,7 @@ import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
 import { maybeRefreshVersion } from '../../../app/version'
 import {
   openModal,
-  selectAPI,
+  selectApi,
   selectBrand,
   selectConfig,
   selectOptIns,
@@ -59,7 +59,7 @@ const SignUp = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const posToken = useQuery().get('pos-token')
-  const api = useSelector(selectAPI)
+  const api = useSelector(selectApi)
   const { signUp: signupConfig } = useSelector(selectConfig)
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)

@@ -43,7 +43,7 @@ import { CheckoutForm, FormError } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
-import { selectAPI, selectBrand, selectConfig } from '../../../slices'
+import { selectApi, selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -86,7 +86,7 @@ const Checkout = () => {
   const brand = useSelector(selectBrand)
   const { title, has_thanx } = brand
   const { checkout: config } = useSelector(selectConfig)
-  const api = useSelector(selectAPI)
+  const api = useSelector(selectApi)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)

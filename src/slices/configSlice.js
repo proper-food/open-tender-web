@@ -100,7 +100,7 @@ export const selectBrand = (state) => state.config.brand
 export const selectTheme = (state) => state.config.theme
 export const selectConfig = (state) => state.config.content
 export const selectSettings = (state) => state.config.settings
-export const selectAPI = (state) => state.config.api
+export const selectApi = (state) => state.config.api
 
 export const selectAccountConfig = (state) => state.config.content.account
 export const selectOutpostName = (state) =>

@@ -11,7 +11,7 @@ import {
   Message,
 } from '@open-tender/components'
 
-import { closeModal, openModal, selectAPI, selectBrand } from '../../../slices'
+import { closeModal, openModal, selectApi, selectBrand } from '../../../slices'
 import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
 import { makeLimitations } from '../../Reward'
@@ -106,7 +106,7 @@ const Reward = ({ reward }) => {
   const [error, setError] = useState(null)
   const { title, description, imageUrl, expiration, service_type } = reward
   const limitations = makeLimitations(reward)
-  const api = useSelector(selectAPI)
+  const api = useSelector(selectApi)
   const { profile } = useSelector(selectCustomer)
   const { has_pos } = useSelector(selectBrand)
   const { customer_id, is_verified } = profile || {}
