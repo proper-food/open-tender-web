@@ -1,6 +1,6 @@
 {
   "name": "open-tender-web",
-  "version": "2.2.13",
+  "version": "2.2.14",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.1.4",
