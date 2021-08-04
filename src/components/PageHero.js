@@ -43,8 +43,8 @@ const PageHeroGreeting = styled('div')`
 `
 
 const makeImageUrl = (images, isBrowser) => {
-  return images.find((i) =>
-    i.type === isBrowser ? 'FEATURED_IMAGE' : 'SECONDARY_IMAGE'
+  return images.find(
+    (i) => i.type === (isBrowser ? 'FEATURED_IMAGE' : 'SECONDARY_IMAGE')
   ).url
 }
 
