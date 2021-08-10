@@ -24,6 +24,7 @@ Sentry.init({
     'TypeError: cancelled',
     'TypeError: Illegal invocation',
     'ReferenceError: fbq is not defined',
+    "ReferenceError: Can't find variable: fbq",
     'Error: Extension context invalidated',
     'MapsRequestError',
   ],

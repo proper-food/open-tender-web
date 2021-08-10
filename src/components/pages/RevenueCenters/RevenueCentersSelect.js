@@ -91,13 +91,8 @@ const RevenueCentersSelect = () => {
   const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
-  const {
-    serviceType,
-    orderType,
-    isOutpost,
-    address,
-    requestedAt,
-  } = useSelector(selectOrder)
+  const { serviceType, orderType, isOutpost, address, requestedAt } =
+    useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
   const [title, setTitle] = useState(rcConfig.title)

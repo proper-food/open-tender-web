@@ -60,12 +60,10 @@ const MenuPage = () => {
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
-  const { revenueCenterId, serviceType, requestedAt } = useSelector(
-    selectMenuVars
-  )
-  let { revenueCenters, categories, soldOut, error, loading } = useSelector(
-    selectMenu
-  )
+  const { revenueCenterId, serviceType, requestedAt } =
+    useSelector(selectMenuVars)
+  let { revenueCenters, categories, soldOut, error, loading } =
+    useSelector(selectMenu)
   const isLoading = loading === 'pending'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
