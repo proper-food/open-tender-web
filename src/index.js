@@ -27,6 +27,8 @@ Sentry.init({
     "ReferenceError: Can't find variable: fbq",
     'Error: Extension context invalidated',
     'MapsRequestError',
+    'Could not load "stats".',
+    'Could not load "places_impl".',
   ],
 })
 
