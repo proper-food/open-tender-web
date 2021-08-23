@@ -37,6 +37,7 @@ import {
   Thanx,
   VerifyAccount,
   MenuItem,
+  CheckoutGuest,
 } from './pages'
 
 const Routes = () => {
@@ -95,6 +96,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/checkout">
         <Checkout />
+      </Route>
+      <Route exact path="/checkout/guest">
+        <CheckoutGuest />
       </Route>
       <Route exact path="/confirmation">
         <Confirmation />

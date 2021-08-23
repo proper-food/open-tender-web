@@ -7,6 +7,7 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Checkout from './Checkout'
+import CheckoutGuest from './CheckoutGuest'
 import Confirmation from './Confirmation'
 import Deals from './Deals'
 import Donations from './Donations'
@@ -49,6 +50,7 @@ export {
   AccountSettings,
   Catering,
   Checkout,
+  CheckoutGuest,
   Confirmation,
   Deals,
   Donations,
