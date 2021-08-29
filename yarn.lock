@@ -1674,18 +1674,18 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-tender/components@^3.3.18":
-  version "3.3.18"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.3.18.tgz#db3d62cb4e1eec6cfc7124428086057514ca25e0"
-  integrity sha512-8ylb1PXYVSBiVXP1K+XaWWhioTPBDLZ6uaQpNe9SNwTMzHAQnIu81mqt0ZDguWvv0FKaiu6a8aDViMOR0fTFEQ==
+"@open-tender/components@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.4.2.tgz#8dbc14184d9478b2849021053d907eb2c2585069"
+  integrity sha512-11xUvsttCCdU6JyRsHdMxeaht/LOkx92jaNqNpGCYEE856MLaB6aMY1F0DyRT8P8MXzVwKAwLYCpTy3jJADvcQ==
   dependencies:
     "@google-pay/button-react" "^2.1.5"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.2.tgz#3b9c753f1444899041c1145ba35a19153e47edca"
-  integrity sha512-G1WyLeD8x8yQXF/Zzv2fmzBGNeWGNeYQziopXVvk3ZNTQqMjCoR/5rb+Q6CWVA8OD7kuJ1SZ7paU1TElMZPDkA==
+"@open-tender/js@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.3.tgz#6692fac03939d55b81fbea06afee3f2c4b1fb747"
+  integrity sha512-8mCjTnvUgpp/KWT9OIqdB4f5/XkFx3u6QiqAsaK2A81vxHLbo09QVFOdErn3nTNu7RYlEq62dTa9ToqPSuss/g==
 
 "@open-tender/redux@^2.2.1":
   version "2.2.1"
