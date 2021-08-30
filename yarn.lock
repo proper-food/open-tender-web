@@ -1682,10 +1682,10 @@
     "@google-pay/button-react" "^2.1.5"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^1.7.3":
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.3.tgz#6692fac03939d55b81fbea06afee3f2c4b1fb747"
-  integrity sha512-8mCjTnvUgpp/KWT9OIqdB4f5/XkFx3u6QiqAsaK2A81vxHLbo09QVFOdErn3nTNu7RYlEq62dTa9ToqPSuss/g==
+"@open-tender/js@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.4.tgz#01c1120cfd42888345bbed2a2cc50dfc0c805e1f"
+  integrity sha512-fMVAIMwQ3IW3WIEVQkNEIgBE0xHOP19voFGwHHCvXuhND7il2zAS462Gc8369s6y4grytE3UPz2vpl2iG0B75w==
 
 "@open-tender/redux@^2.2.1":
   version "2.2.1"
