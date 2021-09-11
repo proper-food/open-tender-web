@@ -1682,15 +1682,15 @@
     "@google-pay/button-react" "^2.1.5"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^1.7.4":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.4.tgz#01c1120cfd42888345bbed2a2cc50dfc0c805e1f"
-  integrity sha512-fMVAIMwQ3IW3WIEVQkNEIgBE0xHOP19voFGwHHCvXuhND7il2zAS462Gc8369s6y4grytE3UPz2vpl2iG0B75w==
+"@open-tender/js@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.7.5.tgz#4759afeed496e88f2cd48e16d8de41e928eefacc"
+  integrity sha512-R6WASPA79QPpYIWsX4GxqaLm32BFFLFhp0XI+8Y9ozB9zQfiRbEMhaeO7KUlS8hGmHDfj/oFKAZtoE4A/JMGkg==
 
-"@open-tender/redux@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.2.1.tgz#4ac4b0c525f6b4eff60152562bc7d37a81917d7f"
-  integrity sha512-g9QU7qKuSIX3rBvFKp9ndOferRgIQ89zUs9GB1ivvcPAqMY1CVWIsyXwwcRNJGD0Q2fLz/YbuWcYsP8dIU+UVg==
+"@open-tender/redux@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.5.0.tgz#a4fa9aaf9e56969d3d77f058705183d2309a8346"
+  integrity sha512-vBFSZWtBvfZnJeTaIyDRz3c+cx29fcpUvtuGxdCSJ5KuF3biP183MNAA0kAR56Xrn/6B/lHObGnuD52S0WiN6Q==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
