@@ -30,6 +30,7 @@ Sentry.init({
     'Could not load "stats".',
     'Could not load "places_impl".',
     "Either header 'client-id' or 'origin' is required",
+    'Object Not Found Matching',
   ],
 })
 
