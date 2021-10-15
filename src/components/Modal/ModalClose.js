@@ -15,14 +15,14 @@ const ModalCloseX = styled('button')`
   right: 7px;
   display: inline;
   font-size: inherit;
-  color: ${(props) => props.theme.links.primary.color};
+  color: ${(props) => props.color || props.theme.links.primary.color};
   &:hover,
   &:active,
   &:focus {
-    color: ${(props) => props.theme.links.primary.hover};
+    color: ${(props) => props.hoverColor || props.theme.links.primary.hover};
   }
   &:disabled {
-    color: ${(props) => props.theme.links.primary.color};
+    color: ${(props) => props.color || props.theme.links.primary.color};
     opacity: 0.5;
   }
 `
@@ -45,12 +45,12 @@ const ModalCloseButton = styled('div')`
   }
 `
 
-const ModalClose = ({ onClick, isButton = false }) => {
+const ModalClose = ({ onClick, isButton = false, color, hoverColor }) => {
   const dispatch = useDispatch()
-  const handleClose = useMemo(() => onClick || (() => dispatch(closeModal())), [
-    onClick,
-    dispatch,
-  ])
+  const handleClose = useMemo(
+    () => onClick || (() => dispatch(closeModal())),
+    [onClick, dispatch]
+  )
 
   const handleEscape = useCallback(
     (evt) => {
@@ -76,7 +76,12 @@ const ModalClose = ({ onClick, isButton = false }) => {
       </ButtonStyled>
     </ModalCloseButton>
   ) : (
-    <ModalCloseX onClick={handleClose} aria-label="Close dialog">
+    <ModalCloseX
+      onClick={handleClose}
+      aria-label="Close dialog"
+      color={color}
+      hoverColor={hoverColor}
+    >
       <X size={20} />
     </ModalCloseX>
   )
@@ -86,6 +91,8 @@ ModalClose.displayName = 'ModalClose'
 ModalClose.propTypes = {
   onClick: propTypes.func,
   isButton: propTypes.bool,
+  color: propTypes.string,
+  hoverColor: propTypes.string,
 }
 
 export default ModalClose

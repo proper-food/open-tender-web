@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
@@ -182,6 +182,11 @@ const Nav = React.forwardRef((props, ref) => {
   if (!has_deals) removed.push('/deals')
   const buttons = profile ? navButtons : guestButtons
   const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
+  const callback = useCallback(
+    () => dispatch(openModal({ type: 'loginThanx' })),
+    [dispatch]
+  )
+  const args = has_thanx ? { callback } : {}
 
   const closeGo = (evt, path) => {
     evt.target.blur()
@@ -196,7 +201,7 @@ const Nav = React.forwardRef((props, ref) => {
     evt.preventDefault()
     evt.stopPropagation()
     dispatch(toggleNav())
-    dispatch(openModal({ type: 'login' }))
+    dispatch(openModal({ type: 'login', args }))
   }
 
   const logout = (evt) => {

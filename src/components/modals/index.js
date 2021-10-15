@@ -12,6 +12,7 @@ import GiftCardAssignOther from './GiftCardAssignOther'
 import GroupOrder from './GroupOrder'
 import LevelUp from './LevelUp'
 import Login from './Login'
+import LoginThanx from './LoginThanx'
 import LoyaltyTier from './LoyaltyTier'
 import MenuItem from './MenuItem'
 import OrderRating from './OrderRating'
@@ -38,6 +39,7 @@ export {
   GroupOrder,
   LevelUp,
   Login,
+  LoginThanx,
   LoyaltyTier,
   MenuItem,
   OrderRating,

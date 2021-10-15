@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
@@ -47,6 +47,7 @@ const AlertView = styled('li')`
 
 const Alert = ({ message, id }) => {
   const dispatch = useDispatch()
+  const [skip, setSkip] = useState(false)
 
   const handleRemove = (evt) => {
     evt.preventDefault()
@@ -54,6 +55,14 @@ const Alert = ({ message, id }) => {
     evt.target.blur()
   }
 
+  useEffect(() => {
+    if (message === 'Thanks! Please check your email on this device.') {
+      dispatch(removeMessage(id))
+      setSkip(true)
+    }
+  }, [dispatch, message, id])
+
+  if (skip) return null
   return (
     <AlertView>
       <span>

@@ -18,10 +18,6 @@ const AlertsView = styled('div')`
 
 const Alerts = () => {
   const messages = useSelector(selectMessages)
-  // const messages = [
-  //   { id: 1, message: 'Requested time updated' },
-  //   { id: 2, message: 'Requested time updated' },
-  // ]
 
   return (
     <AlertsView>

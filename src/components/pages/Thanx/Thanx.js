@@ -7,7 +7,7 @@ import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand } from '../../../slices'
+import { closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -41,7 +41,8 @@ const Thanx = () => {
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
-  }, [windowRef])
+    dispatch(closeModal())
+  }, [windowRef, dispatch])
 
   useEffect(() => {
     if (auth) {

@@ -22,6 +22,7 @@ import {
   GroupOrder,
   LevelUp,
   Login,
+  LoginThanx,
   LoyaltyTier,
   MenuItem,
   OrderRating,
@@ -66,6 +67,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <LevelUp windowRef={windowRef} {...args} />
     case 'login':
       return <Login {...args} />
+    case 'loginThanx':
+      return <LoginThanx {...args} />
     case 'loyaltyTier':
       return <LoyaltyTier {...args} />
     case 'orderType':

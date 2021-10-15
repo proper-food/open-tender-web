@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,18 +10,24 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { openModal } from '../../slices'
+import { openModal, selectBrand } from '../../slices'
 import iconMap from '../iconMap'
 import { NavMenu } from '.'
 
 const Account = ({ color, style = null, useButton = false }) => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { has_thanx } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { cartGuest } = useSelector(selectGroupOrder)
   const { pathname } = useLocation()
   const isAccount = pathname.includes('account')
   const isJoinGroup = pathname.includes('join')
+  const callback = useCallback(
+    () => dispatch(openModal({ type: 'loginThanx' })),
+    [dispatch]
+  )
+  const args = has_thanx ? { callback } : {}
 
   if (cartGuest || isJoinGroup) return null
 
@@ -54,7 +60,7 @@ const Account = ({ color, style = null, useButton = false }) => {
     )
   ) : (
     <ButtonStyled
-      onClick={() => dispatch(openModal({ type: 'login' }))}
+      onClick={() => dispatch(openModal({ type: 'login', args }))}
       label="Log into your account"
       icon={iconMap.UserPlus}
       color="header"
