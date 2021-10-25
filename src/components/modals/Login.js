@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectCustomer,
   selectResetPassword,
@@ -30,7 +31,7 @@ const messaging = {
   thanx: {
     title: 'Log into your account',
     subtitle:
-      "Please enter your email address, and we'll send you an email with a magic link that logs you into your account automatically.",
+      'Already a member of our loyalty program through Thanx? Enter your email address, and we’ll send you a confirmation link!',
   },
   reset: {
     title: 'Reset your password',
@@ -44,6 +45,10 @@ const messaging = {
     reset: 'Back to login form',
   },
 }
+
+const LoginModalIntro = styled('p')`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
 
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
@@ -103,17 +108,21 @@ const LoginModal = ({ callback }) => {
         title={msg.title}
         subtitle={
           <>
-            <p>
+            <LoginModalIntro>
               {msg.subtitle}{' '}
               {mode === 'login' && (
                 <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
               )}
-            </p>
+            </LoginModalIntro>
             {mode === 'thanx' && (
-              <p>
-                Don't have an account yet?{' '}
-                <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
-              </p>
+              <LoginModalIntro>
+                Not yet a member of our loyalty program?{' '}
+                <ButtonLink onClick={signUp}>Sign-up for it here</ButtonLink>{' '}
+                using the same email address you’ve been using with Proper Food,
+                & we’ll link the two accounts together. You’ll have all your
+                previous ordering history and favorites - and can now begin
+                earning Proper Rewards!
+              </LoginModalIntro>
             )}
           </>
         }

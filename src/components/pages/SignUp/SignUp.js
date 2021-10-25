@@ -1,7 +1,9 @@
 import React, { useEffect, useCallback, useContext } from 'react'
+import propTypes from 'prop-types'
 import { useHistory, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import styled from '@emotion/styled'
 import {
   selectCustomer,
   selectSignUp,
@@ -29,8 +31,12 @@ import {
   PageContent,
 } from '../..'
 
-export const ThanxTerms = () => (
-  <p>
+const ThanxTermsView = styled('p')`
+  font-size: ${(props) => props.theme.fonts.sizes[props.fontSize]};
+`
+
+export const ThanxTerms = ({ fontSize = 'main' }) => (
+  <ThanxTermsView fontSize={fontSize}>
     By signing up you agree to our{' '}
     <a
       href="https://app.thanx.com/privacy"
@@ -48,8 +54,13 @@ export const ThanxTerms = () => (
       terms of service
     </a>
     .
-  </p>
+  </ThanxTermsView>
 )
+
+ThanxTerms.displayName = 'ThanxTerms'
+ThanxTerms.propTypes = {
+  fontSize: propTypes.string,
+}
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search)

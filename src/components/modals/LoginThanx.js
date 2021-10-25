@@ -7,7 +7,7 @@ import { Heart } from 'react-feather'
 import { useTheme } from '@emotion/react'
 
 const LoginThanxContent = styled('div')`
-  padding: 4rem;
+  padding: 4rem 4rem 3rem;
   text-align: center;
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors.alert};
@@ -39,6 +39,15 @@ const LoginThanxHeart = styled('span')`
   }
 `
 
+const LoginThanxFootnote2 = styled('div')`
+  margin-top: 1.5rem;
+
+  p {
+    line-height: 1.5;
+    font-size: 1.4rem;
+  }
+`
+
 const LoginThanx = () => {
   const theme = useTheme()
   return (
@@ -64,6 +73,13 @@ const LoginThanx = () => {
               </LoginThanxHeart>
             </Text>
           </LoginThanxFootnote>
+          <LoginThanxFootnote2>
+            <Text as="p">
+              Oops, still nothing? Please make sure you have a Thanx account
+              with the same email address.
+            </Text>
+            <Text as="p">If not, go back & click 'Create an Account'.</Text>
+          </LoginThanxFootnote2>
         </LoginThanxContent>
       </ModalContent>
     </ModalView>

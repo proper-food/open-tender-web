@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectSignUp, signUpCustomer, resetSignUp } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
@@ -7,6 +8,10 @@ import { SignUpForm } from '@open-tender/components'
 import { closeModal, selectBrand, selectOptIns } from '../../slices'
 import { ModalContent, ModalView } from '..'
 import { ThanxTerms } from '../pages/SignUp/SignUp'
+
+const SignUpIntro = styled('p')`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
 
 const SignUp = ({ windowRef }) => {
   const dispatch = useDispatch()
@@ -32,12 +37,17 @@ const SignUp = ({ windowRef }) => {
   return (
     <ModalView>
       <ModalContent
-        title="Sign up for an account"
+        title="Sign-up for an account"
         subtitle={
-          <p>Please provide the info below, and you'll be off to the races!</p>
+          <SignUpIntro>
+            Enter your information below & you’ll be off to the races! Returning
+            Proper customers, please use the same email address you’ve used
+            previously to order with Proper. You’ll have all your previous
+            ordering history & can now begin earning Proper rewards!
+          </SignUpIntro>
         }
       >
-        {has_thanx && <ThanxTerms />}
+        {has_thanx && <ThanxTerms fontSize="small" />}
         <SignUpForm
           loading={loading}
           error={error}
