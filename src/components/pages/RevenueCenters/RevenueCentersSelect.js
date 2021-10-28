@@ -8,6 +8,7 @@ import {
   setRevenueCenter,
   selectAutoSelect,
   resetOrderType,
+  fetchLocations,
   fetchRevenueCenters,
   selectRevenueCenters,
   resetCheckout,
@@ -116,7 +117,8 @@ const RevenueCentersSelect = () => {
       if (orderType === 'CATERING' && requestedAt) {
         params = { ...params, requestedAt }
       }
-      dispatch(fetchRevenueCenters(params))
+      // dispatch(fetchRevenueCenters(params))
+      dispatch(fetchLocations(params))
     }
   }, [orderType, isOutpost, coords, requestedAt, dispatch])
 

@@ -18,8 +18,8 @@ const GroupOrder = ({
   const history = useHistory()
   const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
   const { revenueCenter } = useSelector(selectOrder)
-  const hasGroupOrdering =
-    revenueCenter && revenueCenter.settings.group_ordering
+  const settings = revenueCenter ? revenueCenter.settings || revenueCenter : {}
+  const hasGroupOrdering = settings.group_ordering
 
   const onClick = () => {
     const reviewOrders = () => history.push(`/review`)

@@ -58,8 +58,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
   const history = useHistory()
   const { serviceType, requestedAt } = useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
-  const hasGroupOrdering =
-    revenueCenter && revenueCenter.settings.group_ordering
+  const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering
   const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
