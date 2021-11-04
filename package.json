@@ -1,13 +1,13 @@
 {
   "name": "open-tender-web",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
     "@open-tender/components": "^3.4.2",
-    "@open-tender/js": "^1.7.5",
-    "@open-tender/redux": "^2.5.0",
+    "@open-tender/js": "^1.7.8",
+    "@open-tender/redux": "^2.5.2",
     "@reduxjs/toolkit": "^1.5.0",
     "@sentry/react": "^5.29.2",
     "@testing-library/jest-dom": "^5.11.6",
