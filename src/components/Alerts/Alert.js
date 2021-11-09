@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
 import { removeMessage } from '@open-tender/redux'
@@ -45,8 +46,12 @@ const AlertView = styled('li')`
   }
 `
 
+const thanxMsg = 'Thanks! Please check your email on this device.'
+
 const Alert = ({ message, id }) => {
   const dispatch = useDispatch()
+  const { pathname } = useLocation()
+  const isCheckout = pathname.includes('checkout')
   const [skip, setSkip] = useState(false)
 
   const handleRemove = (evt) => {
@@ -56,11 +61,11 @@ const Alert = ({ message, id }) => {
   }
 
   useEffect(() => {
-    if (message === 'Thanks! Please check your email on this device.') {
+    if (!isCheckout && message === thanxMsg) {
       dispatch(removeMessage(id))
       setSkip(true)
     }
-  }, [dispatch, message, id])
+  }, [dispatch, message, id, isCheckout])
 
   if (skip) return null
   return (
