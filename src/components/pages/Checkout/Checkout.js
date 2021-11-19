@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useCallback, useContext, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -43,7 +43,12 @@ import { CheckoutForm, FormError } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
-import { selectAPI, selectBrand, selectConfig } from '../../../slices'
+import {
+  openModal,
+  selectAPI,
+  selectBrand,
+  selectConfig,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -123,6 +128,11 @@ const Checkout = () => {
   }
   const { windowRef } = useContext(AppContext)
   const deviceTypeName = makeDeviceType(deviceType)
+
+  const callback = useCallback(
+    () => dispatch(openModal({ type: 'loginThanx' })),
+    [dispatch]
+  )
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -207,6 +217,7 @@ const Checkout = () => {
               api={api}
               spinner={<Loading />}
               brand={brand}
+              loginCallback={callback}
             />
           </div>
         </Main>

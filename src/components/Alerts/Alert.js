@@ -61,7 +61,7 @@ const Alert = ({ message, id }) => {
   }
 
   useEffect(() => {
-    if (!isCheckout && message === thanxMsg) {
+    if (message === thanxMsg) {
       dispatch(removeMessage(id))
       setSkip(true)
     }
