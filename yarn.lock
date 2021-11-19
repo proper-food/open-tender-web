@@ -1397,12 +1397,12 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@google-pay/button-react@^2.1.5":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@google-pay/button-react/-/button-react-2.4.1.tgz#d4fa2fe59863906d811fbaf3f21b7ef851f49115"
-  integrity sha512-hZA9TKsJtp6P4p9kur1xbk5KSbpZqqukSmO4LalyhG9r24DgQ6+nyAVoK+6eH4kCn4j3O814J1E9GMkyE9lP2w==
+"@google-pay/button-react@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@google-pay/button-react/-/button-react-3.0.0.tgz#141d89d76a5279ab4a2cc214b1b4f34bae873fc1"
+  integrity sha512-GFRlPrr4rK4iZz1EqsdSDG/gP/UjUAGg+fU3Ar7OacquhCkn2Npr5Bqh7Zyxztx3WzsSYDWA2VPaXIr/JQq0BQ==
   dependencies:
-    "@types/googlepay" "^0.6.1"
+    "@types/googlepay" "^0.6.3"
 
 "@hapi/address@2.x.x":
   version "2.1.4"
@@ -1663,12 +1663,12 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-tender/components@^3.3.13":
-  version "3.3.13"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.3.13.tgz#dd15a46f5f5d8b5725f492bef43c26b1a721d294"
-  integrity sha512-AnECtfGo4CE2ASmhGrgnEzyf43Eov74Ono9yFP7GMPATLCazsuVTlcd1K3CpQoeGiO3dqPx2KPoXPuvYK8Bh4Q==
+"@open-tender/components@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.5.0.tgz#2d851b5ba46ab7733bf79c029f12f2eb8aa7786c"
+  integrity sha512-JZEGIA3IMcz9BTm9iQxZAK84etBGnq6FZqCdySM/MUh6+AtXHsUYBeTd/QY7Z4dEQpZNmYGoN2Gr3pKfSsaZwA==
   dependencies:
-    "@google-pay/button-react" "^2.1.5"
+    "@google-pay/button-react" "^3.0.0"
     react-google-recaptcha "^2.1.0"
 
 "@open-tender/js@^1.6.0":
@@ -2038,10 +2038,10 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/googlepay@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@types/googlepay/-/googlepay-0.6.1.tgz#6010dee7fce6764fd613e97b1de46bd134b09494"
-  integrity sha512-vx4wwIRIF7h7ajxGVszzlVXAOFYJdb8dPhKFIXRYPRK1+yewSfqLmAZSjkQA3EqIQWCNplohV+bzD9RFklZgpg==
+"@types/googlepay@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@types/googlepay/-/googlepay-0.6.3.tgz#4e716556b904c9af5263255bf872b81ee4073d4d"
+  integrity sha512-mA9d9UoSAKbfcP3xYvTtpyBTxFytu1bwjquy8oZdZPG8z0xnfQwtmTI4F44ptyz8OBWiCmvBj8QR0Rb2D/hQXg==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
