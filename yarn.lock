@@ -1410,10 +1410,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@google-pay/button-react@^2.1.5":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@google-pay/button-react/-/button-react-2.6.0.tgz#b8ed21c8765310912500edd5ba79a1c2d9a07e42"
-  integrity sha512-0NgQndvcsug5lvXfQPakPPS2pBUj47VQtIFlXtKHc5e+IyZ6dsqKR/ng15esXJvcGG6Migrl3mcdIrypEHZ3Iw==
+"@google-pay/button-react@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@google-pay/button-react/-/button-react-3.0.0.tgz#141d89d76a5279ab4a2cc214b1b4f34bae873fc1"
+  integrity sha512-GFRlPrr4rK4iZz1EqsdSDG/gP/UjUAGg+fU3Ar7OacquhCkn2Npr5Bqh7Zyxztx3WzsSYDWA2VPaXIr/JQq0BQ==
   dependencies:
     "@types/googlepay" "^0.6.3"
 
@@ -1698,12 +1698,12 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-tender/components@^3.4.5":
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.4.5.tgz#e1ee1a35a5729f9b0cb6da66ae7133eec813d545"
-  integrity sha512-8F7qsupeIsGJjkuKkwYiO3pP3Y2q2zu6G+rq4l/1Bwe4KYJuAunhdpZoy+y4QIMztAU6UTzqI306QtCo55O5FA==
+"@open-tender/components@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.5.0.tgz#2d851b5ba46ab7733bf79c029f12f2eb8aa7786c"
+  integrity sha512-JZEGIA3IMcz9BTm9iQxZAK84etBGnq6FZqCdySM/MUh6+AtXHsUYBeTd/QY7Z4dEQpZNmYGoN2Gr3pKfSsaZwA==
   dependencies:
-    "@google-pay/button-react" "^2.1.5"
+    "@google-pay/button-react" "^3.0.0"
     react-google-recaptcha "^2.1.0"
 
 "@open-tender/js@^1.7.8":
