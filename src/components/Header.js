@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
 import { useTheme } from '@emotion/react'
 
@@ -93,20 +92,18 @@ const Header = ({
   const { navHeight, navHeightMobile } = theme.layout
   const height = isBrowser ? navHeight : navHeightMobile
   const [stuck, setStuck] = useState(false)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    const winRef = windowRef.current
     const handleScroll = () => {
       if (header.current) {
         setStuck(header.current.getBoundingClientRect().top < 0)
       }
     }
-    winRef.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      winRef.removeEventListener('scroll', () => handleScroll)
+      window.removeEventListener('scroll', () => handleScroll)
     }
-  }, [windowRef])
+  }, [])
 
   const adjustedBorderColor =
     borderColor === 'primary' && stuck ? 'secondary' : borderColor
