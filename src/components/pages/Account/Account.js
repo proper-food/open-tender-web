@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
@@ -12,9 +12,7 @@ import {
   fetchAnnouncementPage,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Greeting,
@@ -46,13 +44,10 @@ const Account = () => {
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(closeModal())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     if (!token) return history.push('/')

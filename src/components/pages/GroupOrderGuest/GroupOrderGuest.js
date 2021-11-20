@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -21,9 +21,7 @@ import {
   ButtonStyled,
 } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
   Content,
@@ -187,13 +185,6 @@ const GroupOrderGuest = () => {
     (data, callback) => dispatch(joinGroupOrder(data, callback)),
     [dispatch]
   )
-
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (isCartOwner) {

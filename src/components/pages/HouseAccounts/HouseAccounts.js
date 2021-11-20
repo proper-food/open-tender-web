@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -9,7 +9,6 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   AccountBack,
@@ -22,7 +21,6 @@ import {
   PageError,
   PageTitle,
 } from '../..'
-import { AppContext } from '../../../App'
 import HouseAccountsList from './HouseAccountsList'
 import AccountTabs from '../Account/AccountTabs'
 
@@ -34,12 +32,6 @@ const AccountHouseAccounts = () => {
   const { houseAccounts: config } = useSelector(selectConfig)
   const { entities, loading, error } = useSelector(selectCustomerHouseAccounts)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

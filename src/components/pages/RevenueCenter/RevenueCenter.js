@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -10,7 +10,6 @@ import {
 } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectConfig,
@@ -18,7 +17,6 @@ import {
   setGeoError,
   setGeoLoading,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Background,
   Container,
@@ -49,16 +47,13 @@ const RevenueCenter = () => {
   const order = useSelector(selectOrder)
   const { revenueCenter, loading } = order
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
   const title = revenueCenter ? revenueCenter.name : config.title
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
     dispatch(fetchRevenueCenter(slug))
-  }, [dispatch, slug, windowRef])
+  }, [dispatch, slug])
 
   useEffect(() => {
     if (geoLatLng) {

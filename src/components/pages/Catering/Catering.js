@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -32,9 +32,7 @@ import {
   Text,
 } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import { Content, Header, Loading, Main, PageTitle } from '../..'
 import { Account, StartOver } from '../../buttons'
@@ -212,7 +210,6 @@ const CateringContentSection = ({ policy, startOver }) => {
 }
 
 const CateringPage = () => {
-  const { windowRef } = useContext(AppContext)
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
@@ -233,55 +230,11 @@ const CateringPage = () => {
     : null
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
     if (!hasTypes) {
       dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     }
     dispatch(fetchValidTimes('CATERING'))
   }, [hasTypes, dispatch])
-
-  // useEffect(() => {
-  //   const requestedAtDate =
-  //     !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
-  //   if (validTimes) {
-  //     const {
-  //       first_time,
-  //       holidays,
-  //       hours,
-  //       interval,
-  //       closed_weekdays,
-  //     } = validTimes
-  //     if (!first_time) {
-  //       setDate(requestedAtDate)
-  //     } else {
-  //       const firstDate = isoToDate(first_time.utc, tz)
-  //       const newDate =
-  //         !requestedAtDate || firstDate > requestedAtDate
-  //           ? firstDate
-  //           : requestedAtDate
-  //       setDate(newDate)
-  //       const closedWeekdays = makeWeekdayIndices(closed_weekdays)
-  //       const isClosed = (date) => {
-  //         return !closedWeekdays.includes(date.getDay())
-  //       }
-  //       const newSettings = {
-  //         minDate: firstDate,
-  //         minTime: time24ToDate(hours.open),
-  //         maxTime: time24ToDate(hours.close),
-  //         excludeDates: holidays.map((i) => makeLocalDate(i)),
-  //         interval: interval,
-  //         isClosed: isClosed,
-  //       }
-  //       setSettings(newSettings)
-  //     }
-  //   } else {
-  //     setDate(requestedAtDate)
-  //   }
-  // }, [validTimes, requestedAt, tz])
 
   useEffect(() => {
     if (validTimes) {

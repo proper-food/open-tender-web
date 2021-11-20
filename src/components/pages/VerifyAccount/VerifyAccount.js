@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,9 +10,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, Text } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -32,12 +30,6 @@ const VerifyAccount = () => {
   const title = 'Verify Account'
   const { title: siteTitle } = useSelector(selectBrand)
   const { success, loading, error } = useSelector(selectVerifyAccount)
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!verifyToken) {

@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import { Link } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -9,9 +8,7 @@ import {
   fetchAnnouncementPage,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import { Account, Deals as DealsButton, OrderNow } from '../../buttons'
 import {
   Content,
@@ -53,31 +50,19 @@ const GuestContent = styled('div')`
   }
 `
 
-// const GuestLinks = () => (
-//   <p>
-//     <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-//     <Link to="/donations">make a donation</Link>
-//     {/* <Link to="/contact">get in touch</Link> */}
-//   </p>
-// )
-
 const Guest = () => {
   const dispatch = useDispatch()
-  const { windowRef } = useContext(AppContext)
   const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, content, title, subtitle, showHero } = home
-  // const footnote = "Hint: you don't need an account to place an order."
   const hasContent = !!(content && content.length && content[0].length)
   const hasPageContent = hasContent || has_deals
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(closeModal())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('HOME'))

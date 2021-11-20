@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -11,9 +11,7 @@ import {
 import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, setGeoLatLng } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -45,13 +43,6 @@ const LevelUp = () => {
   const subtitle = errMsg
     ? 'Please review the error below and retry your request or contact request'
     : 'Please hang tight. This will only take a second.'
-
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (auth) {

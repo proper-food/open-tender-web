@@ -1,21 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { SkipLink, Footer } from '.'
 
+import { maybeRefreshVersion } from '../app/version'
+
 const ContentView = styled('div')`
+  label: ContentView;
+
   width: 100%;
+  height: 100%;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
 `
 
 const Content = ({
   maxWidth = '100%',
+  scrollTop = true,
   hasRouter = true,
   hasFooter = true,
   children,
   style = null,
 }) => {
+  useEffect(() => {
+    if (scrollTop) window.scrollTo(0, 0)
+    maybeRefreshVersion()
+  }, [scrollTop])
+
   return (
     <ContentView maxWidth={maxWidth} style={style}>
       <>
@@ -30,6 +41,7 @@ const Content = ({
 Content.displayName = 'Content'
 Content.propTypes = {
   maxWidth: propTypes.string,
+  scrollTop: propTypes.bool,
   hasRouter: propTypes.bool,
   hasFooter: propTypes.bool,
   children: propTypes.oneOfType([

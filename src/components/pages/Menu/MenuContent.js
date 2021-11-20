@@ -19,7 +19,6 @@ import MenuCategories from './MenuCategories'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
-import { AppContext } from '../../../App'
 import MenuDeals from './MenuDeals'
 import { MenuItem } from '../../sidebarModals'
 
@@ -45,12 +44,8 @@ const MenuContent = () => {
     deals,
     announcements,
   } = useContext(MenuContext)
-  const {
-    menuHero,
-    menuHeroMobile,
-    menuHeroChild,
-    menuHeroChildMobile,
-  } = useSelector(selectDisplaySettings)
+  const { menuHero, menuHeroMobile, menuHeroChild, menuHeroChildMobile } =
+    useSelector(selectDisplaySettings)
   const { cartGuest } = useSelector(selectGroupOrder)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
@@ -69,7 +64,6 @@ const MenuContent = () => {
   const heroHeight = heroRef.current
     ? heroRef.current.getBoundingClientRect().height
     : 0
-  const { windowRef } = useContext(AppContext)
   const hasAnnouncements = announcements && announcements.entities.length > 0
 
   useEffect(() => {
@@ -88,9 +82,9 @@ const MenuContent = () => {
   const change = (revenueCenter) => {
     setSelected(revenueCenter)
     if (!revenueCenter) {
-      windowRef.current.scrollTo(0, 0)
+      window.scrollTo(0, 0)
     } else {
-      windowRef.current.scrollTo(0, 0)
+      window.scrollTo(0, 0)
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -6,9 +6,7 @@ import { selectCustomer, authCustomerThanx } from '@open-tender/redux'
 import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -36,12 +34,6 @@ const Thanx = () => {
     : 'Please hang tight. This will only take a second.'
   const query = new URLSearchParams(useLocation().search)
   const code = query.get('code')
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (auth) {

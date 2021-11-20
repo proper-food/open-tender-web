@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
@@ -9,7 +9,6 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
@@ -22,7 +21,6 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
-import { AppContext } from '../../../App'
 import AccountTabs from '../Account/AccountTabs'
 
 const AccountAddresses = () => {
@@ -34,12 +32,6 @@ const AccountAddresses = () => {
   const { entities, loading } = useSelector(selectCustomerAddresses)
   const isLoading = loading === 'pending'
   const limit = 50
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -12,9 +12,7 @@ import {
 } from '@open-tender/redux'
 import { getLastOrder, makeDisplayItem } from '@open-tender/js'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   ItemCards,
@@ -41,20 +39,14 @@ const Favorites = () => {
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const items = favorites.map((i) => ({ ...i.item }))
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')
   }, [auth, history])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   useEffect(() => {
     dispatch(fetchCustomerFavorites())

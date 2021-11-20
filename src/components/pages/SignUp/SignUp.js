@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useHistory, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -11,7 +11,6 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   openModal,
   selectApi,
@@ -19,7 +18,6 @@ import {
   selectConfig,
   selectOptIns,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -66,18 +64,15 @@ const SignUp = () => {
   const token = auth ? auth.access_token : null
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
-  const { windowRef } = useContext(AppContext)
   const signUp = useCallback(
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
   )
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(resetSignUp())
     return () => dispatch(resetSignUp())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     if (auth) {
@@ -90,8 +85,8 @@ const SignUp = () => {
   }, [auth, history, posToken, token, api, dispatch])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   const login = () => {
     dispatch(openModal({ type: 'login' }))
