@@ -8,12 +8,12 @@ const makeGlobalStyles = (theme) => css`
     box-sizing: border-box;
     font-size: 62.5%;
     font-family: sans-serif;
-    height: 100%;
   }
 
-  body {
+  html,
+  body,
+  #root {
     height: 100%;
-    overflow: hidden;
   }
 
   *,

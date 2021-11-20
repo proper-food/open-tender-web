@@ -4,7 +4,10 @@ import styled from '@emotion/styled'
 import { SkipLink, Footer } from '.'
 
 const ContentView = styled('div')`
+  label: ContentView;
+
   width: 100%;
+  height: 100%;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
 `
