@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,9 +10,7 @@ import {
   resetOrderFulfillment,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -44,12 +42,6 @@ const Confirmation = () => {
     revenue_center &&
     revenue_center.has_order_fulfillment &&
     service_type === 'PICKUP'
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!order) history.push('/')

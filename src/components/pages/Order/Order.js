@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -9,9 +9,7 @@ import {
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderUser,
@@ -32,12 +30,6 @@ const Order = () => {
   const { auth } = useSelector(selectCustomer)
   const customerOrder = useSelector(selectCustomerOrder)
   const title = `Order #${orderId}`
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

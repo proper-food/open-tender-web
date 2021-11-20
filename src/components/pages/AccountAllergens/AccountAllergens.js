@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -13,9 +13,7 @@ import {
 import { AllergenForm, FormWrapper } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   AccountBack,
   Content,
@@ -60,12 +58,6 @@ const AccountAllergens = () => {
     (data) => dispatch(updateCustomerAllergens(data)),
     [dispatch]
   )
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

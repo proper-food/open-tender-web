@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -17,9 +17,7 @@ import {
   OrderRatingForm,
 } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -79,7 +77,6 @@ const Rating = () => {
   const title = orderRating
     ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
-  const { windowRef } = useContext(AppContext)
   const isSubmitted = submitted && !error && loading !== 'pending'
   const pageTitles = makePageTitles(
     orderRating,
@@ -98,11 +95,6 @@ const Rating = () => {
   )
 
   const callback = useCallback(() => setSubmitted(true), [setSubmitted])
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (unsubscribe) {

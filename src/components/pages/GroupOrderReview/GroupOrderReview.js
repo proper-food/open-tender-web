@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectGroupOrder } from '@open-tender/redux'
@@ -7,7 +7,6 @@ import styled from '@emotion/styled'
 import { Box } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import GroupOrderReviewGuest from './GroupOrderReviewGuest'
 import GroupOrderReviewOwner from './GroupOrderReviewOwner'
 
@@ -36,12 +35,11 @@ const GroupOrderReview = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const groupOrder = useSelector(selectGroupOrder)
   const { cartId, cartOwner, cartGuest } = groupOrder
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
+    window.scrollTo(0, 0)
     if (!cartId) history.push(`/`)
-  }, [windowRef, cartId, history])
+  }, [cartId, history])
 
   return (
     <>

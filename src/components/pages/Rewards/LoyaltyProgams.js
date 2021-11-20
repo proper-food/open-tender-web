@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { animateScroll as scroll } from 'react-scroll'
 import { ButtonLink } from '@open-tender/components'
@@ -12,7 +12,6 @@ import {
   PageSection,
 } from '../..'
 import styled from '@emotion/styled'
-import { AppContext } from '../../../App'
 import { useTheme } from '@emotion/react'
 import { isMobile } from 'react-device-detect'
 
@@ -36,7 +35,6 @@ const LoyaltyPrograms = ({ hasRewards = false }) => {
   const dispatch = useDispatch()
   const { entities, loading, error } = useSelector(selectCustomerLoyalty)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
   const theme = useTheme()
   const offsetRem = isMobile
     ? theme.layout.navHeightMobile
@@ -51,7 +49,6 @@ const LoyaltyPrograms = ({ hasRewards = false }) => {
     const element = document.getElementById('rewards')
     const position = element.offsetTop - 30 - offset
     scroll.scrollTo(position, {
-      container: windowRef.current,
       duration: 500,
       smooth: true,
       offset: 0,

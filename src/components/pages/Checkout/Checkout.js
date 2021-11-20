@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -41,10 +41,8 @@ import {
 } from '@open-tender/redux'
 import { CheckoutForm, FormError } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
 import { selectApi, selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Loading,
@@ -121,17 +119,11 @@ const Checkout = () => {
     deal: <DollarSign size={null} />,
     reward: <Award size={null} />,
   }
-  const { windowRef } = useContext(AppContext)
   const deviceTypeName = makeDeviceType(deviceType)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!submitting && formError) windowRef.current.scrollTop = 0
-  }, [windowRef, formError, submitting])
+    if (!submitting && formError) window.scrollTo(0, 0)
+  }, [formError, submitting])
 
   useEffect(() => {
     dispatch(setSubmitting(false))

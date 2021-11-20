@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,9 +10,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderUser,
@@ -35,12 +33,6 @@ const AccountGiftCards = () => {
   const { entities, loading } = useSelector(selectCustomerGiftCards)
   const isLoading = loading === 'pending'
   const { auth } = useSelector(selectCustomer)
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

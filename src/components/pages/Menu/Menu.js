@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-} from 'react'
+import React, { useEffect, createContext, useState, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -31,14 +25,12 @@ import {
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectConfig,
   selectTopOffset,
   setTopOffset,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
@@ -49,7 +41,6 @@ export const MenuContext = createContext(null)
 const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { windowRef } = useContext(AppContext)
   const topOffset = useSelector(selectTopOffset)
   const [init, setInit] = useState(true)
   const [showMenu, setShowMenu] = useState(false)
@@ -79,15 +70,13 @@ const MenuPage = () => {
 
   useEffect(() => {
     if (init) {
-      // windowRef.current.scrollTop = topOffset || 0
+      // window.scrollTo(0, topOffset || 0)
       scroll.scrollTo(topOffset || 0, {
-        container: windowRef.current,
         duration: 0,
         smooth: false,
       })
     }
-    maybeRefreshVersion()
-  }, [windowRef, topOffset, init])
+  }, [topOffset, init])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -136,7 +125,7 @@ const MenuPage = () => {
       <Helmet>
         <title>Menu | {siteTitle}</title>
       </Helmet>
-      <Content>
+      <Content scrollTop={false}>
         <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} />
         <Main>
           <MenuContext.Provider

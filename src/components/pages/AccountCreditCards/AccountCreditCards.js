@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -10,7 +10,6 @@ import {
 import { ButtonStyled, Message } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, openModal, selectConfig } from '../../../slices'
 import {
   AccountBack,
@@ -24,7 +23,6 @@ import {
   PageTitle,
   PageTitleButtons,
 } from '../..'
-import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
 import AccountTabs from '../Account/AccountTabs'
 import styled from '@emotion/styled'
@@ -40,7 +38,6 @@ const CreditCardMessage = styled('div')`
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { windowRef } = useContext(AppContext)
   const { title: siteTitle, applePayMerchantId } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { creditCards: config } = useSelector(selectConfig)
@@ -49,11 +46,6 @@ const AccountCreditCards = () => {
   const savedCards = entities.filter((i) => i.has_profile)
   const linkedCards = entities.filter((i) => !i.has_profile)
   const hasLinkedCards = !!applePayMerchantId || linkedCards.length > 0
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

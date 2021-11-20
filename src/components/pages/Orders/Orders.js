@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -12,9 +12,7 @@ import {
 import { makeUniqueDisplayItems } from '@open-tender/js'
 import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderUser,
@@ -55,12 +53,6 @@ const Orders = () => {
   const { orders: config } = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')
