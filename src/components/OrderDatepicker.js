@@ -60,6 +60,7 @@ const OrderDatepicker = ({ revenueCenter, serviceType }) => {
       {dates.map((date) => (
         <OrderDatepickerDate date={date} setDate={setDate} />
       ))}
+      <OrderDatePickerSpacer height={2} />
     </OrderDatepickerView>
   )
 }
