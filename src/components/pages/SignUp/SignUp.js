@@ -82,6 +82,11 @@ const SignUp = () => {
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
   )
+  const callback = useCallback(
+    () => dispatch(openModal({ type: 'loginThanx' })),
+    [dispatch]
+  )
+  const args = has_thanx ? { callback } : {}
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -105,7 +110,7 @@ const SignUp = () => {
   }, [error, windowRef])
 
   const login = () => {
-    dispatch(openModal({ type: 'login' }))
+    dispatch(openModal({ type: 'login', args }))
   }
 
   return (
