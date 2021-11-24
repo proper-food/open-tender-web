@@ -15,6 +15,7 @@ import {
   selectDeals,
   resetRevenueCenter,
   fetchRevenueCenter,
+  fetchLocation,
   fetchMenu,
   fetchAllergens,
   fetchDeals,
@@ -88,7 +89,8 @@ const MenuPage = () => {
       setInit(false)
     } else if (init) {
       dispatch(fetchAllergens())
-      dispatch(fetchRevenueCenter(revenueCenterId))
+      // dispatch(fetchRevenueCenter(revenueCenterId))
+      dispatch(fetchLocation(revenueCenterId, requestedAt))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAnnouncementPage('MENU'))
     }
