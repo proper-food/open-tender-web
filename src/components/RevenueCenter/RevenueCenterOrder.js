@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
@@ -8,10 +8,11 @@ import {
   selectOrder,
   selectGroupOrder,
   selectAutoSelect,
+  // setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled, Message, Text } from '@open-tender/components'
 
-import { selectConfig } from '../../slices'
+import { selectConfig, openModal } from '../../slices'
 import iconMap from '../iconMap'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
@@ -31,16 +32,6 @@ const RevenueCenterOrderView = styled('div')`
 
 const RevenueCenterOrderMessage = styled('div')`
   line-height: ${(props) => props.theme.lineHeight};
-
-  + div {
-    margin-top: 1.5rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin-top: 1rem;
-    }
-  }
-
-  p {
-  }
 `
 
 const RevenueCenterOrderMessageMessage = styled('p')`
@@ -54,8 +45,68 @@ const RevenueCenterOrderMessageMessage = styled('p')`
   }
 `
 
-export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
+const RevenueCenterOrderButtons = styled('div')`
+  margin-top: 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 1rem;
+  }
+`
+
+const RevenueCenterChange = ({ autoSelect }) => {
   const history = useHistory()
+  if (autoSelect) return null
+
+  return (
+    <RevenueCenterOrderButtons>
+      <ButtonStyled
+        icon={iconMap.RefreshCw}
+        onClick={() => history.push(`/locations`)}
+      >
+        Change Location
+      </ButtonStyled>
+    </RevenueCenterOrderButtons>
+  )
+}
+
+const RevenueCenterLanding = ({ revenueCenter }) => {
+  return (
+    <RevenueCenterOrderButtons>
+      <RevenueCenterButtons revenueCenter={revenueCenter} isLanding={true} />
+    </RevenueCenterOrderButtons>
+  )
+}
+
+const icons = {
+  WALKIN: iconMap.Coffee,
+  PICKUP: iconMap.ShoppingBag,
+  DELIVERY: iconMap.Truck,
+}
+
+const serviceTypeNames = {
+  WALKIN: 'Here',
+  PICKUP: 'Here',
+  DELIVERY: 'From Here',
+}
+
+const RevenueCenterChoose = ({ revenueCenter, serviceType }) => {
+  const dispatch = useDispatch()
+
+  const choose = () => {
+    // dispatch(setRevenueCenter(revenueCenter))
+    const args = { revenueCenter, serviceType }
+    dispatch(openModal({ type: 'orderTime', args }))
+  }
+
+  return (
+    <RevenueCenterOrderButtons>
+      <ButtonStyled icon={icons[serviceType]} onClick={choose}>
+        Order {serviceTypeNames[serviceType]}
+      </ButtonStyled>
+    </RevenueCenterOrderButtons>
+  )
+}
+
+export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
   const { serviceType, requestedAt } = useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering
@@ -95,23 +146,14 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
             </RevenueCenterOrderMessage>
           )}
           {isMenu ? (
-            !autoSelect ? (
-              <div>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={() => history.push(`/locations`)}
-                >
-                  Change Location
-                </ButtonStyled>
-              </div>
-            ) : null
+            <RevenueCenterChange autoSelect={autoSelect} />
+          ) : isLanding ? (
+            <RevenueCenterLanding revenueCenter={revenueCenter} />
           ) : (
-            <div>
-              <RevenueCenterButtons
-                revenueCenter={revenueCenter}
-                isLanding={isLanding}
-              />
-            </div>
+            <RevenueCenterChoose
+              revenueCenter={revenueCenter}
+              serviceType={serviceType}
+            />
           )}
         </>
       )}

@@ -90,7 +90,7 @@ const MenuPage = () => {
     } else if (init) {
       dispatch(fetchAllergens())
       // dispatch(fetchRevenueCenter(revenueCenterId))
-      dispatch(fetchLocation(revenueCenterId, requestedAt))
+      dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAnnouncementPage('MENU'))
     }
