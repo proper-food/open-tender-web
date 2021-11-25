@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
@@ -9,7 +9,7 @@ import {
   setRequestedAt,
   setRevenueCenter,
 } from '@open-tender/redux'
-import { serviceTypeNamesMap } from '@open-tender/js'
+import { makeDates, serviceTypeNamesMap } from '@open-tender/js'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
@@ -40,6 +40,15 @@ const OrderTime = ({ revenueCenter, serviceType }) => {
   } = revenueCenter
   const menuSlug = `/menu/${slug}`
   const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const { first_times, holidays, days_ahead } = revenueCenter
+  const firstTime = first_times[serviceType]
+  const [date, setDate] = useState(firstTime.date)
+  const [time, setTime] = useState(null)
+  const dates = useMemo(
+    () => makeDates(firstTime.date, days_ahead),
+    [firstTime.date, days_ahead]
+  )
+  console.log(dates)
 
   const handleASAP = () => {
     dispatch(setRevenueCenter(revenueCenter))
@@ -73,14 +82,11 @@ const OrderTime = ({ revenueCenter, serviceType }) => {
           <ButtonStyled onClick={handleASAP}>Order ASAP</ButtonStyled>
           <p>Or choose a different date & time below.</p>
           <OrderTimeView>
-            <OrderDatepicker
+            <OrderDatepicker intervals={dates} setValue={setDate} />
+            {/* <OrderDatepicker
               revenueCenter={revenueCenter}
               serviceType={serviceType}
-            />
-            <OrderDatepicker
-              revenueCenter={revenueCenter}
-              serviceType={serviceType}
-            />
+            /> */}
           </OrderTimeView>
         </div>
       </ModalContent>
