@@ -16,6 +16,10 @@ const makeGlobalStyles = (theme) => css`
     height: 100%;
   }
 
+  body.has-modal {
+    overflow: hidden;
+  }
+
   *,
   *:before,
   *:after {
