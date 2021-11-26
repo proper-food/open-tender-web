@@ -16,8 +16,8 @@ const getActiveElement = (elements, topOffset) => {
   return active
 }
 
-const OrderDatepickerView = styled('div')`
-  label: OrderDatepickerView;
+const PickerView = styled('div')`
+  label: PickerView;
 
   height: ${(props) => (props.height * 3).toFixed(1)}rem;
   padding: 0;
@@ -29,15 +29,15 @@ const OrderDatepickerView = styled('div')`
   }
 `
 
-const OrderDatePickerSpacer = styled('div')`
-  label: OrderDatePickerSpacer;
+const PickerSpacer = styled('div')`
+  label: PickerSpacer;
 
   width: 100%;
   height: ${(props) => props.height.toFixed(1)}rem;
 `
 
-const OrderDatepickerDateView = styled('div')`
-  label: OrderDatepickerDateView;
+const PickerDateView = styled('div')`
+  label: PickerDateView;
 
   width: 100%;
   height: ${(props) => props.height.toFixed(1)}rem;
@@ -54,20 +54,20 @@ const OrderDatepickerDateView = styled('div')`
   }
 `
 
-const OrderDatepickerDate = ({ index, label, height, isActive }) => {
+const PickerDate = ({ index, label, height, isActive }) => {
   return (
-    <OrderDatepickerDateView
+    <PickerDateView
       name="interval"
       id={`time-${index}`}
       height={height}
       isActive={isActive}
     >
       <div>{label}</div>
-    </OrderDatepickerDateView>
+    </PickerDateView>
   )
 }
 
-const OrderDatepicker = ({ intervals, setValue, height = 44 }) => {
+const Picker = ({ intervals, setValue, height = 44 }) => {
   const scrollRef = useRef(null)
   const [active, setActive] = useState(0)
   const [offset, setOffset] = useState(0)
@@ -111,10 +111,10 @@ const OrderDatepicker = ({ intervals, setValue, height = 44 }) => {
   }, [parent, offset])
 
   return (
-    <OrderDatepickerView ref={scrollRef} height={heightInRem}>
-      <OrderDatePickerSpacer height={heightInRem} />
+    <PickerView ref={scrollRef} height={heightInRem}>
+      <PickerSpacer height={heightInRem} />
       {intervals.map((interval, index) => (
-        <OrderDatepickerDate
+        <PickerDate
           key={interval.label}
           label={interval.label}
           height={heightInRem}
@@ -122,15 +122,15 @@ const OrderDatepicker = ({ intervals, setValue, height = 44 }) => {
           isActive={index === active}
         />
       ))}
-      <OrderDatePickerSpacer height={heightInRem} />
-    </OrderDatepickerView>
+      <PickerSpacer height={heightInRem} />
+    </PickerView>
   )
 }
 
-OrderDatepicker.displayName = 'OrderDatepicker'
-OrderDatepicker.propTypes = {
+Picker.displayName = 'Picker'
+Picker.propTypes = {
   revenueCenter: propTypes.object,
   serviceType: propTypes.string,
 }
 
-export default OrderDatepicker
+export default Picker
