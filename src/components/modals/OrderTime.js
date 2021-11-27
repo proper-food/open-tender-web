@@ -11,6 +11,7 @@ import {
 } from '@open-tender/redux'
 import {
   dateStrMinutesToIso,
+  isoToDateStrMinutes,
   makeDates,
   makeTimes,
   makeReadableDateStrFromIso,
@@ -83,7 +84,7 @@ const OrderTimeNevermind = styled('div')`
   }
 `
 
-const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
+const OrderTime = ({ revenueCenter, serviceType, orderType, requestedAt }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {
@@ -103,9 +104,12 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const firstTime = first_times[serviceType]
   const timeRange = time_ranges[serviceType]
-  const [updated, setUpdated] = useState(false)
-  const [date, setDate] = useState(firstTime.date)
-  const [time, setTime] = useState(firstTime.minutes)
+  const selected = requestedAt && requestedAt !== 'asap'
+  const requested = selected ? isoToDateStrMinutes(requestedAt, timezone) : {}
+  const [date, setDate] = useState(requested.date || firstTime.date)
+  const [time, setTime] = useState(requested.minutes || firstTime.minutes)
+  const [updated, setUpdated] = useState(selected ? true : false)
+  const [dateChange, setDateChange] = useState(false)
   const daysAhead = orderType === 'CATERING' ? 100 : days_ahead
   const dates = useMemo(
     () => makeDates(firstTime.date, daysAhead, 'E, MMM d'),
@@ -131,12 +135,15 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
     ? makeReadableDateStrFromIso(firstTime.utc, timezone)
     : null
   const orderDate = dateOptions.find((i) => i.value === date)
-  const orderTime = timeOptions.find((i) => i.value === time)
+  const orderTime =
+    timeOptions.find((i) => i.value === time) ||
+    timeOptions.find((i) => i.value === firstMinutes)
   const orderMsg =
     orderDate && orderTime
       ? `Order for ${orderDate.name} @ ${orderTime.name}`
       : 'Choose Time'
-  const requestedAt = dateStrMinutesToIso(date, time, timezone)
+  const timeVal = orderTime ? orderTime.value : time
+  const requestedTime = dateStrMinutesToIso(date, timeVal, timezone)
 
   const chooseTime = (requestedAt) => {
     dispatch(setRevenueCenter(revenueCenter))
@@ -154,6 +161,7 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
   const changeDate = (evt) => {
     setUpdated(true)
     setDate(evt.target.value)
+    setDateChange(true)
   }
 
   const changeTime = (evt) => {
@@ -162,8 +170,11 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
   }
 
   useEffect(() => {
-    setTime(firstMinutes)
-  }, [date, firstMinutes])
+    if (dateChange) {
+      if (firstMinutes) setTime(firstMinutes)
+      setDateChange(false)
+    }
+  }, [dateChange, firstMinutes])
 
   return (
     <ModalView>
@@ -186,7 +197,10 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
           {firstTime.has_asap ? (
             <>
               <OrderTimeAsap>
-                <ButtonStyled onClick={() => chooseTime('asap')}>
+                <ButtonStyled
+                  onClick={() => chooseTime('asap')}
+                  color={selected ? 'secondary' : 'primary'}
+                >
                   Order ASAP (about {asapTime})
                 </ButtonStyled>
               </OrderTimeAsap>
@@ -217,7 +231,7 @@ const OrderTime = ({ revenueCenter, serviceType, orderType }) => {
           </OrderTimeSelects>
           <OrderTimeAsap>
             <ButtonStyled
-              onClick={() => chooseTime(requestedAt)}
+              onClick={() => chooseTime(requestedTime)}
               color={!firstTime.has_asap || updated ? 'primary' : 'secondary'}
             >
               {orderMsg}
@@ -234,6 +248,7 @@ OrderTime.propTypes = {
   revenueCenter: propTypes.object,
   serviceType: propTypes.string,
   orderType: propTypes.string,
+  requestedAt: propTypes.string,
 }
 
 export default OrderTime

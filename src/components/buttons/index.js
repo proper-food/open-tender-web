@@ -15,6 +15,7 @@ import Logout from './Logout'
 import Menu from './Menu'
 import NavMenu from './NavMenu'
 import OrderNow from './OrderNow'
+import OrderTime from './OrderTime'
 import Points from './Points'
 import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
@@ -40,6 +41,7 @@ export {
   Menu,
   NavMenu,
   OrderNow,
+  OrderTime,
   Points,
   Reopen,
   RequestedAt,

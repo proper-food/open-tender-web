@@ -9,7 +9,7 @@ import {
   selectAutoSelect,
   resetOrderType,
   fetchLocations,
-  fetchRevenueCenters,
+  // fetchRevenueCenters,
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'

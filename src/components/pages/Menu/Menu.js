@@ -14,7 +14,7 @@ import {
   selectCustomer,
   selectDeals,
   resetRevenueCenter,
-  fetchRevenueCenter,
+  // fetchRevenueCenter,
   fetchLocation,
   fetchMenu,
   fetchAllergens,

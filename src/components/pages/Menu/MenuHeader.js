@@ -21,7 +21,8 @@ import {
   Home,
   LeaveGroup,
   Points,
-  RequestedAt,
+  // RequestedAt,
+  OrderTime,
   RevenueCenter,
   ServiceType,
 } from '../../buttons'
@@ -142,7 +143,8 @@ const MenuHeader = ({
                   {auth ? <Points /> : <Account />}
                   <RevenueCenter />
                   <ServiceType />
-                  <RequestedAt />
+                  {/* <RequestedAt /> */}
+                  <OrderTime />
                   <Allergens />
                   <GroupOrder />
                   <CancelEdit />
