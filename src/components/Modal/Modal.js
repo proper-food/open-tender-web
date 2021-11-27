@@ -127,6 +127,7 @@ const Modal = () => {
   const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
   const focusFirst = args && args.focusFirst ? true : false
+  const skipClose = args && args.skipClose ? true : false
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
@@ -162,7 +163,6 @@ const Modal = () => {
     const allElements = modalRef.current.querySelectorAll(
       'a[href], button, input, select, textarea'
     )
-    console.log(allElements)
     setElements(allElements)
     const allInputs = modalRef.current.querySelectorAll(
       'input, select, textarea'
@@ -172,7 +172,7 @@ const Modal = () => {
       !focusFirst && allInputs.length
         ? allInputs[0]
         : allElements
-        ? allElements[0]
+        ? allElements[skipClose ? 1 : 0]
         : null
     if (firstElement) firstElement.focus()
   }

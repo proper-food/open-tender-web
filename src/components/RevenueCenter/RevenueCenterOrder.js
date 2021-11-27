@@ -92,7 +92,13 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const dispatch = useDispatch()
 
   const choose = () => {
-    const args = { focusFirst: true, revenueCenter, serviceType, orderType }
+    const args = {
+      focusFirst: true,
+      skipClose: true,
+      revenueCenter,
+      serviceType,
+      orderType,
+    }
     dispatch(openModal({ type: 'orderTime', args }))
   }
 
