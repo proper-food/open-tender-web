@@ -88,12 +88,11 @@ const serviceTypeNames = {
   DELIVERY: 'From Here',
 }
 
-const RevenueCenterChoose = ({ revenueCenter, serviceType }) => {
+const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const dispatch = useDispatch()
 
   const choose = () => {
-    // dispatch(setRevenueCenter(revenueCenter))
-    const args = { revenueCenter, serviceType }
+    const args = { focusFirst: true, revenueCenter, serviceType, orderType }
     dispatch(openModal({ type: 'orderTime', args }))
   }
 
@@ -107,7 +106,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType }) => {
 }
 
 export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
-  const { serviceType, requestedAt } = useSelector(selectOrder)
+  const { orderType, serviceType, requestedAt } = useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering
   const autoSelect = useSelector(selectAutoSelect)
@@ -153,6 +152,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
             <RevenueCenterChoose
               revenueCenter={revenueCenter}
               serviceType={serviceType}
+              orderType={orderType}
             />
           )}
         </>

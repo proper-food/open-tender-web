@@ -162,6 +162,7 @@ const Modal = () => {
     const allElements = modalRef.current.querySelectorAll(
       'a[href], button, input, select, textarea'
     )
+    console.log(allElements)
     setElements(allElements)
     const allInputs = modalRef.current.querySelectorAll(
       'input, select, textarea'
