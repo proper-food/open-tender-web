@@ -15,7 +15,6 @@ import Login from './Login'
 import LoyaltyTier from './LoyaltyTier'
 import MenuItem from './MenuItem'
 import OrderRating from './OrderRating'
-import OrderTime from './OrderTime'
 import OrderType from './OrderType'
 import Points from './Points'
 import QRCode from './QRCode'
@@ -43,7 +42,6 @@ export {
   MenuItem,
   OrderRating,
   OrderType,
-  OrderTime,
   Points,
   QRCode,
   RequestedAt,

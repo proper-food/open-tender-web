@@ -25,7 +25,6 @@ import {
   LoyaltyTier,
   MenuItem,
   OrderRating,
-  OrderTime,
   OrderType,
   Points,
   QRCode,
@@ -69,8 +68,6 @@ const makeModal = (type, windowRef, args = {}) => {
       return <Login {...args} />
     case 'loyaltyTier':
       return <LoyaltyTier {...args} />
-    case 'orderTime':
-      return <OrderTime {...args} />
     case 'orderType':
       return <OrderType {...args} />
     case 'qrCode':
