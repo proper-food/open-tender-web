@@ -39,8 +39,8 @@ const RequestedAt = ({
   orderType,
   serviceType,
   requestedAt,
-  forcedUpdate = false,
   openSidebar = false,
+  isReorder = false,
 }) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -93,6 +93,7 @@ const RequestedAt = ({
             chooseTime={chooseTime}
             cancel={cancel}
             isLocation={isLocation}
+            isReorder={isReorder}
           />
         </>
       ) : orderTimes ? (
@@ -122,8 +123,8 @@ RequestedAt.propTypes = {
   serviceType: propTypes.string,
   orderType: propTypes.string,
   requestedAt: propTypes.string,
-  forcedUpdate: propTypes.bool,
   openSidebar: propTypes.bool,
+  isReorder: propTypes.bool,
 }
 
 export default RequestedAt
