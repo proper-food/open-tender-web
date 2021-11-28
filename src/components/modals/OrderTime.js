@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   setAddress,
@@ -87,6 +87,8 @@ const OrderTimeNevermind = styled('div')`
 const OrderTime = ({ revenueCenter, serviceType, orderType, requestedAt }) => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const { pathname } = useLocation()
+  const isLocation = pathname.includes('/locations')
   const {
     name,
     slug,
@@ -146,12 +148,16 @@ const OrderTime = ({ revenueCenter, serviceType, orderType, requestedAt }) => {
   const requestedTime = dateStrMinutesToIso(date, timeVal, timezone)
 
   const chooseTime = (requestedAt) => {
-    dispatch(setRevenueCenter(revenueCenter))
-    dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
     dispatch(setRequestedAt(requestedAt))
-    if (isOutpost) dispatch(setAddress(address))
-    dispatch(closeModal())
-    history.push(menuSlug)
+    if (isLocation) {
+      dispatch(setRevenueCenter(revenueCenter))
+      dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
+      if (isOutpost) dispatch(setAddress(address))
+      dispatch(closeModal())
+      history.push(menuSlug)
+    } else {
+      dispatch(closeModal())
+    }
   }
 
   const cancel = () => {
@@ -179,11 +185,12 @@ const OrderTime = ({ revenueCenter, serviceType, orderType, requestedAt }) => {
   return (
     <ModalView>
       <ModalContent
-        // title={`${serviceTypeName} from ${name}`}
         footer={
           <OrderTimeNevermind>
             <ButtonLink onClick={cancel}>
-              Nevermind, let's choose a different location
+              {isLocation
+                ? "Nevermind, let's choose a different location"
+                : 'Nevermind, keep current time'}
             </ButtonLink>
           </OrderTimeNevermind>
         }
