@@ -99,7 +99,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
       serviceType,
       orderType,
     }
-    dispatch(openModal({ type: 'orderTime', args }))
+    dispatch(openModal({ type: 'requestedAt', args }))
   }
 
   return (
