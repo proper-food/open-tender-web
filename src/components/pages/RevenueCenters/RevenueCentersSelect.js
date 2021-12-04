@@ -32,16 +32,18 @@ const RevenueCentersSelectView = styled('div')`
   z-index: 1;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.primary};
-  // padding: ${(props) => props.theme.layout.padding} 0;
+  padding: 1.5rem 0 0;
+  margin: ${(props) => props.theme.layout.navHeight} 0 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 44rem 0 0;
     padding: 3rem 0 0;
+    margin: 44rem 0 0;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 7.2rem 0 ${(props) => (props.showMap ? '25rem' : '0')};
-    padding: 1rem 0 0;
+    padding: 0;
+    margin: ${(props) => props.theme.layout.navHeightMobile} 0
+      ${(props) => (props.showMap ? '25rem' : '0')};
     transition: all 0.25s ease;
     transform: translateY(${(props) => (props.showMap ? '25rem' : '0')});
   }
