@@ -1698,10 +1698,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-tender/components@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.5.1.tgz#805643a90830a7703a8ca4dd98be84f1b8553e97"
-  integrity sha512-ORZaNR45oeJsetNAU3Mw5hh8Vs99L8Ves50Mm+n45RfIS1YryVYfo8+VLlDH45cc1M4M1uUtnsjzkA8eSQrOlg==
+"@open-tender/components@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.5.2.tgz#340fb015e6ad635c57b8b437a76d71266c5aefee"
+  integrity sha512-z4C8k0hQJYGOl8Pdne7gK3WG9XM4PdPcVzhnarcKNxI+1c75ms6gp3OHFbAGYei86XKfNrWnoBkZD4wQoMDXSA==
   dependencies:
     "@google-pay/button-react" "^3.0.0"
     react-google-recaptcha "^2.1.0"

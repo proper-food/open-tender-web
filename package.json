@@ -1,11 +1,11 @@
 {
   "name": "open-tender-web",
-  "version": "2.4.1",
+  "version": "2.3.3",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@open-tender/components": "^3.5.1",
+    "@open-tender/components": "^3.5.2",
     "@open-tender/js": "^1.7.8",
     "@open-tender/redux": "^2.5.4",
     "@reduxjs/toolkit": "^1.6.2",
