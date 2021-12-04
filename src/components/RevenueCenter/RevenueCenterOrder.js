@@ -124,6 +124,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
     requestedAt,
     statusMessages
   )
+  const showMsg = msg.message && !isMenu ? true : false
 
   return (
     <RevenueCenterOrderView>
@@ -137,11 +138,11 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
         </RevenueCenterOrderMessage>
       ) : (
         <>
-          {msg.message && (
+          {showMsg && (
             <RevenueCenterOrderMessage>
               <p>
                 <Text
-                  color={msg.color}
+                  color="alert"
                   size="small"
                   style={{ borderRadius: '0.3rem' }}
                 >

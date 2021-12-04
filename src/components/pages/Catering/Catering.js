@@ -25,8 +25,6 @@ import { Account, StartOver } from '../../buttons'
 import CateringAutocomplete from './CateringAutocomplete'
 
 const CateringView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   padding: ${(props) => props.theme.layout.padding};
 `
 
@@ -37,11 +35,14 @@ const CateringTitle = styled('div')`
 `
 
 const CateringContent = styled('div')`
-  // opacity: 0;
-  // animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
 
 const CateringError = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+
   p:first-of-type {
     color: ${(props) => props.theme.colors.error};
     margin: 0 0 2rem;
@@ -56,7 +57,17 @@ const CateringButtons = styled('div')`
   }
 `
 
+const CateringStartOver = styled('div')`
+  margin: 3rem 0 0;
+
+  button {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
+
 const CateringPolicy = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   margin: 6rem 0 3rem;
 
   h2 {
@@ -72,24 +83,17 @@ const CateringPolicy = styled('div')`
 
 const CateringContentSection = ({ policy, startOver }) => {
   return (
-    <>
-      <CateringPolicy>
-        {policy.title && <h2>{policy.title}</h2>}
-        {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
-        {policy.content.length > 0 && (
-          <div>
-            {policy.content.map((i, index) => (
-              <p key={index}>{i}</p>
-            ))}
-          </div>
-        )}
-      </CateringPolicy>
-      <div>
-        <ButtonLink onClick={startOver}>
-          Switch to a regular Pickup or Delivery order
-        </ButtonLink>
-      </div>
-    </>
+    <CateringPolicy>
+      {policy.title && <h2>{policy.title}</h2>}
+      {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
+      {policy.content.length > 0 && (
+        <div>
+          {policy.content.map((i, index) => (
+            <p key={index}>{i}</p>
+          ))}
+        </div>
+      )}
+    </CateringPolicy>
   )
 }
 
@@ -152,6 +156,11 @@ const CateringPage = () => {
                     Order Pickup
                   </ButtonStyled>
                 </CateringButtons>
+                <CateringStartOver>
+                  <ButtonLink onClick={startOver}>
+                    Switch to a regular Pickup or Delivery order
+                  </ButtonLink>
+                </CateringStartOver>
               </CateringContent>
             ) : (
               <CateringError>
