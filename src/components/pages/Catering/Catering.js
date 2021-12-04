@@ -25,6 +25,8 @@ import { Account, StartOver } from '../../buttons'
 import CateringAutocomplete from './CateringAutocomplete'
 
 const CateringView = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   padding: ${(props) => props.theme.layout.padding};
 `
 
@@ -34,7 +36,10 @@ const CateringTitle = styled('div')`
   }
 `
 
-const CateringContent = styled('div')``
+const CateringContent = styled('div')`
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out 0.125s forwards;
+`
 
 const CateringError = styled('div')`
   p:first-of-type {
@@ -132,18 +137,19 @@ const CateringPage = () => {
                 <CateringAutocomplete />
                 <CateringButtons>
                   <ButtonStyled
-                    icon={iconMap.ShoppingBag}
-                    onClick={() => chooseServiceType('PICKUP')}
-                    disabled={!address}
-                  >
-                    Order Pickup
-                  </ButtonStyled>
-                  <ButtonStyled
                     icon={iconMap.Truck}
                     onClick={() => chooseServiceType('DELIVERY')}
                     disabled={!address}
                   >
                     Order Delivery
+                  </ButtonStyled>
+                  <ButtonStyled
+                    icon={iconMap.ShoppingBag}
+                    onClick={() => chooseServiceType('PICKUP')}
+                    disabled={!address}
+                    color="secondary"
+                  >
+                    Order Pickup
                   </ButtonStyled>
                 </CateringButtons>
               </CateringContent>

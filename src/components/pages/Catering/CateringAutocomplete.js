@@ -30,25 +30,6 @@ const CateringAutocompleteView = styled('div')`
 
 const CateringAutocompleteInputView = styled('div')`
   width: 100%;
-
-  // input {
-  //   color: ${(props) => props.theme.colors.light};
-  //   border-color: ${(props) => props.theme.colors.light};
-  //   &::placeholder {
-  //     color: ${(props) => props.theme.colors.light};
-  //   }
-
-  //   &:focus {
-  //     outline: none;
-  //   }
-  // }
-
-  // input + div + div {
-  //   opacity: 1;
-  //   left: 0;
-  //   margin-top: -0.8rem;
-  //   color: ${(props) => props.theme.colors.light};
-  // }
 `
 
 const CateringAutocompleteInput = ({
