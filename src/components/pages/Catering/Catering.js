@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
@@ -129,7 +130,12 @@ const CateringPage = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
-        <Header maxWidth="76.8rem" left={<StartOver />} right={<Account />} />
+        <Header
+          maxWidth="76.8rem"
+          title={isMobile ? 'Order Catering' : null}
+          left={<StartOver />}
+          right={<Account />}
+        />
         <Main>
           <ScreenreaderTitle>Catering</ScreenreaderTitle>
           <CateringView>
@@ -144,6 +150,7 @@ const CateringPage = () => {
                     icon={iconMap.Truck}
                     onClick={() => chooseServiceType('DELIVERY')}
                     disabled={!address}
+                    size={isMobile ? 'small' : 'default'}
                   >
                     Order Delivery
                   </ButtonStyled>
@@ -151,6 +158,7 @@ const CateringPage = () => {
                     icon={iconMap.ShoppingBag}
                     onClick={() => chooseServiceType('PICKUP')}
                     disabled={!address}
+                    size={isMobile ? 'small' : 'default'}
                     color="secondary"
                   >
                     Order Pickup
