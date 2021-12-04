@@ -25,8 +25,8 @@ const NavButtonView = styled('button')`
   border-width: ${(props) => props.theme.border.width};
   border-color: ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  box-shadow: ${(props) => props.theme.boxShadow.outer};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  // box-shadow: ${(props) => props.theme.boxShadow.outer};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 0.5rem;
@@ -38,7 +38,7 @@ const NavButtonView = styled('button')`
     border-width: ${(props) => props.theme.border.width};
     border-color: ${(props) => props.theme.border.color};
     border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) => props.theme.bgColors.tertiary};
+    background-color: ${(props) => props.theme.bgColors.secondary};
   }
 
   &:last-of-type {
