@@ -54,7 +54,7 @@ const CartButtonButton = styled('button')`
 
   &:focus {
     outline: none;
-    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 1);
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
     // border: 0.2rem solid
     //   ${(props) => props.theme.buttons.colors.cartHover.color};
     // box-shadow: 0 5px 15px 0

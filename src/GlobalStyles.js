@@ -278,7 +278,7 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       color: ${theme.inputs.colorFocus};
       background-color: ${theme.inputs.bgColorFocus};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColorFocus};
+      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColorFocus};
     }
 
     &:disabled,
@@ -287,7 +287,7 @@ const makeGlobalStyles = (theme) => css`
       opacity: 0.5;
       color: ${theme.inputs.color};
       background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColor};
+      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     }
   }
 

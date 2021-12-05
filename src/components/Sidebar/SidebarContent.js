@@ -11,7 +11,6 @@ import {
   selectOrderLimits,
   setCart,
   closeGroupOrder,
-  checkout,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
@@ -145,8 +144,9 @@ const Sidebar = React.forwardRef((props, ref) => {
   const handleCheckout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
-      dispatch(checkout())
-      history.push(`/checkout`)
+      // dispatch(checkout())
+      // history.push(`/checkout`)
+      history.push(`/checkout/guest`)
     }
   }
 
