@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { serviceTypeNamesMap } from '@open-tender/js'
+import { capitalize, serviceTypeNamesMap } from '@open-tender/js'
 import {
   setAddress,
   setOrderServiceType,
@@ -11,7 +11,11 @@ import {
   setRevenueCenter,
   showNotification,
 } from '@open-tender/redux'
-import { RequestedAtDateTime, RequestedAtTimes } from '@open-tender/components'
+import {
+  ButtonStyled,
+  RequestedAtDateTime,
+  RequestedAtTimes,
+} from '@open-tender/components'
 
 import { closeModal, toggleSidebar } from '../../slices'
 import { ModalClose, ModalContent } from '..'
@@ -112,7 +116,17 @@ const RequestedAt = ({
             setRequestedAt={chooseTime}
           />
         </ModalContent>
-      ) : null}
+      ) : (
+        <ModalContent
+          title={`${capitalize(serviceTypeName)} is not available`}
+          subtitle={<p>Please choose a different location</p>}
+        >
+          <ModalClose />
+          <ButtonStyled onClick={() => dispatch(closeModal())}>
+            Close
+          </ButtonStyled>
+        </ModalContent>
+      )}
     </RequestedAtModalView>
   )
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-// import { BgImage, Box, ButtonLink } from '@open-tender/components'
+import { Heading, Text } from '@open-tender/components'
 
 import iconMap from '../iconMap'
+import { isMobile } from 'react-device-detect'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -11,25 +12,22 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  padding: 2rem 2rem 2rem 2.5rem;
+  padding: 1.6rem 2rem 1.6rem 2.5rem;
   margin: 0 0 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  // font-family: ${(props) => props.theme.fonts.headings.family};
-  // font-weight: ${(props) => props.theme.fonts.headings.weight};
-  font-weight: ${(props) => props.theme.boldWeight};
-  color: ${(props) => props.theme.fonts.headings.color};
-  transition: ${(props) => props.theme.links.transition};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
+  transition: ${(props) => props.theme.links.transition};
   border-style: solid;
   border-width: ${(props) => props.theme.border.width};
   border-color: ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) => props.theme.bgColors.primary};
-  // box-shadow: ${(props) => props.theme.boxShadow.outer};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 0.5rem;
+    padding: 2rem 0.5rem 2rem 2rem;
+    border-width: 0;
+    border-bottom-width: ${(props) => props.theme.border.width};
+    margin: 0;
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 
@@ -38,35 +36,50 @@ const NavButtonView = styled('button')`
     border-width: ${(props) => props.theme.border.width};
     border-color: ${(props) => props.theme.border.color};
     border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) => props.theme.bgColors.secondary};
+    background-color: ${(props) => props.theme.bgColors.tertiary};
   }
 
   &:last-of-type {
     margin-bottom: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      border-width: 0;
+    }
   }
 `
 
 const NavButtonIcon = styled('span')`
   position: relative;
-  // top: -0.1rem;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.6rem;
+  height: 1.6rem;
   flex-shrink: 0;
   line-height: 0;
 `
 
 const NavButtonTitle = styled('span')`
   flex-grow: 1;
-  padding: 0 2.5rem;
-  line-height: 1.2;
+  line-height: ${(props) => props.theme.lineHeight};
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 2.5rem;
+  }
+
+  & > span {
+    display: block;
+  }
+
+  & > span:first-of-type {
+    margin: 0 0 0.1rem -0.1rem;
+  }
 `
 
 const NavButtonArrow = styled('span')`
   position: relative;
-  // top: -0.1rem;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 2rem;
+  height: 2rem;
   line-height: 0;
   flex-shrink: 0;
   transition: ${(props) => props.theme.links.transition};
@@ -81,7 +94,7 @@ const NavButtonArrow = styled('span')`
   }
 `
 
-const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
+const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
   const onUp = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
@@ -91,7 +104,12 @@ const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
   return (
     <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
-      <NavButtonTitle>{title}</NavButtonTitle>
+      <NavButtonTitle>
+        <Heading size={isMobile ? 'medium' : 'big'}>{title}</Heading>
+        <Text size={isMobile ? 'xSmall' : 'small'} color="tertiary">
+          {subtitle}
+        </Text>
+      </NavButtonTitle>
       <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
     </NavButtonView>
   )

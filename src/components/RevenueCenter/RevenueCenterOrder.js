@@ -90,6 +90,10 @@ const serviceTypeNames = {
 
 const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const dispatch = useDispatch()
+  const { first_times, order_times } = revenueCenter
+  const firstTimes = first_times ? first_times[serviceType] : null
+  const orderTimes = order_times ? order_times[serviceType] : null
+  if (!firstTimes && !orderTimes) return null
 
   const choose = () => {
     const args = {
