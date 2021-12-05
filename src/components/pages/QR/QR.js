@@ -69,11 +69,6 @@ const QR = () => {
   const table = query.get('table') || null
   const prep_type = query.get('prep_type') || null
   const presetPrepType = makePrepType(prep_type)
-  // console.log('prep_type', prep_type)
-  // console.log('presetPrepType', presetPrepType)
-  // console.log('prepType', prepType)
-  // console.log('menuSlug', menuSlug)
-  // console.log('revenueCenter', revenueCenter)
 
   useEffect(() => {
     dispatch(resetOrderType())
