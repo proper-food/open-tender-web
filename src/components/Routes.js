@@ -38,6 +38,7 @@ import {
   VerifyAccount,
   MenuItem,
   CheckoutGuest,
+  QR,
 } from './pages'
 
 const Routes = () => {
@@ -60,6 +61,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/thanx/callback">
         <Thanx />
+      </Route>
+      <Route exact path="/qr/:id">
+        <QR />
       </Route>
       <Route exact path="/order-type">
         <OrderType />

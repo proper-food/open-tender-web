@@ -30,6 +30,7 @@ import Order from './Order'
 import Orders from './Orders'
 import OrderType from './OrderType'
 import Profile from './Profile'
+import QR from './QR'
 import Rating from './Rating'
 import Refunds from './Refunds'
 import ResetPassword from './ResetPassword'
@@ -73,6 +74,7 @@ export {
   Orders,
   OrderType,
   Profile,
+  QR,
   Rating,
   Refunds,
   ResetPassword,
