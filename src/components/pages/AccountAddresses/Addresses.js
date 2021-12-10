@@ -68,7 +68,7 @@ const Addresses = ({ addresses, isLoading }) => {
                     onClick={() => handleDefault(address)}
                     disabled={address.is_default || isLoading}
                   >
-                    make primay
+                    make primary
                   </ButtonLink>
                   <LinkSeparator />
                   <ButtonLink
