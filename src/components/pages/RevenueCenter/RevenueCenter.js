@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
-  fetchRevenueCenter,
+  fetchLocation,
   resetOrderType,
   setOrderServiceType,
 } from '@open-tender/redux'
@@ -52,7 +52,7 @@ const RevenueCenter = () => {
   useEffect(() => {
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
-    dispatch(fetchRevenueCenter(slug))
+    dispatch(fetchLocation(slug))
   }, [dispatch, slug])
 
   useEffect(() => {
@@ -65,9 +65,8 @@ const RevenueCenter = () => {
 
   useEffect(() => {
     if (revenueCenter) {
-      const { images, settings, revenue_center_type } = revenueCenter
+      const { images, service_types, revenue_center_type } = revenueCenter
       setImageUrl(makeImageUrl(images, config.background))
-      const { service_types } = settings
       let serviceType = service_types.length
         ? service_types.includes('PICKUP')
           ? 'PICKUP'
