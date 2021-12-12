@@ -9,6 +9,7 @@ import Catering from './Catering'
 import Checkout from './Checkout'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutSignIn from './CheckoutSignIn'
+import CheckoutSignUp from './CheckoutSignUp'
 import Confirmation from './Confirmation'
 import Deals from './Deals'
 import Donations from './Donations'
@@ -54,6 +55,7 @@ export {
   Checkout,
   CheckoutGuest,
   CheckoutSignIn,
+  CheckoutSignUp,
   Confirmation,
   Deals,
   Donations,
