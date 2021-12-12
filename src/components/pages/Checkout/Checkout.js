@@ -45,6 +45,7 @@ import { cardIconMap } from '../../../assets/cardIcons'
 import { selectApi, selectBrand, selectConfig } from '../../../slices'
 import { Content, Loading, Main, PageContainer, PageTitle } from '../..'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
+import CheckoutCustomer from './CheckoutCustomer'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -59,16 +60,7 @@ const makeDeviceType = (deviceType) => {
   }
 }
 
-const CheckoutContainer = styled(PageContainer)`
-  padding: ${(props) => props.theme.layout.navHeight}
-    ${(props) => props.theme.layout.padding} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.navHeightMobile}
-      ${(props) => props.theme.layout.paddingMobile} 0;
-  }
-`
-
-const CheckoutReviewView = styled('div')`
+const CheckoutView = styled('div')`
   flex: 1 1 auto;
   display: flex;
   width: 100%;
@@ -81,13 +73,15 @@ const CheckoutReviewView = styled('div')`
   }
 `
 
-const CheckoutReviewContent = styled('div')`
+const CheckoutContent = styled('div')`
   flex: 1 1 auto;
   padding: 6rem 6rem 0 0;
-  background-color: palegreen;
+  // background-color: palegreen;
 `
 
-const CheckoutReviewSidebar = styled('div')`
+const CheckoutTitle = styled('div')``
+
+const CheckoutSidebar = styled('div')`
   position: relative;
   flex: 0 0 48rem;
   padding: 6rem 0 0 6rem;
@@ -106,7 +100,7 @@ const CheckoutReviewSidebar = styled('div')`
   }
 `
 
-const CheckoutReviewSidebarContent = styled('div')`
+const CheckoutSidebarContent = styled('div')`
   position: relative;
   z-index: 2;
 `
@@ -135,7 +129,7 @@ const iconMap = {
   reward: <Award size={null} />,
 }
 
-const CheckoutReview = () => {
+const Checkout = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -148,10 +142,11 @@ const CheckoutReview = () => {
   const order = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const customer = useSelector(selectCustomer)
+  const { auth } = customer
   const checkout = useSelector(selectCheckout)
   const { check, completedOrder, errors, submitting } = checkout
   const formError = errors ? errors.form || null : null
-  const { sso, customer_id } = check ? check.customer || {} : {}
+
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const deviceTypeName = makeDeviceType(deviceType)
@@ -170,31 +165,18 @@ const CheckoutReview = () => {
   }, [dispatch, deviceTypeName])
 
   useEffect(() => {
-    if (!revenueCenterId || !serviceType) {
-      return history.push('/')
-    } else if (cartTotal === 0) {
-      return history.push(menuSlug)
-    } else if (completedOrder) {
-      dispatch(setConfirmationOrder(completedOrder))
-      dispatch(resetCompletedOrder())
-      dispatch(resetOrder())
-      return history.push('/confirmation')
+    if (!auth) {
+      history.push('/checkout/guest')
     }
-  }, [
-    history,
-    dispatch,
-    cartTotal,
-    menuSlug,
-    revenueCenterId,
-    serviceType,
-    completedOrder,
-  ])
+  }, [auth, history])
 
   useEffect(() => {
-    if (has_thanx && customer_id && sso && !sso.connected) {
-      dispatch(logoutCustomer())
+    if (!revenueCenterId || !serviceType) {
+      history.push('/')
+    } else if (cartTotal === 0) {
+      history.push(menuSlug)
     }
-  }, [has_thanx, customer_id, sso, dispatch])
+  }, [history, cartTotal, menuSlug, revenueCenterId, serviceType])
 
   return (
     <>
@@ -202,25 +184,29 @@ const CheckoutReview = () => {
         <title>Checkout | {title}</title>
       </Helmet>
       <Content>
-        {/* <CheckoutTotal checkout={checkout} /> */}
         <Main bgColor="transparent" style={{ overflow: 'hidden', padding: 0 }}>
-          <CheckoutReviewView>
-            <CheckoutReviewContent>
-              {/* <PageTitle {...config} style={{ marginBottom: '0' }}>
+          <CheckoutView>
+            <CheckoutContent>
+              <PageTitle
+                {...config}
+                style={{ marginBottom: '0', textAlign: 'left' }}
+              >
                 <CheckoutCancelEdit />
-              </PageTitle> */}
-            </CheckoutReviewContent>
-            <CheckoutReviewSidebar>
-              <CheckoutReviewSidebarContent>
+              </PageTitle>
+              {formError && <FormError errMsg={formError} />}
+              <CheckoutCustomer errors={errors} />
+            </CheckoutContent>
+            <CheckoutSidebar>
+              <CheckoutSidebarContent>
                 <p>Sidebar goes here</p>
-              </CheckoutReviewSidebarContent>
-            </CheckoutReviewSidebar>
-          </CheckoutReviewView>
+              </CheckoutSidebarContent>
+            </CheckoutSidebar>
+          </CheckoutView>
         </Main>
       </Content>
     </>
   )
 }
 
-CheckoutReview.displayName = 'CheckoutReview'
-export default CheckoutReview
+Checkout.displayName = 'Checkout'
+export default Checkout
