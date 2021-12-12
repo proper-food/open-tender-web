@@ -39,20 +39,11 @@ import {
   setSubmitting,
   setDeviceType,
 } from '@open-tender/redux'
-import { CheckoutForm, FormError } from '@open-tender/components'
+import { FormError } from '@open-tender/components'
 
 import { cardIconMap } from '../../../assets/cardIcons'
 import { selectApi, selectBrand, selectConfig } from '../../../slices'
-import {
-  Content,
-  Loading,
-  Main,
-  PageTitle,
-  PageContainer,
-  PageContent,
-} from '../..'
-import CheckoutHeader from './CheckoutHeader'
-import CheckoutTotal from './CheckoutTotal'
+import { Content, Loading, Main, PageContainer, PageTitle } from '../..'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
 
 const makeDeviceType = (deviceType) => {
@@ -77,7 +68,74 @@ const CheckoutContainer = styled(PageContainer)`
   }
 `
 
-const Checkout = () => {
+const CheckoutReviewView = styled('div')`
+  flex: 1 1 auto;
+  display: flex;
+  width: 100%;
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    // max-width: ${(props) => props.theme.layout.maxWidth};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const CheckoutReviewContent = styled('div')`
+  flex: 1 1 auto;
+  padding: 6rem 6rem 0 0;
+  background-color: palegreen;
+`
+
+const CheckoutReviewSidebar = styled('div')`
+  position: relative;
+  flex: 0 0 48rem;
+  padding: 6rem 0 0 6rem;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300%;
+    background-color: ${(props) => props.theme.bgColors.tertiary};
+  }
+`
+
+const CheckoutReviewSidebarContent = styled('div')`
+  position: relative;
+  z-index: 2;
+`
+
+const iconMap = {
+  signUp: <User size={null} />,
+  account: <User size={null} />,
+  walkin: <Coffee size={null} />,
+  pickup: <ShoppingBag size={null} />,
+  delivery: <Truck size={null} />,
+  requestedAt: <Clock size={null} />,
+  revenueCenter: <MapPin size={null} />,
+  address: <Navigation size={null} />,
+  tip: <DollarSign size={null} />,
+  add: <PlusCircle size={null} />,
+  remove: <XCircle size={null} />,
+  cash: <DollarSign size={null} />,
+  credit: <CreditCard size={null} />,
+  levelup: <Grid size={null} />,
+  house_account: <Home size={null} />,
+  apple_pay: <Smartphone size={null} />,
+  google_pay: <Smartphone size={null} />,
+  points: <Star size={null} />,
+  loyalty: <Heart size={null} />,
+  deal: <DollarSign size={null} />,
+  reward: <Award size={null} />,
+}
+
+const CheckoutReview = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -96,29 +154,6 @@ const Checkout = () => {
   const { sso, customer_id } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
-  const iconMap = {
-    signUp: <User size={null} />,
-    account: <User size={null} />,
-    walkin: <Coffee size={null} />,
-    pickup: <ShoppingBag size={null} />,
-    delivery: <Truck size={null} />,
-    requestedAt: <Clock size={null} />,
-    revenueCenter: <MapPin size={null} />,
-    address: <Navigation size={null} />,
-    tip: <DollarSign size={null} />,
-    add: <PlusCircle size={null} />,
-    remove: <XCircle size={null} />,
-    cash: <DollarSign size={null} />,
-    credit: <CreditCard size={null} />,
-    levelup: <Grid size={null} />,
-    house_account: <Home size={null} />,
-    apple_pay: <Smartphone size={null} />,
-    google_pay: <Smartphone size={null} />,
-    points: <Star size={null} />,
-    loyalty: <Heart size={null} />,
-    deal: <DollarSign size={null} />,
-    reward: <Award size={null} />,
-  }
   const deviceTypeName = makeDeviceType(deviceType)
 
   useEffect(() => {
@@ -167,45 +202,25 @@ const Checkout = () => {
         <title>Checkout | {title}</title>
       </Helmet>
       <Content>
-        <CheckoutHeader />
-        <CheckoutTotal checkout={checkout} />
-        <Main>
-          <CheckoutContainer>
-            <PageTitle {...config} style={{ marginBottom: '0' }}>
-              <CheckoutCancelEdit />
-            </PageTitle>
-          </CheckoutContainer>
-          {!check && (
-            <PageContent style={{ marginTop: '0' }}>
-              {formError ? (
-                <FormError errMsg={formError} />
-              ) : (
-                <Loading text="Calculating your check..." />
-              )}
-            </PageContent>
-          )}
-          <div ref={formRef}>
-            <CheckoutForm
-              dispatch={dispatch}
-              history={history}
-              iconMap={iconMap}
-              cardIconMap={cardIconMap}
-              config={config}
-              checkout={checkout}
-              order={order}
-              customer={customer}
-              autoSelect={autoSelect}
-              hasThanx={has_thanx}
-              api={api}
-              spinner={<Loading />}
-              brand={brand}
-            />
-          </div>
+        {/* <CheckoutTotal checkout={checkout} /> */}
+        <Main bgColor="transparent" style={{ overflow: 'hidden', padding: 0 }}>
+          <CheckoutReviewView>
+            <CheckoutReviewContent>
+              {/* <PageTitle {...config} style={{ marginBottom: '0' }}>
+                <CheckoutCancelEdit />
+              </PageTitle> */}
+            </CheckoutReviewContent>
+            <CheckoutReviewSidebar>
+              <CheckoutReviewSidebarContent>
+                <p>Sidebar goes here</p>
+              </CheckoutReviewSidebarContent>
+            </CheckoutReviewSidebar>
+          </CheckoutReviewView>
         </Main>
       </Content>
     </>
   )
 }
 
-Checkout.displayName = 'Checkout'
-export default Checkout
+CheckoutReview.displayName = 'CheckoutReview'
+export default CheckoutReview

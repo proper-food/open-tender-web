@@ -10,7 +10,6 @@ import {
   Catering,
   Checkout,
   CheckoutGuest,
-  CheckoutReview,
   CheckoutSignIn,
   Confirmation,
   Deals,
@@ -100,17 +99,14 @@ const Routes = () => {
       <Route exact path="/review">
         <GroupOrderReview />
       </Route>
-      <Route exact path="/checkout">
-        <Checkout />
-      </Route>
       <Route exact path="/checkout/guest">
         <CheckoutGuest />
       </Route>
       <Route exact path="/checkout/signin">
         <CheckoutSignIn />
       </Route>
-      <Route exact path="/checkout/review">
-        <CheckoutReview />
+      <Route exact path="/checkout">
+        <Checkout />
       </Route>
       <Route exact path="/confirmation">
         <Confirmation />

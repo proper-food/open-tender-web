@@ -12,8 +12,7 @@ import { FormWrapper, GuestForm } from '@open-tender/components'
 import Helmet from 'react-helmet'
 
 import { selectBrand } from '../../../slices'
-import { Content, Main, PageContainer, PageTitle } from '../..'
-import CheckoutHeader from '../Checkout/CheckoutHeader'
+import { Content, HeaderCheckout, Main, PageContainer, PageTitle } from '../..'
 
 const defaultText = {
   title: "Let's be quick about this",
@@ -58,7 +57,7 @@ const CheckoutGuest = () => {
         <title>Checkout Guest | {siteTitle}</title>
       </Helmet>
       <Content>
-        <CheckoutHeader />
+        <HeaderCheckout />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...defaultText} />

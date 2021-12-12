@@ -51,9 +51,9 @@ import {
   PageContainer,
   PageContent,
 } from '../..'
-import CheckoutHeader from '../Checkout/CheckoutHeader'
-// import CheckoutTotal from './CheckoutTotal'
-// import CheckoutCancelEdit from './CheckoutCancelEdit'
+import CheckoutHeader from './CheckoutHeader'
+import CheckoutTotal from './CheckoutTotal'
+import CheckoutCancelEdit from './CheckoutCancelEdit'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -77,50 +77,7 @@ const CheckoutContainer = styled(PageContainer)`
   }
 `
 
-const CheckoutReviewView = styled('div')`
-  flex: 1 1 auto;
-  display: flex;
-  width: 100%;
-  max-width: 128rem;
-  margin: 0 auto;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    // max-width: ${(props) => props.theme.layout.maxWidth};
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
-`
-
-const CheckoutReviewContent = styled('div')`
-  flex: 1 1 auto;
-  padding: 6rem 6rem 0 0;
-  background-color: palegreen;
-`
-
-const CheckoutReviewSidebar = styled('div')`
-  position: relative;
-  flex: 0 0 48rem;
-  padding: 6rem 0 0 6rem;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 300%;
-    background-color: ${(props) => props.theme.bgColors.tertiary};
-  }
-`
-
-const CheckoutReviewSidebarContent = styled('div')`
-  position: relative;
-  z-index: 2;
-`
-
-const CheckoutReview = () => {
+const Checkout = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -211,23 +168,44 @@ const CheckoutReview = () => {
       </Helmet>
       <Content>
         <CheckoutHeader />
-        {/* <CheckoutTotal checkout={checkout} /> */}
-        <Main bgColor="transparent" style={{ overflow: 'hidden' }}>
-          <CheckoutReviewView>
-            <CheckoutReviewContent>
-              <p>Content goes here</p>
-            </CheckoutReviewContent>
-            <CheckoutReviewSidebar>
-              <CheckoutReviewSidebarContent>
-                <p>Sidebar goes here</p>
-              </CheckoutReviewSidebarContent>
-            </CheckoutReviewSidebar>
-          </CheckoutReviewView>
+        <CheckoutTotal checkout={checkout} />
+        <Main>
+          <CheckoutContainer>
+            <PageTitle {...config} style={{ marginBottom: '0' }}>
+              <CheckoutCancelEdit />
+            </PageTitle>
+          </CheckoutContainer>
+          {!check && (
+            <PageContent style={{ marginTop: '0' }}>
+              {formError ? (
+                <FormError errMsg={formError} />
+              ) : (
+                <Loading text="Calculating your check..." />
+              )}
+            </PageContent>
+          )}
+          <div ref={formRef}>
+            <CheckoutForm
+              dispatch={dispatch}
+              history={history}
+              iconMap={iconMap}
+              cardIconMap={cardIconMap}
+              config={config}
+              checkout={checkout}
+              order={order}
+              customer={customer}
+              autoSelect={autoSelect}
+              hasThanx={has_thanx}
+              api={api}
+              spinner={<Loading />}
+              brand={brand}
+            />
+          </div>
         </Main>
       </Content>
     </>
   )
 }
 
-CheckoutReview.displayName = 'CheckoutReview'
-export default CheckoutReview
+Checkout.displayName = 'Checkout'
+export default Checkout
