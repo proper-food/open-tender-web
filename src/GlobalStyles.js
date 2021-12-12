@@ -252,14 +252,17 @@ const makeGlobalStyles = (theme) => css`
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    border: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
+    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
     font-family: ${theme.inputs.family};
     font-size: ${theme.inputs.fontSize};
     font-weight: ${theme.inputs.weight};
     letter-spacing: ${theme.inputs.letterSpacing};
     text-transform: ${theme.inputs.textTransform};
-    font-smoothing: ${theme.inputs.fontSmoothing};
+    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
     color: ${theme.inputs.color};
     background-color: ${theme.inputs.bgColor};
     box-shadow: ${theme.inputs.boxShadow};
@@ -278,7 +281,7 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       color: ${theme.inputs.colorFocus};
       background-color: ${theme.inputs.bgColorFocus};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColorFocus};
+      border-color: ${theme.inputs.borderColorFocus};
     }
 
     &:disabled,
@@ -287,7 +290,7 @@ const makeGlobalStyles = (theme) => css`
       opacity: 0.5;
       color: ${theme.inputs.color};
       background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+      border-color: ${theme.inputs.borderColor};
     }
   }
 

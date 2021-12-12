@@ -38,7 +38,7 @@ const CheckoutSignIn = () => {
   useEffect(() => {
     if (auth) {
       dispatch(checkout())
-      history.push('/checkout')
+      history.push('/checkout/review')
     }
   }, [auth, dispatch, history])
 
