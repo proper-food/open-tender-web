@@ -78,8 +78,6 @@ const CheckoutContainer = styled(PageContainer)`
 `
 
 const CheckoutReviewView = styled('div')`
-  // position: relative;
-  // overflow: hidden;
   flex: 1 1 auto;
   display: flex;
   width: 100%;
@@ -99,23 +97,27 @@ const CheckoutReviewContent = styled('div')`
 `
 
 const CheckoutReviewSidebar = styled('div')`
-  // position: relative;
-  // overflow: hidden;
+  position: relative;
   flex: 0 0 48rem;
   padding: 6rem 0 0 6rem;
   background-color: ${(props) => props.theme.bgColors.tertiary};
 
-  // &:after {
-  //   content: '';
-  //   display: block;
-  //   position: absolute;
-  //   z-index: -1;
-  //   top: 0;
-  //   left: 0;
-  //   width: 300%;
-  //   height: 100%;
-  //   background-color: ${(props) => props.theme.bgColors.tertiary};
-  // }
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300%;
+    background-color: ${(props) => props.theme.bgColors.tertiary};
+  }
+`
+
+const CheckoutReviewSidebarContent = styled('div')`
+  position: relative;
+  z-index: 2;
 `
 
 const CheckoutReview = () => {
@@ -210,13 +212,15 @@ const CheckoutReview = () => {
       <Content>
         <CheckoutHeader />
         {/* <CheckoutTotal checkout={checkout} /> */}
-        <Main bgColor="transparent">
+        <Main bgColor="transparent" style={{ overflow: 'hidden' }}>
           <CheckoutReviewView>
             <CheckoutReviewContent>
               <p>Content goes here</p>
             </CheckoutReviewContent>
             <CheckoutReviewSidebar>
-              <p>Sidebar goes here</p>
+              <CheckoutReviewSidebarContent>
+                <p>Sidebar goes here</p>
+              </CheckoutReviewSidebarContent>
             </CheckoutReviewSidebar>
           </CheckoutReviewView>
         </Main>
