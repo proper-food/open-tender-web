@@ -2,9 +2,11 @@ import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 
 const CheckoutSectionView = styled('div')`
-  margin: ${(props) => props.theme.layout.margin} 0;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: ${(props) => props.theme.layout.padding} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0;
+    margin: ${(props) => props.theme.layout.paddingMobile} 0;
   }
 
   h4 {

@@ -15,8 +15,8 @@ import { selectBrand } from '../../../slices'
 import { Content, HeaderCheckout, Main, PageContainer, PageTitle } from '../..'
 
 const defaultText = {
-  title: "Let's be quick about this",
-  subtitle: 'Please enter your email address to get started',
+  title: "Let's see if you have an account",
+  subtitle: 'Please enter your email address below.',
 }
 
 const CheckoutGuest = () => {
@@ -67,6 +67,7 @@ const CheckoutGuest = () => {
                 loading={loading}
                 errors={errors}
                 checkGuest={checkGuest}
+                submitText="Continue"
               />
             </FormWrapper>
           </PageContainer>

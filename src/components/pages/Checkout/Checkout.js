@@ -22,6 +22,9 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { Content, Main, PageTitle } from '../..'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
 import CheckoutCustomer from './CheckoutCustomer'
+import CheckoutGuest from './CheckoutGuest'
+import CheckoutPickup from './CheckoutPickup'
+import CheckoutDelivery from './CheckoutDelivery'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -90,7 +93,6 @@ const Checkout = () => {
   const { form, errors, submitting } = useSelector(selectCheckout)
   const hasGuest = form && !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
-
   const deviceTypeName = makeDeviceType(deviceType)
 
   useEffect(() => {
@@ -136,7 +138,16 @@ const Checkout = () => {
                 <CheckoutCancelEdit />
               </PageTitle>
               {formError && <FormError errMsg={formError} />}
-              <CheckoutCustomer errors={errors} />
+              {auth ? (
+                <CheckoutCustomer errors={errors} />
+              ) : (
+                <CheckoutGuest errors={errors} />
+              )}
+              {serviceType === 'PICKUP' ? (
+                <CheckoutPickup />
+              ) : serviceType === 'DELIVERY' ? (
+                <CheckoutDelivery />
+              ) : null}
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>

@@ -19,7 +19,8 @@ import { Loading } from '../..'
 
 const CheckoutCustomerSignOut = styled('div')`
   label: CheckoutCustomerSignOut;
-  margin: ${(props) => props.theme.layout.padding} 0 0;
+  // margin: ${(props) => props.theme.layout.padding} 0 0;
+  margin: 1.5rem 0 0;
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};

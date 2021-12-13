@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
 import Helmet from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -24,9 +25,16 @@ import { Back } from '../../buttons'
 
 const defaultText = {
   title: 'Sign up or checkout as a guest',
-  subtitle:
-    'Looks like you already have an account. Please enter your password below.',
+  subtitle: 'To checkout as a guest, you can skip the password field.',
 }
+
+const CheckoutSignInEmail = styled('div')`
+  margin: 2rem 0;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const CheckoutSignIn = () => {
   const dispatch = useDispatch()
@@ -72,13 +80,13 @@ const CheckoutSignIn = () => {
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...defaultText}>
-              <div style={{ margin: '1rem 0 2rem' }}>
+              <CheckoutSignInEmail>
                 <p>
                   <ButtonLink onClick={changeEmail}>
-                    Or go back & enter a different email address
+                    Go back & enter a different email address
                   </ButtonLink>
                 </p>
-              </div>
+              </CheckoutSignInEmail>
             </PageTitle>
             <FormWrapper>
               <SignUpGuestForm
