@@ -2,9 +2,9 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Text } from '@open-tender/components'
+import { isMobile } from 'react-device-detect'
 
 import iconMap from '../iconMap'
-import { isMobile } from 'react-device-detect'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -12,7 +12,7 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  padding: 1.6rem 2rem 1.6rem 2.5rem;
+  padding: 1.3rem 2rem 1.3rem 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -20,7 +20,7 @@ const NavButtonView = styled('button')`
   border-style: solid;
   border-width: ${(props) => props.theme.border.width};
   border-color: ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radius};
+  border-radius: ${(props) => props.theme.border.radiusSmall};
   background-color: ${(props) => props.theme.bgColors.primary};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -35,7 +35,7 @@ const NavButtonView = styled('button')`
     border-style: solid;
     border-width: ${(props) => props.theme.border.width};
     border-color: ${(props) => props.theme.border.color};
-    border-radius: ${(props) => props.theme.border.radius};
+    border-radius: ${(props) => props.theme.border.radiusSmall};
     background-color: ${(props) => props.theme.bgColors.tertiary};
   }
 
@@ -53,6 +53,7 @@ const NavButtonIcon = styled('span')`
   height: 1.6rem;
   flex-shrink: 0;
   line-height: 0;
+  color: ${(props) => props.theme.colors.primary};
 `
 
 const NavButtonTitle = styled('span')`
@@ -82,6 +83,7 @@ const NavButtonArrow = styled('span')`
   height: 2rem;
   line-height: 0;
   flex-shrink: 0;
+  color: ${(props) => props.theme.colors.primary};
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);
 

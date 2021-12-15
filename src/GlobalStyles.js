@@ -319,8 +319,11 @@ const makeGlobalStyles = (theme) => css`
   select:read-only {
     opacity: 1;
     cursor: pointer;
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     background-color: ${theme.inputs.bgColor};
+    border: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
+    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
   }
 
   @keyframes fade-in {

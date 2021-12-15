@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
 import {
   Flag,
   ShoppingBag,
@@ -30,7 +31,6 @@ import {
   selectSettings,
 } from '../../../slices'
 import { NavButtons } from '../..'
-import styled from '@emotion/styled'
 
 const OrderTypesView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};

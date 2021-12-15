@@ -25,6 +25,8 @@ import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutPickup from './CheckoutPickup'
 import CheckoutDelivery from './CheckoutDelivery'
+import CheckoutCart from './CheckoutCart'
+import CheckoutHeader from './CheckoutHeader'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -53,14 +55,19 @@ const CheckoutView = styled('div')`
 
 const CheckoutContent = styled('div')`
   flex: 1 1 auto;
-  padding: 6rem 6rem 0 0;
+  padding: 0 ${(props) => props.theme.layout.padding} 0 0;
 `
 
 const CheckoutSidebar = styled('div')`
   position: relative;
   flex: 0 0 48rem;
-  padding: 6rem 0 0 6rem;
+  padding: ${(props) => props.theme.layout.navHeight} 0 0
+    ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  border-width: 0;
+  border-style: solid;
+  border-color: ${(props) => props.theme.border.color};
+  border-left-width: ${(props) => props.theme.border.width};
 
   &:after {
     content: '';
@@ -131,6 +138,7 @@ const Checkout = () => {
         <Main bgColor="transparent" style={{ overflow: 'hidden', padding: 0 }}>
           <CheckoutView>
             <CheckoutContent>
+              <CheckoutHeader />
               <PageTitle
                 {...config}
                 style={{ marginBottom: '0', textAlign: 'left' }}
@@ -151,7 +159,7 @@ const Checkout = () => {
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>
-                <p>Sidebar goes here</p>
+                <CheckoutCart />
               </CheckoutSidebarContent>
             </CheckoutSidebar>
           </CheckoutView>

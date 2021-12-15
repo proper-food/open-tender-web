@@ -29,7 +29,7 @@ const OrderType = () => {
   return (
     <>
       <Helmet>
-        <title>Account Settings | {siteTitle}</title>
+        <title>Start Order | {siteTitle}</title>
       </Helmet>
       <Content>
         <Header
