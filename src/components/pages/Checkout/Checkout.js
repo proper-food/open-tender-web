@@ -71,6 +71,8 @@ const CheckoutTitle = styled('div')`
 `
 
 const CheckoutContent = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   flex: 1 1 auto;
   padding: ${(props) => props.theme.layout.navHeight}
     ${(props) => props.theme.layout.padding} 0 0;
@@ -82,6 +84,8 @@ const CheckoutContent = styled('div')`
 `
 
 const CheckoutSidebar = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   position: relative;
   flex: 0 0 48rem;
   padding: ${(props) => props.theme.layout.navHeight} 0 0
