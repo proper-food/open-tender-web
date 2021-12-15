@@ -1,22 +1,12 @@
 import { useEffect } from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
+import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, validateOrder } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
-import { useHistory } from 'react-router'
-
-const CheckoutGuestSignOut = styled('div')`
-  label: CheckoutGuestSignOut;
-  // margin: ${(props) => props.theme.layout.padding} 0 0;
-  margin: 1.5rem 0 0;
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-`
+import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
 const CheckoutGuest = ({ errors }) => {
   const dispatch = useDispatch()
@@ -40,13 +30,13 @@ const CheckoutGuest = ({ errors }) => {
       </p>
       <p>{email}</p>
       <p>{phone}</p>
-      <CheckoutGuestSignOut>
+      <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={updateInfo}>
             Go back & update your contact info.
           </ButtonLink>
         </p>
-      </CheckoutGuestSignOut>
+      </CheckoutSectionFootnote>
       {/* {check && <CheckoutCompany errors={errors} />} */}
     </CheckoutSection>
   ) : null

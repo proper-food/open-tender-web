@@ -11,10 +11,16 @@ const CheckoutSectionView = styled('div')`
 
   h4 {
     margin: 0 0 0.5em;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
   }
 
   & > p {
     margin: 0.5em 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 

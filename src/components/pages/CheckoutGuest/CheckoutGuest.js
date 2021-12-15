@@ -5,9 +5,11 @@ import {
   checkout,
   fetchGuest,
   resetGuestErrors,
+  selectCheckout,
   selectCustomer,
   selectGuest,
 } from '@open-tender/redux'
+import { checkGuestData } from '@open-tender/js'
 import { FormWrapper, GuestForm } from '@open-tender/components'
 import Helmet from 'react-helmet'
 
@@ -24,7 +26,9 @@ const CheckoutGuest = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
+  const { form } = useSelector(selectCheckout)
   const { email, loading, errors } = useSelector(selectGuest)
+  const { guestIncomplete } = !auth ? checkGuestData(form.customer, email) : {}
   const errMsg = errors ? errors.email || errors.form : null
   const notFound = errMsg && errMsg.includes('not associated')
   const callback = useCallback(
@@ -41,11 +45,11 @@ const CheckoutGuest = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (auth) {
+    if (auth || !guestIncomplete) {
       dispatch(checkout())
       history.push('/checkout')
     }
-  }, [auth, dispatch, history])
+  }, [auth, guestIncomplete, dispatch, history])
 
   useEffect(() => {
     if (notFound) history.push('/checkout/signup')

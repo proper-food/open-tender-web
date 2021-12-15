@@ -20,15 +20,22 @@ import {
 } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
-import { Content, Header, Main, PageContainer, PageTitle } from '../..'
-import { Back } from '../../buttons'
+import {
+  Content,
+  // Header,
+  HeaderCheckout,
+  Main,
+  PageContainer,
+  PageTitle,
+} from '../..'
+// import { Back } from '../../buttons'
 
 const defaultText = {
   title: 'Sign up or checkout as a guest',
   subtitle: 'To checkout as a guest, you can skip the password field.',
 }
 
-const CheckoutSignInEmail = styled('div')`
+const CheckoutSignUpEmail = styled('div')`
   margin: 2rem 0;
 
   p {
@@ -36,7 +43,7 @@ const CheckoutSignInEmail = styled('div')`
   }
 `
 
-const CheckoutSignIn = () => {
+const CheckoutSignUp = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
@@ -60,6 +67,7 @@ const CheckoutSignIn = () => {
   )
 
   const changeEmail = () => {
+    dispatch(updateForm({ customer: {} }))
     history.push('/checkout/guest')
   }
 
@@ -76,17 +84,18 @@ const CheckoutSignIn = () => {
         <title>Checkout Sign Up | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header left={<Back text="Change Email" onClick={changeEmail} />} />
+        {/* <Header left={<Back text="Change Email" onClick={changeEmail} />} /> */}
+        <HeaderCheckout />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...defaultText}>
-              <CheckoutSignInEmail>
+              <CheckoutSignUpEmail>
                 <p>
                   <ButtonLink onClick={changeEmail}>
                     Go back & enter a different email address
                   </ButtonLink>
                 </p>
-              </CheckoutSignInEmail>
+              </CheckoutSignUpEmail>
             </PageTitle>
             <FormWrapper>
               <SignUpGuestForm
@@ -106,5 +115,5 @@ const CheckoutSignIn = () => {
   )
 }
 
-CheckoutSignIn.displayName = 'CheckoutSignIn'
-export default CheckoutSignIn
+CheckoutSignUp.displayName = 'CheckoutSignUp'
+export default CheckoutSignUp

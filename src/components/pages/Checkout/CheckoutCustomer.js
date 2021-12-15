@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   logoutCustomer,
@@ -13,19 +12,10 @@ import {
 import { isEmpty } from '@open-tender/js'
 import { ButtonLink } from '@open-tender/components'
 
-import CheckoutSection from './CheckoutSection'
 import { selectBrand } from '../../../slices'
 import { Loading } from '../..'
-
-const CheckoutCustomerSignOut = styled('div')`
-  label: CheckoutCustomerSignOut;
-  // margin: ${(props) => props.theme.layout.padding} 0 0;
-  margin: 1.5rem 0 0;
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-`
+import CheckoutSection from './CheckoutSection'
+import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
 const CheckoutCustomer = ({ errors }) => {
   const dispatch = useDispatch()
@@ -91,13 +81,13 @@ const CheckoutCustomer = ({ errors }) => {
       </p>
       <p>{email}</p>
       <p>{phone}</p>
-      <CheckoutCustomerSignOut>
+      <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={signOut}>Update your contact info</ButtonLink> or{' '}
           <ButtonLink onClick={signOut}>sign out</ButtonLink> to sign into a
           different account or checkout as a guest.
         </p>
-      </CheckoutCustomerSignOut>
+      </CheckoutSectionFootnote>
       {/* {check && <CheckoutCompany errors={errors} />} */}
     </CheckoutSection>
   ) : (

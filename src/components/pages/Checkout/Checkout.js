@@ -19,7 +19,7 @@ import { isEmpty } from '@open-tender/js'
 import { FormError } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { Content, Main, PageTitle } from '../..'
+import { Content, Main } from '../..'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
 import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutGuest from './CheckoutGuest'
@@ -53,9 +53,32 @@ const CheckoutView = styled('div')`
   }
 `
 
+const CheckoutTitle = styled('div')`
+  label: CheckoutTitle;
+
+  h1 {
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
+    }
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+  }
+`
+
 const CheckoutContent = styled('div')`
   flex: 1 1 auto;
-  padding: 0 ${(props) => props.theme.layout.padding} 0 0;
+  padding: ${(props) => props.theme.layout.navHeight}
+    ${(props) => props.theme.layout.padding} 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 0 0 55%;
+    padding: ${(props) => props.theme.layout.navHeightMobile}
+      ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
 `
 
 const CheckoutSidebar = styled('div')`
@@ -68,6 +91,9 @@ const CheckoutSidebar = styled('div')`
   border-style: solid;
   border-color: ${(props) => props.theme.border.color};
   border-left-width: ${(props) => props.theme.border.width};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 0 0 45%;
+  }
 
   &:after {
     content: '';
@@ -137,14 +163,13 @@ const Checkout = () => {
       <Content>
         <Main bgColor="transparent" style={{ overflow: 'hidden', padding: 0 }}>
           <CheckoutView>
+            <CheckoutHeader />
             <CheckoutContent>
-              <CheckoutHeader />
-              <PageTitle
-                {...config}
-                style={{ marginBottom: '0', textAlign: 'left' }}
-              >
-                <CheckoutCancelEdit />
-              </PageTitle>
+              <CheckoutTitle>
+                <h1>{config.title}</h1>
+                <p>{config.subtitle}</p>
+              </CheckoutTitle>
+              <CheckoutCancelEdit />
               {formError && <FormError errMsg={formError} />}
               {auth ? (
                 <CheckoutCustomer errors={errors} />

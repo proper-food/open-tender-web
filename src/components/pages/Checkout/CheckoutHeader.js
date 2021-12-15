@@ -6,12 +6,17 @@ import { selectGroupOrder } from '@open-tender/redux'
 import { Menu, Reopen } from '../../buttons'
 
 const CheckoutHeaderView = styled('div')`
+  position: absolute;
+  top: 0;
+  left: 0;
   height: ${(props) => props.theme.layout.navHeight};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
