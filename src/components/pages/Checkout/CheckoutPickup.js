@@ -38,7 +38,7 @@ const CheckoutPickup = () => {
 
   return (
     <CheckoutSection>
-      <h4>Pick-up Details</h4>
+      <h4>Pick-up Location & Time</h4>
       <p>{name}</p>
       <p>{street}</p>
       <p>{addressLine2}</p>

@@ -27,6 +27,9 @@ import CheckoutPickup from './CheckoutPickup'
 import CheckoutDelivery from './CheckoutDelivery'
 import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
+import CheckoutAddress from './CheckoutAddress'
+import CheckoutDetails from './CheckoutDetails'
+import CheckoutSection from './CheckoutSection'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -74,12 +77,25 @@ const CheckoutContent = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   flex: 1 1 auto;
-  padding: ${(props) => props.theme.layout.navHeight}
-    ${(props) => props.theme.layout.padding} 0 0;
+  padding: ${(props) => props.theme.layout.navHeight} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex: 0 0 55%;
-    padding: ${(props) => props.theme.layout.navHeightMobile}
-      ${(props) => props.theme.layout.paddingMobile} 0 0;
+    padding: ${(props) => props.theme.layout.navHeightMobile} 0;
+  }
+`
+
+const CheckoutInfo = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  @media (max-width: 1160px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  & > div {
+    flex-grow: 1;
+    min-width: 50%;
   }
 `
 
@@ -175,16 +191,18 @@ const Checkout = () => {
               </CheckoutTitle>
               <CheckoutCancelEdit />
               {formError && <FormError errMsg={formError} />}
-              {auth ? (
-                <CheckoutCustomer errors={errors} />
-              ) : (
-                <CheckoutGuest errors={errors} />
-              )}
-              {serviceType === 'PICKUP' ? (
-                <CheckoutPickup />
-              ) : serviceType === 'DELIVERY' ? (
-                <CheckoutDelivery />
-              ) : null}
+              <CheckoutInfo>
+                {auth ? <CheckoutCustomer /> : <CheckoutGuest />}
+                {serviceType === 'PICKUP' ? (
+                  <CheckoutPickup />
+                ) : serviceType === 'DELIVERY' ? (
+                  <CheckoutDelivery />
+                ) : null}
+              </CheckoutInfo>
+              <CheckoutSection>
+                <CheckoutAddress />
+                <CheckoutDetails />
+              </CheckoutSection>
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>

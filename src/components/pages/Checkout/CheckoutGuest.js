@@ -8,7 +8,7 @@ import { ButtonLink } from '@open-tender/components'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
-const CheckoutGuest = ({ errors }) => {
+const CheckoutGuest = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { form, check } = useSelector(selectCheckout)

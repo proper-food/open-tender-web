@@ -18,6 +18,7 @@ const CheckoutDelivery = () => {
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
+  const orderTime = requestedTime === 'ASAP' ? 'Deliver ASAP' : requestedTime
 
   const changeAddress = () => {
     history.push('/locations')
@@ -37,10 +38,10 @@ const CheckoutDelivery = () => {
 
   return (
     <CheckoutSection>
-      <h4>Delivery Details</h4>
+      <h4>Delivery Address & Time</h4>
       <p>{street}</p>
       <p>{addressLine2}</p>
-      <p>Delivery Time: {requestedTime}</p>
+      <p>{orderTime}</p>
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={changeAddress}>Change address</ButtonLink> or{' '}

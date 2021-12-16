@@ -17,7 +17,7 @@ import { Loading } from '../..'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
-const CheckoutCustomer = ({ errors }) => {
+const CheckoutCustomer = () => {
   const dispatch = useDispatch()
   const { has_thanx } = useSelector(selectBrand)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
