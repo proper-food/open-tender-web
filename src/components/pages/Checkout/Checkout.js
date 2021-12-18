@@ -29,7 +29,6 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
-import CheckoutSection from './CheckoutSection'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -82,6 +81,9 @@ const CheckoutContent = styled('div')`
     flex: 0 0 55%;
     padding: ${(props) => props.theme.layout.navHeightMobile} 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 100%;
+  }
 `
 
 const CheckoutInfo = styled('div')`
@@ -99,12 +101,27 @@ const CheckoutInfo = styled('div')`
   }
 `
 
+const CheckoutForm = styled('div')`
+  margin: ${(props) => props.theme.layout.margin} 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
+  }
+
+  h4 {
+    margin: 0 0 1em;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
+  }
+`
+
 const CheckoutSidebar = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   position: relative;
   flex: 0 0 48rem;
-  padding: ${(props) => props.theme.layout.navHeight} 0 0
+  padding: ${(props) => props.theme.layout.navHeight} 0
+    ${(props) => props.theme.layout.navHeight}
     ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-width: 0;
@@ -113,6 +130,9 @@ const CheckoutSidebar = styled('div')`
   border-left-width: ${(props) => props.theme.border.width};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex: 0 0 45%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
   }
 
   &:after {
@@ -133,6 +153,21 @@ const CheckoutSidebarContent = styled('div')`
   z-index: 2;
 `
 
+const makeFormTitle = (check) => {
+  if (!check || !check.config) return null
+  const displayed = check.config.displayed
+  const required = check.config.required
+  const hasAddress = displayed.address.length || required.address.length
+  const hasDetails = displayed.details.length || required.details.length
+  return hasAddress && hasDetails
+    ? 'Address & Order Details'
+    : hasAddress
+    ? 'Address Details'
+    : hasDetails
+    ? 'Order Details'
+    : null
+}
+
 const Checkout = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -143,10 +178,11 @@ const Checkout = () => {
   const { serviceType, revenueCenter } = useSelector(selectOrder)
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { auth } = useSelector(selectCustomer)
-  const { form, errors, submitting } = useSelector(selectCheckout)
+  const { check, form, errors, submitting } = useSelector(selectCheckout)
   const hasGuest = form && !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
+  const formTitle = makeFormTitle(check)
 
   useEffect(() => {
     if (!submitting && formError) window.scrollTo(0, 0)
@@ -199,10 +235,13 @@ const Checkout = () => {
                   <CheckoutDelivery />
                 ) : null}
               </CheckoutInfo>
-              <CheckoutSection>
-                <CheckoutAddress />
-                <CheckoutDetails />
-              </CheckoutSection>
+              {formTitle && (
+                <CheckoutForm>
+                  <h4>{formTitle}</h4>
+                  <CheckoutAddress />
+                  <CheckoutDetails />
+                </CheckoutForm>
+              )}
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>

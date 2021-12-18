@@ -2,10 +2,9 @@ import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, selectOrder, updateForm } from '@open-tender/redux'
 import { isEmpty, makeNumeric } from '@open-tender/js'
-import { Input, Switch } from '@open-tender/components'
-// import InputSwitch from '../../components/InputSwitch'
+import { Input, Switch, Textarea } from '@open-tender/components'
 
-import CheckoutSection from './CheckoutSection'
+import CheckoutInputs from './CheckoutInputs'
 
 const initialState = {
   eating_utensils: false,
@@ -32,7 +31,7 @@ const makeDetailsConfig = (required, displayed, allowTaxExempt) => {
       required: required.includes('servingUtensils'),
     },
     person_count: {
-      label: 'Person Count',
+      label: `Person Count${!required.includes('count') ? ' (optional)' : ''}`,
       included: displayed.includes('count') || required.includes('count'),
       required: required.includes('count'),
     },
@@ -42,7 +41,7 @@ const makeDetailsConfig = (required, displayed, allowTaxExempt) => {
       required: false,
     },
     notes: {
-      label: 'Notes',
+      label: `Notes${!required.includes('notes') ? ' (optional)' : ''}`,
       included: displayed.includes('notes') || required.includes('notes'),
       required: required.includes('notes'),
     },
@@ -57,7 +56,7 @@ const switches = [
 const inputs = [
   { name: 'person_count', type: 'number', pattern: '[0-9]*', min: 0 },
   { name: 'tax_exempt_id', type: 'text' },
-  { name: 'notes', type: 'text' },
+  // { name: 'notes', type: 'text' },
 ]
 
 const makeCheckDetails = (details) => {
@@ -88,6 +87,8 @@ const CheckoutDetails = () => {
     const input = detailsConfig[field.name]
     return input && input.included ? true : false
   })
+  const notesConfig = detailsConfig['notes']
+  const showNotes = notesConfig && notesConfig.included ? true : false
   const formDetails = useMemo(() => form.details, [form.details])
   const { notes, person_count, tax_exempt_id } = check.details
 
@@ -132,30 +133,17 @@ const CheckoutDetails = () => {
     dispatch(updateForm({ details }))
   }
 
-  if (!filteredSwitches.length && !filteredInputs.length) return null
+  if (!filteredSwitches.length && !filteredInputs.length && !showNotes)
+    return null
 
   return (
-    <>
-      {filteredSwitches.map((field) => {
-        const input = detailsConfig[field.name]
-        return (
-          <Switch
-            key={field.name}
-            label={input.label}
-            id={field.name}
-            on={formDetails[field.name]}
-            onChange={handleChange}
-            // inputClasses="input--button"
-          />
-        )
-      })}
+    <CheckoutInputs>
       {filteredInputs.map((field) => {
         const input = detailsConfig[field.name]
-        const label = `${input.label}${!input.required ? ' (optional)' : ''}`
         return (
           <Input
             key={field.name}
-            label={label}
+            label={input.label}
             name={field.name}
             type={field.type}
             value={formDetails[field.name] || ''}
@@ -167,7 +155,30 @@ const CheckoutDetails = () => {
           />
         )
       })}
-    </>
+      {filteredSwitches.map((field) => {
+        const input = detailsConfig[field.name]
+        return (
+          <Switch
+            key={field.name}
+            label={input.label}
+            id={field.name}
+            on={formDetails[field.name]}
+            onChange={handleChange}
+          />
+        )
+      })}
+      {showNotes && (
+        <Textarea
+          label={notesConfig.label}
+          name="notes"
+          value={formDetails['notes'] || ''}
+          onChange={handleChange}
+          error={detailsErrors['notes']}
+          required={notesConfig.required}
+          style={{ width: '100%', marginTop: '2rem' }}
+        />
+      )}
+    </CheckoutInputs>
   )
 }
 

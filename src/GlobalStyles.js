@@ -252,6 +252,7 @@ const makeGlobalStyles = (theme) => css`
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
+    padding-bottom: ${theme.inputs.paddingBottom};
     border: ${theme.inputs.bottomBorderOnly
       ? '0'
       : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
@@ -305,6 +306,11 @@ const makeGlobalStyles = (theme) => css`
   }
 
   textarea {
+    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    padding-top: ${theme.inputs.paddingVertical};
+    padding-bottom: ${theme.inputs.paddingVertical};
+    padding-left: ${theme.inputs.paddingVertical} !important;
+    padding-right: ${theme.inputs.paddingVertical};
     height: 5em;
   }
 

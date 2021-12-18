@@ -4,7 +4,7 @@ import { selectCheckout, selectOrder, updateForm } from '@open-tender/redux'
 import { isEmpty, makePhone } from '@open-tender/js'
 import { Input } from '@open-tender/components'
 
-import CheckoutSection from './CheckoutSection'
+import CheckoutInputs from './CheckoutInputs'
 
 const initialState = {
   unit: '',
@@ -39,8 +39,8 @@ const makeAddressConfig = (required, displayed) => {
 }
 
 const fields = [
-  { name: 'unit', type: 'text' },
   { name: 'company', type: 'text' },
+  { name: 'unit', type: 'text' },
   { name: 'contact', type: 'text' },
   { name: 'phone', type: 'text' },
 ]
@@ -90,7 +90,7 @@ const CheckoutAddress = () => {
   }
 
   return (
-    <>
+    <CheckoutInputs>
       {filtered.map((field) => {
         const input = addressConfig[field.name]
         const label = `${input.label}${!input.required ? ' (optional)' : ''}`
@@ -107,7 +107,7 @@ const CheckoutAddress = () => {
           />
         )
       })}
-    </>
+    </CheckoutInputs>
   )
 }
 

@@ -14,8 +14,8 @@ const CheckoutPickup = () => {
   const { orderType, requestedAt, revenueCenter, serviceType } =
     useSelector(selectOrder)
   const { name, address } = revenueCenter
-  const { street, city, state, postal_code } = address
-  const addressLine2 = `${city}, ${state} ${postal_code}`
+  // const { street, city, state, postal_code } = address
+  // const addressLine2 = `${city}, ${state} ${postal_code}`
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
@@ -40,8 +40,8 @@ const CheckoutPickup = () => {
     <CheckoutSection>
       <h4>Pick-up Location & Time</h4>
       <p>{name}</p>
-      <p>{street}</p>
-      <p>{addressLine2}</p>
+      <p>{address.street}</p>
+      {/* <p>{addressLine2}</p> */}
       <p>Pick-up Time: {requestedTime}</p>
       <CheckoutSectionFootnote>
         <p>

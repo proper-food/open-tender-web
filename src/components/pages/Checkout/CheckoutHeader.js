@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux'
 import { selectGroupOrder } from '@open-tender/redux'
 
 import { Menu, Reopen } from '../../buttons'
+import { isMobile } from 'react-device-detect'
 
 const CheckoutHeaderView = styled('div')`
   position: absolute;
+  z-index: 10;
   top: 0;
   left: 0;
   height: ${(props) => props.theme.layout.navHeight};
@@ -16,14 +18,17 @@ const CheckoutHeaderView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) =>
+      props.isMobile ? '0' : props.theme.layout.paddingMobile};
   }
 `
 
 const CheckoutHeader = () => {
   const { cartId } = useSelector(selectGroupOrder)
   return (
-    <CheckoutHeaderView>{cartId ? <Reopen /> : <Menu />}</CheckoutHeaderView>
+    <CheckoutHeaderView isMobile={isMobile}>
+      {cartId ? <Reopen /> : <Menu />}
+    </CheckoutHeaderView>
   )
 }
 
