@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react'
+import { useCallback, useMemo, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'

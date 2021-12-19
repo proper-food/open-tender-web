@@ -32,6 +32,7 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
+import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
 import CheckoutSubmit from './CheckoutSubmit'
 
@@ -102,7 +103,15 @@ const CheckoutInfo = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  @media (max-width: 1160px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-direction: column;
     justify-content: flex-start;
   }
@@ -270,6 +279,7 @@ const Checkout = () => {
               )}
               {check && (
                 <>
+                  <CheckoutGiftCards />
                   <CheckoutTenders />
                   <CheckoutSubmit />
                 </>
