@@ -12,6 +12,10 @@ import CheckoutSection from './CheckoutSection'
 import CheckoutCreditCards from './CheckoutCreditCards'
 // import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 
+const CheckoutTendersView = styled.div`
+  margin: 2rem 0 0;
+`
+
 const CheckoutTendersErrors = styled.div`
   margin: 0 0 1.5rem;
 `
@@ -38,11 +42,16 @@ const CheckoutTenders = () => {
     () => form.tenders.filter((i) => i.tender_type === 'GIFT_CARD'),
     [form.tenders]
   )
-  const cards = check.customer ? check.customer.credit_cards : []
+  const cards = useMemo(
+    () => (check.customer ? check.customer.credit_cards : []),
+    [check.customer]
+  )
   const hasCards = cards && cards.length > 0
   const noTender = form.tenders.length === 0
-  const customer_card_id =
-    hasCards && noTender ? cards[0].customer_card_id : null
+  const customerCard = useMemo(
+    () => (hasCards && noTender ? cards[0] : null),
+    [hasCards, noTender, cards]
+  )
 
   // useEffect(() => {
   //   return () => dispatch(updateForm({ tenders: [] }))
@@ -58,11 +67,11 @@ const CheckoutTenders = () => {
   // automatically apply first credit card if user has one
   useEffect(() => {
     setHasTender(true)
-    if (customer_card_id && !hasTender) {
-      const tender = { tender_type: 'CREDIT', amount, customer_card_id }
+    if (customerCard && !hasTender) {
+      const tender = { tender_type: 'CREDIT', amount, ...customerCard }
       dispatch(updateForm({ tenders: [tender] }))
     }
-  }, [hasTender, customer_card_id, amount, dispatch])
+  }, [hasTender, customerCard, amount, dispatch])
 
   const apply = useCallback(
     (data, swap) => {
@@ -81,24 +90,26 @@ const CheckoutTenders = () => {
   return (
     <CheckoutSection>
       <h4>Apply Payment</h4>
-      {hasErrors && (
-        <CheckoutTendersErrors>
-          {tenderErrors.map((errMsg, index) => (
-            <FormError key={`${index}-${errMsg}`} errMsg={errMsg} />
-          ))}
-        </CheckoutTendersErrors>
-      )}
-      <CheckoutCreditCards apply={apply} remove={remove} isPaid={isPaid} />
-      <CheckoutButton
-        icon={
-          <PlusCircle color={theme.colors.primary} width={18} height={18} />
-        }
-        title="Add new credit card"
-        // onPress={() => navigation.navigate('/credit-card')}
-        isApplied={false}
-        disabled={isPaid}
-      />
-      {/* <CheckoutHouseAccounts apply={apply} remove={remove} isPaid={isPaid} /> */}
+      <CheckoutTendersView>
+        {hasErrors && (
+          <CheckoutTendersErrors>
+            {tenderErrors.map((errMsg, index) => (
+              <FormError key={`${index}-${errMsg}`} errMsg={errMsg} />
+            ))}
+          </CheckoutTendersErrors>
+        )}
+        <CheckoutCreditCards apply={apply} remove={remove} isPaid={isPaid} />
+        <CheckoutButton
+          icon={
+            <PlusCircle color={theme.colors.primary} width={18} height={18} />
+          }
+          title="Add new credit card"
+          // onPress={() => navigation.navigate('/credit-card')}
+          isApplied={false}
+          disabled={isPaid}
+        />
+        {/* <CheckoutHouseAccounts apply={apply} remove={remove} isPaid={isPaid} /> */}
+      </CheckoutTendersView>
     </CheckoutSection>
   )
 }

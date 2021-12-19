@@ -41,6 +41,9 @@ const CheckoutButtonInfo = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 1.5rem 0 1.5rem 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 1rem 0 1rem 1.5rem;
+  }
 `
 
 const CheckoutButtonIcon = styled.div`
@@ -51,6 +54,9 @@ const CheckoutButtonIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 1.5rem 0 0;
+  }
 `
 
 const CheckoutButtonText = styled.div`
@@ -69,6 +75,9 @@ const CheckoutButtonTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.medium};
   color: ${(props) =>
     props.theme.colors[props.isApplied ? 'primary' : 'primary']};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const CheckoutButtonSubtitle = styled(Text)`
@@ -76,6 +85,9 @@ const CheckoutButtonSubtitle = styled(Text)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
   color: ${(props) =>
     props.theme.colors[props.isApplied ? 'secondary' : 'secondary']};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const CheckoutButtonContainer = styled.div`
@@ -87,22 +99,27 @@ const CheckoutButtonContainer = styled.div`
 `
 
 const CheckoutButtonButton = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  // flex: 1;
+  // display: flex;
+  // justify-content: center;
+  // align-items: flex-end;
   padding: 0 1.5rem 0 0;
+`
+
+const CheckoutButtonButtonContent = styled.div`
+  label: CheckoutButtonButtonContent;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `
 
 const CheckoutButtonButtonIcon = styled.div`
   width: 1.8rem;
   height: 1.8rem;
-`
-
-const CheckoutButtonButtonContent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
 `
 
 const CheckoutButtonApply = styled(Text)`
@@ -111,6 +128,10 @@ const CheckoutButtonApply = styled(Text)`
   color: ${(props) => props.theme.colors.primary};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   margin: 0 0 0 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    margin: 0.1 0 0 0.4rem;
+  }
 `
 
 const CheckoutButtonRemove = styled(Text)`
@@ -119,6 +140,10 @@ const CheckoutButtonRemove = styled(Text)`
   color: ${(props) => props.theme.colors.error};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   margin: 0 0 0 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    margin: 0.1 0 0 0.4rem;
+  }
 `
 
 const CheckoutButton = ({

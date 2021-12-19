@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
@@ -10,12 +10,15 @@ const CheckoutCreditCardsView = styled.div``
 
 const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
   const { check, form } = useSelector(selectCheckout)
-  const cards = check.customer ? check.customer.credit_cards || [] : []
+  const cards = useMemo(
+    () => (check.customer ? check.customer.credit_cards || [] : []),
+    [check.customer]
+  )
   const [cardCount, setCardCount] = useState(cards.length)
   const hasCards = cards && cards.length > 0
   const appliedCard = form.tenders.find((i) => i.customer_card_id) || {}
   const appliedCardId = appliedCard.customer_card_id || null
-  const defaultCard = cards.find((i) => i.is_default)
+  const defaultCard = useMemo(() => cards.find((i) => i.is_default), [cards])
   const defaultCardId = defaultCard ? defaultCard.customer_card_id : null
 
   // if customer adds new default card, replace the current credit tender
@@ -23,10 +26,18 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
     if (cards.length > cardCount) {
       setCardCount(cards.length)
       if (defaultCardId && appliedCardId !== defaultCardId) {
-        apply({ tender_type: 'CREDIT', customer_card_id: defaultCardId }, true)
+        const card = { tender_type: 'CREDIT', ...defaultCard }
+        apply(card, true)
       }
     }
-  }, [appliedCardId, defaultCardId, apply, cardCount, cards.length])
+  }, [
+    appliedCardId,
+    defaultCardId,
+    defaultCard,
+    apply,
+    cardCount,
+    cards.length,
+  ])
 
   if (!hasCards) return null
 
@@ -48,7 +59,7 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
           ? 'Default Card'
           : null
         const disabled = isPaid && !isApplied
-        const tender = { tender_type: 'CREDIT', customer_card_id }
+        const tender = { tender_type: 'CREDIT', ...card }
         const onPress = isApplied ? () => remove() : () => apply(tender)
         return (
           <CheckoutButton

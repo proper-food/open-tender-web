@@ -127,7 +127,7 @@ const CartButton = () => {
   const { pathname } = useLocation()
   const cartQuantity = useSelector(selectCartQuantity)
   const isItem = pathname.includes('/item/')
-  const showCart = contains(pathname, ['menu', 'checkout']) && !isItem
+  const showCart = contains(pathname, ['menu']) && !isItem
 
   const toggle = (evt) => {
     evt.preventDefault()

@@ -10,6 +10,9 @@ const CheckoutSectionView = styled('div')`
     margin: ${(props) => props.theme.layout.marginMobile} 0 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 
   h4 {
     margin: 0 0 0.5em;
