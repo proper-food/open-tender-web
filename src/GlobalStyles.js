@@ -257,7 +257,9 @@ const makeGlobalStyles = (theme) => css`
       ? '0'
       : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
     border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    border-radius: ${theme.inputs.radius};
+    border-radius: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.radius}`};
     font-family: ${theme.inputs.family};
     font-size: ${theme.inputs.fontSize};
     font-weight: ${theme.inputs.weight};
@@ -307,6 +309,7 @@ const makeGlobalStyles = (theme) => css`
 
   textarea {
     border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    border-radius: ${theme.inputs.radius};
     padding-top: ${theme.inputs.paddingVertical};
     padding-bottom: ${theme.inputs.paddingVertical};
     padding-left: ${theme.inputs.paddingVertical} !important;

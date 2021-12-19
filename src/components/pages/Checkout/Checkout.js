@@ -29,6 +29,8 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
+import CheckoutButton from './CheckoutButton'
+import CheckoutSection from './CheckoutSection'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -242,6 +244,13 @@ const Checkout = () => {
                   <CheckoutDetails />
                 </CheckoutForm>
               )}
+              <CheckoutSection>
+                <CheckoutButton
+                  title="Some credit card"
+                  subtitle="Credit card details"
+                  onPress={() => console.log('test this')}
+                />
+              </CheckoutSection>
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>

@@ -17,14 +17,14 @@ const initialState = {
 const makeDetailsConfig = (required, displayed, allowTaxExempt) => {
   return {
     eating_utensils: {
-      label: 'Add Eating Utensils',
+      label: 'Include Eating Utensils',
       included:
         displayed.includes('eatingUtensils') ||
         required.includes('eatingUtensils'),
       required: required.includes('eatingUtensils'),
     },
     serving_utensils: {
-      label: 'Add Serving Utensils',
+      label: 'Include Serving Utensils',
       included:
         displayed.includes('servingUtensils') ||
         required.includes('servingUtensils'),
