@@ -18,7 +18,7 @@ const CheckoutCartView = styled('div')``
 
 const CheckoutCart = () => {
   const { cart } = useSelector(selectOrder)
-  const { check, form, submitting } = useSelector(selectCheckout)
+  const { check, form, loading } = useSelector(selectCheckout)
 
   return (
     <CheckoutCartView>
@@ -27,7 +27,7 @@ const CheckoutCart = () => {
         <CheckSummary
           check={check}
           tenders={form.tenders}
-          updating={submitting}
+          updating={loading === 'pending'}
           loader={<Loading />}
         />
       )}

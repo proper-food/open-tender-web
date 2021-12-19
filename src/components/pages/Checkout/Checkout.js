@@ -32,6 +32,9 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
+import CheckoutSurcharges from './CheckoutSurcharges'
+import CheckoutDiscounts from './CheckoutDiscounts'
+import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
 import CheckoutSubmit from './CheckoutSubmit'
@@ -279,6 +282,9 @@ const Checkout = () => {
               )}
               {check && (
                 <>
+                  <CheckoutSurcharges />
+                  <CheckoutDiscounts />
+                  <CheckoutPromoCodes />
                   <CheckoutGiftCards />
                   <CheckoutTenders />
                   <CheckoutSubmit />

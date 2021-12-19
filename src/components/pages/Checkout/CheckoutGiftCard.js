@@ -14,13 +14,13 @@ const PaymentGiftCardNew = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1.5rem 0 0;
+  margin: 2rem 0 0;
 `
 
 const PaymentGiftCardInput = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 0 1.5rem 0 0;
+  padding: 0 2rem 0 0;
 `
 
 const PaymentGiftCardButton = styled.div`
