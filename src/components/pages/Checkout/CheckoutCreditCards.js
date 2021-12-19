@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
@@ -75,6 +76,13 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
       })}
     </CheckoutCreditCardsView>
   )
+}
+
+CheckoutCreditCards.displayName = 'CheckoutCreditCards'
+CheckoutCreditCards.propTypes = {
+  apply: propTypes.func,
+  remove: propTypes.func,
+  isPaid: propTypes.bool,
 }
 
 export default CheckoutCreditCards

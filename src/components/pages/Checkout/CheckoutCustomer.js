@@ -84,8 +84,7 @@ const CheckoutCustomer = () => {
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={signOut}>Update your contact info</ButtonLink> or{' '}
-          <ButtonLink onClick={signOut}>sign out</ButtonLink> to sign into a
-          different account or checkout as a guest.
+          <ButtonLink onClick={signOut}>sign out</ButtonLink>.
         </p>
       </CheckoutSectionFootnote>
       {/* {check && <CheckoutCompany errors={errors} />} */}

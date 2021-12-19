@@ -10,8 +10,11 @@ import {
   selectMenuSlug,
   selectOrder,
   selectCheckout,
+  resetCompletedOrder,
   resetErrors,
+  resetOrder,
   resetTip,
+  setConfirmationOrder,
   setSubmitting,
   setDeviceType,
 } from '@open-tender/redux'
@@ -29,9 +32,8 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
-import CheckoutButton from './CheckoutButton'
-import CheckoutSection from './CheckoutSection'
 import CheckoutTenders from './CheckoutTenders'
+import CheckoutSubmit from './CheckoutSubmit'
 
 const makeDeviceType = (deviceType) => {
   switch (deviceType) {
@@ -60,6 +62,13 @@ const CheckoutView = styled('div')`
 
 const CheckoutTitle = styled('div')`
   label: CheckoutTitle;
+  padding: 0 ${(props) => props.theme.layout.padding} 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 
   h1 {
     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
@@ -84,7 +93,7 @@ const CheckoutContent = styled('div')`
     flex: 0 0 55%;
     padding: ${(props) => props.theme.layout.navHeightMobile} 0;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 100%;
   }
 `
@@ -134,7 +143,7 @@ const CheckoutSidebar = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex: 0 0 45%;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: none;
   }
 
@@ -181,7 +190,8 @@ const Checkout = () => {
   const { serviceType, revenueCenter } = useSelector(selectOrder)
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { auth } = useSelector(selectCustomer)
-  const { check, form, errors, submitting } = useSelector(selectCheckout)
+  const { check, form, errors, submitting, completedOrder } =
+    useSelector(selectCheckout)
   const hasGuest = form && !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
@@ -205,8 +215,21 @@ const Checkout = () => {
       history.push('/')
     } else if (cartTotal === 0) {
       history.push(menuSlug)
+    } else if (completedOrder) {
+      dispatch(setConfirmationOrder(completedOrder))
+      dispatch(resetCompletedOrder())
+      dispatch(resetOrder())
+      return history.push('/confirmation')
     }
-  }, [history, cartTotal, menuSlug, revenueCenterId, serviceType])
+  }, [
+    dispatch,
+    history,
+    cartTotal,
+    menuSlug,
+    revenueCenterId,
+    serviceType,
+    completedOrder,
+  ])
 
   useEffect(() => {
     if (!auth && !hasGuest) {
@@ -227,9 +250,9 @@ const Checkout = () => {
               <CheckoutTitle>
                 <h1>{config.title}</h1>
                 <p>{config.subtitle}</p>
+                <CheckoutCancelEdit />
+                {formError && <FormError errMsg={formError} />}
               </CheckoutTitle>
-              <CheckoutCancelEdit />
-              {formError && <FormError errMsg={formError} />}
               <CheckoutInfo>
                 {auth ? <CheckoutCustomer /> : <CheckoutGuest />}
                 {serviceType === 'PICKUP' ? (
@@ -245,14 +268,12 @@ const Checkout = () => {
                   <CheckoutDetails />
                 </CheckoutForm>
               )}
-              {/* <CheckoutSection>
-                <CheckoutButton
-                  title="Some credit card"
-                  subtitle="Credit card details"
-                  onPress={() => console.log('test this')}
-                />
-              </CheckoutSection> */}
-              <CheckoutTenders />
+              {check && (
+                <>
+                  <CheckoutTenders />
+                  <CheckoutSubmit />
+                </>
+              )}
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>

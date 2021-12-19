@@ -90,27 +90,19 @@ const CheckoutButtonSubtitle = styled(Text)`
   }
 `
 
-const CheckoutButtonContainer = styled.div`
+const CheckoutButtonButton = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   width: 9.5rem;
   height: 100%;
-  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
-`
-
-const CheckoutButtonButton = styled.div`
-  // flex: 1;
-  // display: flex;
-  // justify-content: center;
-  // align-items: flex-end;
-  padding: 0 1.5rem 0 0;
-`
-
-const CheckoutButtonButtonContent = styled.div`
-  label: CheckoutButtonButtonContent;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding: 0 2rem 0 0;
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 1.5rem 0 0;
+  }
 `
 
 const CheckoutButtonButtonIcon = styled.div`
@@ -134,16 +126,8 @@ const CheckoutButtonApply = styled(Text)`
   }
 `
 
-const CheckoutButtonRemove = styled(Text)`
-  display: block;
-  line-height: 1;
+const CheckoutButtonRemove = styled(CheckoutButtonApply)`
   color: ${(props) => props.theme.colors.error};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  margin: 0 0 0 0.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    margin: 0.1 0 0 0.4rem;
-  }
 `
 
 const CheckoutButton = ({
@@ -186,31 +170,29 @@ const CheckoutButton = ({
           )}
         </CheckoutButtonText>
       </CheckoutButtonInfo>
-      <CheckoutButtonContainer disabled={disabled}>
-        <CheckoutButtonButton>
-          {isApplied ? (
-            <CheckoutButtonButtonContent>
-              {disabled ? (
-                <CheckoutButtonApply>Applied</CheckoutButtonApply>
-              ) : (
-                <>
-                  <CheckoutButtonButtonIcon>
-                    <XCircle size={null} color={colors.error} />
-                  </CheckoutButtonButtonIcon>
-                  <CheckoutButtonRemove>Remove</CheckoutButtonRemove>
-                </>
-              )}
-            </CheckoutButtonButtonContent>
-          ) : (
-            <CheckoutButtonButtonContent>
-              <CheckoutButtonButtonIcon>
-                <PlusCircle size={null} color={colors.primary} />
-              </CheckoutButtonButtonIcon>
-              <CheckoutButtonApply>{applyText}</CheckoutButtonApply>
-            </CheckoutButtonButtonContent>
-          )}
-        </CheckoutButtonButton>
-      </CheckoutButtonContainer>
+      <CheckoutButtonButton disabled={disabled}>
+        {isApplied ? (
+          <>
+            {disabled ? (
+              <CheckoutButtonApply>Applied</CheckoutButtonApply>
+            ) : (
+              <>
+                <CheckoutButtonButtonIcon>
+                  <XCircle size={null} color={colors.error} />
+                </CheckoutButtonButtonIcon>
+                <CheckoutButtonRemove>Remove</CheckoutButtonRemove>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <CheckoutButtonButtonIcon>
+              <PlusCircle size={null} color={colors.primary} />
+            </CheckoutButtonButtonIcon>
+            <CheckoutButtonApply>{applyText}</CheckoutButtonApply>
+          </>
+        )}
+      </CheckoutButtonButton>
     </CheckoutButtonView>
   )
 }

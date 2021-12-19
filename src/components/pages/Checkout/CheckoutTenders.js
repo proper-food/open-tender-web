@@ -10,7 +10,7 @@ import { PlusCircle } from 'react-feather'
 import CheckoutButton from './CheckoutButton'
 import CheckoutSection from './CheckoutSection'
 import CheckoutCreditCards from './CheckoutCreditCards'
-// import CheckoutHouseAccounts from './CheckoutHouseAccounts'
+import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 
 const CheckoutTendersView = styled.div`
   margin: 2rem 0 0;
@@ -108,7 +108,7 @@ const CheckoutTenders = () => {
           isApplied={false}
           disabled={isPaid}
         />
-        {/* <CheckoutHouseAccounts apply={apply} remove={remove} isPaid={isPaid} /> */}
+        <CheckoutHouseAccounts apply={apply} remove={remove} isPaid={isPaid} />
       </CheckoutTendersView>
     </CheckoutSection>
   )

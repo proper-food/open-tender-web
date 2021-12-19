@@ -20,7 +20,7 @@ const CheckoutInputs = styled('div')`
     @media (max-width: 1160px) {
       width: 100%;
     }
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       padding: 0;
     }
   }
