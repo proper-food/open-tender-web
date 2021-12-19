@@ -5,6 +5,7 @@ import { PlusCircle, XCircle } from 'react-feather'
 import { Checkmark, Heading, Text } from '@open-tender/components'
 
 const CheckoutButtonView = styled.button`
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -14,10 +15,16 @@ const CheckoutButtonView = styled.button`
   border-color: ${(props) =>
     props.isApplied ? props.theme.colors.success : props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radiusSmall};
-  margin: 10px 0 0;
+  margin: 1rem 0 0;
   // background-color: ${(props) =>
     props.theme.bgColors[props.isApplied ? 'success' : 'tertiary']};
-  // opacity: ${(props) => (props.disabled ? '0.5' : '1')};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.bgColors[
+        props.isApplied ? 'primary' : props.disabled ? 'primary' : 'tertiary'
+      ]};
+  }
 `
 
 const CheckoutButtonCheckmark = styled.div`
@@ -33,14 +40,15 @@ const CheckoutButtonInfo = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 1.3rem 0 1.3rem 1.5rem;
+  padding: 1.5rem 0 1.5rem 2rem;
 `
 
 const CheckoutButtonIcon = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
-  width: 28px;
-  margin: 0 14px 0 0;
+  width: 3rem;
+  margin: 0 2rem 0 0;
+  display: flex;
   justify-content: center;
   align-items: center;
 `
@@ -48,6 +56,7 @@ const CheckoutButtonIcon = styled.div`
 const CheckoutButtonText = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
+  display: flex;
   flex-direction: column;
 
   & > span {
@@ -79,26 +88,37 @@ const CheckoutButtonContainer = styled.div`
 
 const CheckoutButtonButton = styled.div`
   flex: 1;
+  display: flex;
   justify-content: center;
   align-items: flex-end;
   padding: 0 1.5rem 0 0;
 `
 
+const CheckoutButtonButtonIcon = styled.div`
+  width: 1.8rem;
+  height: 1.8rem;
+`
+
 const CheckoutButtonButtonContent = styled.div`
-  flex-direction: row;
+  display: flex;
+  justify-content: center;
   align-items: center;
 `
 
 const CheckoutButtonApply = styled(Text)`
+  display: block;
+  line-height: 1;
   color: ${(props) => props.theme.colors.primary};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  margin: 0.1rem 0 0 0.4rem;
+  margin: 0 0 0 0.5rem;
 `
 
 const CheckoutButtonRemove = styled(Text)`
+  display: block;
+  line-height: 1;
   color: ${(props) => props.theme.colors.error};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  margin: 0.1rem 0 0 0.4rem;
+  margin: 0 0 0 0.5rem;
 `
 
 const CheckoutButton = ({
@@ -111,11 +131,10 @@ const CheckoutButton = ({
   disabled,
   applyText = 'Apply',
 }) => {
-  const size = 16
   const { colors } = useTheme()
   return (
     <CheckoutButtonView
-      onPress={onPress}
+      onClick={onPress}
       disabled={disabled}
       isApplied={isApplied}
     >
@@ -150,14 +169,18 @@ const CheckoutButton = ({
                 <CheckoutButtonApply>Applied</CheckoutButtonApply>
               ) : (
                 <>
-                  <XCircle width={size} height={size} color={colors.error} />
+                  <CheckoutButtonButtonIcon>
+                    <XCircle size={null} color={colors.error} />
+                  </CheckoutButtonButtonIcon>
                   <CheckoutButtonRemove>Remove</CheckoutButtonRemove>
                 </>
               )}
             </CheckoutButtonButtonContent>
           ) : (
             <CheckoutButtonButtonContent>
-              <PlusCircle width={size} height={size} color={colors.primary} />
+              <CheckoutButtonButtonIcon>
+                <PlusCircle size={null} color={colors.primary} />
+              </CheckoutButtonButtonIcon>
               <CheckoutButtonApply>{applyText}</CheckoutButtonApply>
             </CheckoutButtonButtonContent>
           )}

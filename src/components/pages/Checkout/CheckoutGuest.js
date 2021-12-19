@@ -33,7 +33,7 @@ const CheckoutGuest = () => {
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={updateInfo}>
-            Go back & update your contact info.
+            Update your contact info.
           </ButtonLink>
         </p>
       </CheckoutSectionFootnote>

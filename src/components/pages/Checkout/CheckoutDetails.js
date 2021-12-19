@@ -175,7 +175,7 @@ const CheckoutDetails = () => {
           onChange={handleChange}
           error={detailsErrors['notes']}
           required={notesConfig.required}
-          style={{ width: '100%', marginTop: '2rem' }}
+          style={{ width: '100%', margin: '2rem 0 0' }}
         />
       )}
     </CheckoutInputs>
