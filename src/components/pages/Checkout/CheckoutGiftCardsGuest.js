@@ -4,38 +4,22 @@ import { ButtonLink, Text } from '@open-tender/components'
 
 const PaymentGiftCardsGuestView = styled.div``
 
-const PaymentGiftCardsGuestLinks = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
-
 const PaymentGiftCardsGuest = () => {
   const history = useHistory()
 
   return (
     <PaymentGiftCardsGuestView>
-      <Text size="small">Have a gift card number?</Text>
-      <PaymentGiftCardsGuestLinks>
-        {/* <ButtonLink
-          onPress={() => history.push('/checkout/signin')}
-          size="small"
-          underline={true}
-          padding="3px 0 0"
-        >
-          Sign In
-        </ButtonLink>
-        <Text size="small"> or </Text> */}
+      <Text size="small">
+        Have a gift card number?{' '}
         <ButtonLink
-          onPress={() => history.push('/checkout/signup')}
+          onClick={() => history.push('/checkout/signup')}
           size="small"
           underline={true}
           padding="3px 0 0"
         >
-          Create an account
+          Create an account to apply it.
         </ButtonLink>
-        <Text size="small"> to apply your gift card.</Text>
-      </PaymentGiftCardsGuestLinks>
+      </Text>
     </PaymentGiftCardsGuestView>
   )
 }

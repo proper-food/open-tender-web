@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, updateForm, validateOrder } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
 
+import { selectContent } from '../../../slices'
 import CheckoutSection from './CheckoutSection'
 import CheckoutButton from './CheckoutButton'
 
 const CheckoutSurchargesView = styled.div`
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
 `
 
 const CheckoutSurcharges = () => {
   const dispatch = useDispatch()
   const { check, form, loading } = useSelector(selectCheckout)
+  const { checkout: config } = useSelector(selectContent)
   const [pendingSurcharge, setPendingSurcharge] = useState(null)
   const surchargeIds = form.surcharges.map((i) => i.id)
 
@@ -41,8 +43,7 @@ const CheckoutSurcharges = () => {
   if (!surchargesOptional) return null
 
   return (
-    <CheckoutSection>
-      <h4>Optional services</h4>
+    <CheckoutSection title={config.surcharges.title}>
       <CheckoutSurchargesView>
         {surchargesOptional.map((i) => {
           const label = i.label || i.name

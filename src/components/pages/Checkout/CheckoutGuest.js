@@ -23,8 +23,7 @@ const CheckoutGuest = () => {
   }
 
   return check ? (
-    <CheckoutSection>
-      <h4>Contact Information</h4>
+    <CheckoutSection title="Contact Info">
       <p>
         {first_name} {last_name}
       </p>

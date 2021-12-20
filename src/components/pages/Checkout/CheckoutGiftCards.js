@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, selectCustomer, updateForm } from '@open-tender/redux'
 import { formatDollars, checkAmountRemaining } from '@open-tender/js'
 
-import { selectConfig } from '../../../slices'
+import { selectContent } from '../../../slices'
 import { cardIconMap } from '../../../assets/cardIcons'
 import CheckoutSection from './CheckoutSection'
 import CheckoutButton from './CheckoutButton'
@@ -12,14 +12,14 @@ import CheckoutGiftCard from './CheckoutGiftCard'
 import CheckoutGiftCardsGuest from './CheckoutGiftCardsGuest'
 
 const CheckoutGiftCardsView = styled.div`
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
 `
 
 const CheckoutGiftCards = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
+  const { checkout: config } = useSelector(selectContent)
   const { check, form } = useSelector(selectCheckout)
-  const { checkout: config } = useSelector(selectConfig)
   const giftCards =
     check.customer && check.customer.gift_cards
       ? check.customer.gift_cards || []
@@ -73,8 +73,7 @@ const CheckoutGiftCards = () => {
   }
 
   return (
-    <CheckoutSection>
-      <h4>{config.giftCards.title}</h4>
+    <CheckoutSection title={config.giftCards.title}>
       <CheckoutGiftCardsView>
         {!auth ? (
           <CheckoutGiftCardsGuest />

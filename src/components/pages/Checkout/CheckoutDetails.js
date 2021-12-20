@@ -1,10 +1,16 @@
 import { useEffect, useMemo } from 'react'
+import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, selectOrder, updateForm } from '@open-tender/redux'
 import { isEmpty, makeNumeric } from '@open-tender/js'
 import { Input, Switch, Textarea } from '@open-tender/components'
 
 import CheckoutInputs from './CheckoutInputs'
+
+const CheckoutDetailsView = styled.div`
+  margin-top: ${(props) => (!props.hasAddress ? '0' : '0')};
+`
 
 const initialState = {
   eating_utensils: false,
@@ -68,7 +74,7 @@ const makeCheckDetails = (details) => {
   }, {})
 }
 
-const CheckoutDetails = () => {
+const CheckoutDetails = ({ hasAddress }) => {
   const dispatch = useDispatch()
   const { orderType } = useSelector(selectOrder)
   const { check, form, errors } = useSelector(selectCheckout)
@@ -137,52 +143,56 @@ const CheckoutDetails = () => {
     return null
 
   return (
-    <CheckoutInputs>
-      {filteredInputs.map((field) => {
-        const input = detailsConfig[field.name]
-        return (
-          <Input
-            key={field.name}
-            label={input.label}
-            name={field.name}
-            type={field.type}
-            value={formDetails[field.name] || ''}
+    <CheckoutDetailsView hasAddress={hasAddress}>
+      <CheckoutInputs>
+        {filteredInputs.map((field) => {
+          const input = detailsConfig[field.name]
+          return (
+            <Input
+              key={field.name}
+              label={input.label}
+              name={field.name}
+              type={field.type}
+              value={formDetails[field.name] || ''}
+              onChange={handleChange}
+              error={detailsErrors[field.name]}
+              required={input.required}
+              pattern={field.pattern}
+              min={field.min}
+            />
+          )
+        })}
+        {filteredSwitches.map((field) => {
+          const input = detailsConfig[field.name]
+          return (
+            <Switch
+              key={field.name}
+              label={input.label}
+              id={field.name}
+              on={formDetails[field.name]}
+              onChange={handleChange}
+            />
+          )
+        })}
+        {showNotes && (
+          <Textarea
+            label={notesConfig.label}
+            name="notes"
+            value={formDetails['notes'] || ''}
             onChange={handleChange}
-            error={detailsErrors[field.name]}
-            required={input.required}
-            pattern={field.pattern}
-            min={field.min}
+            error={detailsErrors['notes']}
+            required={notesConfig.required}
+            style={{ width: '100%', margin: '1rem 0 0' }}
           />
-        )
-      })}
-      {filteredSwitches.map((field) => {
-        const input = detailsConfig[field.name]
-        return (
-          <Switch
-            key={field.name}
-            label={input.label}
-            id={field.name}
-            on={formDetails[field.name]}
-            onChange={handleChange}
-          />
-        )
-      })}
-      {showNotes && (
-        <Textarea
-          label={notesConfig.label}
-          name="notes"
-          value={formDetails['notes'] || ''}
-          onChange={handleChange}
-          error={detailsErrors['notes']}
-          required={notesConfig.required}
-          style={{ width: '100%', margin: '2rem 0 0' }}
-        />
-      )}
-    </CheckoutInputs>
+        )}
+      </CheckoutInputs>
+    </CheckoutDetailsView>
   )
 }
 
 CheckoutDetails.displayName = 'CheckoutDetails'
-CheckoutDetails.propTypes = {}
+CheckoutDetails.propTypes = {
+  hasAddress: propTypes.bool,
+}
 
 export default CheckoutDetails

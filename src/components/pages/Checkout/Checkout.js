@@ -35,8 +35,10 @@ import CheckoutDetails from './CheckoutDetails'
 import CheckoutSurcharges from './CheckoutSurcharges'
 import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
+import CheckoutTip from './CheckoutTip'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
+import CheckoutSection from './CheckoutSection'
 import CheckoutSubmit from './CheckoutSubmit'
 
 const makeDeviceType = (deviceType) => {
@@ -125,20 +127,6 @@ const CheckoutInfo = styled('div')`
   }
 `
 
-const CheckoutForm = styled('div')`
-  margin: ${(props) => props.theme.layout.margin} 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
-  }
-
-  h4 {
-    margin: 0 0 1em;
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h5};
-    }
-  }
-`
-
 const CheckoutSidebar = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
@@ -183,13 +171,15 @@ const makeFormTitle = (check) => {
   const required = check.config.required
   const hasAddress = displayed.address.length || required.address.length
   const hasDetails = displayed.details.length || required.details.length
-  return hasAddress && hasDetails
-    ? 'Address & Order Details'
-    : hasAddress
-    ? 'Address Details'
-    : hasDetails
-    ? 'Order Details'
-    : null
+  const formTitle =
+    hasAddress && hasDetails
+      ? 'Address & Order Details'
+      : hasAddress
+      ? 'Address Details'
+      : hasDetails
+      ? 'Order Details'
+      : null
+  return { hasAddress, hasDetails, formTitle }
 }
 
 const Checkout = () => {
@@ -207,7 +197,7 @@ const Checkout = () => {
   const hasGuest = form && !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
-  const formTitle = makeFormTitle(check)
+  const { formTitle, hasAddress } = makeFormTitle(check)
 
   useEffect(() => {
     if (!submitting && formError) window.scrollTo(0, 0)
@@ -274,17 +264,17 @@ const Checkout = () => {
                 ) : null}
               </CheckoutInfo>
               {formTitle && (
-                <CheckoutForm>
-                  <h4>{formTitle}</h4>
+                <CheckoutSection title={formTitle} style={{ padding: '0' }}>
                   <CheckoutAddress />
-                  <CheckoutDetails />
-                </CheckoutForm>
+                  <CheckoutDetails hasAddress={hasAddress} />
+                </CheckoutSection>
               )}
               {check && (
                 <>
                   <CheckoutSurcharges />
                   <CheckoutDiscounts />
                   <CheckoutPromoCodes />
+                  <CheckoutTip />
                   <CheckoutGiftCards />
                   <CheckoutTenders />
                   <CheckoutSubmit />
@@ -304,4 +294,5 @@ const Checkout = () => {
 }
 
 Checkout.displayName = 'Checkout'
+
 export default Checkout

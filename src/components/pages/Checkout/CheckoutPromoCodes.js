@@ -10,7 +10,7 @@ import CheckoutSection from './CheckoutSection'
 import CheckoutButton from './CheckoutButton'
 
 const CheckoutPromoCodesView = styled.div`
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
 `
 
 const CheckoutPromoCodeNew = styled.div`
@@ -106,8 +106,7 @@ const CheckoutPromoCodes = () => {
   // }
 
   return (
-    <CheckoutSection>
-      <h4>{config.promoCodes.title}</h4>
+    <CheckoutSection title={applied.length ? config.promoCodes.title : ''}>
       <CheckoutPromoCodesView>
         {applied.map((appliedCode) => {
           const discount = check.discounts.find((i) => i.name === appliedCode)
@@ -131,7 +130,11 @@ const CheckoutPromoCodes = () => {
             <CheckoutPromoCodeNew>
               <CheckoutPromoCodeInput>
                 <Input
-                  label="Enter promo code"
+                  label={
+                    applied.length
+                      ? 'Enter another promo code'
+                      : 'Apply a promo code'
+                  }
                   value={promoCode}
                   onChange={handleChange}
                 />

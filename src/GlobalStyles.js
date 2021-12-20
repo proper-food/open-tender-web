@@ -270,6 +270,9 @@ const makeGlobalStyles = (theme) => css`
     background-color: ${theme.inputs.bgColor};
     box-shadow: ${theme.inputs.boxShadow};
     transition: ${theme.links.transition};
+    @media (max-width: ${theme.breakpoints.tablet}) {
+      font-size: ${theme.inputs.fontSizeMobile};
+    }
 
     &::placeholder {
       color: ${theme.inputs.placeholderColor};

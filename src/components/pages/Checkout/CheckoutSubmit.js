@@ -1,8 +1,17 @@
+import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, setSubmitting, submitOrder } from '@open-tender/redux'
 import { checkAmountRemaining, formatDollars } from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonStyled, Message } from '@open-tender/components'
 import CheckoutSection from './CheckoutSection'
+
+const CheckoutSubmitMessage = styled('div')`
+  margin: 3rem 0 0;
+
+  > div {
+    margin: 0 0 3rem;
+  }
+`
 
 const CheckoutSubmit = () => {
   const dispatch = useDispatch()
@@ -22,13 +31,26 @@ const CheckoutSubmit = () => {
 
   return (
     <CheckoutSection>
+      <CheckoutSubmitMessage>
+        {!isPaid ? (
+          <Message
+            as="div"
+            size="small"
+            color="alert"
+            style={{ width: '100%', padding: '1rem 1.5rem' }}
+          >
+            There is a balance of ${amountRemaining.toFixed(2)} remaining on
+            your order. Please add a payment above.
+          </Message>
+        ) : null}
+      </CheckoutSubmitMessage>
       <ButtonStyled
         onClick={submitPayment}
         disabled={submitDisabled}
         size="big"
         color="primary"
       >
-        Submit Order{totalAmount}
+        {updating ? 'Updating...' : `Submit Order${totalAmount}`}
       </ButtonStyled>
     </CheckoutSection>
   )

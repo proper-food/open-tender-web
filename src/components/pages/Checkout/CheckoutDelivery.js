@@ -37,8 +37,7 @@ const CheckoutDelivery = () => {
   }
 
   return (
-    <CheckoutSection>
-      <h4>Delivery Address & Time</h4>
+    <CheckoutSection title="Delivery Address & Time">
       <p>{street}</p>
       <p>{addressLine2}</p>
       <p>{orderTime}</p>

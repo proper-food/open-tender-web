@@ -7,13 +7,14 @@ import { selectCheckout, updateForm } from '@open-tender/redux'
 import { FormError } from '@open-tender/components'
 import { PlusCircle } from 'react-feather'
 
+import { selectContent } from '../../../slices'
 import CheckoutButton from './CheckoutButton'
 import CheckoutSection from './CheckoutSection'
 import CheckoutCreditCards from './CheckoutCreditCards'
 import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 
 const CheckoutTendersView = styled.div`
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
 `
 
 const CheckoutTendersErrors = styled.div`
@@ -32,6 +33,7 @@ const CheckoutTenders = () => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const [hasTender, setHasTender] = useState(false)
+  const { checkout: config } = useSelector(selectContent)
   const { check, form, errors } = useSelector(selectCheckout)
   const total = check.totals ? check.totals.total : 0.0
   const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
@@ -88,8 +90,7 @@ const CheckoutTenders = () => {
   }
 
   return (
-    <CheckoutSection>
-      <h4>Apply Payment</h4>
+    <CheckoutSection title={config.tenders.title}>
       <CheckoutTendersView>
         {hasErrors && (
           <CheckoutTendersErrors>
