@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { selectOrder } from '@open-tender/redux'
 import { makeRequestedAtStr, timezoneMap } from '@open-tender/js'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonLink, Heading } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
@@ -38,7 +38,7 @@ const CheckoutDelivery = () => {
 
   return (
     <CheckoutSection title="Delivery Address & Time">
-      <p>{street}</p>
+      <Heading as="p">{street}</Heading>
       <p>{addressLine2}</p>
       <p>{orderTime}</p>
       <CheckoutSectionFootnote>

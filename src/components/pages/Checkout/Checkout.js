@@ -166,7 +166,7 @@ const CheckoutSidebarContent = styled('div')`
 `
 
 const makeFormTitle = (check) => {
-  if (!check || !check.config) return null
+  if (!check || !check.config) return {}
   const displayed = check.config.displayed
   const required = check.config.required
   const hasAddress = displayed.address.length || required.address.length
@@ -192,12 +192,14 @@ const Checkout = () => {
   const { serviceType, revenueCenter } = useSelector(selectOrder)
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { auth } = useSelector(selectCustomer)
+  const hasCustomer = auth ? true : false
   const { check, form, errors, submitting, completedOrder } =
     useSelector(selectCheckout)
   const hasGuest = form && !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
   const { formTitle, hasAddress } = makeFormTitle(check)
+  console.log(hasGuest, submitting, completedOrder)
 
   useEffect(() => {
     if (!submitting && formError) window.scrollTo(0, 0)
@@ -222,6 +224,8 @@ const Checkout = () => {
       dispatch(resetCompletedOrder())
       dispatch(resetOrder())
       return history.push('/confirmation')
+    } else if (!hasCustomer && !hasGuest) {
+      history.push('/checkout/guest')
     }
   }, [
     dispatch,
@@ -231,13 +235,15 @@ const Checkout = () => {
     revenueCenterId,
     serviceType,
     completedOrder,
+    hasCustomer,
+    hasGuest,
   ])
 
-  useEffect(() => {
-    if (!auth && !hasGuest) {
-      history.push('/checkout/guest')
-    }
-  }, [auth, hasGuest, history])
+  // useEffect(() => {
+  //   if (!auth && !hasGuest) {
+  //     history.push('/checkout/guest')
+  //   }
+  // }, [auth, hasGuest, history])
 
   return (
     <>

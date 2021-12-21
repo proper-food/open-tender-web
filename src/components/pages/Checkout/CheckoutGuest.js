@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, validateOrder } from '@open-tender/redux'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonLink, Heading } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
@@ -24,9 +24,9 @@ const CheckoutGuest = () => {
 
   return check ? (
     <CheckoutSection title="Contact Info">
-      <p>
+      <Heading as="p">
         {first_name} {last_name}
-      </p>
+      </Heading>
       <p>{email}</p>
       <p>{phone}</p>
       <CheckoutSectionFootnote>

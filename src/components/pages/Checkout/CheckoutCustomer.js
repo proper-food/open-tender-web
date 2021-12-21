@@ -10,7 +10,7 @@ import {
   validateOrder,
 } from '@open-tender/redux'
 import { isEmpty } from '@open-tender/js'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonLink, Heading } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
 import { Loading } from '../..'
@@ -75,9 +75,9 @@ const CheckoutCustomer = () => {
 
   return showCustomer ? (
     <CheckoutSection title="Contact Info">
-      <p>
+      <Heading as="p">
         {first_name} {last_name}
-      </p>
+      </Heading>
       <p>{email}</p>
       <p>{phone}</p>
       <CheckoutSectionFootnote>
