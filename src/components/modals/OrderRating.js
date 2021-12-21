@@ -5,7 +5,7 @@ import { updateCustomerOrderRating } from '@open-tender/redux'
 import { OrderRatingForm } from '@open-tender/components'
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
-import iconMap from '../iconMap'
+import { Star } from 'react-feather'
 
 const OrderRating = ({ orderId, orderRating }) => {
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ const OrderRating = ({ orderId, orderRating }) => {
         <OrderRatingForm
           orderId={orderId}
           orderRating={orderRating}
-          icon={iconMap.Star}
+          icon={(fill) => <Star fill={fill} />}
           updateRating={updateRating}
           callback={callback}
         />
