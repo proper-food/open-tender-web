@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { capitalize, serviceTypeNamesMap } from '@open-tender/js'
 import {
+  addAlert,
   setAddress,
   setOrderServiceType,
   setRequestedAt,
   setRevenueCenter,
-  showNotification,
 } from '@open-tender/redux'
 import {
   ButtonStyled,
@@ -67,7 +67,7 @@ const RequestedAt = ({
 
   const chooseTime = (requestedAt) => {
     dispatch(setRequestedAt(requestedAt))
-    dispatch(showNotification('Requested time updated!'))
+    dispatch(addAlert('Requested time updated!'))
     if (isLocation) {
       dispatch(setRevenueCenter(revenueCenter))
       dispatch(setOrderServiceType(rcType, serviceType, isOutpost))

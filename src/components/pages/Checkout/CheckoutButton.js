@@ -93,7 +93,7 @@ const CheckoutButtonSubtitle = styled(Text)`
 const CheckoutButtonButton = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
-  width: 9.5rem;
+  width: 12rem;
   height: 100%;
   display: flex;
   justify-content: flex-end;

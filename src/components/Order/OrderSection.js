@@ -38,6 +38,7 @@ const OrderSectionContent = styled('div')`
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
+    margin: 0.3em 0 0;
 
     &:first-of-type {
       font-size: ${(props) =>

@@ -1,14 +1,12 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { PlusCircle } from 'react-feather'
 import { useDispatch } from 'react-redux'
 import { validateOrder } from '@open-tender/redux'
+
 import { openModal } from '../../../slices'
+import { cardIconMap } from '../../../assets/cardIcons'
 import CheckoutButton from './CheckoutButton'
-import { useTheme } from '@emotion/react'
 
 const CheckoutCreditCardAdd = ({ isPaid }) => {
-  const theme = useTheme()
   const dispatch = useDispatch()
 
   const onClick = (evt) => {
@@ -19,11 +17,12 @@ const CheckoutCreditCardAdd = ({ isPaid }) => {
 
   return (
     <CheckoutButton
-      icon={<PlusCircle color={theme.colors.primary} width={18} height={18} />}
+      icon={<img src={cardIconMap['OTHER']} alt="New Credit Card" />}
       title="Add new credit card"
       onPress={onClick}
       isApplied={false}
       disabled={isPaid}
+      applyText="Add"
     />
   )
 }

@@ -1,14 +1,11 @@
 import { useCallback, useMemo, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkAmountRemaining, isString, updateTenders } from '@open-tender/js'
 import { selectCheckout, selectCustomer, updateForm } from '@open-tender/redux'
 import { FormError } from '@open-tender/components'
-import { PlusCircle } from 'react-feather'
 
 import { selectContent } from '../../../slices'
-import CheckoutButton from './CheckoutButton'
 import CheckoutSection from './CheckoutSection'
 import CheckoutCreditCards from './CheckoutCreditCards'
 import CheckoutHouseAccounts from './CheckoutHouseAccounts'
@@ -33,7 +30,6 @@ const makeTenderErrors = (errors) => {
 }
 
 const CheckoutTenders = () => {
-  const theme = useTheme()
   const dispatch = useDispatch()
   const [hasTender, setHasTender] = useState(false)
   const { checkout: config } = useSelector(selectContent)

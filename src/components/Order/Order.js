@@ -33,6 +33,7 @@ import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
+import OrderFulfillment from './OrderFulfillment'
 
 const OrderView = styled(Box)`
   margin: 4rem auto;
@@ -108,6 +109,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     taxes,
     totals,
     details,
+    order_fulfillment,
     tenders,
     rating,
   } = order || {}
@@ -203,6 +205,11 @@ const Order = ({ order, loading, error, isConfirmation }) => {
               delivery={delivery}
               status={status}
             />
+          </OrderSection>
+        )}
+        {order_fulfillment && (
+          <OrderSection label="Curbside Pickup">
+            <OrderFulfillment {...order_fulfillment} />
           </OrderSection>
         )}
         {notes && notes.length ? (
