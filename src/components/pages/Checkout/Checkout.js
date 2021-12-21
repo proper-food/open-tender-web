@@ -32,6 +32,7 @@ import CheckoutCart from './CheckoutCart'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDetails from './CheckoutDetails'
+import CheckoutCurbside from './CheckoutCurbside'
 import CheckoutSurcharges from './CheckoutSurcharges'
 import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
@@ -199,7 +200,6 @@ const Checkout = () => {
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
   const { formTitle, hasAddress } = makeFormTitle(check)
-  console.log(hasGuest, submitting, completedOrder)
 
   useEffect(() => {
     if (!submitting && formError) window.scrollTo(0, 0)
@@ -277,6 +277,7 @@ const Checkout = () => {
               )}
               {check && (
                 <>
+                  <CheckoutCurbside />
                   <CheckoutSurcharges />
                   <CheckoutDiscounts />
                   <CheckoutPromoCodes />
