@@ -14,6 +14,7 @@ import CheckoutCreditCards from './CheckoutCreditCards'
 import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 import CheckoutGuestCreditCard from './CheckoutGuestCreditCard'
 import CheckoutPay from './CheckoutPay'
+import CheckoutCreditCardAdd from './CheckoutCreditCardAdd'
 
 const CheckoutTendersView = styled.div`
   margin: 1.5rem 0 0;
@@ -110,19 +111,7 @@ const CheckoutTenders = () => {
               remove={remove}
               isPaid={isPaid}
             />
-            <CheckoutButton
-              icon={
-                <PlusCircle
-                  color={theme.colors.primary}
-                  width={18}
-                  height={18}
-                />
-              }
-              title="Add new credit card"
-              // onPress={() => navigation.navigate('/credit-card')}
-              isApplied={false}
-              disabled={isPaid}
-            />
+            <CheckoutCreditCardAdd isPaid={isPaid} />
             <CheckoutHouseAccounts
               apply={apply}
               remove={remove}
