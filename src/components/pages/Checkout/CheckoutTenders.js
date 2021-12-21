@@ -13,6 +13,7 @@ import CheckoutSection from './CheckoutSection'
 import CheckoutCreditCards from './CheckoutCreditCards'
 import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 import CheckoutGuestCreditCard from './CheckoutGuestCreditCard'
+import CheckoutPay from './CheckoutPay'
 
 const CheckoutTendersView = styled.div`
   margin: 1.5rem 0 0;
@@ -101,6 +102,7 @@ const CheckoutTenders = () => {
             ))}
           </CheckoutTendersErrors>
         )}
+        <CheckoutPay />
         {auth ? (
           <>
             <CheckoutCreditCards
