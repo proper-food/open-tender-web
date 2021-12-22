@@ -12,7 +12,7 @@ import {
 import { isEmpty } from '@open-tender/js'
 import { ButtonLink, Heading } from '@open-tender/components'
 
-import { selectBrand } from '../../../slices'
+import { openModal, selectBrand } from '../../../slices'
 import { Loading } from '../..'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
@@ -65,6 +65,10 @@ const CheckoutCustomer = () => {
     }
   }, [has_thanx, customer_id, sso, dispatch])
 
+  const update = () => {
+    dispatch(openModal({ type: 'profile' }))
+  }
+
   const signOut = () => {
     setIsLoggingOut(true)
     dispatch(resetCheckout())
@@ -82,8 +86,8 @@ const CheckoutCustomer = () => {
       <p>{phone}</p>
       <CheckoutSectionFootnote>
         <p>
-          <ButtonLink onClick={signOut}>Update your contact info</ButtonLink> or{' '}
-          <ButtonLink onClick={signOut}>sign out</ButtonLink>.
+          <ButtonLink onClick={update}>Update your contact info</ButtonLink> or{' '}
+          <ButtonLink onClick={signOut}>sign out</ButtonLink>
         </p>
       </CheckoutSectionFootnote>
       {/* {check && <CheckoutCompany errors={errors} />} */}

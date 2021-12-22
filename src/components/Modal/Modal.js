@@ -27,6 +27,7 @@ import {
   OrderRating,
   OrderType,
   Points,
+  Profile,
   QRCode,
   RequestedAt,
   Reward,
@@ -74,6 +75,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <QRCode {...args} />
     case 'points':
       return <Points {...args} />
+    case 'profile':
+      return <Profile {...args} />
     case 'rating':
       return <OrderRating {...args} />
     case 'requestedAt':
@@ -92,14 +95,10 @@ const makeModal = (type, windowRef, args = {}) => {
 const containerStyleMap = {
   address: { alignItems: 'flex-start' },
   creditCard: { alignItems: 'flex-start' },
-  // requestedAt: { alignItems: 'flex-start' },
-  // allergens: { alignItems: 'flex-start' },
   cartErrors: { alignItems: 'flex-start' },
   cartCounts: { alignItems: 'flex-start' },
-  // groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
-  // reward: { alignItems: 'flex-start' },
-  // loyaltyTier: { alignItems: 'flex-start' },
+  profile: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
