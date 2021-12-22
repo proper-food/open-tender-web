@@ -1,10 +1,15 @@
 import { useEffect } from 'react'
+import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, selectOrder, updateForm } from '@open-tender/redux'
 import { isEmpty, makePhone } from '@open-tender/js'
 import { Input } from '@open-tender/components'
 
 import CheckoutInputs from './CheckoutInputs'
+
+const CheckoutAddressView = styled.div`
+  margin: 1.5rem 0 0;
+`
 
 const initialState = {
   unit: '',
@@ -90,24 +95,26 @@ const CheckoutAddress = () => {
   }
 
   return (
-    <CheckoutInputs>
-      {filtered.map((field) => {
-        const input = addressConfig[field.name]
-        const label = `${input.label}${!input.required ? ' (optional)' : ''}`
-        return (
-          <Input
-            key={field.name}
-            label={label}
-            name={field.name}
-            type={field.type}
-            value={form.address[field.name] || ''}
-            onChange={handleChange}
-            error={addressErrors[field.name]}
-            required={input.required}
-          />
-        )
-      })}
-    </CheckoutInputs>
+    <CheckoutAddressView>
+      <CheckoutInputs>
+        {filtered.map((field) => {
+          const input = addressConfig[field.name]
+          const label = `${input.label}${!input.required ? ' (optional)' : ''}`
+          return (
+            <Input
+              key={field.name}
+              label={label}
+              name={field.name}
+              type={field.type}
+              value={form.address[field.name] || ''}
+              onChange={handleChange}
+              error={addressErrors[field.name]}
+              required={input.required}
+            />
+          )
+        })}
+      </CheckoutInputs>
+    </CheckoutAddressView>
   )
 }
 
