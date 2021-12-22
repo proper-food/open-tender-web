@@ -31,9 +31,7 @@ const CheckoutGuest = () => {
       <p>{phone}</p>
       <CheckoutSectionFootnote>
         <p>
-          <ButtonLink onClick={updateInfo}>
-            Update your contact info.
-          </ButtonLink>
+          <ButtonLink onClick={updateInfo}>Update your contact info</ButtonLink>
         </p>
       </CheckoutSectionFootnote>
       {/* {check && <CheckoutCompany errors={errors} />} */}

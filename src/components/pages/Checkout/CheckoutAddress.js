@@ -8,7 +8,7 @@ import { Input } from '@open-tender/components'
 import CheckoutInputs from './CheckoutInputs'
 
 const CheckoutAddressView = styled.div`
-  margin: 1.5rem 0 0;
+  margin: 2.5rem 0 0;
 `
 
 const initialState = {

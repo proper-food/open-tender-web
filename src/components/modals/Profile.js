@@ -11,15 +11,21 @@ import { ProfileForm } from '@open-tender/components'
 import { closeModal, selectOptIns } from '../../slices'
 import { ModalContent, ModalView } from '..'
 
-const Profile = ({ windowRef }) => {
+const Profile = ({ windowRef, callback }) => {
   const dispatch = useDispatch()
   const optIns = useSelector(selectOptIns)
   const { profile, loading, error } = useSelector(selectCustomer)
   const { customer_id } = profile || {}
-  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
-  const update = useCallback(
-    (data) => dispatch(updateCustomer(data, callback)),
+  const updateCallback = useCallback(
+    (data) => {
+      if (callback) callback(data)
+      dispatch(closeModal())
+    },
     [dispatch, callback]
+  )
+  const update = useCallback(
+    (data) => dispatch(updateCustomer(data, updateCallback)),
+    [dispatch, updateCallback]
   )
 
   useEffect(() => {

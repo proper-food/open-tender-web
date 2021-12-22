@@ -16,6 +16,7 @@ import { openModal, selectBrand } from '../../../slices'
 import { Loading } from '../..'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
+import CheckoutCompany from './CheckoutCompany'
 
 const CheckoutCustomer = () => {
   const dispatch = useDispatch()
@@ -65,8 +66,21 @@ const CheckoutCustomer = () => {
     }
   }, [has_thanx, customer_id, sso, dispatch])
 
+  const callback = (data) => {
+    const { first_name, last_name, email, phone, company } = data
+    const customer = {
+      customer_id,
+      first_name,
+      last_name,
+      email,
+      phone,
+      company,
+    }
+    dispatch(updateForm({ customer }))
+  }
+
   const update = () => {
-    dispatch(openModal({ type: 'profile' }))
+    dispatch(openModal({ type: 'profile', args: { callback } }))
   }
 
   const signOut = () => {
@@ -82,6 +96,7 @@ const CheckoutCustomer = () => {
       <Heading as="p">
         {first_name} {last_name}
       </Heading>
+      <CheckoutCompany callback={callback} />
       <p>{email}</p>
       <p>{phone}</p>
       <CheckoutSectionFootnote>

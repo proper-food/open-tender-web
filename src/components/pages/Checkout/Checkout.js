@@ -83,7 +83,7 @@ const CheckoutTitle = styled('div')`
     }
   }
 
-  p {
+  & > p:first-of-type {
     margin: 0.5rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
