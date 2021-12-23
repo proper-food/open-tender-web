@@ -56,7 +56,7 @@ const Favorite = ({ item, favoriteId }) => {
   return (
     <FavoriteView
       onClick={favoriteId ? handleRemove : handleAdd}
-      color={favoriteId ? 'secondary' : 'primary'}
+      color={favoriteId ? 'cart' : 'primary'}
       aria-label={favoriteId ? 'Remove favorite' : 'Add favorite'}
     >
       <FavoriteIcon>{iconMap.Heart}</FavoriteIcon>
