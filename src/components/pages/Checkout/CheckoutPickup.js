@@ -16,9 +16,12 @@ const CheckoutPickup = () => {
   const { name, address } = revenueCenter
   // const { street, city, state, postal_code } = address
   // const addressLine2 = `${city}, ${state} ${postal_code}`
-  const { timezone } = revenueCenter || {}
+  const { timezone, first_times } = revenueCenter || {}
+  const firstTime = first_times ? first_times['PICKUP'] : {}
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
+  const isAsap = requestedTime === 'ASAP'
+  const waitTime = isAsap ? firstTime.wait_minutes || null : null
 
   const changeLocation = () => {
     history.push('/locations')
@@ -41,7 +44,10 @@ const CheckoutPickup = () => {
       <Heading as="p">{name}</Heading>
       <p>{address.street}</p>
       {/* <p>{addressLine2}</p> */}
-      <p>Pick-up Time: {requestedTime}</p>
+      <p>
+        Pick-up Time: {requestedTime}
+        {waitTime && <span> (about {waitTime} mins)</span>}
+      </p>
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={changeLocation}>Change location</ButtonLink> or{' '}

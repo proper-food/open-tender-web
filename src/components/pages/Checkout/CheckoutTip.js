@@ -45,7 +45,7 @@ const makeTipOptions = (options) => {
 
 const CheckoutTip = () => {
   const dispatch = useDispatch()
-  const { check, form } = useSelector(selectCheckout)
+  const { check, form, loading } = useSelector(selectCheckout)
   const tipSettings = check.config.gratuity
   const { has_tip, options } = tipSettings
   const tipOptions = makeTipOptions(options)
@@ -54,10 +54,11 @@ const CheckoutTip = () => {
   const [customTip, setCustomTip] = useState(initialTip)
 
   useEffect(() => {
-    if (has_tip && !form.tip) {
+    if (has_tip && !form.tip && loading !== 'pending') {
+      setCustomTip('')
       dispatch(updateForm({ tip: check.totals.tip }))
     }
-  }, [has_tip, form.tip, check.totals.tip, dispatch])
+  }, [has_tip, form.tip, loading, check.totals.tip, dispatch])
 
   if (!has_tip) return null
 

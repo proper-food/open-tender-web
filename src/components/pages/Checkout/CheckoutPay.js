@@ -41,8 +41,9 @@ const CheckoutPay = () => {
   const hasGooglePay = checkHasGooglePay(check)
   const googlePayError = tenderError ? tenderError.google_pay || null : null
 
-  console.log('hasApplePay', hasApplePay)
-  console.log('hasGooglePay', hasGooglePay)
+  if (process.env.NODE_ENV !== 'development') {
+    console.log('hasApplePay', hasApplePay, 'hasGooglePay', hasGooglePay)
+  }
 
   const addTender = (tender) => {
     const newTender = { ...tender, amount }

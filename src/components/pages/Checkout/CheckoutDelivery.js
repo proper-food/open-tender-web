@@ -15,10 +15,15 @@ const CheckoutDelivery = () => {
     useSelector(selectOrder)
   const { street, city, state, postal_code } = address || {}
   const addressLine2 = `${city}, ${state} ${postal_code}`
-  const { timezone } = revenueCenter || {}
+  const { timezone, first_times } = revenueCenter || {}
+  const firstTime = first_times ? first_times['DELIVERY'] : {}
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
-  const orderTime = requestedTime === 'ASAP' ? 'Deliver ASAP' : requestedTime
+  const isAsap = requestedTime === 'ASAP'
+  const waitTime = isAsap ? firstTime.wait_minutes || null : null
+  const orderTime = isAsap
+    ? `Deliver ASAP (about ${waitTime} mins)`
+    : requestedTime
 
   const changeAddress = () => {
     history.push('/locations')

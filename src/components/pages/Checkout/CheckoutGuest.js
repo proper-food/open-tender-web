@@ -1,22 +1,16 @@
-import { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectCheckout, validateOrder } from '@open-tender/redux'
+import { useSelector } from 'react-redux'
+import { selectCheckout } from '@open-tender/redux'
 import { ButtonLink, Heading } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
 const CheckoutGuest = () => {
-  const dispatch = useDispatch()
   const history = useHistory()
   const { form, check } = useSelector(selectCheckout)
   const { first_name, last_name, email, phone } = form.customer
-
-  useEffect(() => {
-    dispatch(validateOrder())
-  }, [dispatch])
 
   const updateInfo = () => {
     history.push('/checkout/signup')
