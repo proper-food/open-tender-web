@@ -133,9 +133,7 @@ const CheckoutSidebar = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   position: relative;
   flex: 0 0 48rem;
-  padding: ${(props) => props.theme.layout.navHeight} 0
-    ${(props) => props.theme.layout.navHeight}
-    ${(props) => props.theme.layout.padding};
+  padding: 0 0 0 ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-width: 0;
   border-style: solid;
