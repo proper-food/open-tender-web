@@ -14,6 +14,7 @@ import {
   CartSummary,
   CheckSummary,
   Heading,
+  Text,
 } from '@open-tender/components'
 
 import { toggleSidebar, selectSidebar } from '../../../slices'
@@ -90,11 +91,12 @@ const CheckoutCart = () => {
     index,
     points: itemsPoints[index.toString()],
   }))
-  const formPoints = useMemo(
+  const pointsApplied = useMemo(
     () => form.points.reduce((t, i) => (t += i.points), 0),
     [form.points]
   )
   const cartDiff = cart.length - cartLength
+  const pointsName = points ? points.name.toLowerCase() : null
 
   const editCart = () => {
     dispatch(toggleSidebar())
@@ -142,11 +144,14 @@ const CheckoutCart = () => {
       dispatch(resetTip())
       dispatch(validateOrder())
     }
-  }, [dispatch, isOpen, formPoints])
+  }, [dispatch, isOpen])
+
+  useEffect(() => {
+    dispatch(validateOrder())
+  }, [dispatch, pointsApplied])
 
   useEffect(() => {
     if (cartDiff < 0) {
-      console.log('resetting points')
       setCartLength(cart.length)
       dispatch(updateForm({ points: [] }))
       dispatch(resetTip())
@@ -160,10 +165,17 @@ const CheckoutCart = () => {
         {points && (
           <div>
             <Heading as="p">
-              You've got {formatQuantity(points.balance)}{' '}
-              {points.name.toLowerCase()}!
+              You've got {formatQuantity(points.balance)} {pointsName}!
             </Heading>
-            <p>Click the buttons below to apply.</p>
+            {points.remaining < points.balance ? (
+              <Text as="p" color="alert">
+                {formatQuantity(pointsApplied)} {pointsName} applied.{' '}
+                {formatQuantity(points.remaining)} remaining. See discount
+                below.
+              </Text>
+            ) : (
+              <p>Click the buttons below to apply.</p>
+            )}
           </div>
         )}
       </CheckoutCartHeader>
