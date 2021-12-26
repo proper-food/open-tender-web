@@ -14,6 +14,7 @@ import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
+import Geolocation from './Geolocation'
 import GiftCard from './GiftCard'
 import Greeting from './Greeting'
 import GroupOrderLink from './GroupOrderLink'
@@ -102,6 +103,7 @@ export {
   DealsScrollable,
   ErrorBoundary,
   Footer,
+  Geolocation,
   GiftCard,
   Greeting,
   GroupOrderLink,

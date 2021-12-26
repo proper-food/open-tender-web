@@ -28,6 +28,7 @@ const NavButtonView = styled('button')`
     border-width: 0;
     border-bottom-width: ${(props) => props.theme.border.width};
     margin: 0;
+    border-radius: 0;
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 

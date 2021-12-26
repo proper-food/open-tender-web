@@ -4,8 +4,8 @@ import styled from '@emotion/styled'
 import NavButton from './NavButton'
 
 const NavButtonsView = styled('div')`
-  width: 64rem;
-  max-width: 100%;
+  // width: 64rem;
+  // max-width: 100%;
   margin: 0 auto;
 `
 

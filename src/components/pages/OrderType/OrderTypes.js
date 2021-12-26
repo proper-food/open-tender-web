@@ -21,7 +21,12 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import { Message, useGeolocation } from '@open-tender/components'
+import {
+  ButtonLink,
+  Heading,
+  Message,
+  useGeolocation,
+} from '@open-tender/components'
 
 import {
   selectConfig,
@@ -32,10 +37,29 @@ import {
 } from '../../../slices'
 import { NavButtons } from '../..'
 
-const OrderTypesView = styled('div')`
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
+const OrderTypesView = styled('div')``
+
+const OrderTypesFooter = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.5s forwards;
+  margin: ${(props) => props.theme.layout.margin} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
+    text-align: center;
+  }
+
+  & > p {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
+  }
+`
+
+const OrderTypesLinks = styled('div')`
+  margin: 1rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 
@@ -48,6 +72,13 @@ const OrderTypes = () => {
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
   const { cartGuestId } = cartGuest || {}
+  const orderButtons = orderTypes.filter(
+    (i) => !['GIFT_CARDS', 'DONATIONS'].includes(i)
+  )
+  const orderLinks = orderTypes.filter((i) =>
+    ['GIFT_CARDS', 'DONATIONS'].includes(i)
+  )
+  const hasLinks = orderLinks.length > 0
 
   useEffect(() => {
     dispatch(setGeoLoading())
@@ -128,7 +159,13 @@ const OrderTypes = () => {
     DONATIONS: <DollarSign size={null} />,
   }
 
-  const buttons = orderTypes.map((orderType) => ({
+  const buttons = orderButtons.map((orderType) => ({
+    ...home.orderTypes[orderType],
+    icon: icons[orderType],
+    onClick: handlers[orderType],
+  }))
+
+  const links = orderLinks.map((orderType) => ({
     ...home.orderTypes[orderType],
     icon: icons[orderType],
     onClick: handlers[orderType],
@@ -137,7 +174,22 @@ const OrderTypes = () => {
   return (
     <OrderTypesView>
       {hasOrderTypes ? (
-        <NavButtons buttons={buttons} />
+        <>
+          <NavButtons buttons={buttons} />
+          {hasLinks && (
+            <OrderTypesFooter>
+              <Heading as="p">Other stuff...</Heading>
+              <OrderTypesLinks>
+                {links.map((link, index) => (
+                  <span key={link.title}>
+                    <ButtonLink onClick={link.onClick}>{link.title}</ButtonLink>
+                    {index + 1 < links.length ? <span> or </span> : null}
+                  </span>
+                ))}
+              </OrderTypesLinks>
+            </OrderTypesFooter>
+          )}
+        </>
       ) : (
         <Message color="error">
           This brand is not currently accepting online orders.
