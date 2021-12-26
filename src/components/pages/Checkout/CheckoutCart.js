@@ -89,7 +89,7 @@ const CheckoutCart = () => {
   const cartWithPoints = cart.map((i, index) => ({
     ...i,
     index,
-    points: itemsPoints[index.toString()],
+    points: points ? itemsPoints[index.toString()] : null,
   }))
   const pointsApplied = useMemo(
     () => form.points.reduce((t, i) => (t += i.points), 0),

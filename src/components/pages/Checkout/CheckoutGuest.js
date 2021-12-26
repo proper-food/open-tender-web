@@ -13,7 +13,7 @@ const CheckoutGuest = () => {
   const { first_name, last_name, email, phone } = form.customer
 
   const updateInfo = () => {
-    history.push('/checkout/signup')
+    history.push(email ? '/checkout/signup' : '/checkout/guest')
   }
 
   return check ? (
@@ -21,8 +21,8 @@ const CheckoutGuest = () => {
       <Heading as="p">
         {first_name} {last_name}
       </Heading>
-      <p>{email}</p>
-      <p>{phone}</p>
+      {email && <p>{email}</p>}
+      {phone && <p>{phone}</p>}
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={updateInfo}>Update your contact info</ButtonLink>
