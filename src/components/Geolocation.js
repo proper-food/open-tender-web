@@ -10,16 +10,13 @@ const Geolocation = ({ children }) => {
   const { geoLatLng, geoError } = useGeolocation()
 
   useEffect(() => {
-    console.log('loading geo')
     dispatch(setGeoLoading())
   }, [dispatch])
 
   useEffect(() => {
     if (geoLatLng) {
-      console.log('geo set')
       dispatch(setGeoLatLng(geoLatLng))
     } else if (geoError) {
-      console.log('geo failed')
       dispatch(setGeoError(geoError))
     }
   }, [geoLatLng, geoError, dispatch])
