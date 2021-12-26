@@ -164,11 +164,13 @@ const CheckoutSidebarContent = styled('div')`
   z-index: 2;
 `
 
-const makeFormTitle = (check) => {
+const makeFormTitle = (check, serviceType) => {
   if (!check || !check.config) return {}
   const displayed = check.config.displayed
   const required = check.config.required
-  const hasAddress = displayed.address.length || required.address.length
+  const hasAddress =
+    serviceType === 'DELIVERY' &&
+    (displayed.address.length || required.address.length)
   const hasDetails = displayed.details.length || required.details.length
   const formTitle =
     hasAddress && hasDetails
@@ -194,10 +196,10 @@ const Checkout = () => {
   const hasCustomer = auth ? true : false
   const { check, form, errors, submitting, completedOrder } =
     useSelector(selectCheckout)
-  const hasGuest = form && !isEmpty(form.customer) ? true : false
+  const hasFormCustomer = !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
-  const { formTitle, hasAddress } = makeFormTitle(check)
+  const { formTitle, hasAddress } = makeFormTitle(check, serviceType)
 
   useEffect(() => {
     if (!submitting && formError) window.scrollTo(0, 0)
@@ -222,7 +224,7 @@ const Checkout = () => {
       dispatch(resetCompletedOrder())
       dispatch(resetOrder())
       return history.push('/confirmation')
-    } else if (!hasCustomer && !hasGuest) {
+    } else if (!hasCustomer && !hasFormCustomer) {
       history.push('/checkout/guest')
     }
   }, [
@@ -234,7 +236,7 @@ const Checkout = () => {
     serviceType,
     completedOrder,
     hasCustomer,
-    hasGuest,
+    hasFormCustomer,
   ])
 
   // useEffect(() => {
@@ -288,7 +290,7 @@ const Checkout = () => {
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>
-                <CheckoutCart />
+                {hasFormCustomer && <CheckoutCart />}
               </CheckoutSidebarContent>
             </CheckoutSidebar>
           </CheckoutView>

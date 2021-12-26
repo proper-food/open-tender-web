@@ -42,6 +42,7 @@ const CheckoutPromoCodes = () => {
   const [error, setError] = useState('')
   const [pendingPromoCode, setPendingPromoCode] = useState(null)
   const { check, form, loading, errors } = useSelector(selectCheckout)
+  const { email } = form.customer
   const { checkout: config } = useSelector(selectContent)
   const { checkout: settings } = useSelector(selectSettings)
   const promoCodeLimit = getPromoCodeLimit(settings)
@@ -104,6 +105,8 @@ const CheckoutPromoCodes = () => {
   //     dispatch(updateForm({ promoCodes: applied }))
   //   }
   // }
+
+  if (!email) return null
 
   return (
     <CheckoutSection title={applied.length ? config.promoCodes.title : ''}>

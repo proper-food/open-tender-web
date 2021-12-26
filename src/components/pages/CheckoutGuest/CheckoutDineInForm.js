@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
+import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -8,11 +9,25 @@ import {
   selectCustomer,
   updateForm,
 } from '@open-tender/redux'
-import { DineInForm, FormWrapper } from '@open-tender/components'
+import { ButtonLink, DineInForm, FormWrapper } from '@open-tender/components'
 
+import { openModal } from '../../../slices'
 import { PageTitle } from '../..'
 
-const CheckoutGuest = () => {
+const CheckoutDineInFormView = styled.div`
+  & > div:first-of-type h1 {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
+    }
+  }
+
+  & > div:first-of-type p {
+    margin: 2rem 0 0;
+  }
+`
+
+const CheckoutDineInForm = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
@@ -30,6 +45,10 @@ const CheckoutGuest = () => {
     [dispatch, history]
   )
 
+  const login = () => {
+    dispatch(openModal({ type: 'login' }))
+  }
+
   useEffect(() => {
     return () => dispatch(resetGuest())
   }, [dispatch])
@@ -42,8 +61,13 @@ const CheckoutGuest = () => {
   }, [auth, dispatch, history])
 
   return (
-    <>
-      <PageTitle title="Please add a name for your order" />
+    <CheckoutDineInFormView>
+      <PageTitle title="Please add a name for your order">
+        <p>
+          Have an account?{' '}
+          <ButtonLink onClick={login}>Sign in here.</ButtonLink>
+        </p>
+      </PageTitle>
       <FormWrapper>
         <DineInForm
           initialData={initialData}
@@ -51,9 +75,9 @@ const CheckoutGuest = () => {
           submitText="Continue"
         />
       </FormWrapper>
-    </>
+    </CheckoutDineInFormView>
   )
 }
 
-CheckoutGuest.displayName = 'CheckoutGuest'
-export default CheckoutGuest
+CheckoutDineInForm.displayName = 'CheckoutDineInForm'
+export default CheckoutDineInForm

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -19,7 +19,7 @@ const defaultText = {
   subtitle: 'Please enter your email address below.',
 }
 
-const CheckoutGuest = () => {
+const CheckoutGuestForm = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
@@ -68,5 +68,5 @@ const CheckoutGuest = () => {
   )
 }
 
-CheckoutGuest.displayName = 'CheckoutGuest'
-export default CheckoutGuest
+CheckoutGuestForm.displayName = 'CheckoutGuestForm'
+export default CheckoutGuestForm

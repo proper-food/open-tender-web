@@ -76,7 +76,7 @@ const makeModal = (type, windowRef, args = {}) => {
     case 'points':
       return <Points {...args} />
     case 'profile':
-      return <Profile {...args} />
+      return <Profile windowRef={windowRef} {...args} />
     case 'rating':
       return <OrderRating {...args} />
     case 'requestedAt':

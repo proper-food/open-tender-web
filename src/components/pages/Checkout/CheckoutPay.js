@@ -17,7 +17,7 @@ const checkHasGooglePay = (check) => {
 const CheckoutPayView = styled('div')`
   // max-width: 36rem;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 3rem;
   text-align: center;
 `
 

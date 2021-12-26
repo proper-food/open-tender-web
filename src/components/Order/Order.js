@@ -62,6 +62,10 @@ const OrderButtons = styled(`div`)`
   }
 `
 
+const OrderDetails = styled('div')`
+  margin: 3rem 0 0;
+`
+
 const OrderSectionHeader = styled('h2')`
   margin: 4rem 0 1rem -0.1rem;
   line-height: 1;
@@ -155,9 +159,9 @@ const Order = ({ order, loading, error, isConfirmation }) => {
       <div>
         <Preface>Order #{order_id}</Preface>
         {isConfirmation ? <h2>{orderTitle}</h2> : <h1>{orderTitle}</h1>}
-        {!isMerch && (
+        {!isMerch && auth && (
           <OrderButtons>
-            {auth && order.is_editable && (
+            {order.is_editable && (
               <ButtonStyled
                 icon={iconMap.Edit}
                 onClick={() => dispatch(editOrder(order))}
@@ -185,7 +189,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           </OrderButtons>
         )}
       </div>
-      <div>
+      <OrderDetails>
         <OrderSection label="Location">
           <OrderRevenueCenter revenueCenter={revenue_center} />
         </OrderSection>
@@ -236,7 +240,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
             <OrderRating {...rating} />
           </OrderSection>
         ) : null}
-      </div>
+      </OrderDetails>
       {displayedItems.length > 0 && (
         <>
           <OrderSectionHeader>Items in Your Order</OrderSectionHeader>

@@ -7,6 +7,7 @@ import {
   selectCheckout,
   selectCustomer,
   updateForm,
+  validateOrder,
 } from '@open-tender/redux'
 import { isEmpty } from '@open-tender/js'
 import { ButtonLink, Heading } from '@open-tender/components'
@@ -32,7 +33,7 @@ const CheckoutCustomer = () => {
 
   useEffect(() => {
     if (!isLoggingOut) {
-      if (noCustomer || noCustomerId) {
+      if ((noCustomer || noCustomerId) && customer_id) {
         const customer = {
           customer_id,
           first_name,
@@ -74,6 +75,7 @@ const CheckoutCustomer = () => {
       company,
     }
     dispatch(updateForm({ customer }))
+    dispatch(validateOrder())
   }
 
   const update = () => {
