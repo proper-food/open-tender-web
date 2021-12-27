@@ -3,9 +3,10 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { updateCustomerOrderRating } from '@open-tender/redux'
 import { OrderRatingForm } from '@open-tender/components'
+
 import { closeModal } from '../../slices'
+import iconMap from '../iconMap'
 import { ModalContent, ModalView } from '..'
-import { Star } from 'react-feather'
 
 const OrderRating = ({ orderId, orderRating }) => {
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const OrderRating = ({ orderId, orderRating }) => {
         <OrderRatingForm
           orderId={orderId}
           orderRating={orderRating}
-          icon={(fill) => <Star fill={fill} />}
+          icon={iconMap.Star}
           updateRating={updateRating}
           callback={callback}
         />

@@ -21,12 +21,7 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import {
-  ButtonLink,
-  Heading,
-  Message,
-  useGeolocation,
-} from '@open-tender/components'
+import { ButtonLink, Message, useGeolocation } from '@open-tender/components'
 
 import {
   selectConfig,
@@ -178,7 +173,7 @@ const OrderTypes = () => {
           <NavButtons buttons={buttons} />
           {hasLinks && (
             <OrderTypesFooter>
-              <Heading as="p">Other stuff...</Heading>
+              {/* <Heading as="p">Other stuff...</Heading> */}
               <OrderTypesLinks>
                 {links.map((link, index) => (
                   <span key={link.title}>

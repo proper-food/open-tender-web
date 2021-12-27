@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { addCustomerFavorite, removeCustomerFavorite } from '@open-tender/redux'
 import { makeSimpleCart } from '@open-tender/js'
 
-import iconMap from '../iconMap'
 import styled from '@emotion/styled'
+import { Heart } from 'react-feather'
 
 const FavoriteView = styled('button')`
   display: inline-flex;
@@ -15,18 +15,19 @@ const FavoriteView = styled('button')`
   text-align: center;
   width: ${(props) => props.theme.favorite.size};
   height: ${(props) => props.theme.favorite.size};
-  border-radius: ${(props) => props.theme.favorite.size};
-  color: ${(props) => props.theme.buttons.colors[props.color].color};
-  background-color: ${(props) =>
-    props.theme.buttons.colors[props.color].bgColor};
+  color: ${(props) => props.theme.colors.primary};
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: ${(props) =>
-      props.theme.buttons.colors[`${props.color}Hover`].color};
-    background-color: ${(props) =>
-      props.theme.buttons.colors[`${props.color}Hover`].bgColor};
+  svg {
+    fill: ${(props) => (props.filled ? props.theme.colors.primary : null)};
+  }
+
+  &:hover {
+    color: ${(props) => props.theme.links.primary.color};
+
+    svg {
+      fill: ${(props) =>
+        props.filled ? props.theme.links.primary.color : null};
+    }
   }
 `
 
@@ -39,9 +40,11 @@ const FavoriteIcon = styled('span')`
 
 const Favorite = ({ item, favoriteId }) => {
   const dispatch = useDispatch()
+  const [filled, setFilled] = useState()
 
   const handleAdd = (evt) => {
     evt.preventDefault()
+    setFilled(true)
     const cart = makeSimpleCart([item])[0]
     delete cart.quantity
     const data = { cart }
@@ -50,16 +53,23 @@ const Favorite = ({ item, favoriteId }) => {
 
   const handleRemove = (evt) => {
     evt.preventDefault()
+    setFilled(false)
     dispatch(removeCustomerFavorite(favoriteId))
   }
+
+  useEffect(() => {
+    setFilled(favoriteId ? true : false)
+  }, [favoriteId])
 
   return (
     <FavoriteView
       onClick={favoriteId ? handleRemove : handleAdd}
-      color={favoriteId ? 'cart' : 'primary'}
       aria-label={favoriteId ? 'Remove favorite' : 'Add favorite'}
+      filled={filled}
     >
-      <FavoriteIcon>{iconMap.Heart}</FavoriteIcon>
+      <FavoriteIcon>
+        <Heart size={null} />
+      </FavoriteIcon>
     </FavoriteView>
   )
 }

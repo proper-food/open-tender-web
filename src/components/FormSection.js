@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
-import { isMobileOnly } from 'react-device-detect'
 import { Preface, Text } from '@open-tender/components'
 
 const FormSectionView = styled('div')`
@@ -18,6 +17,14 @@ const FormSectionView = styled('div')`
   }
 `
 
+const FormSectionLabel = styled.div`
+  div {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
+  }
+`
+
 const FormSectionContent = styled.div`
   margin: 1.5rem 0 0;
 `
@@ -26,13 +33,11 @@ const FormSection = ({ title, subtitle, children, style = null }) => {
   return (
     <FormSectionView style={style}>
       {title ? (
-        <Preface
-          as="div"
-          size={isMobileOnly ? 'xSmall' : 'small'}
-          color="tertiary"
-        >
-          {title}
-        </Preface>
+        <FormSectionLabel>
+          <Preface as="div" size="small" color="tertiary">
+            {title}
+          </Preface>
+        </FormSectionLabel>
       ) : null}
       {subtitle ? (
         <Text as="p" size="small">
