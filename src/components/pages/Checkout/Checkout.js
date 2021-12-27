@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { deviceType } from 'react-device-detect'
+import { deviceType, isMobile } from 'react-device-detect'
 import {
   selectCustomer,
   selectCartTotal,
@@ -74,7 +74,7 @@ const CheckoutTitle = styled('div')`
     padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
+    padding: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 
   h1 {
@@ -282,6 +282,7 @@ const Checkout = () => {
                   <CheckoutDiscounts />
                   <CheckoutPromoCodes />
                   <CheckoutTip />
+                  {isMobile && hasFormCustomer && <CheckoutCart />}
                   <CheckoutGiftCards />
                   <CheckoutTenders />
                   <CheckoutSubmit />
@@ -290,7 +291,7 @@ const Checkout = () => {
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>
-                {hasFormCustomer && <CheckoutCart />}
+                {!isMobile && hasFormCustomer && <CheckoutCart />}
               </CheckoutSidebarContent>
             </CheckoutSidebar>
           </CheckoutView>

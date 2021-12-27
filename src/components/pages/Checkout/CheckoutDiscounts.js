@@ -149,8 +149,7 @@ const CheckoutDiscounts = () => {
   const other = discountsOptional.filter((i) => i.discount_type === 'DISCOUNT')
 
   return (
-    <CheckoutSection>
-      <h4>{config.discounts.title}</h4>
+    <CheckoutSection title={config.discounts.title}>
       <CheckoutDiscountsView>
         {loyalty.length > 0 && loyalty.map((i) => makeDiscountButton(i))}
         {rewards.length > 0 && rewards.map((i) => makeDiscountButton(i))}

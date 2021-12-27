@@ -4,6 +4,7 @@ import Allergens from './Allergens'
 import Back from './Back'
 import ButtonBoth from './ButtonBoth'
 import CancelEdit from './CancelEdit'
+import Cart from './Cart'
 import Deals from './Deals'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
@@ -30,6 +31,7 @@ export {
   Back,
   ButtonBoth,
   CancelEdit,
+  Cart,
   Deals,
   Favorite,
   GroupOrder,

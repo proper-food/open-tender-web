@@ -24,6 +24,9 @@ import iconMap from '../../iconMap'
 
 const CheckoutCartView = styled('div')`
   padding: 0 0 ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `
 
 const CheckoutCartHeader = styled('div')`
@@ -32,6 +35,10 @@ const CheckoutCartHeader = styled('div')`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: ${(props) =>
+      props.hasPoints ? props.theme.layout.navHeight : '3rem'};
+  }
 
   p:first-of-type {
     font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -49,6 +56,9 @@ const CheckoutCartEdit = styled('div')`
   display: flex;
   justify-content: center;
   align-items: baseline;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: none;
+  }
 
   span {
     display: block;
@@ -161,7 +171,7 @@ const CheckoutCart = () => {
 
   return (
     <CheckoutCartView>
-      <CheckoutCartHeader>
+      <CheckoutCartHeader hasPoints={points ? true : false}>
         {points && (
           <div>
             <Heading as="p">

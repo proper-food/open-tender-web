@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
-// import { isBrowser } from 'react-device-detect'
-import { selectGroupOrder } from '@open-tender/redux'
-
-import { Menu, Reopen } from '../../buttons'
+import { selectCheckout, selectGroupOrder } from '@open-tender/redux'
+import { formatDollars } from '@open-tender/js'
 import { isMobile } from 'react-device-detect'
+
+import { Cart, Menu, Reopen } from '../../buttons'
+import { Header } from '../..'
 
 const CheckoutHeaderView = styled('div')`
   position: absolute;
@@ -25,7 +26,16 @@ const CheckoutHeaderView = styled('div')`
 
 const CheckoutHeader = () => {
   const { cartId } = useSelector(selectGroupOrder)
-  return (
+  const { check } = useSelector(selectCheckout)
+  const amount = check ? formatDollars(check.totals.total) : ''
+
+  return isMobile ? (
+    <Header
+      title={`Checkout ${amount}`}
+      left={cartId ? <Reopen /> : <Menu />}
+      right={<Cart />}
+    />
+  ) : (
     <CheckoutHeaderView isMobile={isMobile}>
       {cartId ? <Reopen /> : <Menu />}
     </CheckoutHeaderView>
