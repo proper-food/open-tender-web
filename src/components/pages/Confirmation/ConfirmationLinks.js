@@ -9,7 +9,18 @@ const ConfirmationLinksView = styled('div')`
   margin: 1.5rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 1.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
+
+  // p {
+  //   button,
+  //   span {
+  //     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //       display: inline-block;
+  //       width: 100%;
+  //     }
+  //   }
+  // }
 `
 
 const ConfirmationLinks = ({ auth, brand }) => {
@@ -33,7 +44,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
             Head back to our website
           </a>
         )}
-        {' or '}
+        <span> or </span>
         <ButtonLink onClick={() => history.push('/')}>
           start another order
         </ButtonLink>

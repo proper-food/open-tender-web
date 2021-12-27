@@ -11,12 +11,14 @@ import {
   selectOrder,
   selectCheckout,
   resetCompletedOrder,
+  resetCheck,
   resetErrors,
   resetOrder,
   resetTip,
   setConfirmationOrder,
   setSubmitting,
   setDeviceType,
+  validateOrder,
 } from '@open-tender/redux'
 import { isEmpty } from '@open-tender/js'
 import { FormError } from '@open-tender/components'
@@ -196,6 +198,7 @@ const Checkout = () => {
   const hasCustomer = auth ? true : false
   const { check, form, errors, submitting, completedOrder } =
     useSelector(selectCheckout)
+  const hasCheck = check ? true : false
   const hasFormCustomer = !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const deviceTypeName = makeDeviceType(deviceType)
@@ -211,8 +214,15 @@ const Checkout = () => {
     return () => {
       dispatch(resetErrors())
       dispatch(resetTip())
+      dispatch(resetCheck())
     }
   }, [dispatch, deviceTypeName])
+
+  useEffect(() => {
+    if (hasFormCustomer && !hasCheck) {
+      dispatch(validateOrder())
+    }
+  }, [dispatch, hasFormCustomer, hasCheck])
 
   useEffect(() => {
     if (!revenueCenterId || !serviceType) {
@@ -282,7 +292,7 @@ const Checkout = () => {
                   <CheckoutDiscounts />
                   <CheckoutPromoCodes />
                   <CheckoutTip />
-                  {isMobile && hasFormCustomer && <CheckoutCart />}
+                  {isMobile && <CheckoutCart />}
                   <CheckoutGiftCards />
                   <CheckoutTenders />
                   <CheckoutSubmit />
@@ -291,7 +301,7 @@ const Checkout = () => {
             </CheckoutContent>
             <CheckoutSidebar>
               <CheckoutSidebarContent>
-                {!isMobile && hasFormCustomer && <CheckoutCart />}
+                {!isMobile && check && <CheckoutCart />}
               </CheckoutSidebarContent>
             </CheckoutSidebar>
           </CheckoutView>

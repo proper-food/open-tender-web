@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 import {
   resetTip,
   selectCheckout,
@@ -84,6 +85,7 @@ const CheckoutCartEdit = styled('div')`
 
 const CheckoutCart = () => {
   const dispatch = useDispatch()
+  const [hasOpened, setHasOpened] = useState(false)
   const { cart } = useSelector(selectOrder)
   const [cartLength, setCartLength] = useState(cart.length)
   const { isOpen } = useSelector(selectSidebar)
@@ -151,10 +153,14 @@ const CheckoutCart = () => {
 
   useEffect(() => {
     if (!isOpen) {
-      dispatch(resetTip())
-      dispatch(validateOrder())
+      if (hasOpened) {
+        dispatch(resetTip())
+        dispatch(validateOrder())
+      }
+    } else {
+      setHasOpened(true)
     }
-  }, [dispatch, isOpen])
+  }, [dispatch, isOpen, hasOpened])
 
   useEffect(() => {
     dispatch(validateOrder())
@@ -196,6 +202,7 @@ const CheckoutCart = () => {
           tenders={form.tenders}
           updating={loading === 'pending'}
           loader={<Loading />}
+          showTenders={!isMobile}
         />
       )}
       <CheckoutCartEdit>
