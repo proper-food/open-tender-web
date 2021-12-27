@@ -5,7 +5,15 @@ import { checkAmountRemaining, formatDollars } from '@open-tender/js'
 import { ButtonStyled, Message } from '@open-tender/components'
 import CheckoutSection from './CheckoutSection'
 
-const CheckoutSubmitMessage = styled('div')`
+const CheckoutSubmitButton = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    justify-content: center;
+  }
+`
+
+const CheckoutSubmitMessage = styled.div`
   margin: 3rem 0 0;
 
   > div {
@@ -44,14 +52,16 @@ const CheckoutSubmit = () => {
           </Message>
         ) : null}
       </CheckoutSubmitMessage>
-      <ButtonStyled
-        onClick={submitPayment}
-        disabled={submitDisabled}
-        size="big"
-        color="primary"
-      >
-        {updating ? 'Updating...' : `Submit Order${totalAmount}`}
-      </ButtonStyled>
+      <CheckoutSubmitButton>
+        <ButtonStyled
+          onClick={submitPayment}
+          disabled={submitDisabled}
+          size="big"
+          color="primary"
+        >
+          {updating ? 'Updating...' : `Submit Order${totalAmount}`}
+        </ButtonStyled>
+      </CheckoutSubmitButton>
     </CheckoutSection>
   )
 }
