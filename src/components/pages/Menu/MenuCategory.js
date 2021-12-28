@@ -16,14 +16,29 @@ export const MenuCategoryView = styled('div')`
 export const MenuCategoryHeader = styled('div')`
   margin: 0 0 1rem;
 
-  h2,
+  h2 {
+    margin: 0 0 0 -0.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
+    }
+  }
+
   h3 {
     margin: 0 0 0 -0.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
   }
 
   p {
     margin: 0.5rem 0 0;
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -66,11 +81,13 @@ const MenuCategory = ({ category, isChild }) => {
           {category.description && <p>{category.description}</p>}
         </Container>
       </MenuCategoryHeader>
-      <MenuItems>
-        {category.items.map((item) => (
-          <MenuItem key={item.id} item={item} />
-        ))}
-      </MenuItems>
+      {category.items.length > 0 && (
+        <MenuItems>
+          {category.items.map((item) => (
+            <MenuItem key={item.id} item={item} />
+          ))}
+        </MenuItems>
+      )}
     </MenuCategoryView>
   )
 }

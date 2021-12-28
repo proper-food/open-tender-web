@@ -23,7 +23,8 @@ const FooterContainer = styled('div')`
   justify-content: space-between;
   align-items: stretch;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.padding} 0;
+    height: 30rem;
+    // padding: ${(props) => props.theme.layout.padding} 0;
     flex-direction: column;
     justify-content: space-between;
     // align-items: flex-start;
@@ -36,7 +37,7 @@ const FooterContent = styled('div')`
   flex-direction: column;
   justify-content: space-between;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    justify-content: flex-start;
+    // justify-content: flex-start;
   }
 `
 
@@ -46,7 +47,7 @@ const FooterLogo = styled('div')`
   height: 3.2rem;
   margin: 0 0 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 2.4rem;
+    height: 2.2rem;
   }
 
   img {
@@ -87,6 +88,9 @@ const FooterLinks = styled('ul')`
 const FooterTerms = styled('nav')`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1rem 0 2rem;
+  }
 
   ul li {
     float: left;

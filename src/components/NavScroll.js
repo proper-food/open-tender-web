@@ -28,6 +28,9 @@ const NavScrollButtonView = styled('button')`
   font-size: ${(props) => props.theme.fonts.preface.fontSize};
   color: ${(props) =>
     props.theme.links.light[props.active ? 'hover' : 'color']};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 
   &:hover,
   &:focus {
@@ -122,7 +125,7 @@ const NavScroll = ({ items, offset = 0 }) => {
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
   const topOffset = heightInPixels * 2 + 1
   const elements = Array.from(document.getElementsByName('section'))
-  const navOffset = offset + (isMobile ? -30 : -30)
+  const navOffset = offset + (isMobile ? -60 : -60)
 
   useEffect(() => {
     const handleScroll = () => {

@@ -75,7 +75,11 @@ export const MenuItemOverlay = styled('div')`
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   background-color: ${(props) =>
-    props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
+    props.isSoldOut
+      ? props.theme.overlay.dark
+      : props.isAlert
+      ? props.theme.overlay.alert
+      : 'transparent'};
 `
 
 const MenuItemAdd = styled('button')`
@@ -94,6 +98,12 @@ const MenuItemAdd = styled('button')`
     width: 2.8rem;
     height: 3.2rem;
     align-items: flex-end;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: 10.6rem;
+    bottom: auto;
+    width: 2.8rem;
+    height: 2.8rem;
   }
 
   span {
@@ -115,6 +125,11 @@ const MenuItemAdd = styled('button')`
       padding: 0.2rem;
       border-width: 0.2rem;
     }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      background-color: ${(props) => props.theme.bgColors.primary};
+      padding: 0.3rem;
+      border-width: 0.1rem;
+    }
   }
 
   &:hover:enabled,
@@ -125,6 +140,9 @@ const MenuItemAdd = styled('button')`
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
         color: ${(props) => props.theme.colors.primary};
         background-color: transparent;
+      }
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        background-color: ${(props) => props.theme.bgColors.primary};
       }
     }
   }
@@ -362,8 +380,8 @@ const MenuItem = ({ item }) => {
   ) : hasAllergensAlert ? (
     <Tag
       icon={iconMap.AlertCircle}
-      text={`Contains ${allergenAlert.join(', ')}`}
-      bgColor="error"
+      text={allergenAlert.join(', ')}
+      bgColor="alert"
     />
   ) : null
 
@@ -383,7 +401,10 @@ const MenuItem = ({ item }) => {
             {showImage && (
               <MenuItemImage imageUrl={imageUrl}>
                 {itemTag && (
-                  <MenuItemOverlay isSoldOut={isSoldOut}>
+                  <MenuItemOverlay
+                    isSoldOut={isSoldOut}
+                    isAlert={hasAllergensAlert}
+                  >
                     <div>{itemTag}</div>
                   </MenuItemOverlay>
                 )}
@@ -418,7 +439,7 @@ const MenuItem = ({ item }) => {
         {showQuickAdd && (
           <MenuItemAdd onClick={add} disabled={isIncomplete} title="Quick Add">
             <span>
-              <Plus size={18} />
+              <Plus size={null} />
             </span>
           </MenuItemAdd>
         )}

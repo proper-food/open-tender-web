@@ -23,10 +23,16 @@ const FavoriteView = styled('button')`
 
   &:hover {
     color: ${(props) => props.theme.links.primary.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.colors.primary};
+    }
 
     svg {
       fill: ${(props) =>
         props.filled ? props.theme.links.primary.color : null};
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        fill: ${(props) => (props.filled ? props.theme.colors.primary : null)};
+      }
     }
   }
 `

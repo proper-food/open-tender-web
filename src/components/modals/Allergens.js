@@ -13,7 +13,7 @@ import styled from '@emotion/styled'
 
 const AllergenFormView = styled('div')`
   label {
-    padding: 1.25rem 0;
+    // padding: 1.25rem 0;
 
     & > span > span:last-of-type {
       text-align: right;
