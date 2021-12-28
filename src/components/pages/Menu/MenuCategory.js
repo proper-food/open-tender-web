@@ -28,15 +28,32 @@ export const MenuCategoryHeader = styled('div')`
 `
 
 const MenuItems = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-flow: row wrap;
+  // justify-content: space-between;
+  // align-items: stretch;
+  display: grid;
+
+  justify-content: center;
+  align-items: stretch;
   padding: ${(props) => props.theme.layout.padding};
-  padding-top: 0;
-  padding-right: 0;
+  gap: ${(props) => props.theme.layout.padding};
+  grid-template-columns: repeat(5, 1fr);
+  @media (max-width: 1560px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-top: 0;
-    padding-right: 0;
+    gap: ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    gap: 0.6rem;
   }
 `
 

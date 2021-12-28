@@ -14,6 +14,10 @@ const MenuItemImageView = styled('div')`
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   overflow: hidden;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    height: 14rem;
+    padding: 0;
+  }
 `
 
 const MenuItemImageLoading = styled('div')`

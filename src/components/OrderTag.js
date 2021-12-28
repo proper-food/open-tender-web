@@ -16,12 +16,12 @@ const OrderTag = ({ isUpcoming, status }) => {
     ? {
         text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
         icon: iconMap.AlertCircle,
-        bgColor: 'error',
+        bgColor: 'alert',
       }
     : status === 'REFUNDED'
     ? {
         text: 'Refunded',
-        bgColor: 'alert',
+        bgColor: 'error',
       }
     : {
         text: 'Completed',
