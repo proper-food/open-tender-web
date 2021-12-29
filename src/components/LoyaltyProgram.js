@@ -21,11 +21,11 @@ const LoyaltyProgramView = styled(Box)`
 `
 
 const LoyaltyProgramSummary = styled('div')`
-  flex: 1 0 auto;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 6rem 2.5rem 0;
+  padding: 0 2.5rem 2.5rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
     // margin: 0 0 3rem;

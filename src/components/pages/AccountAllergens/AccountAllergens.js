@@ -27,16 +27,7 @@ import {
 import styled from '@emotion/styled'
 import AccountTabs from '../Account/AccountTabs'
 
-const AllergenFormView = styled('div')`
-  label {
-    padding: 1.25rem 0 1rem !important;
-
-    & > span > span:last-of-type {
-      text-align: right;
-      line-height: 1;
-    }
-  }
-`
+const AllergenFormView = styled('div')``
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()

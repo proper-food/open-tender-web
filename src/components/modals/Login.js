@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -44,6 +45,23 @@ const messaging = {
     reset: 'Back to login form',
   },
 }
+
+const LoginModalClose = styled.div`
+  label: LoginModalClose;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const LoginModalFooter = styled.div`
+  label: LoginModalFooter;
+
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
 
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
@@ -119,18 +137,20 @@ const LoginModal = ({ callback }) => {
         }
         footer={
           !has_thanx && (
-            <div>
+            <LoginModalFooter>
               <ButtonLink onClick={resetSent ? toggleResetSent : toggleReset}>
                 {msg.reset}
               </ButtonLink>
-            </div>
+            </LoginModalFooter>
           )
         }
       >
         {resetSent ? (
-          <ButtonStyled onClick={() => dispatch(closeModal())}>
-            Close
-          </ButtonStyled>
+          <LoginModalClose>
+            <ButtonStyled onClick={() => dispatch(closeModal())}>
+              Close
+            </ButtonStyled>
+          </LoginModalClose>
         ) : isReset ? (
           <SendResetForm
             {...resetPassword}

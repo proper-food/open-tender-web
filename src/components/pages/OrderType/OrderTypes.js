@@ -52,7 +52,7 @@ const OrderTypesFooter = styled('div')`
 `
 
 const OrderTypesLinks = styled('div')`
-  margin: 1rem 0 0;
+  // margin: 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }

@@ -12,6 +12,7 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
+  min-height: 6rem;
   padding: 1.3rem 2rem 1.3rem 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;
@@ -24,6 +25,7 @@ const NavButtonView = styled('button')`
   background-color: ${(props) => props.theme.bgColors.primary};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    min-height: 4rem;
     padding: 2rem 0.5rem 2rem 2rem;
     border-width: 0;
     border-bottom-width: ${(props) => props.theme.border.width};

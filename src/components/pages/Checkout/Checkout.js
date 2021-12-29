@@ -273,7 +273,7 @@ const Checkout = () => {
               </CheckoutTitle>
               <CheckoutInfo>
                 {auth ? <CheckoutCustomer /> : <CheckoutGuest />}
-                {serviceType === 'PICKUP' ? (
+                {['WALKIN', 'PICKUP'].includes(serviceType) ? (
                   <CheckoutPickup />
                 ) : serviceType === 'DELIVERY' ? (
                   <CheckoutDelivery />
