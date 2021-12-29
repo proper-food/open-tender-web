@@ -1,21 +1,25 @@
 import React, { useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectOrderFulfillment,
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import {
-  FormHeader,
-  FormWrapper,
-  Heading,
-  Message,
-  OrderFulfillmentForm,
-} from '@open-tender/components'
+import { Message, OrderFulfillmentForm } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
-import { Loading } from '.'
+import { FormSection, Loading } from '.'
+
+const OrderFulfillmentView = styled.div`
+  max-width: 54rem;
+  margin: ${(props) => props.theme.layout.margin} auto;
+  margin: 4rem auto;
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   margin: ${(props) => props.theme.layout.marginMobile} auto;
+  // }
+`
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   const dispatch = useDispatch()
@@ -45,30 +49,26 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   }, [dispatch])
 
   return (
-    <FormWrapper>
-      <FormHeader>
-        <p>
-          <Heading>{fulfillmentSettings.title}</Heading>
-        </p>
-        <p>{subtitle}</p>
-      </FormHeader>
-      {isLoading ? (
-        <Loading text="Retrieving..." />
-      ) : errMsg ? (
-        <Message color="error" style={{ width: '100%' }}>
-          {errMsg}
-        </Message>
-      ) : (
-        <OrderFulfillmentForm
-          orderId={orderId}
-          fulfillment={fulfillment}
-          loading={loading}
-          error={error}
-          update={update}
-          settings={fulfillmentSettings}
-        />
-      )}
-    </FormWrapper>
+    <OrderFulfillmentView>
+      <FormSection title={fulfillmentSettings.title} subtitle={subtitle}>
+        {isLoading ? (
+          <Loading text="Retrieving..." />
+        ) : errMsg ? (
+          <Message color="error" style={{ width: '100%' }}>
+            {errMsg}
+          </Message>
+        ) : (
+          <OrderFulfillmentForm
+            orderId={orderId}
+            fulfillment={fulfillment}
+            loading={loading}
+            error={error}
+            update={update}
+            settings={fulfillmentSettings}
+          />
+        )}
+      </FormSection>
+    </OrderFulfillmentView>
   )
 }
 

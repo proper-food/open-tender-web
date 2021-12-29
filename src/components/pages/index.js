@@ -7,6 +7,9 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Checkout from './Checkout'
+import CheckoutGuest from './CheckoutGuest'
+import CheckoutSignIn from './CheckoutSignIn'
+import CheckoutSignUp from './CheckoutSignUp'
 import Confirmation from './Confirmation'
 import Deals from './Deals'
 import Donations from './Donations'
@@ -29,6 +32,7 @@ import Order from './Order'
 import Orders from './Orders'
 import OrderType from './OrderType'
 import Profile from './Profile'
+import QR from './QR'
 import Rating from './Rating'
 import Refunds from './Refunds'
 import ResetPassword from './ResetPassword'
@@ -49,6 +53,9 @@ export {
   AccountSettings,
   Catering,
   Checkout,
+  CheckoutGuest,
+  CheckoutSignIn,
+  CheckoutSignUp,
   Confirmation,
   Deals,
   Donations,
@@ -71,6 +78,7 @@ export {
   Orders,
   OrderType,
   Profile,
+  QR,
   Rating,
   Refunds,
   ResetPassword,

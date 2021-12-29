@@ -47,10 +47,10 @@ const ModalCloseButton = styled('div')`
 
 const ModalClose = ({ onClick, isButton = false }) => {
   const dispatch = useDispatch()
-  const handleClose = useMemo(() => onClick || (() => dispatch(closeModal())), [
-    onClick,
-    dispatch,
-  ])
+  const handleClose = useMemo(
+    () => onClick || (() => dispatch(closeModal())),
+    [onClick, dispatch]
+  )
 
   const handleEscape = useCallback(
     (evt) => {
@@ -71,12 +71,17 @@ const ModalClose = ({ onClick, isButton = false }) => {
         onClick={handleClose}
         size="small"
         color="header"
+        id="modal-close"
       >
         Close
       </ButtonStyled>
     </ModalCloseButton>
   ) : (
-    <ModalCloseX onClick={handleClose} aria-label="Close dialog">
+    <ModalCloseX
+      id="modal-close"
+      onClick={handleClose}
+      aria-label="Close dialog"
+    >
       <X size={20} />
     </ModalCloseX>
   )

@@ -14,11 +14,14 @@ import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
+import FormSection from './FormSection'
+import Geolocation from './Geolocation'
 import GiftCard from './GiftCard'
 import Greeting from './Greeting'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
+import HeaderCheckout from './HeaderCheckout'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import Header from './Header'
@@ -101,12 +104,15 @@ export {
   DealsScrollable,
   ErrorBoundary,
   Footer,
+  FormSection,
+  Geolocation,
   GiftCard,
   Greeting,
   GroupOrderLink,
   GroupOrderTime,
   Header,
   HeaderAccount,
+  HeaderCheckout,
   HeaderDefault,
   HeaderLogo,
   HeaderUser,

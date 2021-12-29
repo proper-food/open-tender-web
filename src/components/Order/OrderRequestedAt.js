@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { timezoneMap, makeRequestedAtStr } from '@open-tender/js'
 

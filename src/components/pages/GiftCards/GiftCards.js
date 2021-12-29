@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Minus, Plus } from 'react-feather'
@@ -14,9 +14,7 @@ import {
   setAlert,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -47,12 +45,6 @@ const GiftCards = () => {
   )
   const reset = useCallback(() => dispatch(resetGiftCards()), [dispatch])
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())
@@ -86,7 +78,6 @@ const GiftCards = () => {
                 loading={loading}
                 error={error}
                 iconMap={iconMap}
-                windowRef={windowRef}
                 recaptchaKey={includeRecaptcha ? recaptchaKey : null}
               />
             </FormWrapper>

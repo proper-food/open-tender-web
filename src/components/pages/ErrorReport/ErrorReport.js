@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Sentry from '@sentry/react'
@@ -7,7 +7,6 @@ import { resetOrderType, resetCheckout } from '@open-tender/redux'
 import { ButtonStyled, ButtonLink } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
   Content,
@@ -50,11 +49,10 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
   const dispatch = useDispatch()
   const { error: config } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-  }, [windowRef])
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleReset = () => {
     dispatch(resetOrderType())

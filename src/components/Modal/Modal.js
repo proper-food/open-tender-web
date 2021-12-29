@@ -27,6 +27,7 @@ import {
   OrderRating,
   OrderType,
   Points,
+  Profile,
   QRCode,
   RequestedAt,
   Reward,
@@ -74,6 +75,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <QRCode {...args} />
     case 'points':
       return <Points {...args} />
+    case 'profile':
+      return <Profile windowRef={windowRef} {...args} />
     case 'rating':
       return <OrderRating {...args} />
     case 'requestedAt':
@@ -92,14 +95,10 @@ const makeModal = (type, windowRef, args = {}) => {
 const containerStyleMap = {
   address: { alignItems: 'flex-start' },
   creditCard: { alignItems: 'flex-start' },
-  // requestedAt: { alignItems: 'flex-start' },
-  // allergens: { alignItems: 'flex-start' },
   cartErrors: { alignItems: 'flex-start' },
   cartCounts: { alignItems: 'flex-start' },
-  // groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
-  // reward: { alignItems: 'flex-start' },
-  // loyaltyTier: { alignItems: 'flex-start' },
+  profile: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
@@ -124,6 +123,7 @@ const Modal = () => {
   const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
   const focusFirst = args && args.focusFirst ? true : false
+  const skipClose = args && args.skipClose ? true : false
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
@@ -168,7 +168,7 @@ const Modal = () => {
       !focusFirst && allInputs.length
         ? allInputs[0]
         : allElements
-        ? allElements[0]
+        ? allElements[skipClose ? 1 : 0]
         : null
     if (firstElement) firstElement.focus()
   }

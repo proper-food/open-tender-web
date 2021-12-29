@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -11,9 +11,7 @@ import {
 import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   AccountBack,
   Content,
@@ -41,16 +39,10 @@ const AccountProfile = () => {
     [dispatch]
   )
   const optIns = useSelector(selectOptIns)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   useEffect(() => {
     if (!customer_id) return history.push('/')

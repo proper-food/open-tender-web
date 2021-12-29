@@ -19,11 +19,11 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
   const {
     name,
     slug,
-    settings,
     revenue_center_type: rcType,
     is_outpost: isOutpost,
     address,
   } = revenueCenter
+  const settings = revenueCenter.settings || revenueCenter
   const { first_times: ft, order_times: ot } = settings
   const menuSlug = `/menu/${slug}`
   const serviceType = useSelector(selectServiceType)

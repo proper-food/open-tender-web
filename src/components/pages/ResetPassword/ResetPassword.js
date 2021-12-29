@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useHistory, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -14,9 +14,7 @@ import {
   ResetPasswordForm,
 } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -35,18 +33,12 @@ const ResetPassword = () => {
   const { resetPassword: config } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
   const { success, loading, error } = useSelector(selectResetPassword)
-  const { windowRef } = useContext(AppContext)
   const reset = useCallback(
     (new_password, resetToken) =>
       dispatch(resetPassword(new_password, resetToken)),
     [dispatch]
   )
   const resetForm = useCallback(() => dispatch(resetPasswordReset), [dispatch])
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (auth) return history.push('/')

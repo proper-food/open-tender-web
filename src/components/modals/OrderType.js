@@ -30,11 +30,11 @@ const OrderType = () => {
         title="Change your order type"
         footer={
           <div>
-            <ButtonStyled onClick={cancel} color="cart">
-              Keep {serviceTypeName}
-            </ButtonStyled>
             <ButtonStyled onClick={changeOrderType}>
               Change Order Type
+            </ButtonStyled>
+            <ButtonStyled onClick={cancel} color="secondary">
+              Keep {serviceTypeName}
             </ButtonStyled>
           </div>
         }

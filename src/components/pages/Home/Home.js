@@ -1,29 +1,19 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
-import { useGeolocation } from '@open-tender/components'
 
-import { Account, Guest } from '..'
-import { setGeoLatLng, setGeoError, setGeoLoading } from '../../../slices'
+import { Account } from '..'
 
 const Home = () => {
-  const dispatch = useDispatch()
+  const history = useHistory()
   const { auth } = useSelector(selectCustomer)
-  const { geoLatLng, geoError } = useGeolocation()
 
   useEffect(() => {
-    dispatch(setGeoLoading())
-  }, [dispatch])
+    if (!auth) history.push('/order-type')
+  }, [history, auth])
 
-  useEffect(() => {
-    if (geoLatLng) {
-      dispatch(setGeoLatLng(geoLatLng))
-    } else if (geoError) {
-      dispatch(setGeoError(geoError))
-    }
-  }, [geoLatLng, geoError, dispatch])
-
-  return auth ? <Account /> : <Guest />
+  return auth ? <Account /> : null
 }
 
 Home.displayName = 'Home'

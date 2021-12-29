@@ -4,6 +4,7 @@ import Allergens from './Allergens'
 import Back from './Back'
 import ButtonBoth from './ButtonBoth'
 import CancelEdit from './CancelEdit'
+import Cart from './Cart'
 import Deals from './Deals'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
@@ -15,6 +16,7 @@ import Logout from './Logout'
 import Menu from './Menu'
 import NavMenu from './NavMenu'
 import OrderNow from './OrderNow'
+import OrderTime from './OrderTime'
 import Points from './Points'
 import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
@@ -29,6 +31,7 @@ export {
   Back,
   ButtonBoth,
   CancelEdit,
+  Cart,
   Deals,
   Favorite,
   GroupOrder,
@@ -40,6 +43,7 @@ export {
   Menu,
   NavMenu,
   OrderNow,
+  OrderTime,
   Points,
   Reopen,
   RequestedAt,

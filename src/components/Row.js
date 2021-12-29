@@ -32,6 +32,7 @@ const RowText = styled('div')`
   flex: 1;
 
   p {
+    margin: 0.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
 

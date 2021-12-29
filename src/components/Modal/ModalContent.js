@@ -8,7 +8,7 @@ import { ModalClose } from '.'
 const ModalContentView = styled('div')`
   padding: 3.5rem 3.5rem 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 2.5rem 2.5rem 3rem;
+    padding: 3rem 2.5rem 3rem;
   }
 `
 
@@ -20,12 +20,18 @@ const ModalTitle = styled('p')`
   margin: 0;
   line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.h3};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
+  }
 `
 
 const ModalSubtitle = styled('div')`
   p {
     margin-top: 1rem;
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 

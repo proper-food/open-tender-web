@@ -1,18 +1,29 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 
 import iconMap from '../iconMap'
-import styled from '@emotion/styled'
+
+const OrderRatingView = styled.div`
+  p + p {
+    margin: 0.8rem 0 0;
+  }
+`
 
 const OrderRatingStars = styled('div')`
   display: flex;
   margin: 0.25rem 0 0.5rem;
+
   span {
     display: block;
     margin: 0 0.5rem 0 0;
     width: 2rem;
     height: 2rem;
-    color: ${(props) => props.theme.fonts.headings.color};
+    color: ${(props) => props.theme.colors.primary};
+
+    svg {
+      fill: ${(props) => props.theme.colors.primary};
+    }
   }
 `
 
@@ -22,7 +33,7 @@ const OrderRating = ({ rating, comments }) => {
     stars.push(i)
   }
   return (
-    <>
+    <OrderRatingView>
       <p>
         <OrderRatingStars>
           {stars.map((star) => (
@@ -31,7 +42,7 @@ const OrderRating = ({ rating, comments }) => {
         </OrderRatingStars>
       </p>
       {comments.length ? <p>{comments}</p> : null}
-    </>
+    </OrderRatingView>
   )
 }
 

@@ -16,9 +16,10 @@ import {
 } from '../../buttons'
 
 const MenuMobileMenuView = styled('div')`
+  label: MenuMobileMenuView;
   position: fixed;
   z-index: 12;
-  top: 6rem;
+  top: ${(props) => props.theme.layout.navHeightMobile};
   left: 0;
   right: 0;
   padding: ${(props) => props.theme.layout.paddingMobile};

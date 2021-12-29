@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderUser,
@@ -26,12 +24,6 @@ const AccountSettings = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { accountSettings: config } = useSelector(selectConfig)
   const { auth, profile } = useSelector(selectCustomer)
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

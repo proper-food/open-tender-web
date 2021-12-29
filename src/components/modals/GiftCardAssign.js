@@ -35,7 +35,7 @@ const GiftCardAssign = ({ windowRef, validate }) => {
   return (
     <ModalView>
       <ModalContent
-        title="Add a gift card to your account"
+        title="Add gift card to your account"
         subtitle={
           <p>
             Have a gift card number from a physical gift card or gift card

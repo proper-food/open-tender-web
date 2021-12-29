@@ -11,10 +11,20 @@ const NotificationsView = styled('div')`
   z-index: 15;
   bottom: 12rem;
   right: ${(props) => props.theme.layout.padding};
+  // right: calc(
+  //   ${(props) => props.theme.layout.padding} +
+  //     ${(props) => props.theme.layout.padding} + 8rem
+  // );
+  // bottom: calc(${(props) => props.theme.layout.padding} + 1.5rem);
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     left: ${(props) => props.theme.layout.paddingMobile};
     right: auto;
     bottom: 2rem;
+    // right: calc(
+    //   ${(props) => props.theme.layout.paddingMobile} +
+    //     ${(props) => props.theme.layout.paddingMobile} + 7rem
+    // );
+    // bottom: calc(${(props) => props.theme.layout.padding} + 1rem);
   }
 `
 

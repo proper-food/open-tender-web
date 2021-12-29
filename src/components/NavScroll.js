@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { animateScroll as scroll } from 'react-scroll'
 import { slugify } from '@open-tender/js'
 
-import { AppContext } from '../App'
 import styled from '@emotion/styled'
 import { isBrowser, isMobile } from 'react-device-detect'
 import { useTheme } from '@emotion/react'
@@ -29,6 +28,9 @@ const NavScrollButtonView = styled('button')`
   font-size: ${(props) => props.theme.fonts.preface.fontSize};
   color: ${(props) =>
     props.theme.links.light[props.active ? 'hover' : 'color']};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 
   &:hover,
   &:focus {
@@ -36,7 +38,7 @@ const NavScrollButtonView = styled('button')`
   }
 `
 
-const NavScrollButton = ({ container, name, active, offset = 0 }) => {
+const NavScrollButton = ({ name, active, offset = 0 }) => {
   const id = slugify(name)
 
   const onClick = (evt) => {
@@ -45,7 +47,6 @@ const NavScrollButton = ({ container, name, active, offset = 0 }) => {
     const element = document.getElementById(id)
     const position = element.offsetTop + offset
     scroll.scrollTo(position, {
-      container,
       duration: 500,
       smooth: true,
       offset: -60,
@@ -115,7 +116,6 @@ const shs = (e, sc, eAmt, start) => {
 }
 
 const NavScroll = ({ items, offset = 0 }) => {
-  const { windowRef } = useContext(AppContext)
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
@@ -124,22 +124,20 @@ const NavScroll = ({ items, offset = 0 }) => {
   const height = isBrowser ? navHeight : navHeightMobile
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
   const topOffset = heightInPixels * 2 + 1
-  // const topOffset = 121
   const elements = Array.from(document.getElementsByName('section'))
-  const navOffset = offset + (isMobile ? -30 : -30)
+  const navOffset = offset + (isMobile ? -60 : -60)
 
   useEffect(() => {
-    const winRef = windowRef.current
     const handleScroll = () => {
       if (elements.length) {
         setActive(getActiveElement(elements, topOffset))
       }
     }
-    winRef.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      winRef.removeEventListener('scroll', () => handleScroll)
+      window.removeEventListener('scroll', () => handleScroll)
     }
-  }, [windowRef, topOffset, elements, active])
+  }, [topOffset, elements, active])
 
   useEffect(() => {
     if (active) {
@@ -147,7 +145,6 @@ const NavScroll = ({ items, offset = 0 }) => {
       if (navActive) {
         const navOffset = navActive.getBoundingClientRect().x
         const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-        // const offsetLeft = navOffset - parentOffset
         if (navRef.current) {
           smoothHorizontalScrolling(
             navRef.current,
@@ -155,12 +152,6 @@ const NavScroll = ({ items, offset = 0 }) => {
             navOffset,
             -parentOffset
           )
-          // navRef.current.scrollTo({
-          //   top: 0,
-          //   left: offsetLeft,
-          //   behavior: 'smooth',
-          // })
-          // navRef.current.scrollLeft = offsetLeft
         }
       }
     }
@@ -175,7 +166,6 @@ const NavScroll = ({ items, offset = 0 }) => {
           return (
             <li key={`${sectionId}-${index}`} id={`nav-${sectionId}`}>
               <NavScrollButton
-                container={windowRef.current}
                 name={name}
                 offset={navOffset}
                 active={activeId === sectionId}

@@ -23,14 +23,11 @@ import './App.scss'
 export const AppContext = createContext(null)
 
 export const AppView = styled('div')`
+  label: AppView;
+
+  height: 100%;
   display: flex;
   justify-content: flex-end;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 `
 
 class App extends React.Component {
@@ -58,6 +55,7 @@ class App extends React.Component {
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
+    // console.log(JSON.stringify(theme, null, 2))
     return (
       <>
         <ErrorFatal error={error} loading={loading} />

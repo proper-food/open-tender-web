@@ -14,9 +14,18 @@ const RequestedAt = ({
   useButton = false,
 }) => {
   const dispatch = useDispatch()
-  const { requestedAt, revenueCenter } = useSelector(selectOrder)
+  const { requestedAt, revenueCenter, serviceType, orderType } =
+    useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const requestedAtText = makeRequestedAtStr(requestedAt, tz)
+  const args = {
+    focusFirst: true,
+    skipClose: true,
+    revenueCenter,
+    serviceType,
+    orderType,
+    requestedAt,
+  }
 
   if (!revenueCenter || !requestedAt) return null
 
@@ -24,7 +33,7 @@ const RequestedAt = ({
     <ButtonBoth
       text={requestedAtText}
       icon={icon}
-      onClick={() => dispatch(openModal({ type: 'requestedAt' }))}
+      onClick={() => dispatch(openModal({ type: 'requestedAt', args }))}
       style={style}
       useButton={useButton}
     />

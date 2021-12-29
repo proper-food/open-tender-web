@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -13,9 +13,7 @@ import {
   setAlert,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -24,6 +22,7 @@ import {
   HeaderDefault,
   PageContainer,
 } from '../..'
+import { cardIconMap } from '../../../assets/cardIcons'
 
 const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
@@ -35,7 +34,6 @@ const Donations = () => {
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const { success, loading, error, donation } = useSelector(selectDonation)
-  const { windowRef } = useContext(AppContext)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseDonation(data, callback)),
     [dispatch]
@@ -44,10 +42,8 @@ const Donations = () => {
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     return () => dispatch(resetDonation())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())
@@ -76,8 +72,8 @@ const Donations = () => {
                 donation={donation}
                 loading={loading}
                 error={error}
-                windowRef={windowRef}
                 recaptchaKey={includeRecaptcha ? recaptchaKey : null}
+                cardIconMap={cardIconMap}
               />
             </FormWrapper>
             {success && (

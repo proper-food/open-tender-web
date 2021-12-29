@@ -22,6 +22,7 @@ import {
   LeaveGroup,
   Points,
   RequestedAt,
+  // OrderTime,
   RevenueCenter,
   ServiceType,
 } from '../../buttons'
@@ -143,6 +144,7 @@ const MenuHeader = ({
                   <RevenueCenter />
                   <ServiceType />
                   <RequestedAt />
+                  {/* <OrderTime /> */}
                   <Allergens />
                   <GroupOrder />
                   <CancelEdit />

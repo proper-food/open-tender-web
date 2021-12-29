@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -18,9 +18,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectDisplaySettings } from '../../../slices'
-import { AppContext } from '../../../App'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
 import MenuItemBuilder from './MenuItemBuilder'
 import iconMap from '../../iconMap'
@@ -85,7 +83,6 @@ const MenuItemBack = styled('div')`
 const MenuItem = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { windowRef } = useContext(AppContext)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
@@ -100,11 +97,6 @@ const MenuItem = () => {
       item.app_image_url ||
       item.imageUrl
     : null
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!item) history.push(menuSlug)

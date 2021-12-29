@@ -1,44 +1,48 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
-import { selectGroupOrder } from '@open-tender/redux'
+import { selectCheckout, selectGroupOrder } from '@open-tender/redux'
+import { formatDollars } from '@open-tender/js'
+import { isMobile } from 'react-device-detect'
 
+import { Cart, Menu, Reopen } from '../../buttons'
 import { Header } from '../..'
-import { Account, CancelEdit, Menu, Reopen } from '../../buttons'
-import { isBrowser } from 'react-device-detect'
 
-const CheckoutHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
+const CheckoutHeaderView = styled('div')`
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: ${(props) => props.theme.layout.navHeight};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    height: ${(props) => props.theme.layout.navHeightMobile};
+    padding: ${(props) =>
+      props.isMobile ? '0' : props.theme.layout.paddingMobile};
+  }
+`
+
+const CheckoutHeader = () => {
   const { cartId } = useSelector(selectGroupOrder)
+  const { check } = useSelector(selectCheckout)
+  const amount = check ? formatDollars(check.totals.total) : ''
 
-  return (
+  return isMobile ? (
     <Header
-      title={title}
-      maxWidth={maxWidth}
-      bgColor={bgColor}
-      borderColor={borderColor}
+      title={`Checkout ${amount}`}
       left={cartId ? <Reopen /> : <Menu />}
-      right={
-        <>
-          {isBrowser ? (
-            <>
-              <Account />
-              <CancelEdit />
-            </>
-          ) : (
-            <Account />
-          )}
-        </>
-      }
+      right={<Cart />}
     />
+  ) : (
+    <CheckoutHeaderView isMobile={isMobile}>
+      {cartId ? <Reopen /> : <Menu />}
+    </CheckoutHeaderView>
   )
 }
 
 CheckoutHeader.displayName = 'CheckoutHeader'
-CheckoutHeader.propTypes = {
-  maxWidth: propTypes.string,
-  title: propTypes.string,
-  bgColor: propTypes.string,
-  borderColor: propTypes.string,
-}
+CheckoutHeader.propTypes = {}
 
 export default CheckoutHeader

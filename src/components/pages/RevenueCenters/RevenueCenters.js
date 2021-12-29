@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
@@ -13,14 +13,12 @@ import {
 import { makeOrderTypeFromParam } from '@open-tender/js'
 import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectSettings,
   selectGeoLatLng,
   selectHeaderHeight,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Header,
@@ -59,13 +57,7 @@ const RevenueCenters = () => {
   const hasTypes = orderType && serviceType
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
-  const { windowRef } = useContext(AppContext)
   const missingAddress = serviceType === 'DELIVERY' && !address
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     let paramOrderType = null
@@ -89,14 +81,12 @@ const RevenueCenters = () => {
         if (element) {
           const position = element.offsetTop + offset
           scroll.scrollTo(position, {
-            container: windowRef.current,
             duration: 500,
             smooth: true,
             offset: 0,
           })
         }
       } else {
-        // windowRef.current.scrollTop = 0
         setActiveMarker(null)
         const newCenter = address
           ? { lat: address.lat, lng: address.lng }
@@ -104,7 +94,7 @@ const RevenueCenters = () => {
         setCenter(newCenter)
       }
     },
-    [address, defaultCenter, geoLatLng, windowRef, offset]
+    [address, defaultCenter, geoLatLng, offset]
   )
 
   return (
@@ -116,6 +106,7 @@ const RevenueCenters = () => {
         <Header
           maxWidth="76.8rem"
           borderColor={isMobile ? 'transparent' : 'primary'}
+          title={isMobile ? 'Choose Location' : null}
           style={{ boxShadow: 'none' }}
           left={
             orderType === 'CATERING' ? (
@@ -132,7 +123,7 @@ const RevenueCenters = () => {
               <Account />
             ) : (
               <>
-                <Account />
+                {/* <Account /> */}
                 <RevenueCenter />
                 <ServiceType />
                 <RequestedAt />

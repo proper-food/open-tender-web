@@ -16,27 +16,59 @@ export const MenuCategoryView = styled('div')`
 export const MenuCategoryHeader = styled('div')`
   margin: 0 0 1rem;
 
-  h2,
+  h2 {
+    margin: 0 0 0 -0.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
+    }
+  }
+
   h3 {
     margin: 0 0 0 -0.1rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
   }
 
   p {
     margin: 0.5rem 0 0;
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
 const MenuItems = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-flow: row wrap;
+  // justify-content: space-between;
+  // align-items: stretch;
+  display: grid;
+
+  justify-content: center;
+  align-items: stretch;
   padding: ${(props) => props.theme.layout.padding};
-  padding-top: 0;
-  padding-right: 0;
+  gap: ${(props) => props.theme.layout.padding};
+  grid-template-columns: repeat(5, 1fr);
+  @media (max-width: 1560px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-top: 0;
-    padding-right: 0;
+    gap: ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    gap: 0.6rem;
   }
 `
 
@@ -49,11 +81,13 @@ const MenuCategory = ({ category, isChild }) => {
           {category.description && <p>{category.description}</p>}
         </Container>
       </MenuCategoryHeader>
-      <MenuItems>
-        {category.items.map((item) => (
-          <MenuItem key={item.id} item={item} />
-        ))}
-      </MenuItems>
+      {category.items.length > 0 && (
+        <MenuItems>
+          {category.items.map((item) => (
+            <MenuItem key={item.id} item={item} />
+          ))}
+        </MenuItems>
+      )}
     </MenuCategoryView>
   )
 }

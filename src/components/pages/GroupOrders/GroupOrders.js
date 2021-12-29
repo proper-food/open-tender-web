@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -9,9 +9,7 @@ import {
   fetchCustomerGroupOrders,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Container,
   Content,
@@ -34,12 +32,6 @@ const GroupOrders = () => {
   const config = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

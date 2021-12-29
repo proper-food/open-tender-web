@@ -8,11 +8,15 @@ const makeGlobalStyles = (theme) => css`
     box-sizing: border-box;
     font-size: 62.5%;
     font-family: sans-serif;
+  }
+
+  html,
+  body,
+  #root {
     height: 100%;
   }
 
-  body {
-    height: 100%;
+  body.has-modal {
     overflow: hidden;
   }
 
@@ -248,18 +252,27 @@ const makeGlobalStyles = (theme) => css`
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    border-radius: ${theme.inputs.radius};
+    padding-bottom: ${theme.inputs.paddingBottom};
+    border: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
+    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    border-radius: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.radius}`};
     font-family: ${theme.inputs.family};
     font-size: ${theme.inputs.fontSize};
     font-weight: ${theme.inputs.weight};
     letter-spacing: ${theme.inputs.letterSpacing};
     text-transform: ${theme.inputs.textTransform};
-    font-smoothing: ${theme.inputs.fontSmoothing};
+    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
     color: ${theme.inputs.color};
     background-color: ${theme.inputs.bgColor};
     box-shadow: ${theme.inputs.boxShadow};
     transition: ${theme.links.transition};
+    @media (max-width: ${theme.breakpoints.tablet}) {
+      font-size: ${theme.inputs.fontSizeMobile};
+    }
 
     &::placeholder {
       color: ${theme.inputs.placeholderColor};
@@ -274,7 +287,7 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       color: ${theme.inputs.colorFocus};
       background-color: ${theme.inputs.bgColorFocus};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColorFocus};
+      border-color: ${theme.inputs.borderColorFocus};
     }
 
     &:disabled,
@@ -283,7 +296,7 @@ const makeGlobalStyles = (theme) => css`
       opacity: 0.5;
       color: ${theme.inputs.color};
       background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.borderColor};
+      border-color: ${theme.inputs.borderColor};
     }
   }
 
@@ -298,6 +311,12 @@ const makeGlobalStyles = (theme) => css`
   }
 
   textarea {
+    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    border-radius: ${theme.inputs.radius};
+    padding-top: ${theme.inputs.paddingVertical};
+    padding-bottom: ${theme.inputs.paddingVertical};
+    padding-left: ${theme.inputs.paddingVertical} !important;
+    padding-right: ${theme.inputs.paddingVertical};
     height: 5em;
   }
 
@@ -312,8 +331,11 @@ const makeGlobalStyles = (theme) => css`
   select:read-only {
     opacity: 1;
     cursor: pointer;
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     background-color: ${theme.inputs.bgColor};
+    border: ${theme.inputs.bottomBorderOnly
+      ? '0'
+      : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
+    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
   }
 
   @keyframes fade-in {
