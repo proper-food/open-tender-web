@@ -12,7 +12,8 @@ import { ButtonBoth } from '.'
 const ServiceType = ({ style = null, useButton = false }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { orderType, serviceType, isOutpost } = useSelector(selectOrder)
+  const { orderType, serviceType, isOutpost, prepType } =
+    useSelector(selectOrder)
   const outpostName = useSelector(selectOutpostName)
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
@@ -21,12 +22,15 @@ const ServiceType = ({ style = null, useButton = false }) => {
     isOutpost,
     outpostName
   )
+  const name = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
   const icon =
     iconMap[
       isCatering
         ? 'Calendar'
         : serviceType === 'DELIVERY'
         ? 'Truck'
+        : serviceType === 'WALKIN' && prepType !== 'TAKE_OUT'
+        ? 'Coffee'
         : 'ShoppingBag'
     ]
 
@@ -36,15 +40,24 @@ const ServiceType = ({ style = null, useButton = false }) => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
+  const handlePrepType = () => {
+    dispatch(openModal({ type: 'prepType' }))
+  }
+
   const handleCatering = () => {
     history.push(`/catering`)
   }
 
-  const change = isCatering ? handleCatering : handleServiceType
+  const change =
+    prepType !== null
+      ? handlePrepType
+      : isCatering
+      ? handleCatering
+      : handleServiceType
 
   return (
     <ButtonBoth
-      text={serviceTypeName}
+      text={name}
       icon={icon}
       onClick={change}
       style={style}

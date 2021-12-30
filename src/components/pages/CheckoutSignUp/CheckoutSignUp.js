@@ -19,16 +19,8 @@ import {
   SignUpGuestForm,
 } from '@open-tender/components'
 
-import { selectBrand } from '../../../slices'
-import {
-  Content,
-  // Header,
-  HeaderCheckout,
-  Main,
-  PageContainer,
-  PageTitle,
-} from '../..'
-// import { Back } from '../../buttons'
+import { selectBrand, selectContent } from '../../../slices'
+import { Content, HeaderCheckout, Main, PageContainer, PageTitle } from '../..'
 
 const defaultText = {
   title: 'Sign up or checkout as a guest',
@@ -47,6 +39,8 @@ const CheckoutSignUp = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
+  const { checkoutFlow } = useSelector(selectContent)
+  const config = checkoutFlow ? checkoutFlow.sections['signUp'] : defaultText
   const { form } = useSelector(selectCheckout)
   const { email } = useSelector(selectGuest)
   const { loading, error } = useSelector(selectSignUp)
@@ -84,11 +78,10 @@ const CheckoutSignUp = () => {
         <title>Checkout Sign Up | {siteTitle}</title>
       </Helmet>
       <Content>
-        {/* <Header left={<Back text="Change Email" onClick={changeEmail} />} /> */}
         <HeaderCheckout />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...defaultText}>
+            <PageTitle {...config}>
               <CheckoutSignUpEmail>
                 <p>
                   <ButtonLink onClick={changeEmail}>

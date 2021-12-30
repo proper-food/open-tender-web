@@ -12,6 +12,7 @@ import {
 import { checkGuestData } from '@open-tender/js'
 import { FormWrapper, GuestForm } from '@open-tender/components'
 
+import { selectContent } from '../../../slices'
 import { PageTitle } from '../..'
 
 const defaultText = {
@@ -22,6 +23,8 @@ const defaultText = {
 const CheckoutGuestForm = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { checkoutFlow } = useSelector(selectContent)
+  const config = checkoutFlow ? checkoutFlow.sections['email'] : defaultText
   const { auth } = useSelector(selectCustomer)
   const { form } = useSelector(selectCheckout)
   const { email, loading, errors } = useSelector(selectGuest)
@@ -54,7 +57,7 @@ const CheckoutGuestForm = () => {
 
   return (
     <>
-      <PageTitle {...defaultText} />
+      <PageTitle {...config} />
       <FormWrapper>
         <GuestForm
           email={email}

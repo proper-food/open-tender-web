@@ -15,7 +15,7 @@ import { openModal } from '../../../slices'
 const CheckoutPickup = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { orderType, requestedAt, revenueCenter, serviceType } =
+  const { orderType, requestedAt, revenueCenter, serviceType, prepType } =
     useSelector(selectOrder)
   const { name, address } = revenueCenter
   // const { street, city, state, postal_code } = address
@@ -26,7 +26,8 @@ const CheckoutPickup = () => {
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
   const isAsap = requestedTime === 'ASAP' && serviceType === 'PICKUP'
   const waitTime = isAsap ? firstTime.wait_minutes || null : null
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  let serviceTypeName = serviceTypeNamesMap[serviceType]
+  serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
 
   const changeLocation = () => {
     history.push('/locations')
@@ -45,7 +46,7 @@ const CheckoutPickup = () => {
   }
 
   return (
-    <CheckoutSection title={`${serviceTypeName} Location & Time`}>
+    <CheckoutSection title="Location & Time">
       <Heading as="p">{name}</Heading>
       <p>{address.street}</p>
       {/* <p>{addressLine2}</p> */}
@@ -56,7 +57,9 @@ const CheckoutPickup = () => {
       <CheckoutSectionFootnote>
         <p>
           <ButtonLink onClick={changeLocation}>Change location</ButtonLink> or{' '}
-          <ButtonLink onClick={adjustTime}>adjust pick-up time</ButtonLink>
+          <ButtonLink onClick={adjustTime}>
+            adjust {serviceTypeName.toLowerCase()} time
+          </ButtonLink>
         </p>
       </CheckoutSectionFootnote>
     </CheckoutSection>

@@ -125,7 +125,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
   const isLoading = loading === 'pending'
   const isMerch = order_type === 'MERCH'
   const errMsg = handleOrderError(error)
-  const orderTypeName = makeOrderTypeName(order_type, service_type)
+  let orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
@@ -136,8 +136,13 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     serving_utensils,
     person_count,
     notes,
+    notes_internal,
     tax_exempt_id,
   } = details || {}
+  orderTypeName =
+    notes_internal && notes_internal.includes('TAKE OUT')
+      ? 'Take Out'
+      : orderTypeName
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
   const orderTitle = revenue_center

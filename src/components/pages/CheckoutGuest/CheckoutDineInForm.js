@@ -11,8 +11,14 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, DineInForm, FormWrapper } from '@open-tender/components'
 
-import { openModal } from '../../../slices'
+import { openModal, selectContent } from '../../../slices'
 import { PageTitle } from '../..'
+
+const defaultText = {
+  title: 'Please add a name or create an account',
+  subtitle:
+    'Creating an account allows you to apply promo codes and to start earning rewards. It takes just a few seconds!',
+}
 
 const CheckoutDineInFormView = styled.div`
   & > div:first-of-type h1 {
@@ -30,6 +36,8 @@ const CheckoutDineInFormView = styled.div`
 const CheckoutDineInForm = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { checkoutFlow } = useSelector(selectContent)
+  const config = checkoutFlow ? checkoutFlow.sections['name'] : defaultText
   const { auth } = useSelector(selectCustomer)
   const { form } = useSelector(selectCheckout)
   const { first_name, last_name } = form ? form.customer : {}
@@ -62,10 +70,11 @@ const CheckoutDineInForm = () => {
 
   return (
     <CheckoutDineInFormView>
-      <PageTitle title="Please add a name for your order">
+      <PageTitle title={config.title} style={{ margin: '0 auto' }}>
+        <p>{config.subtitle}</p>
         <p>
-          Have an account?{' '}
-          <ButtonLink onClick={login}>Sign in here.</ButtonLink>
+          <ButtonLink onClick={login}>Create an account</ButtonLink> or{' '}
+          <ButtonLink onClick={login}>sign into an existing one</ButtonLink>
         </p>
       </PageTitle>
       <FormWrapper>

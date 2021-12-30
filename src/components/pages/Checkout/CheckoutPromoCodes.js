@@ -8,6 +8,7 @@ import { ButtonStyled, FormError, Input } from '@open-tender/components'
 import { selectContent, selectSettings } from '../../../slices'
 import CheckoutSection from './CheckoutSection'
 import CheckoutButton from './CheckoutButton'
+import CheckoutPromoCodesGuest from './CheckoutPromoCodesGuest'
 
 const CheckoutPromoCodesView = styled.div`
   margin: 1.5rem 0 0;
@@ -106,10 +107,10 @@ const CheckoutPromoCodes = () => {
   //   }
   // }
 
-  if (!email) return null
+  if (!email) return <CheckoutPromoCodesGuest />
 
   return (
-    <CheckoutSection title={applied.length ? config.promoCodes.title : ''}>
+    <CheckoutSection title={config.promoCodes.title}>
       <CheckoutPromoCodesView>
         {applied.map((appliedCode) => {
           const discount = check.discounts.find((i) => i.name === appliedCode)
@@ -136,7 +137,7 @@ const CheckoutPromoCodes = () => {
                   label={
                     applied.length
                       ? 'Enter another promo code'
-                      : 'Apply a promo code'
+                      : 'Enter promo code'
                   }
                   value={promoCode}
                   onChange={handleChange}

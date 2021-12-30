@@ -10,7 +10,7 @@ import {
 import { ButtonLink, FormWrapper, SignInForm } from '@open-tender/components'
 import Helmet from 'react-helmet'
 
-import { selectBrand } from '../../../slices'
+import { selectBrand, selectContent } from '../../../slices'
 import { Content, Header, Main, PageContainer, PageTitle } from '../..'
 import { Back } from '../../buttons'
 
@@ -24,6 +24,8 @@ const CheckoutSignIn = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
+  const { checkoutFlow } = useSelector(selectContent)
+  const config = checkoutFlow ? checkoutFlow.sections['signIn'] : defaultText
   const { email } = useSelector(selectGuest)
   const { auth, loading, error } = useSelector(selectCustomer)
   const login = useCallback(
@@ -51,7 +53,7 @@ const CheckoutSignIn = () => {
         <Header left={<Back text="Change Email" onClick={changeEmail} />} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...defaultText}>
+            <PageTitle {...config}>
               <div style={{ margin: '1rem 0 2rem' }}>
                 <p>
                   <ButtonLink onClick={changeEmail}>

@@ -18,9 +18,10 @@ const ConfirmationProfile = () => {
   const { profile, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const errMsg = error ? error.message || null : null
-  const update = useCallback((data) => dispatch(updateCustomer(data)), [
-    dispatch,
-  ])
+  const update = useCallback(
+    (data) => dispatch(updateCustomer(data)),
+    [dispatch]
+  )
 
   return isLoading ? (
     <Loading text="Checking your account..." />
@@ -29,7 +30,7 @@ const ConfirmationProfile = () => {
       {errMsg}
     </Message>
   ) : (
-    <FormWrapper>
+    <FormWrapper style={{ textAlign: 'left' }}>
       <FormHeader>
         <p>
           <Heading>Update your communication preferences</Heading>

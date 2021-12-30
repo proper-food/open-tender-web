@@ -27,6 +27,7 @@ import {
   OrderRating,
   OrderType,
   Points,
+  PrepType,
   Profile,
   QRCode,
   RequestedAt,
@@ -75,6 +76,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <QRCode {...args} />
     case 'points':
       return <Points {...args} />
+    case 'prepType':
+      return <PrepType {...args} />
     case 'profile':
       return <Profile windowRef={windowRef} {...args} />
     case 'rating':

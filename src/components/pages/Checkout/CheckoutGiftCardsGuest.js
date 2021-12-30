@@ -6,9 +6,9 @@ import { ButtonLink, Text } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
 
-const PaymentGiftCardsGuestView = styled.div``
+const CheckoutGiftCardsGuestView = styled.div``
 
-const PaymentGiftCardsGuest = () => {
+const CheckoutGiftCardsGuest = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { form } = useSelector(selectCheckout)
@@ -21,7 +21,7 @@ const PaymentGiftCardsGuest = () => {
   }
 
   return (
-    <PaymentGiftCardsGuestView>
+    <CheckoutGiftCardsGuestView>
       <Text size="small">
         Have a gift card number?{' '}
         <ButtonLink
@@ -33,11 +33,11 @@ const PaymentGiftCardsGuest = () => {
           Create an account to apply it.
         </ButtonLink>
       </Text>
-    </PaymentGiftCardsGuestView>
+    </CheckoutGiftCardsGuestView>
   )
 }
 
-PaymentGiftCardsGuest.displayName = 'PaymentGiftCardsGuest'
-PaymentGiftCardsGuest.propTypes = {}
+CheckoutGiftCardsGuest.displayName = 'CheckoutGiftCardsGuest'
+CheckoutGiftCardsGuest.propTypes = {}
 
-export default PaymentGiftCardsGuest
+export default CheckoutGiftCardsGuest
