@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, updateForm, validateOrder } from '@open-tender/redux'
 import { formatDollars, formatQuantity } from '@open-tender/js'
-import { ButtonStyled, Input } from '@open-tender/components'
+import { ButtonStyled, Checkmark, Input } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
 import CheckoutTipButton from './CheckoutTipButton'
@@ -27,9 +27,19 @@ const CheckoutTipCustom = styled.div`
 `
 
 const CheckoutTipCustomInput = styled.div`
+  position: relative;
   flex-grow: 1;
   flex-shrink: 1;
   padding: 0 2rem 0 0;
+`
+const CheckoutTipCustomCheckmark = styled.div`
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const CheckoutTipCustomButton = styled.div`
@@ -52,6 +62,7 @@ const CheckoutTip = () => {
   const initialTip =
     form.tip && !tipOptions.find((i) => i.amount === form.tip) ? form.tip : null
   const [customTip, setCustomTip] = useState(initialTip)
+  const customTipApplied = customTip && customTip === check.totals.tip
 
   useEffect(() => {
     if (has_tip && !form.tip && loading !== 'pending') {
@@ -105,12 +116,18 @@ const CheckoutTip = () => {
               type="number"
               value={customTip || ''}
               onChange={(evt) => handleCustomTip(evt.target.value)}
+              style={{ margin: 0 }}
             />
+            {customTipApplied && (
+              <CheckoutTipCustomCheckmark>
+                <Checkmark />
+              </CheckoutTipCustomCheckmark>
+            )}
           </CheckoutTipCustomInput>
           <CheckoutTipCustomButton>
             <ButtonStyled
               onClick={applyCustomTip}
-              disabled={!customTip}
+              disabled={!customTip || customTipApplied}
               size="small"
               color="secondary"
             >

@@ -13,7 +13,13 @@ import CheckoutButton from './CheckoutButton'
 const CheckoutLevelUpView = styled.div``
 
 const CheckoutLevelUpContent = styled.div`
+  label: CheckoutLevelUpContent;
+
   margin: 0 0 2rem;
+
+  p {
+    margin: 0.5rem 0 0;
+  }
 `
 
 const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
@@ -82,18 +88,20 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
           </Text>
         </CheckoutLevelUpContent>
       ) : (
-        <>
+        <CheckoutLevelUpContent>
           <Text as="p" color="error">
             Account Required
           </Text>
           <Text as="p" size="small">
             In order to pay with LevelUp, you must first create an account and
             then connect your LevelUp account to your account here.{' '}
+          </Text>
+          <Text as="p" size="small">
             <ButtonLink onClick={signUp} label="Sign up for an account">
               Click here to sign up for an account.
             </ButtonLink>
           </Text>
-        </>
+        </CheckoutLevelUpContent>
       )}
     </CheckoutLevelUpView>
   )
