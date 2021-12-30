@@ -53,7 +53,11 @@ const CheckoutDineInForm = () => {
     [dispatch, history]
   )
 
-  const login = () => {
+  const signUp = () => {
+    dispatch(openModal({ type: 'signUp' }))
+  }
+
+  const signIn = () => {
     dispatch(openModal({ type: 'login' }))
   }
 
@@ -73,8 +77,8 @@ const CheckoutDineInForm = () => {
       <PageTitle title={config.title} style={{ margin: '0 auto' }}>
         <p>{config.subtitle}</p>
         <p>
-          <ButtonLink onClick={login}>Create an account</ButtonLink> or{' '}
-          <ButtonLink onClick={login}>sign into an existing one</ButtonLink>
+          <ButtonLink onClick={signUp}>Create an account</ButtonLink> or{' '}
+          <ButtonLink onClick={signIn}>sign into an existing one</ButtonLink>
         </p>
       </PageTitle>
       <FormWrapper>
