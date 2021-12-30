@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Text } from '@open-tender/components'
-import { isMobile } from 'react-device-detect'
+import { isMobileOnly } from 'react-device-detect'
 
 import iconMap from '../iconMap'
 
@@ -24,7 +24,7 @@ const NavButtonView = styled('button')`
   border-radius: ${(props) => props.theme.border.radiusSmall};
   background-color: ${(props) => props.theme.bgColors.primary};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     min-height: 4rem;
     padding: 2rem 0.5rem 2rem 2rem;
     border-width: 0;
@@ -44,7 +44,7 @@ const NavButtonView = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       border-width: 0;
     }
   }
@@ -67,7 +67,7 @@ const NavButtonTitle = styled('span')`
   flex-direction: column;
   align-items: flex-start;
   padding: 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 2.5rem;
   }
 
@@ -93,7 +93,7 @@ const NavButtonArrow = styled('span')`
   button:hover & {
     transform: translateX(1rem);
 
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: translateX(0);
     }
   }
@@ -110,8 +110,8 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
     <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
       <NavButtonTitle>
-        <Heading size={isMobile ? 'medium' : 'big'}>{title}</Heading>
-        <Text size={isMobile ? 'xSmall' : 'small'} color="tertiary">
+        <Heading size={isMobileOnly ? 'medium' : 'big'}>{title}</Heading>
+        <Text size={isMobileOnly ? 'xSmall' : 'small'} color="tertiary">
           {subtitle}
         </Text>
       </NavButtonTitle>

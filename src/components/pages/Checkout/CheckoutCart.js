@@ -89,7 +89,7 @@ const CheckoutCart = () => {
   const { cart } = useSelector(selectOrder)
   const [cartLength, setCartLength] = useState(cart.length)
   const { isOpen } = useSelector(selectSidebar)
-  const { check, form, loading } = useSelector(selectCheckout)
+  const { check, form, loading, submitting } = useSelector(selectCheckout)
   const { points } = check?.config || {}
   const { cart: items = [] } = check || {}
   const itemsPoints = items.length
@@ -200,7 +200,7 @@ const CheckoutCart = () => {
         <CheckSummary
           check={check}
           tenders={form.tenders}
-          updating={loading === 'pending'}
+          updating={loading === 'pending' && !submitting}
           loader={<Loading />}
           showTenders={!isMobile}
         />

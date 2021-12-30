@@ -29,9 +29,11 @@ const OrderTypeView = styled('div')`
 
 const OrderTypeTitle = styled('div')`
   margin: 0 0 ${(props) => props.theme.layout.margin};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    text-align: center;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 0 ${(props) => props.theme.layout.marginMobile};
-    text-align: center;
   }
 
   h1 {

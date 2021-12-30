@@ -2,14 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isMobileOnly } from 'react-device-detect'
 import {
   selectOrder,
   setRevenueCenter,
   selectAutoSelect,
   resetOrderType,
   fetchLocations,
-  // fetchRevenueCenters,
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'
@@ -17,13 +15,7 @@ import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
 import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
-import {
-  Container,
-  Loading,
-  PageContent,
-  PageTitle,
-  RevenueCenter,
-} from '../..'
+import { Container, Loading, PageContent, RevenueCenter } from '../..'
 import styled from '@emotion/styled'
 import iconMap from '../../iconMap'
 
@@ -46,6 +38,32 @@ const RevenueCentersSelectView = styled('div')`
       ${(props) => (props.showMap ? '25rem' : '0')};
     transition: all 0.25s ease;
     transform: translateY(${(props) => (props.showMap ? '25rem' : '0')});
+  }
+`
+
+const RevenueCentersSelectTitle = styled('div')`
+  margin: 0 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0 3rem;
+    text-align: center;
+  }
+
+  h2 {
+    line-height: 1;
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
+    }
+  }
+
+  & > p {
+    margin: 1rem 0 0;
+    line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 1rem 0 0;
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -81,7 +99,17 @@ const RevenueCentersSelectList = styled('ul')`
   & > li {
     margin: ${(props) => props.theme.layout.padding} 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+      padding: 0 0 2.5rem;
+      border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
+      margin: 0 0 2rem;
+    }
+
+    &:last-of-type {
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        padding: 0;
+        border: 0;
+        margin: 0;
+      }
     }
   }
 `
@@ -175,7 +203,7 @@ const RevenueCentersSelect = () => {
           </PageContent>
         ) : (
           <>
-            <PageTitle>
+            <RevenueCentersSelectTitle>
               <RevenueCentersSelectShowMap>
                 <ButtonLink onClick={() => setShowMap(!showMap)}>
                   <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
@@ -183,7 +211,7 @@ const RevenueCentersSelect = () => {
               </RevenueCentersSelectShowMap>
               <h2>{renamedTitle}</h2>
               <p>{renamedError || renamedMsg}</p>
-            </PageTitle>
+            </RevenueCentersSelectTitle>
             {showRevenueCenters ? (
               <RevenueCentersSelectList>
                 {displayedRevenueCenters.map((revenueCenter) => (
@@ -193,7 +221,7 @@ const RevenueCentersSelect = () => {
                   >
                     <RevenueCenter
                       revenueCenter={revenueCenter}
-                      showImage={!isMobileOnly}
+                      showImage={true}
                     />
                   </li>
                 ))}

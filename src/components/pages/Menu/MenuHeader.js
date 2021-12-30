@@ -71,10 +71,12 @@ const MenuHeaderName = styled('span')`
 const MenuHeaderTitle = ({
   serviceType,
   revenueCenter,
+  prepType,
   showMenu,
   setShowMenu,
 }) => {
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  let serviceTypeName = serviceTypeNamesMap[serviceType]
+  serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
   const orderTypeName =
     revenueCenter && revenueCenter.revenue_center_type === 'CATERING'
       ? ' Catering '
@@ -100,6 +102,15 @@ const MenuHeaderTitle = ({
       </MenuHeaderTitleRevenueCenter>
     </>
   ) : null
+}
+
+MenuHeaderTitle.displayName = 'MenuHeaderTitle'
+MenuHeaderTitle.propTypes = {
+  serviceType: propTypes.string,
+  revenueCenter: propTypes.object,
+  prepType: propTypes.string,
+  showMenu: propTypes.bool,
+  setShowMenu: propTypes.func,
 }
 
 const MenuHeader = ({

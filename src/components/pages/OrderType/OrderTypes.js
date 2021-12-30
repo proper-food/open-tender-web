@@ -38,9 +38,11 @@ const OrderTypesFooter = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.5s forwards;
   margin: ${(props) => props.theme.layout.margin} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    text-align: center;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
-    text-align: center;
   }
 
   & > p {

@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { isBrowser } from 'react-device-detect'
+import { isMobileOnly } from 'react-device-detect'
 import styled from '@emotion/styled'
 
 import { BackgroundImage } from '.'
@@ -16,7 +16,7 @@ const BackgroundView = styled('div')`
 `
 
 const Background = ({ imageUrl }) => {
-  if (!isBrowser) return null
+  if (isMobileOnly) return null
 
   return (
     <BackgroundView>

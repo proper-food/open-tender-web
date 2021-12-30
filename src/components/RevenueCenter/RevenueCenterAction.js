@@ -17,12 +17,18 @@ const RevenueCenterActionIcon = styled('div')`
   height: 1.5rem;
   line-height: 0;
   color: ${(props) => props.theme.fonts.body.color};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 `
 
 const RevenueCenterActionArrow = styled(RevenueCenterActionIcon)`
   transition: all 0.15s ease;
   line-height: 0;
   transform: translateX(0);
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 
   a:hover &,
   button:hover & {
@@ -33,18 +39,29 @@ const RevenueCenterActionArrow = styled(RevenueCenterActionIcon)`
 const RevenueCenterActionArrowText = styled('div')`
   width: 100%;
   padding: 0 1rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+  }
 
   p {
     color: ${(props) => props.theme.fonts.body.color};
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
-const RevenueCenterAction = ({ icon, text, arrow = 'ArrowRight' }) => {
+const RevenueCenterAction = ({
+  icon,
+  text,
+  arrow = 'ArrowRight',
+  style = null,
+}) => {
   const iconArrow = arrow === null ? ' ' : iconMap[arrow]
   return (
-    <RevenueCenterActionView>
+    <RevenueCenterActionView style={style}>
       <RevenueCenterActionIcon>{icon}</RevenueCenterActionIcon>
       <RevenueCenterActionArrowText>
         <p>{text}</p>
@@ -60,6 +77,7 @@ RevenueCenterAction.propTypes = {
   iconClass: propTypes.string,
   text: propTypes.string,
   arrow: propTypes.string,
+  style: propTypes.object,
 }
 
 export default RevenueCenterAction

@@ -4,19 +4,25 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
-import { BgImage, Box } from '@open-tender/components'
+import { BgImage, Box, Heading } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
 import { selectDisplaySettings } from '../../slices'
+import { isMobileOnly } from 'react-device-detect'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
   overflow: hidden;
   width: 100%;
-  background-color: ${(props) =>
-    props.theme.bgColors[props.isMenu ? 'primary' : 'secondary']};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    box-shadow: none;
+  }
 `
 
 const RevenueCenterImage = styled(BgImage)`
@@ -42,7 +48,7 @@ const RevenueCenterContent = styled('div')`
   > div {
     padding: 1.5rem 2rem 2rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding: 1.5rem 1.5rem;
+      padding: 0;
     }
   }
 `
@@ -54,7 +60,9 @@ const RevenueCenterHeader = styled('div')`
   flex-wrap: wrap;
   margin-bottom: 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-bottom: 1rem;
+    margin: 0 0 0rem -0.1rem;
+    // height: 2rem;
+    // align-items: flex-start;
   }
 
   & > * {
@@ -63,12 +71,32 @@ const RevenueCenterHeader = styled('div')`
 
   h2 {
     font-size: ${(props) => props.theme.fonts.sizes.h4};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+    }
   }
 
   p {
     padding-top: 0.4rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
+`
+
+const RevenueCenterFlex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const RevenueCenterFlexContent = styled.div`
+  flex: 1 1 auto;
+`
+
+const RevenueCenterImageMobile = styled(BgImage)`
+  flex: 0 0 9rem;
+  width: 9rem;
+  height: 6rem;
+  border-radius: ${(props) => props.theme.border.radiusSmall};
 `
 
 const RevenueCenterActions = styled('div')`
@@ -143,7 +171,6 @@ const RevenueCenter = ({
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
-
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
       ? revenueCenter.distance
@@ -151,42 +178,61 @@ const RevenueCenter = ({
 
   return (
     <RevenueCenterView style={style} isMenu={isMenu}>
-      {showImage && (
+      {showImage && !isMobileOnly && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
       <RevenueCenterContent showImage={showImage}>
         <div>
-          <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
-            {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
-          </RevenueCenterHeader>
-          <RevenueCenterActions>
-            <a
-              href={revenueCenter.directions_url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <RevenueCenterAction
-                icon={iconMap.MapPin}
-                text={address.street}
-              />
-            </a>
-            {storePhone && phoneUrl && (
-              <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
-                <RevenueCenterAction
-                  icon={iconMap.Phone}
-                  text={address.phone}
-                />
-              </a>
+          <RevenueCenterFlex>
+            <RevenueCenterFlexContent>
+              <RevenueCenterHeader>
+                <h2>{revenueCenter.name}</h2>
+                {/* {distance !== null && <p>{distance.toFixed(2)} miles away</p>} */}
+              </RevenueCenterHeader>
+
+              <RevenueCenterActions>
+                <a
+                  href={revenueCenter.directions_url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <RevenueCenterAction
+                    icon={iconMap.MapPin}
+                    text={
+                      <span>
+                        {address.street}{' '}
+                        {distance !== null && (
+                          <Heading>
+                            &bull; {distance.toFixed(2)} miles away
+                          </Heading>
+                        )}
+                      </span>
+                    }
+                  />
+                </a>
+                {storePhone && phoneUrl && !isMobileOnly && (
+                  <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
+                    <RevenueCenterAction
+                      icon={iconMap.Phone}
+                      text={address.phone}
+                    />
+                  </a>
+                )}
+                {hoursDesc && (
+                  <RevenueCenterAction
+                    icon={hoursDescIcon}
+                    text={hoursDesc}
+                    arrow={null}
+                  />
+                )}
+              </RevenueCenterActions>
+            </RevenueCenterFlexContent>
+            {showImage && isMobileOnly && (
+              <RevenueCenterImageMobile style={bgStyle}>
+                &nbsp;
+              </RevenueCenterImageMobile>
             )}
-            {hoursDesc && (
-              <RevenueCenterAction
-                icon={hoursDescIcon}
-                text={hoursDesc}
-                arrow={null}
-              />
-            )}
-          </RevenueCenterActions>
+          </RevenueCenterFlex>
           {!cartGuest && (
             <RevenueCenterOrder
               revenueCenter={revenueCenter}

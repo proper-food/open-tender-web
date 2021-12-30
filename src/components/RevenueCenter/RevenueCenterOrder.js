@@ -2,13 +2,17 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isMobileOnly } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
 import {
   selectOrder,
   selectGroupOrder,
   selectAutoSelect,
-  // setRevenueCenter,
+  setAddress,
+  setOrderServiceType,
+  setRequestedAt,
+  setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled, Message, Text } from '@open-tender/components'
 
@@ -32,6 +36,16 @@ const RevenueCenterOrderView = styled('div')`
 
 const RevenueCenterOrderMessage = styled('div')`
   line-height: ${(props) => props.theme.lineHeight};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  p span {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
+  }
 `
 
 const RevenueCenterOrderMessageMessage = styled('p')`
@@ -41,6 +55,7 @@ const RevenueCenterOrderMessageMessage = styled('p')`
     border-radius: 0.3rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: inline-block;
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
 `
@@ -48,7 +63,11 @@ const RevenueCenterOrderMessageMessage = styled('p')`
 const RevenueCenterOrderButtons = styled('div')`
   margin-top: 1.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  button {
+    margin-bottom: 0;
   }
 `
 
@@ -82,20 +101,36 @@ const icons = {
   DELIVERY: iconMap.Truck,
 }
 
-const serviceTypeNames = {
-  WALKIN: 'Here',
-  PICKUP: 'Here',
-  DELIVERY: 'From Here',
-}
-
 const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const dispatch = useDispatch()
-  const { first_times, order_times } = revenueCenter
+  const history = useHistory()
+  const {
+    slug,
+    revenue_center_type: rcType,
+    is_outpost: isOutpost,
+    address,
+    first_times,
+    order_times,
+  } = revenueCenter
+  const menuSlug = `/menu/${slug}`
   const firstTimes = first_times ? first_times[serviceType] : null
   const orderTimes = order_times ? order_times[serviceType] : null
+
   if (!firstTimes && !orderTimes) return null
 
-  const choose = () => {
+  const hasAsap = firstTimes && firstTimes.has_asap
+  const isCatering = rcType === 'CATERING'
+
+  const orderAsap = () => {
+    if (!hasAsap) return
+    dispatch(setRequestedAt('asap'))
+    dispatch(setRevenueCenter(revenueCenter))
+    dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
+    if (isOutpost) dispatch(setAddress(address))
+    history.push(menuSlug)
+  }
+
+  const orderLater = () => {
     const args = {
       focusFirst: true,
       skipClose: true,
@@ -108,8 +143,23 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
 
   return (
     <RevenueCenterOrderButtons>
-      <ButtonStyled icon={icons[serviceType]} onClick={choose}>
-        Order {serviceTypeNames[serviceType]}
+      {!isCatering && (
+        <ButtonStyled
+          icon={icons[serviceType]}
+          onClick={orderAsap}
+          disabled={!hasAsap}
+          size={isMobileOnly ? 'small' : 'default'}
+        >
+          Order ASAP
+        </ButtonStyled>
+      )}
+      <ButtonStyled
+        icon={isCatering ? icons[serviceType] : iconMap.Clock}
+        onClick={orderLater}
+        size={isMobileOnly ? 'small' : 'default'}
+        color={isCatering ? 'primary' : 'secondary'}
+      >
+        {isCatering ? 'Order from Here' : 'Order for Later'}
       </ButtonStyled>
     </RevenueCenterOrderButtons>
   )

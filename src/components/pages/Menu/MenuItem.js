@@ -229,7 +229,7 @@ const MenuItemName = styled('p')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: 600px) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
@@ -239,7 +239,7 @@ const MenuItemDescription = styled('p')`
   line-height: ${(props) => props.theme.lineHeight};
   color: ${(props) => props.theme.fonts.body.color};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: 600px) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -250,14 +250,14 @@ const MenuItemDescription = styled('p')`
 const MenuItemDetails = styled('p')`
   margin: 0.5rem 0 0;
   line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: 600px) {
     margin: 0.3rem 0 0;
   }
 
   & > span {
     display: inline-block;
     margin: 0 1.5rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: 600px) {
       margin: 0 0.75rem 0 0;
     }
 
@@ -270,7 +270,7 @@ const MenuItemDetails = styled('p')`
 const MenuItemAllergens = styled('span')`
   color: ${(props) => props.theme.colors.alert};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: 600px) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -282,7 +282,7 @@ const MenuItemTags = styled(MenuItemAllergens)`
 const MenuItemPriceCals = styled('div')`
   flex: 0 0 auto;
   margin: 0.7rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: 600px) {
     margin: 0.3rem 0 0;
   }
 
@@ -296,10 +296,10 @@ const MenuItemPrice = styled('span')`
   font-weight: ${(props) => props.theme.boldWeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    font-weight: ${(props) => props.theme.fonts.body.weight};
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: 600px) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    font-weight: ${(props) => props.theme.fonts.body.weight};
   }
 `
 
