@@ -12,6 +12,7 @@ import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 import CheckoutGuestCreditCard from './CheckoutGuestCreditCard'
 import CheckoutPay from './CheckoutPay'
 import CheckoutCreditCardAdd from './CheckoutCreditCardAdd'
+import CheckoutLevelUp from './CheckoutLevelUp'
 
 const CheckoutTendersView = styled.div`
   margin: 1.5rem 0 0;
@@ -100,6 +101,7 @@ const CheckoutTenders = () => {
           </CheckoutTendersErrors>
         )}
         <CheckoutPay />
+        <CheckoutLevelUp apply={apply} remove={remove} isPaid={isPaid} />
         {auth ? (
           <>
             <CheckoutCreditCards
