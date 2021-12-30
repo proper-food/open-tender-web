@@ -80,6 +80,7 @@ const PaymentGiftCard = () => {
             onChange={handleChange}
             type="number"
             pattern="[0-9]*"
+            style={{ margin: 0 }}
           />
         </PaymentGiftCardInput>
         <PaymentGiftCardButton>

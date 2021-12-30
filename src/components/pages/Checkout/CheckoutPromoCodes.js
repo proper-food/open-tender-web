@@ -140,6 +140,7 @@ const CheckoutPromoCodes = () => {
                   }
                   value={promoCode}
                   onChange={handleChange}
+                  style={{ margin: 0 }}
                 />
               </CheckoutPromoCodeInput>
               <CheckoutPromoCodeButton>

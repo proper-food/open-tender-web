@@ -5,7 +5,7 @@ import { useTheme } from '@emotion/react'
 import { Grid } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, validateOrder } from '@open-tender/redux'
-import { ButtonLink, Text } from '@open-tender/components'
+import { ButtonLink, FormError, Text } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
 import CheckoutButton from './CheckoutButton'
@@ -20,7 +20,7 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const theme = useTheme()
-  const { check, form } = useSelector(selectCheckout)
+  const { check, form, errors } = useSelector(selectCheckout)
   const { tender_types } = check.config
 
   if (!tender_types.includes('LEVELUP')) return null
@@ -31,8 +31,10 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
   const isApplied =
     form.tenders.filter((i) => i.tender_type === 'LEVELUP').length > 0
   const onPress = isApplied ? () => remove() : () => apply(tender)
-  const disabled = isApplied || isPaid
+  const disabled = isPaid && !isApplied
   const { email } = form.customer
+  const errMsg =
+    errors && errors.levelup ? Object.values(errors.levelup)[0] : null
 
   const connectLevelUp = () => {
     const validate = () => dispatch(validateOrder())
@@ -47,6 +49,7 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
 
   return (
     <CheckoutLevelUpView>
+      <FormError errMsg={errMsg} />
       {levelup.connected ? (
         <CheckoutButton
           icon={<Grid color={theme.colors.primary} width={18} height={18} />}
