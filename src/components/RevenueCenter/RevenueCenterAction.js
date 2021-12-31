@@ -74,8 +74,7 @@ const RevenueCenterAction = ({
 RevenueCenterAction.displayName = 'RevenueCenterAction'
 RevenueCenterAction.propTypes = {
   icon: propTypes.element,
-  iconClass: propTypes.string,
-  text: propTypes.string,
+  text: propTypes.oneOfType([propTypes.string, propTypes.element]),
   arrow: propTypes.string,
   style: propTypes.object,
 }

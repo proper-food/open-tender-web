@@ -93,10 +93,17 @@ const RevenueCenterFlexContent = styled.div`
 `
 
 const RevenueCenterImageMobile = styled(BgImage)`
-  flex: 0 0 9rem;
-  width: 9rem;
-  height: 6rem;
   border-radius: ${(props) => props.theme.border.radiusSmall};
+  flex: 0 0 15rem;
+  width: 15rem;
+  height: 10rem;
+  margin: 0 0 0 1rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 9rem;
+    width: 9rem;
+    height: 6rem;
+    margin: 0;
+  }
 `
 
 const RevenueCenterActions = styled('div')`
@@ -114,6 +121,9 @@ const RevenueCenterDesc = styled('div')`
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -163,12 +173,13 @@ const RevenueCenter = ({
 }) => {
   const { cartGuest } = useSelector(selectGroupOrder)
   const { storePhone = true } = useSelector(selectDisplaySettings)
-  const { address, images, hours, is_outpost } = revenueCenter
+  const { address, images, hours, is_outpost, description } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const bgImage = smallImg.url || largeImg.url
   const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
+  const desc = description ? stripTags(description) : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
   const distance =
@@ -181,7 +192,7 @@ const RevenueCenter = ({
       {showImage && !isMobileOnly && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
-      <RevenueCenterContent showImage={showImage}>
+      <RevenueCenterContent showImage={showImage && !isMobileOnly}>
         <div>
           <RevenueCenterFlex>
             <RevenueCenterFlexContent>
@@ -233,6 +244,11 @@ const RevenueCenter = ({
               </RevenueCenterImageMobile>
             )}
           </RevenueCenterFlex>
+          {desc && (
+            <RevenueCenterDesc>
+              <p>{desc}</p>
+            </RevenueCenterDesc>
+          )}
           {!cartGuest && (
             <RevenueCenterOrder
               revenueCenter={revenueCenter}
