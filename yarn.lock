@@ -1698,23 +1698,23 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@open-tender/components@^3.6.1":
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.6.1.tgz#eec9dbc2c3fd03fa42a12330efba714d77c6050b"
-  integrity sha512-hiEy7aYrz607T5kaOSUglNy0EcQ/283k+NdY189ZuDZrwSEjENam1HGT3/vjIjGn+HZQPBArYpciB3VTp4JGdQ==
+"@open-tender/components@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-3.6.2.tgz#b9f78ff6c5c98fcbc17ea2bae6155cf619c4f5c0"
+  integrity sha512-wkJ4hFez2Ed3jMYeuppaW9Werp+Tg9NL4t3uvQ/klDVSDXJG6c5QygcN/QyajmwaC4drtW6vuKm5f7kbJPjhXQ==
   dependencies:
     "@google-pay/button-react" "^3.0.0"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.8.0.tgz#3b0b45f46e2a1ed894f1246decd1a4022b2ef41d"
-  integrity sha512-FGlkNFiUW5rjuu+dp9UKTsH+4fUyI+LGfvnCQm9KTPNyhfB73vp4wFTCDWzSUvku28aeFSCghnl1VSXCJIUaYg==
+"@open-tender/js@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.8.1.tgz#d62af2cbfd88728667bd142378a848c4472ad52c"
+  integrity sha512-vlEbmC273nnHKw8spMS8bnQRIyrgLLSL87W1W1tjv2pJZtfbPoMFLG8ouhya/YcEHotQ7Qpe6oNaJSp3q2VmRw==
 
-"@open-tender/redux@^2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.6.0.tgz#862a8273c1417d0feed5d0fd57f7d60bd50ceb52"
-  integrity sha512-A++1f8tuTWra41bvoVrlCFRw5e8qIh1lW0HPLC8ztpsdvGO2yZ6L7AVmXX7PqVHY2HTKVpHTskrkgrTkYE20UA==
+"@open-tender/redux@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-2.6.1.tgz#aefd125dd60f78c088c4a17aac23458b55b1feb5"
+  integrity sha512-QYQG2xE3RD9RnJpSMaGzRZqb1GDgsMYMd/n/uwYYlKdwZoqv9QnAneGJfNqGSRwhw+DgNoQdQWyaWYA0td7ABg==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
