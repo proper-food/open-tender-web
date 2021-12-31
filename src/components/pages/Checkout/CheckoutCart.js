@@ -104,7 +104,7 @@ const CheckoutCart = () => {
     points: points ? itemsPoints[index.toString()] : null,
   }))
   const pointsApplied = useMemo(
-    () => form.points.reduce((t, i) => (t += i.points), 0),
+    () => (form.points ? form.points.reduce((t, i) => (t += i.points), 0) : 0),
     [form.points]
   )
   const cartDiff = cart.length - cartLength

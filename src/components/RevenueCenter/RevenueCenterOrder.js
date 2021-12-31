@@ -138,6 +138,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
     const args = {
       focusFirst: true,
       skipClose: true,
+      style: orderTimes ? { alignItems: 'flex-start' } : {},
       revenueCenter,
       serviceType,
       orderType,
@@ -147,7 +148,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
 
   return (
     <RevenueCenterOrderButtons>
-      {!isCatering && (
+      {!isCatering && firstTimes && (
         <ButtonStyled
           icon={icons[serviceType]}
           onClick={orderAsap}
@@ -161,7 +162,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
         icon={isCatering ? icons[serviceType] : iconMap.Clock}
         onClick={orderLater}
         size={isMobileOnly ? 'small' : 'default'}
-        color={isCatering ? 'primary' : 'secondary'}
+        color={isCatering || !firstTimes ? 'primary' : 'secondary'}
       >
         {isCatering ? 'Order from Here' : 'Order for Later'}
       </ButtonStyled>

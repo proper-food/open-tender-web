@@ -17,10 +17,12 @@ const CheckoutPickup = () => {
   const dispatch = useDispatch()
   const { orderType, requestedAt, revenueCenter, serviceType, prepType } =
     useSelector(selectOrder)
-  const { name, address } = revenueCenter
+
+  if (!revenueCenter) return null
+
+  const { name, address, timezone, first_times } = revenueCenter || {}
   // const { street, city, state, postal_code } = address
   // const addressLine2 = `${city}, ${state} ${postal_code}`
-  const { timezone, first_times } = revenueCenter || {}
   const firstTime = first_times ? first_times[serviceType] : {}
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null

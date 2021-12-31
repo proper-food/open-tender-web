@@ -18,9 +18,12 @@ const RequestedAt = ({
     useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const requestedAtText = makeRequestedAtStr(requestedAt, tz)
+  const { order_times } = revenueCenter || {}
+  const orderTimes = order_times ? order_times[serviceType] : null
   const args = {
     focusFirst: true,
     skipClose: true,
+    style: orderTimes ? { alignItems: 'flex-start' } : {},
     revenueCenter,
     serviceType,
     orderType,

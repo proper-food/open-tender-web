@@ -54,33 +54,30 @@ const Cart = () => {
     dispatch(removeItemFromCart(item))
   }
 
-  return cart && cart.length ? (
-    <ul>
-      {cart.map((item, index) => {
+  return cart && cart.length
+    ? cart.map((item, index) => {
         return (
-          <li key={`${item.id}-${index}`}>
-            <CartItem
+          <CartItem
+            key={`${item.id}-${index}`}
+            item={item}
+            showModifiers={true}
+            editItem={() => editItem(item)}
+            removeItem={() => removeItem(item)}
+            displaySettings={cartDisplaySettings}
+          >
+            <BuilderQuantity
               item={item}
-              showModifiers={true}
-              editItem={() => editItem(item)}
-              removeItem={() => removeItem(item)}
-              displaySettings={cartDisplaySettings}
-            >
-              <BuilderQuantity
-                item={item}
-                adjust={null}
-                increment={() => dispatch(incrementItemInCart(item))}
-                decrement={() => dispatch(decrementItemInCart(item))}
-                incrementDisabled={item.quantity === item.max}
-                decrementDisabled={false}
-                iconMap={iconMap}
-              />
-            </CartItem>
-          </li>
+              adjust={null}
+              increment={() => dispatch(incrementItemInCart(item))}
+              decrement={() => dispatch(decrementItemInCart(item))}
+              incrementDisabled={item.quantity === item.max}
+              decrementDisabled={false}
+              iconMap={iconMap}
+            />
+          </CartItem>
         )
-      })}
-    </ul>
-  ) : null
+      })
+    : null
 }
 
 Cart.displayName = 'Cart'

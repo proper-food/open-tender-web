@@ -50,6 +50,7 @@ const RequestedAt = ({
   const history = useHistory()
   const { pathname } = useLocation()
   const isLocation = pathname.includes('/locations')
+  const isLanding = pathname.includes('/locations/')
   if (!revenueCenter) return null
 
   const {
@@ -98,6 +99,7 @@ const RequestedAt = ({
             cancel={cancel}
             isLocation={isLocation}
             isReorder={isReorder}
+            isLanding={isLanding}
           />
         </>
       ) : orderTimes ? (

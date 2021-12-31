@@ -102,6 +102,7 @@ const containerStyleMap = {
   cartCounts: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
   profile: { alignItems: 'flex-start' },
+  allergens: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
@@ -128,9 +129,11 @@ const Modal = () => {
   const focusFirst = args && args.focusFirst ? true : false
   const skipClose = args && args.skipClose ? true : false
   const preventClose = args && args.preventClose ? true : false
+  const style = args && args.style ? args.style : {}
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
-  const containerStyle = containerStyleMap[type] || null
+  let containerStyle = containerStyleMap[type] || null
+  containerStyle = containerStyle ? { ...containerStyle, ...style } : style
   const isWorking = type === 'working'
 
   useEffect(() => {

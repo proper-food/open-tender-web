@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetRevenueCenter, resetOrderType } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
@@ -14,6 +15,7 @@ const defaultText = {
 
 const Closed = ({ status, isCancel }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const statusMsg = statusMessages[status] || defaultText
@@ -21,6 +23,7 @@ const Closed = ({ status, isCancel }) => {
   const changeLocation = () => {
     dispatch(resetRevenueCenter())
     dispatch(closeModal())
+    history.push('/locations')
   }
 
   const startOver = () => {
