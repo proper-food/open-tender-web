@@ -80,6 +80,7 @@ const RevenueCenterChange = ({ autoSelect }) => {
       <ButtonStyled
         icon={iconMap.RefreshCw}
         onClick={() => history.push(`/locations`)}
+        size={isMobileOnly ? `small` : 'default'}
       >
         Change Location
       </ButtonStyled>

@@ -17,11 +17,16 @@ const RevenueCenterView = styled(Box)`
   overflow: hidden;
   width: 100%;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    ${(props) =>
+      !props.isMenu
+        ? `
     padding: 0;
     border-radius: 0;
     border: 0;
     margin: 0;
-    box-shadow: none;
+    background-color: transparent;
+    box-shadow: none;`
+        : `padding: 1.5rem;`}
   }
 `
 
