@@ -112,12 +112,15 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
     address,
     first_times,
     order_times,
+    status,
   } = revenueCenter
   const menuSlug = `/menu/${slug}`
   const firstTimes = first_times ? first_times[serviceType] : null
   const orderTimes = order_times ? order_times[serviceType] : null
 
   if (!firstTimes && !orderTimes) return null
+
+  if (status !== 'OPEN') return null
 
   const hasAsap = firstTimes && firstTimes.has_asap
   const isCatering = rcType === 'CATERING'
