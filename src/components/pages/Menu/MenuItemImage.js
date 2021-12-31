@@ -9,14 +9,15 @@ const MenuItemImageView = styled('div')`
   position: relative;
   z-index: 1;
   padding: 30% 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   overflow: hidden;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 14rem;
     padding: 0;
+    border-radius: 0;
   }
 `
 
