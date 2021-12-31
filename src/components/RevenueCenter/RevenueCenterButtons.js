@@ -10,6 +10,7 @@ import { ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../slices'
 import iconMap from '../iconMap'
+import { isMobileOnly } from 'react-device-detect'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
@@ -66,6 +67,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
           label={`Order Dine-in from ${name}`}
           icon={iconMap.Coffee}
           onClick={handleWalkin}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order {hasDelivery ? 'Dine-in' : 'Here'}
         </ButtonStyled>
@@ -75,6 +77,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
           label={`Order Pickup from ${name}`}
           icon={iconMap.ShoppingBag}
           onClick={handlePickup}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order {hasDelivery ? 'Pickup' : 'Here'}
         </ButtonStyled>
@@ -84,6 +87,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
           label={`Order Delivery from ${name}`}
           icon={iconMap.Truck}
           onClick={handleDelivery}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order Delivery
         </ButtonStyled>
