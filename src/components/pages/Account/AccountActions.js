@@ -3,17 +3,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import {
+  fetchCustomerFavorites,
+  fetchCustomerOrders,
+  fetchLocation,
+  fetchMenuItems,
   resetOrderType,
   resetOrder,
+  selectCartQuantity,
   selectOrder,
-  fetchCustomerOrders,
   selectCustomerOrders,
-  fetchCustomerFavorites,
-  fetchRevenueCenter,
   setOrderServiceType,
   setAddress,
-  selectCartQuantity,
-  fetchMenuItems,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
@@ -103,7 +103,7 @@ const AccountActions = () => {
       } = lastOrder
       const { revenue_center_id: revenueCenterId, is_outpost } = revenue_center
       if (!cartQuantity) {
-        dispatch(fetchRevenueCenter(revenueCenterId))
+        dispatch(fetchLocation(revenueCenterId))
         dispatch(setOrderServiceType(order_type, serviceType, is_outpost))
         dispatch(setAddress(address || null))
       }

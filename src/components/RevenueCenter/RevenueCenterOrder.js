@@ -88,14 +88,6 @@ const RevenueCenterChange = ({ autoSelect }) => {
   )
 }
 
-const RevenueCenterLanding = ({ revenueCenter }) => {
-  return (
-    <RevenueCenterOrderButtons>
-      <RevenueCenterButtons revenueCenter={revenueCenter} isLanding={true} />
-    </RevenueCenterOrderButtons>
-  )
-}
-
 const icons = {
   WALKIN: iconMap.Coffee,
   PICKUP: iconMap.ShoppingBag,
@@ -213,7 +205,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
           {isMenu ? (
             <RevenueCenterChange autoSelect={autoSelect} />
           ) : isLanding ? (
-            <RevenueCenterLanding revenueCenter={revenueCenter} />
+            <RevenueCenterOrderButtons>
+              <RevenueCenterButtons revenueCenter={revenueCenter} />
+            </RevenueCenterOrderButtons>
           ) : (
             <RevenueCenterChoose
               revenueCenter={revenueCenter}

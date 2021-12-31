@@ -5,10 +5,10 @@ import { Helmet } from 'react-helmet'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
+  fetchLocation,
   selectGroupOrder,
   resetGroupOrder,
   resetOrder,
-  fetchRevenueCenter,
   selectRevenueCenter,
   selectTimezone,
   joinGroupOrder,
@@ -208,7 +208,7 @@ const GroupOrderGuest = () => {
   ])
 
   useEffect(() => {
-    if (revenueCenterId) dispatch(fetchRevenueCenter(revenueCenterId))
+    if (revenueCenterId) dispatch(fetchLocation(revenueCenterId))
   }, [dispatch, revenueCenterId])
 
   const startOver = () => {

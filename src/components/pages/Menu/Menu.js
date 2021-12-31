@@ -89,7 +89,6 @@ const MenuPage = () => {
       setInit(false)
     } else if (init) {
       dispatch(fetchAllergens())
-      // dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAnnouncementPage('MENU'))

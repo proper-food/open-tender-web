@@ -23,6 +23,7 @@ import {
   LevelUp,
   Login,
   LoyaltyTier,
+  MapsAutocomplete,
   MenuItem,
   OrderRating,
   OrderType,
@@ -62,14 +63,16 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GiftCardAssignOther windowRef={windowRef} {...args} />
     case 'groupOrder':
       return <GroupOrder {...args} />
-    case 'item':
-      return <MenuItem {...args} />
     case 'levelup':
       return <LevelUp windowRef={windowRef} {...args} />
     case 'login':
       return <Login {...args} />
     case 'loyaltyTier':
       return <LoyaltyTier {...args} />
+    case 'item':
+      return <MenuItem {...args} />
+    case 'mapsAutocomplete':
+      return <MapsAutocomplete {...args} />
     case 'orderType':
       return <OrderType {...args} />
     case 'qrCode':

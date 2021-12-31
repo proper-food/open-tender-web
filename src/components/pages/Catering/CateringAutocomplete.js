@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
+import { useSelector, useDispatch } from 'react-redux'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { setAddress, selectOrder } from '@open-tender/redux'
 import { GoogleMap, GoogleMapsAutocomplete } from '@open-tender/components'
