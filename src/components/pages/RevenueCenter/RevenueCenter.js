@@ -81,11 +81,12 @@ const RevenueCenter = () => {
     if (revenueCenter) {
       const { images, service_types, revenue_center_type } = revenueCenter
       setImageUrl(makeImageUrl(images, config.background))
-      let serviceType = service_types.length
-        ? service_types.includes('PICKUP')
-          ? 'PICKUP'
-          : 'DELIVERY'
-        : null
+      let serviceType =
+        service_types && service_types.length
+          ? service_types.includes('PICKUP')
+            ? 'PICKUP'
+            : 'DELIVERY'
+          : null
       if (serviceType) {
         dispatch(setOrderServiceType(revenue_center_type, serviceType))
       }
