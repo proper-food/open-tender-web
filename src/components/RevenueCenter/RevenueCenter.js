@@ -2,11 +2,12 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { selectGroupOrder } from '@open-tender/redux'
+import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
 import { BgImage, Box } from '@open-tender/components'
 
 import iconMap from '../iconMap'
+import bentocartButton from '../../assets/bentocart-button.png'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
 import { selectDisplaySettings } from '../../slices'
@@ -89,6 +90,20 @@ const RevenueCenterDesc = styled('div')`
   }
 `
 
+const RevenueCenterDelivery = styled('div')`
+  p {
+    margin: 1rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+
+  a {
+    display: block;
+    width: 28rem;
+    margin: 2.5rem 0 0;
+  }
+`
+
 export const RevenueCenterChild = ({ revenueCenter, style }) => {
   const { hours_desc, description } = revenueCenter
   const hoursDesc = hours_desc ? stripTags(hours_desc) : null
@@ -135,7 +150,9 @@ const RevenueCenter = ({
 }) => {
   const { cartGuest } = useSelector(selectGroupOrder)
   const { storePhone = true } = useSelector(selectDisplaySettings)
-  const { address, images, hours, is_outpost } = revenueCenter
+  const { serviceType } = useSelector(selectOrder)
+  const { address, images, hours, is_outpost, delivery_url, description } =
+    revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const bgImage = smallImg.url || largeImg.url
@@ -143,11 +160,16 @@ const RevenueCenter = ({
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
+  const isExternalDelivery = serviceType === 'DELIVERY' && delivery_url
 
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
       ? revenueCenter.distance
       : null
+
+  const createMarkup = () => {
+    return { __html: description }
+  }
 
   return (
     <RevenueCenterView style={style} isMenu={isMenu}>
@@ -155,46 +177,60 @@ const RevenueCenter = ({
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
       <RevenueCenterContent showImage={showImage}>
-        <div>
-          <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
-            {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
-          </RevenueCenterHeader>
-          <RevenueCenterActions>
-            <a
-              href={revenueCenter.directions_url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <RevenueCenterAction
-                icon={iconMap.MapPin}
-                text={address.street}
-              />
-            </a>
-            {storePhone && phoneUrl && (
-              <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
+        {isExternalDelivery ? (
+          <div>
+            <RevenueCenterHeader>
+              <h2>Home Delivery by Bentocart</h2>
+            </RevenueCenterHeader>
+            <RevenueCenterDelivery>
+              <div dangerouslySetInnerHTML={createMarkup()} />
+              <a href={delivery_url} rel="noopener noreferrer" target="_blank">
+                <img src={bentocartButton} alt="Order on BentoCart" />
+              </a>
+            </RevenueCenterDelivery>
+          </div>
+        ) : (
+          <div>
+            <RevenueCenterHeader>
+              <h2>{revenueCenter.name}</h2>
+              {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
+            </RevenueCenterHeader>
+            <RevenueCenterActions>
+              <a
+                href={revenueCenter.directions_url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 <RevenueCenterAction
-                  icon={iconMap.Phone}
-                  text={address.phone}
+                  icon={iconMap.MapPin}
+                  text={address.street}
                 />
               </a>
-            )}
-            {hoursDesc && (
-              <RevenueCenterAction
-                icon={hoursDescIcon}
-                text={hoursDesc}
-                arrow={null}
+              {storePhone && phoneUrl && (
+                <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
+                  <RevenueCenterAction
+                    icon={iconMap.Phone}
+                    text={address.phone}
+                  />
+                </a>
+              )}
+              {hoursDesc && (
+                <RevenueCenterAction
+                  icon={hoursDescIcon}
+                  text={hoursDesc}
+                  arrow={null}
+                />
+              )}
+            </RevenueCenterActions>
+            {!cartGuest && (
+              <RevenueCenterOrder
+                revenueCenter={revenueCenter}
+                isMenu={isMenu}
+                isLanding={isLanding}
               />
             )}
-          </RevenueCenterActions>
-          {!cartGuest && (
-            <RevenueCenterOrder
-              revenueCenter={revenueCenter}
-              isMenu={isMenu}
-              isLanding={isLanding}
-            />
-          )}
-        </div>
+          </div>
+        )}
       </RevenueCenterContent>
     </RevenueCenterView>
   )
