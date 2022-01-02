@@ -1,6 +1,6 @@
 {
   "name": "proper-food-web",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.4.0",
