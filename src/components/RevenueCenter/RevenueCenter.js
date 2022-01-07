@@ -180,7 +180,7 @@ const RevenueCenter = ({
         {isExternalDelivery ? (
           <div>
             <RevenueCenterHeader>
-              <h2>Home Delivery by Bentocart</h2>
+              <h2>Proper@Home Delivered By Bentocart</h2>
             </RevenueCenterHeader>
             <RevenueCenterDelivery>
               <div dangerouslySetInnerHTML={createMarkup()} />
