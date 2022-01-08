@@ -51,12 +51,40 @@ const OrderTypeTitle = styled('div')`
   }
 `
 
+const OrderTypeContent = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  margin: 2.5rem 0;
+  line-height: ${(props) => props.theme.lineHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  p {
+    margin: 0.5em 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+`
+
 const OrderType = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
-  const { orderType } = useSelector(selectContent)
+  const { home, orderType } = useSelector(selectContent)
   const { background, title, subtitle } = orderType
+  const { content } = home
+  const hasContent = !!(content && content.length && content[0].length)
   // const announcements = useSelector(selectAnnouncements)
 
   useEffect(() => {
@@ -88,6 +116,13 @@ const OrderType = () => {
               {subtitle && <p>{subtitle}</p>}
             </OrderTypeTitle>
             <OrderTypes />
+            {hasContent && (
+              <OrderTypeContent>
+                {content.map((i, index) => (
+                  <p key={index}>{i}</p>
+                ))}
+              </OrderTypeContent>
+            )}
           </OrderTypeView>
         </Main>
       </Content>
