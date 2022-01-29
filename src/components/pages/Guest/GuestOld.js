@@ -4,19 +4,23 @@ import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
-  // selectAnnouncementsPage,
+  selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
 
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
+import { Account, Deals as DealsButton, OrderNow } from '../../buttons'
 import {
   Content,
   DealsSection,
-  HeroSite,
+  Greeting,
+  HeaderLogo,
+  Header,
   Main,
   PageContainer,
-  HeaderSite,
+  PageHero,
 } from '../..'
+import GuestActions from './GuestActions'
 
 const GuestContent = styled('div')`
   line-height: ${(props) => props.theme.lineHeight};
@@ -48,11 +52,11 @@ const GuestContent = styled('div')`
 
 const Guest = () => {
   const dispatch = useDispatch()
-  // const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
-  const { background, mobile, content } = home
+  const { background, mobile, content, title, subtitle, showHero } = home
   const hasContent = !!(content && content.length && content[0].length)
   const hasPageContent = hasContent || has_deals
 
@@ -70,11 +74,33 @@ const Guest = () => {
         <title>{brand.title}</title>
       </Helmet>
       <Content>
-        <HeaderSite />
-        <Main style={{ paddingTop: '0' }}>
-          <HeroSite imageUrl={isBrowser ? background : mobile} />
+        <Header
+          left={<HeaderLogo />}
+          right={
+            <>
+              {isBrowser && has_deals && <DealsButton />}
+              <Account />
+              {isBrowser && <OrderNow />}
+            </>
+          }
+        />
+        <Main>
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+            showHero={showHero}
+          >
+            <Greeting
+              title={title}
+              subtitle={subtitle}
+              actions={<GuestActions />}
+              // footnote={footnote}
+            >
+              {/* <GuestLinks /> */}
+            </Greeting>
+          </PageHero>
           {hasPageContent && (
-            <PageContainer>
+            <PageContainer style={{ marginTop: '0' }}>
               {has_deals && <DealsSection />}
               {hasContent && (
                 <GuestContent hasDeals={has_deals}>

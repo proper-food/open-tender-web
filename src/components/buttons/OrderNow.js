@@ -53,6 +53,7 @@ const OrderNow = ({
   text = 'Order Now',
   icon = iconMap.ShoppingBag,
   color = 'primary',
+  size = 'small',
 }) => {
   const history = useHistory()
   // const { auth } = useSelector(selectCustomer)
@@ -70,7 +71,7 @@ const OrderNow = ({
   }
 
   return isBrowser ? (
-    <ButtonStyled onClick={order} icon={icon} color={color} size="small">
+    <ButtonStyled onClick={order} icon={icon} color={color} size={size}>
       {isCurrentOrder ? 'Continue Order' : text}
     </ButtonStyled>
   ) : isCurrentOrder ? (
@@ -91,6 +92,7 @@ OrderNow.propTypes = {
   text: propTypes.string,
   icon: propTypes.element,
   color: propTypes.string,
+  size: propTypes.string,
 }
 
 export default OrderNow

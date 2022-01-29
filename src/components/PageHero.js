@@ -63,6 +63,7 @@ const PageHero = ({ announcements, imageUrl, showHero, style, children }) => {
   // const isLoading = true
   const hasHero = imageUrl && showHero
   const hasImage = slides || hasHero
+  console.log('imageUrl', imageUrl)
 
   return (
     <PageHeroView style={style} hasImage={hasImage}>

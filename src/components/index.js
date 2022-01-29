@@ -20,14 +20,16 @@ import GiftCard from './GiftCard'
 import Greeting from './Greeting'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
+import Header from './Header'
 import HeaderAccount from './HeaderAccount'
 import HeaderCheckout from './HeaderCheckout'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
-import Header from './Header'
+import HeaderSite from './HeaderSite'
 import HeaderUser from './HeaderUser'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
+import HeroSite from './HeroSite'
 import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
@@ -115,9 +117,11 @@ export {
   HeaderCheckout,
   HeaderDefault,
   HeaderLogo,
+  HeaderSite,
   HeaderUser,
   Hero,
   HeroContent,
+  HeroSite,
   HeroSlides,
   ImageSpinner,
   ItemCards,
