@@ -30,6 +30,7 @@ import HeaderUser from './HeaderUser'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
 import HeroSite from './HeroSite'
+import HeroSiteCta from './HeroSiteCta'
 import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
@@ -59,11 +60,12 @@ import OrderImage from './OrderImage'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
 import PageButtons from './PageButtons'
+import PageContainer from './PageContainer'
 import PageContent from './PageContent'
 import PageError from './PageError'
 import PageHeader from './PageHeader'
 import PageHero from './PageHero'
-import PageContainer from './PageContainer'
+import PageIntro from './PageIntro'
 import PageSection from './PageSection'
 import PageSectionHeader from './PageSectionHeader'
 import PageTitle from './PageTitle'
@@ -122,6 +124,7 @@ export {
   Hero,
   HeroContent,
   HeroSite,
+  HeroSiteCta,
   HeroSlides,
   ImageSpinner,
   ItemCards,
@@ -154,11 +157,12 @@ export {
   OrderQuantity,
   OrderTag,
   PageButtons,
+  PageContainer,
   PageContent,
   PageError,
   PageHeader,
   PageHero,
-  PageContainer,
+  PageIntro,
   PageSection,
   PageSectionHeader,
   PageTitle,

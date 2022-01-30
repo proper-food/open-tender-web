@@ -37,9 +37,18 @@ const HeroSiteLoading = styled('div')`
   align-items: center;
 `
 
-const HeroSiteChildren = styled('div')`
-  position: relative;
+const HeroSiteContent = styled('div')`
+  position: absolute;
   z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: ${(props) => props.theme.layout.margin};
+  padding-bottom: 9.6rem;
 `
 
 const HeroSite = ({ imageUrl, style = {}, children }) => {
@@ -59,7 +68,7 @@ const HeroSite = ({ imageUrl, style = {}, children }) => {
       ) : (
         <HeroSiteBackgroundImage style={bgStyle} />
       )}
-      <HeroSiteChildren>{children}</HeroSiteChildren>
+      <HeroSiteContent>{children}</HeroSiteContent>
     </HeroSiteView>
   )
 }

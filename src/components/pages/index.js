@@ -27,6 +27,7 @@ import HouseAccounts from './HouseAccounts'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
 import MenuItem from './MenuItem'
+import MenuSite from './MenuSite'
 import NotFound from './NotFound'
 import Order from './Order'
 import Orders from './Orders'
@@ -73,6 +74,7 @@ export {
   LevelUp,
   Menu,
   MenuItem,
+  MenuSite,
   NotFound,
   Order,
   Orders,

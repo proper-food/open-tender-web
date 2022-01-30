@@ -26,6 +26,7 @@ import {
   LevelUp,
   Menu,
   MenuItem,
+  MenuSite,
   NotFound,
   Order,
   Orders,
@@ -87,6 +88,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/locations/:slug">
         <RevenueCenter />
+      </Route>
+      <Route exact path="/menu">
+        <MenuSite />
       </Route>
       <Route exact path="/menu/:slug">
         <Menu />

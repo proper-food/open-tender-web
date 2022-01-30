@@ -21,11 +21,10 @@ const HeaderSiteView = styled('div')`
   transition: all 0.25s ease;
   background-color: ${(props) =>
     props.stuck ? props.theme.bgColors.dark : 'transparent'};
-  padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
+  padding: 0 ${(props) => props.theme.layout.margin};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: ${(props) =>
-      props.isMobile ? '0' : props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.marginMobile};
   }
 `
 
@@ -82,6 +81,7 @@ const HeaderSiteNav = styled.div`
 const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
+  { path: '/catering', title: 'Catering' },
   { path: '/press', title: 'Press' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },
@@ -115,7 +115,7 @@ const HeaderSite = ({ style = null }) => {
         <HeaderSiteNav>
           <ul>
             {links.map((link) => (
-              <li>
+              <li key={link.path}>
                 <Link to={link.path}>{link.title}</Link>
               </li>
             ))}

@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState, useMemo } from 'react'
+import { useEffect, createContext, useState, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
