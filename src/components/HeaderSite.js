@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
 
-import { HeaderLogo } from '.'
+import { selectBrand } from '../slices'
 import { OrderNow } from './buttons'
-import { Link } from 'react-router-dom'
 
 const HeaderSiteView = styled('div')`
   position: fixed;
@@ -31,6 +32,16 @@ const HeaderSiteView = styled('div')`
 const HeaderSiteLogo = styled('div')`
   position: relative;
   z-index: 2;
+  max-width: 18rem;
+  margin: 0.4rem 0 0;
+  margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 14rem;
+  }
+
+  img {
+    pointer-events: none;
+  }
 `
 
 const HeaderSiteNav = styled.div`
@@ -79,6 +90,7 @@ const links = [
 const HeaderSite = ({ style = null }) => {
   const header = useRef(null)
   const [stuck, setStuck] = useState(false)
+  const { logoLight, title } = useSelector(selectBrand)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,7 +108,9 @@ const HeaderSite = ({ style = null }) => {
     <nav ref={header} role="navigation" aria-label="Primary Navigation">
       <HeaderSiteView stuck={stuck} isMobile={isMobile} style={style}>
         <HeaderSiteLogo>
-          <HeaderLogo useLight={true} />
+          <Link to="/">
+            <img src={logoLight} alt={title} />
+          </Link>
         </HeaderSiteLogo>
         <HeaderSiteNav>
           <ul>

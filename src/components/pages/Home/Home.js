@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useEffect } from 'react'
+// import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 
 import { Account, Guest } from '..'
 
 const Home = () => {
-  const history = useHistory()
+  // const history = useHistory()
   const { auth } = useSelector(selectCustomer)
 
   // useEffect(() => {

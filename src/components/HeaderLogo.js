@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 
 const HeaderLogoLink = styled('a')`
   display: block;
-  max-width: 18rem;
+  max-width: 14rem;
   margin: 0.4rem 0 0;
   margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
