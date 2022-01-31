@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
-import { BgImage, Box, Heading } from '@open-tender/components'
+import { BgImage, Box, Checkmark, Heading } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
@@ -16,6 +16,12 @@ const RevenueCenterView = styled(Box)`
   position: relative;
   overflow: hidden;
   width: 100%;
+  // background-color: ${(props) =>
+    props.isActive
+      ? props.theme.bgColors.tertiary
+      : props.theme.bgColors.secondary};
+  box-shadow: ${(props) =>
+    props.isActive ? '0 0 23px rgba(0, 0, 0, 0.35)' : 'none'};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     ${(props) =>
       !props.isMenu
@@ -60,8 +66,8 @@ const RevenueCenterContent = styled('div')`
 
 const RevenueCenterHeader = styled('div')`
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -85,6 +91,10 @@ const RevenueCenterHeader = styled('div')`
     padding-top: 0.4rem;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
+`
+
+const RevenueCenterCheckmark = styled.div`
+  margin: 0 0 0 1rem;
 `
 
 const RevenueCenterFlex = styled.div`
@@ -172,6 +182,7 @@ RevenueCenterChild.propTypes = {
 const RevenueCenter = ({
   revenueCenter,
   showImage,
+  isActive = false,
   isMenu,
   isLanding,
   style = null,
@@ -193,7 +204,7 @@ const RevenueCenter = ({
       : null
 
   return (
-    <RevenueCenterView style={style} isMenu={isMenu}>
+    <RevenueCenterView style={style} isMenu={isMenu} isActive={isActive}>
       {showImage && !isMobileOnly && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
@@ -203,7 +214,11 @@ const RevenueCenter = ({
             <RevenueCenterFlexContent>
               <RevenueCenterHeader>
                 <h2>{revenueCenter.name}</h2>
-                {/* {distance !== null && <p>{distance.toFixed(2)} miles away</p>} */}
+                {isActive && (
+                  <RevenueCenterCheckmark>
+                    <Checkmark />
+                  </RevenueCenterCheckmark>
+                )}
               </RevenueCenterHeader>
 
               <RevenueCenterActions>
@@ -271,6 +286,7 @@ RevenueCenter.displayName = 'RevenueCenter'
 RevenueCenter.propTypes = {
   revenueCenter: propTypes.object,
   showImage: propTypes.bool,
+  isActive: propTypes.bool,
   isMenu: propTypes.bool,
   isLanding: propTypes.bool,
   style: propTypes.object,
