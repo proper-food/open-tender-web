@@ -82,7 +82,7 @@ const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
   { path: '/catering', title: 'Catering' },
-  { path: '/offers', title: 'Offers' },
+  { path: '/deals', title: 'Offers' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },
 ]

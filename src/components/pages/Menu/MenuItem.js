@@ -27,7 +27,6 @@ import {
 } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
-import { MenuContext } from './Menu'
 import { MenuItemButton, MenuItemImage } from '.'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { Plus } from 'react-feather'

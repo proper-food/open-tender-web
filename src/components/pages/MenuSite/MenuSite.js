@@ -10,7 +10,6 @@ import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, selectBrand } from '../../../slices'
 import {
-  Container,
   Content,
   HeroSite,
   Main,

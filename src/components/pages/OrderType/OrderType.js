@@ -12,7 +12,7 @@ import {
   Content,
   Geolocation,
   Header,
-  HeaderLogo,
+  // HeaderLogo,
   Main,
 } from '../..'
 import OrderTypes from './OrderTypes'
