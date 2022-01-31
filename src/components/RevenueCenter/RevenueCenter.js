@@ -51,7 +51,7 @@ const RevenueCenterContent = styled('div')`
   }
 
   > div {
-    padding: 1.5rem 2rem 2rem;
+    padding: 2rem 2.5rem 2.5rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       padding: 0;
     }

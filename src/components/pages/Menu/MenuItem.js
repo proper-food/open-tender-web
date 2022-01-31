@@ -1,12 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import {
-  setCurrentItem,
-  selectCartCounts,
-  selectMenuSlug,
   addItemToCart,
+  selectCartCounts,
+  selectMenu,
+  selectMenuSlug,
+  selectSelectedAllergenNames,
+  setCurrentItem,
   showNotification,
 } from '@open-tender/redux'
 import {
@@ -21,6 +23,7 @@ import {
   openModal,
   setTopOffset,
   toggleSidebarModal,
+  selectContent,
 } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
@@ -310,7 +313,9 @@ const MenuItemCals = styled(MenuItemPrice)`
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
+  const { menu: menuContent } = useSelector(selectContent)
+  const { soldOut } = useSelector(selectMenu)
+  const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const {
     menuImages: showImage,
     calories: showCals,
@@ -321,7 +326,7 @@ const MenuItem = ({ item }) => {
     quickAddMobile = true,
   } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
-  const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
+  const soldOutMsg = menuContent.soldOutMessage || 'Sold out for day'
   const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut.includes(item.id)
   const cartCount = cartCounts[item.id] || 0
@@ -451,6 +456,9 @@ const MenuItem = ({ item }) => {
 MenuItem.displayName = 'MenuItem'
 MenuItem.propTypes = {
   item: propTypes.object,
+  soldOut: propTypes.array,
+  menuConfig: propTypes.object,
+  allergenAlerts: propTypes.array,
 }
 
 export default MenuItem

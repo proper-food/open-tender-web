@@ -24,6 +24,7 @@ import {
   Home,
   HouseAccounts,
   LevelUp,
+  Locations,
   Menu,
   MenuItem,
   MenuSite,
@@ -80,6 +81,12 @@ const Routes = () => {
       <Route exact path="/verify">
         <VerifyAccount />
       </Route>
+      <Route exact path="/menu">
+        <MenuSite />
+      </Route>
+      <Route exact path="/restaurants">
+        <Locations />
+      </Route>
       <Route exact path="/catering">
         <Catering />
       </Route>
@@ -88,9 +95,6 @@ const Routes = () => {
       </Route>
       <Route exact path="/locations/:slug">
         <RevenueCenter />
-      </Route>
-      <Route exact path="/menu">
-        <MenuSite />
       </Route>
       <Route exact path="/menu/:slug">
         <Menu />

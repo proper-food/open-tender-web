@@ -1,10 +1,10 @@
 import propTypes from 'prop-types'
-import MenuItem from './MenuItem'
 import styled from '@emotion/styled'
 
 import { Container } from '../..'
+import MenuItem from '../Menu/MenuItem'
 
-export const MenuCategoryView = styled('div')`
+export const MenuSiteCategoryView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   padding: ${(props) => (props.isChild ? '2rem 0 0' : '4rem 0 0')};
@@ -13,11 +13,13 @@ export const MenuCategoryView = styled('div')`
   }
 `
 
-export const MenuCategoryHeader = styled('div')`
+export const MenuSiteCategoryHeader = styled('div')`
   margin: 0 0 1rem;
+  text-align: center;
 
   h2 {
     margin: 0 0 0 -0.1rem;
+    font-size: ${(props) => props.theme.fonts.sizes.h1};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.h4};
     }
@@ -33,6 +35,7 @@ export const MenuCategoryHeader = styled('div')`
   p {
     margin: 0.5rem 0 0;
     line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
@@ -43,19 +46,15 @@ export const MenuCategoryHeader = styled('div')`
 `
 
 const MenuItems = styled('div')`
-  // display: flex;
-  // flex-flow: row wrap;
-  // justify-content: space-between;
-  // align-items: stretch;
   display: grid;
 
   justify-content: center;
   align-items: stretch;
   padding: ${(props) => props.theme.layout.padding};
   gap: ${(props) => props.theme.layout.padding};
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   @media (max-width: 1560px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   @media (max-width: 1280px) {
     grid-template-columns: repeat(3, 1fr);
@@ -72,15 +71,15 @@ const MenuItems = styled('div')`
   }
 `
 
-const MenuCategory = ({ category, isChild }) => {
+const MenuSiteCategory = ({ category, isChild }) => {
   return (
-    <MenuCategoryView isChild={isChild}>
-      <MenuCategoryHeader>
+    <MenuSiteCategoryView isChild={isChild}>
+      <MenuSiteCategoryHeader>
         <Container>
           {isChild ? <h3>{category.name}</h3> : <h2>{category.name}</h2>}
           {category.description && <p>{category.description}</p>}
         </Container>
-      </MenuCategoryHeader>
+      </MenuSiteCategoryHeader>
       {category.items.length > 0 && (
         <MenuItems>
           {category.items.map((item) => (
@@ -88,14 +87,14 @@ const MenuCategory = ({ category, isChild }) => {
           ))}
         </MenuItems>
       )}
-    </MenuCategoryView>
+    </MenuSiteCategoryView>
   )
 }
 
-MenuCategory.displayName = 'MenuCategory'
-MenuCategory.propTypes = {
+MenuSiteCategory.displayName = 'MenuSiteCategory'
+MenuSiteCategory.propTypes = {
   category: propTypes.object,
   isChild: propTypes.bool,
 }
 
-export default MenuCategory
+export default MenuSiteCategory

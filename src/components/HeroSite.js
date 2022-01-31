@@ -11,6 +11,7 @@ const HeroSiteView = styled('div')`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  min-height: 64rem;
   background-color: ${(props) => props.theme.bgColors.dark};
 `
 
@@ -48,7 +49,7 @@ const HeroSiteContent = styled('div')`
   justify-content: flex-start;
   align-items: flex-end;
   padding: ${(props) => props.theme.layout.margin};
-  padding-bottom: 9.6rem;
+  // padding-bottom: 9.6rem;
 `
 
 const HeroSite = ({ imageUrl, style = {}, children }) => {

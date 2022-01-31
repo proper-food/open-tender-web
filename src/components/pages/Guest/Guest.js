@@ -30,8 +30,7 @@ const Guest = () => {
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = home
-  const hasContent = !!(content && content.length && content[0].length)
-  const hasPageContent = hasContent || has_deals
+  const hasContent = !!(content && content.length)
 
   useEffect(() => {
     dispatch(closeModal())
@@ -56,9 +55,7 @@ const Guest = () => {
               </ButtonStyled>
             </HeroSiteCta>
           </HeroSite>
-          <Container>
-            <PageIntro dangerouslySetInnerHTML={{ __html: content }} />
-          </Container>
+          {hasContent && <PageIntro content={content} />}
         </Main>
       </Content>
     </>

@@ -105,7 +105,8 @@ const OrderType = () => {
         <Header
           maxWidth="76.8rem"
           title={!isBrowser && auth ? 'Order Type' : null}
-          left={auth ? <Home /> : <HeaderLogo />}
+          // left={auth ? <Home /> : <HeaderLogo />}
+          left={<Home />}
           right={auth ? <Logout /> : <Account />}
         />
         <Main>

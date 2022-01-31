@@ -25,6 +25,7 @@ import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import LevelUp from './LevelUp'
+import Locations from './Locations'
 import Menu from './Menu'
 import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
@@ -72,6 +73,7 @@ export {
   Home,
   HouseAccounts,
   LevelUp,
+  Locations,
   Menu,
   MenuItem,
   MenuSite,

@@ -82,7 +82,7 @@ const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
   { path: '/catering', title: 'Catering' },
-  { path: '/press', title: 'Press' },
+  { path: '/offers', title: 'Offers' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },
 ]
@@ -95,7 +95,7 @@ const HeaderSite = ({ style = null }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (header.current) {
-        setStuck(header.current.getBoundingClientRect().top < 0)
+        setStuck(header.current.getBoundingClientRect().top < -50)
       }
     }
     window.addEventListener('scroll', handleScroll)
