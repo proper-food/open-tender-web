@@ -21,11 +21,9 @@ const HeroSiteCtaView = styled('div')`
     margin: 0.5em 0 0;
     color: ${(props) => props.theme.colors.light};
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    // line-height: ${(props) => props.theme.lineHeight};
-    line-height: 1.5;
+    line-height: ${(props) => props.theme.lineHeight};
     text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      // margin: 1em 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.main};
     }
   }
@@ -39,8 +37,6 @@ const HeroSiteCtaButton = styled.div`
     border-color: ${(props) => props.theme.colors.light};
     background: transparent;
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    // padding: 1.5rem 3rem;
-    // border-radius: 3rem;
   }
 `
 

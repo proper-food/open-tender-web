@@ -212,7 +212,7 @@ const MenuItemContent = styled('div')`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1.5rem 1.5rem;
+  padding: 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 1.5rem 1.5rem 1.2rem;
   }

@@ -19,11 +19,10 @@ const PageIntroContent = styled.div`
 
   p {
     margin: 1em 0;
-    // font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    // line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.lineHeight};
     font-family: 'Lora', sans-serif;
-    font-size: 2.5rem;
-    line-height: 1.5;
+    // font-size: 2.5rem;
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
   }
 `
 

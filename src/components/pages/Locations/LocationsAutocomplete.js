@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -67,24 +67,41 @@ const LocationsAutocompleteForm = styled.div`
 
 const LocationsAutocompleteButtons = styled.div`
   flex: 0 0 auto;
-  margin: 0 0 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const LocationsAutocompleteToggle = styled.div`
+  flex: 0 0 auto;
+  margin: 0 2rem;
 
   button {
-    color: ${(props) => props.theme.colors.light};
-    border-color: ${(props) => props.theme.colors.light};
-    background: transparent;
-
     &:first-of-type {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: 0;
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
       border-right: 0;
     }
 
     &:last-of-type {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-radius: 0;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
     }
   }
+`
+
+const LocationsAutocompleteButton = styled.button`
+  padding: 0.7rem 1.4rem 0.7rem;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: ${(props) => props.theme.colors.light};
+  color: ${(props) =>
+    props.isActive ? props.theme.colors.dark : props.theme.colors.light};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.colors.light : 'transparent'};
 `
 
 const LocationsAutocomplete = ({
@@ -97,21 +114,29 @@ const LocationsAutocomplete = ({
   const dispatch = useDispatch()
   const history = useHistory()
   const { address, serviceType } = useSelector(selectOrder)
+  const [locSt, setLocSt] = useState(serviceType || 'PICKUP')
   const formattedAddress = address ? address.formatted_address : ''
   const placeholder =
     serviceType === 'DELIVERY'
       ? 'enter a delivery address'
       : 'enter an address or zip code'
 
-  const handlePickup = () => {
-    dispatch(setOrderServiceType('OLO', 'PICKUP'))
+  const toggle = (evt, st) => {
+    evt.preventDefault()
+    setLocSt(st)
+  }
+
+  const order = () => {
+    dispatch(setOrderServiceType('OLO', locSt))
     history.push('/locations')
   }
 
-  const handleDelivery = () => {
-    dispatch(setOrderServiceType('OLO', 'DELIVERY'))
-    history.push('/locations')
-  }
+  useEffect(() => {
+    if (!serviceType || serviceType === 'WALKIN') {
+      setLocSt('PICKUP')
+      dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    }
+  }, [dispatch, serviceType])
 
   return (
     <LocationsAutocompleteView>
@@ -128,15 +153,27 @@ const LocationsAutocomplete = ({
           placeholder={placeholder}
         />
         <LocationsAutocompleteButtons>
-          <ButtonStyled onClick={handlePickup} size="small" disabled={!address}>
-            Pickup
-          </ButtonStyled>
+          <LocationsAutocompleteToggle>
+            <LocationsAutocompleteButton
+              onClick={(evt) => toggle(evt, 'PICKUP')}
+              isActive={locSt === 'PICKUP'}
+            >
+              Pickup
+            </LocationsAutocompleteButton>
+            <LocationsAutocompleteButton
+              onClick={(evt) => toggle(evt, 'DELIVERY')}
+              isActive={locSt === 'DELIVERY'}
+            >
+              Delivery
+            </LocationsAutocompleteButton>
+          </LocationsAutocompleteToggle>
           <ButtonStyled
-            onClick={handleDelivery}
+            onClick={order}
             size="small"
-            disabled={!address}
+            color="cart"
+            disabled={!address || !locSt}
           >
-            Delivery
+            Go
           </ButtonStyled>
         </LocationsAutocompleteButtons>
       </LocationsAutocompleteForm>
