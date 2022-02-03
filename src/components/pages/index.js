@@ -6,6 +6,7 @@ import AccountCreditCards from './AccountCreditCards'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
+import CateringSite from './CateringSite'
 import Checkout from './Checkout'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutSignIn from './CheckoutSignIn'
@@ -54,6 +55,7 @@ export {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  CateringSite,
   Checkout,
   CheckoutGuest,
   CheckoutSignIn,

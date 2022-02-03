@@ -8,6 +8,7 @@ import {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  CateringSite,
   Checkout,
   CheckoutGuest,
   CheckoutSignIn,
@@ -86,6 +87,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/restaurants">
         <Locations />
+      </Route>
+      <Route exact path="/catering-menu">
+        <CateringSite />
       </Route>
       <Route exact path="/catering">
         <Catering />

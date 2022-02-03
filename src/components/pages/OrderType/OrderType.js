@@ -84,7 +84,7 @@ const OrderType = () => {
   const { home, orderType } = useSelector(selectContent)
   const { background, title, subtitle } = orderType
   const { content } = home
-  const hasContent = !!(content && content.length && content[0].length)
+  const hasContent = !!(content && content.length)
   // const announcements = useSelector(selectAnnouncements)
 
   useEffect(() => {
@@ -118,11 +118,7 @@ const OrderType = () => {
             </OrderTypeTitle>
             <OrderTypes />
             {hasContent && (
-              <OrderTypeContent>
-                {content.map((i, index) => (
-                  <p key={index}>{i}</p>
-                ))}
-              </OrderTypeContent>
+              <OrderTypeContent dangerouslySetInnerHTML={{ __html: content }} />
             )}
           </OrderTypeView>
         </Main>

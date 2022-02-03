@@ -81,7 +81,7 @@ const HeaderSiteNav = styled.div`
 const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
-  { path: '/catering', title: 'Catering' },
+  { path: '/catering-menu', title: 'Catering' },
   { path: '/deals', title: 'Offers' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },

@@ -140,7 +140,11 @@ const CateringPage = () => {
           <ScreenreaderTitle>Catering</ScreenreaderTitle>
           <CateringView>
             <CateringTitle>
-              <PageTitle title={title} subtitle={subtitle} />
+              <PageTitle
+                title={title}
+                subtitle={subtitle}
+                style={{ maxWidth: '100%' }}
+              />
             </CateringTitle>
             {hasCatering ? (
               <CateringContent>

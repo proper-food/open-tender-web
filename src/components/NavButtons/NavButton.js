@@ -13,7 +13,7 @@ const NavButtonView = styled('button')`
   align-items: center;
   line-height: 1;
   min-height: 6rem;
-  padding: 1.3rem 2rem 1.3rem 2.5rem;
+  padding: 1.5rem 2rem 1.5rem 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -52,8 +52,8 @@ const NavButtonView = styled('button')`
 
 const NavButtonIcon = styled('span')`
   position: relative;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 2rem;
+  height: 2rem;
   flex-shrink: 0;
   line-height: 0;
   color: ${(props) => props.theme.colors.primary};
@@ -76,14 +76,15 @@ const NavButtonTitle = styled('span')`
   }
 
   & > span:first-of-type {
+    line-height: 1.2;
     margin: 0 0 0.1rem -0.1rem;
   }
 `
 
 const NavButtonArrow = styled('span')`
   position: relative;
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   line-height: 0;
   flex-shrink: 0;
   color: ${(props) => props.theme.colors.primary};
