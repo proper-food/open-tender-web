@@ -4,6 +4,7 @@ import {
   About,
   Accessibility,
   AccountAddresses,
+  Account,
   AccountAllergens,
   AccountCreditCards,
   AccountGiftCards,
@@ -151,6 +152,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/group-orders">
         <GroupOrders />
+      </Route>
+      <Route exact path="/home">
+        <Account />
       </Route>
       <Route exact path="/account">
         <AccountSettings />

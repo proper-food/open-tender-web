@@ -24,7 +24,7 @@ import {
 import { ButtonLink, Message, useGeolocation } from '@open-tender/components'
 
 import {
-  selectConfig,
+  selectContent,
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
@@ -64,7 +64,7 @@ const OrderTypes = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { geoLatLng, geoError } = useGeolocation()
-  const { home } = useSelector(selectConfig)
+  const { orderType: orderTypeContent } = useSelector(selectContent)
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -157,13 +157,13 @@ const OrderTypes = () => {
   }
 
   const buttons = orderButtons.map((orderType) => ({
-    ...home.orderTypes[orderType],
+    ...orderTypeContent.orderTypes[orderType],
     icon: icons[orderType],
     onClick: handlers[orderType],
   }))
 
   const links = orderLinks.map((orderType) => ({
-    ...home.orderTypes[orderType],
+    ...orderTypeContent.orderTypes[orderType],
     icon: icons[orderType],
     onClick: handlers[orderType],
   }))

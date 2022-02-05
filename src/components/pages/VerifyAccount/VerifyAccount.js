@@ -64,7 +64,9 @@ const VerifyAccount = () => {
                 <PageContent>
                   <div>
                     <p>
-                      <ButtonLink onClick={() => history.push('/')}>
+                      <ButtonLink
+                        onClick={() => history.push(auth ? '/home' : '/')}
+                      >
                         {auth
                           ? 'Head back to your account'
                           : 'Head back to the home page'}

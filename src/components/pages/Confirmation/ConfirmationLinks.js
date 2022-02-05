@@ -11,16 +11,6 @@ const ConfirmationLinksView = styled('div')`
     margin: 1.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
-
-  // p {
-  //   button,
-  //   span {
-  //     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //       display: inline-block;
-  //       width: 100%;
-  //     }
-  //   }
-  // }
 `
 
 const ConfirmationLinks = ({ auth, brand }) => {
@@ -29,7 +19,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
 
   const reviewAccount = () => {
     dispatch(resetCustomerOrder())
-    history.push('/')
+    history.push('/home')
   }
 
   return (

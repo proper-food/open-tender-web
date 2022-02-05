@@ -81,9 +81,8 @@ const OrderType = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
-  const { home, orderType } = useSelector(selectContent)
-  const { background, title, subtitle } = orderType
-  const { content } = home
+  const { orderType } = useSelector(selectContent)
+  const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
   // const announcements = useSelector(selectAnnouncements)
 

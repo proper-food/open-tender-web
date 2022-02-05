@@ -23,7 +23,7 @@ const GreetingFootnote = styled('p')`
   }
 `
 
-const GuestContent = styled('div')`
+const GreetingContent = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   margin: 2.5rem 0 0;
@@ -40,7 +40,7 @@ const Greeting = ({ title, subtitle, actions, footnote, children, style }) => {
       <PageTitle title={title} subtitle={subtitle} />
       {actions}
       {footnote && <GreetingFootnote>{footnote}</GreetingFootnote>}
-      {children && <GuestContent>{children}</GuestContent>}
+      {children && <GreetingContent>{children}</GreetingContent>}
     </GreetingView>
   )
 }
