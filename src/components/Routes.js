@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import {
+  About,
   Accessibility,
   AccountAddresses,
   AccountAllergens,
@@ -82,16 +83,19 @@ const Routes = () => {
       <Route exact path="/verify">
         <VerifyAccount />
       </Route>
+      <Route exact path="/about">
+        <About />
+      </Route>
       <Route exact path="/menu">
         <MenuSite />
       </Route>
       <Route exact path="/restaurants">
         <Locations />
       </Route>
-      <Route exact path="/catering-menu">
+      <Route exact path="/catering">
         <CateringSite />
       </Route>
-      <Route exact path="/catering">
+      <Route exact path="/catering-address">
         <Catering />
       </Route>
       <Route exact path="/locations">

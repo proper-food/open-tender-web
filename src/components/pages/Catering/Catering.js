@@ -12,7 +12,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectContent } from '../../../slices'
 import iconMap from '../../iconMap'
 import {
   Background,
@@ -58,6 +58,32 @@ const CateringButtons = styled('div')`
   }
 `
 
+const CateringPolicy = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  margin: 2.5rem 0;
+  line-height: ${(props) => props.theme.lineHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  p {
+    margin: 0.5em 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+`
+
 const CateringStartOver = styled('div')`
   margin: 3rem 0 0;
 
@@ -66,45 +92,30 @@ const CateringStartOver = styled('div')`
   }
 `
 
-const CateringPolicy = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  margin: 6rem 0 3rem;
-
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-  }
-
-  div p {
-    margin: 1em 0;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
-  }
-`
-
-const CateringContentSection = ({ policy, startOver }) => {
-  return (
-    <CateringPolicy>
-      {policy.title && <h2>{policy.title}</h2>}
-      {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
-      {policy.content.length > 0 && (
-        <div>
-          {policy.content.map((i, index) => (
-            <p key={index}>{i}</p>
-          ))}
-        </div>
-      )}
-    </CateringPolicy>
-  )
-}
+// const CateringContentSection = ({ policy }) => {
+//   return (
+//     <CateringPolicy>
+//       {policy.title && <h2>{policy.title}</h2>}
+//       {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
+//       {policy.content.length > 0 && (
+//         <div>
+//           {policy.content.map((i, index) => (
+//             <p key={index}>{i}</p>
+//           ))}
+//         </div>
+//       )}
+//     </CateringPolicy>
+//   )
+// }
 
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { catering: config } = useSelector(selectConfig)
-  const { title, subtitle, background, policy } = config
+  const { catering: config } = useSelector(selectContent)
+  const { title, subtitle, background, content } = config
   const { orderType, address } = useSelector(selectOrder)
+  const hasContent = !!(content && content.length)
   const hasCatering = true
 
   useEffect(() => {
@@ -182,7 +193,10 @@ const CateringPage = () => {
                 </ButtonStyled>
               </CateringError>
             )}
-            <CateringContentSection policy={policy} startOver={startOver} />
+            {hasContent && (
+              <CateringPolicy dangerouslySetInnerHTML={{ __html: content }} />
+            )}
+            {/* <CateringContentSection policy={policy} /> */}
           </CateringView>
         </Main>
       </Content>

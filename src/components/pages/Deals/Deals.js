@@ -2,15 +2,13 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
   Deals as DealsList,
-  HeaderDefault,
-  HeaderUser,
+  HeaderSite,
   Loading,
   Main,
   PageContainer,
@@ -18,14 +16,13 @@ import {
   PageError,
   PageTitle,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const Deals = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { deals: config } = useSelector(selectConfig)
-  const { auth, profile } = useSelector(selectCustomer)
+  const { profile } = useSelector(selectCustomer)
   const { customer_id } = profile || {}
   const { entities: deals, loading, error } = useSelector(selectDeals)
   const hasDeals = deals.length > 0
@@ -47,9 +44,8 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        {auth ? <HeaderUser /> : <HeaderDefault />}
+        <HeaderSite useLight={false} />
         <Main>
-          {!isBrowser && auth && <AccountTabs />}
           <PageContainer>
             <PageTitle {...config} />
             {error ? (

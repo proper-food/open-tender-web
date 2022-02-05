@@ -23,7 +23,7 @@ const CateringSiteView = styled.div``
 
 const CateringSiteMenu = styled.div`
   max-width: 128rem;
-  margin: 0 auto;
+  margin: 0 auto ${(props) => props.theme.layout.margin};
 `
 
 const CateringSite = () => {
@@ -31,9 +31,9 @@ const CateringSite = () => {
   const brand = useSelector(selectBrand)
   const { cateringSite } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = cateringSite
-  const revenueCenterId = 1285
+  const revenueCenterId = 1408
   const serviceType = 'DELIVERY'
-  const requestedAt = 'asap'
+  const requestedAt = '2022-02-03T17:00:00Z'
   const { categories } = useSelector(selectMenu)
 
   const scrollToMenu = () => {

@@ -118,7 +118,7 @@ const OrderTypes = () => {
 
   const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
-    history.push('/catering')
+    history.push('/catering-address')
   }
 
   const handleMerch = () => {

@@ -63,7 +63,8 @@ const HeaderSiteNav = styled.div`
   }
 
   a {
-    color: ${(props) => props.theme.colors.light};
+    color: ${(props) =>
+      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
 
     &:hover,
     &:active {
@@ -72,8 +73,10 @@ const HeaderSiteNav = styled.div`
   }
 
   button {
-    color: ${(props) => props.theme.colors.light};
-    border-color: ${(props) => props.theme.colors.light};
+    color: ${(props) =>
+      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
+    border-color: ${(props) =>
+      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
     background: transparent;
   }
 `
@@ -81,16 +84,17 @@ const HeaderSiteNav = styled.div`
 const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
-  { path: '/catering-menu', title: 'Catering' },
+  { path: '/catering', title: 'Catering' },
   { path: '/deals', title: 'Offers' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },
 ]
 
-const HeaderSite = ({ style = null }) => {
+const HeaderSite = ({ useLight = true, style = null }) => {
   const header = useRef(null)
   const [stuck, setStuck] = useState(false)
-  const { logoLight, title } = useSelector(selectBrand)
+  const { logo, logoLight, title } = useSelector(selectBrand)
+  const logoUrl = useLight || stuck ? logoLight : logo
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,10 +113,10 @@ const HeaderSite = ({ style = null }) => {
       <HeaderSiteView stuck={stuck} isMobile={isMobile} style={style}>
         <HeaderSiteLogo>
           <Link to="/">
-            <img src={logoLight} alt={title} />
+            <img src={logoUrl} alt={title} />
           </Link>
         </HeaderSiteLogo>
-        <HeaderSiteNav>
+        <HeaderSiteNav useLight={useLight} stuck={stuck}>
           <ul>
             {links.map((link) => (
               <li key={link.path}>

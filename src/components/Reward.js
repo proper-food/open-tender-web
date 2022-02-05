@@ -12,10 +12,10 @@ import { Tag } from '.'
 const RewardView = styled(Box)`
   position: relative;
   height: 100%;
-  min-height: 13rem;
+  min-height: 20rem;
   display: flex;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0;
 `
 
 const RewardTag = styled('div')`
@@ -29,15 +29,18 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 25%;
+  flex: 0 0 35%;
   height: 100%;
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  border-radius: ${(props) => props.theme.cards.default.borderRadius};
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 `
 
 const RewardDetails = styled('div')`
-  flex: 1 1 75%;
+  flex: 1 1 65%;
   height: 100%;
-  padding: 0 0 0 1rem;
+  padding: 1.5rem 2rem 1.5rem 2.5rem;
 
   & > div {
     display: flex;
@@ -54,8 +57,8 @@ const RewardContent = styled('div')`
 const RewardNote = styled('div')`
   display: flex;
   align-items: center;
-  margin: 0 0 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  margin: 0 0 1.5rem;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
 
   span {
     display: block;
@@ -63,9 +66,9 @@ const RewardNote = styled('div')`
   }
 
   span:first-of-type {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin: 0 0.4rem 0 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: 0 0.8rem 0 0;
     // color: ${(props) => props.theme.links.primary.color};
 `
 
@@ -77,14 +80,15 @@ const RewardNote = styled('div')`
 // `
 
 const RewardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
   line-height: 1.25;
 `
 
 const RewardDescription = styled('p')`
   margin: 0.5rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  line-height: 1.2;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: 1.3;
+  // line-height: ${(props) => props.theme.lineHeight};
 `
 
 const RewardExpiration = styled('div')`
@@ -93,14 +97,14 @@ const RewardExpiration = styled('div')`
 `
 
 const RewardAction = styled('div')`
-  margin: 0 0 0 0.5rem;
+  margin: 0 2rem 0 0.5rem;
   // position: absolute;
   // bottom: 0.4rem;
   // right: 1rem;
 
   button {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
   }
 `
 

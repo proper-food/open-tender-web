@@ -3,18 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-import styled from '@emotion/styled'
-import {
-  // selectAnnouncementsPage,
-  fetchAnnouncementPage,
-} from '@open-tender/redux'
+// import {
+//   selectAnnouncementsPage,
+//   fetchAnnouncementPage,
+// } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import {
-  Container,
   Content,
-  DealsSection,
   HeaderSite,
   HeroSite,
   HeroSiteCta,
@@ -27,7 +24,6 @@ const Guest = () => {
   const history = useHistory()
   // const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
-  const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = home
   const hasContent = !!(content && content.length)
@@ -36,9 +32,9 @@ const Guest = () => {
     dispatch(closeModal())
   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(fetchAnnouncementPage('HOME'))
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(fetchAnnouncementPage('HOME'))
+  // }, [dispatch])
 
   return (
     <>

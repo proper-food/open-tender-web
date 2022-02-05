@@ -45,7 +45,7 @@ const ServiceType = ({ style = null, useButton = false }) => {
   }
 
   const handleCatering = () => {
-    history.push(`/catering`)
+    history.push(`/catering-address`)
   }
 
   const change =

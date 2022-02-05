@@ -65,7 +65,7 @@ const RevenueCenters = () => {
       const [orderType, serviceType, isOutpost] = makeOrderTypeFromParam(param)
       if (paramOrderType) {
         dispatch(setOrderServiceType(orderType, serviceType, isOutpost))
-        if (paramOrderType[0] === 'CATERING') history.push('/catering')
+        if (paramOrderType[0] === 'CATERING') history.push('/catering-address')
       }
     }
     if (!hasTypes && !paramOrderType) history.push('/')
@@ -110,7 +110,10 @@ const RevenueCenters = () => {
           style={{ boxShadow: 'none' }}
           left={
             orderType === 'CATERING' ? (
-              <Back text="Catering" onClick={() => history.push('/catering')} />
+              <Back
+                text="Catering"
+                onClick={() => history.push('/catering-address')}
+              />
             ) : (
               <Back
                 text="Order Type"

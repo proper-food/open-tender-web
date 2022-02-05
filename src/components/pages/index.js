@@ -1,3 +1,4 @@
+import About from './About'
 import Accessibility from './Accessibility'
 import Account from './Account'
 import AccountAddresses from './AccountAddresses'
@@ -47,6 +48,7 @@ import Thanx from './Thanx'
 import VerifyAccount from './VerifyAccount'
 
 export {
+  About,
   Accessibility,
   Account,
   AccountAddresses,

@@ -22,8 +22,8 @@ const Deal = styled('div')`
   // width: 33.33333%;
   // padding: 0.5rem;
   width: 50%;
-  max-width: 42rem;
-  padding: 0.5rem;
+  // max-width: 42rem;
+  padding: 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 50%;
     padding: 0.5rem;
