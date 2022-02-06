@@ -23,12 +23,6 @@ import ModalView from '../Modal/ModalView'
 
 const RequestedAtModalView = styled(ModalView)`
   width: ${(props) => props.width};
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //   max-width: 100%;
-  //   min-height: 100%;
-  //   margin: 0;
-  //   border-radius: 0;
-  // }
 
   & > div {
     padding: 3.5rem 3.5rem 4rem;

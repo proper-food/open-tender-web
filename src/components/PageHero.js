@@ -60,10 +60,8 @@ const PageHero = ({ announcements, imageUrl, showHero, style, children }) => {
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
-  // const isLoading = true
   const hasHero = imageUrl && showHero
   const hasImage = slides || hasHero
-  console.log('imageUrl', imageUrl)
 
   return (
     <PageHeroView style={style} hasImage={hasImage}>
