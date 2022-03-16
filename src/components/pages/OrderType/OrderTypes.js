@@ -64,7 +64,10 @@ const OrderTypes = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { geoLatLng, geoError } = useGeolocation()
-  const { orderType: orderTypeContent } = useSelector(selectContent)
+  const { orderType: orderTypeContent, home: homeContent } =
+    useSelector(selectContent)
+  const contentTypes =
+    orderTypeContent.orderTypes || homeContent.orderTypes || []
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -157,13 +160,13 @@ const OrderTypes = () => {
   }
 
   const buttons = orderButtons.map((orderType) => ({
-    ...orderTypeContent.orderTypes[orderType],
+    ...contentTypes[orderType],
     icon: icons[orderType],
     onClick: handlers[orderType],
   }))
 
   const links = orderLinks.map((orderType) => ({
-    ...orderTypeContent.orderTypes[orderType],
+    ...contentTypes[orderType],
     icon: icons[orderType],
     onClick: handlers[orderType],
   }))
