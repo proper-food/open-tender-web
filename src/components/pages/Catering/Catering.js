@@ -38,6 +38,8 @@ const CateringTitle = styled('div')`
 const CateringContent = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  position: relative;
+  z-index: 2;
 `
 
 const CateringError = styled('div')`
@@ -61,6 +63,8 @@ const CateringButtons = styled('div')`
 const CateringPolicy = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  position: relative;
+  z-index: 1;
   margin: 2.5rem 0;
   line-height: ${(props) => props.theme.lineHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
