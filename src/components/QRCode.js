@@ -15,6 +15,7 @@ const QRCodeView = styled('div')`
   border-radius: ${(props) => props.theme.border.radiusSmall};
   background-color: white;
   line-height: 0.1;
+  overflow: hidden;
 
   img {
     position: absolute;

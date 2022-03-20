@@ -54,6 +54,7 @@ const RewardFinePrint = styled('div')`
 `
 
 const RewardContent = styled('div')`
+  label: RewardContent;
   width: 100%;
   margin: 1.5rem 0 1rem;
 
