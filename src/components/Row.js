@@ -37,6 +37,7 @@ const RowText = styled('div')`
     line-height: ${(props) => props.theme.lineHeight};
 
     &:first-of-type {
+      margin: 0rem 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.main};
       color: ${(props) => props.theme.fonts.headings.color};
     }

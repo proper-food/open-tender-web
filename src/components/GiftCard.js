@@ -10,6 +10,8 @@ import { LinkSeparator, QRCode } from '.'
 import styled from '@emotion/styled'
 
 const GiftCardView = styled(Box)`
+  label: GiftCardView;
+
   position: relative;
   height: 100%;
   display: flex;
@@ -22,6 +24,8 @@ const GiftCardQRCode = styled('button')`
 `
 
 const GiftCardContent = styled('div')`
+  label: GiftCardContent;
+
   flex: 1 1 75%;
   padding: 0.2rem 0 0.2rem 1rem;
   height: 100%;
@@ -42,6 +46,8 @@ const GiftCardContent = styled('div')`
 `
 
 const GiftCardAction = styled('div')`
+  label: GiftCardAction;
+
   margin: 0 0 0 0.5rem;
 
   button {
