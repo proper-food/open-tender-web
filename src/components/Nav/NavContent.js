@@ -74,7 +74,7 @@ const navButtons = [
   },
   {
     icon: iconMap.Sliders,
-    title: 'Allergens',
+    title: 'Dietary Preferences',
     path: '/account/allergens',
   },
   {
