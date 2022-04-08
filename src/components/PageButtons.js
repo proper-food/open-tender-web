@@ -8,7 +8,7 @@ const PageButtons = styled('div')`
   align-items: center;
   margin: -2rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: -1rem -1rem 0;
+    margin: -1rem 0 0;
     flex-wrap: wrap;
   }
 

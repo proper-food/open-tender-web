@@ -141,7 +141,7 @@ const NavItem = styled('button')`
   align-items: center;
   text-align: left;
   line-height: 0;
-  padding: 1rem 1rem 1rem 3.5rem;
+  padding: 1.25rem 1rem 1.25rem 3.5rem;
   color: ${(props) => props.theme.fonts.headings.color};
 
   span {
@@ -161,7 +161,7 @@ const NavIcon = styled('span')`
 
 const NavTitle = styled('p')`
   flex-grow: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.main};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   line-height: 1.2;
 `
 

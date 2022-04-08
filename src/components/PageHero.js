@@ -8,14 +8,6 @@ const PageHeroView = styled('div')`
   position: relative;
   display: flex;
   flex-direction: column;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    ${(props) =>
-      props.hasImage
-        ? `
-    min-height: 100vh;
-    min-height: -webkit-fill-available;`
-        : ''}
-  }
 `
 
 const PageHeroContent = styled('div')`

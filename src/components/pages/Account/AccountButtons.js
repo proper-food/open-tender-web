@@ -1,71 +1,78 @@
-import styled from '@emotion/styled'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectCustomerGroupOrders } from '@open-tender/redux'
+import { isBrowser } from 'react-device-detect'
+import { resetOrder, selectOrder, selectCustomer } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
 
-import { selectBrand, selectSettings } from '../../../slices'
 import iconMap from '../../iconMap'
-import { NavButtons } from '../..'
+import styled from '@emotion/styled'
 
-const AccountButtonsContainer = styled('div')`
-  // padding: 0 2.5rem 2.5rem;
+const AccountButtonsView = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    width: 48%;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      width: 48%;
+    }
+  }
 `
-
-const navButtons = [
-  {
-    icon: iconMap.Users,
-    title: 'Group Orders',
-    path: '/group-orders',
-  },
-  {
-    icon: iconMap.ShoppingBag,
-    title: 'Order History',
-    path: '/orders',
-  },
-  {
-    icon: iconMap.Heart,
-    title: 'Favorites',
-    path: '/favorites',
-  },
-  {
-    icon: iconMap.Award,
-    title: 'Rewards',
-    path: '/rewards',
-  },
-  {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/account/gift-cards',
-  },
-  {
-    icon: iconMap.User,
-    title: 'Account',
-    path: '/account',
-  },
-]
 
 const AccountButtons = () => {
   const history = useHistory()
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const { accountSections } = useSelector(selectSettings)
-  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
-  const hasRewards = has_rewards || has_thanx || hasLevelUp
-  const { entities: groupOrders } = useSelector(selectCustomerGroupOrders)
-  let removed = !hasRewards ? ['/rewards'] : []
-  if (!groupOrders.length) removed.push('/group-orders')
-  const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
-  const buttons = filteredButtons.map((i) => ({
-    ...i,
-    onClick: () => history.push(i.path),
-  }))
+  const dispatch = useDispatch()
+  const currentOrder = useSelector(selectOrder)
+  const { revenueCenter, serviceType, cart } = currentOrder
+  const { profile } = useSelector(selectCustomer)
+  const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
+  const buttonSize = isBrowser ? 'default' : 'default'
+
+  const continueCurrent = () => {
+    history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
+  }
+
+  const startNewOrder = () => {
+    dispatch(resetOrder())
+    history.push(`/order-type`)
+  }
+
+  const reorder = () => {
+    history.push(`/orders`)
+  }
 
   return (
-    <AccountButtonsContainer>
-      <NavButtons buttons={buttons} />
-    </AccountButtonsContainer>
+    <AccountButtonsView>
+      {isCurrentOrder ? (
+        <ButtonStyled onClick={continueCurrent} size={buttonSize}>
+          Continue Order
+        </ButtonStyled>
+      ) : (
+        <ButtonStyled onClick={startNewOrder} size={buttonSize}>
+          New Order
+        </ButtonStyled>
+      )}
+      {profile ? (
+        <ButtonStyled onClick={reorder} size={buttonSize}>
+          Reorder
+        </ButtonStyled>
+      ) : (
+        <ButtonStyled
+          icon={iconMap.ShoppingBag}
+          onClick={startNewOrder}
+          size={buttonSize}
+        >
+          Login
+        </ButtonStyled>
+      )}
+    </AccountButtonsView>
   )
 }
 
 AccountButtons.displayName = 'AccountButtons'
+
 export default AccountButtons

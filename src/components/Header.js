@@ -4,6 +4,11 @@ import styled from '@emotion/styled'
 import { isBrowser, isMobile } from 'react-device-detect'
 import { useTheme } from '@emotion/react'
 
+const HeaderContainer = styled('nav')`
+  // display: block;
+  // width: 100%;
+`
+
 const HeaderView = styled('div')`
   position: fixed;
   z-index: 14;
@@ -109,7 +114,11 @@ const Header = ({
     borderColor === 'primary' && stuck ? 'secondary' : borderColor
 
   return (
-    <nav ref={header} role="navigation" aria-label="Primary Navigation">
+    <HeaderContainer
+      ref={header}
+      role="navigation"
+      aria-label="Primary Navigation"
+    >
       <HeaderView
         height={height}
         stuck={stuck}
@@ -127,7 +136,7 @@ const Header = ({
         )}
         <HeaderNav isBrowser={isBrowser}>{right}</HeaderNav>
       </HeaderView>
-    </nav>
+    </HeaderContainer>
   )
 }
 

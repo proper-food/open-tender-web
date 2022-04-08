@@ -6,9 +6,11 @@ import { PageTitle } from '.'
 
 const GreetingView = styled('div')`
   width: 100%;
-  text-align: center;
+  flex: 1 1 100%;
+  // text-align: center;
+  margin-top: ${(props) => props.theme.layout.navHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
+    margin-top: ${(props) => props.theme.layout.navHeightMobile};
   }
 `
 

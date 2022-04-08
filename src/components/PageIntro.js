@@ -23,6 +23,9 @@ const PageIntroContent = styled.div`
     font-family: 'Lora', sans-serif;
     // font-size: 2.5rem;
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.big};
+    }
   }
 `
 

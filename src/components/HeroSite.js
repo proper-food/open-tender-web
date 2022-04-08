@@ -48,8 +48,12 @@ const HeroSiteContent = styled('div')`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  padding: ${(props) => props.theme.layout.margin};
-  // padding-bottom: 9.6rem;
+  padding: ${(props) => props.theme.layout.margin}
+    ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.marginMobile}
+      ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const HeroSite = ({ imageUrl, style = {}, children }) => {

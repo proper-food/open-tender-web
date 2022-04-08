@@ -37,18 +37,19 @@ const BackgroundContentText = styled('div')`
     font-size: ${(props) => props.theme.fonts.sizes.mega};
     color: ${(props) => props.color || props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h1};
+      line-height: 1;
+      font-size: ${(props) => props.theme.fonts.sizes.h2};
     }
   }
 
   p + p {
     max-width: 64rem;
     margin: 2rem auto 0;
-    line-height: 1.2;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 1rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.big};
+      margin: 0.5rem 0 0;
+      font-size: ${(props) => props.theme.fonts.sizes.main};
     }
   }
 `

@@ -21,10 +21,10 @@ const HeaderSiteView = styled('div')`
   transition: all 0.25s ease;
   background-color: ${(props) =>
     props.stuck ? props.theme.bgColors.dark : 'transparent'};
-  padding: 0 ${(props) => props.theme.layout.margin};
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: 0 ${(props) => props.theme.layout.marginMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -50,6 +50,9 @@ const HeaderSiteNav = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 
   ul {
     display: flex;
