@@ -15,7 +15,7 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
-import { Announcements, Content, Header, Main, PageHero } from '../..'
+import { Announcements, Content, Greeting, Header, Main } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 // import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
@@ -66,7 +66,7 @@ const Account = () => {
         <Header
           // style={isBrowser ? null : { backgroundColor: 'transparent' }}
           // left={<AccountScan />}
-          left={<AccountWelcome title={title} profile={profile} />}
+          left={<Greeting />}
           right={
             isBrowser ? (
               <>
