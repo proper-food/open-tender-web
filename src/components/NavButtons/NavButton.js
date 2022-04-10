@@ -12,8 +12,8 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  min-height: 6rem;
-  padding: 1.5rem 2rem 1.5rem 2.5rem;
+  height: 8rem;
+  padding: 0 2rem 0 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -25,13 +25,15 @@ const NavButtonView = styled('button')`
   background-color: ${(props) => props.theme.bgColors.primary};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    min-height: 4rem;
-    padding: 2rem 0.5rem 2rem 2rem;
-    border-width: 0;
-    border-bottom-width: ${(props) => props.theme.border.width};
-    margin: 0;
-    border-radius: 0;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    height: 7rem;
+    padding: 0 1rem 0 2rem;
+    // min-height: 4rem;
+    // padding: 2rem 0.5rem 2rem 2rem;
+    // border-width: 0;
+    // border-bottom-width: ${(props) => props.theme.border.width};
+    // margin: 0;
+    // border-radius: 0;
+    // font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 
   &:hover {
@@ -44,9 +46,9 @@ const NavButtonView = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      border-width: 0;
-    }
+    // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    //   border-width: 0;
+    // }
   }
 `
 
@@ -68,7 +70,7 @@ const NavButtonTitle = styled('span')`
   align-items: flex-start;
   padding: 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 2.5rem;
+    padding: 0 2rem;
   }
 
   & > span {
