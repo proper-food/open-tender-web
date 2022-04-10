@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 const AccountGreetingView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  text-align: center;
+  // text-align: center;
   margin: 0 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 0;
@@ -13,9 +13,9 @@ const AccountGreetingView = styled('div')`
 
   h1 {
     line-height: 1.1;
-    font-size: ${(props) => props.theme.fonts.sizes.giga};
+    font-size: ${(props) => props.theme.fonts.sizes.h1};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h1};
+      font-size: ${(props) => props.theme.fonts.sizes.h2};
     }
 
     // span {

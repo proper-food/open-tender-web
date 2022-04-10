@@ -7,7 +7,7 @@ import AccountLoyaltyProgram from './AccountLoyaltyProgram'
 import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
-const AccountLoyalty = ({ showTitle = true }) => {
+const AccountLoyalty = ({ showTitle = false }) => {
   const { has_rewards, has_thanx, has_levelup } = useSelector(selectBrand)
   const { account } = useSelector(selectConfig)
 

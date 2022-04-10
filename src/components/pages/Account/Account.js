@@ -21,8 +21,9 @@ import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountGreeting from './AccountGreeting'
 import AccountButtons from './AccountButtons'
+import AccountLoyalty from './AccountLoyalty'
+import AccountSlider from './AccountSlider'
 // import AccountOrders from './AccountOrders'
-// import AccountLoyalty from './AccountLoyalty'
 // import AccountGroupOrders from './AccountGroupOrders'
 // import AccountDeals from './AccountDeals'
 // import AccountRewards from './AccountRewards'
@@ -39,7 +40,7 @@ const AccountContainer = styled.div`
 
 const AccountWelcome = styled.div`
   flex: 1 1 100%;
-  padding: ${(props) => props.theme.layout.paddingMobile};
+  padding: 0 ${(props) => props.theme.layout.paddingMobile};
   // background-color: ${(props) => props.theme.bgColors.tertiary};
 `
 
@@ -74,7 +75,7 @@ const Account = () => {
       <Content>
         <Header
           // style={isBrowser ? null : { backgroundColor: 'transparent' }}
-          left={<AccountScan />}
+          // left={<AccountScan />}
           right={
             isBrowser ? (
               <>
@@ -99,13 +100,9 @@ const Account = () => {
                 profile={profile}
               />
               <AccountButtons />
+              {/* <AccountLoyalty /> */}
             </AccountWelcome>
-            <PageHero
-              announcements={announcements}
-              imageUrl={isBrowser ? background : mobile}
-              showHero={showHero}
-              // style={isBrowser ? null : { paddingBottom: navHeightMobile }}
-            />
+            <AccountSlider announcements={announcements} />
           </AccountContainer>
         </Main>
       </Content>
