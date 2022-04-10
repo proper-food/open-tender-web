@@ -11,7 +11,7 @@ import iconMap from '../iconMap'
 const Home = ({ text = 'Home', color }) => {
   const history = useHistory()
   const { auth } = useSelector(selectCustomer)
-  const path = auth ? '/home' : '/'
+  const path = auth ? '/account' : '/'
   const icon = auth ? iconMap.User : iconMap.Home
 
   return isBrowser ? (

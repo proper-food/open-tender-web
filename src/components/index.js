@@ -1,5 +1,6 @@
 import Alerts from './Alerts'
 import AccountBack from './AccountBack'
+import Announcements from './Announcements'
 import Background from './Background'
 import BackgroundContent from './BackgroundContent'
 import BackgroundImage from './BackgroundImage'
@@ -95,6 +96,7 @@ import VerifyAccount from './VerifyAccount'
 export {
   Alerts,
   AccountBack,
+  Announcements,
   Background,
   BackgroundContent,
   BackgroundImage,

@@ -15,7 +15,7 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
-import { Content, Header, Main, PageHero } from '../..'
+import { Announcements, Content, Header, Main, PageHero } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 // import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
@@ -30,7 +30,7 @@ import AccountWelcome from './AccountWelcome'
 const AccountView = styled('div')`
   padding: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -85,7 +85,8 @@ const Account = () => {
           <AccountView>
             {/* {!isBrowser && <AccountTabs />} */}
             <AccountButtons />
-            <AccountLoyalty />
+            <Announcements />
+            {/* <AccountLoyalty /> */}
           </AccountView>
         </Main>
       </Content>

@@ -65,7 +65,7 @@ const VerifyAccount = () => {
                   <div>
                     <p>
                       <ButtonLink
-                        onClick={() => history.push(auth ? '/home' : '/')}
+                        onClick={() => history.push(auth ? '/account' : '/')}
                       >
                         {auth
                           ? 'Head back to your account'

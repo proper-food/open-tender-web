@@ -153,14 +153,14 @@ const Routes = () => {
       <Route exact path="/group-orders">
         <GroupOrders />
       </Route>
-      <Route exact path="/home">
+      <Route exact path="/account">
         <Account />
       </Route>
-      <Route exact path="/account">
+      <Route exact path="/settings">
         <AccountSettings />
       </Route>
       <Route exact path="/account/settings">
-        <Redirect to="/account" />
+        <Redirect to="/settings" />
       </Route>
       <Route exact path="/account/gift-cards">
         <AccountGiftCards />

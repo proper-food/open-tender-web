@@ -54,9 +54,9 @@ const navTabs = [
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.User,
-    title: 'Account',
-    path: '/account',
+    icon: iconMap.Settings,
+    title: 'Settings',
+    path: '/settings',
   },
 ]
 

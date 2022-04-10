@@ -17,7 +17,7 @@ const BackgroundContentView = styled('div')`
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 2.5rem ${(props) => props.theme.layout.paddingMobile} 3.5rem;
+    padding: 1.5rem ${(props) => props.theme.layout.paddingMobile};
     justify-content: center;
     align-items: flex-end;
     text-align: center;
@@ -38,7 +38,7 @@ const BackgroundContentText = styled('div')`
     color: ${(props) => props.color || props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       line-height: 1;
-      font-size: ${(props) => props.theme.fonts.sizes.h2};
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
     }
   }
 
@@ -49,7 +49,7 @@ const BackgroundContentText = styled('div')`
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.main};
+      font-size: ${(props) => props.theme.fonts.sizes.small};
     }
   }
 `

@@ -80,7 +80,7 @@ const Donations = () => {
               <PageContent>
                 <p>
                   {customer ? (
-                    <Link to="/home">Head back to your account page</Link>
+                    <Link to="/account">Head back to your account page</Link>
                   ) : (
                     <Link to="/">
                       Head back to the home page to start an order

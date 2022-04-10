@@ -13,9 +13,9 @@ const AccountWelcomeView = styled('div')`
   h1 {
     line-height: 1.1;
     margin-left: -0.1rem;
-    font-size: ${(props) => props.theme.fonts.sizes.h2};
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
     }
   }
 `
