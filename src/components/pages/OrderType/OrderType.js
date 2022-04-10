@@ -6,7 +6,7 @@ import Helmet from 'react-helmet'
 // import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import { selectContent, closeModal, selectBrand } from '../../../slices'
-import { Account, Home, Logout } from '../../buttons'
+import { Account, AccountHome, Logout } from '../../buttons'
 import {
   Background,
   Content,
@@ -104,8 +104,7 @@ const OrderType = () => {
         <Header
           maxWidth="76.8rem"
           title={!isBrowser && auth ? 'Order Type' : null}
-          // left={auth ? <Home /> : <HeaderLogo />}
-          left={<Home />}
+          left={<AccountHome />}
           right={auth ? <Logout /> : <Account />}
         />
         <Main>

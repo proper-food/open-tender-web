@@ -1,4 +1,5 @@
 import Account from './Account'
+import AccountHome from './AccountHome'
 import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
 import Back from './Back'
@@ -26,6 +27,7 @@ import StartOver from './StartOver'
 
 export {
   Account,
+  AccountHome,
   AccountSettings,
   Allergens,
   Back,

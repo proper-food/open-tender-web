@@ -28,7 +28,8 @@ const ProgressPoint = styled('div')`
   height: 2.4rem;
   border-radius: 1.2rem;
   border: 0.2rem solid ${(props) => props.theme.bgColors.primary};
-  background-color: ${(props) => props.theme.links.primary.color};
+  // background-color: ${(props) => props.theme.links.primary.color};
+  background-color: ${(props) => props.theme.colors.primary};
 `
 
 const ProgressPointContainer = styled('div')`
@@ -122,7 +123,7 @@ const ProgressBar = ({ progress, tiers = [] }) => {
           key={tier.percentage}
           style={{
             left: `${tier.percentage.toFixed(5)}%`,
-            backgroundColor: tier.color,
+            // backgroundColor: tier.color,
           }}
         >
           <ProgressPointContainer>

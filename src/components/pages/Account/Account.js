@@ -8,24 +8,17 @@ import {
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
-  selectAnnouncementsPage,
-  fetchAnnouncementPage,
   fetchCustomerOrders,
   fetchCustomerFavorites,
 } from '@open-tender/redux'
 
-import { selectBrand, selectConfig, closeModal } from '../../../slices'
+import { selectBrand, closeModal } from '../../../slices'
 import { Announcements, Content, Greeting, Header, Main } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 // import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
-import AccountWelcome from './AccountWelcome'
-// import AccountOrders from './AccountOrders'
-// import AccountGroupOrders from './AccountGroupOrders'
-// import AccountDeals from './AccountDeals'
-// import AccountRewards from './AccountRewards'
 
 const AccountView = styled('div')`
   padding: ${(props) => props.theme.layout.padding};
@@ -37,11 +30,10 @@ const AccountView = styled('div')`
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const { title: siteTitle } = useSelector(selectBrand)
-  const { account: accountConfig } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle, showHero } = accountConfig
-  const { auth, profile } = useSelector(selectCustomer)
+  // const { account: accountConfig } = useSelector(selectConfig)
+  // const { background, mobile, title, subtitle, showHero } = accountConfig
+  const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
 
   useEffect(() => {
@@ -49,15 +41,13 @@ const Account = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (!token) return history.push('/')
-    dispatch(fetchAnnouncementPage('HOME'))
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
   }, [token, dispatch, history])
 
-  return profile ? (
+  return (
     <>
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
@@ -83,15 +73,14 @@ const Account = () => {
         />
         <Main>
           <AccountView>
-            {/* {!isBrowser && <AccountTabs />} */}
             <AccountButtons />
+            <AccountLoyalty />
             <Announcements />
-            {/* <AccountLoyalty /> */}
           </AccountView>
         </Main>
       </Content>
     </>
-  ) : null
+  )
 }
 
 Account.displayName = 'Account'

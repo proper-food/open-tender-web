@@ -5,8 +5,8 @@ import { isBrowser } from 'react-device-detect'
 import { resetOrder, selectOrder, selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import iconMap from '../../iconMap'
 import styled from '@emotion/styled'
+import { openModal } from '../../../slices'
 
 const AccountButtonsView = styled('div')`
   opacity: 0;
@@ -16,7 +16,7 @@ const AccountButtonsView = styled('div')`
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 2rem ${(props) => props.theme.layout.paddingMobile} 4rem;
+  padding: 2rem ${(props) => props.theme.layout.paddingMobile} 2rem;
   background-color: ${(props) => props.theme.bgColors.primary};
   // border: 0;
   // border-style: solid;
@@ -48,6 +48,7 @@ const AccountButtons = () => {
   const { profile } = useSelector(selectCustomer)
   const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
   const buttonSize = isBrowser ? 'default' : 'default'
+  const buttonColor = 'primary'
 
   const continueCurrent = () => {
     history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
@@ -62,29 +63,37 @@ const AccountButtons = () => {
     history.push(`/orders`)
   }
 
+  const login = () => {
+    dispatch(openModal({ type: 'login' }))
+  }
+
   return (
     <AccountButtonsView>
       <AccountButtonsContainer>
         {isCurrentOrder ? (
-          <ButtonStyled onClick={continueCurrent} size={buttonSize}>
+          <ButtonStyled
+            onClick={continueCurrent}
+            size={buttonSize}
+            color={buttonColor}
+          >
             Continue Order
           </ButtonStyled>
         ) : (
-          <ButtonStyled onClick={startNewOrder} size={buttonSize}>
+          <ButtonStyled
+            onClick={startNewOrder}
+            size={buttonSize}
+            color={buttonColor}
+          >
             New Order
           </ButtonStyled>
         )}
         {profile ? (
-          <ButtonStyled onClick={reorder} size={buttonSize}>
+          <ButtonStyled onClick={reorder} size={buttonSize} color={buttonColor}>
             Reorder
           </ButtonStyled>
         ) : (
-          <ButtonStyled
-            icon={iconMap.ShoppingBag}
-            onClick={startNewOrder}
-            size={buttonSize}
-          >
-            Login
+          <ButtonStyled onClick={login} size={buttonSize} color={buttonColor}>
+            Login / Sign Up
           </ButtonStyled>
         )}
       </AccountButtonsContainer>

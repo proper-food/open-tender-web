@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { selectCustomer } from '@open-tender/redux'
 
 import { Header } from '.'
-import { Account, Home, Logout } from './buttons'
+import { Account, AccountHome, Logout } from './buttons'
 import { useSelector } from 'react-redux'
 
 const HeaderDefault = ({
@@ -20,7 +20,7 @@ const HeaderDefault = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<Home />}
+      left={<AccountHome />}
       right={auth ? <Logout /> : <Account />}
     />
   )

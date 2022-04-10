@@ -46,7 +46,7 @@ const Home = () => {
         <Main style={{ paddingTop: '0' }}>
           <HeroSite imageUrl={isBrowser ? background : mobile}>
             <HeroSiteCta title={title} subtitle={subtitle} width="56rem">
-              <ButtonStyled onClick={() => history.push('/order-type')}>
+              <ButtonStyled onClick={() => history.push('/account')}>
                 Order Now
               </ButtonStyled>
             </HeroSiteCta>

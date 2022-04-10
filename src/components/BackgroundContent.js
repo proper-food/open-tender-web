@@ -11,8 +11,7 @@ const BackgroundContentView = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  padding: 5rem ${(props) => props.theme.layout.padding};
-  // padding: 5rem;
+  padding: 3rem ${(props) => props.theme.layout.padding};
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
@@ -46,7 +45,7 @@ const BackgroundContentText = styled('div')`
     max-width: 64rem;
     margin: 2rem auto 0;
     line-height: ${(props) => props.theme.lineHeight};
-    font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 0.5rem 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.small};

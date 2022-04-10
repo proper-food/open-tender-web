@@ -114,33 +114,6 @@ const LoyaltyProgramPoints = styled('div')`
   }
 `
 
-// const tiers = [
-//   {
-//     level: 1,
-//     threshold: 1000,
-//     name: 'Green',
-//     description: 'Lorem ipsum',
-//   },
-//   {
-//     level: 2,
-//     threshold: 2500,
-//     name: 'Gold',
-//     description: 'Lorem ipsum',
-//   },
-//   {
-//     level: 3,
-//     threshold: 5000,
-//     name: 'Black',
-//     description: 'Lorem ipsum',
-//   },
-// ]
-
-// const status = {
-//   level: 1,
-//   name: 'Green',
-//   progress: 1500,
-// }
-
 const makeStatus = (tiers, status, points) => {
   if (!tiers) return null
   const highest = tiers[tiers.length - 1].threshold

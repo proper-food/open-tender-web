@@ -51,7 +51,6 @@ const ProgressPercentage = styled('div')`
 
     span:first-of-type {
       font-size: ${(props) => props.theme.fonts.sizes.h3};
-      margin: 0 0 0.3rem;
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
         font-size: ${(props) => props.theme.fonts.sizes.h4};
       }

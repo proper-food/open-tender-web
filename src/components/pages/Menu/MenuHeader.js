@@ -18,8 +18,8 @@ import {
   CancelEdit,
   GroupGuest,
   GroupOrder,
-  Home,
   LeaveGroup,
+  Locations,
   Points,
   RequestedAt,
   // OrderTime,
@@ -123,7 +123,7 @@ const MenuHeader = ({
   const { auth } = useSelector(selectCustomer)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
-  const left = cartGuest ? <LeaveGroup /> : <Home />
+  const left = cartGuest ? <LeaveGroup /> : <Locations />
 
   return (
     <Header

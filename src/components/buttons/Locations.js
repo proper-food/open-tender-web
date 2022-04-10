@@ -6,7 +6,7 @@ import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const Locations = ({ text = 'Locations', icon = iconMap.ArrowLeft }) => {
+const Locations = ({ text = 'Locations', icon = iconMap.MapPin }) => {
   const history = useHistory()
 
   const back = () => {
