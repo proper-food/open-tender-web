@@ -11,6 +11,18 @@ import styled from '@emotion/styled'
 const AccountButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem ${(props) => props.theme.layout.paddingMobile} 4rem;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+`
+
+const AccountButtonsContainer = styled.div`
+  max-width: 40rem;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,28 +59,30 @@ const AccountButtons = () => {
 
   return (
     <AccountButtonsView>
-      {isCurrentOrder ? (
-        <ButtonStyled onClick={continueCurrent} size={buttonSize}>
-          Continue Order
-        </ButtonStyled>
-      ) : (
-        <ButtonStyled onClick={startNewOrder} size={buttonSize}>
-          New Order
-        </ButtonStyled>
-      )}
-      {profile ? (
-        <ButtonStyled onClick={reorder} size={buttonSize}>
-          Reorder
-        </ButtonStyled>
-      ) : (
-        <ButtonStyled
-          icon={iconMap.ShoppingBag}
-          onClick={startNewOrder}
-          size={buttonSize}
-        >
-          Login
-        </ButtonStyled>
-      )}
+      <AccountButtonsContainer>
+        {isCurrentOrder ? (
+          <ButtonStyled onClick={continueCurrent} size={buttonSize}>
+            Continue Order
+          </ButtonStyled>
+        ) : (
+          <ButtonStyled onClick={startNewOrder} size={buttonSize}>
+            New Order
+          </ButtonStyled>
+        )}
+        {profile ? (
+          <ButtonStyled onClick={reorder} size={buttonSize}>
+            Reorder
+          </ButtonStyled>
+        ) : (
+          <ButtonStyled
+            icon={iconMap.ShoppingBag}
+            onClick={startNewOrder}
+            size={buttonSize}
+          >
+            Login
+          </ButtonStyled>
+        )}
+      </AccountButtonsContainer>
     </AccountButtonsView>
   )
 }

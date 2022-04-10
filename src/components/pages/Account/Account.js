@@ -17,31 +17,21 @@ import {
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { Content, Header, Main, PageHero } from '../..'
 import { Logout, OrderNow } from '../../buttons'
-import AccountScan from './AccountScan'
+// import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
-import AccountGreeting from './AccountGreeting'
 import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
-import AccountSlider from './AccountSlider'
+import AccountWelcome from './AccountWelcome'
 // import AccountOrders from './AccountOrders'
 // import AccountGroupOrders from './AccountGroupOrders'
 // import AccountDeals from './AccountDeals'
 // import AccountRewards from './AccountRewards'
 
-const AccountContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  margin-top: -${(props) => props.theme.layout.navHeightMobile};
-  padding-top: ${(props) => props.theme.layout.navHeightMobile};
-  // background-color: palegreen;
-`
-
-const AccountWelcome = styled.div`
-  flex: 1 1 100%;
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  // background-color: ${(props) => props.theme.bgColors.tertiary};
+const AccountView = styled('div')`
+  padding: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const Account = () => {
@@ -76,6 +66,7 @@ const Account = () => {
         <Header
           // style={isBrowser ? null : { backgroundColor: 'transparent' }}
           // left={<AccountScan />}
+          left={<AccountWelcome title={title} profile={profile} />}
           right={
             isBrowser ? (
               <>
@@ -91,19 +82,11 @@ const Account = () => {
           }
         />
         <Main>
-          {/* {!isBrowser && <AccountTabs />} */}
-          <AccountContainer>
-            <AccountWelcome>
-              <AccountGreeting
-                title={title}
-                subtitle={subtitle}
-                profile={profile}
-              />
-              <AccountButtons />
-              {/* <AccountLoyalty /> */}
-            </AccountWelcome>
-            <AccountSlider announcements={announcements} />
-          </AccountContainer>
+          <AccountView>
+            {/* {!isBrowser && <AccountTabs />} */}
+            <AccountButtons />
+            <AccountLoyalty />
+          </AccountView>
         </Main>
       </Content>
     </>
