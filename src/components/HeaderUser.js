@@ -2,10 +2,9 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { Header } from '.'
-import { NavMenu, OrderNow } from './buttons'
+import { AccountHome, NavMenu, OrderNow } from './buttons'
 import { isBrowser } from 'react-device-detect'
 import AccountTabs from './pages/Account/AccountTabs'
-import Greeting from './Greeting'
 
 const HeaderUser = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   return (
@@ -14,7 +13,7 @@ const HeaderUser = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<Greeting />}
+      left={<AccountHome />}
       right={
         isBrowser ? (
           <>

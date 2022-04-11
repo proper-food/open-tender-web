@@ -21,7 +21,7 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import { ButtonLink, Message, useGeolocation } from '@open-tender/components'
+import { ButtonStyled, Message, useGeolocation } from '@open-tender/components'
 
 import {
   selectContent,
@@ -54,9 +54,31 @@ const OrderTypesFooter = styled('div')`
 `
 
 const OrderTypesLinks = styled('div')`
-  // margin: 1rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+  margin: 4rem 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 3rem 0 0;
+    justify-content: center;
+  }
+
+  button {
+    display: block;
+    color: ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme.bgColors.secondary};
+    border-color: ${(props) => props.theme.bgColors.secondary};
+
+    &:hover,
+    &:active {
+      color: ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.bgColors.tertiary};
+      border-color: ${(props) => props.theme.bgColors.tertiary};
+    }
+  }
+
+  button + button {
+    margin: 0 0 0 1rem;
   }
 `
 
@@ -180,11 +202,15 @@ const OrderTypes = () => {
             <OrderTypesFooter>
               {/* <Heading as="p">Other stuff...</Heading> */}
               <OrderTypesLinks>
-                {links.map((link, index) => (
-                  <span key={link.title}>
-                    <ButtonLink onClick={link.onClick}>{link.title}</ButtonLink>
-                    {index + 1 < links.length ? <span> or </span> : null}
-                  </span>
+                {links.map((link) => (
+                  <ButtonStyled
+                    key={link.title}
+                    onClick={link.onClick}
+                    size="small"
+                    color="secondary"
+                  >
+                    {link.title}
+                  </ButtonStyled>
                 ))}
               </OrderTypesLinks>
             </OrderTypesFooter>

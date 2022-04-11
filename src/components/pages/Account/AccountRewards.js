@@ -29,7 +29,7 @@ const AccountRewardsSignUp = styled.div`
   h2 {
     margin-left: -0.1rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
     }
   }
 
@@ -82,7 +82,7 @@ const AccountRewards = () => {
     <AccountRewardsView>
       {!hasCustomer ? (
         <AccountRewardsSignUp>
-          <h2>Want some free stuff?</h2>
+          <h2>Welcome! Want some free stuff?</h2>
           <p>
             Sign up for our loyalty program to start earning points for each
             purchase, which can be redeemed for free stuff!
