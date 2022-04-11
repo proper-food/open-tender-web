@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Box, Heading } from '@open-tender/components'
+import { BgImage, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
@@ -29,7 +29,7 @@ const RewardButton = styled.button`
   }
 `
 
-const RewardView = styled(Box)`
+const RewardView = styled.div`
   position: relative;
   height: 100%;
   min-height: 16rem;
@@ -37,6 +37,9 @@ const RewardView = styled(Box)`
   align-items: center;
   padding: 0;
   border: 0;
+  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
+  background-color: ${(props) => props.theme.cards.menuItem.bgColor};
+  box-shadow: ${(props) => props.theme.cards.menuItem.boxShadow};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     min-height: 8rem;
   }
