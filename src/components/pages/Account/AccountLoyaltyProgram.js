@@ -15,9 +15,16 @@ const AccountLoyaltyProgramPoints = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`
 
-  & > div:last-of-type {
-    flex-grow: 1;
+const AccountLoyaltyProgramTier = styled('div')`
+  flex-grow: 1;
+  padding: 0 0 0 3rem;
+  text-align: right;
+
+  p + p {
+    margin: 0.6rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
@@ -39,9 +46,9 @@ const AccountLoyaltyProgramCredit = styled('div')`
 
 const AccountLoyaltyProgramStatus = styled('div')`
   flex-grow: 0;
-  margin: 1rem 0 0;
+  padding: 3rem 0 3.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 3rem 0 3.5rem;
+    padding: 3rem 0 3.5rem;
   }
 `
 
@@ -62,7 +69,7 @@ const makeStatus = (tiers, status, points) => {
       : `${formatQuantity(i.threshold)}`,
   }))
   const daysMsg =
-    status.days === 7300 ? 'all-time' : `in the last ${status.days} days`
+    status.days === 7300 ? 'all-time' : `in last ${status.days} days`
   const progressAmt = !points
     ? formatDollars(status.progress, '', 0)
     : formatQuantity(status.progress)
@@ -108,6 +115,26 @@ const AccountLoyaltyProgram = ({ program, isLoading = false }) => {
       {points ? (
         <AccountLoyaltyProgramPoints>
           <AccountPoints {...points} />
+          {currentStatus && (
+            <AccountLoyaltyProgramTier>
+              {status.tier ? (
+                <p>
+                  You're at{' '}
+                  <Text
+                    color="primary"
+                    bold={true}
+                    style={{ color: `#${status.tier.hex_code}` }}
+                  >
+                    {status.tier.name}
+                  </Text>{' '}
+                  status
+                </p>
+              ) : currentStatus.progress ? (
+                <p>You're making progress!</p>
+              ) : null}
+              <p>{currentStatus.progressMsg}</p>
+            </AccountLoyaltyProgramTier>
+          )}
         </AccountLoyaltyProgramPoints>
       ) : (
         <AccountLoyaltyProgramCredit>

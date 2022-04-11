@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -16,6 +17,16 @@ import {
   PageError,
   PageTitle,
 } from '../..'
+
+const DealsView = styled.div`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  max-width: 120rem;
+  margin: ${(props) => props.theme.layout.padding} auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    max-width: 60rem;
+  }
+`
 
 const Deals = () => {
   const history = useHistory()
@@ -51,7 +62,9 @@ const Deals = () => {
             {error ? (
               <PageError error={error} />
             ) : hasDeals ? (
-              <DealsList deals={deals} />
+              <DealsView>
+                <DealsList deals={deals} />
+              </DealsView>
             ) : (
               <PageContent>
                 {isLoading ? (

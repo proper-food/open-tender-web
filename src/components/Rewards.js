@@ -23,7 +23,7 @@ const RewardsContainer = styled('div')`
 `
 
 const RewardView = styled('div')`
-  width: 50%;
+  width: 100%;
   padding: 0.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;

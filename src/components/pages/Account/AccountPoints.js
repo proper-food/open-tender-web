@@ -6,7 +6,7 @@ import { Heading } from '@open-tender/components'
 import iconMap from '../../iconMap'
 
 const AccountPointsView = styled('div')`
-  width: 100%;
+  flex-grow: 0;
 `
 
 const AccountPointsCount = styled('div')`

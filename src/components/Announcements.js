@@ -8,6 +8,8 @@ import {
 } from '@open-tender/redux'
 import BackgroundImage from './BackgroundImage'
 import BackgroundContent from './BackgroundContent'
+import AccountSectionTitle from './pages/Account/AccountSectionTitle'
+import { selectBrand } from '../slices'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -54,6 +56,8 @@ const Annoucement = styled.div`
 
 const Annoucements = () => {
   const dispatch = useDispatch()
+  const brand = useSelector(selectBrand)
+  const title = `What's new at ${brand.title}`
   const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const { entities, loading, error } = announcements || {}
   const isLoading = loading === 'pending'
@@ -67,6 +71,7 @@ const Annoucements = () => {
 
   return (
     <AnnoucementsView>
+      <AccountSectionTitle title={title} />
       {slides.map((slide) => {
         return (
           <Annoucement key={slide.imageUrl}>

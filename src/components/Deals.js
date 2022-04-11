@@ -19,14 +19,11 @@ const DealsView = styled('div')`
 `
 
 const Deal = styled('div')`
-  // width: 33.33333%;
-  // padding: 0.5rem;
   width: 50%;
-  // max-width: 42rem;
   padding: 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 50%;
-    padding: 0.5rem;
+    width: 100%;
+    // padding: 0.5rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;

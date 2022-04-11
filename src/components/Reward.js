@@ -2,20 +2,41 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Box, ButtonLink, Heading } from '@open-tender/components'
+import { BgImage, Box, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
 import iconMap from './iconMap'
 import { Tag } from '.'
 
+const RewardButton = styled.button`
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+
+  &:hover,
+  &:active {
+    & > div {
+      // transition: ${(props) => props.theme.links.transition};
+      transition: all 0.25s ease-in-out;
+      transform: translate3D(0, -0.5rem, 0);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+`
+
 const RewardView = styled(Box)`
   position: relative;
   height: 100%;
-  min-height: 20rem;
+  min-height: 16rem;
   display: flex;
   align-items: center;
   padding: 0;
+  border: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    min-height: 8rem;
+  }
 `
 
 const RewardTag = styled('div')`
@@ -29,18 +50,25 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 35%;
+  flex: 0 0 16rem;
   height: 100%;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.cards.default.borderRadius};
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 8rem;
+  }
 `
 
 const RewardDetails = styled('div')`
-  flex: 1 1 65%;
+  flex: 1 1 100%;
   height: 100%;
-  padding: 1.5rem 2rem 1.5rem 2.5rem;
+  padding: 1.5rem 2rem 1.5rem 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 1 1 100%;
+    padding: 1rem 2rem 1rem 1.5rem;
+  }
 
   & > div {
     display: flex;
@@ -59,6 +87,10 @@ const RewardNote = styled('div')`
   align-items: center;
   margin: 0 0 1.5rem;
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    margin: 0 0 0.5rem;
+  }
 
   span {
     display: block;
@@ -69,7 +101,12 @@ const RewardNote = styled('div')`
     width: 1.6rem;
     height: 1.6rem;
     margin: 0 0.8rem 0 0;
-    // color: ${(props) => props.theme.links.primary.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      width: 1.2rem;
+      height: 1.2rem;
+      margin: 0 0.4rem 0 0;
+    }
+  }
 `
 
 // const RewardTitle = styled('p')`
@@ -80,32 +117,26 @@ const RewardNote = styled('div')`
 // `
 
 const RewardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
   line-height: 1.25;
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const RewardDescription = styled('p')`
   margin: 0.5rem 0 0;
+  line-height: ${(props) => props.theme.lineHeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  line-height: 1.3;
-  // line-height: ${(props) => props.theme.lineHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    display: none;
+  }
 `
 
 const RewardExpiration = styled('div')`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-`
-
-const RewardAction = styled('div')`
-  margin: 0 2rem 0 0.5rem;
-  // position: absolute;
-  // bottom: 0.4rem;
-  // right: 1rem;
-
-  button {
-    width: 3rem;
-    height: 3rem;
-  }
 `
 
 const makeImageUrl = (images) => {
@@ -198,41 +229,36 @@ const Reward = ({ item }) => {
   }
 
   return (
-    <RewardView>
-      <RewardTag>
-        {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
-      </RewardTag>
-      <RewardImage style={bgStyle}>&nbsp;</RewardImage>
-      <RewardDetails>
-        <div>
-          <RewardContent>
-            <RewardNote>{reward.limitations}</RewardNote>
-            <RewardTitle as="p">{reward.title}</RewardTitle>
-            {reward.short_description && (
-              <RewardDescription>{reward.short_description}</RewardDescription>
-            )}
-          </RewardContent>
-          <RewardExpiration>
-            {reward.end_date === today ? (
-              <p>Valid today only</p>
-            ) : reward.end_date ? (
-              <p>Use by {reward.expiration}</p>
-            ) : (
-              <p>Expires never!</p>
-            )}
-          </RewardExpiration>
-        </div>
-      </RewardDetails>
-      <RewardAction>
-        <ButtonLink
-          onClick={redeem}
-          disabled={false}
-          label={`Apply ${reward.name}`}
-        >
-          {iconMap.PlusCircle}
-        </ButtonLink>
-      </RewardAction>
-    </RewardView>
+    <RewardButton onClick={redeem} label={`Apply ${reward.name}`}>
+      <RewardView>
+        <RewardTag>
+          {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
+        </RewardTag>
+        <RewardImage style={bgStyle}>&nbsp;</RewardImage>
+        <RewardDetails>
+          <div>
+            <RewardContent>
+              <RewardNote>{reward.limitations}</RewardNote>
+              <RewardTitle as="p">{reward.title}</RewardTitle>
+              {reward.short_description && (
+                <RewardDescription>
+                  {reward.short_description}
+                </RewardDescription>
+              )}
+            </RewardContent>
+            <RewardExpiration>
+              {reward.end_date === today ? (
+                <p>Valid today only</p>
+              ) : reward.end_date ? (
+                <p>Use by {reward.expiration}</p>
+              ) : (
+                <p>Expires never!</p>
+              )}
+            </RewardExpiration>
+          </div>
+        </RewardDetails>
+      </RewardView>
+    </RewardButton>
   )
 }
 

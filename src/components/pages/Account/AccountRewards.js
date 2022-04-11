@@ -14,6 +14,7 @@ import { ButtonStyled } from '@open-tender/components'
 import { Loading, Rewards } from '../..'
 import AccountLoyaltyProgram from './AccountLoyaltyProgram'
 import { isMobile } from 'react-device-detect'
+import AccountSectionTitle from './AccountSectionTitle'
 
 const AccountRewardsView = styled.div`
   padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
@@ -50,6 +51,11 @@ const AccountRewardsButtons = styled.div`
   button + button {
     margin: 0 0 0 1rem;
   }
+`
+
+const AccountLoyaltyRewards = styled.div`
+  width: 100%;
+  margin: 1.5rem 0 1rem;
 `
 
 const AccountRewards = () => {
@@ -103,7 +109,12 @@ const AccountRewards = () => {
       ) : (
         <>
           <AccountLoyaltyProgram program={loyalty.program} />
-          {hasRewards && <Rewards rewards={entities} />}
+          {hasRewards && (
+            <AccountLoyaltyRewards>
+              <AccountSectionTitle title="Your Rewards" />
+              <Rewards rewards={entities} />
+            </AccountLoyaltyRewards>
+          )}
         </>
       )}
     </AccountRewardsView>
