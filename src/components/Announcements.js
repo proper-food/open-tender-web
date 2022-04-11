@@ -25,8 +25,8 @@ const makeSlides = (items) => {
   }))
 }
 
-const AnnoucementsView = styled.div`
-  label: AnnoucementsView;
+const AnnouncementsView = styled.div`
+  label: AnnouncementsView;
 
   display: flex;
   flex-direction: column;
@@ -34,8 +34,8 @@ const AnnoucementsView = styled.div`
   align-items: center;
 `
 
-const Annoucement = styled.div`
-  label: Annoucement;
+const Announcement = styled.div`
+  label: Announcement;
 
   display: flex;
   width: 100%;
@@ -48,42 +48,38 @@ const Annoucement = styled.div`
     height: 24rem;
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
-
-  // &:last-of-type {
-  //   margin: 0;
-  // }
 `
 
-const Annoucements = () => {
+const Announcements = ({ page = 'HOME' }) => {
   const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
   const title = `What's new at ${brand.title}`
-  const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const announcements = useSelector(selectAnnouncementsPage(page))
   const { entities, loading, error } = announcements || {}
   const isLoading = loading === 'pending'
   const slides = isLoading || error ? null : makeSlides(entities)
 
   useEffect(() => {
-    dispatch(fetchAnnouncementPage('HOME'))
-  }, [dispatch])
+    dispatch(fetchAnnouncementPage(page))
+  }, [dispatch, page])
 
   if (!slides) return null
 
   return (
-    <AnnoucementsView>
+    <AnnouncementsView>
       <AccountSectionTitle title={title} />
       {slides.map((slide) => {
         return (
-          <Annoucement key={slide.imageUrl}>
+          <Announcement key={slide.imageUrl}>
             <BackgroundImage {...slide}>
               <BackgroundContent {...slide} />
             </BackgroundImage>
-          </Annoucement>
+          </Announcement>
         )
       })}
-    </AnnoucementsView>
+    </AnnouncementsView>
   )
 }
 
-Annoucements.displayName = 'Annoucements'
-export default Annoucements
+Announcements.displayName = 'Announcements'
+export default Announcements
