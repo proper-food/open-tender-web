@@ -8,11 +8,12 @@ import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const AccountHome = ({ text = 'Account', color }) => {
+const AccountHome = () => {
   const history = useHistory()
   const { auth } = useSelector(selectCustomer)
   const path = auth ? '/account' : '/account'
   const icon = auth ? iconMap.User : iconMap.Home
+  const text = auth ? 'Account' : 'Home'
 
   return isBrowser ? (
     <ButtonStyled
@@ -24,7 +25,7 @@ const AccountHome = ({ text = 'Account', color }) => {
       {text}
     </ButtonStyled>
   ) : (
-    <ButtonIcon color={color} label={text} onClick={() => history.push(path)}>
+    <ButtonIcon label={text} onClick={() => history.push(path)}>
       {icon}
     </ButtonIcon>
   )

@@ -59,6 +59,10 @@ const NavButtonIcon = styled('span')`
   flex-shrink: 0;
   line-height: 0;
   color: ${(props) => props.theme.colors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
 `
 
 const NavButtonTitle = styled('span')`

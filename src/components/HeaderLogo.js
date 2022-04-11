@@ -1,15 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 
 import { selectBrand } from '../slices'
-import styled from '@emotion/styled'
-import { isMobile } from 'react-device-detect'
 
 const HeaderLogoLink = styled('a')`
   display: block;
   max-width: 14rem;
   margin: 0.4rem 0 0;
-  margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
+  // margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     max-width: 14rem;
   }
@@ -26,7 +26,8 @@ const HeaderLogo = ({ useLight = false }) => {
   return (
     <HeaderLogoLink
       isMobile={isMobile}
-      href={brand.url}
+      // href={brand.url}
+      href="/"
       rel="noopener noreferrer"
     >
       <img src={logoUrl} alt="logo" />

@@ -20,7 +20,10 @@ const AccountRewardsView = styled.div`
 `
 
 const AccountRewardsSignUp = styled.div`
-  margin: 1rem 0 2rem;
+  margin: 1rem 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1rem 0 2rem;
+  }
 
   h2 {
     margin-left: -0.1rem;
@@ -30,11 +33,22 @@ const AccountRewardsSignUp = styled.div`
   }
 
   p {
-    margin: 0.6rem 0 1.2rem;
+    margin: 1rem 0 2rem;
     line-height: ${(props) => props.theme.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0.6rem 0 1.2rem;
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
+  }
+`
+
+const AccountRewardsButtons = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  button + button {
+    margin: 0 0 0 1rem;
   }
 `
 
@@ -62,18 +76,27 @@ const AccountRewards = () => {
     <AccountRewardsView>
       {!hasCustomer ? (
         <AccountRewardsSignUp>
-          <h2>Start earning rewards!</h2>
+          <h2>Want some free stuff?</h2>
           <p>
             Sign up for our loyalty program to start earning points for each
             purchase, which can be redeemed for free stuff!
           </p>
-          <ButtonStyled
-            onClick={() => history.push(`/signup`)}
-            size={isMobile ? 'small' : 'default'}
-            color="cart"
-          >
-            Sign Up & Start Earning
-          </ButtonStyled>
+          <AccountRewardsButtons>
+            <ButtonStyled
+              onClick={() => history.push(`/signup`)}
+              size={isMobile ? 'small' : 'default'}
+              color="primary"
+            >
+              Sign Up
+            </ButtonStyled>
+            <ButtonStyled
+              onClick={() => history.push(`/order-type`)}
+              size={isMobile ? 'small' : 'default'}
+              color="secondary"
+            >
+              Order without Rewards
+            </ButtonStyled>
+          </AccountRewardsButtons>
         </AccountRewardsSignUp>
       ) : isLoading && !hasProgram && !hasRewards ? (
         <Loading text="Retrieving your loyalty status..." />
