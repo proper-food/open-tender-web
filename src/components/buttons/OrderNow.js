@@ -66,7 +66,7 @@ const OrderNow = ({
   const showMenu = revenueCenter && (lastOrder || isCurrentOrder)
 
   const order = () => {
-    const path = showMenu ? `/menu/${revenueCenter.slug}` : '/order-type'
+    const path = showMenu ? `/menu/${revenueCenter.slug}` : '/account'
     history.push(path)
   }
 

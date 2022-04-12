@@ -33,7 +33,7 @@ const BackgroundContentText = styled('div')`
 
   p:first-of-type {
     line-height: 0.9;
-    font-size: ${(props) => props.theme.fonts.sizes.mega};
+    font-size: ${(props) => props.theme.fonts.sizes.h1};
     color: ${(props) => props.color || props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       line-height: 1;
@@ -43,7 +43,7 @@ const BackgroundContentText = styled('div')`
 
   p + p {
     max-width: 64rem;
-    margin: 2rem auto 0;
+    margin: 1rem auto 0;
     line-height: ${(props) => props.theme.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

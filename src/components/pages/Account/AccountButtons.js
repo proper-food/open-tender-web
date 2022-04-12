@@ -9,8 +9,8 @@ import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
 
 const AccountButtonsView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out 0.25s forwards;
   position: fixed;
   z-index: 10;
   left: 0;
@@ -18,10 +18,6 @@ const AccountButtonsView = styled('div')`
   bottom: 0;
   padding: 2rem ${(props) => props.theme.layout.paddingMobile} 2rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-  // border: 0;
-  // border-style: solid;
-  // border-top-width: ${(props) => props.theme.border.width};
-  // border-color: ${(props) => props.theme.border.color};
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -2px 4px rgba(0, 0, 0, 0.05);
 `
 
@@ -34,6 +30,8 @@ const AccountButtonsContainer = styled.div`
 
   button {
     width: 48%;
+    padding-left: 0;
+    padding-right: 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 48%;
     }

@@ -21,9 +21,44 @@ import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
 
 const AccountView = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   padding: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // max-width: ${(props) => props.theme.layout.maxWidth};
+    // margin: 0 auto;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const AccountLoyaltyView = styled.div`
+  flex: 0 0 ${(props) => props.theme.layout.maxWidth};
+  @media (max-width: 1360px) {
+    flex: 0 0 50%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+`
+
+const AccountAnnouncements = styled.div`
+  flex: 1 1 100%;
+  padding-left: ${(props) => props.theme.layout.margin};
+  @media (max-width: 1360px) {
+    flex: 0 0 50%;
+    padding-left: ${(props) => props.theme.layout.padding};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 1 1 auto;
+    width: 100%;
+    padding: 0;
   }
 `
 
@@ -72,10 +107,14 @@ const Account = () => {
           }
         />
         <Main>
+          <AccountButtons />
           <AccountView>
-            <AccountButtons />
-            <AccountLoyalty />
-            <Announcements />
+            <AccountLoyaltyView>
+              <AccountLoyalty />
+            </AccountLoyaltyView>
+            <AccountAnnouncements>
+              <Announcements />
+            </AccountAnnouncements>
           </AccountView>
         </Main>
       </Content>

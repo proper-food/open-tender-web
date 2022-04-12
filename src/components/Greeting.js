@@ -5,12 +5,13 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectCustomer } from '@open-tender/redux'
 import HeaderLogo from './HeaderLogo'
+import { isMobile } from 'react-device-detect'
 
 const GreetingView = styled.div`
-  // opacity: 0;
-  // animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  padding: ${(props) => (props.isMobile ? props.theme.layout.padding : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding-left: ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) =>
+      props.isMobile ? props.theme.layout.paddingMobile : '0'};
   }
 
   h1 {
@@ -30,7 +31,7 @@ const Greeting = () => {
   const title = 'Hi there'
   const greeting = firstName ? `${title}, ${firstName}!` : `${title}!`
   return (
-    <GreetingView>
+    <GreetingView isMobile={isMobile}>
       {profile ? (
         <button onClick={() => history.push('/account')}>
           <h1>{greeting}</h1>

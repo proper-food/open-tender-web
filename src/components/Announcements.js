@@ -42,7 +42,7 @@ const Announcement = styled.div`
   height: 24rem;
   border-radius: ${(props) => props.theme.border.radius};
   overflow: hidden;
-  height: 48rem;
+  height: 36rem;
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 24rem;

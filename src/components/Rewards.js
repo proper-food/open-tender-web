@@ -7,8 +7,6 @@ import { Reward } from '.'
 const RewardsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 auto;
 `
 
 const RewardsContainer = styled('div')`

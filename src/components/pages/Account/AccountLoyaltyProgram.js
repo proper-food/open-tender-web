@@ -6,10 +6,7 @@ import { Text } from '@open-tender/components'
 import { ProgressBar, ProgressCircle } from '../..'
 import AccountPoints from './AccountPoints'
 
-const AccountLoyaltyProgramView = styled.div`
-  margin: 0 auto;
-  max-width: ${(props) => props.theme.layout.maxWidth};
-`
+const AccountLoyaltyProgramView = styled.div``
 
 const AccountLoyaltyProgramPoints = styled('div')`
   display: flex;

@@ -17,7 +17,10 @@ import { isMobile } from 'react-device-detect'
 import AccountSectionTitle from './AccountSectionTitle'
 
 const AccountRewardsView = styled.div`
-  padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+  padding: 0 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const AccountRewardsSignUp = styled.div`

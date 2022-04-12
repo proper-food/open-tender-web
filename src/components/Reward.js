@@ -18,7 +18,7 @@ const RewardButton = styled.button`
   &:hover,
   &:active {
     & > div {
-      transition: all 0.25s ease-in-out;
+      transition: all 0.25s ease;
       transform: translate3D(0, -0.5rem, 0);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
       @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
