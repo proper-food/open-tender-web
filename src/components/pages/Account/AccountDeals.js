@@ -5,7 +5,8 @@ import styled from '@emotion/styled'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { Rewards } from '../..'
-import AccountSectionTitle from './AccountSectionTitle'
+import AccountSectionHeader from './AccountSectionHeader'
+import { isMobile } from 'react-device-detect'
 
 const AccountDealsView = styled.div`
   width: 100%;
@@ -23,6 +24,8 @@ const AccountDeals = () => {
   const { profile } = useSelector(selectCustomer)
   const { entities } = useSelector(selectDeals)
   const { customer_id } = profile || {}
+  const displayed = !isMobile ? entities.slice(0, 2) : entities
+  const isMore = entities.length > displayed.length
 
   useEffect(() => {
     if (has_deals) {
@@ -32,8 +35,8 @@ const AccountDeals = () => {
 
   return has_deals ? (
     <AccountDealsView>
-      <AccountSectionTitle title={title} />
-      <Rewards rewards={entities} />
+      <AccountSectionHeader title={title} to={isMore ? '/deals' : null} />
+      <Rewards rewards={displayed} />
     </AccountDealsView>
   ) : null
 }

@@ -1,10 +1,15 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { loyaltyType, formatDollars, formatQuantity } from '@open-tender/js'
+import {
+  fetchCustomerLoyalty,
+  selectCustomerLoyaltyProgram,
+} from '@open-tender/redux'
 import { Text } from '@open-tender/components'
 import { ProgressBar, ProgressCircle } from '../..'
 import AccountPoints from './AccountPoints'
+import Loading from '../../Loading'
+import { useDispatch, useSelector } from 'react-redux'
 
 const AccountLoyaltyProgramView = styled.div``
 
@@ -87,7 +92,10 @@ const makeProgress = (loyalty_type, spend, redemption) => {
   return progress
 }
 
-const AccountLoyaltyProgram = ({ program, isLoading = false }) => {
+const AccountLoyaltyProgram = () => {
+  const dispatch = useDispatch()
+  const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
+  const hasProgram = program ? true : false
   const {
     loyalty_type,
     points,
@@ -107,9 +115,15 @@ const AccountLoyaltyProgram = ({ program, isLoading = false }) => {
   const currentStatus =
     tiers && status ? makeStatus(tiers, status, points) : null
 
+  useEffect(() => {
+    dispatch(fetchCustomerLoyalty())
+  }, [dispatch])
+
   return (
     <AccountLoyaltyProgramView>
-      {points ? (
+      {loading === 'pending' && !hasProgram ? (
+        <Loading text="Retrieving your loyalty status..." />
+      ) : points ? (
         <AccountLoyaltyProgramPoints>
           <AccountPoints {...points} />
           {currentStatus && (
@@ -159,7 +173,10 @@ const AccountLoyaltyProgram = ({ program, isLoading = false }) => {
             </div>
           )}
           <AccountLoyaltyProgress>
-            <ProgressCircle progress={currentProgress} isLoading={isLoading} />
+            <ProgressCircle
+              progress={currentProgress}
+              isLoading={loading === 'pending'}
+            />
           </AccountLoyaltyProgress>
         </AccountLoyaltyProgramCredit>
       )}
@@ -173,8 +190,6 @@ const AccountLoyaltyProgram = ({ program, isLoading = false }) => {
 }
 
 AccountLoyaltyProgram.displayName = 'AccountLoyaltyProgram'
-AccountLoyaltyProgram.propTypes = {
-  program: propTypes.object,
-}
+AccountLoyaltyProgram.propTypes = {}
 
 export default AccountLoyaltyProgram

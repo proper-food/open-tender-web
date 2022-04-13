@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectAnnouncementsPage,
@@ -8,8 +8,6 @@ import {
 } from '@open-tender/redux'
 import BackgroundImage from './BackgroundImage'
 import BackgroundContent from './BackgroundContent'
-import AccountSectionTitle from './pages/Account/AccountSectionTitle'
-import { selectBrand } from '../slices'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -52,8 +50,6 @@ const Announcement = styled.div`
 
 const Announcements = ({ page = 'HOME' }) => {
   const dispatch = useDispatch()
-  const brand = useSelector(selectBrand)
-  const title = `What's new at ${brand.title}`
   const announcements = useSelector(selectAnnouncementsPage(page))
   const { entities, loading, error } = announcements || {}
   const isLoading = loading === 'pending'
@@ -67,7 +63,6 @@ const Announcements = ({ page = 'HOME' }) => {
 
   return (
     <AnnouncementsView>
-      {isMobile && <AccountSectionTitle title={title} />}
       {slides.map((slide) => {
         return (
           <Announcement key={slide.imageUrl}>

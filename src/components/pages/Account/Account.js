@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser, isMobileOnly } from 'react-device-detect'
+import { isBrowser, isMobile, isMobileOnly } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
@@ -23,6 +23,7 @@ import AccountLoyalty from './AccountLoyalty'
 import AccountHero from './AccountHero'
 import AccountGreeting from './AccountGreeting'
 import AccountDeals from './AccountDeals'
+import AccountSectionHeader from './AccountSectionHeader'
 
 const AccountView = styled('div')`
   display: flex;
@@ -131,7 +132,14 @@ const Account = () => {
             </AccountLoyaltyView>
             <AccountBanner>
               {!error ? (
-                <Announcements page="ACCOUNT" />
+                <>
+                  {isMobile && (
+                    <AccountSectionHeader
+                      title={`What's new at ${siteTitle}`}
+                    />
+                  )}
+                  <Announcements page="ACCOUNT" />
+                </>
               ) : (
                 <AccountHero imageUrl={imageUrl} />
               )}
