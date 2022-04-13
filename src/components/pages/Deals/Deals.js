@@ -8,20 +8,23 @@ import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
-  Deals as DealsList,
-  HeaderSite,
+  Header,
   Loading,
   Main,
   PageContainer,
   PageContent,
   PageError,
   PageTitle,
+  Rewards,
 } from '../..'
+import { AccountHome, Logout, OrderNow } from '../../buttons'
+import AccountTabs from '../Account/AccountTabs'
+import { isBrowser } from 'react-device-detect'
 
 const DealsView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  max-width: 120rem;
+  max-width: ${(props) => props.theme.breakpoints.tablet};
   margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     max-width: 60rem;
@@ -55,7 +58,22 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderSite useLight={false} />
+        <Header
+          left={<AccountHome />}
+          right={
+            isBrowser ? (
+              <>
+                <AccountTabs />
+                <OrderNow />
+              </>
+            ) : (
+              <>
+                <OrderNow />
+                <Logout />
+              </>
+            )
+          }
+        />
         <Main>
           <PageContainer>
             <PageTitle {...config} />
@@ -63,7 +81,7 @@ const Deals = () => {
               <PageError error={error} />
             ) : hasDeals ? (
               <DealsView>
-                <DealsList deals={deals} />
+                <Rewards rewards={deals} />
               </DealsView>
             ) : (
               <PageContent>

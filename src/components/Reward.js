@@ -32,7 +32,7 @@ const RewardButton = styled.button`
 const RewardView = styled.div`
   position: relative;
   height: 100%;
-  min-height: 16rem;
+  min-height: 8rem;
   display: flex;
   align-items: center;
   padding: 0;
@@ -40,9 +40,6 @@ const RewardView = styled.div`
   border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   background-color: ${(props) => props.theme.cards.menuItem.bgColor};
   box-shadow: ${(props) => props.theme.cards.menuItem.boxShadow};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    min-height: 8rem;
-  }
 `
 
 const RewardTag = styled('div')`
@@ -56,25 +53,18 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 16rem;
+  flex: 0 0 8rem;
   height: 100%;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.cards.default.borderRadius};
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 0 0 8rem;
-  }
 `
 
 const RewardDetails = styled('div')`
   flex: 1 1 100%;
   height: 100%;
-  padding: 1.5rem 2rem 1.5rem 1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 1 1 100%;
-    padding: 1rem 2rem 1rem 1.5rem;
-  }
+  padding: 1rem 2rem 1rem 1.5rem;
 
   & > div {
     display: flex;
@@ -91,12 +81,8 @@ const RewardContent = styled('div')`
 const RewardNote = styled('div')`
   display: flex;
   align-items: center;
-  margin: 0 0 1.5rem;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    margin: 0 0 0.5rem;
-  }
+  margin: 0 0 0.5rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 
   span {
     display: block;
@@ -104,14 +90,9 @@ const RewardNote = styled('div')`
   }
 
   span:first-of-type {
-    width: 1.6rem;
-    height: 1.6rem;
-    margin: 0 0.8rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      width: 1.2rem;
-      height: 1.2rem;
-      margin: 0 0.4rem 0 0;
-    }
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 0.4rem 0 0;
   }
 `
 
@@ -124,20 +105,14 @@ const RewardNote = styled('div')`
 
 const RewardTitle = styled(Heading)`
   line-height: 1.25;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
+  font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
 const RewardDescription = styled('p')`
   margin: 0.5rem 0 0;
   line-height: ${(props) => props.theme.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    display: none;
-  }
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  display: none;
 `
 
 const RewardExpiration = styled('div')`

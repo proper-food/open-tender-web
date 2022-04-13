@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCustomer } from '@open-tender/redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
 
-import { selectBrand, selectTheme } from '../../../slices'
+import { openModal, selectBrand, selectTheme } from '../../../slices'
 import iconMap from '../../iconMap'
 import AccountTab from './AccountTab'
 
@@ -60,11 +61,26 @@ const navTabs = [
   },
 ]
 
+const navTabsGuest = [
+  {
+    icon: iconMap.Tag,
+    title: 'Deals',
+    path: '/deals',
+  },
+  {
+    icon: iconMap.User,
+    title: 'Login / Sign Up',
+    path: '/login',
+  },
+]
+
 const AccountTabs = () => {
+  const dispatch = useDispatch()
   const history = useHistory()
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
   const brand = useSelector(selectBrand)
+  const { auth } = useSelector(selectCustomer)
   const { has_rewards, has_thanx, has_levelup, has_deals } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
@@ -72,15 +88,18 @@ const AccountTabs = () => {
   if (!has_deals) removed.push('/deals')
   if (!isMobile || (hasRewards && has_deals))
     removed.push('/account/gift-cards')
-  const filteredButtons = navTabs.filter((i) => !removed.includes(i.path))
+  const filteredButtons = auth
+    ? navTabs.filter((i) => !removed.includes(i.path))
+    : navTabsGuest
+  const login = () => dispatch(openModal({ type: 'login' }))
   const buttons = filteredButtons.map((i) => ({
     ...i,
-    onClick: () => history.push(i.path),
+    onClick: i.path === '/login' ? login : () => history.push(i.path),
   }))
 
   return isMobile ? (
     <AccountTabsView>
-      {buttons.map((button, index) => (
+      {buttons.map((button) => (
         <AccountTab
           key={button.title}
           {...button}

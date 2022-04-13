@@ -54,7 +54,7 @@ const AccountLoyaltyView = styled.div`
 
 const AccountBanner = styled.div`
   flex: 1 1 100%;
-  padding-left: ${(props) => props.theme.layout.margin};
+  padding-left: ${(props) => props.theme.layout.padding};
   @media (max-width: 1360px) {
     flex: 0 0 50%;
     padding-left: ${(props) => props.theme.layout.padding};
