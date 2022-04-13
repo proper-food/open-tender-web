@@ -29,7 +29,7 @@ const Greeting = () => {
   const { profile } = useSelector(selectCustomer)
   const firstName = profile ? profile.first_name : null
   const title = 'Hi there'
-  const greeting = firstName ? `${title}, ${firstName}!` : `${title}!`
+  const greeting = firstName ? `${title}, ${firstName}` : `${title}`
   return (
     <GreetingView isMobile={isMobile}>
       {profile ? (
