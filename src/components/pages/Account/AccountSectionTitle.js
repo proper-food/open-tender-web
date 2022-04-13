@@ -4,10 +4,11 @@ import { Heading } from '@open-tender/components'
 
 const AccountSectionTitleView = styled.div`
   width: 100%;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.5rem;
   text-align: left;
-  font-size: ${(props) => props.theme.fonts.sizes.h4};
+  font-size: ${(props) => props.theme.fonts.sizes.h5};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 0 1.25rem;
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 

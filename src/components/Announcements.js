@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectAnnouncementsPage,
@@ -67,7 +67,7 @@ const Announcements = ({ page = 'HOME' }) => {
 
   return (
     <AnnouncementsView>
-      <AccountSectionTitle title={title} />
+      {isMobile && <AccountSectionTitle title={title} />}
       {slides.map((slide) => {
         return (
           <Announcement key={slide.imageUrl}>

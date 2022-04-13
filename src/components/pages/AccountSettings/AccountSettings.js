@@ -26,7 +26,7 @@ const AccountSettings = () => {
   const { auth, profile } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   return profile ? (

@@ -10,19 +10,23 @@ const RewardsView = styled('div')`
 `
 
 const RewardsContainer = styled('div')`
-  margin: -1rem;
+  margin: -0.5rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     margin: -0.5rem;
-    justify-content: center;
+    justify-content: flex-start;
   }
 `
 
 const RewardView = styled('div')`
   width: 100%;
   padding: 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 50%;
+    padding: 0.5rem;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     padding: 0.5rem;

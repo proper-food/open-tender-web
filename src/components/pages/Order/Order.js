@@ -32,7 +32,7 @@ const Order = () => {
   const title = `Order #${orderId}`
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   useEffect(() => {

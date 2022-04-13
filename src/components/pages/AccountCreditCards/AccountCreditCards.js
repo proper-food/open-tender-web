@@ -48,7 +48,7 @@ const AccountCreditCards = () => {
   const hasLinkedCards = !!applePayMerchantId || linkedCards.length > 0
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   useEffect(() => {

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobileOnly } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
+  selectAnnouncementsPage,
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
@@ -12,13 +13,16 @@ import {
   fetchCustomerFavorites,
 } from '@open-tender/redux'
 
-import { selectBrand, closeModal } from '../../../slices'
+import { selectBrand, closeModal, selectConfig } from '../../../slices'
 import { Announcements, Content, Greeting, Header, Main } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 // import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
+import AccountHero from './AccountHero'
+import AccountGreeting from './AccountGreeting'
+import AccountDeals from './AccountDeals'
 
 const AccountView = styled('div')`
   display: flex;
@@ -48,7 +52,7 @@ const AccountLoyaltyView = styled.div`
   }
 `
 
-const AccountAnnouncements = styled.div`
+const AccountBanner = styled.div`
   flex: 1 1 100%;
   padding-left: ${(props) => props.theme.layout.margin};
   @media (max-width: 1360px) {
@@ -65,11 +69,19 @@ const AccountAnnouncements = styled.div`
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle } = useSelector(selectBrand)
-  // const { account: accountConfig } = useSelector(selectConfig)
-  // const { background, mobile, title, subtitle, showHero } = accountConfig
+  const {
+    title: siteTitle,
+    has_rewards,
+    has_thanx,
+    has_levelup,
+  } = useSelector(selectBrand)
+  const hasLoyalty = has_rewards || has_thanx || has_levelup
+  const { error } = useSelector(selectAnnouncementsPage('ACCOUNT'))
+  const { account: acctConfig } = useSelector(selectConfig)
+  const { background, mobile, title, subtitle } = acctConfig || {}
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
+  const imageUrl = isMobileOnly ? mobile : background
 
   useEffect(() => {
     dispatch(closeModal())
@@ -110,11 +122,20 @@ const Account = () => {
           <AccountButtons />
           <AccountView>
             <AccountLoyaltyView>
-              <AccountLoyalty />
+              {hasLoyalty ? (
+                <AccountLoyalty />
+              ) : (
+                <AccountGreeting title={title} subtitle={subtitle} />
+              )}
+              <AccountDeals />
             </AccountLoyaltyView>
-            <AccountAnnouncements>
-              <Announcements />
-            </AccountAnnouncements>
+            <AccountBanner>
+              {!error ? (
+                <Announcements page="ACCOUNT" />
+              ) : (
+                <AccountHero imageUrl={imageUrl} />
+              )}
+            </AccountBanner>
           </AccountView>
         </Main>
       </Content>

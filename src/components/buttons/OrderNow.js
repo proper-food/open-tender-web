@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
@@ -34,7 +34,7 @@ const OrderNowCount = styled('div')`
   border-width: 0.2rem;
   border-style: solid;
   color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.colors.error};
+  background-color: ${(props) => props.theme.colors.alert};
   border-color: ${(props) => props.theme.colors.light};
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -57,6 +57,7 @@ const OrderNow = ({
 }) => {
   const history = useHistory()
   // const { auth } = useSelector(selectCustomer)
+  const { pathname } = useLocation()
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders } = useSelector(selectCustomerOrders)
@@ -66,7 +67,11 @@ const OrderNow = ({
   const showMenu = revenueCenter && (lastOrder || isCurrentOrder)
 
   const order = () => {
-    const path = showMenu ? `/menu/${revenueCenter.slug}` : '/account'
+    const path = showMenu
+      ? `/menu/${revenueCenter.slug}`
+      : pathname === '/account'
+      ? '/order-type'
+      : '/account'
     history.push(path)
   }
 

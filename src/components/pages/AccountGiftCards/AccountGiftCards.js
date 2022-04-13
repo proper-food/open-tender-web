@@ -35,7 +35,7 @@ const AccountGiftCards = () => {
   const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   useEffect(() => {

@@ -79,7 +79,7 @@ const SignUp = () => {
       if (posToken) {
         dispatch(linkPosToken(posToken)).finally(history.push('/'))
       } else {
-        return history.push('/')
+        return history.push('/account')
       }
     }
   }, [auth, history, posToken, token, api, dispatch])

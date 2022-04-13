@@ -34,7 +34,7 @@ const AccountAddresses = () => {
   const limit = 50
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   useEffect(() => {

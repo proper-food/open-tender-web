@@ -34,7 +34,7 @@ const AccountHouseAccounts = () => {
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!auth) return history.push('/account')
   }, [auth, history])
 
   useEffect(() => {
