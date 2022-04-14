@@ -16,9 +16,11 @@ const PointsBalancePoints = styled('div')`
 
   p {
     display: block;
+    margin: 0 0 0 -0.1rem;
     font-size: ${(props) => props.theme.fonts.sizes.h1};
-    margin: 0;
-    // line-height: 1;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h2};
+    }
   }
 
   span {
@@ -28,6 +30,15 @@ const PointsBalancePoints = styled('div')`
     margin: 0 0 0 0.5rem;
     line-height: 0;
     color: ${(props) => props.theme.colors.primary};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0 0 0 0.3rem;
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+
+    svg {
+      fill: ${(props) => props.theme.colors.primary};
+    }
   }
 `
 

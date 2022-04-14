@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
-import { loyaltyType, formatDollars, formatQuantity } from '@open-tender/js'
+import { makeProgress, makeStatus } from '@open-tender/js'
 import {
   fetchCustomerLoyalty,
   selectCustomerLoyaltyProgram,
@@ -11,7 +11,11 @@ import AccountPoints from './AccountPoints'
 import Loading from '../../Loading'
 import { useDispatch, useSelector } from 'react-redux'
 
-const AccountLoyaltyProgramView = styled.div``
+const AccountLoyaltyProgramView = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+`
 
 const AccountLoyaltyProgramPoints = styled('div')`
   display: flex;
@@ -55,42 +59,6 @@ const AccountLoyaltyProgramStatus = styled('div')`
 `
 
 const AccountLoyaltyProgress = styled('div')``
-
-const makeStatus = (tiers, status, points) => {
-  if (!tiers) return null
-  const highest = tiers[tiers.length - 1].threshold
-  const total = highest * 1.2
-  const progress = Math.min((status.progress / total) * 100, 100)
-  const progressTiers = tiers.map((i) => ({
-    ...i,
-    points,
-    percentage: (i.threshold / total) * 100,
-    color: `#${i.hex_code}`,
-    value: !points
-      ? `${formatDollars(i.threshold, '', 0)}`
-      : `${formatQuantity(i.threshold)}`,
-  }))
-  const daysMsg =
-    status.days === 7300 ? 'all-time' : `in last ${status.days} days`
-  const progressAmt = !points
-    ? formatDollars(status.progress, '', 0)
-    : formatQuantity(status.progress)
-  const progressMsg = !points
-    ? `${progressAmt} spent ${daysMsg}`
-    : `${progressAmt} ${points.name.toLowerCase()} earned ${daysMsg}`
-  return { progress, progressMsg, tiers: progressTiers }
-}
-
-const makeProgress = (loyalty_type, spend, redemption) => {
-  if (!spend || !redemption || !loyalty_type) return null
-  const currentSpend = parseFloat(spend.current)
-  const threshold = parseFloat(redemption.threshold)
-  const progress =
-    loyalty_type === loyaltyType.CREDIT
-      ? parseInt((currentSpend / threshold) * 100)
-      : null
-  return progress
-}
 
 const AccountLoyaltyProgram = () => {
   const dispatch = useDispatch()

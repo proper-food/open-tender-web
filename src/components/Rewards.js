@@ -18,6 +18,7 @@ const RewardsContainer = styled('div')`
     width: 100%;
     flex-wrap: nowrap;
     overflow-x: auto;
+    margin: 0;
   }
 `
 
@@ -30,6 +31,7 @@ const RewardView = styled('div')`
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 90%;
+    padding: 0.5rem 1rem 0.5rem 0;
   }
 `
 

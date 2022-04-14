@@ -34,11 +34,12 @@ const AccountView = styled('div')`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    // max-width: ${(props) => props.theme.layout.maxWidth};
-    // margin: 0 auto;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -64,6 +65,9 @@ const AccountBanner = styled.div`
     flex: 1 1 auto;
     width: 100%;
     padding: 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 `
 

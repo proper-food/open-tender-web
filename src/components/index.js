@@ -10,7 +10,6 @@ import Card from './Card'
 import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
-import DealsScrollable from './DealsScrollable'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import FormSection from './FormSection'
@@ -104,7 +103,6 @@ export {
   CartButton,
   Container,
   Content,
-  DealsScrollable,
   ErrorBoundary,
   Footer,
   FormSection,
