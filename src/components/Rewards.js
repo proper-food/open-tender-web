@@ -14,6 +14,11 @@ const RewardsContainer = styled('div')`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
 `
 
 const RewardView = styled('div')`
@@ -22,6 +27,9 @@ const RewardView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     padding: 0.5rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 90%;
   }
 `
 
