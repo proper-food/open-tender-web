@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerGiftCards,
@@ -23,7 +22,6 @@ import {
   AccountBack,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountGiftCards = () => {
   const history = useHistory()
@@ -52,7 +50,6 @@ const AccountGiftCards = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />}>
               <PageTitleButtons>

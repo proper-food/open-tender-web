@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerCreditCards,
@@ -24,8 +24,6 @@ import {
   PageTitleButtons,
 } from '../..'
 import CreditCards from './CreditCards'
-import AccountTabs from '../Account/AccountTabs'
-import styled from '@emotion/styled'
 
 const CreditCardMessage = styled('div')`
   text-align: center;
@@ -66,7 +64,6 @@ const AccountCreditCards = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />}>
               <PageTitleButtons>

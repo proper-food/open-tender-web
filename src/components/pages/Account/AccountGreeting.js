@@ -6,6 +6,10 @@ const AccountGreetingView = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 ${(props) => props.theme.layout.paddingMobile}
+      ${(props) => props.theme.layout.paddingMobile} 0;
+  }
 
   h1 {
     margin-left: -0.2rem;

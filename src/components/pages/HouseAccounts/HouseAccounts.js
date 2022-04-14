@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerHouseAccounts,
@@ -22,7 +21,6 @@ import {
   PageTitle,
 } from '../..'
 import HouseAccountsList from './HouseAccountsList'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
@@ -51,7 +49,6 @@ const AccountHouseAccounts = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />} />
             <PageError error={error} />

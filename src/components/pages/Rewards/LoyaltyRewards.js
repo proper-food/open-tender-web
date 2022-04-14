@@ -5,10 +5,27 @@ import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
 import LoyaltyPrograms from './LoyaltyProgams'
 import { Loading, PageSection, Rewards } from '../..'
 import { selectConfig } from '../../../slices'
+import PageContainer from '../../PageContainer'
+
+const LoyaltyRewardsView = styled(PageContainer)`
+  margin-top: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin-top: 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const LoyaltyRewardsContainer = styled(PageContainer)`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+`
 
 const LoyaltyRewardsRewards = styled.div`
   max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 auto;
+  margin: -1rem auto 5rem;
 `
 
 const LoyaltyRewards = () => {
@@ -26,18 +43,23 @@ const LoyaltyRewards = () => {
   }, [dispatch])
 
   return (
-    <>
-      <LoyaltyPrograms hasRewards={hasRewards} />
+    <LoyaltyRewardsView>
       {loading === 'pending' ? (
         <Loading text="Checking for rewards..." />
       ) : hasRewards ? (
-        <PageSection id="rewards" {...rewardsConfig.rewards}>
+        <>
+          <LoyaltyRewardsContainer>
+            <PageSection id="rewards" {...rewardsConfig.rewards} />
+          </LoyaltyRewardsContainer>
           <LoyaltyRewardsRewards>
             <Rewards rewards={rewards} />
           </LoyaltyRewardsRewards>
-        </PageSection>
+        </>
       ) : null}
-    </>
+      <LoyaltyRewardsContainer>
+        <LoyaltyPrograms />
+      </LoyaltyRewardsContainer>
+    </LoyaltyRewardsView>
   )
 }
 

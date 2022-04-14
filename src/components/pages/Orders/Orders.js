@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerOrders,
@@ -26,7 +25,6 @@ import {
   PageTitle,
 } from '../..'
 import OrdersList from './OrdersList'
-import AccountTabs from '../Account/AccountTabs'
 
 const ToggleView = styled('div')`
   text-align: center;
@@ -88,7 +86,6 @@ const Orders = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>
             <PageTitle {...config} />
             <PageError error={error} />

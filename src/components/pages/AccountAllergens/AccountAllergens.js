@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   fetchAllergens,
   selectAllergens,
@@ -25,7 +24,6 @@ import {
   PageTitle,
 } from '../..'
 import styled from '@emotion/styled'
-import AccountTabs from '../Account/AccountTabs'
 
 const AllergenFormView = styled('div')``
 
@@ -68,7 +66,6 @@ const AccountAllergens = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />} />
             <PageContent>

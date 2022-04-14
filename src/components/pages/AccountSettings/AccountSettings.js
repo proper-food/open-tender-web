@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
+import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
@@ -15,8 +16,13 @@ import {
   VerifyAccount,
 } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
-import { isBrowser } from 'react-device-detect'
-import AccountTabs from '../Account/AccountTabs'
+
+const AccountSettingsLogOut = styled.div`
+  margin: 1rem 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const AccountSettings = () => {
   const history = useHistory()
@@ -39,17 +45,16 @@ const AccountSettings = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config}>
-              <div style={{ margin: '1rem 0 2rem' }}>
+              <AccountSettingsLogOut>
                 <p>
                   <ButtonLink onClick={() => dispatch(logoutCustomer())}>
                     Log out of your account
                   </ButtonLink>
                 </p>
                 <VerifyAccount style={{ margin: '2rem 0 0' }} />
-              </div>
+              </AccountSettingsLogOut>
             </PageTitle>
             <AccountSettingsButtons />
           </PageContainer>

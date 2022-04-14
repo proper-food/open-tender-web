@@ -2,12 +2,10 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
-import { selectBrand, selectConfig } from '../../../slices'
-import { Content, HeaderUser, Main, PageContainer, PageTitle } from '../..'
-import AccountTabs from '../Account/AccountTabs'
+import { selectBrand } from '../../../slices'
+import { Content, HeaderUser, Main, PageContainer } from '../..'
 import LevelUpLoyalty from './LevelUpLoyalty'
 import ThanxLoyalty from './ThanxLoyalty'
 import LoyaltyRewards from './LoyaltyRewards'
@@ -15,8 +13,6 @@ import LoyaltyRewards from './LoyaltyRewards'
 const Rewards = () => {
   const history = useHistory()
   const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
-  const { account, rewards } = useSelector(selectConfig)
-  const config = has_levelup ? account.levelup : rewards
   const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
@@ -31,17 +27,17 @@ const Rewards = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer>
-            <PageTitle {...config} />
-            {has_levelup ? (
+          {has_levelup ? (
+            <PageContainer>
               <LevelUpLoyalty />
-            ) : has_thanx ? (
+            </PageContainer>
+          ) : has_thanx ? (
+            <PageContainer>
               <ThanxLoyalty />
-            ) : (
-              <LoyaltyRewards />
-            )}
-          </PageContainer>
+            </PageContainer>
+          ) : (
+            <LoyaltyRewards />
+          )}
         </Main>
       </Content>
     </>

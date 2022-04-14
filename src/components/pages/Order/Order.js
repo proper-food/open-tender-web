@@ -6,7 +6,6 @@ import {
   fetchCustomerOrder,
   selectCustomerOrder,
 } from '@open-tender/redux'
-import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 
 import { selectBrand } from '../../../slices'
@@ -19,7 +18,6 @@ import {
   PageContainer,
   PageTitle,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 import iconMap from '../../iconMap'
 
 const Order = () => {
@@ -49,7 +47,6 @@ const Order = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {isMobile && <AccountTabs />}
           <PageContainer>
             <PageTitle>
               <LinkIcon

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerAddresses,
@@ -21,7 +20,6 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountAddresses = () => {
   const history = useHistory()
@@ -51,7 +49,6 @@ const AccountAddresses = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />} />
             {entities.length ? (

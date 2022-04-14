@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerFavorites,
@@ -25,7 +24,6 @@ import {
   PageContainer,
   PageContent,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const Favorites = () => {
   const dispatch = useDispatch()
@@ -75,7 +73,6 @@ const Favorites = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>
             <PageTitle {...config} />
             <PageError error={error} />

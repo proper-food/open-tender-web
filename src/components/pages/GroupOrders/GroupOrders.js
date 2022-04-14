@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerGroupOrders,
@@ -21,7 +20,6 @@ import {
   PageTitle,
 } from '../..'
 import OrdersList from '../Orders/OrdersList'
-import AccountTabs from '../Account/AccountTabs'
 
 const GroupOrders = () => {
   const dispatch = useDispatch()
@@ -51,7 +49,6 @@ const GroupOrders = () => {
       <Content>
         <HeaderUser />
         <Main bgColor="secondary">
-          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.groupOrders} />
             <PageContent>

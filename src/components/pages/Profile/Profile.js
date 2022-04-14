@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomer,
@@ -23,7 +22,6 @@ import {
   PageTitle,
   VerifyAccount,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
@@ -60,7 +58,6 @@ const AccountProfile = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '72rem' }}>
             <PageTitle {...config} preface={<AccountBack />}>
               <VerifyAccount style={{ margin: '2rem 0 0' }} />
