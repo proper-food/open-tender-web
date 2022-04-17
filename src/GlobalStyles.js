@@ -378,6 +378,15 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  @keyframes fill-bar-vertical {
+    0% {
+      height: 0%;
+    }
+    100% {
+      height: 100%;
+    }
+  }
+
   .md-enter,
   .md-exit.md-exit-active {
     transition: all 250ms ease;

@@ -12,7 +12,7 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  height: 8rem;
+  height: 7.5rem;
   padding: 0 2rem 0 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;

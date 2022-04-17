@@ -33,6 +33,7 @@ import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
 import OrderFulfillment from './OrderFulfillment'
+import OrderPrep from './OrderPrep'
 
 const OrderView = styled('div')`
   margin: 4rem auto;
@@ -120,6 +121,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     order_fulfillment,
     tenders,
     rating,
+    order_prep,
   } = order || {}
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
@@ -199,6 +201,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           </OrderButtons>
         )}
       </OrderHeader>
+      <OrderPrep orderId={order_id} orderPrep={order_prep} />
       <OrderDetails>
         <OrderSection label="Location">
           <OrderRevenueCenter revenueCenter={revenue_center} />

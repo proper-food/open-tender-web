@@ -81,7 +81,11 @@ const Account = () => {
     has_levelup,
   } = useSelector(selectBrand)
   const hasLoyalty = has_rewards || has_thanx || has_levelup
-  const { error } = useSelector(selectAnnouncementsPage('ACCOUNT'))
+  const { entities: announcements } = useSelector(
+    selectAnnouncementsPage('ACCOUNT')
+  )
+  const hasAnnouncements =
+    announcements && announcements.length > 0 ? true : false
   const { account: acctConfig } = useSelector(selectConfig)
   const { background, mobile, title, subtitle } = acctConfig || {}
   const { auth } = useSelector(selectCustomer)
@@ -135,7 +139,7 @@ const Account = () => {
               <AccountDeals />
             </AccountLoyaltyView>
             <AccountBanner>
-              {!error ? (
+              {hasAnnouncements ? (
                 <>
                   {isMobile && (
                     <AccountSectionHeader
