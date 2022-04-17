@@ -34,6 +34,7 @@ import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
 import OrderFulfillment from './OrderFulfillment'
 import OrderPrep from './OrderPrep'
+import { isDesktop } from 'react-device-detect'
 
 const OrderView = styled('div')`
   margin: 4rem auto;
@@ -191,7 +192,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           <OrderButtons>
             {order.is_editable && (
               <ButtonStyled
-                icon={iconMap.Edit}
+                icon={isDesktop ? iconMap.Edit : null}
                 onClick={() => dispatch(editOrder(order))}
                 size="small"
               >
@@ -199,7 +200,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
               </ButtonStyled>
             )}
             <ButtonStyled
-              icon={iconMap.RefreshCw}
+              icon={isDesktop ? iconMap.RefreshCw : null}
               onClick={handleReorder}
               size="small"
             >
@@ -207,11 +208,12 @@ const Order = ({ order, loading, error, isConfirmation }) => {
             </ButtonStyled>
             {!isUpcoming && (
               <ButtonStyled
-                icon={iconMap.Star}
+                icon={isDesktop ? iconMap.Star : null}
                 onClick={updateRating}
                 size="small"
+                color="secondary"
               >
-                {rating ? 'Update Rating' : 'Add Rating'}
+                {rating ? 'Update Rating' : 'Rate Order'}
               </ButtonStyled>
             )}
           </OrderButtons>
