@@ -74,7 +74,9 @@ const OrderPrep = ({ orderId, orderPrep }) => {
   const dispatch = useDispatch()
   const { order } = useSelector(selectCustomerOrder)
   const { prep_status, created_at, fire_at, done_at, completed_at } =
-    order && order.order_id === orderId ? order.order_prep : orderPrep
+    order && order.order_id === orderId
+      ? order.order_prep || {}
+      : orderPrep || {}
 
   useEffect(() => {
     if (fire_at !== null) {
