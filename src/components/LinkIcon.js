@@ -7,7 +7,7 @@ const LinkIconView = styled('span')`
   display: inline-block;
   margin: ${(props) => (props.isBefore ? '0 1.5rem 0 0' : '0 0 0 1.5rem')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} auto;
+    margin: 0 auto;
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 

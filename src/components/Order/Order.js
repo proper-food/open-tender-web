@@ -45,6 +45,9 @@ const OrderView = styled('div')`
 
 const OrderHeader = styled(`div`)`
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: left;
+  }
 
   h1,
   h2 {
@@ -54,6 +57,15 @@ const OrderHeader = styled(`div`)`
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.h3};
     }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
+    }
+  }
+
+  & > span {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -62,6 +74,10 @@ const OrderButtons = styled(`div`)`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: flex-start;
+    margin: 2.5rem 0 3rem;
+  }
 
   button + button {
     margin-left: 1rem;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
@@ -10,27 +10,33 @@ const OrderPrepView = styled.div`
   display: flex;
   justify-content: center;
   margin: 4rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: flex-start;
+    margin: 3rem 0;
+  }
 `
 
 const OrderPrepContainer = styled.div`
   position: relative;
   padding: 0 0 0 7rem;
   margin: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 0 7rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 0 5rem;
   }
 `
 
 const OrderPrepProgress = styled.div`
   position: absolute;
-  top: 1.75rem;
+  top: 2rem;
   left: 0;
-  bottom: 2.5rem;
+  bottom: 3rem;
   width: 7rem;
   display: flex;
   justify-content: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 7rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 5rem;
+    justify-content: flex-start;
+    padding: 0 0 0 1.5rem;
   }
 `
 
@@ -53,8 +59,11 @@ const OrderPrepStepSubtitle = styled.p`
   color: ${(props) => props.theme.colors.tertiary};
 `
 
-const makeLowercase = (dateStr) => {
-  return dateStr.replace('PM', 'pm').replace('AM', 'am')
+const formatDate = (timestamp) => {
+  if (!timestamp) return ' '
+  return isoToDateStr(timestamp, null, 'MMM d, yyyy @ h:mma')
+    .replace('PM', 'pm')
+    .replace('AM', 'am')
 }
 
 const OrderPrepStep = ({ title, timestamp, isActive }) => {
@@ -62,13 +71,7 @@ const OrderPrepStep = ({ title, timestamp, isActive }) => {
     <OrderPrepStepView>
       <div>
         <OrderPrepStepTitle isActive={isActive}>{title}</OrderPrepStepTitle>
-        <OrderPrepStepSubtitle>
-          {timestamp
-            ? makeLowercase(
-                isoToDateStr(timestamp, null, 'MMM d, yyyy @ h:mma')
-              )
-            : ' '}
-        </OrderPrepStepSubtitle>
+        <OrderPrepStepSubtitle>{formatDate(timestamp)}</OrderPrepStepSubtitle>
       </div>
     </OrderPrepStepView>
   )
@@ -83,8 +86,6 @@ const statusPercentages = {
 
 const OrderPrep = ({ orderId, orderPrep }) => {
   const dispatch = useDispatch()
-  const [progress, setProgress] = useState(0)
-  const [inProgress, setInProgress] = useState(null)
   const { order } = useSelector(selectCustomerOrder)
   const { prep_status, created_at, fire_at, done_at, completed_at } =
     order && order.order_id === orderId
@@ -92,20 +93,9 @@ const OrderPrep = ({ orderId, orderPrep }) => {
       : orderPrep || {}
   const isCompleted = prep_status === 'COMPLETED' || prep_status === 'FULFILLED'
   const percent = statusPercentages[prep_status]
-  // const createdDate = parseIsoToDate(created_at)
-  // const fireDate = parseIsoToDate(fire_at)
-  // const progressAt = createdDate > fireDate ? created_at : fire_at
-  const progressAt = inProgress ? inProgress.toISOString() : null
-
-  useEffect(() => {
-    if (progress < 50 && percent === 50) {
-      setInProgress(new Date())
-    }
-  }, [percent, progress])
-
-  useEffect(() => {
-    setProgress(percent)
-  }, [percent])
+  const createdDate = parseIsoToDate(created_at)
+  const fireDate = parseIsoToDate(fire_at)
+  const progressAt = createdDate > fireDate ? created_at : fire_at
 
   useEffect(() => {
     if (fire_at !== null && !isCompleted) {
@@ -121,9 +111,6 @@ const OrderPrep = ({ orderId, orderPrep }) => {
 
   return (
     <OrderPrepView>
-      {/* <OrderPrepHeader>
-        <OrderPrepTitle>Order Progress</OrderPrepTitle>
-      </OrderPrepHeader> */}
       <OrderPrepContainer>
         <OrderPrepProgress>
           <OrderProgress prepStatus={prep_status} />
