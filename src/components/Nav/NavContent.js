@@ -73,6 +73,16 @@ const navButtons = [
     path: '/donations',
   },
   {
+    icon: iconMap.User,
+    title: 'Profile',
+    path: '/account/profile',
+  },
+  {
+    icon: iconMap.Mail,
+    title: 'Communication Preferences',
+    path: '/account/communications',
+  },
+  {
     icon: iconMap.Sliders,
     title: 'Dietary Preferences',
     path: '/account/allergens',
@@ -91,11 +101,6 @@ const navButtons = [
     icon: iconMap.Home,
     title: 'House Accounts',
     path: '/account/house-accounts',
-  },
-  {
-    icon: iconMap.Settings,
-    title: 'Profile & Preferences',
-    path: '/account/profile',
   },
 ]
 

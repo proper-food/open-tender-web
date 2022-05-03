@@ -55,6 +55,7 @@ import {
   UserX,
   XCircle,
   X,
+  Mail,
 } from 'react-feather'
 
 const iconMap = {
@@ -91,6 +92,7 @@ const iconMap = {
   Phone: <Phone size={null} />,
   Plus: <Plus size={null} />,
   PlusCircle: <PlusCircle size={null} />,
+  Mail: <Mail size={null} />,
   Map: <Map size={null} />,
   MapPin: <MapPin size={null} />,
   Menu: <Menu size={null} />,

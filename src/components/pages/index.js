@@ -12,6 +12,7 @@ import Checkout from './Checkout'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutSignIn from './CheckoutSignIn'
 import CheckoutSignUp from './CheckoutSignUp'
+import CommsPrefs from './CommsPrefs'
 import Confirmation from './Confirmation'
 import Deals from './Deals'
 import Donations from './Donations'
@@ -61,6 +62,7 @@ export {
   CheckoutGuest,
   CheckoutSignIn,
   CheckoutSignUp,
+  CommsPrefs,
   Confirmation,
   Deals,
   Donations,

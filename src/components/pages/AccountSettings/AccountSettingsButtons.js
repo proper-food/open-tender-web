@@ -14,6 +14,16 @@ const AccountButtonsView = styled('div')`
 
 const navButtons = [
   {
+    icon: iconMap.User,
+    title: 'Profile',
+    path: '/account/profile',
+  },
+  {
+    icon: iconMap.Mail,
+    title: 'Communicaton Preferences',
+    path: '/account/communications',
+  },
+  {
     icon: iconMap.Sliders,
     title: 'Dietary Preferences',
     path: '/account/allergens',
@@ -38,16 +48,6 @@ const navButtons = [
     title: 'House Accounts',
     path: '/account/house-accounts',
   },
-  {
-    icon: iconMap.User,
-    title: 'Profile & Preferences',
-    path: '/account/profile',
-  },
-  // {
-  //   icon: iconMap.UserX,
-  //   title: 'Logout',
-  //   func: logoutCustomer,
-  // },
 ]
 
 const AccountSettingsButtons = () => {

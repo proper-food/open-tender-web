@@ -15,6 +15,7 @@ import {
   CheckoutGuest,
   CheckoutSignIn,
   CheckoutSignUp,
+  CommsPrefs,
   Confirmation,
   Deals,
   Donations,
@@ -179,6 +180,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/account/profile">
         <Profile />
+      </Route>
+      <Route exact path="/account/communications">
+        <CommsPrefs />
       </Route>
       <Route exact path="/accessibility">
         <Accessibility />

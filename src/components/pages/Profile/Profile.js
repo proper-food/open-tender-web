@@ -10,7 +10,7 @@ import {
 import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
+import { selectBrand, selectConfig } from '../../../slices'
 import {
   AccountBack,
   Content,
@@ -36,14 +36,13 @@ const AccountProfile = () => {
     (data) => dispatch(updateCustomer(data)),
     [dispatch]
   )
-  const optIns = useSelector(selectOptIns)
 
   useEffect(() => {
     if (error) window.scrollTo(0, 0)
   }, [error])
 
   useEffect(() => {
-    if (!customer_id) return history.push('/')
+    if (!customer_id) return history.push('/account')
     dispatch(fetchCustomer())
     return () => dispatch(resetLoginError())
   }, [customer_id, dispatch, history])
@@ -70,7 +69,6 @@ const AccountProfile = () => {
                     loading={loading}
                     error={error}
                     update={update}
-                    optIns={optIns}
                   />
                 </FormWrapper>
                 <PageContent>
