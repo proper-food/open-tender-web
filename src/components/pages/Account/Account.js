@@ -24,6 +24,7 @@ import AccountHero from './AccountHero'
 import AccountGreeting from './AccountGreeting'
 import AccountDeals from './AccountDeals'
 import AccountSectionHeader from './AccountSectionHeader'
+import AccountRewards from './AccountRewards'
 
 const AccountView = styled('div')`
   display: flex;
@@ -136,21 +137,15 @@ const Account = () => {
               ) : (
                 <AccountGreeting title={title} subtitle={subtitle} />
               )}
+              <AccountRewards />
               <AccountDeals />
             </AccountLoyaltyView>
             <AccountBanner>
-              {hasAnnouncements ? (
-                <>
-                  {isMobile && (
-                    <AccountSectionHeader
-                      title={`What's new at ${siteTitle}`}
-                    />
-                  )}
-                  <Announcements page="ACCOUNT" />
-                </>
-              ) : (
-                <AccountHero imageUrl={imageUrl} />
-              )}
+              {hasAnnouncements && isMobile ? (
+                <AccountSectionHeader title={`What's new at ${siteTitle}`} />
+              ) : null}
+              <Announcements page="ACCOUNT" />
+              {!hasAnnouncements && <AccountHero imageUrl={imageUrl} />}
             </AccountBanner>
           </AccountView>
         </Main>

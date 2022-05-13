@@ -12,7 +12,7 @@ const AccountSectionHeaderView = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.5rem;
   }
 `
 

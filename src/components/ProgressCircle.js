@@ -24,8 +24,7 @@ const ProgressCirlceView = styled('div')`
   }
 
   path:first-of-type {
-    stroke: rgba(0, 0, 0, 0.1);
-    // stroke: ${(props) => props.theme.bgColors.secondary};
+    stroke: ${(props) => props.theme.bgColors.tertiary};
   }
 `
 

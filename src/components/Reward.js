@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Heading } from '@open-tender/components'
+import { BgImage, Box, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
@@ -14,32 +14,13 @@ const RewardButton = styled.button`
   width: 100%;
   height: 100%;
   text-align: left;
-
-  // &:hover,
-  // &:active {
-  //   & > div {
-  //     transition: all 0.25s ease;
-  //     transform: translate3D(0, -0.5rem, 0);
-  //     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  //     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //       transform: none;
-  //       box-shadow: none;
-  //     }
-  //   }
-  // }
 `
 
-const RewardView = styled.div`
+const RewardView = styled(Box)`
   position: relative;
-  height: 100%;
-  min-height: 8rem;
   display: flex;
   align-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
-  background-color: ${(props) => props.theme.cards.menuItem.bgColor};
-  box-shadow: ${(props) => props.theme.cards.menuItem.boxShadow};
+  padding: 1rem 1rem;
 `
 
 const RewardTag = styled('div')`
@@ -53,24 +34,22 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 8rem;
-  height: 100%;
+  flex: 0 0 7rem;
+  height: 7rem;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.cards.default.borderRadius};
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
 `
 
 const RewardDetails = styled('div')`
   flex: 1 1 100%;
-  height: 100%;
-  padding: 1rem 2rem 1rem 1.5rem;
+  // height: 100%;
+  padding: 0 2rem 0 1.5rem;
 
   & > div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    min-height: 7rem;
   }
 `
 

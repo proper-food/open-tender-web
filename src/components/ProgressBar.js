@@ -7,28 +7,25 @@ import { useDispatch } from 'react-redux'
 const ProgressView = styled('div')`
   position: relative;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
 `
 
 const ProgressBarFill = styled('div')`
   width: 0;
-  height: 1rem;
-  border-radius: 0.5rem;
+  height: 0.6rem;
+  border-radius: 0.3rem;
   animation: fill-bar 0.5s ease-in-out 0.5s forwards;
-  // background-color: ${(props) => props.theme.links.primary.color};
   background-color: ${(props) => props.theme.colors.primary};
 `
 
 const ProgressPoint = styled('div')`
   position: absolute;
   top: -0.7rem;
-  margin-left: -1.2rem;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 1.2rem;
-  border: 0.2rem solid ${(props) => props.theme.bgColors.primary};
-  // background-color: ${(props) => props.theme.links.primary.color};
+  margin-left: -1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
   background-color: ${(props) => props.theme.colors.primary};
 `
 
@@ -41,9 +38,9 @@ const ProgressPointContainer = styled('div')`
 const ProgressPointButton = styled('button')`
   position: absolute;
   z-index: 1;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 1.2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
   text-indent: -5000px;
 
   &:hover ~ div {
@@ -123,7 +120,7 @@ const ProgressBar = ({ progress, tiers = [] }) => {
           key={tier.percentage}
           style={{
             left: `${tier.percentage.toFixed(5)}%`,
-            // backgroundColor: tier.color,
+            backgroundColor: tier.color,
           }}
         >
           <ProgressPointContainer>

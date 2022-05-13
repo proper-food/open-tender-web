@@ -12,8 +12,10 @@ import Loading from '../../Loading'
 import { useDispatch, useSelector } from 'react-redux'
 
 const AccountLoyaltyProgramView = styled.div`
+  margin: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+    margin: 0 0 2rem;
   }
 `
 
