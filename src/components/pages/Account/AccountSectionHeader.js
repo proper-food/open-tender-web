@@ -46,8 +46,8 @@ const AccountSectionLink = styled.div`
   }
 `
 
-const AccountSectionHeader = ({ title, to }) => (
-  <AccountSectionHeaderView>
+const AccountSectionHeader = ({ title, to, style }) => (
+  <AccountSectionHeaderView style={style}>
     <AccountSectionTitle>
       <Heading as="p">{title}</Heading>
     </AccountSectionTitle>
@@ -67,6 +67,8 @@ const AccountSectionHeader = ({ title, to }) => (
 AccountSectionHeader.displayName = 'AccountSectionHeader'
 AccountSectionHeader.propTypes = {
   title: propTypes.string,
+  to: propTypes.string,
+  style: propTypes.object,
 }
 
 export default AccountSectionHeader

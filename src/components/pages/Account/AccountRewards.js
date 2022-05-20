@@ -1,12 +1,12 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
 
-import Rewards from '../../Rewards'
+import { selectConfig } from '../../../slices'
+import { Rewards, Loading } from '../..'
 import AccountSectionHeader from './AccountSectionHeader'
-import { useEffect } from 'react'
-import Loading from '../../Loading'
-import { isMobile } from 'react-device-detect'
 
 const AccountRewardsView = styled.div`
   width: 100%;
@@ -19,6 +19,8 @@ const AccountRewardsView = styled.div`
 const AccountRewards = () => {
   const dispatch = useDispatch()
   const rewards = useSelector(selectCustomerRewards)
+  const { account: config } = useSelector(selectConfig)
+  const { title } = config.rewards
   const { entities, loading, error } = rewards
   const hasRewards = entities.length > 0 && !error
   const displayed = !isMobile ? entities.slice(0, 2) : entities
@@ -36,10 +38,7 @@ const AccountRewards = () => {
         <Loading text="Retrieving rewards..." />
       ) : (
         <>
-          <AccountSectionHeader
-            title="Your Rewards"
-            to={isMore ? '/rewards' : null}
-          />
+          <AccountSectionHeader title={title} to={isMore ? '/rewards' : null} />
           <Rewards rewards={displayed} />
         </>
       )}

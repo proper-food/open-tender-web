@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser, isMobile, isMobileOnly } from 'react-device-detect'
+import { isBrowser, isMobileOnly } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
@@ -16,14 +16,12 @@ import {
 import { selectBrand, closeModal, selectConfig } from '../../../slices'
 import { Announcements, Content, Greeting, Header, Main } from '../..'
 import { Logout, OrderNow } from '../../buttons'
-// import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
 import AccountHero from './AccountHero'
 import AccountGreeting from './AccountGreeting'
 import AccountDeals from './AccountDeals'
-import AccountSectionHeader from './AccountSectionHeader'
 import AccountRewards from './AccountRewards'
 
 const AccountView = styled('div')`
@@ -141,9 +139,6 @@ const Account = () => {
               <AccountDeals />
             </AccountLoyaltyView>
             <AccountBanner>
-              {hasAnnouncements && isMobile ? (
-                <AccountSectionHeader title={`What's new at ${siteTitle}`} />
-              ) : null}
               <Announcements page="ACCOUNT" />
               {!hasAnnouncements && <AccountHero imageUrl={imageUrl} />}
             </AccountBanner>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectAnnouncementsPage,
@@ -8,6 +8,7 @@ import {
 } from '@open-tender/redux'
 import BackgroundImage from './BackgroundImage'
 import BackgroundContent from './BackgroundContent'
+import AccountSectionHeader from './pages/Account/AccountSectionHeader'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -51,7 +52,8 @@ const Announcement = styled.div`
 const Announcements = ({ page = 'HOME' }) => {
   const dispatch = useDispatch()
   const announcements = useSelector(selectAnnouncementsPage(page))
-  const { entities, loading, error } = announcements || {}
+  const { settings, entities, loading, error } = announcements || {}
+  const { title } = settings || {}
   const isLoading = loading === 'pending'
   const slides = isLoading || error ? null : makeSlides(entities)
 
@@ -62,17 +64,22 @@ const Announcements = ({ page = 'HOME' }) => {
   if (!slides) return null
 
   return (
-    <AnnouncementsView>
-      {slides.map((slide) => {
-        return (
-          <Announcement key={slide.imageUrl}>
-            <BackgroundImage {...slide}>
-              <BackgroundContent {...slide} />
-            </BackgroundImage>
-          </Announcement>
-        )
-      })}
-    </AnnouncementsView>
+    <>
+      {isMobile && title ? (
+        <AccountSectionHeader title={title} style={{ marginBottom: 12 }} />
+      ) : null}
+      <AnnouncementsView>
+        {slides.map((slide) => {
+          return (
+            <Announcement key={slide.imageUrl}>
+              <BackgroundImage {...slide}>
+                <BackgroundContent {...slide} />
+              </BackgroundImage>
+            </Announcement>
+          )
+        })}
+      </AnnouncementsView>
+    </>
   )
 }
 

@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
 import { isMobile } from 'react-device-detect'
+import { useSelector } from 'react-redux'
+import { selectConfig } from '../../../slices'
 
 const AccountLoyaltySignUpView = styled.div`
   margin: 1rem 0 4rem;
@@ -38,27 +40,26 @@ const AccountLoyaltySignUpButtons = styled.div`
 
 const AccountLoyaltySignUp = () => {
   const history = useHistory()
+  const { account: config } = useSelector(selectConfig)
+  const { title, subtitle, signUp, skip } = config.loyalty
   return (
     <AccountLoyaltySignUpView>
-      <h2>Welcome! Want some free stuff?</h2>
-      <p>
-        Sign up for our loyalty program to start earning points for each
-        purchase, which can be redeemed for free stuff!
-      </p>
+      <h2>{title}</h2>
+      <p>{subtitle}</p>
       <AccountLoyaltySignUpButtons>
         <ButtonStyled
           onClick={() => history.push(`/signup`)}
           size={isMobile ? 'small' : 'default'}
           color="primary"
         >
-          Sign Up
+          {signUp}
         </ButtonStyled>
         <ButtonStyled
           onClick={() => history.push(`/order-type`)}
           size={isMobile ? 'small' : 'default'}
           color="secondary"
         >
-          Order without Rewards
+          {skip}
         </ButtonStyled>
       </AccountLoyaltySignUpButtons>
     </AccountLoyaltySignUpView>

@@ -15,8 +15,12 @@ const VerifyAccountView = styled('div')`
   margin: 2rem 0;
 
   p {
-    // color: ${(props) => props.theme.colors.primary};
     line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+
+  p + p {
+    margin: 0.5rem 0 0;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -42,6 +46,8 @@ const VerifyAccount = ({ style }) => {
         Your account has not yet been verified, which gives you access to
         certain deals and rewards that are made available only to verified
         accounts.{' '}
+      </p>
+      <p>
         <ButtonLink onClick={verifyAccount}>
           Click here to verify your account.
         </ButtonLink>
