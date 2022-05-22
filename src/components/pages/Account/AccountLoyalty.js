@@ -10,11 +10,11 @@ import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
 const AccountLoyalty = () => {
-  const { has_rewards, has_thanx, has_levelup } = useSelector(selectBrand)
+  const { has_loyalty, has_thanx, has_levelup } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { account } = useSelector(selectConfig)
 
-  return has_rewards ? (
+  return has_loyalty ? (
     !auth ? (
       <AccountLoyaltySignUp />
     ) : (

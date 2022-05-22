@@ -75,11 +75,11 @@ const Account = () => {
   const dispatch = useDispatch()
   const {
     title: siteTitle,
-    has_rewards,
+    has_loyalty,
     has_thanx,
     has_levelup,
   } = useSelector(selectBrand)
-  const hasLoyalty = has_rewards || has_thanx || has_levelup
+  const hasLoyalty = has_loyalty || has_thanx || has_levelup
   const { entities: announcements } = useSelector(
     selectAnnouncementsPage('ACCOUNT')
   )

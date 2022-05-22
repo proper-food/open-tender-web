@@ -35,7 +35,7 @@ const navButtons = [
   },
   {
     icon: iconMap.CreditCard,
-    title: 'Credit Cards',
+    title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
@@ -53,11 +53,13 @@ const navButtons = [
 const AccountSettingsButtons = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const filteredButtons =
-    has_rewards || has_thanx
-      ? navButtons
-      : navButtons.filter((i) => i.path !== '/rewards')
+  const { has_allergens, has_house_accounts, has_gift_cards } =
+    useSelector(selectBrand)
+  let removed = []
+  if (!has_gift_cards) removed.push('/account/gift-cards')
+  if (!has_allergens) removed.push('/account/allergens')
+  if (!has_house_accounts) removed.push('/account/house-accounts')
+  const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
   const buttons = filteredButtons.map((i) => ({
     ...i,
     onClick: i.path ? () => history.push(i.path) : () => dispatch(i.func()),

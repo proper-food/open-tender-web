@@ -40,7 +40,7 @@ const navTabs = [
     path: '/favorites',
   },
   {
-    icon: iconMap.Heart,
+    icon: iconMap.Smile,
     title: 'Loyalty',
     path: '/loyalty',
   },
@@ -86,17 +86,25 @@ const AccountTabs = () => {
   const theme = useSelector(selectTheme)
   const brand = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
-  const { has_rewards, has_thanx, has_levelup, has_deals, has_loyalty } = brand
+  const {
+    has_rewards,
+    has_thanx,
+    has_levelup,
+    has_deals,
+    has_loyalty,
+    has_favorites,
+  } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_deals) removed.push('/deals')
   if (!has_loyalty) removed.push('/loyalty')
+  if (!has_favorites) removed.push('/favorites')
   if (!isMobile || (hasRewards && has_deals))
     removed.push('/account/gift-cards')
   const filteredButtons = auth
     ? navTabs.filter((i) => !removed.includes(i.path))
-    : navTabsGuest
+    : navTabsGuest.filter((i) => !removed.includes(i.path))
   const login = () => dispatch(openModal({ type: 'login' }))
   const buttons = filteredButtons.map((i) => ({
     ...i,

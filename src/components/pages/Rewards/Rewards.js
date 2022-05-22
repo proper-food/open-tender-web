@@ -12,12 +12,18 @@ import RewardsList from './RewardsList'
 
 const Rewards = () => {
   const history = useHistory()
-  const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
+  const {
+    title: siteTitle,
+    has_thanx,
+    has_levelup,
+    has_rewards,
+  } = useSelector(selectBrand)
+  const hasRewards = has_rewards || has_thanx || has_levelup
   const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth || !hasRewards) return history.push('/account')
+  }, [auth, hasRewards, history])
 
   return auth ? (
     <>

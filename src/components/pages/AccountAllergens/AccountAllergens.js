@@ -30,7 +30,7 @@ const AllergenFormView = styled('div')``
 const AccountAllergens = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_allergens } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { allergens: config } = useSelector(selectConfig)
   const brandAllergens = useSelector(selectAllergens)
@@ -49,8 +49,8 @@ const AccountAllergens = () => {
   )
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth || !has_allergens) return history.push('/account')
+  }, [auth, has_allergens, history])
 
   useEffect(() => {
     dispatch(fetchAllergens())

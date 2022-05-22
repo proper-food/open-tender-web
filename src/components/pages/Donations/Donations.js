@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { DonationForm, FormWrapper } from '@open-tender/components'
 import {
@@ -28,9 +28,10 @@ const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
 const Donations = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { donations: config } = useSelector(selectConfig)
   const { donations: includeRecaptcha } = useSelector(selectRecaptcha)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_donations } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const { success, loading, error, donation } = useSelector(selectDonation)
@@ -40,6 +41,10 @@ const Donations = () => {
   )
   const reset = useCallback(() => dispatch(resetDonation()), [dispatch])
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
+
+  useEffect(() => {
+    if (!has_donations) return history.push('/account')
+  }, [has_donations, history])
 
   useEffect(() => {
     return () => dispatch(resetDonation())

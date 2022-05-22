@@ -12,7 +12,7 @@ const guestButtons = [
   {
     icon: iconMap.Home,
     title: 'Home',
-    path: '/',
+    path: '/account',
   },
   {
     icon: iconMap.Tag,
@@ -40,7 +40,7 @@ const navButtons = [
   {
     icon: iconMap.Home,
     title: 'Home',
-    path: '/',
+    path: '/account',
   },
   {
     icon: iconMap.ShoppingBag,
@@ -53,7 +53,7 @@ const navButtons = [
     path: '/favorites',
   },
   {
-    icon: iconMap.Heart,
+    icon: iconMap.Smile,
     title: 'Loyalty',
     path: '/loyalty',
   },
@@ -99,7 +99,7 @@ const navButtons = [
   },
   {
     icon: iconMap.CreditCard,
-    title: 'Credit Cards',
+    title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
@@ -185,12 +185,31 @@ const Nav = React.forwardRef((props, ref) => {
   const history = useHistory()
   const { profile } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
-  const { has_rewards, has_thanx, has_levelup, has_deals, has_loyalty } = brand
+  const {
+    has_rewards,
+    has_thanx,
+    has_levelup,
+    has_deals,
+    has_loyalty,
+    has_gift_cards,
+    has_donations,
+    has_allergens,
+    has_house_accounts,
+    has_favorites,
+  } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_loyalty) removed.push('/loyalty')
   if (!has_deals) removed.push('/deals')
+  if (!has_gift_cards) {
+    removed.push('/gift-cards')
+    removed.push('/account/gift-cards')
+  }
+  if (!has_donations) removed.push('/donations')
+  if (!has_allergens) removed.push('/account/allergens')
+  if (!has_house_accounts) removed.push('/account/house-accounts')
+  if (!has_favorites) removed.push('/favorites')
   const buttons = profile ? navButtons : guestButtons
   const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
 

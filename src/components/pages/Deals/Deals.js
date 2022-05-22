@@ -48,7 +48,7 @@ const Deals = () => {
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!has_deals) return history.push('/')
+    if (!has_deals) return history.push('/account')
   }, [has_deals, history])
 
   useEffect(() => {

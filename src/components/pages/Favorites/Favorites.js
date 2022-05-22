@@ -32,15 +32,15 @@ const Favorites = () => {
   const { entities: orders } = useSelector(selectCustomerOrders)
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   const [favorites, setFavorites] = useState(entities)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_favorites } = useSelector(selectBrand)
   const { favorites: config } = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const items = favorites.map((i) => ({ ...i.item }))
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth || !has_favorites) return history.push('/account')
+  }, [auth, has_favorites, history])
 
   useEffect(() => {
     if (error) window.scrollTo(0, 0)

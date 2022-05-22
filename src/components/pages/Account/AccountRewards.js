@@ -8,7 +8,7 @@ import {
   selectCustomerRewards,
 } from '@open-tender/redux'
 
-import { selectConfig } from '../../../slices'
+import { selectBrand, selectConfig } from '../../../slices'
 import { Rewards, Loading } from '../..'
 import AccountSectionHeader from './AccountSectionHeader'
 
@@ -23,6 +23,7 @@ const AccountRewardsView = styled.div`
 const AccountRewards = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
+  const { has_rewards } = useSelector(selectBrand)
   const hasCustomer = auth ? true : false
   const rewards = useSelector(selectCustomerRewards)
   const { account: config } = useSelector(selectConfig)
@@ -38,7 +39,7 @@ const AccountRewards = () => {
     }
   }, [dispatch, hasCustomer])
 
-  if (!hasRewards) return null
+  if (!hasRewards || !has_rewards) return null
 
   return (
     <AccountRewardsView>

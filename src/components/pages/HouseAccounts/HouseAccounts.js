@@ -25,15 +25,15 @@ import HouseAccountsList from './HouseAccountsList'
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_house_accounts } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { houseAccounts: config } = useSelector(selectConfig)
   const { entities, loading, error } = useSelector(selectCustomerHouseAccounts)
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth || !has_house_accounts) return history.push('/account')
+  }, [auth, has_house_accounts, history])
 
   useEffect(() => {
     dispatch(fetchCustomerHouseAccounts())
