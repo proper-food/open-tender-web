@@ -8,7 +8,7 @@ import { selectBrand } from '../../../slices'
 import { Content, HeaderUser, Main, PageContainer } from '../..'
 import LevelUpLoyalty from './LevelUpLoyalty'
 import ThanxLoyalty from './ThanxLoyalty'
-import LoyaltyRewards from './LoyaltyRewards'
+import RewardsList from './RewardsList'
 
 const Rewards = () => {
   const history = useHistory()
@@ -36,7 +36,7 @@ const Rewards = () => {
               <ThanxLoyalty />
             </PageContainer>
           ) : (
-            <LoyaltyRewards />
+            <RewardsList />
           )}
         </Main>
       </Content>

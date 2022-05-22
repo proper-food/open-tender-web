@@ -29,6 +29,7 @@ import {
   HouseAccounts,
   LevelUp,
   Locations,
+  Loyalty,
   Menu,
   MenuItem,
   MenuSite,
@@ -138,6 +139,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/ratings/:id">
         <Rating />
+      </Route>
+      <Route exact path="/loyalty">
+        <Loyalty />
       </Route>
       <Route exact path="/rewards">
         <Rewards />

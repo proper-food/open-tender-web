@@ -40,6 +40,11 @@ const navTabs = [
     path: '/favorites',
   },
   {
+    icon: iconMap.Heart,
+    title: 'Loyalty',
+    path: '/loyalty',
+  },
+  {
     icon: iconMap.Award,
     title: 'Rewards',
     path: '/rewards',
@@ -81,11 +86,12 @@ const AccountTabs = () => {
   const theme = useSelector(selectTheme)
   const brand = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
-  const { has_rewards, has_thanx, has_levelup, has_deals } = brand
+  const { has_rewards, has_thanx, has_levelup, has_deals, has_loyalty } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_deals) removed.push('/deals')
+  if (!has_loyalty) removed.push('/loyalty')
   if (!isMobile || (hasRewards && has_deals))
     removed.push('/account/gift-cards')
   const filteredButtons = auth

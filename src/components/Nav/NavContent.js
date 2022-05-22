@@ -53,6 +53,11 @@ const navButtons = [
     path: '/favorites',
   },
   {
+    icon: iconMap.Heart,
+    title: 'Loyalty',
+    path: '/loyalty',
+  },
+  {
     icon: iconMap.Award,
     title: 'Rewards',
     path: '/rewards',
@@ -180,10 +185,11 @@ const Nav = React.forwardRef((props, ref) => {
   const history = useHistory()
   const { profile } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
-  const { has_rewards, has_thanx, has_levelup, has_deals } = brand
+  const { has_rewards, has_thanx, has_levelup, has_deals, has_loyalty } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
+  if (!has_loyalty) removed.push('/loyalty')
   if (!has_deals) removed.push('/deals')
   const buttons = profile ? navButtons : guestButtons
   const filteredButtons = buttons.filter((i) => !removed.includes(i.path))

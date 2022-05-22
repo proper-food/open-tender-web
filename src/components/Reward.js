@@ -59,6 +59,7 @@ const RewardContent = styled('div')`
 
 const RewardNote = styled('div')`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin: 0 0 0.5rem;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
@@ -67,12 +68,12 @@ const RewardNote = styled('div')`
     display: block;
     line-height: 1.4;
   }
+`
 
-  span:first-of-type {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin: 0 0.4rem 0 0;
-  }
+const RewardNoteIcon = styled.span`
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0 0.4rem 0 0;
 `
 
 // const RewardTitle = styled('p')`
@@ -111,19 +112,20 @@ const makeServiceType = (serviceType) => {
     case 'WALKIN':
       return (
         <>
-          <span>{iconMap.Grid}</span>Scan in-store only
+          <RewardNoteIcon>{iconMap.Grid}</RewardNoteIcon>Scan in-store only
         </>
       )
     case 'PICKUP':
       return (
         <>
-          <span>{iconMap.ShoppingBag}</span>Pickup orders only
+          <RewardNoteIcon>{iconMap.ShoppingBag}</RewardNoteIcon>Pickup orders
+          only
         </>
       )
     case 'DELIVERY':
       return (
         <>
-          <span>{iconMap.Truck}</span>Delivery orders only
+          <RewardNoteIcon>{iconMap.Truck}</RewardNoteIcon>Delivery orders only
         </>
       )
     default:
@@ -144,17 +146,47 @@ const makeOrderType = (orderType) => {
   }
 }
 
+const RewardChannel = styled.span`
+  color: ${(props) => props.theme.colors.alert};
+`
+
+const RewardDash = styled.span`
+  margin: 0 0.2rem;
+`
+
+const makeChannelType = (channelType) => {
+  switch (channelType) {
+    case 'APP':
+      return <RewardChannel>App Only!</RewardChannel>
+    case 'ONLINE':
+      return <RewardChannel>Online Only!</RewardChannel>
+    case 'POS':
+      return <RewardChannel>At POS Only!</RewardChannel>
+    case 'KIOSK':
+      return <RewardChannel>Kiosk Only!</RewardChannel>
+    default:
+      return null
+  }
+}
+
 export const makeLimitations = (item) => {
-  const { order_type, service_type } = item
+  const { channel_type, order_type, service_type } = item
   const serviceType = makeServiceType(service_type)
   const orderType = makeOrderType(order_type)
+  const channelType = makeChannelType(channel_type)
   const comma = serviceType && orderType ? ', ' : null
-  if (serviceType || orderType) {
+  const dash =
+    (serviceType || orderType) && channelType ? (
+      <RewardDash>-</RewardDash>
+    ) : null
+  if (serviceType || orderType || channelType) {
     return (
       <>
         {serviceType}
         {comma}
         {orderType}
+        {dash}
+        {channelType}
       </>
     )
   }

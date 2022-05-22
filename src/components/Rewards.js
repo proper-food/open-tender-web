@@ -41,7 +41,6 @@ const Rewards = ({ rewards, renderItem = Reward }) => {
       <RewardsContainer>
         {rewards.map((reward) => (
           <RewardView key={reward.discount_id}>
-            {/* <Reward item={reward} /> */}
             {renderItem({ item: reward })}
           </RewardView>
         ))}

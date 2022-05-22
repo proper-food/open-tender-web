@@ -28,6 +28,7 @@ import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import LevelUp from './LevelUp'
 import Locations from './Locations'
+import Loyalty from './Loyalty'
 import Menu from './Menu'
 import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
@@ -78,6 +79,7 @@ export {
   HouseAccounts,
   LevelUp,
   Locations,
+  Loyalty,
   Menu,
   MenuItem,
   MenuSite,

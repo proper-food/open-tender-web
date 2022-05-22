@@ -2,7 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
-import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
+import {
+  fetchCustomerRewards,
+  selectCustomer,
+  selectCustomerRewards,
+} from '@open-tender/redux'
 
 import { selectConfig } from '../../../slices'
 import { Rewards, Loading } from '../..'
@@ -18,6 +22,8 @@ const AccountRewardsView = styled.div`
 
 const AccountRewards = () => {
   const dispatch = useDispatch()
+  const { auth } = useSelector(selectCustomer)
+  const hasCustomer = auth ? true : false
   const rewards = useSelector(selectCustomerRewards)
   const { account: config } = useSelector(selectConfig)
   const { title } = config.rewards
@@ -27,8 +33,10 @@ const AccountRewards = () => {
   const isMore = entities.length > displayed.length
 
   useEffect(() => {
-    dispatch(fetchCustomerRewards())
-  }, [dispatch])
+    if (hasCustomer) {
+      dispatch(fetchCustomerRewards())
+    }
+  }, [dispatch, hasCustomer])
 
   if (!hasRewards) return null
 

@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
@@ -16,10 +17,10 @@ import {
   PageError,
   PageTitle,
   Rewards,
+  Reward,
 } from '../..'
 import { AccountHome, Logout, OrderNow } from '../../buttons'
 import AccountTabs from '../Account/AccountTabs'
-import { isBrowser } from 'react-device-detect'
 
 const DealsView = styled.div`
   opacity: 0;
@@ -29,6 +30,10 @@ const DealsView = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     max-width: 60rem;
   }
+`
+
+const DealView = styled.div`
+  margin: 0 0 1.5rem;
 `
 
 const Deals = () => {
@@ -81,7 +86,17 @@ const Deals = () => {
               <PageError error={error} />
             ) : hasDeals ? (
               <DealsView>
-                <Rewards rewards={deals} />
+                {isMobile ? (
+                  <>
+                    {deals.map((deal) => (
+                      <DealView>
+                        <Reward item={deal} />
+                      </DealView>
+                    ))}
+                  </>
+                ) : (
+                  <Rewards rewards={deals} />
+                )}
               </DealsView>
             ) : (
               <PageContent>
