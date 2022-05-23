@@ -41,9 +41,10 @@ const FooterContent = styled('div')`
   }
 `
 
-const FooterNav = styled('div')``
+const FooterNav = styled.div``
 
-const FooterLogo = styled('div')`
+const FooterLogo = styled.a`
+  display: block;
   height: 3.2rem;
   margin: 0 0 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -54,6 +55,7 @@ const FooterLogo = styled('div')`
     display: inline-block;
     width: auto;
     height: 100%;
+    pointer-events: none;
   }
 `
 
@@ -148,8 +150,11 @@ const FooterVersion = styled('div')`
 `
 
 const Footer = ({ hasRouter = true }) => {
-  const { logoLight, url, has_deals } = useSelector(selectBrand)
+  const { logoLight, url, has_deals, has_gift_cards, has_donations } =
+    useSelector(selectBrand)
   const { orderTypes = [] } = useSelector(selectSettings)
+  const hasGiftCards = has_gift_cards && orderTypes.includes('GIFT_CARDS')
+  const hasDonations = has_donations && orderTypes.includes('DONATIONS')
 
   return (
     <FooterView role="contentinfo">
@@ -158,32 +163,32 @@ const Footer = ({ hasRouter = true }) => {
           <FooterContent>
             <FooterNav>
               {logoLight && (
-                <FooterLogo>
+                <FooterLogo href={url || '/'} rel="noopener noreferrer">
                   <img src={logoLight} alt="logo" />
                 </FooterLogo>
               )}
               {hasRouter && (
                 <FooterLinks>
+                  {url && (
+                    <li>
+                      <a href={url} rel="noopener noreferrer">
+                        Back to Website
+                      </a>
+                    </li>
+                  )}
                   {has_deals && (
                     <li>
                       <Link to="/deals">Deals</Link>
                     </li>
                   )}
-                  {orderTypes.includes('GIFT_CARDS') && (
+                  {hasGiftCards && (
                     <li>
                       <Link to="/gift-cards">Gift Cards</Link>
                     </li>
                   )}
-                  {orderTypes.includes('DONATIONS') && (
+                  {hasDonations && (
                     <li>
                       <Link to="/donations">Donations</Link>
-                    </li>
-                  )}
-                  {url && (
-                    <li>
-                      <a href={url} rel="noopener noreferrer" target="_blank">
-                        Full Website
-                      </a>
                     </li>
                   )}
                 </FooterLinks>
