@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -21,19 +21,20 @@ import {
   HeaderDefault,
   PageContainer,
 } from '../..'
-import ConfirmationProfile from './ConfirmationProfile'
+import ConfirmationPrefs from './ConfirmationPrefs'
 import ConfirmationLinks from './ConfirmationLinks'
 
 const Confirmation = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [showPrefs, setShowPrefs] = useState(false)
   const { confirmation: config } = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
   const { order_fulfillment, order_id, revenue_center, service_type } =
     order || {}
   const { auth, profile } = useSelector(selectCustomer)
-  const isNew = auth && profile && profile.order_notifications === 'NEW'
+  const isNew = auth && profile && !profile.is_notification_set
   const optIns = useSelector(selectOptIns)
   const { accepts_marketing, order_notifications } = optIns
   const showOptIns = isNew && (accepts_marketing || order_notifications)
@@ -55,6 +56,12 @@ const Confirmation = () => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())
   }, [hasFulfillment, dispatch])
 
+  useEffect(() => {
+    if (showOptIns) {
+      setShowPrefs(true)
+    }
+  }, [showOptIns])
+
   return (
     <>
       <Helmet>
@@ -68,7 +75,7 @@ const Confirmation = () => {
               <ConfirmationLinks auth={auth} brand={brand} />
             </PageTitle>
             <PageContent style={{ margin: '2.5rem auto' }}>
-              {showOptIns && <ConfirmationProfile />}
+              {showPrefs && <ConfirmationPrefs />}
               {hasFulfillment && (
                 <OrderFulfillment
                   orderId={order_id}

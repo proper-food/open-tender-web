@@ -14,11 +14,7 @@ import { FormSection, Loading } from '.'
 
 const OrderFulfillmentView = styled.div`
   max-width: 54rem;
-  margin: ${(props) => props.theme.layout.margin} auto;
   margin: 4rem auto;
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   margin: ${(props) => props.theme.layout.marginMobile} auto;
-  // }
 `
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
