@@ -9,6 +9,7 @@ import ButtonText from './ButtonText'
 import Card from './Card'
 import CartButton from './CartButton'
 import Content from './Content'
+import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
@@ -101,6 +102,7 @@ export {
   ButtonText,
   Card,
   CartButton,
+  CommunicationPrefs,
   Container,
   Content,
   ErrorBoundary,
