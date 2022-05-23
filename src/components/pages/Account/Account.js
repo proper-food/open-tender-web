@@ -14,7 +14,7 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectConfig } from '../../../slices'
-import { Announcements, Content, Greeting, Header, Main } from '../..'
+import { Announcements, Content, Header, Main } from '../..'
 import { Logout, OrderNow } from '../../buttons'
 import AccountTabs from './AccountTabs'
 import AccountButtons from './AccountButtons'
@@ -23,6 +23,8 @@ import AccountHero from './AccountHero'
 import AccountGreeting from './AccountGreeting'
 import AccountDeals from './AccountDeals'
 import AccountRewards from './AccountRewards'
+import AccountLogo from './AccountLogo'
+import AccountContent from './AccountContent'
 
 const AccountView = styled('div')`
   display: flex;
@@ -86,7 +88,7 @@ const Account = () => {
   const hasAnnouncements =
     announcements && announcements.length > 0 ? true : false
   const { account: acctConfig } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle } = acctConfig || {}
+  const { background, mobile } = acctConfig || {}
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const imageUrl = isMobileOnly ? mobile : background
@@ -109,9 +111,7 @@ const Account = () => {
       </Helmet>
       <Content>
         <Header
-          // style={isBrowser ? null : { backgroundColor: 'transparent' }}
-          // left={<AccountScan />}
-          left={<Greeting />}
+          left={<AccountLogo />}
           right={
             isBrowser ? (
               <>
@@ -130,13 +130,11 @@ const Account = () => {
           <AccountButtons />
           <AccountView>
             <AccountLoyaltyView>
-              {hasLoyalty ? (
-                <AccountLoyalty />
-              ) : (
-                <AccountGreeting title={title} subtitle={subtitle} />
-              )}
+              <AccountGreeting />
+              {hasLoyalty && <AccountLoyalty />}
               <AccountRewards />
               <AccountDeals />
+              <AccountContent />
             </AccountLoyaltyView>
             <AccountBanner>
               <Announcements page="ACCOUNT" />
