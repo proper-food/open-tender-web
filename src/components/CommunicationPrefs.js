@@ -122,6 +122,8 @@ const CommunicationPrefs = ({ style }) => {
           prefs={prefs}
           add={add}
           remove={remove}
+          accepts_marketing={accepts_marketing}
+          order_notifications={order_notifications}
         />
       </FormWrapper>
     </>
