@@ -121,7 +121,7 @@ const RevenueCenter = () => {
               ) : (
                 <p>
                   Location not found. Please try a different URL or{' '}
-                  <Link to="/">head back to our home page</Link>.
+                  <Link to="/account">head back to our home page</Link>.
                 </p>
               )}
             </RevenueCenterView>

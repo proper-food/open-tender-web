@@ -93,7 +93,7 @@ const GiftCards = () => {
                   {customer ? (
                     <Link to="/account">Head back to your account page</Link>
                   ) : (
-                    <Link to="/">
+                    <Link to="/account">
                       Head back to the home page to start an order
                     </Link>
                   )}

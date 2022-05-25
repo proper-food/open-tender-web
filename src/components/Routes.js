@@ -57,10 +57,10 @@ const Routes = () => {
         <Home />
       </Route>
       <Route exact path="/order">
-        <Redirect to="/" />
+        <Redirect to="/account" />
       </Route>
       <Route exact path="/order/catering">
-        <Redirect to="/" />
+        <Redirect to="/account" />
       </Route>
       <Route exact path="/levelup">
         <LevelUp />

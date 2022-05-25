@@ -129,7 +129,7 @@ const Rating = () => {
                   {auth ? (
                     <Link to="/account">Head back to your account page</Link>
                   ) : (
-                    <Link to="/">Head back to the home page</Link>
+                    <Link to="/account">Head back to the home page</Link>
                   )}
                 </p>
               ) : orderRating ? (

@@ -37,7 +37,7 @@ const NotFound = () => {
           <PageContainer>
             <PageTitle {...config} />
             <PageContent>
-              <Link to="/">{config.back}</Link>
+              <Link to="/account">{config.back}</Link>
             </PageContent>
           </PageContainer>
         </Main>

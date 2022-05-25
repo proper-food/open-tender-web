@@ -121,7 +121,7 @@ const SignUp = () => {
             </FormWrapper>
             <PageContent>
               <p>
-                <Link to="/">{signupConfig.back}</Link>
+                <Link to="/account">{signupConfig.back}</Link>
               </p>
             </PageContent>
           </PageContainer>
