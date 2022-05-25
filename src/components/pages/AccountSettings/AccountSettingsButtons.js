@@ -10,6 +10,10 @@ import iconMap from '../../iconMap'
 const AccountButtonsView = styled('div')`
   max-width: 54rem;
   margin: 0 auto;
+
+  button {
+    height: 6rem;
+  }
 `
 
 const navButtons = [

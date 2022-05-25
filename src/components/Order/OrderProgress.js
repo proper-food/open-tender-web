@@ -1,7 +1,9 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const OrderProgressView = styled('div')`
+import iconMap from '../iconMap'
+
+const OrderProgressView = styled.div`
   position: relative;
   width: 0.4rem;
   height: 100%;
@@ -10,7 +12,7 @@ const OrderProgressView = styled('div')`
   border-radius: 0.5rem;
 `
 
-const OrderProgressFill = styled('div')`
+const OrderProgressFill = styled.div`
   width: 0.4rem;
   height: 0;
   border-radius: 0.5rem;
@@ -18,17 +20,33 @@ const OrderProgressFill = styled('div')`
   background-color: ${(props) => props.theme.colors.primary};
 `
 
-const OrderProgressPoint = styled('div')`
+const OrderProgressPoint = styled.div`
   position: absolute;
   top: ${(props) => `${props.top}%`};
   left: -0.8rem;
   margin-top: -1rem;
   width: 2rem;
   height: 2rem;
-  border-radius: 1.2rem;
-  border: 0.2rem solid ${(props) => props.theme.bgColors.primary};
+  border-radius: 1rem;
+  // border: 0.2rem solid ${(props) => props.theme.bgColors.primary};
   background-color: ${(props) =>
     props.filled ? props.theme.colors.primary : props.theme.bgColors.tertiary};
+`
+
+const OrderProgressPointCheck = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: 0 0 0.1rem;
+    color: ${(props) => props.theme.bgColors.primary};
+  }
 `
 
 const statusPercentages = {
@@ -49,7 +67,13 @@ const OrderProgress = ({ prepStatus }) => {
         <OrderProgressFill />
       </div>
       {steps.map((step) => (
-        <OrderProgressPoint key={step} top={step} filled={percent >= step} />
+        <OrderProgressPoint key={step} top={step} filled={percent >= step}>
+          {percent >= step && (
+            <OrderProgressPointCheck>
+              <span>{iconMap.Check}</span>
+            </OrderProgressPointCheck>
+          )}
+        </OrderProgressPoint>
       ))}
     </OrderProgressView>
   )

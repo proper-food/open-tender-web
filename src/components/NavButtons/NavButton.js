@@ -27,13 +27,6 @@ const NavButtonView = styled('button')`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 7rem;
     padding: 0 1rem 0 2rem;
-    // min-height: 4rem;
-    // padding: 2rem 0.5rem 2rem 2rem;
-    // border-width: 0;
-    // border-bottom-width: ${(props) => props.theme.border.width};
-    // margin: 0;
-    // border-radius: 0;
-    // font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 
   &:hover {
@@ -46,9 +39,6 @@ const NavButtonView = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
-    // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    //   border-width: 0;
-    // }
   }
 `
 
