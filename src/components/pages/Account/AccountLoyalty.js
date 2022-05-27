@@ -25,7 +25,7 @@ const AccountLoyalty = () => {
       <PageSection {...account.loyalty} style={{ marginBottom: '2.5rem' }} />
       <ThanxLoyalty />
     </>
-  ) : has_levelup ? (
+  ) : has_levelup && auth ? (
     <LevelUpLoyalty />
   ) : null
 }
