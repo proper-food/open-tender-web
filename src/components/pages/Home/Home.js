@@ -30,7 +30,8 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(closeModal())
-  }, [dispatch])
+    history.push('/account')
+  }, [dispatch, history])
 
   // useEffect(() => {
   //   dispatch(fetchAnnouncementPage('HOME'))
