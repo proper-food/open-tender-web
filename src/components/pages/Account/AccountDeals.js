@@ -26,6 +26,7 @@ const AccountDeals = () => {
   const { customer_id } = profile || {}
   const displayed = !isMobile ? entities.slice(0, 2) : entities
   const isMore = entities.length > displayed.length
+  const hasDeals = has_deals && displayed.length
 
   useEffect(() => {
     if (has_deals) {
@@ -33,7 +34,7 @@ const AccountDeals = () => {
     }
   }, [has_deals, customer_id, dispatch])
 
-  return has_deals ? (
+  return hasDeals ? (
     <AccountDealsView>
       <AccountSectionHeader title={title} to={isMore ? '/deals' : null} />
       <Rewards rewards={displayed} />
