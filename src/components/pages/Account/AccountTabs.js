@@ -62,7 +62,7 @@ const navTabs = [
   {
     icon: iconMap.Settings,
     title: 'Settings',
-    path: '/settings',
+    path: '/account/settings',
   },
 ]
 

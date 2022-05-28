@@ -1,13 +1,13 @@
 import React, { createContext, createRef } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { ThemeProvider } from '@emotion/react'
 import styled from '@emotion/styled'
 import TagManager from 'react-gtm-module'
 import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
-import Routes from './components/Routes'
+import AppRoutes from './components/AppRoutes'
 import {
   Alerts,
   CartButton,
@@ -74,15 +74,15 @@ class App extends React.Component {
               </Helmet>
               <AppContext.Provider value={{ windowRef: this.windowRef }}>
                 <ErrorBoundary>
-                  <Router>
+                  <BrowserRouter>
                     <Modal />
                     <Alerts />
                     <Notifications />
                     <CartButton />
-                    <Routes />
+                    <AppRoutes />
                     <Sidebar />
                     <Nav />
-                  </Router>
+                  </BrowserRouter>
                 </ErrorBoundary>
               </AppContext.Provider>
             </AppView>

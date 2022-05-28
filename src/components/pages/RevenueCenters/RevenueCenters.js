@@ -58,6 +58,7 @@ const RevenueCenters = () => {
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
   const missingAddress = serviceType === 'DELIVERY' && !address
+  const show = false
 
   useEffect(() => {
     let paramOrderType = null
@@ -133,7 +134,7 @@ const RevenueCenters = () => {
         />
         <Main>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>
-          {apiKey && (
+          {show && apiKey && (
             <GoogleMap
               apiKey={apiKey}
               zoom={zoom}

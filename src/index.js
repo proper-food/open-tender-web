@@ -1,20 +1,15 @@
 import React from 'react'
 // import ReactDOM from 'react-dom'
 import { createRoot } from 'react-dom/client'
-import App from './App'
-import store from './app/store'
 import { Provider } from 'react-redux'
-import * as serviceWorker from './serviceWorker'
+import store from './app/store'
+import App from './App'
 import * as Sentry from '@sentry/react'
 import packageJson from '../package.json'
 
 global.appVersion = packageJson.version
 
-// https://stackoverflow.com/questions/55738408/javascript-typeerror-cancelled-error-when-calling-fetch-on-ios
 // https://docs.sentry.io/clients/javascript/config/
-// "When using strings, they’ll partially match the messages,
-// so if you need to achieve an exact match,
-// use RegExp patterns instead."
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
   environment: process.env.NODE_ENV,
@@ -59,8 +54,3 @@ if (container) {
     </React.StrictMode>
   )
 }
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()

@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
-import { selectToken } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
@@ -15,14 +13,8 @@ import {
 } from '../..'
 
 const NotFound = () => {
-  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { notFound: config } = useSelector(selectConfig)
-  const token = useSelector(selectToken)
-
-  useEffect(() => {
-    if (token) return navigate('/')
-  }, [token, navigate])
 
   return (
     <>
@@ -37,7 +29,7 @@ const NotFound = () => {
           <PageContainer>
             <PageTitle {...config} />
             <PageContent>
-              <Link to="/account">{config.back}</Link>
+              <Link to="/">{config.back}</Link>
             </PageContent>
           </PageContainer>
         </Main>
