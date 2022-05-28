@@ -3,7 +3,7 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
 
 import { openModal, selectBrand, selectTheme } from '../../../slices'
@@ -81,7 +81,7 @@ const navTabsGuest = [
 
 const AccountTabs = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
   const brand = useSelector(selectBrand)
@@ -108,7 +108,7 @@ const AccountTabs = () => {
   const login = () => dispatch(openModal({ type: 'login' }))
   const buttons = filteredButtons.map((i) => ({
     ...i,
-    onClick: i.path === '/login' ? login : () => history.push(i.path),
+    onClick: i.path === '/login' ? login : () => navigate(i.path),
   }))
 
   return isMobile ? (

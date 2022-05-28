@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { fetchOrderFulfillment } from '@open-tender/redux'
@@ -16,14 +16,14 @@ import {
 
 const Fulfillment = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { id: orderId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
   const fulfillment = useSelector(selectFulfillment)
 
   useEffect(() => {
-    if (!fulfillment) return history.push('/')
-  }, [fulfillment, history])
+    if (!fulfillment) return navigate('/')
+  }, [fulfillment, navigate])
 
   useEffect(() => {
     dispatch(fetchOrderFulfillment(orderId))

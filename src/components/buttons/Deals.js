@@ -1,19 +1,19 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
 const Deals = ({ text = 'Deals', icon = iconMap.DollarSign }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <ButtonBoth
       text={text}
       label="Check out today's deals"
       icon={icon}
-      onClick={() => history.push('/deals')}
+      onClick={() => navigate('/deals')}
     />
   )
 }

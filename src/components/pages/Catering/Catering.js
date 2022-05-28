@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -113,7 +113,7 @@ const CateringStartOver = styled('div')`
 // }
 
 const CateringPage = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectContent)
@@ -128,12 +128,12 @@ const CateringPage = () => {
 
   const chooseServiceType = (serviceType) => {
     dispatch(setServiceType(serviceType))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const startOver = () => {
     dispatch(resetOrder())
-    history.push(`/order-type`)
+    navigate(`/order-type`)
   }
 
   return (

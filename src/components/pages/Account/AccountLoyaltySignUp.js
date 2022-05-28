@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
@@ -41,7 +41,7 @@ const AccountLoyaltySignUpButtons = styled.div`
 `
 
 const AccountLoyaltySignUp = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { account: config } = useSelector(selectConfig)
   const { title, subtitle, signUp, skip } = config.loyalty
   return (
@@ -50,14 +50,14 @@ const AccountLoyaltySignUp = () => {
       <p>{subtitle}</p>
       <AccountLoyaltySignUpButtons>
         <ButtonStyled
-          onClick={() => history.push(`/signup`)}
+          onClick={() => navigate(`/signup`)}
           size={isMobile ? 'small' : 'small'}
           color="primary"
         >
           {signUp}
         </ButtonStyled>
         <ButtonStyled
-          onClick={() => history.push(`/order-type`)}
+          onClick={() => navigate(`/order-type`)}
           size={isMobile ? 'small' : 'small'}
           color="secondary"
         >

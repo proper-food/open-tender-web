@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
 
@@ -13,14 +13,14 @@ const CancelEdit = ({
   style = null,
   useButton = false,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
 
   const cancel = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/`)
   }
 
   if (!orderId) return null

@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   setOrderServiceType,
@@ -21,7 +21,7 @@ import iconMap from './iconMap'
 import { Card, OrderImages, OrderTag } from '.'
 
 const OrderCard = ({ order, isLast }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     order_id,
@@ -109,7 +109,7 @@ const OrderCard = ({ order, isLast }) => {
           )}
           <ButtonStyled
             icon={iconMap.FileText}
-            onClick={() => history.push(`/orders/${order_id}`)}
+            onClick={() => navigate(`/orders/${order_id}`)}
             size="small"
             color="secondary"
           >

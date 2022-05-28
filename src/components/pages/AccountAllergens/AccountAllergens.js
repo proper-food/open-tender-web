@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   fetchAllergens,
   selectAllergens,
@@ -29,7 +29,7 @@ const AllergenFormView = styled('div')``
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle, has_allergens } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { allergens: config } = useSelector(selectConfig)
@@ -49,8 +49,8 @@ const AccountAllergens = () => {
   )
 
   useEffect(() => {
-    if (!auth || !has_allergens) return history.push('/account')
-  }, [auth, has_allergens, history])
+    if (!auth || !has_allergens) return navigate('/account')
+  }, [auth, has_allergens, navigate])
 
   useEffect(() => {
     dispatch(fetchAllergens())
@@ -86,7 +86,7 @@ const AccountAllergens = () => {
                   <AccountBack />
                 </>
               ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
+                <Loading text="Retrieving your order navigate..." />
               ) : (
                 <p>Allergens aren't currently listed on our menu.</p>
               )}

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   selectCustomer,
   fetchCustomer,
@@ -25,7 +25,7 @@ import {
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { profile: config } = useSelector(selectConfig)
   const { profile, loading, error } = useSelector(selectCustomer)
@@ -42,10 +42,10 @@ const AccountProfile = () => {
   }, [error])
 
   useEffect(() => {
-    if (!customer_id) return history.push('/account')
+    if (!customer_id) return navigate('/account')
     dispatch(fetchCustomer())
     return () => dispatch(resetLoginError())
-  }, [customer_id, dispatch, history])
+  }, [customer_id, dispatch, navigate])
 
   return (
     <>

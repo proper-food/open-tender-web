@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import styled from '@emotion/styled'
@@ -182,7 +182,7 @@ const NavFooter = styled('div')`
 
 const Nav = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { profile } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
   const {
@@ -218,7 +218,7 @@ const Nav = React.forwardRef((props, ref) => {
     evt.preventDefault()
     evt.stopPropagation()
     dispatch(toggleNav())
-    history.push(path)
+    navigate(path)
   }
 
   const login = (evt) => {

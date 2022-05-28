@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { selectOrder, selectAutoSelect } from '@open-tender/redux'
 
 import iconMap from '../iconMap'
@@ -12,12 +12,12 @@ const RevenueCenter = ({
   style = null,
   useButton = false,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { revenueCenter } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
 
   const change = () => {
-    history.push(`/locations`)
+    navigate(`/locations`)
   }
 
   if (!revenueCenter || autoSelect) return null

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
@@ -25,15 +25,15 @@ const AccountSettingsLogOut = styled.div`
 `
 
 const AccountSettings = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { accountSettings: config } = useSelector(selectConfig)
   const { auth, profile } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   return profile ? (
     <>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { selectGroupOrder } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -31,15 +31,15 @@ export const GroupOrderCartView = styled(Box)`
 `
 
 const GroupOrderReview = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const groupOrder = useSelector(selectGroupOrder)
   const { cartId, cartOwner, cartGuest } = groupOrder
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    if (!cartId) history.push(`/`)
-  }, [cartId, history])
+    if (!cartId) navigate(`/`)
+  }, [cartId, navigate])
 
   return (
     <>

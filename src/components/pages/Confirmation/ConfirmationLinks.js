@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { resetCustomerOrder } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
@@ -15,11 +15,11 @@ const ConfirmationLinksView = styled('div')`
 
 const ConfirmationLinks = ({ auth, brand }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const reviewAccount = () => {
     dispatch(resetCustomerOrder())
-    history.push('/account')
+    navigate('/account')
   }
 
   return (
@@ -35,7 +35,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
           </a>
         )}
         <span> or </span>
-        <ButtonLink onClick={() => history.push('/')}>
+        <ButtonLink onClick={() => navigate('/')}>
           start another order
         </ButtonLink>
       </p>

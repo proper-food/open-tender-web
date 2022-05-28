@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { selectCustomer } from '@open-tender/redux'
@@ -11,7 +11,7 @@ import ThanxLoyalty from './ThanxLoyalty'
 import RewardsList from './RewardsList'
 
 const Rewards = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const {
     title: siteTitle,
     has_thanx,
@@ -22,8 +22,8 @@ const Rewards = () => {
   const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth || !hasRewards) return history.push('/account')
-  }, [auth, hasRewards, history])
+    if (!auth || !hasRewards) return navigate('/account')
+  }, [auth, hasRewards, navigate])
 
   return auth ? (
     <>

@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { capitalize, serviceTypeNamesMap } from '@open-tender/js'
 import {
   addAlert,
@@ -41,7 +41,7 @@ const RequestedAt = ({
   isReorder = false,
 }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
   const isLocation = pathname.includes('/locations')
   const isLanding = pathname.includes('/locations/')
@@ -68,7 +68,7 @@ const RequestedAt = ({
       dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
       if (isOutpost) dispatch(setAddress(address))
       dispatch(closeModal())
-      history.push(menuSlug)
+      navigate(menuSlug)
     } else {
       dispatch(closeModal())
     }

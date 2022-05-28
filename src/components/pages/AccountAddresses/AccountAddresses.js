@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -22,7 +22,7 @@ import {
 } from '../..'
 
 const AccountAddresses = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { addresses: config } = useSelector(selectConfig)
@@ -32,8 +32,8 @@ const AccountAddresses = () => {
   const limit = 50
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerAddresses(limit))
@@ -61,7 +61,7 @@ const AccountAddresses = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading text="Retrieving your order history..." />
+                  <Loading text="Retrieving your order navigate..." />
                 ) : (
                   <p>
                     Looks like you haven't added any addresses yet. Please place

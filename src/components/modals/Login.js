@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -66,7 +66,7 @@ const LoginModalFooter = styled.div`
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { has_thanx } = useSelector(selectBrand)
   const customer = useSelector(selectCustomer)
   const { profile } = customer
@@ -112,7 +112,7 @@ const LoginModal = ({ callback }) => {
 
   const signUp = () => {
     dispatch(closeModal())
-    history.push(`/signup`)
+    navigate(`/signup`)
   }
 
   return (

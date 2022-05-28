@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
@@ -81,7 +81,7 @@ const MenuItemBack = styled('div')`
 `
 
 const MenuItem = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
@@ -99,8 +99,8 @@ const MenuItem = () => {
     : null
 
   useEffect(() => {
-    if (!item) history.push(menuSlug)
-  }, [item, history, menuSlug])
+    if (!item) navigate(menuSlug)
+  }, [item, navigate, menuSlug])
 
   const cancel = () => {
     dispatch(setCurrentItem(null))

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
@@ -38,7 +38,7 @@ const ToggleView = styled('div')`
 
 const Orders = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const increment = 20
   const limit = 60
   const [toggle, setToggle] = useState('orders')
@@ -53,8 +53,8 @@ const Orders = () => {
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerOrders(limit + 1))
@@ -127,7 +127,7 @@ const Orders = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading text="Retrieving your order history..." />
+                  <Loading text="Retrieving your order navigate..." />
                 ) : (
                   <p>Looks like you don't have any orders yet.</p>
                 )}

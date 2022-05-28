@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -25,7 +25,7 @@ import ConfirmationPrefs from './ConfirmationPrefs'
 import ConfirmationLinks from './ConfirmationLinks'
 
 const Confirmation = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [showPrefs, setShowPrefs] = useState(false)
   const { confirmation: config } = useSelector(selectConfig)
@@ -45,12 +45,12 @@ const Confirmation = () => {
     service_type === 'PICKUP'
 
   useEffect(() => {
-    if (!order) history.push('/')
+    if (!order) navigate('/')
     dispatch(resetGroupOrder())
     return () => {
       dispatch(resetConfirmation())
     }
-  }, [order, auth, dispatch, history])
+  }, [order, auth, dispatch, navigate])
 
   useEffect(() => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())

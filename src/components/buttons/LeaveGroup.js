@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   resetOrderType,
@@ -16,14 +16,14 @@ const LeaveGroup = ({
   icon = iconMap.ArrowLeft,
   useButton = false,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const leave = () => {
     dispatch(resetOrderType())
     dispatch(resetGroupOrder())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/`)
   }
 
   return (

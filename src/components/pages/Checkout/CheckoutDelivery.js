@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { selectOrder } from '@open-tender/redux'
 import { makeRequestedAtStr, timezoneMap } from '@open-tender/js'
 import { ButtonLink, Heading } from '@open-tender/components'
@@ -9,7 +9,7 @@ import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 import { openModal } from '../../../slices'
 
 const CheckoutDelivery = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { address, orderType, requestedAt, revenueCenter, serviceType } =
     useSelector(selectOrder)
@@ -26,7 +26,7 @@ const CheckoutDelivery = () => {
     : requestedTime
 
   const changeAddress = () => {
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const adjustTime = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { selectCustomer, authCustomerThanx } from '@open-tender/redux'
 import { isObject } from '@open-tender/js'
@@ -19,7 +19,7 @@ import {
 
 const Thanx = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
@@ -37,13 +37,13 @@ const Thanx = () => {
 
   useEffect(() => {
     if (auth) {
-      history.push('/')
+      navigate('/')
     } else if (code) {
       dispatch(authCustomerThanx(code))
     } else {
-      history.push('/')
+      navigate('/')
     }
-  }, [auth, code, history, dispatch])
+  }, [auth, code, navigate, dispatch])
 
   return (
     <>

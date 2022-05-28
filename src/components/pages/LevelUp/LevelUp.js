@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams, useHistory } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
@@ -24,7 +24,7 @@ import {
 
 const LevelUp = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectLevelUp)
@@ -46,7 +46,7 @@ const LevelUp = () => {
 
   useEffect(() => {
     if (auth) {
-      history.push('/')
+      navigate('/')
     } else if (token) {
       if (lat && lng) {
         const geoLatLng = { lat: parseFloat(lat), lng: parseFloat(lng) }
@@ -54,10 +54,10 @@ const LevelUp = () => {
       }
       dispatch(fetchLevelUpCustomer(token))
     } else {
-      history.push('/')
+      navigate('/')
     }
     return () => dispatch(resetLevelUpCustomer())
-  }, [auth, token, lat, lng, history, dispatch])
+  }, [auth, token, lat, lng, navigate, dispatch])
 
   return (
     <>

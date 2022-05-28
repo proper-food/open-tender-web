@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Routes as RouterRoutes, Route } from 'react-router-dom'
 import {
   About,
   Accessibility,
@@ -52,16 +52,16 @@ import {
 
 const Routes = () => {
   return (
-    <Switch>
+    <RouterRoutes>
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/order">
+      {/* <Route exact path="/order">
         <Redirect to="/account" />
       </Route>
       <Route exact path="/order/catering">
         <Redirect to="/account" />
-      </Route>
+      </Route> */}
       <Route exact path="/levelup">
         <LevelUp />
       </Route>
@@ -164,9 +164,9 @@ const Routes = () => {
       <Route exact path="/settings">
         <AccountSettings />
       </Route>
-      <Route exact path="/account/settings">
+      {/* <Route exact path="/account/settings">
         <Redirect to="/settings" />
-      </Route>
+      </Route> */}
       <Route exact path="/account/gift-cards">
         <AccountGiftCards />
       </Route>
@@ -206,7 +206,7 @@ const Routes = () => {
       <Route>
         <NotFound />
       </Route>
-    </Switch>
+    </RouterRoutes>
   )
 }
 

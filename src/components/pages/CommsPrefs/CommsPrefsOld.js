@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import {
   addCustomerCommunicationPreference,
@@ -44,7 +44,7 @@ const CommsPrefsDefaults = styled.div`
 
 const CommsPrefs = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [hasLoaded, setHasLoaded] = useState(false)
   const { title: siteTitle } = useSelector(selectBrand)
   const { communicationPreferences: config } = useSelector(selectConfig)
@@ -70,12 +70,12 @@ const CommsPrefs = () => {
   )
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
+    if (!auth) return navigate('/account')
     if (isSet) {
       setHasLoaded(true)
       dispatch(fetchCustomerCommunicationPreferences())
     }
-  }, [auth, history, dispatch, isSet])
+  }, [auth, navigate, dispatch, isSet])
 
   useEffect(() => {
     if (!is_notification_set) {

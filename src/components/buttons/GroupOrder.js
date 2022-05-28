@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectGroupOrder } from '@open-tender/redux'
 
@@ -15,14 +15,14 @@ const GroupOrder = ({
   useButton = false,
 }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
   const { revenueCenter } = useSelector(selectOrder)
   const settings = revenueCenter ? revenueCenter.settings || revenueCenter : {}
   const hasGroupOrdering = settings.group_ordering
 
   const onClick = () => {
-    const reviewOrders = () => history.push(`/review`)
+    const reviewOrders = () => navigate(`/review`)
     dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
   }
 

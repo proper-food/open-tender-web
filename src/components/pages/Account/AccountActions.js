@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import {
   fetchCustomerFavorites,
@@ -67,7 +67,7 @@ const makeOrderTypeIcon = (orderType, serviceType) => {
 }
 
 const AccountActions = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, orderType, serviceType, cart } = currentOrder
@@ -113,16 +113,16 @@ const AccountActions = () => {
 
   const startNewOrder = () => {
     dispatch(resetOrder())
-    history.push(`/order-type`)
+    navigate(`/order-type`)
   }
 
   const switchOrderType = () => {
     dispatch(resetOrderType())
-    history.push(`/order-type`)
+    navigate(`/order-type`)
   }
 
   const continueCurrent = () => {
-    history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
+    navigate(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
   }
 
   return (

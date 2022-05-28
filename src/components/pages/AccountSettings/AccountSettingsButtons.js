@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { NavButtons } from '../..'
 import { selectBrand } from '../../../slices'
@@ -55,7 +55,7 @@ const navButtons = [
 ]
 
 const AccountSettingsButtons = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { has_allergens, has_house_accounts, has_gift_cards } =
     useSelector(selectBrand)
@@ -66,7 +66,7 @@ const AccountSettingsButtons = () => {
   const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
   const buttons = filteredButtons.map((i) => ({
     ...i,
-    onClick: i.path ? () => history.push(i.path) : () => dispatch(i.func()),
+    onClick: i.path ? () => navigate(i.path) : () => dispatch(i.func()),
   }))
 
   return (

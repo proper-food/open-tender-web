@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Helmet from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
@@ -37,7 +37,7 @@ const CheckoutSignUpEmail = styled('div')`
 
 const CheckoutSignUp = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
   const config = checkoutFlow ? checkoutFlow.sections['signUp'] : defaultText
@@ -55,22 +55,22 @@ const CheckoutSignUp = () => {
     (data) => {
       dispatch(resetSignUp())
       dispatch(updateForm({ customer: data }))
-      history.push('/checkout')
+      navigate('/checkout')
     },
-    [dispatch, history]
+    [dispatch, navigate]
   )
 
   const changeEmail = () => {
     dispatch(updateForm({ customer: {} }))
-    history.push('/checkout/guest')
+    navigate('/checkout/guest')
   }
 
   useEffect(() => {
     if (auth) {
       dispatch(checkout())
-      history.push('/checkout')
+      navigate('/checkout')
     }
-  }, [auth, dispatch, history])
+  }, [auth, dispatch, navigate])
 
   return (
     <>

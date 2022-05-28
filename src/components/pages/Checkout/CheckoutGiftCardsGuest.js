@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ButtonLink, Text } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
@@ -9,14 +9,14 @@ import { openModal } from '../../../slices'
 const CheckoutGiftCardsGuestView = styled.div``
 
 const CheckoutGiftCardsGuest = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { form } = useSelector(selectCheckout)
   const { email } = form.customer
 
   const signUp = () => {
     email
-      ? history.push('/checkout/signup')
+      ? navigate('/checkout/signup')
       : dispatch(openModal({ type: 'signUp' }))
   }
 

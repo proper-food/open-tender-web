@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   checkout,
@@ -21,7 +21,7 @@ const defaultText = {
 }
 
 const CheckoutGuestForm = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { checkoutFlow } = useSelector(selectContent)
   const config = checkoutFlow ? checkoutFlow.sections['email'] : defaultText
@@ -31,10 +31,7 @@ const CheckoutGuestForm = () => {
   const { guestIncomplete } = !auth ? checkGuestData(form.customer, email) : {}
   const errMsg = errors ? errors.email || errors.form : null
   const notFound = errMsg && errMsg.includes('not associated')
-  const callback = useCallback(
-    () => history.push('/checkout/signin'),
-    [history]
-  )
+  const callback = useCallback(() => navigate('/checkout/signin'), [navigate])
   const checkGuest = useCallback(
     (email) => dispatch(fetchGuest(email, callback)),
     [dispatch, callback]
@@ -47,13 +44,13 @@ const CheckoutGuestForm = () => {
   useEffect(() => {
     if (auth || !guestIncomplete) {
       dispatch(checkout())
-      history.push('/checkout')
+      navigate('/checkout')
     }
-  }, [auth, guestIncomplete, dispatch, history])
+  }, [auth, guestIncomplete, dispatch, navigate])
 
   useEffect(() => {
-    if (notFound) history.push('/checkout/signup')
-  }, [notFound, history])
+    if (notFound) navigate('/checkout/signup')
+  }, [notFound, navigate])
 
   return (
     <>

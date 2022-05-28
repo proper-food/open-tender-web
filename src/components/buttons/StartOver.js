@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
@@ -32,7 +32,7 @@ const StartOver = ({
   isLogo = false,
   color,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   // const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
   // const { auth } = useSelector(selectCustomer)
@@ -41,7 +41,7 @@ const StartOver = ({
   const startOver = () => {
     // if (!auth) dispatch(resetOrderType())
     // dispatch(resetCheckout())
-    history.push(`/order-type`)
+    navigate(`/order-type`)
   }
 
   return isBrowser ? (

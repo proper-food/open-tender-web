@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { animateScroll as scroll } from 'react-scroll'
@@ -36,7 +36,7 @@ import {
 } from '../../buttons'
 
 const RevenueCenters = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
@@ -65,11 +65,11 @@ const RevenueCenters = () => {
       const [orderType, serviceType, isOutpost] = makeOrderTypeFromParam(param)
       if (paramOrderType) {
         dispatch(setOrderServiceType(orderType, serviceType, isOutpost))
-        if (paramOrderType[0] === 'CATERING') history.push('/catering-address')
+        if (paramOrderType[0] === 'CATERING') navigate('/catering-address')
       }
     }
-    if (!hasTypes && !paramOrderType) history.push('/')
-  }, [hasTypes, param, dispatch, history])
+    if (!hasTypes && !paramOrderType) navigate('/')
+  }, [hasTypes, param, dispatch, navigate])
 
   const setActive = useCallback(
     (revenueCenter) => {
@@ -112,13 +112,10 @@ const RevenueCenters = () => {
             orderType === 'CATERING' ? (
               <Back
                 text="Catering"
-                onClick={() => history.push('/catering-address')}
+                onClick={() => navigate('/catering-address')}
               />
             ) : (
-              <Back
-                text="Order Type"
-                onClick={() => history.push('/order-type')}
-              />
+              <Back text="Order Type" onClick={() => navigate('/order-type')} />
             )
           }
           right={

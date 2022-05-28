@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
@@ -10,11 +10,9 @@ const AccountSettings = ({
   path = '/account',
   icon = iconMap.User,
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
-  return (
-    <ButtonBoth text={text} icon={icon} onClick={() => history.push(path)} />
-  )
+  return <ButtonBoth text={text} icon={icon} onClick={() => navigate(path)} />
 }
 
 AccountSettings.displayName = 'AccountSettings'

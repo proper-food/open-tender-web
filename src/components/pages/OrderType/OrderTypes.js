@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import {
   Flag,
@@ -84,7 +84,7 @@ const OrderTypesLinks = styled('div')`
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { geoLatLng, geoError } = useGeolocation()
   const { orderType: orderTypeContent, home: homeContent } =
     useSelector(selectContent)
@@ -123,40 +123,40 @@ const OrderTypes = () => {
 
   const handleOutpost = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleWalkin = () => {
     dispatch(setOrderServiceType('OLO', 'WALKIN'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handlePickup = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleDelivery = () => {
     dispatch(setOrderServiceType('OLO', 'DELIVERY'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
-    history.push('/catering-address')
+    navigate('/catering-address')
   }
 
   const handleMerch = () => {
     dispatch(setOrderServiceType('MERCH', 'DELIVERY'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleGiftCards = () => {
-    history.push('/gift-cards')
+    navigate('/gift-cards')
   }
 
   const handleDonations = () => {
-    history.push('/donations')
+    navigate('/donations')
   }
 
   const handlers = {

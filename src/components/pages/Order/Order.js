@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -22,7 +22,7 @@ import iconMap from '../../iconMap'
 
 const Order = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { id: orderId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
@@ -30,8 +30,8 @@ const Order = () => {
   const title = `Order #${orderId}`
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerOrder(orderId))

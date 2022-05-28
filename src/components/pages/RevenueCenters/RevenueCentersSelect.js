@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   selectOrder,
   setRevenueCenter,
@@ -116,7 +116,7 @@ const RevenueCentersSelectList = styled('ul')`
 
 const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [showMap, setShowMap] = useState(false)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { maxDistance, locationName } = useSelector(selectSettings)
@@ -155,9 +155,9 @@ const RevenueCentersSelect = () => {
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
-      return history.push(`/menu/${revenueCenter.slug}`)
+      return navigate(`/menu/${revenueCenter.slug}`)
     },
-    [dispatch, history]
+    [dispatch, navigate]
   )
 
   useEffect(() => {
@@ -191,7 +191,7 @@ const RevenueCentersSelect = () => {
   const handleStartOver = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/`)
   }
 
   return (

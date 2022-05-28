@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   // isoToDate,
   makeReadableDateStrFromIso,
@@ -24,7 +24,7 @@ const GroupGuest = ({
   useButton = false,
   style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const tz = useSelector(selectTimezone)
   const { cartGuest, cutoffAt, spendingLimit } = useSelector(selectGroupOrder)
@@ -47,7 +47,7 @@ const GroupGuest = ({
       if (!current) dispatch(addMessage(msg))
     } else {
       dispatch(resetMessages())
-      history.push('/review')
+      navigate('/review')
     }
   }
 

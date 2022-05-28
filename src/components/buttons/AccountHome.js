@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
@@ -9,7 +9,7 @@ import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 import iconMap from '../iconMap'
 
 const AccountHome = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { auth } = useSelector(selectCustomer)
   const path = auth ? '/account' : '/account'
   const icon = auth ? iconMap.User : iconMap.Home
@@ -17,7 +17,7 @@ const AccountHome = () => {
 
   return isBrowser ? (
     <ButtonStyled
-      onClick={() => history.push(path)}
+      onClick={() => navigate(path)}
       icon={icon}
       color="header"
       size="header"
@@ -25,7 +25,7 @@ const AccountHome = () => {
       {text}
     </ButtonStyled>
   ) : (
-    <ButtonIcon label={text} onClick={() => history.push(path)}>
+    <ButtonIcon label={text} onClick={() => navigate(path)}>
       {icon}
     </ButtonIcon>
   )

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser, isMobile } from 'react-device-detect'
@@ -37,7 +37,7 @@ const DealView = styled.div`
 `
 
 const Deals = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { deals: config } = useSelector(selectConfig)
@@ -48,8 +48,8 @@ const Deals = () => {
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!has_deals) return history.push('/account')
-  }, [has_deals, history])
+    if (!has_deals) return navigate('/account')
+  }, [has_deals, navigate])
 
   useEffect(() => {
     dispatch(fetchDeals())

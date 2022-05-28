@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -22,7 +22,7 @@ import {
 } from '../..'
 
 const VerifyAccount = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { hash } = useLocation()
   const verifyToken = hash.includes('#') ? hash.split('#')[1] : ''
@@ -33,11 +33,11 @@ const VerifyAccount = () => {
 
   useEffect(() => {
     if (!verifyToken) {
-      return history.push('/')
+      return navigate('/')
     } else {
       dispatch(verifyAccount(verifyToken))
     }
-  }, [verifyToken, history, dispatch])
+  }, [verifyToken, navigate, dispatch])
 
   const retryVerifyAccount = async () => {
     const linkUrl = `${window.location.origin}/verify`
@@ -65,7 +65,7 @@ const VerifyAccount = () => {
                   <div>
                     <p>
                       <ButtonLink
-                        onClick={() => history.push(auth ? '/account' : '/')}
+                        onClick={() => navigate(auth ? '/account' : '/')}
                       >
                         {auth
                           ? 'Head back to your account'

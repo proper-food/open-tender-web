@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { resetOrder, selectOrder, selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
@@ -39,7 +39,7 @@ const AccountButtonsContainer = styled.div`
 `
 
 const AccountButtons = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
@@ -49,16 +49,16 @@ const AccountButtons = () => {
   const buttonColor = 'primary'
 
   const continueCurrent = () => {
-    history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
+    navigate(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
   }
 
   const startNewOrder = () => {
     dispatch(resetOrder())
-    history.push(`/order-type`)
+    navigate(`/order-type`)
   }
 
   const reorder = () => {
-    history.push(`/orders`)
+    navigate(`/orders`)
   }
 
   const login = () => {

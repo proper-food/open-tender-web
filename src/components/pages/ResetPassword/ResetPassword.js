@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -25,7 +25,7 @@ import {
 } from '../..'
 
 const ResetPassword = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { hash } = useLocation()
   const resetToken = hash.includes('#') ? hash.split('#')[1] : ''
@@ -41,14 +41,14 @@ const ResetPassword = () => {
   const resetForm = useCallback(() => dispatch(resetPasswordReset), [dispatch])
 
   useEffect(() => {
-    if (auth) return history.push('/')
-    if (!resetToken) return history.push('/')
-  }, [auth, resetToken, history])
+    if (auth) return navigate('/')
+    if (!resetToken) return navigate('/')
+  }, [auth, resetToken, navigate])
 
   const handleLogin = () => {
     const args = {
       type: 'login',
-      args: { callback: () => history.push('/') },
+      args: { callback: () => navigate('/') },
     }
     dispatch(openModal(args))
   }

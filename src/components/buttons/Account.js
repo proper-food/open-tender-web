@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import {
@@ -15,7 +15,7 @@ import iconMap from '../iconMap'
 import { NavMenu } from '.'
 
 const Account = ({ color, style = null, useButton = false }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -41,7 +41,7 @@ const Account = ({ color, style = null, useButton = false }) => {
       </ButtonStyled>
     ) : (
       <ButtonStyled
-        onClick={() => history.push(`/`)}
+        onClick={() => navigate(`/`)}
         label="Manage your account"
         icon={iconMap.User}
         color="header"

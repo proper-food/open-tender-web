@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -27,7 +27,7 @@ import {
 
 const Favorites = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const { entities: orders } = useSelector(selectCustomerOrders)
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
@@ -39,8 +39,8 @@ const Favorites = () => {
   const items = favorites.map((i) => ({ ...i.item }))
 
   useEffect(() => {
-    if (!auth || !has_favorites) return history.push('/account')
-  }, [auth, has_favorites, history])
+    if (!auth || !has_favorites) return navigate('/account')
+  }, [auth, has_favorites, navigate])
 
   useEffect(() => {
     if (error) window.scrollTo(0, 0)

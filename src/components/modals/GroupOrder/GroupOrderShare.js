@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectGroupOrder,
@@ -14,12 +14,12 @@ import { GroupOrderLink, GroupOrderTime } from '../..'
 import { ModalContent } from '../../Modal'
 
 const GroupOrderShare = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { token, cartId } = useSelector(selectGroupOrder)
 
   const proceed = () => {
-    history.push('/review')
+    navigate('/review')
     dispatch(closeModal())
   }
 

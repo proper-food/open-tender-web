@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   reopenGroupOrder,
@@ -21,7 +21,7 @@ import { Card } from '.'
 
 const OrderCardGroup = ({ order }) => {
   const [open, setOpen] = useState(false)
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     cart_id,
@@ -59,9 +59,9 @@ const OrderCardGroup = ({ order }) => {
   useEffect(() => {
     if (open && menuSlug && menuSlug !== '/') {
       setOpen(false)
-      history.push(menuSlug)
+      navigate(menuSlug)
     }
-  }, [open, menuSlug, history])
+  }, [open, menuSlug, navigate])
 
   return (
     <Card

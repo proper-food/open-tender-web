@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
@@ -14,14 +14,14 @@ const CheckoutCancelView = styled('div')`
 `
 
 const CheckoutCancelEdit = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
 
   const handleCancelEdit = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/`)
   }
 
   return orderId ? (

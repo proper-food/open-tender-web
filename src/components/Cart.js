@@ -19,7 +19,7 @@ import {
   toggleSidebar,
   toggleSidebarModal,
 } from '../slices'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const iconMap = {
   plus: <Plus size={null} />,
@@ -28,7 +28,7 @@ const iconMap = {
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const cart = useSelector(selectCart)
   const menuSlug = useSelector(selectMenuSlug)
   const displaySettings = useSelector(selectDisplaySettings)
@@ -42,7 +42,7 @@ const Cart = () => {
       const mainElement = document.getElementById('main')
       const mainOffset = mainElement.getBoundingClientRect().top
       dispatch(setTopOffset(-mainOffset))
-      history.push(`${menuSlug}/item/${slugify(item.name)}`)
+      navigate(`${menuSlug}/item/${slugify(item.name)}`)
     } else if (builderType === 'SIDEBAR') {
       dispatch(toggleSidebarModal())
     } else {

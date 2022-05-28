@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   selectOrder,
   selectGroupOrder,
@@ -41,7 +41,7 @@ const makeSubtitle = (error, cart, firstName, config) => {
 
 const GroupOrderReviewGuest = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { groupOrders: config } = useSelector(selectConfig)
   const menuSlug = useSelector(selectMenuSlug)
   const { cart } = useSelector(selectOrder)
@@ -67,7 +67,7 @@ const GroupOrderReviewGuest = () => {
   const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
-    history.push('/')
+    navigate('/')
   }
 
   return (

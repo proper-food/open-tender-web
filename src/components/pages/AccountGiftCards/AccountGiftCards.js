@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -24,7 +24,7 @@ import {
 import GiftCardsList from './GiftCardsList'
 
 const AccountGiftCards = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { giftCardsAccount: config } = useSelector(selectConfig)
@@ -33,8 +33,8 @@ const AccountGiftCards = () => {
   const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerGiftCards())
@@ -53,7 +53,7 @@ const AccountGiftCards = () => {
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} preface={<AccountBack />}>
               <PageTitleButtons>
-                <ButtonStyled onClick={() => history.push('/gift-cards')}>
+                <ButtonStyled onClick={() => navigate('/gift-cards')}>
                   Buy Gift Cards For Others
                 </ButtonStyled>
                 <ButtonStyled

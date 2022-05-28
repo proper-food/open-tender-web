@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { Grid } from 'react-feather'
@@ -24,7 +24,7 @@ const CheckoutLevelUpContent = styled.div`
 
 const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const theme = useTheme()
   const { check, form, errors } = useSelector(selectCheckout)
   const { tender_types } = check.config
@@ -49,7 +49,7 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
 
   const signUp = () => {
     email
-      ? history.push('/checkout/signup')
+      ? navigate('/checkout/signup')
       : dispatch(openModal({ type: 'signUp' }))
   }
 

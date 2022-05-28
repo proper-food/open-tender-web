@@ -28,7 +28,7 @@ import {
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
 import { MenuItemButton, MenuItemImage } from '.'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useNavigate } from 'react-router-dom'
 import { Plus } from 'react-feather'
 import { isBrowser } from 'react-device-detect'
 
@@ -311,7 +311,7 @@ const MenuItemCals = styled(MenuItemPrice)`
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { menu: menuContent } = useSelector(selectContent)
   const { soldOut } = useSelector(selectMenu)
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
@@ -361,7 +361,7 @@ const MenuItem = ({ item }) => {
         const mainElement = document.getElementById('main')
         const mainOffset = mainElement.getBoundingClientRect().top
         dispatch(setTopOffset(-mainOffset))
-        history.push(`${menuSlug}/item/${slugify(item.name)}`)
+        navigate(`${menuSlug}/item/${slugify(item.name)}`)
       } else if (builderType === 'SIDEBAR') {
         dispatch(toggleSidebarModal())
       } else {

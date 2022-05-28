@@ -1,16 +1,16 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
 const Locations = ({ text = 'Locations', icon = iconMap.MapPin }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const back = () => {
-    history.push(`/locations`)
+    navigate(`/locations`)
   }
 
   return isBrowser ? (

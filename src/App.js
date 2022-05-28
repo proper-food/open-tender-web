@@ -18,7 +18,6 @@ import {
   Sidebar,
 } from './components'
 import { ErrorFatal } from './components/pages'
-import './App.scss'
 
 export const AppContext = createContext(null)
 

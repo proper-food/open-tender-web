@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 // import {
@@ -21,7 +21,7 @@ import {
 
 const Home = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   // const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
@@ -30,8 +30,8 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(closeModal())
-    history.push('/account')
-  }, [dispatch, history])
+    navigate('/account')
+  }, [dispatch, navigate])
 
   // useEffect(() => {
   //   dispatch(fetchAnnouncementPage('HOME'))
@@ -47,7 +47,7 @@ const Home = () => {
         <Main style={{ paddingTop: '0' }}>
           <HeroSite imageUrl={isBrowser ? background : mobile}>
             <HeroSiteCta title={title} subtitle={subtitle} width="56rem">
-              <ButtonStyled onClick={() => history.push('/account')}>
+              <ButtonStyled onClick={() => navigate('/account')}>
                 Order Now
               </ButtonStyled>
             </HeroSiteCta>

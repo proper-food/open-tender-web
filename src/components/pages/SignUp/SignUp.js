@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -54,7 +54,7 @@ const useQuery = () => {
 }
 
 const SignUp = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const posToken = useQuery().get('pos-token')
   const api = useSelector(selectApi)
@@ -77,12 +77,12 @@ const SignUp = () => {
   useEffect(() => {
     if (auth) {
       if (posToken) {
-        dispatch(linkPosToken(posToken)).finally(history.push('/'))
+        dispatch(linkPosToken(posToken)).finally(navigate('/'))
       } else {
-        return history.push('/account')
+        return navigate('/account')
       }
     }
-  }, [auth, history, posToken, token, api, dispatch])
+  }, [auth, navigate, posToken, token, api, dispatch])
 
   useEffect(() => {
     if (error) window.scrollTo(0, 0)

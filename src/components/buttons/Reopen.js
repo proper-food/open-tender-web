@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectOrder,
@@ -13,7 +13,7 @@ import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
 const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { cart } = useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
@@ -22,7 +22,7 @@ const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
     const customerCart = cart.filter((i) => i.customer_id)
     dispatch(setCart(customerCart))
     dispatch(closeGroupOrder(cartId, false)).then(() => {
-      history.push('/review')
+      navigate('/review')
     })
   }
 

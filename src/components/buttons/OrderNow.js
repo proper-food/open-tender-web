@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
@@ -55,7 +55,7 @@ const OrderNow = ({
   color = 'primary',
   size = 'small',
 }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   // const { auth } = useSelector(selectCustomer)
   const { pathname } = useLocation()
   const currentOrder = useSelector(selectOrder)
@@ -72,7 +72,7 @@ const OrderNow = ({
       : pathname === '/account'
       ? '/order-type'
       : '/account'
-    history.push(path)
+    navigate(path)
   }
 
   return isBrowser ? (

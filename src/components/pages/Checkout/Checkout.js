@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { deviceType, isMobile } from 'react-device-detect'
@@ -186,7 +186,7 @@ const makeFormTitle = (check, serviceType) => {
 }
 
 const Checkout = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title } = useSelector(selectBrand)
   const { checkout: config } = useSelector(selectConfig)
@@ -226,20 +226,20 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!revenueCenterId || !serviceType) {
-      history.push('/')
+      navigate('/')
     } else if (cartTotal === 0) {
-      history.push(menuSlug)
+      navigate(menuSlug)
     } else if (completedOrder) {
       dispatch(setConfirmationOrder(completedOrder))
       dispatch(resetCompletedOrder())
       dispatch(resetOrder())
-      return history.push('/confirmation')
+      return navigate('/confirmation')
     } else if (!hasCustomer && !hasFormCustomer) {
-      history.push('/checkout/guest')
+      navigate('/checkout/guest')
     }
   }, [
     dispatch,
-    history,
+    navigate,
     cartTotal,
     menuSlug,
     revenueCenterId,
@@ -251,9 +251,9 @@ const Checkout = () => {
 
   // useEffect(() => {
   //   if (!auth && !hasGuest) {
-  //     history.push('/checkout/guest')
+  //     navigate('/checkout/guest')
   //   }
-  // }, [auth, hasGuest, history])
+  // }, [auth, hasGuest, navigate])
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useEffect, createContext, useState, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isMobile } from 'react-device-detect'
@@ -40,7 +40,7 @@ import MenuMobileMenu from './MenuMobileMenu'
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const topOffset = useSelector(selectTopOffset)
   const [init, setInit] = useState(true)
@@ -81,9 +81,9 @@ const MenuPage = () => {
 
   useEffect(() => {
     if (!revenueCenterId) {
-      return history.push('/locations')
+      return navigate('/locations')
     } else if (groupOrderClosed) {
-      return history.push('/review')
+      return navigate('/review')
     } else if (topOffset) {
       dispatch(setTopOffset(null))
       setInit(false)
@@ -99,7 +99,7 @@ const MenuPage = () => {
     serviceType,
     requestedAt,
     dispatch,
-    history,
+    navigate,
     groupOrderClosed,
     topOffset,
     init,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { selectToken } from '@open-tender/redux'
@@ -15,14 +15,14 @@ import {
 } from '../..'
 
 const NotFound = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { notFound: config } = useSelector(selectConfig)
   const token = useSelector(selectToken)
 
   useEffect(() => {
-    if (token) return history.push('/')
-  }, [token, history])
+    if (token) return navigate('/')
+  }, [token, navigate])
 
   return (
     <>

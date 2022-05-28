@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Minus, Plus } from 'react-feather'
@@ -34,7 +34,7 @@ const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
 const GiftCards = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { giftCards: config } = useSelector(selectConfig)
   const { giftCards: includeRecaptcha } = useSelector(selectRecaptcha)
   const { title, has_gift_cards } = useSelector(selectBrand)
@@ -49,8 +49,8 @@ const GiftCards = () => {
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
 
   useEffect(() => {
-    if (!has_gift_cards) return history.push('/account')
-  }, [has_gift_cards, history])
+    if (!has_gift_cards) return navigate('/account')
+  }, [has_gift_cards, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())

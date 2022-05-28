@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 import { makeServiceTypeName } from '@open-tender/js'
@@ -10,7 +10,7 @@ import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
 const ServiceType = ({ style = null, useButton = false }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderType, serviceType, isOutpost, prepType } =
     useSelector(selectOrder)
@@ -45,7 +45,7 @@ const ServiceType = ({ style = null, useButton = false }) => {
   }
 
   const handleCatering = () => {
-    history.push(`/catering-address`)
+    navigate(`/catering-address`)
   }
 
   const change =

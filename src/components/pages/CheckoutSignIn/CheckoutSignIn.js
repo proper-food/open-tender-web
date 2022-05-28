@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   checkout,
@@ -21,7 +21,7 @@ const defaultText = {
 }
 
 const CheckoutSignIn = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
@@ -34,15 +34,15 @@ const CheckoutSignIn = () => {
   )
 
   const changeEmail = () => {
-    history.push('/checkout/guest')
+    navigate('/checkout/guest')
   }
 
   useEffect(() => {
     if (auth) {
       dispatch(checkout())
-      history.push('/checkout')
+      navigate('/checkout')
     }
-  }, [auth, dispatch, history])
+  }, [auth, dispatch, navigate])
 
   return (
     <>

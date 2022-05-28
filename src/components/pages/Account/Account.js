@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser, isMobileOnly } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
@@ -73,7 +73,7 @@ const AccountBanner = styled.div`
 `
 
 const Account = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     title: siteTitle,
@@ -102,7 +102,7 @@ const Account = () => {
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
-  }, [token, dispatch, history])
+  }, [token, dispatch, navigate])
 
   return (
     <>

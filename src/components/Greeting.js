@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { selectCustomer } from '@open-tender/redux'
 import HeaderLogo from './HeaderLogo'
 import { isMobile } from 'react-device-detect'
@@ -25,7 +25,7 @@ const GreetingView = styled.div`
 `
 
 const Greeting = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { profile } = useSelector(selectCustomer)
   const firstName = profile ? profile.first_name : null
   const title = 'Hi there'
@@ -33,7 +33,7 @@ const Greeting = () => {
   return (
     <GreetingView isMobile={isMobile}>
       {profile ? (
-        <button onClick={() => history.push('/account')}>
+        <button onClick={() => navigate('/account')}>
           <h1>{greeting}</h1>
         </button>
       ) : (

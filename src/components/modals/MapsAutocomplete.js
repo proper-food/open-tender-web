@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { inZone, isEmpty } from '@open-tender/js'
 import { selectOrder, setAddress } from '@open-tender/redux'
@@ -90,7 +90,7 @@ const nonInZone =
 
 const MapsAutocomplete = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { googleMaps } = useSelector(selectSettings)
   const { apiKey, defaultCenter, zoom, styles } = googleMaps
   const [, setCenter] = useState(defaultCenter)
@@ -113,12 +113,12 @@ const MapsAutocomplete = () => {
     if (hasAddress) {
       if (isInZone) {
         dispatch(closeModal())
-        history.push(menuSlug)
+        navigate(menuSlug)
       } else {
         setError(nonInZone)
       }
     }
-  }, [hasAddress, isInZone, dispatch, history, menuSlug])
+  }, [hasAddress, isInZone, dispatch, navigate, menuSlug])
 
   return (
     <ModalView>

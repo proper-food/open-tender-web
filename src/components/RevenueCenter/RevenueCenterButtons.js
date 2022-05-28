@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   setOrderServiceType,
@@ -14,7 +14,7 @@ import { isMobileOnly } from 'react-device-detect'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const {
     name,
     slug,
@@ -37,14 +37,14 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   const handleWalkin = () => {
     dispatch(setOrderServiceType(rcType, 'WALKIN', false))
     dispatch(setRevenueCenter(revenueCenter))
-    history.push(menuSlug)
+    navigate(menuSlug)
   }
 
   const handlePickup = () => {
     dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
-    history.push(menuSlug)
+    navigate(menuSlug)
   }
 
   const handleDelivery = () => {
@@ -52,7 +52,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     if (isOutpost) {
       dispatch(setAddress(address))
       dispatch(setRevenueCenter(revenueCenter))
-      history.push(menuSlug)
+      navigate(menuSlug)
     } else {
       dispatch(setAddress(null))
       dispatch(setRevenueCenter(revenueCenter))

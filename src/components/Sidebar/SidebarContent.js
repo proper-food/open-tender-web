@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCartQuantity,
@@ -110,7 +110,7 @@ const SidebarCheckout = styled('div')`
 
 const Sidebar = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
   const { orderId, cart } = useSelector(selectOrder)
   const groupOrder = useSelector(selectGroupOrder)
@@ -133,20 +133,20 @@ const Sidebar = React.forwardRef((props, ref) => {
 
   const handleBack = () => {
     dispatch(toggleSidebar())
-    if (!isMenu) history.push(menuSlug)
+    if (!isMenu) navigate(menuSlug)
   }
 
   const handleReview = () => {
     dispatch(toggleSidebar())
-    if (!isReview) history.push(`/review`)
+    if (!isReview) navigate(`/review`)
   }
 
   const handleCheckout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
       // dispatch(checkout())
-      // history.push(`/checkout`)
-      history.push(`/checkout/guest`)
+      // navigate(`/checkout`)
+      navigate(`/checkout/guest`)
     }
   }
 
@@ -155,7 +155,7 @@ const Sidebar = React.forwardRef((props, ref) => {
     dispatch(setCart(customerCart))
     dispatch(toggleSidebar())
     dispatch(closeGroupOrder(cartId, false)).then(() => {
-      history.push('/review')
+      navigate('/review')
     })
   }
 

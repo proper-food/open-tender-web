@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { isBrowser } from 'react-device-detect'
 import isEqual from 'lodash/isEqual'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   selectOrder,
   selectGroupOrder,
@@ -95,7 +95,7 @@ const GroupOrderReviewOwner = () => {
   const [guestCart, setGuestCart] = useState([])
   const [guestCartLookup, setGuestCartLookup] = useState({})
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const { entities: menuItems } = useSelector(selectMenuItems)
@@ -151,7 +151,7 @@ const GroupOrderReviewOwner = () => {
     dispatch(setCart(combinedCart))
     dispatch(closeGroupOrder(cartId, true))
     dispatch(checkout())
-    history.push('/checkout')
+    navigate('/checkout')
   }
 
   const save = () => {

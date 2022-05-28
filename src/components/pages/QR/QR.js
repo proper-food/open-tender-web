@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -52,7 +52,7 @@ const makePrepType = (prepType) => {
 
 const QR = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [init, setInit] = useState(false)
   const { id: locationId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
@@ -81,7 +81,7 @@ const QR = () => {
     if (init && menuSlug !== '/' && prepType) {
       dispatch(setTable(table))
       dispatch(setOrderServiceType(orderType, serviceType, false))
-      history.push(menuSlug)
+      navigate(menuSlug)
     }
   }, [
     init,
@@ -91,7 +91,7 @@ const QR = () => {
     serviceType,
     table,
     dispatch,
-    history,
+    navigate,
   ])
 
   return (

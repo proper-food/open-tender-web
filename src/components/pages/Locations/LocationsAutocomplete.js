@@ -10,7 +10,7 @@ import {
 import { ButtonStyled, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LocationsAutocompleteView = styled('div')`
   position: absolute;
@@ -112,7 +112,7 @@ const LocationsAutocomplete = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { address, serviceType } = useSelector(selectOrder)
   const [locSt, setLocSt] = useState(serviceType || 'PICKUP')
   const formattedAddress = address ? address.formatted_address : ''
@@ -128,7 +128,7 @@ const LocationsAutocomplete = ({
 
   const order = () => {
     dispatch(setOrderServiceType('OLO', locSt))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   useEffect(() => {

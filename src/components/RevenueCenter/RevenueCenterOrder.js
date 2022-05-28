@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { isMobileOnly } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
@@ -72,14 +72,14 @@ const RevenueCenterOrderButtons = styled('div')`
 `
 
 const RevenueCenterChange = ({ autoSelect }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   if (autoSelect) return null
 
   return (
     <RevenueCenterOrderButtons>
       <ButtonStyled
         icon={iconMap.RefreshCw}
-        onClick={() => history.push(`/locations`)}
+        onClick={() => navigate(`/locations`)}
         size={isMobileOnly ? `small` : 'default'}
       >
         Change Location
@@ -96,7 +96,7 @@ const icons = {
 
 const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const {
     slug,
     revenue_center_type: rcType,
@@ -123,7 +123,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
     dispatch(setRevenueCenter(revenueCenter))
     dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
     if (isOutpost) dispatch(setAddress(address))
-    history.push(menuSlug)
+    navigate(menuSlug)
   }
 
   const orderLater = () => {

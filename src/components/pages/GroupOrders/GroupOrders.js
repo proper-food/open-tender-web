@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -23,7 +23,7 @@ import OrdersList from '../Orders/OrdersList'
 
 const GroupOrders = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const orders = useSelector(selectCustomerGroupOrders)
   const { entities: groupOrders, loading, error } = orders
   const { title: siteTitle } = useSelector(selectBrand)
@@ -32,8 +32,8 @@ const GroupOrders = () => {
   const isLoading = loading === 'pending'
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerGroupOrders())

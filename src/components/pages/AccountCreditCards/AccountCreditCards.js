@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   selectCustomer,
   fetchCustomerCreditCards,
@@ -35,7 +35,7 @@ const CreditCardMessage = styled('div')`
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle, applePayMerchantId } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { creditCards: config } = useSelector(selectConfig)
@@ -46,8 +46,8 @@ const AccountCreditCards = () => {
   const hasLinkedCards = !!applePayMerchantId || linkedCards.length > 0
 
   useEffect(() => {
-    if (!auth) return history.push('/account')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     const includeLinked = true

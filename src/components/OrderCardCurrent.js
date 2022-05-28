@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartTotal, checkout } from '@open-tender/redux'
 import {
@@ -15,16 +15,10 @@ import iconMap from './iconMap'
 import { Card, OrderImages, OrderTag } from '.'
 
 const OrderCardCurrent = ({ order }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {
-    orderType,
-    serviceType,
-    revenueCenter,
-    requestedAt,
-    address,
-    cart,
-  } = order
+  const { orderType, serviceType, revenueCenter, requestedAt, address, cart } =
+    order
   const cartTotal = useSelector(selectCartTotal)
   const tz = timezoneMap[revenueCenter.timezone]
   const requestedAtStr =
@@ -40,11 +34,11 @@ const OrderCardCurrent = ({ order }) => {
 
   const handleCheckout = () => {
     dispatch(checkout())
-    history.push('/checkout')
+    navigate('/checkout')
   }
 
   const backToMenu = () => {
-    history.push(`/menu/${revenueCenter.slug}`)
+    navigate(`/menu/${revenueCenter.slug}`)
   }
 
   return (

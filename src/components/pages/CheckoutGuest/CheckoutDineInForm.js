@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   checkout,
@@ -34,7 +34,7 @@ const CheckoutDineInFormView = styled.div`
 `
 
 const CheckoutDineInForm = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { checkoutFlow } = useSelector(selectContent)
   const config = checkoutFlow ? checkoutFlow.sections['name'] : defaultText
@@ -48,9 +48,9 @@ const CheckoutDineInForm = () => {
       dispatch(resetGuest())
       dispatch(updateForm(data))
       dispatch(checkout())
-      history.push('/checkout')
+      navigate('/checkout')
     },
-    [dispatch, history]
+    [dispatch, navigate]
   )
 
   const signUp = () => {
@@ -68,9 +68,9 @@ const CheckoutDineInForm = () => {
   useEffect(() => {
     if (auth) {
       dispatch(checkout())
-      history.push('/checkout')
+      navigate('/checkout')
     }
-  }, [auth, dispatch, history])
+  }, [auth, dispatch, navigate])
 
   return (
     <CheckoutDineInFormView>

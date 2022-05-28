@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
 import { ButtonLink, Heading } from '@open-tender/components'
@@ -8,12 +8,12 @@ import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
 
 const CheckoutGuest = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { form, check } = useSelector(selectCheckout)
   const { first_name, last_name, email, phone } = form.customer
 
   const updateInfo = () => {
-    history.push(email ? '/checkout/signup' : '/checkout/guest')
+    navigate(email ? '/checkout/signup' : '/checkout/guest')
   }
 
   return check ? (
