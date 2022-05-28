@@ -63,8 +63,10 @@ const AppRoutes = () => {
         <Redirect to="/settings" />
       </Route> */}
       <Route index element={<Home />} />
-      <Route path="levelup" element={<LevelUp />} />
-      <Route path="levelup/:token" element={<LevelUp />} />
+      <Route path="levelup">
+        <Route index element={<LevelUp />} />
+        <Route path=":token" element={<LevelUp />} />
+      </Route>
       <Route path="thanx/callback" element={<Thanx />} />
       <Route path="qr/:id" element={<QR />} />
       <Route path="order-type" element={<OrderType />} />
@@ -78,14 +80,18 @@ const AppRoutes = () => {
       <Route path="catering-address" element={<Catering />} />
       <Route path="locations" element={<RevenueCenters />} />
       <Route path="locations/:slug" element={<RevenueCenter />} />
-      <Route path="menu/:slug" element={<Menu />} />
-      <Route path="menu/:slug/item/:itemSlug" element={<MenuItem />} />
+      <Route path="menu/:slug">
+        <Route index element={<Menu />} />
+        <Route path="item/:itemSlug" element={<MenuItem />} />
+      </Route>
       <Route path="join/:token" element={<GroupOrderGuest />} />
       <Route path="review" element={<GroupOrderReview />} />
-      <Route path="checkout/guest" element={<CheckoutGuest />} />
-      <Route path="checkout/signin" element={<CheckoutSignIn />} />
-      <Route path="checkout/signup" element={<CheckoutSignUp />} />
-      <Route path="checkout" element={<Checkout />} />
+      <Route path="checkout">
+        <Route index element={<Checkout />} />
+        <Route path="guest" element={<CheckoutGuest />} />
+        <Route path="signin" element={<CheckoutSignIn />} />
+        <Route path="signup" element={<CheckoutSignUp />} />
+      </Route>
       <Route path="confirmation" element={<Confirmation />} />
       <Route path="curbside/:id" element={<Fulfillment />} />
       <Route path="ratings/:id" element={<Rating />} />
