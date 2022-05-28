@@ -1597,16 +1597,16 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@open-tender/components@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-4.0.0.tgz#e4066f866e14340b76f44a09bf213ee97b8899e0"
-  integrity sha512-/ob10hlJX62kCW0LfECULDsyJOZ80T16Ikdp3F9Qw+ya/bDF4I872rTfCNHGMZk5FJnmQQ3JL6DNonwCmQnESQ==
+"@open-tender/components@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-4.0.2.tgz#656cce44b722ea214cb012da8a0159a71874c78a"
+  integrity sha512-9nGx88SYdFA2Y3R7XcnzJ1sLHFNXivCiyCJoyVrqXzsaBrdK9lcy10kxAO4esmYt8rcXPhzMeTAZACWX7CRVLA==
   dependencies:
     "@google-pay/button-react" "^3.0.0"
     "@googlemaps/js-api-loader" "^1.14.3"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^2.0.1":
+"@open-tender/js@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.0.2.tgz#894f68bda34bdd175a9cfaccb8bedad5a4d8b399"
   integrity sha512-jUiQsRPAkbZPpyKAsy7pa9clvDIh1SznbgoXNjQQrpo6khk3m1Q2BlltNwWuy9UwqoSDWa4kLS8zgzaFL9rpHQ==
