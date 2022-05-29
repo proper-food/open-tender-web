@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCartQuantity,
   selectCartTotal,
+  selectCustomer,
   selectMenuSlug,
   selectCanOrder,
   selectGroupOrder,
@@ -120,6 +121,7 @@ const Sidebar = React.forwardRef((props, ref) => {
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const { orderMinimum, orderMaximum } = useSelector(selectOrderLimits)
+  const { auth } = useSelector(selectCustomer)
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
   const isReview = pathname.includes('review')
@@ -138,15 +140,13 @@ const Sidebar = React.forwardRef((props, ref) => {
 
   const handleReview = () => {
     dispatch(toggleSidebar())
-    if (!isReview) navigate(`/review`)
+    if (!isReview) navigate('/review')
   }
 
   const handleCheckout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
-      // dispatch(checkout())
-      // navigate(`/checkout`)
-      navigate(`/checkout/guest`)
+      navigate(auth ? '/checkout' : '/checkout/guest')
     }
   }
 

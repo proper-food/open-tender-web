@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { deviceType, isMobile } from 'react-device-detect'
 import {
-  selectCustomer,
   selectCartTotal,
+  selectCustomer,
   selectMenuSlug,
   selectOrder,
   selectCheckout,
