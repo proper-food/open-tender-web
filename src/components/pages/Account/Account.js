@@ -45,25 +45,17 @@ const AccountView = styled('div')`
 `
 
 const AccountLoyaltyView = styled.div`
-  flex: 0 0 ${(props) => props.theme.layout.maxWidth};
-  @media (max-width: 1360px) {
-    flex: 0 0 50%;
-  }
+  min-width: 42rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 1 1 auto;
     width: 100%;
+    min-width: 0;
   }
 `
 
 const AccountBanner = styled.div`
-  flex: 1 1 100%;
+  flex: 1 1 auto;
   padding-left: ${(props) => props.theme.layout.padding};
-  @media (max-width: 1360px) {
-    flex: 0 0 50%;
-    padding-left: ${(props) => props.theme.layout.padding};
-  }
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 1 1 auto;
     width: 100%;
     padding: 0;
   }

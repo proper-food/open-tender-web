@@ -6,9 +6,11 @@ import { selectContent } from '../../../slices'
 const AccountContentView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  width: ${(props) => props.theme.layout.maxWidth};
   margin: 3rem 0;
   line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 100%;
     margin: 2rem 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
@@ -33,7 +35,7 @@ const AccountContent = () => {
   const { account } = useSelector(selectContent)
   const { content } = account || {}
   const hasContent = !!(content && content.length)
-  if (!hasContent) return null
+  if (!hasContent || content === '<p><br></p>') return null
   return <AccountContentView dangerouslySetInnerHTML={{ __html: content }} />
 }
 

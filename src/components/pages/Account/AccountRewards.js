@@ -13,9 +13,10 @@ import { Rewards, Loading } from '../..'
 import AccountSectionHeader from './AccountSectionHeader'
 
 const AccountRewardsView = styled.div`
-  width: 100%;
+  width: ${(props) => props.theme.layout.maxWidth};
   margin: 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 100%;
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
