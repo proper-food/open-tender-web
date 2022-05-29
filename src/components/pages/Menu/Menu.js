@@ -70,14 +70,8 @@ const MenuPage = () => {
   )
 
   useEffect(() => {
-    if (init) {
-      // window.scrollTo(0, topOffset || 0)
-      scroll.scrollTo(topOffset || 0, {
-        duration: 0,
-        smooth: false,
-      })
-    }
-  }, [topOffset, init])
+    if (!init) dispatch(setTopOffset(null))
+  }, [init, dispatch])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -85,9 +79,11 @@ const MenuPage = () => {
     } else if (groupOrderClosed) {
       return navigate('/review')
     } else if (topOffset) {
-      dispatch(setTopOffset(null))
+      scroll.scrollTo(topOffset || 0, { duration: 0, smooth: false })
       setInit(false)
     } else if (init) {
+      scroll.scrollTo(0, { duration: 0, smooth: false })
+      setInit(false)
       dispatch(fetchAllergens())
       dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
