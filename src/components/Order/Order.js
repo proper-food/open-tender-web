@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -8,6 +8,7 @@ import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
+  resetCustomerOrder,
   editOrder,
 } from '@open-tender/redux'
 import {
@@ -167,6 +168,10 @@ const Order = ({ order, loading, error, isConfirmation }) => {
   const orderTitle = revenue_center
     ? `${orderTypeName} from ${revenue_center.name}`
     : ''
+
+  useEffect(() => {
+    return () => dispatch(resetCustomerOrder())
+  }, [dispatch])
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center

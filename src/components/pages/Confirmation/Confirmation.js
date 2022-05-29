@@ -5,10 +5,14 @@ import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
   selectConfirmationOrder,
+  resetCheckout,
+  resetCompletedOrder,
   resetConfirmation,
   resetGroupOrder,
+  resetOrder,
   resetOrderFulfillment,
 } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import {
@@ -23,6 +27,12 @@ import {
 } from '../..'
 import ConfirmationPrefs from './ConfirmationPrefs'
 import ConfirmationLinks from './ConfirmationLinks'
+import styled from '@emotion/styled'
+
+const ConfirmationFooter = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 const Confirmation = () => {
   const navigate = useNavigate()
@@ -45,21 +55,25 @@ const Confirmation = () => {
     service_type === 'PICKUP'
 
   useEffect(() => {
-    if (!order) navigate('/')
+    dispatch(resetCompletedOrder())
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
     dispatch(resetGroupOrder())
     return () => {
       dispatch(resetConfirmation())
     }
-  }, [order, auth, dispatch, navigate])
+  }, [dispatch])
+
+  useEffect(() => {
+    if (!order) navigate('/account')
+  }, [order, navigate])
 
   useEffect(() => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())
   }, [hasFulfillment, dispatch])
 
   useEffect(() => {
-    if (showOptIns) {
-      setShowPrefs(true)
-    }
+    if (showOptIns) setShowPrefs(true)
   }, [showOptIns])
 
   return (
@@ -84,6 +98,11 @@ const Confirmation = () => {
               )}
             </PageContent>
             <Order order={order} isConfirmation={true} />
+            <ConfirmationFooter>
+              <ButtonStyled onClick={() => navigate(`/account`)}>
+                Back Home
+              </ButtonStyled>
+            </ConfirmationFooter>
           </PageContainer>
         </Main>
       </Content>

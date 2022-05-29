@@ -10,10 +10,8 @@ import {
   selectMenuSlug,
   selectOrder,
   selectCheckout,
-  resetCompletedOrder,
   resetCheck,
   resetErrors,
-  resetOrder,
   resetTip,
   setConfirmationOrder,
   setSubmitting,
@@ -219,21 +217,19 @@ const Checkout = () => {
   }, [dispatch, deviceTypeName])
 
   useEffect(() => {
-    if (hasFormCustomer && !hasCheck) {
+    if (!completedOrder && hasFormCustomer && !hasCheck) {
       dispatch(validateOrder())
     }
-  }, [dispatch, hasFormCustomer, hasCheck])
+  }, [dispatch, completedOrder, hasFormCustomer, hasCheck])
 
   useEffect(() => {
-    if (!revenueCenterId || !serviceType) {
-      navigate('/')
+    if (completedOrder) {
+      dispatch(setConfirmationOrder(completedOrder))
+      navigate('/confirmation')
     } else if (cartTotal === 0) {
       navigate(menuSlug)
-    } else if (completedOrder) {
-      dispatch(setConfirmationOrder(completedOrder))
-      dispatch(resetCompletedOrder())
-      dispatch(resetOrder())
-      return navigate('/confirmation')
+    } else if (!revenueCenterId || !serviceType) {
+      navigate('/')
     } else if (!hasCustomer && !hasFormCustomer) {
       navigate('/checkout/guest')
     }
@@ -248,12 +244,6 @@ const Checkout = () => {
     hasCustomer,
     hasFormCustomer,
   ])
-
-  // useEffect(() => {
-  //   if (!auth && !hasGuest) {
-  //     navigate('/checkout/guest')
-  //   }
-  // }, [auth, hasGuest, navigate])
 
   return (
     <>

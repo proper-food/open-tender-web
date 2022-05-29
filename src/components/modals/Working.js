@@ -25,6 +25,10 @@ const WorkingView = styled('div')`
 
   > div:last-of-type {
     display: inline-block;
+
+    > span {
+      display: block;
+    }
   }
 `
 

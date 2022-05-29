@@ -19,6 +19,10 @@ const LoadingView = styled('div')`
 
 const LoadingLoader = styled('div')`
   display: inline-block;
+
+  & > span {
+    display: block;
+  }
 `
 
 const LoadingMessage = styled('p')`

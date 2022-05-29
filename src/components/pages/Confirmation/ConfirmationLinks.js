@@ -1,7 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { resetCustomerOrder } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 import styled from '@emotion/styled'
 
@@ -14,19 +12,13 @@ const ConfirmationLinksView = styled('div')`
 `
 
 const ConfirmationLinks = ({ auth, brand }) => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const reviewAccount = () => {
-    dispatch(resetCustomerOrder())
-    navigate('/account')
-  }
 
   return (
     <ConfirmationLinksView>
       <p>
         {auth ? (
-          <ButtonLink onClick={reviewAccount}>
+          <ButtonLink onClick={() => navigate('/account')}>
             Head back to your account
           </ButtonLink>
         ) : (
@@ -35,7 +27,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
           </a>
         )}
         <span> or </span>
-        <ButtonLink onClick={() => navigate('/')}>
+        <ButtonLink onClick={() => navigate('/account')}>
           start another order
         </ButtonLink>
       </p>
