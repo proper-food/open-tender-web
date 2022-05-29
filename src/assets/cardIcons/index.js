@@ -1,4 +1,4 @@
-// https://github.com/muffinresearch/payment-icons
+// https://github.com/aaronfagan/svg-credit-card-payment-icons
 
 import visa from './visa.svg'
 import amex from './amex.svg'
