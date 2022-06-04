@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import {
   About,
   Accessibility,
@@ -53,15 +53,6 @@ import {
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* <Route path="order">
-        <Redirect to="/account" />
-      </Route>
-      <Route path="order/catering">
-        <Redirect to="/account" />
-      </Route>
-      <Route path="account/settings">
-        <Redirect to="/settings" />
-      </Route> */}
       <Route index element={<Home />} />
       <Route path="levelup">
         <Route index element={<LevelUp />} />
@@ -117,6 +108,11 @@ const AppRoutes = () => {
       <Route path="deals" element={<Deals />} />
       <Route path="accessibility" element={<Accessibility />} />
       <Route path="refunds" element={<Refunds />} />
+      <Route path="order" element={<Navigate to="/account" replace />} />
+      <Route
+        path="order/catering"
+        element={<Navigate to="/account" replace />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
