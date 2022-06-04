@@ -30,7 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(closeModal())
-    // navigate('/account')
+    navigate('/account')
   }, [dispatch, navigate])
 
   // useEffect(() => {
