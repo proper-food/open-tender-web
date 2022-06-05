@@ -85,12 +85,6 @@ const RewardNote = styled('div')`
     display: block;
     line-height: 1.4;
   }
-
-  span:first-of-type {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin: 0 0.4rem 0 0;
-    // color: ${(props) => props.theme.links.primary.color};
 `
 
 const errors = {
