@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
-import { ButtonStyled } from '@open-tender/components'
+import { Box, ButtonStyled } from '@open-tender/components'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { selectConfig } from '../../../slices'
 
-const AccountLoyaltySignUpView = styled.div`
-  margin: 1rem 0 4rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 2.5rem 0 3rem;
-  }
+const AccountLoyaltySignUpView = styled(Box)`
+  padding: 2rem;
+  // margin: 1rem 0 4rem;
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   margin: 2.5rem 0 3rem;
+  // }
 
   h2 {
     margin-left: -0.1rem;

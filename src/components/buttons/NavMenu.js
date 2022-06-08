@@ -5,6 +5,7 @@ import { ButtonIcon } from '@open-tender/components'
 
 import { toggleNav } from '../../slices'
 import iconMap from '../iconMap'
+import { isBrowser } from 'react-device-detect'
 
 const NavMenu = ({ color }) => {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ const NavMenu = ({ color }) => {
     <ButtonIcon
       label={auth ? 'Account Navigation' : 'Login'}
       color={color}
+      size={isBrowser ? 26 : 20}
       onClick={() => dispatch(toggleNav())}
     >
       {iconMap.Menu}

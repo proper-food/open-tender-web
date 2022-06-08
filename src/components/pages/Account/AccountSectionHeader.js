@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Heading } from '@open-tender/components'
+import { Preface } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 
@@ -18,10 +18,10 @@ const AccountSectionHeaderView = styled.div`
 
 const AccountSectionTitle = styled.div`
   text-align: left;
-  font-size: ${(props) => props.theme.fonts.sizes.h5};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
-  }
+  // font-size: ${(props) => props.theme.fonts.sizes.h5};
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   font-size: ${(props) => props.theme.fonts.sizes.main};
+  // }
 `
 
 const AccountSectionLink = styled.div`
@@ -49,7 +49,7 @@ const AccountSectionLink = styled.div`
 const AccountSectionHeader = ({ title, to, style }) => (
   <AccountSectionHeaderView style={style}>
     <AccountSectionTitle>
-      <Heading as="p">{title}</Heading>
+      <Preface as="p">{title}</Preface>
     </AccountSectionTitle>
     {to && (
       <AccountSectionLink>

@@ -25,24 +25,24 @@ import {
 import { Account, StartOver } from '../../buttons'
 import CateringAutocomplete from './CateringAutocomplete'
 
-const CateringView = styled('div')`
+const CateringView = styled.div`
   padding: ${(props) => props.theme.layout.padding};
 `
 
-const CateringTitle = styled('div')`
+const CateringTitle = styled.div`
   & > div {
     text-align: left;
   }
 `
 
-const CateringContent = styled('div')`
+const CateringContent = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   position: relative;
   z-index: 2;
 `
 
-const CateringError = styled('div')`
+const CateringError = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
 
@@ -52,7 +52,7 @@ const CateringError = styled('div')`
   }
 `
 
-const CateringButtons = styled('div')`
+const CateringButtons = styled.div`
   margin: 2rem 0 0;
 
   button {
@@ -60,7 +60,7 @@ const CateringButtons = styled('div')`
   }
 `
 
-const CateringPolicy = styled('div')`
+const CateringPolicy = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   position: relative;
@@ -88,7 +88,7 @@ const CateringPolicy = styled('div')`
   }
 `
 
-const CateringStartOver = styled('div')`
+const CateringStartOver = styled.div`
   margin: 3rem 0 0;
 
   button {

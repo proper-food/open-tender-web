@@ -6,9 +6,9 @@ import {
   selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
-import BackgroundImage from './BackgroundImage'
-import BackgroundContent from './BackgroundContent'
-import AccountSectionHeader from './pages/Account/AccountSectionHeader'
+import { BackgroundImage, BackgroundContent } from '../..'
+import AccountSection from './AccountSection'
+import AccountSectionHeader from './AccountSectionHeader'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -24,8 +24,8 @@ const makeSlides = (items) => {
   }))
 }
 
-const AnnouncementsView = styled.div`
-  label: AnnouncementsView;
+const AccountAnnouncementsView = styled.div`
+  label: AccountAnnouncementsView;
 
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@ const AnnouncementsView = styled.div`
   align-items: center;
 `
 
-const Announcement = styled.div`
+const AccountAnnouncement = styled.div`
   label: Announcement;
 
   display: flex;
@@ -48,39 +48,39 @@ const Announcement = styled.div`
   }
 `
 
-const Announcements = ({ page = 'HOME' }) => {
+const AccountAnnouncements = () => {
   const dispatch = useDispatch()
-  const announcements = useSelector(selectAnnouncementsPage(page))
+  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const { settings, entities, loading, error } = announcements || {}
   const { title } = settings || {}
   const isLoading = loading === 'pending'
   const slides = isLoading || error ? null : makeSlides(entities)
 
   useEffect(() => {
-    dispatch(fetchAnnouncementPage(page))
-  }, [dispatch, page])
+    dispatch(fetchAnnouncementPage('ACCOUNT'))
+  }, [dispatch])
 
   if (!slides) return null
 
   return (
-    <>
+    <AccountSection>
       {title ? (
         <AccountSectionHeader title={title} style={{ marginBottom: 12 }} />
       ) : null}
-      <AnnouncementsView>
+      <AccountAnnouncementsView>
         {slides.map((slide) => {
           return (
-            <Announcement key={slide.imageUrl}>
+            <AccountAnnouncement key={slide.imageUrl}>
               <BackgroundImage {...slide}>
                 <BackgroundContent {...slide} />
               </BackgroundImage>
-            </Announcement>
+            </AccountAnnouncement>
           )
         })}
-      </AnnouncementsView>
-    </>
+      </AccountAnnouncementsView>
+    </AccountSection>
   )
 }
 
-Announcements.displayName = 'Announcements'
-export default Announcements
+AccountAnnouncements.displayName = 'AccountAnnouncements'
+export default AccountAnnouncements

@@ -9,10 +9,9 @@ const AccountContentView = styled('div')`
   width: ${(props) => props.theme.layout.maxWidth};
   margin: 3rem 0;
   line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
-    margin: 2rem 0;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+    margin: 0 0 3rem;
   }
 
   p {

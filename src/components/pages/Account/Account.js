@@ -15,7 +15,7 @@ import {
 
 import { selectBrand, closeModal, selectConfig } from '../../../slices'
 import { Announcements, Content, Header, Main } from '../..'
-import { Logout, OrderNow } from '../../buttons'
+import { Logout, NavMenu, OrderNow } from '../../buttons'
 import AccountTabs from './AccountTabs'
 import AccountButtons from './AccountButtons'
 import AccountLoyalty from './AccountLoyalty'
@@ -25,31 +25,31 @@ import AccountDeals from './AccountDeals'
 import AccountRewards from './AccountRewards'
 import AccountLogo from './AccountLogo'
 import AccountContent from './AccountContent'
+import Background from '../../Background'
+import AccountAnnouncements from './AccountAnnouncements'
 
-const AccountView = styled('div')`
+const AccountView = styled.div`
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  // background-color: pink;
+  // justify-content: space-between;
+  // align-items: flex-start;
   padding: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
-  }
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  // }
 `
 
 const AccountLoyaltyView = styled.div`
-  min-width: 42rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 100%;
-    min-width: 0;
-  }
+  // min-width: 42rem;
+  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  //   width: 100%;
+  //   min-width: 0;
+  // }
 `
 
 const AccountBanner = styled.div`
@@ -84,6 +84,7 @@ const Account = () => {
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const imageUrl = isMobileOnly ? mobile : background
+  const showHero = !hasAnnouncements && isMobileOnly
 
   useEffect(() => {
     dispatch(closeModal())
@@ -101,37 +102,28 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Content>
+      <Background imageUrl={imageUrl} />
+      <Content maxWidth="76.8rem">
         <Header
+          maxWidth="76.8rem"
           left={<AccountLogo />}
           right={
-            isBrowser ? (
-              <>
-                <AccountTabs />
-                <OrderNow />
-              </>
-            ) : (
-              <>
-                <OrderNow />
-                <Logout />
-              </>
-            )
+            <>
+              <OrderNow />
+              <NavMenu />
+            </>
           }
         />
         <Main>
-          <AccountButtons />
           <AccountView>
-            <AccountLoyaltyView>
-              <AccountGreeting />
-              {hasLoyalty && <AccountLoyalty />}
-              <AccountRewards />
-              <AccountDeals />
-              <AccountContent />
-            </AccountLoyaltyView>
-            <AccountBanner>
-              <Announcements page="ACCOUNT" />
-              {!hasAnnouncements && <AccountHero imageUrl={imageUrl} />}
-            </AccountBanner>
+            <AccountGreeting />
+            <AccountButtons />
+            <AccountContent />
+            {hasLoyalty && <AccountLoyalty />}
+            <AccountRewards />
+            <AccountDeals />
+            {showHero && <AccountHero imageUrl={imageUrl} />}
+            <AccountAnnouncements />
           </AccountView>
         </Main>
       </Content>

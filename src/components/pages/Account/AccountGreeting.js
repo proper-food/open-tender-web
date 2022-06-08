@@ -3,31 +3,13 @@ import { useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 
 import { selectContent } from '../../../slices'
+import PageTitle from '../../PageTitle'
 
 const AccountGreetingView = styled.div`
-  margin: 0 0 3.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 3.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 2rem;
-  }
-
-  h1 {
-    margin-left: -0.2rem;
-    // font-size: ${(props) => props.theme.fonts.sizes.giga};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      margin-left: -0.1rem;
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
-  }
-
-  p {
-    // font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    margin: 0.5rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
+  & > div {
+    text-align: left;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0;
     }
   }
 `
@@ -40,8 +22,11 @@ const AccountGreeting = () => {
   const welcome = firstName ? `${greeting}, ${firstName}` : `${title}`
   return (
     <AccountGreetingView>
-      <h1>{welcome}</h1>
-      {subtitle && <p>{subtitle}</p>}
+      <PageTitle
+        title={welcome}
+        subtitle={subtitle}
+        style={{ maxWidth: '100%' }}
+      />
     </AccountGreetingView>
   )
 }

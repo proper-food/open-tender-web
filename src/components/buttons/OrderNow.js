@@ -16,7 +16,9 @@ import iconMap from '../iconMap'
 
 const OrderNowIcon = styled('div')`
   position: relative;
-  margin: 0 -0.5rem 0 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 -0.5rem 0 0.5rem;
+  }
 `
 
 const OrderNowCount = styled('div')`
@@ -75,16 +77,13 @@ const OrderNow = ({
     navigate(path)
   }
 
-  return isBrowser ? (
-    <ButtonStyled onClick={order} icon={icon} color={color} size={size}>
-      {isCurrentOrder ? 'Continue Order' : text}
-    </ButtonStyled>
-  ) : isCurrentOrder ? (
+  return isCurrentOrder ? (
     <OrderNowIcon>
       <OrderNowCount>{cartQuantity}</OrderNowCount>
       <ButtonIcon
         label={isCurrentOrder ? 'Continue Order' : text}
         onClick={order}
+        size={isBrowser ? 26 : 20}
       >
         {icon}
       </ButtonIcon>

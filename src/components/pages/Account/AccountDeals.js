@@ -1,21 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
-import styled from '@emotion/styled'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { Rewards } from '../..'
+import AccountSection from './AccountSection'
 import AccountSectionHeader from './AccountSectionHeader'
-import { isMobile } from 'react-device-detect'
-
-const AccountDealsView = styled.div`
-  width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 100%;
-    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
-  }
-`
 
 const AccountDeals = () => {
   const dispatch = useDispatch()
@@ -36,10 +27,10 @@ const AccountDeals = () => {
   }, [has_deals, customer_id, dispatch])
 
   return hasDeals ? (
-    <AccountDealsView>
+    <AccountSection>
       <AccountSectionHeader title={title} to={isMore ? '/deals' : null} />
       <Rewards rewards={displayed} />
-    </AccountDealsView>
+    </AccountSection>
   ) : null
 }
 

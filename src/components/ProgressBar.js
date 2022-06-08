@@ -8,6 +8,7 @@ const ProgressView = styled('div')`
   position: relative;
   width: 100%;
   border-radius: 0.3rem;
+  // background-color: rgba(0, 0, 0, 0.1);
   background-color: ${(props) => props.theme.bgColors.tertiary};
 `
 

@@ -68,6 +68,9 @@ const HeaderTitle = styled('div')`
 const HeaderNav = styled('div')`
   position: relative;
   z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
   ${(props) =>
     props.isBrowser
@@ -80,7 +83,7 @@ const HeaderNav = styled('div')`
     }
     }
   `
-      : `display: flex; align-items: center;`}
+      : ``}
 `
 
 const Header = ({
