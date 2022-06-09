@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser, isMobileOnly } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
-  selectAnnouncementsPage,
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
@@ -13,13 +12,10 @@ import {
   fetchCustomerFavorites,
 } from '@open-tender/redux'
 
-import { selectBrand, closeModal, selectConfig } from '../../../slices'
-import { Announcements, Content, Header, Main } from '../..'
-import { Logout, NavMenu, OrderNow } from '../../buttons'
-import AccountTabs from './AccountTabs'
+import { selectBrand, closeModal, selectContent } from '../../../slices'
+import { Content, Header, Main } from '../..'
+import { NavMenu, OrderNow } from '../../buttons'
 import AccountButtons from './AccountButtons'
-import AccountLoyalty from './AccountLoyalty'
-import AccountHero from './AccountHero'
 import AccountGreeting from './AccountGreeting'
 import AccountDeals from './AccountDeals'
 import AccountRewards from './AccountRewards'
@@ -41,24 +37,11 @@ const AccountView = styled.div`
 const Account = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {
-    title: siteTitle,
-    has_loyalty,
-    has_thanx,
-    has_levelup,
-  } = useSelector(selectBrand)
-  const hasLoyalty = has_loyalty || has_thanx || has_levelup
-  const { entities: announcements } = useSelector(
-    selectAnnouncementsPage('ACCOUNT')
-  )
-  const hasAnnouncements =
-    announcements && announcements.length > 0 ? true : false
-  const { account: acctConfig } = useSelector(selectConfig)
-  const { background, mobile } = acctConfig || {}
+  const { title: siteTitle } = useSelector(selectBrand)
+  const { account } = useSelector(selectContent)
+  const imageUrl = account ? account.background : null
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
-  const imageUrl = isMobileOnly ? mobile : background
-  const showHero = !hasAnnouncements && isMobileOnly
 
   useEffect(() => {
     dispatch(closeModal())
@@ -99,11 +82,9 @@ const Account = () => {
             <AccountGreeting />
             <AccountButtons />
             <AccountContent />
-            {hasLoyalty && <AccountLoyalty />}
             <AccountRewards />
             <AccountDeals />
-            {showHero && <AccountHero imageUrl={imageUrl} />}
-            <AccountAnnouncements />
+            {isMobile && <AccountAnnouncements />}
           </AccountView>
         </Main>
       </Content>

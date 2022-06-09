@@ -9,6 +9,8 @@ import {
 import { BackgroundImage, BackgroundContent } from '../..'
 import AccountSection from './AccountSection'
 import AccountSectionHeader from './AccountSectionHeader'
+import { selectContent } from '../../../slices'
+import AccountHero from './AccountHero'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -50,6 +52,8 @@ const AccountAnnouncement = styled.div`
 
 const AccountAnnouncements = () => {
   const dispatch = useDispatch()
+  const { account } = useSelector(selectContent)
+  const imageUrl = account ? account.mobile : null
   const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const { settings, entities, loading, error } = announcements || {}
   const { title } = settings || {}
@@ -60,9 +64,7 @@ const AccountAnnouncements = () => {
     dispatch(fetchAnnouncementPage('ACCOUNT'))
   }, [dispatch])
 
-  if (!slides) return null
-
-  return (
+  return slides ? (
     <AccountSection>
       {title ? (
         <AccountSectionHeader title={title} style={{ marginBottom: 12 }} />
@@ -79,7 +81,9 @@ const AccountAnnouncements = () => {
         })}
       </AccountAnnouncementsView>
     </AccountSection>
-  )
+  ) : imageUrl ? (
+    <AccountHero imageUrl={imageUrl} />
+  ) : null
 }
 
 AccountAnnouncements.displayName = 'AccountAnnouncements'
