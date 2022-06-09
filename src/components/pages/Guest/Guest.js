@@ -10,6 +10,7 @@ import { selectBrand, closeModal, selectContent } from '../../../slices'
 import { Background, Content, Header, HeaderLogo, Main } from '../..'
 import { Logout, NavMenu, OrderNow } from '../../buttons'
 import PageTitle from '../../PageTitle'
+import GuestButtons from './GuestButtons'
 
 const GuestView = styled.div`
   flex: 1;
@@ -70,6 +71,7 @@ const Guest = () => {
               subtitle={subtitle}
               style={{ textAlign: 'left', width: '100%', maxWidth: '100%' }}
             />
+            <GuestButtons />
           </GuestView>
         </Main>
       </Content>
