@@ -32,35 +32,9 @@ const AccountView = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  // background-color: pink;
-  // justify-content: space-between;
-  // align-items: flex-start;
   padding: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //   padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  // }
-`
-
-const AccountLoyaltyView = styled.div`
-  // min-width: 42rem;
-  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //   width: 100%;
-  //   min-width: 0;
-  // }
-`
-
-const AccountBanner = styled.div`
-  flex: 1 1 auto;
-  padding-left: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 100%;
-    padding: 0;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 `
 
@@ -91,11 +65,17 @@ const Account = () => {
   }, [dispatch])
 
   useEffect(() => {
+    if (!auth) navigate('/guest')
+  }, [auth, navigate])
+
+  useEffect(() => {
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
   }, [token, dispatch, navigate])
+
+  if (!auth) return null
 
   return (
     <>

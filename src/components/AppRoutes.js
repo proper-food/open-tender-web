@@ -25,6 +25,7 @@ import {
   GroupOrderGuest,
   GroupOrderReview,
   GroupOrders,
+  Guest,
   Home,
   HouseAccounts,
   LevelUp,
@@ -92,6 +93,7 @@ const AppRoutes = () => {
       <Route path="orders" element={<Orders />} />
       <Route path="orders/:id" element={<Order />} />
       <Route path="group-orders" element={<GroupOrders />} />
+      <Route path="guest" element={<Guest />} />
       <Route path="account">
         <Route index element={<Account />} />
         <Route path="settings" element={<AccountSettings />} />
