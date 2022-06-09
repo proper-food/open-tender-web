@@ -112,20 +112,19 @@ const makeServiceType = (serviceType) => {
     case 'WALKIN':
       return (
         <>
-          <RewardNoteIcon>{iconMap.Grid}</RewardNoteIcon>Scan in-store only
+          <RewardNoteIcon>{iconMap.Grid}</RewardNoteIcon>In-store only
         </>
       )
     case 'PICKUP':
       return (
         <>
-          <RewardNoteIcon>{iconMap.ShoppingBag}</RewardNoteIcon>Pickup orders
-          only
+          <RewardNoteIcon>{iconMap.ShoppingBag}</RewardNoteIcon>Pickup only
         </>
       )
     case 'DELIVERY':
       return (
         <>
-          <RewardNoteIcon>{iconMap.Truck}</RewardNoteIcon>Delivery orders only
+          <RewardNoteIcon>{iconMap.Truck}</RewardNoteIcon>Delivery only
         </>
       )
     default:

@@ -12,6 +12,9 @@ const AccountHeroView = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
 `
 
 const AccountHero = ({ imageUrl }) => {

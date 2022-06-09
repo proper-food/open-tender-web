@@ -33,6 +33,9 @@ const AccountAnnouncementsView = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
 `
 
 const AccountAnnouncement = styled.div`

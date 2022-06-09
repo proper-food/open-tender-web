@@ -23,6 +23,7 @@ import AccountLogo from './AccountLogo'
 import AccountContent from './AccountContent'
 import Background from '../../Background'
 import AccountAnnouncements from './AccountAnnouncements'
+import AccountOrders from './AccountOrders'
 
 const AccountView = styled.div`
   flex: 1;
@@ -30,7 +31,7 @@ const AccountView = styled.div`
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -84,6 +85,7 @@ const Account = () => {
             <AccountContent />
             <AccountRewards />
             <AccountDeals />
+            <AccountOrders />
             {isMobile && <AccountAnnouncements />}
           </AccountView>
         </Main>

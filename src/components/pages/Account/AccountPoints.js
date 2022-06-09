@@ -20,7 +20,7 @@ const AccountPointsCount = styled('div')`
     margin: 0 0 0 -0.1rem;
     font-size: ${(props) => props.theme.fonts.sizes.h2};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
+      font-size: ${(props) => props.theme.fonts.sizes.h4};
     }
   }
 
@@ -47,7 +47,7 @@ const AccountPointsBalance = styled.p`
   margin: 0.3rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 

@@ -28,6 +28,9 @@ const OrderTag = ({ isUpcoming, status }) => {
         icon: iconMap.CheckCircle,
         bgColor: 'success',
       }
+
+  if (tag.text === 'Completed') return null
+
   return (
     <OrderTagView>
       <Tag text={tag.text} icon={tag.icon} bgColor={tag.bgColor} />
