@@ -11,13 +11,16 @@ import { openModal } from '../../../slices'
 const AccountButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     position: fixed;
     z-index: 10;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 2rem ${(props) => props.theme.layout.paddingMobile} 2rem;
+    margin: 0;
+    height: ${(props) => props.theme.layout.navHeight};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     background-color: ${(props) => props.theme.bgColors.primary};
     box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -2px 4px rgba(0, 0, 0, 0.05);
   }
@@ -25,8 +28,8 @@ const AccountButtonsView = styled('div')`
 
 const AccountButtonsContainer = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    max-width: 40rem;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

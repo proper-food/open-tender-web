@@ -2,6 +2,8 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const WelcomeView = styled.div`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   margin-top: ${(props) => props.theme.welcome.desktop.marginTop};
   margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
   text-align: ${(props) => props.theme.welcome.desktop.textAlign};

@@ -11,12 +11,14 @@ import { openModal } from '../../../slices'
 const GuestButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     position: fixed;
     z-index: 10;
     left: 0;
     right: 0;
     bottom: 0;
+    margin: 0;
     height: ${(props) => props.theme.layout.navHeight};
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     background-color: ${(props) => props.theme.bgColors.primary};

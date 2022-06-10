@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { selectContent } from '../../../slices'
 
-const AccountContentView = styled('div')`
+const AccountContentView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   width: ${(props) => props.theme.layout.maxWidth};

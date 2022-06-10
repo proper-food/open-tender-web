@@ -7,9 +7,9 @@ import Loading from './Loading'
 const ScrollableSectionView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin: 4rem 0 0;
+  margin: 0 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 2rem -${(props) => props.theme.layout.paddingMobile} 0;
+    margin: 0 -${(props) => props.theme.layout.paddingMobile} 2rem;
   }
 `
 

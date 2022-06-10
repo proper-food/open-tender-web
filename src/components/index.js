@@ -11,6 +11,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
+import Deals from './Deals'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import FormSection from './FormSection'
@@ -30,6 +31,7 @@ import HeroContent from './HeroContent'
 import HeroSite from './HeroSite'
 import HeroSiteCta from './HeroSiteCta'
 import HeroSlides from './HeroSlides'
+import HtmlContent from './HtmlContent'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import ItemsScrollable from './ItemsScrollable'
@@ -106,6 +108,7 @@ export {
   CommunicationPrefs,
   Container,
   Content,
+  Deals,
   ErrorBoundary,
   Footer,
   FormSection,
@@ -125,6 +128,7 @@ export {
   HeroSite,
   HeroSiteCta,
   HeroSlides,
+  HtmlContent,
   ImageSpinner,
   ItemCards,
   ItemsScrollable,
