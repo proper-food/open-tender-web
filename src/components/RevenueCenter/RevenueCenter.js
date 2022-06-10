@@ -42,7 +42,7 @@ const RevenueCenterImage = styled(BgImage)`
   bottom: 0;
   right: 0;
   width: 24rem;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;

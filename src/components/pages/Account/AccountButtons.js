@@ -9,8 +9,8 @@ import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
 
 const AccountButtonsView = styled('div')`
-  // opacity: 0;
-  // animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     position: fixed;
     z-index: 10;
