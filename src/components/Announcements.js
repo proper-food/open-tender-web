@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
@@ -6,9 +7,9 @@ import {
   selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
+import { Preface } from '@open-tender/components'
 import BackgroundImage from './BackgroundImage'
 import BackgroundContent from './BackgroundContent'
-import AccountSectionHeader from './pages/Account/AccountSectionHeader'
 
 const makeImageUrl = (images, isBrowser) => {
   return images.find(
@@ -26,7 +27,25 @@ const makeSlides = (items) => {
 
 const AnnouncementsView = styled.div`
   label: AnnouncementsView;
+  margin: 4rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 3rem 0 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+`
 
+const AnnouncementsTitle = styled.div`
+  label: AnnouncementsTitle;
+  width: 100%;
+  margin: 0 0 1.5rem;
+  text-align: left;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 0 1.2rem;
+  }
+`
+
+const AnnouncementsContainer = styled.div`
+  label: AnnouncementsView;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -35,7 +54,6 @@ const AnnouncementsView = styled.div`
 
 const Announcement = styled.div`
   label: Announcement;
-
   display: flex;
   width: 100%;
   border-radius: ${(props) => props.theme.border.radius};
@@ -48,7 +66,17 @@ const Announcement = styled.div`
   }
 `
 
-const Announcements = ({ page = 'HOME' }) => {
+const AnnouncementsHero = styled.div`
+  display: flex;
+  width: 100%;
+  height: 80vh;
+  min-height: 64rem;
+  overflow: hidden;
+  border-radius: ${(props) => props.theme.border.radius};
+  margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+`
+
+const Announcements = ({ page = 'HOME', imageUrl }) => {
   const dispatch = useDispatch()
   const announcements = useSelector(selectAnnouncementsPage(page))
   const { settings, entities, loading, error } = announcements || {}
@@ -60,27 +88,40 @@ const Announcements = ({ page = 'HOME' }) => {
     dispatch(fetchAnnouncementPage(page))
   }, [dispatch, page])
 
-  if (!slides) return null
-
   return (
-    <>
-      {title ? (
-        <AccountSectionHeader title={title} style={{ marginBottom: 12 }} />
+    <AnnouncementsView>
+      {slides ? (
+        <>
+          {title ? (
+            <AnnouncementsTitle>
+              <Preface as="p">{title}</Preface>
+            </AnnouncementsTitle>
+          ) : null}
+          <AnnouncementsContainer>
+            {slides.map((slide) => {
+              return (
+                <Announcement key={slide.imageUrl}>
+                  <BackgroundImage {...slide}>
+                    <BackgroundContent {...slide} />
+                  </BackgroundImage>
+                </Announcement>
+              )
+            })}
+          </AnnouncementsContainer>
+        </>
+      ) : imageUrl ? (
+        <AnnouncementsHero>
+          <BackgroundImage imageUrl={imageUrl} />
+        </AnnouncementsHero>
       ) : null}
-      <AnnouncementsView>
-        {slides.map((slide) => {
-          return (
-            <Announcement key={slide.imageUrl}>
-              <BackgroundImage {...slide}>
-                <BackgroundContent {...slide} />
-              </BackgroundImage>
-            </Announcement>
-          )
-        })}
-      </AnnouncementsView>
-    </>
+    </AnnouncementsView>
   )
 }
 
 Announcements.displayName = 'Announcements'
+Announcements.propTypes = {
+  page: propTypes.string,
+  imageUrl: propTypes.string,
+}
+
 export default Announcements

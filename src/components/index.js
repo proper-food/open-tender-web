@@ -16,7 +16,6 @@ import Footer from './Footer'
 import FormSection from './FormSection'
 import Geolocation from './Geolocation'
 import GiftCard from './GiftCard'
-import Greeting from './Greeting'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import Header from './Header'
@@ -109,7 +108,6 @@ export {
   FormSection,
   Geolocation,
   GiftCard,
-  Greeting,
   GroupOrderLink,
   GroupOrderTime,
   Header,
