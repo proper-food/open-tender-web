@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": {
+      "3F56ZV8XUQ.opentender.app": {
+        "paths": [
+          "/qr/*"
+        ]
+      }
+    }
+  }
+}
