@@ -65,15 +65,12 @@ const OrderTypesLinks = styled('div')`
 
   button {
     display: block;
-    color: ${(props) => props.theme.colors.primary};
-    background-color: ${(props) => props.theme.bgColors.secondary};
-    border-color: ${(props) => props.theme.bgColors.secondary};
+    border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
 
     &:hover,
     &:active {
-      color: ${(props) => props.theme.colors.primary};
-      background-color: ${(props) => props.theme.bgColors.tertiary};
-      border-color: ${(props) => props.theme.bgColors.tertiary};
+      // border-color: ${(props) =>
+        props.theme.buttons.colors.largeHover.borderColor};
     }
   }
 
