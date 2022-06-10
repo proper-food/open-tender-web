@@ -4,12 +4,12 @@ import styled from '@emotion/styled'
 
 import { Reward } from '.'
 
-const RewardsView = styled('div')`
+const RewardsView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 
-const RewardsContainer = styled('div')`
+const RewardsContainer = styled.div`
   margin: -0.5rem;
   display: flex;
   flex-wrap: wrap;
@@ -22,7 +22,7 @@ const RewardsContainer = styled('div')`
   }
 `
 
-const RewardView = styled('div')`
+const RewardView = styled.div`
   width: 50%;
   padding: 0.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -32,6 +32,18 @@ const RewardView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 90%;
     padding: 1.5rem 1rem 1.5rem 0;
+  }
+
+  &:first-of-type {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding-left: ${(props) => props.theme.layout.paddingMobile};
+    }
+  }
+
+  &:last-of-type {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding-right: ${(props) => props.theme.layout.paddingMobile};
+    }
   }
 `
 

@@ -12,7 +12,6 @@ const AccountGreetingView = styled.div`
   align-items: center;
   margin: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
     margin: 2rem 0 0;
   }
 

@@ -78,6 +78,8 @@ import Reward from './Reward'
 import Rewards from './Rewards'
 import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
+import ScrollableSection from './ScrollableSection'
+import ScrollableSectionHeader from './ScrollableSectionHeader'
 import Section from './Section'
 import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
@@ -174,6 +176,8 @@ export {
   Rewards,
   Row,
   ScreenreaderTitle,
+  ScrollableSection,
+  ScrollableSectionHeader,
   Section,
   SectionHeader,
   SectionTitle,

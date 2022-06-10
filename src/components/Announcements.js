@@ -27,10 +27,9 @@ const makeSlides = (items) => {
 
 const AnnouncementsView = styled.div`
   label: AnnouncementsView;
-  margin: 4rem 0 0;
+  margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 3rem 0 0;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile} 0 0;
+    margin: 0;
   }
 `
 
@@ -56,9 +55,9 @@ const Announcement = styled.div`
   label: Announcement;
   display: flex;
   width: 100%;
-  border-radius: ${(props) => props.theme.border.radius};
-  overflow: hidden;
   height: 36rem;
+  overflow: hidden;
+  border-radius: ${(props) => props.theme.border.radius};
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 24rem;
@@ -66,17 +65,7 @@ const Announcement = styled.div`
   }
 `
 
-const AnnouncementsHero = styled.div`
-  display: flex;
-  width: 100%;
-  height: 80vh;
-  min-height: 64rem;
-  overflow: hidden;
-  border-radius: ${(props) => props.theme.border.radius};
-  margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
-`
-
-const Announcements = ({ page = 'HOME', imageUrl }) => {
+const Announcements = ({ page = 'HOME' }) => {
   const dispatch = useDispatch()
   const announcements = useSelector(selectAnnouncementsPage(page))
   const { settings, entities, loading, error } = announcements || {}
@@ -88,32 +77,26 @@ const Announcements = ({ page = 'HOME', imageUrl }) => {
     dispatch(fetchAnnouncementPage(page))
   }, [dispatch, page])
 
+  if (!slides) return null
+
   return (
     <AnnouncementsView>
-      {slides ? (
-        <>
-          {title ? (
-            <AnnouncementsTitle>
-              <Preface as="p">{title}</Preface>
-            </AnnouncementsTitle>
-          ) : null}
-          <AnnouncementsContainer>
-            {slides.map((slide) => {
-              return (
-                <Announcement key={slide.imageUrl}>
-                  <BackgroundImage {...slide}>
-                    <BackgroundContent {...slide} />
-                  </BackgroundImage>
-                </Announcement>
-              )
-            })}
-          </AnnouncementsContainer>
-        </>
-      ) : imageUrl ? (
-        <AnnouncementsHero>
-          <BackgroundImage imageUrl={imageUrl} />
-        </AnnouncementsHero>
+      {title ? (
+        <AnnouncementsTitle>
+          <Preface as="p">{title}</Preface>
+        </AnnouncementsTitle>
       ) : null}
+      <AnnouncementsContainer>
+        {slides.map((slide) => {
+          return (
+            <Announcement key={slide.imageUrl}>
+              <BackgroundImage {...slide}>
+                <BackgroundContent {...slide} />
+              </BackgroundImage>
+            </Announcement>
+          )
+        })}
+      </AnnouncementsContainer>
     </AnnouncementsView>
   )
 }
@@ -121,7 +104,6 @@ const Announcements = ({ page = 'HOME', imageUrl }) => {
 Announcements.displayName = 'Announcements'
 Announcements.propTypes = {
   page: propTypes.string,
-  imageUrl: propTypes.string,
 }
 
 export default Announcements

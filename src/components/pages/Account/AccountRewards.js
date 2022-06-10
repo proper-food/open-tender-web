@@ -8,9 +8,7 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { Rewards, Loading } from '../..'
-import AccountSection from './AccountSection'
-import AccountSectionHeader from './AccountSectionHeader'
+import { Reward, ScrollableSection } from '../..'
 
 const AccountRewards = () => {
   const dispatch = useDispatch()
@@ -20,7 +18,7 @@ const AccountRewards = () => {
   const rewards = useSelector(selectCustomerRewards)
   const { account: config } = useSelector(selectConfig)
   const { title } = config.rewards
-  const { entities, loading, error } = rewards
+  const { entities, error } = rewards
   const hasRewards = entities.length > 0 && !error
   const displayed = !isMobile ? entities.slice(0, 2) : entities
   const isMore = entities.length > displayed.length
@@ -34,16 +32,13 @@ const AccountRewards = () => {
   if (!hasRewards || !has_rewards) return null
 
   return (
-    <AccountSection>
-      {loading === 'pending' && !hasRewards ? (
-        <Loading text="Retrieving rewards..." />
-      ) : (
-        <>
-          <AccountSectionHeader title={title} to={isMore ? '/rewards' : null} />
-          <Rewards rewards={displayed} />
-        </>
-      )}
-    </AccountSection>
+    <ScrollableSection
+      title={title}
+      to={isMore ? '/rewards' : null}
+      items={displayed}
+      renderItem={Reward}
+      keyName="discount_id"
+    />
   )
 }
 

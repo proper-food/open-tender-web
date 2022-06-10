@@ -28,11 +28,12 @@ const HeaderView = styled('div')`
   border-bottom-width: 0.1rem;
   border-style: solid;
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
-  padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
+  padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: ${(props) =>
-      props.isMobile ? '0' : props.theme.layout.paddingMobile};
+    padding: 0
+      ${(props) =>
+        props.isMobile ? '0.5rem' : props.theme.layout.paddingMobile};
   }
 `
 

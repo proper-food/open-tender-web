@@ -31,7 +31,7 @@ const AccountView = styled.div`
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 

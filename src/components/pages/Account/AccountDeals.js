@@ -4,9 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { Rewards } from '../..'
-import AccountSection from './AccountSection'
-import AccountSectionHeader from './AccountSectionHeader'
+import { Reward, ScrollableSection } from '../..'
 
 const AccountDeals = () => {
   const dispatch = useDispatch()
@@ -27,10 +25,13 @@ const AccountDeals = () => {
   }, [has_deals, customer_id, dispatch])
 
   return hasDeals ? (
-    <AccountSection>
-      <AccountSectionHeader title={title} to={isMore ? '/deals' : null} />
-      <Rewards rewards={displayed} />
-    </AccountSection>
+    <ScrollableSection
+      title={title}
+      to={isMore ? '/deals' : null}
+      items={displayed}
+      renderItem={Reward}
+      keyName="discount_id"
+    />
   ) : null
 }
 

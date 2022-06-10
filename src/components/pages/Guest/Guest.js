@@ -8,7 +8,7 @@ import { selectCustomer } from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectContent } from '../../../slices'
 import { Background, Content, Header, HeaderLogo, Main } from '../..'
-import { Logout, NavMenu, OrderNow } from '../../buttons'
+import { AccountSettings, Logout, NavMenu, OrderNow } from '../../buttons'
 import PageTitle from '../../PageTitle'
 import GuestButtons from './GuestButtons'
 import Announcements from '../../Announcements'
@@ -50,7 +50,8 @@ const Guest = () => {
       <Content maxWidth="76.8rem">
         <Header
           maxWidth="76.8rem"
-          left={<HeaderLogo />}
+          left={<AccountSettings />}
+          title={<HeaderLogo />}
           right={
             <>
               <OrderNow />
