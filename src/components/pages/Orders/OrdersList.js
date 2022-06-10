@@ -12,28 +12,10 @@ const OrdersListView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 const OrdersListItem = styled('div')`
-    flex: 0 0 36rem;
-    max-width: 20%;
-    padding: 0 1rem;
-    margin: 0 0 2rem;
-
-    @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-      flex: 0 0 25%;
-      max-width: 25%;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      flex: 0 0 33.33333%;
-      max-width: 33.33333%;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-  }
+  width: 36rem;
+  max-width: 100%;
+  padding: 0 1rem;
+  margin: 0 0 2rem;
 `
 
 const OrdersList = ({ orders, isGroup = false }) => {

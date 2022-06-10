@@ -73,7 +73,7 @@ const Favorites = () => {
       <Content>
         <HeaderUser />
         <Main>
-          <PageContainer style={{ maxWidth: '100%' }}>
+          <PageContainer style={{ maxWidth: '114rem' }}>
             <PageTitle {...config} />
             <PageError error={error} />
             {items.length ? (

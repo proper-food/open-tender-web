@@ -25,6 +25,7 @@ import {
   PageTitle,
 } from '../..'
 import OrdersList from './OrdersList'
+import { isMobile } from 'react-device-detect'
 
 const ToggleView = styled('div')`
   text-align: center;
@@ -86,7 +87,7 @@ const Orders = () => {
       <Content>
         <HeaderUser />
         <Main>
-          <PageContainer style={{ maxWidth: '100%' }}>
+          <PageContainer style={{ maxWidth: '114rem' }}>
             <PageTitle {...config} />
             <PageError error={error} />
             {recentOrders.length ? (
@@ -94,12 +95,14 @@ const Orders = () => {
                 <ToggleView>
                   <ButtonToggleGroup>
                     <ButtonStyled
+                      size={isMobile ? 'small' : 'small'}
                       onClick={() => setToggle('orders')}
                       disabled={toggle === 'orders'}
                     >
                       Recent Orders
                     </ButtonStyled>
                     <ButtonStyled
+                      size={isMobile ? 'small' : 'small'}
                       onClick={() => setToggle('items')}
                       disabled={toggle === 'items'}
                     >
