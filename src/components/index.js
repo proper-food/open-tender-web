@@ -90,6 +90,7 @@ import Slider from './Slider'
 import SliderCards from './SliderCards'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
+import Welcome from './Welcome'
 
 export {
   Alerts,
@@ -188,4 +189,5 @@ export {
   SliderCards,
   Tag,
   VerifyAccount,
+  Welcome,
 }

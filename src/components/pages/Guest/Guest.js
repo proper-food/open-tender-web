@@ -7,11 +7,18 @@ import styled from '@emotion/styled'
 import { selectCustomer } from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectContent } from '../../../slices'
-import { Background, Content, Header, HeaderLogo, Main } from '../..'
-import { AccountSettings, Logout, NavMenu, OrderNow } from '../../buttons'
-import PageTitle from '../../PageTitle'
+import {
+  Announcements,
+  Background,
+  BackgroundImage,
+  Content,
+  Header,
+  HeaderLogo,
+  Main,
+  Welcome,
+} from '../..'
+import { AccountSettings, NavMenu, OrderNow } from '../../buttons'
 import GuestButtons from './GuestButtons'
-import Announcements from '../../Announcements'
 
 const GuestView = styled.div`
   flex: 1;
@@ -19,8 +26,15 @@ const GuestView = styled.div`
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    margin: 0 0 ${(props) => props.theme.layout.navHeight};
   }
+`
+
+const GuestHero = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `
 
 const Guest = () => {
@@ -61,13 +75,16 @@ const Guest = () => {
         />
         <Main>
           <GuestView>
-            <PageTitle
-              title={title}
-              subtitle={subtitle}
-              style={{ textAlign: 'left', width: '100%', maxWidth: '100%' }}
-            />
+            <Welcome title={title} subtitle={subtitle} />
             <GuestButtons />
-            {isMobile && <Announcements page="GUEST" imageUrl={mobile} />}
+            {isMobile && (
+              <>
+                <GuestHero>
+                  <BackgroundImage imageUrl={mobile} />
+                </GuestHero>
+                <Announcements page="GUEST" />
+              </>
+            )}
           </GuestView>
         </Main>
       </Content>
