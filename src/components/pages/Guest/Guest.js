@@ -1,30 +1,26 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isMobile } from 'react-device-detect'
+import { isMobile, isMobileOnly } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import {
-  selectCustomer,
-  selectDeals,
-  selectHasAnnouncementsPage,
-} from '@open-tender/redux'
+import { selectCustomer, selectHasAnnouncementsPage } from '@open-tender/redux'
 
-import { selectBrand, closeModal, selectContent } from '../../../slices'
+import { selectBrand, closeModal, selectContentSection } from '../../../slices'
 import {
   Announcements,
   Background,
   BackgroundImage,
   Content,
-  Deals,
   Header,
   HeaderLogo,
-  HtmlContent,
   Main,
   Welcome,
 } from '../..'
 import { AccountSettings, NavMenu, OrderNow } from '../../buttons'
 import GuestButtons from './GuestButtons'
+import GuestContent from './GuestContent'
+import GuestDeals from './GuestDeals'
 
 const GuestView = styled.div`
   flex: 1;
@@ -38,45 +34,38 @@ const GuestView = styled.div`
   }
 `
 
-const GuestContent = styled.div`
-  margin: 0 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 3rem;
-  }
-`
-
-// const GuestDeals = styled.div`
-//   margin: ${(props) => (props.addMargin ? '3rem 0 0' : '0')};
-//   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-//     margin: 0;
-//   }
-// `
-
 const GuestHero = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 16rem;
-  // margin: ${(props) => (props.addMargin ? '3rem 0 0' : '0')};
 `
-
-const checkContent = (content) => {
-  const hasContent = !!(content && content.length)
-  return !hasContent || content === '<p><br></p>' ? false : true
-}
 
 const Guest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
-  const { guest } = useSelector(selectContent)
-  const { title, subtitle, background, mobile, content, showGuest } = guest
-  const hasContent = checkContent(content)
+  const {
+    title,
+    subtitle,
+    background,
+    mobile,
+    content,
+    showGuest,
+    displayLogo,
+    displayLogoMobile,
+    displayed,
+  } = useSelector(selectContentSection('guest'))
   const { auth } = useSelector(selectCustomer)
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
-  const { entities } = useSelector(selectDeals)
-  const hasDeals = has_deals && entities.length
-  const showHero = hasAnnouncements || (hasDeals && hasContent) ? false : true
+  const sections = {
+    CONTENT: <GuestContent content={content} />,
+    DEALS: <GuestDeals has_deals={has_deals} />,
+  }
+  const displayedSectons = displayed ? displayed.map((i) => sections[i]) : null
+  const showHero =
+    !hasAnnouncements && displayedSectons.length <= 1 ? true : false
+  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
 
   useEffect(() => {
     dispatch(closeModal())
@@ -90,7 +79,7 @@ const Guest = () => {
     }
   }, [auth, showGuest, navigate])
 
-  if (auth) return null
+  if (auth || !showGuest) return null
 
   return (
     <>
@@ -102,7 +91,7 @@ const Guest = () => {
         <Header
           maxWidth="76.8rem"
           left={<AccountSettings />}
-          title={<HeaderLogo />}
+          title={showLogo ? <HeaderLogo /> : null}
           right={
             <>
               <OrderNow />
@@ -114,16 +103,11 @@ const Guest = () => {
           <GuestView showHero={showHero}>
             <Welcome title={title} subtitle={subtitle} />
             <GuestButtons />
-            {hasContent && (
-              <GuestContent>
-                <HtmlContent content={content} />
-              </GuestContent>
-            )}
-            <Deals />
+            {displayedSectons}
             {isMobile && (
               <>
                 {showHero && (
-                  <GuestHero addMargin={hasContent || hasDeals}>
+                  <GuestHero>
                     <BackgroundImage imageUrl={mobile} />
                   </GuestHero>
                 )}

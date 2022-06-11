@@ -237,15 +237,17 @@ const Reward = ({ item }) => {
                 </RewardDescription>
               )}
             </RewardContent>
-            <RewardExpiration>
-              {reward.end_date === today ? (
-                <p>Valid today only</p>
-              ) : reward.end_date ? (
-                <p>Use by {reward.expiration}</p>
-              ) : (
-                <p>Expires never!</p>
-              )}
-            </RewardExpiration>
+            {reward.end_date && (
+              <RewardExpiration>
+                {reward.end_date === today ? (
+                  <p>Valid today only</p>
+                ) : reward.end_date ? (
+                  <p>Use by {reward.expiration}</p>
+                ) : (
+                  <p>Expires never!</p>
+                )}
+              </RewardExpiration>
+            )}
           </div>
         </RewardDetails>
       </RewardView>

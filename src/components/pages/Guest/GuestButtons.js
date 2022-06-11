@@ -11,7 +11,8 @@ import { openModal } from '../../../slices'
 const GuestButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
+  // margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
+  margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     position: fixed;
     z-index: 10;

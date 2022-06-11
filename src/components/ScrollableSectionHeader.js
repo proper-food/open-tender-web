@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Preface } from '@open-tender/components'
+import { Heading } from '@open-tender/components'
 
 import iconMap from './iconMap'
 
@@ -10,10 +10,14 @@ const ScrollableSectionHeaderView = styled.div`
   margin: 0 0 1.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0;
+  }
+
+  p {
+    line-height: 1;
   }
 `
 
@@ -23,6 +27,7 @@ const ScrollableSectionTitle = styled.div`
 
 const ScrollableSectionLink = styled.div`
   p {
+    line-height: 1;
     font-size: ${(props) => props.theme.fonts.sizes.small};
 
     a {
@@ -46,7 +51,7 @@ const ScrollableSectionLink = styled.div`
 const ScrollableSectionHeader = ({ title, to, style }) => (
   <ScrollableSectionHeaderView style={style}>
     <ScrollableSectionTitle>
-      <Preface as="p">{title}</Preface>
+      <Heading as="p">{title}</Heading>
     </ScrollableSectionTitle>
     {to && (
       <ScrollableSectionLink>
