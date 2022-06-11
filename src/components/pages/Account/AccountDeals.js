@@ -1,39 +1,39 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { isMobile } from 'react-device-detect'
-import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
+import { useEffect, useState } from 'react'
+import propTypes from 'prop-types'
+import styled from '@emotion/styled'
+import { useSelector } from 'react-redux'
+import { selectDeals } from '@open-tender/redux'
 
-import { selectBrand, selectConfig } from '../../../slices'
-import { Reward, ScrollableSection } from '../..'
+import { Deals } from '../..'
 
-const AccountDeals = () => {
-  const dispatch = useDispatch()
-  const { has_deals } = useSelector(selectBrand)
-  const { account: config } = useSelector(selectConfig)
-  const { title } = config.deals
-  const { profile } = useSelector(selectCustomer)
-  const { entities } = useSelector(selectDeals)
-  const { customer_id } = profile || {}
-  const displayed = !isMobile ? entities.slice(0, 2) : entities
-  const isMore = entities.length > displayed.length
-  const hasDeals = has_deals && displayed.length
+const AccountDealsView = styled.div`
+  padding: 0 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 2rem;
+  }
+`
+
+const AccountDeals = ({ has_deals }) => {
+  const [hasFetched, setHasFetched] = useState(false)
+  const { entities, loading } = useSelector(selectDeals)
+  const hasDeals = !hasFetched || entities.length
 
   useEffect(() => {
-    if (has_deals) {
-      dispatch(fetchDeals())
-    }
-  }, [has_deals, customer_id, dispatch])
+    if (loading === 'pending') setHasFetched(true)
+  }, [loading])
 
-  return hasDeals ? (
-    <ScrollableSection
-      title={title}
-      to={isMore ? '/deals' : null}
-      items={displayed}
-      renderItem={Reward}
-      keyName="discount_id"
-    />
-  ) : null
+  if (!has_deals || !hasDeals) return null
+
+  return (
+    <AccountDealsView>
+      <Deals />
+    </AccountDealsView>
+  )
 }
 
 AccountDeals.displayName = 'AccountDeals'
+AccountDeals.propTypes = {
+  has_deals: propTypes.bool,
+}
+
 export default AccountDeals

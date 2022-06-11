@@ -24,7 +24,9 @@ const Deals = () => {
     }
   }, [has_deals, customer_id, dispatch])
 
-  return hasDeals ? (
+  if (!hasDeals) return null
+
+  return (
     <ScrollableSection
       title={title}
       to={isMore ? '/deals' : null}
@@ -32,7 +34,7 @@ const Deals = () => {
       renderItem={Reward}
       keyName="discount_id"
     />
-  ) : null
+  )
 }
 
 Deals.displayName = 'Deals'

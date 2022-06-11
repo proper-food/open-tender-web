@@ -9,7 +9,7 @@ import { Deals } from '../..'
 const GuestDealsView = styled.div`
   padding: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 3rem;
+    padding: 0 0 2rem;
   }
 `
 
