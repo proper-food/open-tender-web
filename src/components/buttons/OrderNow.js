@@ -10,7 +10,7 @@ import {
   selectCartQuantity,
 } from '@open-tender/redux'
 import { getLastOrder } from '@open-tender/js'
-import { ButtonStyled, ButtonIcon } from '@open-tender/components'
+import { ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
@@ -51,12 +51,7 @@ const OrderNowCount = styled('div')`
   }
 `
 
-const OrderNow = ({
-  text = 'Order Now',
-  icon = iconMap.ShoppingBag,
-  color = 'primary',
-  size = 'small',
-}) => {
+const OrderNow = ({ text = 'Order Now', icon = iconMap.ShoppingBag }) => {
   const navigate = useNavigate()
   // const { auth } = useSelector(selectCustomer)
   const { pathname } = useLocation()
@@ -95,8 +90,6 @@ OrderNow.displayName = 'OrderNow'
 OrderNow.propTypes = {
   text: propTypes.string,
   icon: propTypes.element,
-  color: propTypes.string,
-  size: propTypes.string,
 }
 
 export default OrderNow

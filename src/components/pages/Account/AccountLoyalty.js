@@ -16,18 +16,17 @@ const AccountLoyaltView = styled.div`
 
 const AccountLoyalty = () => {
   const { has_loyalty, has_thanx, has_levelup } = useSelector(selectBrand)
+  const loyalty = has_loyalty ? (
+    <AccountLoyaltyProgram />
+  ) : has_thanx ? (
+    <ThanxLoyalty />
+  ) : has_levelup ? (
+    <LevelUpLoyalty />
+  ) : null
 
-  return (
-    <AccountLoyaltView>
-      {has_loyalty ? (
-        <AccountLoyaltyProgram />
-      ) : has_thanx ? (
-        <ThanxLoyalty />
-      ) : has_levelup ? (
-        <LevelUpLoyalty />
-      ) : null}
-    </AccountLoyaltView>
-  )
+  if (!loyalty) return null
+
+  return <AccountLoyaltView>{loyalty}</AccountLoyaltView>
 }
 
 AccountLoyalty.displayName = 'AccountLoyalty'
