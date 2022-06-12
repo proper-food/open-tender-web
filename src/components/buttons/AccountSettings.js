@@ -24,7 +24,6 @@ const AccountSettings = ({ text = 'Settings', icon = iconMap.User }) => {
   return (
     <ButtonIcon
       label={text}
-      color="heading"
       size={isBrowser ? 22 : 18}
       style={isBrowser ? { width: '2.6rem' } : {}}
       onClick={auth ? goToSettings : login}

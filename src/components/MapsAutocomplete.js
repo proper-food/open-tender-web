@@ -18,7 +18,7 @@ const MapsAutocompleteView = styled('div')`
   background-color: ${(props) => props.theme.bgColors.primary};
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;

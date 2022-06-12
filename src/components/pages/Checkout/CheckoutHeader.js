@@ -19,8 +19,11 @@ const CheckoutHeaderView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: ${(props) =>
-      props.isMobile ? '0' : props.theme.layout.paddingMobile};
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+
+  button {
+    color: ${(props) => props.theme.colors.primary};
   }
 `
 
@@ -36,9 +39,7 @@ const CheckoutHeader = () => {
       right={<Cart />}
     />
   ) : (
-    <CheckoutHeaderView isMobile={isMobile}>
-      {cartId ? <Reopen /> : <Menu />}
-    </CheckoutHeaderView>
+    <CheckoutHeaderView>{cartId ? <Reopen /> : <Menu />}</CheckoutHeaderView>
   )
 }
 

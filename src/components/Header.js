@@ -28,7 +28,8 @@ const HeaderView = styled('div')`
   border: 0;
   border-bottom-width: 0.1rem;
   border-style: solid;
-  border-color: ${(props) => props.theme.bgColors[props.borderColor]};
+  border-color: ${(props) =>
+    props.theme.header[props.stuck ? 'stuck' : 'primary']};
   padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
@@ -62,8 +63,8 @@ const HeaderTitle = styled('div')`
     text-transform: ${(props) => props.theme.fonts.headings.textTransform};
     -webkit-font-smoothing: ${(props) =>
       props.theme.fonts.headings.fontSmoothing};
-    color: ${(props) => props.theme.fonts.headings.color};
     font-size: ${(props) => props.theme.fonts.sizes.big};
+    color: ${(props) => props.theme.buttons.colors.header.color};
   }
 `
 

@@ -32,6 +32,7 @@ const MenuHeaderTitleServiceType = styled(Preface)`
   line-height: 1;
   margin: 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  color: ${(props) => props.theme.buttons.colors.header.color};
 `
 
 const MenuHeaderTitleRevenueCenter = styled('button')`
@@ -40,10 +41,11 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   justify-content: center;
   align-items: center;
   margin: 0.4rem 0 0;
-  // font-size: ${(props) => props.theme.fonts.sizes.big};
+  color: ${(props) => props.theme.buttons.colors.header.color};
 
   > span {
     display: inline-block;
+    color: ${(props) => props.theme.buttons.colors.header.color};
 
     // &:first-of-type {
     //   margin: 0.3rem 0.4rem 0 0;
@@ -55,7 +57,6 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
       margin: 0.2rem 0 0 0.5rem;
       width: 1.6rem;
       height: 1.6rem;
-      color: ${(props) => props.theme.fonts.headings.color};
     }
   }
 `
@@ -65,6 +66,10 @@ const MenuHeaderName = styled('span')`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  span {
+    color: ${(props) => props.theme.buttons.colors.header.color};
+  }
 `
 
 const MenuHeaderTitle = ({
@@ -172,7 +177,7 @@ const MenuHeader = ({
           ) : (
             <>
               <Allergens />
-              <NavMenu />
+              {/* <NavMenu /> */}
             </>
           )}
         </>

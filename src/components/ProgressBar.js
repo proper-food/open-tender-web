@@ -108,8 +108,6 @@ const ProgressAmount = styled('div')`
 const ProgressBar = ({ progress, tiers = [] }) => {
   const dispatch = useDispatch()
   const style = { width: `${progress || 0}%` }
-  console.log(progress)
-  console.log(tiers)
 
   const showTier = (evt, tier) => {
     evt.preventDefault()
