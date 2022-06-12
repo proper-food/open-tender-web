@@ -27,7 +27,10 @@ const ProgressPoint = styled('div')`
   width: 2rem;
   height: 2rem;
   border-radius: 1rem;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) =>
+    props.isFilled
+      ? props.theme.colors.primary
+      : props.theme.bgColors.tertiary};
 `
 
 const ProgressPointContainer = styled('div')`
@@ -105,6 +108,8 @@ const ProgressAmount = styled('div')`
 const ProgressBar = ({ progress, tiers = [] }) => {
   const dispatch = useDispatch()
   const style = { width: `${progress || 0}%` }
+  console.log(progress)
+  console.log(tiers)
 
   const showTier = (evt, tier) => {
     evt.preventDefault()
@@ -119,9 +124,9 @@ const ProgressBar = ({ progress, tiers = [] }) => {
       {tiers.map((tier) => (
         <ProgressPoint
           key={tier.percentage}
+          isFilled={progress > tier.percentage}
           style={{
             left: `${tier.percentage.toFixed(5)}%`,
-            backgroundColor: tier.color,
           }}
         >
           <ProgressPointContainer>

@@ -13,16 +13,15 @@ import { Preface, Heading } from '@open-tender/components'
 
 import { Header } from '../..'
 import {
-  Account,
+  AccountHome,
   Allergens,
   CancelEdit,
   GroupGuest,
   GroupOrder,
   LeaveGroup,
-  Locations,
+  NavMenu,
   Points,
   RequestedAt,
-  // OrderTime,
   RevenueCenter,
   ServiceType,
 } from '../../buttons'
@@ -41,16 +40,16 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   justify-content: center;
   align-items: center;
   margin: 0.4rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  // font-size: ${(props) => props.theme.fonts.sizes.big};
 
   > span {
     display: inline-block;
 
-    &:first-of-type {
-      margin: 0.3rem 0.4rem 0 0;
-      width: 1.6rem;
-      height: 1.6rem;
-    }
+    // &:first-of-type {
+    //   margin: 0.3rem 0.4rem 0 0;
+    //   width: 1.6rem;
+    //   height: 1.6rem;
+    // }
 
     &:last-of-type {
       margin: 0.2rem 0 0 0.5rem;
@@ -123,7 +122,6 @@ const MenuHeader = ({
   const { auth } = useSelector(selectCustomer)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
-  const left = cartGuest ? <LeaveGroup /> : <Locations />
 
   return (
     <Header
@@ -139,7 +137,16 @@ const MenuHeader = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={showMenu ? 'secondary' : borderColor}
-      left={left}
+      left={
+        cartGuest ? (
+          <LeaveGroup />
+        ) : (
+          <>
+            <AccountHome />
+            {/* {isBrowser && <Locations />} */}
+          </>
+        )
+      }
       right={
         <>
           {isBrowser ? (
@@ -151,19 +158,22 @@ const MenuHeader = ({
                 </>
               ) : (
                 <>
-                  {auth ? <Points /> : <Account />}
                   <RevenueCenter />
                   <ServiceType />
                   <RequestedAt />
-                  {/* <OrderTime /> */}
                   <Allergens />
                   <GroupOrder />
                   <CancelEdit />
+                  {auth ? <Points /> : null}
+                  <NavMenu />
                 </>
               )}
             </>
           ) : (
-            <Allergens />
+            <>
+              <Allergens />
+              <NavMenu />
+            </>
           )}
         </>
       }

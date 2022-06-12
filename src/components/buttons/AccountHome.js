@@ -12,7 +12,7 @@ const AccountHome = () => {
       label="Home"
       onClick={() => navigate('/account')}
       size={isBrowser ? 22 : 20}
-      style={isBrowser ? { width: '2.6rem' } : {}}
+      style={isBrowser ? { width: '2.6rem', marginRight: '1.5rem' } : {}}
     >
       {iconMap.Home}
     </ButtonIcon>

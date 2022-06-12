@@ -157,6 +157,13 @@ const NavItem = styled('button')`
   span {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
+
+  &:hover {
+    color: ${(props) => props.theme.links.primary.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.fonts.headings.color};
+    }
+  }
 `
 
 const NavIcon = styled('span')`

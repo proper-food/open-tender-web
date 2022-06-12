@@ -170,7 +170,7 @@ const LocationsAutocomplete = ({
           <ButtonStyled
             onClick={order}
             size="small"
-            color="cart"
+            color="primary"
             disabled={!address || !locSt}
           >
             Go

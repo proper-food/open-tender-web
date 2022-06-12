@@ -16,7 +16,11 @@ const NavMenu = ({ color }) => {
       label={auth ? 'Account Navigation' : 'Login'}
       color={color}
       size={isBrowser ? 24 : 20}
-      style={isBrowser ? { width: '2.6rem' } : {}}
+      style={
+        isBrowser
+          ? { width: '2.6rem', marginTop: '0.2rem' }
+          : { marginTop: '0' }
+      }
       onClick={() => dispatch(toggleNav())}
     >
       {iconMap.Menu}

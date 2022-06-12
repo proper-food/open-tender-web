@@ -21,7 +21,10 @@ const GroupOrderGuest = () => {
       title="Start a group order"
       footer={
         <div>
-          <ButtonStyled onClick={() => dispatch(closeModal())}>
+          <ButtonStyled
+            color="secondary"
+            onClick={() => dispatch(closeModal())}
+          >
             Nevermind
           </ButtonStyled>
         </div>
@@ -33,7 +36,7 @@ const GroupOrderGuest = () => {
           <ButtonStyled
             icon={iconMap.User}
             onClick={() => login('login')}
-            color="cart"
+            color="primary"
           >
             Click here to login
           </ButtonStyled>

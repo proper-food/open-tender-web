@@ -16,6 +16,7 @@ import iconMap from '../iconMap'
 
 const OrderNowIcon = styled('div')`
   position: relative;
+  margin: 0 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 -0.5rem 0 0.5rem;
   }
@@ -24,20 +25,17 @@ const OrderNowIcon = styled('div')`
 const OrderNowCount = styled('div')`
   position: absolute;
   z-index: 1;
-  top: -0.3rem;
-  right: -0.2rem;
+  top: 0.1rem;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 1.3rem;
+  min-width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 1.2rem;
   padding-bottom: 0.1rem;
-  border-width: 0.2rem;
-  border-style: solid;
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors.alert};
-  border-color: ${(props) => props.theme.colors.light};
   font-weight: ${(props) => props.theme.boldWeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -46,8 +44,7 @@ const OrderNowCount = styled('div')`
     min-width: 1.9rem;
     height: 1.9rem;
     border-radius: 1rem;
-    font-size: 1rem;
-    border: 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
@@ -78,7 +75,7 @@ const OrderNow = ({ text = 'Order Now', icon = iconMap.ShoppingBag }) => {
       <ButtonIcon
         label={isCurrentOrder ? 'Continue Order' : text}
         onClick={order}
-        size={isBrowser ? 26 : 20}
+        size={isBrowser ? 24 : 20}
       >
         {icon}
       </ButtonIcon>

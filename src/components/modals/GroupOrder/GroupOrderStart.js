@@ -96,12 +96,14 @@ const GroupOrderStart = () => {
           <ButtonStyled
             icon={iconMap.Users}
             onClick={start}
-            color="cart"
+            color="primary"
             disabled={isLoading}
           >
             {isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
           </ButtonStyled>
-          <ButtonStyled onClick={cancel}>Nevermind</ButtonStyled>
+          <ButtonStyled color="secondary" onClick={cancel}>
+            Nevermind
+          </ButtonStyled>
         </div>
       }
     >

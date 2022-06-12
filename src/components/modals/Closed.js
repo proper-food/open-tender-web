@@ -41,7 +41,7 @@ const Closed = ({ status, isCancel }) => {
         title={statusMsg.title}
         footer={
           <div>
-            <ButtonStyled onClick={changeLocation} color="cart">
+            <ButtonStyled onClick={changeLocation} color="primary">
               Change Location
             </ButtonStyled>
             {isCancel ? (

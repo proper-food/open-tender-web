@@ -72,7 +72,7 @@ const Points = () => {
             <p>{points.name} can be applied to eligible items at checkout.</p>
           </PointsContent>
           <div>
-            <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
+            <ButtonStyled onClick={() => dispatch(closeModal())}>
               Close
             </ButtonStyled>
           </div>

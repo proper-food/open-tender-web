@@ -203,7 +203,11 @@ const Reward = ({ reward }) => {
                   </Message>
                 )}
                 <p>
-                  <ButtonStyled color="cart" onClick={scan} disabled={fetching}>
+                  <ButtonStyled
+                    color="primary"
+                    onClick={scan}
+                    disabled={fetching}
+                  >
                     {fetching ? 'Retrieving QR Code' : 'Scan In-store'}
                   </ButtonStyled>
                 </p>
