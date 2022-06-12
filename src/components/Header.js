@@ -21,7 +21,8 @@ const HeaderView = styled('div')`
   justify-content: space-between;
   align-items: center;
   transition: all 0.25s ease;
-  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
+  background-color: ${(props) =>
+    props.theme.header[props.stuck ? 'stuck' : 'primary']};
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
   border: 0;

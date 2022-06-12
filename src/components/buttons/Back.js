@@ -1,27 +1,27 @@
-import React from 'react'
 import propTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
-import { ButtonStyled, ButtonIcon } from '@open-tender/components'
+import { ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const Back = ({ icon = iconMap.ArrowLeft, text = 'Back', onClick, color }) => {
-  return isBrowser ? (
-    <ButtonStyled onClick={onClick} icon={icon} color="header" size="header">
-      {text}
-    </ButtonStyled>
-  ) : (
-    <ButtonIcon label={text} color={color} onClick={onClick}>
-      {icon}
+const Back = ({ path = '/order-type' }) => {
+  const navigate = useNavigate()
+  return (
+    <ButtonIcon
+      label="Order Type"
+      onClick={() => navigate(path)}
+      size={isBrowser ? 24 : 20}
+      style={isBrowser ? { width: '2.4rem' } : {}}
+    >
+      {iconMap.ArrowLeft}
     </ButtonIcon>
   )
 }
 
 Back.displayName = 'Back'
 Back.propTypes = {
-  text: propTypes.string,
-  classes: propTypes.string,
-  icon: propTypes.element,
+  path: propTypes.string,
 }
 
 export default Back

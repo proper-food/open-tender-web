@@ -27,13 +27,7 @@ import {
   ScreenreaderTitle,
 } from '../..'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import {
-  Account,
-  Back,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-} from '../../buttons'
+import { Back, NavMenu } from '../../buttons'
 
 const RevenueCenters = () => {
   const navigate = useNavigate()
@@ -107,26 +101,12 @@ const RevenueCenters = () => {
           style={{ boxShadow: 'none' }}
           left={
             orderType === 'CATERING' ? (
-              <Back
-                text="Catering"
-                onClick={() => navigate('/catering-address')}
-              />
+              <Back path="/catering-address" />
             ) : (
-              <Back text="Order Type" onClick={() => navigate('/order-type')} />
+              <Back />
             )
           }
-          right={
-            isMobile ? (
-              <Account />
-            ) : (
-              <>
-                {/* <Account /> */}
-                <RevenueCenter />
-                <ServiceType />
-                <RequestedAt />
-              </>
-            )
-          }
+          right={<NavMenu />}
         />
         <Main>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>

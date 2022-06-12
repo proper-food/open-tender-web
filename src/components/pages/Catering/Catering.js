@@ -12,26 +12,27 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
-import { selectBrand, selectContent } from '../../../slices'
+import { selectBrand, selectCateringOnly, selectContent } from '../../../slices'
 import iconMap from '../../iconMap'
 import {
   Background,
   Content,
   Header,
+  HeaderGuest,
+  HtmlContent,
   Main,
   PageTitle,
   ScreenreaderTitle,
 } from '../..'
-import { Account, StartOver } from '../../buttons'
+import { NavMenu, OrderType } from '../../buttons'
 import CateringAutocomplete from './CateringAutocomplete'
 
 const CateringView = styled.div`
-  padding: ${(props) => props.theme.layout.padding};
-`
-
-const CateringTitle = styled.div`
-  & > div {
-    text-align: left;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
@@ -60,31 +61,10 @@ const CateringButtons = styled.div`
   }
 `
 
-const CateringPolicy = styled.div`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  position: relative;
-  z-index: 1;
-  margin: 2.5rem 0;
-  line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
-    text-align: center;
-  }
-
-  p {
-    margin: 0.5em 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
+const CateingContent = styled.div`
+  margin: ${(props) => props.theme.layout.margin} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
@@ -96,27 +76,14 @@ const CateringStartOver = styled.div`
   }
 `
 
-// const CateringContentSection = ({ policy }) => {
-//   return (
-//     <CateringPolicy>
-//       {policy.title && <h2>{policy.title}</h2>}
-//       {/* {policy.subtitle && <p>{policy.subtitle}</p>} */}
-//       {policy.content.length > 0 && (
-//         <div>
-//           {policy.content.map((i, index) => (
-//             <p key={index}>{i}</p>
-//           ))}
-//         </div>
-//       )}
-//     </CateringPolicy>
-//   )
-// }
-
 const CateringPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { catering: config } = useSelector(selectContent)
+  const cateringOnly = useSelector(selectCateringOnly)
+  const { catering: config, guest } = useSelector(selectContent)
+  const { showGuest } = guest || {}
+  const showGuestHeader = !showGuest && cateringOnly
   const { title, subtitle, background, content } = config
   const { orderType, address } = useSelector(selectOrder)
   const hasContent = !!(content && content.length)
@@ -145,22 +112,24 @@ const CateringPage = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
-        <Header
-          maxWidth="76.8rem"
-          title={isMobile ? 'Order Catering' : null}
-          left={<StartOver />}
-          right={<Account />}
-        />
+        {showGuestHeader ? (
+          <HeaderGuest />
+        ) : (
+          <Header
+            maxWidth="76.8rem"
+            title={isMobile ? 'Order Catering' : null}
+            left={<OrderType />}
+            right={<NavMenu />}
+          />
+        )}
         <Main>
           <ScreenreaderTitle>Catering</ScreenreaderTitle>
           <CateringView>
-            <CateringTitle>
-              <PageTitle
-                title={title}
-                subtitle={subtitle}
-                style={{ maxWidth: '100%' }}
-              />
-            </CateringTitle>
+            <PageTitle
+              title={title}
+              subtitle={subtitle}
+              style={{ textAlign: 'left', maxWidth: '100%' }}
+            />
             {hasCatering ? (
               <CateringContent>
                 <CateringAutocomplete />
@@ -198,9 +167,10 @@ const CateringPage = () => {
               </CateringError>
             )}
             {hasContent && (
-              <CateringPolicy dangerouslySetInnerHTML={{ __html: content }} />
+              <CateingContent>
+                <HtmlContent content={content} />
+              </CateingContent>
             )}
-            {/* <CateringContentSection policy={policy} /> */}
           </CateringView>
         </Main>
       </Content>

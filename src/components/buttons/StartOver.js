@@ -4,11 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-// import {
-//   selectCustomer,
-//   resetOrderType,
-//   resetCheckout,
-// } from '@open-tender/redux'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
@@ -33,14 +28,10 @@ const StartOver = ({
   color,
 }) => {
   const navigate = useNavigate()
-  // const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
-  // const { auth } = useSelector(selectCustomer)
   const logoUrl = isBrowser ? brand.logo : brand.logoLight
 
   const startOver = () => {
-    // if (!auth) dispatch(resetOrderType())
-    // dispatch(resetCheckout())
     navigate(`/order-type`)
   }
 

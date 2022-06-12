@@ -4,21 +4,21 @@ import { ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const AccountHome = () => {
+const OrderType = () => {
   const navigate = useNavigate()
 
   return (
     <ButtonIcon
-      label="Home"
-      onClick={() => navigate('/account')}
-      size={isBrowser ? 22 : 20}
-      style={isBrowser ? { width: '2.6rem' } : {}}
+      label="Order Type"
+      onClick={() => navigate('/order-type')}
+      size={isBrowser ? 24 : 20}
+      style={isBrowser ? { width: '2.4rem' } : {}}
     >
-      {iconMap.Home}
+      {iconMap.ArrowLeft}
     </ButtonIcon>
   )
 }
 
-AccountHome.displayName = 'AccountHome'
+OrderType.displayName = 'OrderType'
 
-export default AccountHome
+export default OrderType

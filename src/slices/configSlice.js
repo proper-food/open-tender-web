@@ -105,21 +105,34 @@ export const selectApi = (state) => state.config.api
 
 export const selectContentSection = (page) => (state) =>
   state.config.content[page]
+
+export const selectCateringOnly = (state) => {
+  const { orderTypes } = state.config.settings
+  return !!(orderTypes.includes('CATERING') && orderTypes.length === 1)
+}
+
 export const selectAccountConfig = (state) => state.config.content.account
+
 export const selectOutpostName = (state) =>
   capitalize(state.config.settings.locationName.OUTPOST[0])
+
 export const selectDisplaySettings = (state) => {
   const orderType = state.data.order.orderType || 'OLO'
   return state.config.settings.displaySettings[orderType]
 }
+
 export const selectConfigRetries = (state) => state.config.retries
+
 export const selectLightColor = (state) =>
   state.theme ? state.theme.colors.light : '#ffffff'
+
 export const selectOptIns = (state) => {
   const { accepts_marketing, order_notifications } = state.config.brand
   return { accepts_marketing, order_notifications }
 }
+
 export const selectFulfillment = (state) => state.config.brand.fulfillment
+
 export const selectRecaptcha = (state) => state.config.settings.recaptcha
 
 export const selectHeaderHeight = (state) => {

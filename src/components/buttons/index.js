@@ -18,6 +18,7 @@ import Menu from './Menu'
 import NavMenu from './NavMenu'
 import OrderNow from './OrderNow'
 import OrderTime from './OrderTime'
+import OrderType from './OrderType'
 import Points from './Points'
 import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
@@ -46,6 +47,7 @@ export {
   NavMenu,
   OrderNow,
   OrderTime,
+  OrderType,
   Points,
   Reopen,
   RequestedAt,

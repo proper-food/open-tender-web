@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { isMobileOnly } from 'react-device-detect'
 import Helmet from 'react-helmet'
 // import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
-import { selectContent, closeModal, selectBrand } from '../../../slices'
-import { AccountHome, AccountSettings, NavMenu } from '../../buttons'
+import {
+  selectContent,
+  closeModal,
+  selectBrand,
+  selectCateringOnly,
+} from '../../../slices'
+import { AccountHome, NavMenu } from '../../buttons'
 import {
   Background,
   Content,
   Geolocation,
   Header,
-  HeaderLogo,
   HtmlContent,
   Main,
   PageTitle,
 } from '../..'
 import OrderTypes from './OrderTypes'
+import HeaderGuest from '../../HeaderGuest'
 
 const OrderTypeView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};
@@ -37,10 +42,11 @@ const OrderTypeContent = styled('div')`
 
 const OrderType = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
+  const cateringOnly = useSelector(selectCateringOnly)
   const { orderType, guest } = useSelector(selectContent)
-  const { showGuest, displayLogo, displayLogoMobile } = guest || {}
-  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
+  const { showGuest } = guest || {}
   const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
   // const announcements = useSelector(selectAnnouncements)
@@ -48,6 +54,10 @@ const OrderType = () => {
   useEffect(() => {
     dispatch(closeModal())
   }, [dispatch])
+
+  useEffect(() => {
+    if (cateringOnly) navigate('/catering-address')
+  }, [cateringOnly, navigate])
 
   // useEffect(() => {
   //   dispatch(fetchAnnouncementPage('ORDER_TYPE'))
@@ -60,12 +70,15 @@ const OrderType = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
-        <Header
-          maxWidth="76.8rem"
-          title={!showGuest && showLogo ? <HeaderLogo /> : null}
-          left={showGuest ? <AccountHome /> : <AccountSettings />}
-          right={<NavMenu />}
-        />
+        {showGuest ? (
+          <Header
+            maxWidth="76.8rem"
+            left={<AccountHome />}
+            right={<NavMenu />}
+          />
+        ) : (
+          <HeaderGuest />
+        )}
         <Main>
           <Geolocation />
           <OrderTypeView>

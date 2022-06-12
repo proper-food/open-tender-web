@@ -38,7 +38,8 @@ const GuestHero = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 16rem;
+  overflow: hidden;
+  border-radius: ${(props) => props.theme.border.radius};
 `
 
 const Guest = () => {

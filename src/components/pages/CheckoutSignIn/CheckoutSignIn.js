@@ -12,7 +12,7 @@ import Helmet from 'react-helmet'
 
 import { selectBrand, selectContent } from '../../../slices'
 import { Content, Header, Main, PageContainer, PageTitle } from '../..'
-import { Back } from '../../buttons'
+import { Back, NavMenu } from '../../buttons'
 
 const defaultText = {
   title: 'Sign into your account',
@@ -50,7 +50,7 @@ const CheckoutSignIn = () => {
         <title>Checkout Sign In | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header left={<Back text="Change Email" onClick={changeEmail} />} />
+        <Header left={<Back path="/checkout/guest" />} right={<NavMenu />} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config}>

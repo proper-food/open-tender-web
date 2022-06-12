@@ -6,10 +6,11 @@ const HtmlContentView = styled.div`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 
   p {
-    margin: 0.5em 0;
+    margin: 1em 0;
     line-height: ${(props) => props.theme.lineHeight};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
+      margin: 1em 0;
     }
 
     &:first-of-type {
@@ -18,6 +19,18 @@ const HtmlContentView = styled.div`
 
     &:last-of-type {
       margin-bottom: 0;
+    }
+  }
+
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
+    margin: 1em 0 0 !important;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 1em 0 0 !important;
     }
   }
 `

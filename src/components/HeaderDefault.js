@@ -1,37 +1,18 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { selectCustomer } from '@open-tender/redux'
 
 import { Header } from '.'
-import { Account, AccountHome, Logout } from './buttons'
-import { useSelector } from 'react-redux'
+import { AccountHome, NavMenu } from './buttons'
 
-const HeaderDefault = ({
-  maxWidth = '100%',
-  title,
-  bgColor = 'primary',
-  borderColor = 'primary',
-}) => {
-  const { auth } = useSelector(selectCustomer)
-
+const HeaderDefault = ({ maxWidth = '100%' }) => {
   return (
-    <Header
-      title={title}
-      maxWidth={maxWidth}
-      bgColor={bgColor}
-      borderColor={borderColor}
-      left={<AccountHome />}
-      right={auth ? <Logout /> : <Account />}
-    />
+    <Header maxWidth={maxWidth} left={<AccountHome />} right={<NavMenu />} />
   )
 }
 
 HeaderDefault.displayName = 'HeaderDefault'
 HeaderDefault.propTypes = {
   maxWidth: propTypes.string,
-  title: propTypes.string,
-  bgColor: propTypes.string,
-  borderColor: propTypes.string,
 }
 
 export default HeaderDefault

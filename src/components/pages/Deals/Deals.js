@@ -3,13 +3,13 @@ import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
-  Header,
+  HeaderUser,
   Loading,
   Main,
   PageContainer,
@@ -19,8 +19,6 @@ import {
   Rewards,
   Reward,
 } from '../..'
-import { AccountHome, Logout, OrderNow } from '../../buttons'
-import AccountTabs from '../Account/AccountTabs'
 
 const DealsView = styled.div`
   opacity: 0;
@@ -63,22 +61,7 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        <Header
-          left={<AccountHome />}
-          right={
-            isBrowser ? (
-              <>
-                <AccountTabs />
-                <OrderNow />
-              </>
-            ) : (
-              <>
-                <OrderNow />
-                <Logout />
-              </>
-            )
-          }
-        />
+        <HeaderUser />
         <Main>
           <PageContainer>
             <PageTitle {...config} />

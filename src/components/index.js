@@ -20,9 +20,9 @@ import GiftCard from './GiftCard'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import Header from './Header'
-import HeaderAccount from './HeaderAccount'
 import HeaderCheckout from './HeaderCheckout'
 import HeaderDefault from './HeaderDefault'
+import HeaderGuest from './HeaderGuest'
 import HeaderLogo from './HeaderLogo'
 import HeaderSite from './HeaderSite'
 import HeaderUser from './HeaderUser'
@@ -117,9 +117,9 @@ export {
   GroupOrderLink,
   GroupOrderTime,
   Header,
-  HeaderAccount,
   HeaderCheckout,
   HeaderDefault,
+  HeaderGuest,
   HeaderLogo,
   HeaderSite,
   HeaderUser,
