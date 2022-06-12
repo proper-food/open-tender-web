@@ -11,7 +11,7 @@ const AccountHome = () => {
 
   return (
     <ButtonIcon
-      label={'Home'}
+      label="Home"
       onClick={() => navigate('/account')}
       size={isBrowser ? 22 : 20}
       style={isBrowser ? { width: '2.6rem' } : {}}

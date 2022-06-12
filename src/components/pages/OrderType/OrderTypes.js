@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
-import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import styled from '@emotion/styled'
 import {
   Flag,
   ShoppingBag,
@@ -21,7 +19,7 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import { ButtonStyled, Message, useGeolocation } from '@open-tender/components'
+import { Message, useGeolocation } from '@open-tender/components'
 
 import {
   selectContent,
@@ -31,53 +29,7 @@ import {
   selectSettings,
 } from '../../../slices'
 import { NavButtons } from '../..'
-
-const OrderTypesView = styled('div')``
-
-const OrderTypesFooter = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.5s forwards;
-  margin: ${(props) => props.theme.layout.margin} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    text-align: center;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0;
-  }
-
-  & > p {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h5};
-    }
-  }
-`
-
-const OrderTypesLinks = styled('div')`
-  margin: 4rem 0 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 3rem 0 0;
-    justify-content: center;
-  }
-
-  button {
-    display: block;
-    border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
-
-    &:hover,
-    &:active {
-      // border-color: ${(props) =>
-        props.theme.buttons.colors.largeHover.borderColor};
-    }
-  }
-
-  button + button {
-    margin: 0 0 0 1rem;
-  }
-`
+import OrderTypeLinks from './OrderTypeLinks'
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
@@ -91,13 +43,10 @@ const OrderTypes = () => {
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
   const { cartGuestId } = cartGuest || {}
-  const orderButtons = orderTypes.filter(
-    (i) => !['GIFT_CARDS', 'DONATIONS'].includes(i)
-  )
-  const orderLinks = orderTypes.filter((i) =>
-    ['GIFT_CARDS', 'DONATIONS'].includes(i)
-  )
-  const hasLinks = orderLinks.length > 0
+  // const asLinks = ['GIFT_CARDS', 'DONATIONS']
+  const asLinks = []
+  const orderButtons = orderTypes.filter((i) => !asLinks.includes(i))
+  const orderLinks = orderTypes.filter((i) => asLinks.includes(i))
 
   useEffect(() => {
     dispatch(setGeoLoading())
@@ -184,47 +133,27 @@ const OrderTypes = () => {
     onClick: handlers[orderType],
   }))
 
-  const links = orderLinks.map((orderType) => ({
-    ...contentTypes[orderType],
-    icon: icons[orderType],
-    onClick: handlers[orderType],
-  }))
-
   return (
-    <OrderTypesView>
+    <div>
       {hasOrderTypes ? (
         <>
           <NavButtons buttons={buttons} />
-          {hasLinks && (
-            <OrderTypesFooter>
-              {/* <Heading as="p">Other stuff...</Heading> */}
-              <OrderTypesLinks>
-                {links.map((link) => (
-                  <ButtonStyled
-                    key={link.title}
-                    onClick={link.onClick}
-                    size="small"
-                    color="secondary"
-                  >
-                    {link.title}
-                  </ButtonStyled>
-                ))}
-              </OrderTypesLinks>
-            </OrderTypesFooter>
-          )}
+          <OrderTypeLinks
+            orderLinks={orderLinks}
+            contentTypes={contentTypes}
+            icons={icons}
+            handlers={handlers}
+          />
         </>
       ) : (
         <Message color="error">
           This brand is not currently accepting online orders.
         </Message>
       )}
-    </OrderTypesView>
+    </div>
   )
 }
 
 OrderTypes.displayName = 'OrderTypes'
-OrderTypes.propTypes = {
-  content: propTypes.element,
-}
 
 export default OrderTypes

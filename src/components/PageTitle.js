@@ -7,9 +7,9 @@ const PageTitleView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   text-align: center;
   max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 auto ${(props) => props.theme.layout.padding};
+  margin: 0 auto ${(props) => props.theme.layout.margin};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 auto ${(props) => props.theme.layout.paddingMobile};
+    margin: 0 auto ${(props) => props.theme.layout.marginMobile};
   }
 
   h1 {

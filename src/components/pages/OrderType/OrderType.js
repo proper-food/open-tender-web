@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
-import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
+import { isMobileOnly } from 'react-device-detect'
 import Helmet from 'react-helmet'
 // import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import { selectContent, closeModal, selectBrand } from '../../../slices'
-import { Account, AccountHome, Logout } from '../../buttons'
+import { AccountHome, AccountSettings, NavMenu } from '../../buttons'
 import {
   Background,
   Content,
   Geolocation,
   Header,
-  // HeaderLogo,
+  HeaderLogo,
+  HtmlContent,
   Main,
+  PageTitle,
 } from '../..'
 import OrderTypes from './OrderTypes'
-import styled from '@emotion/styled'
 
 const OrderTypeView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};
@@ -27,61 +28,19 @@ const OrderTypeView = styled('div')`
   }
 `
 
-const OrderTypeTitle = styled('div')`
-  margin: 0 0 ${(props) => props.theme.layout.margin};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    text-align: center;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 ${(props) => props.theme.layout.marginMobile};
-  }
-
-  h1 {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
-  }
-
-  p {
-    margin: 1rem 0 0;
-    line-height: ${(props) => props.theme.lineHeight};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-  }
-`
-
 const OrderTypeContent = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin: 2.5rem 0;
-  line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
-    text-align: center;
-  }
-
-  p {
-    margin: 0.5em 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
+  margin: ${(props) => props.theme.layout.margin} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
 const OrderType = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { auth } = useSelector(selectCustomer)
-  const { orderType } = useSelector(selectContent)
+  const { orderType, guest } = useSelector(selectContent)
+  const { showGuest, displayLogo, displayLogoMobile } = guest || {}
+  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
   const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
   // const announcements = useSelector(selectAnnouncements)
@@ -103,20 +62,23 @@ const OrderType = () => {
       <Content maxWidth="76.8rem">
         <Header
           maxWidth="76.8rem"
-          title={!isBrowser && auth ? 'Order Type' : null}
-          left={<AccountHome />}
-          right={auth ? <Logout /> : <Account />}
+          title={!showGuest && showLogo ? <HeaderLogo /> : null}
+          left={showGuest ? <AccountHome /> : <AccountSettings />}
+          right={<NavMenu />}
         />
         <Main>
           <Geolocation />
           <OrderTypeView>
-            <OrderTypeTitle>
-              {title && <h1>{title}</h1>}
-              {subtitle && <p>{subtitle}</p>}
-            </OrderTypeTitle>
+            <PageTitle
+              title={title}
+              subtitle={subtitle}
+              style={{ textAlign: 'left', maxWidth: '100%' }}
+            />
             <OrderTypes />
             {hasContent && (
-              <OrderTypeContent dangerouslySetInnerHTML={{ __html: content }} />
+              <OrderTypeContent>
+                <HtmlContent content={content} />
+              </OrderTypeContent>
             )}
           </OrderTypeView>
         </Main>
