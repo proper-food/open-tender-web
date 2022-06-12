@@ -3,8 +3,6 @@ import propTypes from 'prop-types'
 
 import { Header } from '.'
 import { AccountHome, NavMenu, OrderNow } from './buttons'
-import { isBrowser } from 'react-device-detect'
-import AccountTabs from './pages/Account/AccountTabs'
 
 const HeaderUser = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   return (
@@ -15,17 +13,10 @@ const HeaderUser = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
       borderColor={borderColor}
       left={<AccountHome />}
       right={
-        isBrowser ? (
-          <>
-            <AccountTabs />
-            <OrderNow />
-          </>
-        ) : (
-          <>
-            <OrderNow />
-            <NavMenu />
-          </>
-        )
+        <>
+          <OrderNow />
+          <NavMenu />
+        </>
       }
     />
   )

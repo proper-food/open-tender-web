@@ -267,7 +267,9 @@ const makeGlobalStyles = (theme) => css`
     text-transform: ${theme.inputs.textTransform};
     -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
     color: ${theme.inputs.color};
-    background-color: ${theme.inputs.bgColor};
+    background-color: ${theme.inputs.bottomBorderOnly
+      ? 'transparent'
+      : `${theme.inputs.bgColor}`};
     box-shadow: ${theme.inputs.boxShadow};
     transition: ${theme.links.transition};
     @media (max-width: ${theme.breakpoints.tablet}) {
@@ -331,7 +333,9 @@ const makeGlobalStyles = (theme) => css`
   select:read-only {
     opacity: 1;
     cursor: pointer;
-    background-color: ${theme.inputs.bgColor};
+    background-color: ${theme.inputs.bottomBorderOnly
+      ? 'transparent'
+      : `${theme.inputs.bgColor}`};
     border: ${theme.inputs.bottomBorderOnly
       ? '0'
       : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};

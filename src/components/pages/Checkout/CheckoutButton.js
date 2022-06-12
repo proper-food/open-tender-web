@@ -10,20 +10,21 @@ const CheckoutButtonView = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-width: ${(props) => props.theme.border.width};
+  border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
   border-style: solid;
   border-color: ${(props) =>
-    props.isApplied ? props.theme.colors.success : props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radiusSmall};
+    props.isApplied
+      ? props.theme.colors.success
+      : props.theme.buttons.colors.large.borderColor};
+  border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
   margin: 1rem 0 0;
-  // background-color: ${(props) =>
-    props.theme.bgColors[props.isApplied ? 'success' : 'tertiary']};
+  background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.bgColors[
-        props.isApplied ? 'primary' : props.disabled ? 'primary' : 'tertiary'
-      ]};
+      props.isApplied || props.disabled
+        ? props.theme.buttons.colors.large.bgColor
+        : props.theme.buttons.colors.largeHover.bgColor};
   }
 `
 

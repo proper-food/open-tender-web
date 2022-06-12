@@ -30,9 +30,10 @@ const NavButtonView = styled('button')`
   }
 
   &:hover {
-    border-style: solid;
-    border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
-    border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
+    // border-style: solid;
+    // border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
+    // border-radius: ${(props) =>
+      props.theme.buttons.sizes.large.borderRadius};
     border-color: ${(props) =>
       props.theme.buttons.colors.largeHover.borderColor};
     background-color: ${(props) =>
