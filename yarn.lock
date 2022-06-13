@@ -1597,10 +1597,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@open-tender/components@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-4.0.6.tgz#fc68d5cb43441959dc8acb89bf4a84e342ca3756"
-  integrity sha512-0jHOsHRfiorRgy/V9Mrzp/qFdohJJMMG5N53QhI5kyGvy5phskNB20modAaeORiKlJhKCpGkl4+3U2HqeTejDQ==
+"@open-tender/components@^4.0.8":
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-4.0.8.tgz#d6ba2227606a8718c876b0a4ccfac935de0fdad6"
+  integrity sha512-6BWIskW5bqD7uHU+S7JMlEphXcZeecc3z9Y+HKDDTKU2FMDOsawRc3npSJOZH9+flUFKpuki9VyCe/6FkZg/zg==
   dependencies:
     "@google-pay/button-react" "^3.0.0"
     "@googlemaps/js-api-loader" "^1.14.3"
@@ -1614,10 +1614,10 @@
     date-fns "^2.28.0"
     date-fns-tz "^1.3.4"
 
-"@open-tender/redux@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-3.0.2.tgz#16d6af5f6b7acfa892f261cae5da9651df2c5743"
-  integrity sha512-RC4EKcJJ2nfDQ6kBYq0XMXYq/yQmemk9gbig/HorVDHX/su9bMyWPlDrYV1cMiexRT8Hr7ZC9kSQDKRmUbLepg==
+"@open-tender/redux@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-3.0.3.tgz#1928b716cc090789947c2b6c589b3ebe06559ab9"
+  integrity sha512-d1/YFufm7cq8RGyEU3mCP14m0dpfu2seWCwBebNt7ywwTyThhyJ1Kx3RCzrUELdIwDsYjiQjfBMpcGhc6VXk/w==
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.7"

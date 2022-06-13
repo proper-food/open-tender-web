@@ -190,7 +190,7 @@ const ThanxLoyalty = ({ isAccount = false }) => {
               />
               <ThanxRewards>
                 {thanxRewards.map((item) => (
-                  <ThanxReward key={item.name} item={item} />
+                  <ThanxReward key={item.discount_id} item={item} />
                 ))}
               </ThanxRewards>
             </ThanxRewardsView>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   checkout,
   fetchGuest,
+  fetchGuestThanx,
   resetGuestErrors,
   selectCheckout,
   selectCustomer,
@@ -12,29 +13,42 @@ import {
 import { checkGuestData } from '@open-tender/js'
 import { FormWrapper, GuestForm } from '@open-tender/components'
 
-import { selectContent } from '../../../slices'
+import { selectBrand, selectContent } from '../../../slices'
 import { PageTitle } from '../..'
+import CheckoutMagicLink from './CheckoutMagicLink'
 
 const defaultText = {
   title: "Let's see if you have an account",
   subtitle: 'Please enter your email address below.',
 }
 
+const checkNotFound = (errors) => {
+  const errMsg = errors ? errors.email || errors.form : null
+  if (!errMsg) return null
+  return (
+    errMsg.includes('not associated') || errMsg.includes('Account not found')
+  )
+}
+
 const CheckoutGuestForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { has_thanx } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
   const config = checkoutFlow ? checkoutFlow.sections['email'] : defaultText
   const { auth } = useSelector(selectCustomer)
   const { form } = useSelector(selectCheckout)
-  const { email, loading, errors } = useSelector(selectGuest)
+  const { showMagicLink, email, loading, errors } = useSelector(selectGuest)
   const { guestIncomplete } = !auth ? checkGuestData(form.customer, email) : {}
-  const errMsg = errors ? errors.email || errors.form : null
-  const notFound = errMsg && errMsg.includes('not associated')
+  const notFound = checkNotFound(errors)
   const callback = useCallback(() => navigate('/checkout/signin'), [navigate])
   const checkGuest = useCallback(
     (email) => dispatch(fetchGuest(email, callback)),
     [dispatch, callback]
+  )
+  const checkGuestThanx = useCallback(
+    (email) => dispatch(fetchGuestThanx(email)),
+    [dispatch]
   )
 
   useEffect(() => {
@@ -52,7 +66,9 @@ const CheckoutGuestForm = () => {
     if (notFound) navigate('/checkout/signup')
   }, [notFound, navigate])
 
-  return (
+  return showMagicLink ? (
+    <CheckoutMagicLink />
+  ) : (
     <>
       <PageTitle {...config} />
       <FormWrapper>
@@ -60,7 +76,7 @@ const CheckoutGuestForm = () => {
           email={email}
           loading={loading}
           errors={errors}
-          checkGuest={checkGuest}
+          checkGuest={has_thanx ? checkGuestThanx : checkGuest}
           submitText="Continue"
         />
       </FormWrapper>
