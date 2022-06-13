@@ -30,6 +30,16 @@ import {
 } from '../../../slices'
 import { NavButtons } from '../..'
 import OrderTypeLinks from './OrderTypeLinks'
+import { isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
+
+const OrderTypesView = styled.div`
+
+  & > div:first-of-type button {
+    ${(props) =>
+      !props.showDesc ? `height: ${props.isMobile ? '5.6rem' : '6rem'};` : ``}
+
+`
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
@@ -43,6 +53,8 @@ const OrderTypes = () => {
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
   const { cartGuestId } = cartGuest || {}
+  const { showDescriptions, showDescriptionsMobile } = orderTypeContent
+  const showDesc = isMobile ? showDescriptionsMobile : showDescriptions
   // const asLinks = ['GIFT_CARDS', 'DONATIONS']
   const asLinks = []
   const orderButtons = orderTypes.filter((i) => !asLinks.includes(i))
@@ -127,16 +139,21 @@ const OrderTypes = () => {
     DONATIONS: <DollarSign size={null} />,
   }
 
-  const buttons = orderButtons.map((orderType) => ({
-    ...contentTypes[orderType],
-    icon: icons[orderType],
-    onClick: handlers[orderType],
-  }))
+  const buttons = orderButtons
+    .map((orderType) => ({
+      ...contentTypes[orderType],
+      icon: icons[orderType],
+      onClick: handlers[orderType],
+    }))
+    .map((orderType) => ({
+      ...orderType,
+      subtitle: showDesc ? orderType.subtitle : null,
+    }))
 
   return (
     <div>
       {hasOrderTypes ? (
-        <>
+        <OrderTypesView showDesc={showDesc} isMobile={isMobile}>
           <NavButtons buttons={buttons} />
           <OrderTypeLinks
             orderLinks={orderLinks}
@@ -144,7 +161,7 @@ const OrderTypes = () => {
             icons={icons}
             handlers={handlers}
           />
-        </>
+        </OrderTypesView>
       ) : (
         <Message color="error">
           This brand is not currently accepting online orders.

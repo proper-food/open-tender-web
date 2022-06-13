@@ -25,15 +25,11 @@ const NavButtonView = styled('button')`
   background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 7rem;
+    height: 6.6rem;
     padding: 0 1rem 0 2rem;
   }
 
   &:hover {
-    // border-style: solid;
-    // border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
-    // border-radius: ${(props) =>
-      props.theme.buttons.sizes.large.borderRadius};
     border-color: ${(props) =>
       props.theme.buttons.colors.largeHover.borderColor};
     background-color: ${(props) =>
