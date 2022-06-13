@@ -19,7 +19,7 @@ const AccountLoyalty = () => {
   const loyalty = has_loyalty ? (
     <AccountLoyaltyProgram />
   ) : has_thanx ? (
-    <ThanxLoyalty />
+    <ThanxLoyalty isAccount={true} />
   ) : has_levelup ? (
     <LevelUpLoyalty />
   ) : null

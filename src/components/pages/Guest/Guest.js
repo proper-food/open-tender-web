@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isMobile, isMobileOnly } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import { selectCustomer, selectHasAnnouncementsPage } from '@open-tender/redux'
@@ -12,15 +12,13 @@ import {
   Background,
   BackgroundImage,
   Content,
-  Header,
-  HeaderLogo,
   Main,
   Welcome,
 } from '../..'
-import { AccountSettings, NavMenu, OrderNow } from '../../buttons'
 import GuestButtons from './GuestButtons'
 import GuestContent from './GuestContent'
 import GuestDeals from './GuestDeals'
+import HeaderGuest from '../../HeaderGuest'
 
 const GuestView = styled.div`
   flex: 1;
@@ -46,17 +44,8 @@ const Guest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
-  const {
-    title,
-    subtitle,
-    background,
-    mobile,
-    content,
-    showGuest,
-    displayLogo,
-    displayLogoMobile,
-    displayed,
-  } = useSelector(selectContentSection('guest'))
+  const { title, subtitle, background, mobile, content, showGuest, displayed } =
+    useSelector(selectContentSection('guest'))
   const { auth } = useSelector(selectCustomer)
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
   const sections = {
@@ -66,7 +55,6 @@ const Guest = () => {
   const displayedSectons = displayed ? displayed.map((i) => sections[i]) : null
   const showHero =
     !hasAnnouncements && displayedSectons.length <= 1 ? true : false
-  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
 
   useEffect(() => {
     dispatch(closeModal())
@@ -89,17 +77,7 @@ const Guest = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
-        <Header
-          maxWidth="76.8rem"
-          left={<AccountSettings />}
-          title={showLogo ? <HeaderLogo /> : null}
-          right={
-            <>
-              <OrderNow />
-              <NavMenu />
-            </>
-          }
-        />
+        <HeaderGuest />
         <Main>
           <GuestView showHero={showHero}>
             <Welcome title={title} subtitle={subtitle} />

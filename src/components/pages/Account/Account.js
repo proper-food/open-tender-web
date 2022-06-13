@@ -26,7 +26,6 @@ import {
 } from '../..'
 import { AccountSettings, NavMenu, OrderNow } from '../../buttons'
 import AccountButtons from './AccountButtons'
-// import AccountGreeting from './AccountGreeting'
 import AccountContent from './AccountContent'
 import AccountLoyalty from './AccountLoyalty'
 import AccountRewards from './AccountRewards'

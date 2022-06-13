@@ -4,20 +4,12 @@ import { isMobile } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerRewards, selectCustomerRewards } from '@open-tender/redux'
 
-import { selectConfig } from '../../../slices'
-import {
-  Loading,
-  Rewards,
-  PageContainer,
-  PageContent,
-  PageTitle,
-  Reward,
-} from '../..'
+import { Loading, Rewards, Reward } from '../..'
 
 const RewardsListView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  max-width: ${(props) => props.theme.breakpoints.tablet};
+  // max-width: ${(props) => props.theme.breakpoints.tablet};
   margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     max-width: 60rem;
@@ -30,48 +22,33 @@ const RewardsListReward = styled.div`
 
 const RewardsList = () => {
   const dispatch = useDispatch()
-  const { rewards: rewardsConfig } = useSelector(selectConfig)
-  const {
-    entities: rewards,
-    loading,
-    error,
-  } = useSelector(selectCustomerRewards)
-  const hasRewards = rewards.length > 0 && !error
+  const { entities, loading, error } = useSelector(selectCustomerRewards)
+  const hasRewards = entities.length > 0 && !error
 
   useEffect(() => {
     dispatch(fetchCustomerRewards())
   }, [dispatch])
 
-  return (
-    <PageContainer>
-      <PageTitle {...rewardsConfig.rewards} />
-      {hasRewards ? (
-        <RewardsListView>
-          {isMobile ? (
-            <>
-              {rewards.map((deal) => (
-                <RewardsListReward>
-                  <Reward item={deal} />
-                </RewardsListReward>
-              ))}
-            </>
-          ) : (
-            <Rewards rewards={rewards} />
-          )}
-        </RewardsListView>
+  return hasRewards ? (
+    <RewardsListView>
+      {isMobile ? (
+        <>
+          {entities.map((deal) => (
+            <RewardsListReward>
+              <Reward item={deal} />
+            </RewardsListReward>
+          ))}
+        </>
       ) : (
-        <PageContent>
-          {loading === 'pending' ? (
-            <Loading text="Retrieving your rewards..." />
-          ) : (
-            <p>
-              Looks like you don't currently have any rewards. Pleaes try back
-              later!
-            </p>
-          )}
-        </PageContent>
+        <Rewards rewards={entities} />
       )}
-    </PageContainer>
+    </RewardsListView>
+  ) : loading === 'pending' ? (
+    <Loading text="Retrieving your rewards..." />
+  ) : (
+    <p>
+      Looks like you don't currently have any rewards. Pleaes try back later!
+    </p>
   )
 }
 

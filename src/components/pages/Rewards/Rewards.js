@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { selectCustomer } from '@open-tender/redux'
 
-import { selectBrand } from '../../../slices'
+import { selectBrand, selectContentSection } from '../../../slices'
 import { Content, HeaderUser, Main, PageContainer } from '../..'
 import LevelUpLoyalty from './LevelUpLoyalty'
 import ThanxLoyalty from './ThanxLoyalty'
 import RewardsList from './RewardsList'
+import PageContent from '../../PageContent'
+import PageTitle from '../../PageTitle'
 
 const Rewards = () => {
   const navigate = useNavigate()
@@ -20,6 +22,7 @@ const Rewards = () => {
   } = useSelector(selectBrand)
   const hasRewards = has_rewards || has_thanx || has_levelup
   const { auth } = useSelector(selectCustomer)
+  const { title, subtitle } = useSelector(selectContentSection('rewards'))
 
   useEffect(() => {
     if (!auth || !hasRewards) return navigate('/account')
@@ -33,17 +36,18 @@ const Rewards = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {has_levelup ? (
-            <PageContainer>
-              <LevelUpLoyalty />
-            </PageContainer>
-          ) : has_thanx ? (
-            <PageContainer>
-              <ThanxLoyalty />
-            </PageContainer>
-          ) : (
-            <RewardsList />
-          )}
+          <PageContainer>
+            <PageTitle title={title} subtitle={subtitle} />
+            <PageContent>
+              {has_levelup ? (
+                <LevelUpLoyalty />
+              ) : has_thanx ? (
+                <ThanxLoyalty />
+              ) : (
+                <RewardsList />
+              )}
+            </PageContent>
+          </PageContainer>
         </Main>
       </Content>
     </>
