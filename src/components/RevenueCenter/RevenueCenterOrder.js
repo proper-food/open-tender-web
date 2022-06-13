@@ -2,7 +2,6 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { isMobileOnly } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
 import {
@@ -80,7 +79,7 @@ const RevenueCenterChange = ({ autoSelect }) => {
       <ButtonStyled
         icon={iconMap.RefreshCw}
         onClick={() => navigate(`/locations`)}
-        size={isMobileOnly ? `small` : 'default'}
+        size="small"
       >
         Change Location
       </ButtonStyled>
@@ -145,7 +144,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
           icon={icons[serviceType]}
           onClick={orderAsap}
           disabled={!hasAsap}
-          size={isMobileOnly ? 'small' : 'default'}
+          size="small"
         >
           Order ASAP
         </ButtonStyled>
@@ -153,7 +152,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
       <ButtonStyled
         icon={isCatering ? icons[serviceType] : iconMap.Clock}
         onClick={orderLater}
-        size={isMobileOnly ? 'small' : 'default'}
+        size="small"
         color={isCatering || !firstTimes ? 'primary' : 'secondary'}
       >
         {isCatering ? 'Order from Here' : 'Order for Later'}

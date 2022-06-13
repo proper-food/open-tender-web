@@ -16,12 +16,6 @@ const RevenueCenterView = styled(Box)`
   position: relative;
   overflow: hidden;
   width: 100%;
-  // background-color: ${(props) =>
-    props.isActive
-      ? props.theme.bgColors.tertiary
-      : props.theme.bgColors.secondary};
-  box-shadow: ${(props) =>
-    props.isActive ? '0 0 23px rgba(0, 0, 0, 0.35)' : 'none'};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     ${(props) =>
       !props.isMenu
