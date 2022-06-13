@@ -38,7 +38,7 @@ const Rewards = () => {
         <Main>
           <PageContainer>
             <PageTitle title={title} subtitle={subtitle} />
-            <PageContent>
+            <PageContent style={has_rewards ? { maxWidth: '82rem' } : null}>
               {has_levelup ? (
                 <LevelUpLoyalty />
               ) : has_thanx ? (

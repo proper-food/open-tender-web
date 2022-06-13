@@ -14,12 +14,6 @@ const RewardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin: -0.5rem 0 0;
-  }
 `
 
 const RewardView = styled.div`
@@ -27,23 +21,6 @@ const RewardView = styled.div`
   padding: 0.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    padding: 0.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex: 0 0 90%;
-    padding: 1.5rem 1rem 1.5rem 0;
-  }
-
-  &:first-of-type {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding-left: ${(props) => props.theme.layout.paddingMobile};
-    }
-  }
-
-  &:last-of-type {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding-right: ${(props) => props.theme.layout.paddingMobile};
-    }
   }
 `
 

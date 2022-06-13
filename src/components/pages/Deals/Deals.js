@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isMobile } from 'react-device-detect'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
@@ -17,22 +15,7 @@ import {
   PageError,
   PageTitle,
   Rewards,
-  Reward,
 } from '../..'
-
-const DealsView = styled.div`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  max-width: ${(props) => props.theme.breakpoints.tablet};
-  margin: ${(props) => props.theme.layout.padding} auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    max-width: 60rem;
-  }
-`
-
-const DealView = styled.div`
-  margin: 0 0 1.5rem;
-`
 
 const Deals = () => {
   const navigate = useNavigate()
@@ -67,23 +50,11 @@ const Deals = () => {
             <PageTitle {...config} />
             {error ? (
               <PageError error={error} />
-            ) : hasDeals ? (
-              <DealsView>
-                {isMobile ? (
-                  <>
-                    {deals.map((deal) => (
-                      <DealView>
-                        <Reward item={deal} />
-                      </DealView>
-                    ))}
-                  </>
-                ) : (
-                  <Rewards rewards={deals} />
-                )}
-              </DealsView>
             ) : (
-              <PageContent>
-                {isLoading ? (
+              <PageContent style={{ maxWidth: '82rem' }}>
+                {hasDeals ? (
+                  <Rewards rewards={deals} />
+                ) : isLoading ? (
                   <Loading text="Retrieving today's deals..." />
                 ) : (
                   <p>

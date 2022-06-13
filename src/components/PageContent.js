@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-const PageContent = styled('div')`
+const PageContent = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   text-align: center;
