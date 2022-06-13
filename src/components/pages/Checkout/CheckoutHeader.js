@@ -24,6 +24,10 @@ const CheckoutHeaderView = styled('div')`
 
   button {
     color: ${(props) => props.theme.colors.primary};
+
+    &:hover {
+      color: ${(props) => props.theme.links.primary.color};
+    }
   }
 `
 
