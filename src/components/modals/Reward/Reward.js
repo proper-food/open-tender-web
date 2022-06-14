@@ -149,11 +149,7 @@ const Reward = ({ reward }) => {
               <Text color="alert" size="small" as="p">
                 Use by {expiration}
               </Text>
-            ) : (
-              <Text size="small" as="p">
-                Expires never!
-              </Text>
-            )}
+            ) : null}
             {reward.per_order === 1 && (
               <Text color="alert" size="small" as="p">
                 Cannot be used with any other discounts
