@@ -100,11 +100,7 @@ const AccountLoyaltyProgram = () => {
               {status.tier ? (
                 <p>
                   You're at{' '}
-                  <Text
-                    color="primary"
-                    bold={true}
-                    style={{ color: `#${status.tier.hex_code}` }}
-                  >
+                  <Text color="primary" bold={true}>
                     {status.tier.name}
                   </Text>{' '}
                   status

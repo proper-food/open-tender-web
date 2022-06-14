@@ -55,7 +55,7 @@ const AccountHero = styled.div`
 const Account = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { auth } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const {
@@ -67,7 +67,14 @@ const Account = () => {
     displayLogo,
     displayLogoMobile,
     displayed,
+    showFirstName,
+    punctuation,
   } = useSelector(selectContentSection('account'))
+  const firstName = profile ? profile.first_name : null
+  const welcome =
+    firstName && showFirstName
+      ? `${title}, ${firstName}${punctuation}`
+      : `${title}${punctuation}`
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const sections = {
     CONTENT: <AccountContent content={content} />,
@@ -77,8 +84,8 @@ const Account = () => {
     ORDERS: <AccountOrders />,
   }
   const displayedSectons = displayed ? displayed.map((i) => sections[i]) : null
-  const showHero =
-    !hasAnnouncements && displayedSectons.length <= 1 ? true : false
+  const oneSection = displayedSectons && displayedSectons.length <= 1
+  const showHero = !hasAnnouncements && oneSection ? true : false
 
   const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
 
@@ -102,7 +109,9 @@ const Account = () => {
   return (
     <>
       <Helmet>
-        <title>Welcome Back | {siteTitle}</title>
+        <title>
+          {welcome} | {siteTitle}
+        </title>
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
@@ -119,7 +128,7 @@ const Account = () => {
         />
         <Main>
           <AccountView showHero={showHero}>
-            <Welcome title={title} subtitle={subtitle} />
+            <Welcome title={welcome} subtitle={subtitle} />
             <AccountButtons />
             {displayedSectons}
             {isMobile && (
