@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet'
 
 import { selectBrand, openModal, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -65,7 +64,7 @@ const AccountCreditCards = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />}>
+            <PageTitle {...config}>
               <PageTitleButtons>
                 <ButtonStyled
                   onClick={() => dispatch(openModal({ type: 'creditCard' }))}
@@ -117,11 +116,7 @@ const AccountCreditCards = () => {
                   <p>Looks like you haven't added any credit cards yet.</p>
                 )}
               </PageContent>
-            ) : (
-              <PageContent>
-                <AccountBack />
-              </PageContent>
-            )}
+            ) : null}
           </PageContainer>
         </Main>
       </Content>

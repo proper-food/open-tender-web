@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   CommunicationPrefs,
   Content,
   HeaderUser,
@@ -25,7 +24,7 @@ const CommsPrefs = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '72rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             <CommunicationPrefs />
           </PageContainer>
         </Main>

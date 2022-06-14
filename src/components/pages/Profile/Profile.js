@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -58,23 +57,18 @@ const AccountProfile = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '72rem' }}>
-            <PageTitle {...config} preface={<AccountBack />}>
+            <PageTitle {...config}>
               <VerifyAccount style={{ margin: '2rem 0 0' }} />
             </PageTitle>
             {profile ? (
-              <>
-                <FormWrapper>
-                  <ProfileForm
-                    profile={profile}
-                    loading={loading}
-                    error={error}
-                    update={update}
-                  />
-                </FormWrapper>
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <FormWrapper>
+                <ProfileForm
+                  profile={profile}
+                  loading={loading}
+                  error={error}
+                  update={update}
+                />
+              </FormWrapper>
             ) : (
               <PageContent>
                 {isLoading ? (

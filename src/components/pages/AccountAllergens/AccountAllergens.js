@@ -14,7 +14,6 @@ import { Helmet } from 'react-helmet'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -25,7 +24,10 @@ import {
 } from '../..'
 import styled from '@emotion/styled'
 
-const AllergenFormView = styled('div')``
+const AllergenFormView = styled.div`
+  max-width: 48rem;
+  margin: 0 auto;
+`
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()
@@ -67,24 +69,21 @@ const AccountAllergens = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             <PageContent>
               {brandAllergens.entities.length ? (
-                <>
+                <AllergenFormView>
                   <FormWrapper>
-                    <AllergenFormView>
-                      <AllergenForm
-                        allergens={brandAllergens.entities}
-                        selectedAllergens={customerAllergens.entities}
-                        isLoading={isLoading}
-                        error={error}
-                        setAllergens={setAllergens}
-                        updateAllergens={updateAllergens}
-                      />
-                    </AllergenFormView>
+                    <AllergenForm
+                      allergens={brandAllergens.entities}
+                      selectedAllergens={customerAllergens.entities}
+                      isLoading={isLoading}
+                      error={error}
+                      setAllergens={setAllergens}
+                      updateAllergens={updateAllergens}
+                    />
                   </FormWrapper>
-                  <AccountBack />
-                </>
+                </AllergenFormView>
               ) : isLoading ? (
                 <Loading text="Retrieving your order navigate..." />
               ) : (

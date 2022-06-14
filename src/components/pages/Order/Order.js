@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet'
 import { selectBrand } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   LinkIcon,
   Main,
   Order as OrderSummary,
@@ -45,7 +45,7 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer>
             <PageTitle>

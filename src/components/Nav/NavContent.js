@@ -68,16 +68,6 @@ const navButtons = [
     path: '/deals',
   },
   {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/account/gift-cards',
-  },
-  {
-    icon: iconMap.DollarSign,
-    title: 'Donations',
-    path: '/donations',
-  },
-  {
     icon: iconMap.User,
     title: 'Profile',
     path: '/account/profile',
@@ -93,19 +83,29 @@ const navButtons = [
     path: '/account/allergens',
   },
   {
-    icon: iconMap.MapPin,
-    title: 'Addresses',
-    path: '/account/addresses',
-  },
-  {
     icon: iconMap.CreditCard,
     title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
+    icon: iconMap.Gift,
+    title: 'Gift Cards',
+    path: '/account/gift-cards',
+  },
+  {
+    icon: iconMap.MapPin,
+    title: 'Addresses',
+    path: '/account/addresses',
+  },
+  {
     icon: iconMap.Home,
     title: 'House Accounts',
     path: '/account/house-accounts',
+  },
+  {
+    icon: iconMap.DollarSign,
+    title: 'Donations',
+    path: '/donations',
   },
 ]
 

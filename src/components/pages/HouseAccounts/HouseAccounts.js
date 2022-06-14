@@ -10,7 +10,6 @@ import { Helmet } from 'react-helmet'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -50,7 +49,7 @@ const AccountHouseAccounts = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             <PageError error={error} />
             {entities.length ? (
               <HouseAccountsList houseAccounts={entities} />

@@ -15,7 +15,7 @@ import { selectConfig, selectBrand } from '../../../slices'
 import {
   Content,
   ItemCards,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   OrderCardItem,
@@ -71,7 +71,7 @@ const Favorites = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer style={{ maxWidth: '114rem' }}>
             <PageTitle {...config} />

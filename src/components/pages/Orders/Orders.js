@@ -14,7 +14,7 @@ import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   ItemCards,
   Loading,
   Main,
@@ -85,7 +85,7 @@ const Orders = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer style={{ maxWidth: '114rem' }}>
             <PageTitle {...config} />

@@ -82,7 +82,7 @@ const Confirmation = () => {
         <title>Confirmation | {brand.title}</title>
       </Helmet>
       <Content>
-        <HeaderDefault isLogo={false} />
+        <HeaderDefault />
         <Main>
           <PageContainer>
             <PageTitle {...config}>

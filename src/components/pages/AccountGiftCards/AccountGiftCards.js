@@ -19,7 +19,6 @@ import {
   PageContainer,
   PageContent,
   PageTitleButtons,
-  AccountBack,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
 
@@ -51,7 +50,7 @@ const AccountGiftCards = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />}>
+            <PageTitle {...config}>
               <PageTitleButtons>
                 <ButtonStyled onClick={() => navigate('/gift-cards')}>
                   Buy Gift Cards For Others
@@ -73,12 +72,7 @@ const AccountGiftCards = () => {
               </PageTitleButtons>
             </PageTitle>
             {entities.length ? (
-              <>
-                <GiftCardsList giftCards={entities} isLoading={isLoading} />
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <GiftCardsList giftCards={entities} isLoading={isLoading} />
             ) : (
               <PageContent>
                 {isLoading ? (

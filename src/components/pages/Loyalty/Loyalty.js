@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { selectCustomer } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { Content, HeaderUser, Main, PageContainer, PageTitle } from '../..'
+import { Content, HeaderDefault, Main, PageContainer, PageTitle } from '../..'
 import LoyaltyPrograms from './LoyaltyProgams'
 
 const Loyalty = () => {
@@ -24,7 +24,7 @@ const Loyalty = () => {
         <title>Loyalty | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer>
             <PageTitle {...rewardsConfig.loyalty} />

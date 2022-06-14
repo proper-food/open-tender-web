@@ -9,7 +9,7 @@ import { ButtonLink } from '@open-tender/components'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Main,
   PageContainer,
   PageTitle,
@@ -32,7 +32,7 @@ const AccountSettings = () => {
   const { auth, profile } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!auth) return navigate('/account')
+    if (!auth) return navigate('/guest')
   }, [auth, navigate])
 
   return profile ? (
@@ -43,7 +43,7 @@ const AccountSettings = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config}>

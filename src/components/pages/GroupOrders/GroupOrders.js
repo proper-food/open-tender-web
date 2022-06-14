@@ -12,7 +12,7 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
   Container,
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContent,
@@ -47,7 +47,7 @@ const GroupOrders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.groupOrders} />

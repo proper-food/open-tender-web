@@ -7,7 +7,7 @@ import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContainer,
@@ -44,7 +44,7 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer>
             <PageTitle {...config} />

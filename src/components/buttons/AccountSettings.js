@@ -1,5 +1,3 @@
-import React from 'react'
-import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 import { useNavigate } from 'react-router-dom'
@@ -8,9 +6,8 @@ import { ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import { openModal } from '../../slices'
-// import { ButtonBoth } from '.'
 
-const AccountSettings = ({ text = 'Settings', icon = iconMap.User }) => {
+const AccountSettings = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { auth } = useSelector(selectCustomer)
@@ -23,20 +20,16 @@ const AccountSettings = ({ text = 'Settings', icon = iconMap.User }) => {
 
   return (
     <ButtonIcon
-      label={text}
+      label={auth ? 'Settings' : 'Login'}
       size={isBrowser ? 22 : 18}
       style={isBrowser ? { width: '2.6rem' } : {}}
       onClick={auth ? goToSettings : login}
     >
-      {icon}
+      {iconMap.User}
     </ButtonIcon>
   )
 }
 
 AccountSettings.displayName = 'AccountSettings'
-AccountSettings.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-}
 
 export default AccountSettings

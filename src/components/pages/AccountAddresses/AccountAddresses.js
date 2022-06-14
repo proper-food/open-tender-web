@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
   fetchCustomerAddresses,
   selectCustomerAddresses,
 } from '@open-tender/redux'
-import { Helmet } from 'react-helmet'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import Addresses from './Addresses'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -20,6 +18,7 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
+import Addresses from './Addresses'
 
 const AccountAddresses = () => {
   const navigate = useNavigate()
@@ -50,14 +49,9 @@ const AccountAddresses = () => {
         <HeaderUser />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             {entities.length ? (
-              <>
-                <Addresses addresses={entities} isLoading={isLoading} />
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <Addresses addresses={entities} isLoading={isLoading} />
             ) : (
               <PageContent>
                 {isLoading ? (

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { selectCustomer } from '@open-tender/redux'
 
 import { selectBrand, selectContentSection } from '../../../slices'
-import { Content, HeaderUser, Main, PageContainer } from '../..'
+import { Content, HeaderDefault, Main, PageContainer } from '../..'
 import LevelUpLoyalty from './LevelUpLoyalty'
 import ThanxLoyalty from './ThanxLoyalty'
 import RewardsList from './RewardsList'
@@ -34,7 +34,7 @@ const Rewards = () => {
         <title>Rewards | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
           <PageContainer>
             <PageTitle title={title} subtitle={subtitle} />
