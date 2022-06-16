@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { capitalize, serviceTypeNamesMap } from '@open-tender/js'
 import {
   addAlert,
+  fetchMenu,
   setAddress,
   setOrderServiceType,
   setRequestedAt,
@@ -48,9 +49,10 @@ const RequestedAt = ({
   if (!revenueCenter) return null
 
   const {
-    slug,
+    revenue_center_id: revenueCenterId,
     revenue_center_type: rcType,
     is_outpost: isOutpost,
+    slug,
     address,
     first_times,
     order_times,
@@ -70,6 +72,7 @@ const RequestedAt = ({
       dispatch(closeModal())
       navigate(menuSlug)
     } else {
+      dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(closeModal())
     }
     if (openSidebar) dispatch(toggleSidebar())
