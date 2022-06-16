@@ -83,7 +83,7 @@ const NavButtonTitle = styled.span`
     color: ${(props) => props.theme.buttons.colors.large.color};
   }
 
-  & > span:last-of-type {
+  & > span + span {
     color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
   }
 
@@ -91,7 +91,7 @@ const NavButtonTitle = styled.span`
     color: ${(props) => props.theme.buttons.colors.largeHover.color};
   }
 
-  button:hover & > span:last-of-type {
+  button:hover & > span + span {
     color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
   }
 `
