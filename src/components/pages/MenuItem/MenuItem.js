@@ -48,6 +48,7 @@ const MenuItemImage = styled('div')`
   bottom: 0;
   left: 0;
   right: 64rem;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     right: 0;
     bottom: auto;

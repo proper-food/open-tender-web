@@ -77,6 +77,7 @@ const NavButtonTitle = styled.span`
   }
 
   & > span:first-of-type {
+    // line-height: ${(props) => (props.subtitle ? '1.2' : '1')};
     line-height: 1.2;
     margin: 0 0 0.1rem -0.1rem;
     color: ${(props) => props.theme.buttons.colors.large.color};
@@ -126,10 +127,14 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
     <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
       <NavButtonTitle>
-        <Heading size={isMobileOnly ? 'medium' : 'big'}>{title}</Heading>
-        <Text size={isMobileOnly ? 'xSmall' : 'small'} color="tertiary">
-          {subtitle}
-        </Text>
+        <Heading size={isMobileOnly ? 'medium' : 'big'} subtitle={subtitle}>
+          {title}
+        </Heading>
+        {subtitle && (
+          <Text size={isMobileOnly ? 'xSmall' : 'small'} color="tertiary">
+            {subtitle}
+          </Text>
+        )}
       </NavButtonTitle>
       <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
     </NavButtonView>
