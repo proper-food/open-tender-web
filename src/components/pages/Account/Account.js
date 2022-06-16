@@ -69,7 +69,7 @@ const Account = () => {
     displayed,
     showFirstName,
     punctuation,
-  } = useSelector(selectContentSection('account'))
+  } = useSelector(selectContentSection('account')) || {}
   const firstName = profile ? profile.first_name : null
   const welcome =
     firstName && showFirstName
@@ -77,13 +77,15 @@ const Account = () => {
       : `${title}${punctuation}`
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const sections = {
-    CONTENT: <AccountContent content={content} />,
-    LOYALTY: <AccountLoyalty />,
-    REWARDS: <AccountRewards />,
-    DEALS: <AccountDeals has_deals={has_deals} />,
-    ORDERS: <AccountOrders />,
+    CONTENT: (key) => <AccountContent key={key} content={content} />,
+    LOYALTY: (key) => <AccountLoyalty key={key} />,
+    REWARDS: (key) => <AccountRewards key={key} />,
+    DEALS: (key) => <AccountDeals key={key} has_deals={has_deals} />,
+    ORDERS: (key) => <AccountOrders key={key} />,
   }
-  const displayedSectons = displayed ? displayed.map((i) => sections[i]) : null
+  const displayedSectons = displayed
+    ? displayed.map((i) => sections[i](i))
+    : null
   const oneSection = displayedSectons && displayedSectons.length <= 1
   const showHero = !hasAnnouncements && oneSection ? true : false
 

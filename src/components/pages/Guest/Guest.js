@@ -45,14 +45,16 @@ const Guest = () => {
   const dispatch = useDispatch()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { title, subtitle, background, mobile, content, showGuest, displayed } =
-    useSelector(selectContentSection('guest'))
+    useSelector(selectContentSection('guest')) || {}
   const { auth } = useSelector(selectCustomer)
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
   const sections = {
-    CONTENT: <GuestContent content={content} />,
-    DEALS: <GuestDeals has_deals={has_deals} />,
+    CONTENT: (key) => <GuestContent key={key} content={content} />,
+    DEALS: (key) => <GuestDeals key={key} has_deals={has_deals} />,
   }
-  const displayedSectons = displayed ? displayed.map((i) => sections[i]) : null
+  const displayedSectons = displayed
+    ? displayed.map((i) => sections[i](i))
+    : null
   const showHero =
     !hasAnnouncements && displayedSectons.length <= 1 ? true : false
 

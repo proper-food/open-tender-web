@@ -2,12 +2,6 @@ import styled from '@emotion/styled'
 import { ClipLoader } from 'react-spinners'
 
 const LocationsMapView = styled('div')`
-  // position: relative;
-  // z-index: 0;
-  // display: flex;
-  // flex-direction: column;
-  // height: 100vh;
-  // min-height: 64rem;
   position: absolute;
   z-index: 1;
   top: 0;
