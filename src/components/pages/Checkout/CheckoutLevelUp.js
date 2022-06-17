@@ -1,7 +1,6 @@
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { Grid } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, validateOrder } from '@open-tender/redux'
@@ -25,7 +24,6 @@ const CheckoutLevelUpContent = styled.div`
 const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const theme = useTheme()
   const { check, form, errors } = useSelector(selectCheckout)
   const { tender_types } = check.config
 
@@ -58,7 +56,7 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
       <FormError errMsg={errMsg} />
       {levelup.connected ? (
         <CheckoutButton
-          icon={<Grid color={theme.colors.primary} width={18} height={18} />}
+          icon={<Grid width={18} height={18} />}
           title="Pay with LevelUp"
           subtitle={`Currently connected via your ${levelup.email} email address`}
           onPress={onPress}

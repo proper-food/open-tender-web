@@ -1,6 +1,5 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
@@ -10,7 +9,6 @@ import { Home } from 'react-feather'
 const CheckoutHouseAccountsView = styled.div``
 
 const CheckoutHouseAccounts = ({ apply, remove, isPaid }) => {
-  const theme = useTheme()
   const { check, form } = useSelector(selectCheckout)
   const houseAccounts = check.customer.house_accounts || []
   const hasHouseAccounts = houseAccounts.length > 0
@@ -66,7 +64,7 @@ const CheckoutHouseAccounts = ({ apply, remove, isPaid }) => {
         return (
           <CheckoutButton
             key={house_account_id}
-            icon={<Home color={theme.colors.primary} width={18} height={18} />}
+            icon={<Home width={18} height={18} />}
             title={title}
             subtitle={subtitle}
             onPress={onPress}

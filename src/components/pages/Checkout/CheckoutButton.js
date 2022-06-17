@@ -1,6 +1,5 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { PlusCircle, XCircle } from 'react-feather'
 import { Checkmark, Heading, Text } from '@open-tender/components'
 
@@ -55,8 +54,13 @@ const CheckoutButtonIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.buttons.colors.large.iconColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 1.5rem 0 0;
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
@@ -73,21 +77,29 @@ const CheckoutButtonText = styled.div`
 `
 
 const CheckoutButtonTitle = styled(Heading)`
+  transition: ${(props) => props.theme.links.transition};
   font-size: ${(props) => props.theme.fonts.sizes.medium};
-  color: ${(props) =>
-    props.theme.colors[props.isApplied ? 'primary' : 'primary']};
+  color: ${(props) => props.theme.buttons.colors.large.color};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.color};
   }
 `
 
 const CheckoutButtonSubtitle = styled(Text)`
+  transition: ${(props) => props.theme.links.transition};
   margin: 0.3rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  color: ${(props) =>
-    props.theme.colors[props.isApplied ? 'secondary' : 'secondary']};
+  color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
   }
 `
 
@@ -109,26 +121,44 @@ const CheckoutButtonButton = styled.div`
 const CheckoutButtonButtonIcon = styled.div`
   width: 1.8rem;
   height: 1.8rem;
+  color: ${(props) => props.theme.buttons.colors.large.iconColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 1.6rem;
     height: 1.6rem;
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
 const CheckoutButtonApply = styled(Text)`
   display: block;
   line-height: 1;
-  color: ${(props) => props.theme.colors.primary};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
   margin: 0 0 0 0.5rem;
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.iconColor};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     margin: 0.1 0 0 0.4rem;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  svg {
+    transition: ${(props) => props.theme.links.transition};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
 const CheckoutButtonRemove = styled(CheckoutButtonApply)`
-  color: ${(props) => props.theme.colors.error};
+  // color: ${(props) => props.theme.colors.error};
+
+  // button:hover & {
+  //   color: ${(props) => props.theme.colors.error};
+  // }
 `
 
 const CheckoutButton = ({
@@ -141,7 +171,6 @@ const CheckoutButton = ({
   disabled,
   applyText = 'Apply',
 }) => {
-  const { colors } = useTheme()
   return (
     <CheckoutButtonView
       onClick={onPress}
@@ -179,7 +208,7 @@ const CheckoutButton = ({
             ) : (
               <>
                 <CheckoutButtonButtonIcon>
-                  <XCircle size={null} color={colors.error} />
+                  <XCircle size={null} />
                 </CheckoutButtonButtonIcon>
                 <CheckoutButtonRemove>Remove</CheckoutButtonRemove>
               </>
@@ -188,7 +217,7 @@ const CheckoutButton = ({
         ) : (
           <>
             <CheckoutButtonButtonIcon>
-              <PlusCircle size={null} color={colors.primary} />
+              <PlusCircle size={null} />
             </CheckoutButtonButtonIcon>
             <CheckoutButtonApply>{applyText}</CheckoutButtonApply>
           </>
