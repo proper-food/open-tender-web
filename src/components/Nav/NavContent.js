@@ -152,16 +152,16 @@ const NavItem = styled('button')`
   text-align: left;
   line-height: 0;
   padding: 1.25rem 1rem 1.25rem 3.5rem;
-  color: ${(props) => props.theme.fonts.headings.color};
+  color: ${(props) => props.theme.links.dark.color};
 
   span {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 
   &:hover {
-    color: ${(props) => props.theme.links.primary.color};
+    color: ${(props) => props.theme.links.dark.hover};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.fonts.headings.color};
+      color: ${(props) => props.theme.links.dark.color};
     }
   }
 `
