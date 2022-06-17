@@ -9,21 +9,27 @@ const CheckoutButtonView = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
+  margin: 1rem 0 0;
   border-style: solid;
+  border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
+  border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
+  background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
   border-color: ${(props) =>
     props.isApplied
       ? props.theme.colors.success
       : props.theme.buttons.colors.large.borderColor};
-  border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
-  margin: 1rem 0 0;
-  background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
   &:hover {
     background-color: ${(props) =>
       props.isApplied || props.disabled
         ? props.theme.buttons.colors.large.bgColor
         : props.theme.buttons.colors.largeHover.bgColor};
+    border-color: ${(props) =>
+      props.isApplied
+        ? props.theme.colors.success
+        : props.disabled
+        ? props.theme.buttons.colors.large.borderColor
+        : props.theme.buttons.colors.largeHover.borderColor};
   }
 `
 
@@ -59,8 +65,11 @@ const CheckoutButtonIcon = styled.div`
     margin: 0 1.5rem 0 0;
   }
 
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
+  button:enabled:hover & {
+    color: ${(props) =>
+      props.isApplied
+        ? props.theme.buttons.colors.large.iconColor
+        : props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
@@ -84,8 +93,11 @@ const CheckoutButtonTitle = styled(Heading)`
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.color};
+  button:enabled:hover & {
+    color: ${(props) =>
+      props.isApplied
+        ? props.theme.buttons.colors.large.color
+        : props.theme.buttons.colors.largeHover.color};
   }
 `
 
@@ -98,8 +110,11 @@ const CheckoutButtonSubtitle = styled(Text)`
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
+  button:enabled:hover & {
+    color: ${(props) =>
+      props.isApplied
+        ? props.theme.buttons.colors.large.subtitleColor
+        : props.theme.buttons.colors.largeHover.subtitleColor};
   }
 `
 
@@ -127,8 +142,11 @@ const CheckoutButtonButtonIcon = styled.div`
     height: 1.6rem;
   }
 
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
+  button:enabled:hover & {
+    color: ${(props) =>
+      props.isApplied
+        ? props.theme.colors.error
+        : props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
@@ -148,17 +166,15 @@ const CheckoutButtonApply = styled(Text)`
     transition: ${(props) => props.theme.links.transition};
   }
 
-  button:hover & {
+  button:enabled:hover & {
     color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
   }
 `
 
 const CheckoutButtonRemove = styled(CheckoutButtonApply)`
-  // color: ${(props) => props.theme.colors.error};
-
-  // button:hover & {
-  //   color: ${(props) => props.theme.colors.error};
-  // }
+  button:enabled:hover & {
+    color: ${(props) => props.theme.colors.error};
+  }
 `
 
 const CheckoutButton = ({
@@ -183,7 +199,9 @@ const CheckoutButton = ({
         </CheckoutButtonCheckmark>
       ) : null}
       <CheckoutButtonInfo>
-        {icon && <CheckoutButtonIcon>{icon}</CheckoutButtonIcon>}
+        {icon && (
+          <CheckoutButtonIcon isApplied={isApplied}>{icon}</CheckoutButtonIcon>
+        )}
         <CheckoutButtonText>
           <CheckoutButtonTitle isApplied={isApplied}>
             {title}
@@ -207,7 +225,7 @@ const CheckoutButton = ({
               <CheckoutButtonApply>Applied</CheckoutButtonApply>
             ) : (
               <>
-                <CheckoutButtonButtonIcon>
+                <CheckoutButtonButtonIcon isApplied={isApplied}>
                   <XCircle size={null} />
                 </CheckoutButtonButtonIcon>
                 <CheckoutButtonRemove>Remove</CheckoutButtonRemove>

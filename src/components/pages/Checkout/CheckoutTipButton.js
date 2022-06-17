@@ -11,11 +11,13 @@ const CheckoutTipButtonView = styled.button`
   align-items: center;
   padding: 1.5rem 0;
   margin: 0 0.5rem;
-  border-width: ${(props) => props.theme.border.width};
   border-style: solid;
+  border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
+  border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
   border-color: ${(props) =>
-    props.isApplied ? props.theme.colors.success : props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radiusSmall};
+    props.isApplied
+      ? props.theme.colors.success
+      : props.theme.buttons.colors.large.borderColor};
 
   &:disabled {
     opacity: 1;
@@ -23,9 +25,15 @@ const CheckoutTipButtonView = styled.button`
 
   &:hover {
     background-color: ${(props) =>
-      props.theme.bgColors[
-        props.isApplied ? 'primary' : props.disabled ? 'primary' : 'tertiary'
-      ]};
+      props.isApplied || props.disabled
+        ? props.theme.buttons.colors.large.bgColor
+        : props.theme.buttons.colors.largeHover.bgColor};
+    border-color: ${(props) =>
+      props.isApplied
+        ? props.theme.colors.success
+        : props.disabled
+        ? props.theme.buttons.colors.large.bgColor
+        : props.theme.buttons.colors.largeHover.borderColor};
   }
 
   & > span {
@@ -42,21 +50,29 @@ const CheckoutTipButtonCheckmark = styled.div`
 `
 
 const CheckoutTipButtonTitle = styled(Heading)`
+  transition: ${(props) => props.theme.links.transition};
   font-size: ${(props) => props.theme.fonts.sizes.medium};
-  color: ${(props) =>
-    props.theme.colors[props.isApplied ? 'primary' : 'primary']};
+  color: ${(props) => props.theme.buttons.colors.large.color};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+
+  button:enabled:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.color};
   }
 `
 
 const CheckoutTipButtonSubtitle = styled(Text)`
   margin: 0.3rem 0 0;
+  transition: ${(props) => props.theme.links.transition};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  color: ${(props) =>
-    props.theme.colors[props.isApplied ? 'secondary' : 'secondary']};
+  color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  button:enabled:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
   }
 `
 
