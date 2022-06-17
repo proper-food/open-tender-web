@@ -8,7 +8,7 @@ import {
   validateOrder,
 } from '@open-tender/redux'
 import { selectContent } from '../../../slices'
-import { ButtonLink, Text } from '@open-tender/components'
+import { ButtonLink, FormError, Text } from '@open-tender/components'
 
 import CheckoutSection from './CheckoutSection'
 import CheckoutButton from './CheckoutButton'
@@ -34,13 +34,13 @@ const calcTotal = (totals) => {
 
 const CheckoutDiscounts = () => {
   const dispatch = useDispatch()
-  const { check, form, loading } = useSelector(selectCheckout)
+  const { check, form, loading, errors } = useSelector(selectCheckout)
   const { checkout: config } = useSelector(selectContent)
   const { customer_id, is_verified } = check.customer || {}
   const total = calcTotal(check.totals)
   const [pendingDiscount, setPendingDiscount] = useState(null)
   const discountIds = form.discounts.map((i) => i.id)
-  // const prevCheckDiscounts = usePrevious(check.discounts)
+  const errMsg = errors ? errors?.customer?.account : null
 
   // add initial auto applied discounts
   useEffect(() => {
@@ -55,19 +55,6 @@ const CheckoutDiscounts = () => {
       dispatch(validateOrder())
     }
   }, [check.discounts, form.discounts, dispatch])
-
-  // if the check.discounts array changes, remove any discounts that
-  // have disappeared from the form.discounts array
-  // useEffect(() => {
-  //   if (!isEqual(check.discounts, prevCheckDiscounts)) {
-  //     const checkDiscountIds = check.discounts.map((i) => i.id)
-  //     const formDiscounts = form.discounts.filter((i) =>
-  //       checkDiscountIds.includes(i.id)
-  //     )
-  //     dispatch(updateForm({ discounts: [...formDiscounts] }))
-  //     dispatch(validateOrder())
-  //   }
-  // }, [form.discounts, prevCheckDiscounts, check.discounts, dispatch])
 
   useEffect(() => {
     if (loading !== 'pending') setPendingDiscount(null)
@@ -150,6 +137,7 @@ const CheckoutDiscounts = () => {
 
   return (
     <CheckoutSection title={config.discounts.title}>
+      <FormError errMsg={errMsg} />
       <CheckoutDiscountsView>
         {loyalty.length > 0 && loyalty.map((i) => makeDiscountButton(i))}
         {rewards.length > 0 && rewards.map((i) => makeDiscountButton(i))}
