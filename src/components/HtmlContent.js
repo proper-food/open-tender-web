@@ -22,15 +22,40 @@ const HtmlContentView = styled.div`
     }
   }
 
-  h1 + p,
-  h2 + p,
-  h3 + p,
-  h4 + p,
-  h5 + p,
-  h6 + p {
-    margin: 1em 0 0 !important;
+  ul,
+  ol {
+    margin: 1em 0 1em 1em;
+  }
+
+  ul {
+    list-style: disc outside;
+  }
+
+  ul li,
+  ol li {
+    margin: 0.5em 0;
+    line-height: ${(props) => props.theme.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+      margin: 0.5em 0;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1em;
+
+    & + p {
       margin: 1em 0 0 !important;
+    }
+
+    & + ul,
+    & + ol {
+      margin-top: 0.5em;
     }
   }
 `
