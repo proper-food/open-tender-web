@@ -79,8 +79,12 @@ const GuestButtons = () => {
         >
           {isCurrentOrder ? 'Continue Order' : 'New Order'}
         </ButtonStyled>
-        <ButtonStyled onClick={login} size={buttonSize} color="secondary">
-          Login / Sign Up
+        <ButtonStyled
+          onClick={isCurrentOrder ? startNewOrder : login}
+          size={buttonSize}
+          color="secondary"
+        >
+          {isCurrentOrder ? 'New Order' : 'Login / Sign Up'}
         </ButtonStyled>
       </GuestButtonsContainer>
     </GuestButtonsView>
