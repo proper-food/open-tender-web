@@ -10,9 +10,14 @@ import {
   resetOrder,
   setOrderType,
 } from '@open-tender/redux'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, Message } from '@open-tender/components'
 
-import { selectBrand, selectCateringOnly, selectContent } from '../../../slices'
+import {
+  selectBrand,
+  selectCateringOnly,
+  selectContent,
+  selectHasCatering,
+} from '../../../slices'
 import iconMap from '../../iconMap'
 import {
   Background,
@@ -46,10 +51,11 @@ const CateringContent = styled.div`
 const CateringError = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: -3rem 0 0;
 
-  p:first-of-type {
-    color: ${(props) => props.theme.colors.error};
-    margin: 0 0 2rem;
+  & > p {
+    width: 100%;
+    margin: 0 0 3rem;
   }
 `
 
@@ -80,6 +86,7 @@ const CateringPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
+  const hasCatering = useSelector(selectHasCatering)
   const cateringOnly = useSelector(selectCateringOnly)
   const { catering: config, guest } = useSelector(selectContent)
   const { showGuest } = guest || {}
@@ -87,7 +94,6 @@ const CateringPage = () => {
   const { title, subtitle, background, content } = config
   const { orderType, address } = useSelector(selectOrder)
   const hasContent = !!(content && content.length)
-  const hasCatering = true
 
   useEffect(() => {
     if (!orderType) dispatch(setOrderType('CATERING'))
@@ -152,15 +158,19 @@ const CateringPage = () => {
                     Order Pickup
                   </ButtonStyled>
                 </CateringButtons>
-                <CateringStartOver>
-                  <ButtonLink onClick={startOver}>
-                    Switch to a regular Pickup or Delivery order
-                  </ButtonLink>
-                </CateringStartOver>
+                {!cateringOnly && (
+                  <CateringStartOver>
+                    <ButtonLink onClick={startOver}>
+                      Switch to a regular Pickup or Delivery order
+                    </ButtonLink>
+                  </CateringStartOver>
+                )}
               </CateringContent>
             ) : (
               <CateringError>
-                <p>This order type isn't currently available</p>
+                <Message color="alert" as="p">
+                  This merchant isn't currently accepting catering orders.
+                </Message>
                 <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
                   Start Over
                 </ButtonStyled>

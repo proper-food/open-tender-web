@@ -106,6 +106,11 @@ export const selectApi = (state) => state.config.api
 export const selectContentSection = (page) => (state) =>
   state.config.content[page]
 
+export const selectHasCatering = (state) => {
+  const { orderTypes } = state.config.settings
+  return orderTypes.includes('CATERING')
+}
+
 export const selectCateringOnly = (state) => {
   const { orderTypes } = state.config.settings
   return !!(orderTypes.includes('CATERING') && orderTypes.length === 1)

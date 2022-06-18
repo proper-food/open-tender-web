@@ -9,7 +9,7 @@ import { Input, Switch, Textarea } from '@open-tender/components'
 import CheckoutInputs from './CheckoutInputs'
 
 const CheckoutDetailsView = styled.div`
-  margin-top: ${(props) => (!props.hasAddress ? '0' : '1.5rem')};
+  margin-top: 1.5rem;
 `
 
 const initialState = {
