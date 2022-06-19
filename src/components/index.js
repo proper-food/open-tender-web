@@ -11,6 +11,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
+import ContainerSite from './ContainerSite'
 import Deals from './Deals'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
@@ -107,6 +108,7 @@ export {
   CartButton,
   CommunicationPrefs,
   Container,
+  ContainerSite,
   Content,
   Deals,
   ErrorBoundary,

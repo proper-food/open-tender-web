@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
-import ContainerSite from './ContainerSite'
+import { ContainerSite } from '.'
 
 const HeaderSiteView = styled('div')`
   position: fixed;
