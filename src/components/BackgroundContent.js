@@ -3,6 +3,9 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
 
+import { ContainerSite } from '.'
+import BackgroundCta from './BackgroundCta'
+
 const BackgroundContentView = styled('div')`
   position: absolute;
   z-index: 3;
@@ -11,12 +14,14 @@ const BackgroundContentView = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  padding: 6rem ${(props) => props.theme.layout.padding};
+  padding: ${(props) => props.theme.layout.headerHeightSite}
+    ${(props) => props.theme.layout.padding};
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.headerHeightSiteMobile}
+      ${(props) => props.theme.layout.paddingMobile};
     justify-content: center;
     align-items: flex-end;
     text-align: center;
@@ -24,32 +29,30 @@ const BackgroundContentView = styled('div')`
 `
 
 const BackgroundContentText = styled('div')`
-  max-width: 108rem;
-
-  p {
-    color: ${(props) => props.color || props.theme.colors.light};
-    // text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  max-width: 72rem;
+  padding: ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.paddingMobile} 0;
   }
+`
 
-  p:first-of-type {
-    line-height: 0.9;
+const BackgroundContentTitle = styled(Heading)`
+  margin-left: -0.3rem;
+  line-height: 1;
+  color: #${(props) => props.textColor};
+  font-size: ${(props) => props.theme.fonts.sizes.mega};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.h1};
-    color: ${(props) => props.color || props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      line-height: 1;
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
   }
+`
 
-  p + p {
-    max-width: 64rem;
-    margin: 1rem auto 0;
-    line-height: ${(props) => props.theme.lineHeight};
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
+const BackgroundContentSubtitle = styled.p`
+  margin: 0.5em 0;
+  line-height: ${(props) => props.theme.lineHeight};
+  color: #${(props) => props.textColor};
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 `
 
@@ -69,6 +72,8 @@ const makeAlignment = (alignment) => {
 const BackgroundContent = ({
   title,
   subtitle,
+  url,
+  url_text,
   title_color = 'ffffff',
   subtitle_color = 'ffffff',
   vertical = 'BOTTOM',
@@ -79,20 +84,29 @@ const BackgroundContent = ({
   const justifyContent = makeAlignment(horizontal)
   const alignItems = makeAlignment(vertical)
 
-  return hide_text ? null : (
+  if (hide_text) return null
+
+  return (
     <BackgroundContentView
       justifyContent={justifyContent}
       alignItems={alignItems}
       textAlign={horizontal}
     >
-      <BackgroundContentText>
-        {title && (
-          <Heading as="p" style={{ color: `#${title_color}` }}>
-            {title}
-          </Heading>
-        )}
-        {subtitle && <p style={{ color: `#${subtitle_color}` }}>{subtitle}</p>}
-      </BackgroundContentText>
+      <ContainerSite>
+        <BackgroundContentText>
+          {title && (
+            <BackgroundContentTitle as="p" textColor={title_color}>
+              {title}
+            </BackgroundContentTitle>
+          )}
+          {subtitle && (
+            <BackgroundContentSubtitle textColor={subtitle_color}>
+              {subtitle}
+            </BackgroundContentSubtitle>
+          )}
+          <BackgroundCta url={url} urlText={url_text} />
+        </BackgroundContentText>
+      </ContainerSite>
     </BackgroundContentView>
   )
 }

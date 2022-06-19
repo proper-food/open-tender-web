@@ -9,7 +9,7 @@ import { ButtonStyled } from '@open-tender/components'
 import { selectBrand } from '../slices'
 import { ContainerSite } from '.'
 
-const HeaderSiteView = styled('div')`
+const HeaderSiteView = styled.div`
   position: fixed;
   z-index: 14;
   top: 0;
@@ -33,7 +33,7 @@ const HeaderSiteContainer = styled.div`
   align-items: center;
 `
 
-const HeaderSiteLogo = styled('div')`
+const HeaderSiteLogo = styled.div`
   position: relative;
   z-index: 2;
   max-width: 18rem;

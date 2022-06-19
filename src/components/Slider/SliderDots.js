@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 const SliderDots = styled.div`
   position: absolute;
-  z-index: 11;
+  z-index: 13;
   bottom: ${(props) => props.theme.layout.padding};
   left: 0;
   right: 0;

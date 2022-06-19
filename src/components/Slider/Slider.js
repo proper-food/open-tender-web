@@ -77,6 +77,7 @@ const SliderNew = ({ settings = {}, slides }) => {
     (index > lastIndex && !(index === last && lastIndex === 0)) ||
     (index === 0 && lastIndex === last)
   const moveRight = !moveLeft
+  console.log(slides)
 
   const config = {
     delta: 10,

@@ -3,6 +3,7 @@ import AccountBack from './AccountBack'
 import Announcements from './Announcements'
 import Background from './Background'
 import BackgroundContent from './BackgroundContent'
+import BackgroundCta from './BackgroundCta'
 import BackgroundImage from './BackgroundImage'
 import BackgroundLoading from './BackgroundLoading'
 import ButtonText from './ButtonText'
@@ -100,6 +101,7 @@ export {
   Announcements,
   Background,
   BackgroundContent,
+  BackgroundCta,
   BackgroundImage,
   BackgroundLoading,
   ButtonText,
