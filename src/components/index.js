@@ -90,7 +90,6 @@ import Sidebar from './Sidebar'
 import SidebarModal from './SidebarModal'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
-import SliderCards from './SliderCards'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
 import Welcome from './Welcome'
@@ -192,7 +191,6 @@ export {
   SidebarModal,
   SkipLink,
   Slider,
-  SliderCards,
   Tag,
   VerifyAccount,
   Welcome,
