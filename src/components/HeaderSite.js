@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
+import ContainerSite from './ContainerSite'
 
 const HeaderSiteView = styled('div')`
   position: fixed;
@@ -21,11 +22,15 @@ const HeaderSiteView = styled('div')`
   transition: all 0.25s ease;
   background-color: ${(props) =>
     props.stuck ? props.theme.bgColors.dark : 'transparent'};
-  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
+`
+
+const HeaderSiteContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 const HeaderSiteLogo = styled('div')`
@@ -66,21 +71,12 @@ const HeaderSiteNav = styled.div`
   }
 
   a {
-    color: ${(props) =>
-      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
+    color: ${(props) => props.theme.links.light.color};
 
     &:hover,
     &:active {
-      color: ${(props) => props.theme.links.primary.color};
+      color: ${(props) => props.theme.links.light.hover};
     }
-  }
-
-  button {
-    color: ${(props) =>
-      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
-    border-color: ${(props) =>
-      props.theme.colors[props.useLight || props.stuck ? 'light' : 'dark']};
-    background: transparent;
   }
 `
 
@@ -114,23 +110,27 @@ const HeaderSite = ({ useLight = true, style = null }) => {
   return (
     <nav ref={header} role="navigation" aria-label="Primary Navigation">
       <HeaderSiteView stuck={stuck} isMobile={isMobile} style={style}>
-        <HeaderSiteLogo>
-          <Link to="/">
-            <img src={logoUrl} alt={title} />
-          </Link>
-        </HeaderSiteLogo>
-        <HeaderSiteNav useLight={useLight} stuck={stuck}>
-          <ul>
-            {links.map((link) => (
-              <li key={link.path}>
-                <Link to={link.path}>{link.title}</Link>
-              </li>
-            ))}
-          </ul>
-          <ButtonStyled color="primary" onClick={() => navigate('/guest')}>
-            Order Now
-          </ButtonStyled>
-        </HeaderSiteNav>
+        <ContainerSite>
+          <HeaderSiteContainer>
+            <HeaderSiteLogo>
+              <Link to="/">
+                <img src={logoUrl} alt={title} />
+              </Link>
+            </HeaderSiteLogo>
+            <HeaderSiteNav useLight={useLight} stuck={stuck}>
+              <ul>
+                {links.map((link) => (
+                  <li key={link.path}>
+                    <Link to={link.path}>{link.title}</Link>
+                  </li>
+                ))}
+              </ul>
+              <ButtonStyled color="light" onClick={() => navigate('/guest')}>
+                Order Now
+              </ButtonStyled>
+            </HeaderSiteNav>
+          </HeaderSiteContainer>
+        </ContainerSite>
       </HeaderSiteView>
     </nav>
   )

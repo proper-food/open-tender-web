@@ -6,22 +6,90 @@ import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
 import { useSwipeable } from 'react-swipeable'
 
-const ArrowView = styled.div`
+// const ArrowView = styled.div`
+//   position: absolute;
+//   z-index: 100;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   width: ${(props) => props.size};
+//   height: ${(props) => props.size};
+//   color: ${(props) => props.theme.colors.light};
+//   cursor: pointer;
+//   transition: ${(props) => props.theme.links.transition};
+//   left: ${(props) => (props.direction === 'left' ? '0.5rem' : 'auto')};
+//   right: ${(props) => (props.direction === 'right' ? '0.5rem' : 'auto')};
+//   opacity: ${(props) => (props.disabled ? '0.5' : '1.0')};
+
+//   &:hover {
+//     opacity: 0.5;
+//   }
+// `
+
+// const Arrow = ({ direction, size, disabled, onClick }) => {
+//   return (
+//     <ArrowView
+//       direction={direction}
+//       size={size}
+//       disabled={disabled}
+//       onClick={onClick}
+//     >
+//       {direction === 'left' ? iconMap.ChevronLeft : iconMap.ChevronRight}
+//     </ArrowView>
+//   )
+// }
+
+// Arrow.displayName = 'Arrow'
+// Arrow.propTypes = {
+//   direction: propTypes.string,
+//   size: propTypes.string,
+//   disabled: propTypes.bool,
+//   onClick: propTypes.func,
+// }
+
+const Arrows = styled.div`
   position: absolute;
-  z-index: 100;
-  top: 50%;
-  transform: translateY(-50%);
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
-  color: ${(props) => props.theme.colors.light};
-  cursor: pointer;
-  transition: ${(props) => props.theme.links.transition};
-  left: ${(props) => (props.direction === 'left' ? '0.5rem' : 'auto')};
-  right: ${(props) => (props.direction === 'right' ? '0.5rem' : 'auto')};
-  opacity: ${(props) => (props.disabled ? '0.5' : '1.0')};
+  z-index: 12;
+  bottom: ${(props) => props.theme.layout.padding};
+  left: ${(props) =>
+    props.position === 'LEFT' ? props.theme.layout.padding : 'auto'};
+  right: ${(props) =>
+    props.position === 'RIGHT' ? props.theme.layout.padding : 'auto'};
+  display: flex;
+  jstify-content: center;
+  align-items: center;
+`
+
+const ArrowView = styled.button`
+  display: block;
+  width: ${(props) => props.size.toFixed(2)}rem;
+  height: ${(props) => props.size.toFixed(2)}rem;
+  border-radius: ${(props) => (props.size / 2).toFixed(2)}rem;
+  padding: ${(props) => (props.size / 8).toFixed(2)}rem;
+  display: flex;
+  jstify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-width: ${(props) => props.theme.border.width};
+  border-color: ${(props) => props.theme.buttons.colors.light.borderColor};
+  background-color: ${(props) => props.theme.buttons.colors.light.bgColor};
+  color: ${(props) => props.theme.buttons.colors.light.color};
 
   &:hover {
-    opacity: 0.5;
+    border-color: ${(props) =>
+      props.theme.buttons.colors.lightHover.borderColor};
+    background-color: ${(props) =>
+      props.theme.buttons.colors.lightHover.bgColor};
+    color: ${(props) => props.theme.buttons.colors.lightHover.color};
+  }
+
+  & > span {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  button + & {
+    margin-left: ${(props) => (props.size / 4).toFixed(2)}rem;
   }
 `
 
@@ -33,7 +101,9 @@ const Arrow = ({ direction, size, disabled, onClick }) => {
       disabled={disabled}
       onClick={onClick}
     >
-      {direction === 'left' ? iconMap.ChevronLeft : iconMap.ChevronRight}
+      <span>
+        {direction === 'LEFT' ? iconMap.ArrowLeft : iconMap.ArrowRight}
+      </span>
     </ArrowView>
   )
 }
@@ -49,17 +119,15 @@ Arrow.propTypes = {
 const Dots = styled.div`
   position: absolute;
   z-index: 11;
-  bottom: 0;
+  bottom: ${(props) => props.theme.layout.padding};
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 ${(props) => props.theme.layout.padding};
-  height: 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // height: ${(props) => props.theme.layout.paddingMobile};
-    height: 3rem;
+    bottom: ${(props) => props.theme.layout.paddingMobile};
     padding: 0;
     justify-content: center;
     align-items: center;
@@ -68,11 +136,11 @@ const Dots = styled.div`
 
 const Dot = styled.button`
   width: 100%;
-  margin: 0 0.4rem;
-  height: 0.8rem;
-  border-radius: 0.4rem;
+  margin: 0 0.3rem;
+  height: 0.6rem;
+  border-radius: 0.3rem;
   background-color: ${(props) => props.theme.colors.light};
-  max-width: ${(props) => (props.active ? '4rem' : '0.8rem')};
+  max-width: ${(props) => (props.active ? '3rem' : '0.6rem')};
   opacity: ${(props) => (props.active ? '1' : '0.5')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
@@ -138,7 +206,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   const interval = isBrowser ? duration : duration_mobile
   const showArrows = isBrowser ? show_arrows : show_arrows_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
-  const size = isBrowser ? '3rem' : '2rem'
+  const size = isBrowser ? 3.6 : 2.4
   const count = slides.length
   const last = count - 1
   const prevIndex = index === 0 ? last : index - 1
@@ -224,18 +292,18 @@ const SliderNew = ({ settings = {}, slides }) => {
         })}
       </SliderSwipeWrapper>
       {showArrows && (
-        <>
+        <Arrows position="RIGHT">
           <Arrow
-            direction="left"
+            direction="LEFT"
             size={size}
             onClick={(evt) => showSlide(evt, index === 0 ? last : index - 1)}
           />
           <Arrow
-            direction="right"
+            direction="RIGHT"
             size={size}
             onClick={(evt) => showSlide(evt, index === last ? 0 : index + 1)}
           />
-        </>
+        </Arrows>
       )}
       {showDots && (
         <Dots>
