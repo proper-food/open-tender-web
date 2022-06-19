@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-// import {
-//   selectAnnouncementsPage,
-//   fetchAnnouncementPage,
-// } from '@open-tender/redux'
+
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
@@ -18,11 +15,10 @@ import {
   Main,
   PageIntro,
 } from '../..'
+import PageHero from '../../PageHero'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  // const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = home
@@ -30,12 +26,9 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(closeModal())
-    navigate('/account')
-  }, [dispatch, navigate])
+  }, [dispatch])
 
-  // useEffect(() => {
-  //   dispatch(fetchAnnouncementPage('HOME'))
-  // }, [dispatch])
+  useEffect(() => {}, [dispatch])
 
   return (
     <>
@@ -45,13 +38,14 @@ const Home = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <HeroSite imageUrl={isBrowser ? background : mobile}>
+          {/* <HeroSite imageUrl={isBrowser ? background : mobile}>
             <HeroSiteCta title={title} subtitle={subtitle} width="56rem">
               <ButtonStyled onClick={() => navigate('/account')}>
                 Order Now
               </ButtonStyled>
             </HeroSiteCta>
-          </HeroSite>
+          </HeroSite> */}
+          <PageHero page="HOME" imageUrl={isBrowser ? background : mobile} />
           {hasContent && <PageIntro content={content} />}
         </Main>
       </Content>

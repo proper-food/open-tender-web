@@ -6,7 +6,7 @@ import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
 import { useSwipeable } from 'react-swipeable'
 
-const ArrowView = styled('div')`
+const ArrowView = styled.div`
   position: absolute;
   z-index: 100;
   top: 50%;
@@ -46,7 +46,7 @@ Arrow.propTypes = {
   onClick: propTypes.func,
 }
 
-const Dots = styled('div')`
+const Dots = styled.div`
   position: absolute;
   z-index: 11;
   bottom: 0;
@@ -56,7 +56,7 @@ const Dots = styled('div')`
   justify-content: center;
   align-items: center;
   padding: 0 ${(props) => props.theme.layout.padding};
-  height: ${(props) => props.theme.layout.padding};
+  height: 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     // height: ${(props) => props.theme.layout.paddingMobile};
     height: 3rem;
@@ -66,13 +66,13 @@ const Dots = styled('div')`
   }
 `
 
-const Dot = styled('button')`
+const Dot = styled.button`
   width: 100%;
-  margin: 0 0.2rem;
-  height: 0.4rem;
-  border-radius: 0.2rem;
+  margin: 0 0.4rem;
+  height: 0.8rem;
+  border-radius: 0.4rem;
   background-color: ${(props) => props.theme.colors.light};
-  max-width: ${(props) => (props.active ? '2rem' : '0.4rem')};
+  max-width: ${(props) => (props.active ? '4rem' : '0.8rem')};
   opacity: ${(props) => (props.active ? '1' : '0.5')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
@@ -81,19 +81,18 @@ const Dot = styled('button')`
   }
 `
 
-const SliderView = styled('div')`
+const SliderView = styled.div`
   position: relative;
   flex-grow: 1;
   overflow: hidden;
-  // display: flex;
 `
 
-const SliderSwipeWrapper = styled('div')`
+const SliderSwipeWrapper = styled.div`
   display: flex;
   height: 100%;
 `
 
-const Slide = styled('div')`
+const Slide = styled.div`
   position: absolute;
   z-index: ${(props) => props.index};
   top: 0;

@@ -6,6 +6,7 @@ import Back from './Back'
 import ButtonBoth from './ButtonBoth'
 import CancelEdit from './CancelEdit'
 import Cart from './Cart'
+import ContinueOrder from './ContinueOrder'
 import Deals from './Deals'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
@@ -16,7 +17,6 @@ import Locations from './Locations'
 import Logout from './Logout'
 import Menu from './Menu'
 import NavMenu from './NavMenu'
-import OrderNow from './OrderNow'
 import OrderTime from './OrderTime'
 import OrderType from './OrderType'
 import Points from './Points'
@@ -35,6 +35,7 @@ export {
   ButtonBoth,
   CancelEdit,
   Cart,
+  ContinueOrder,
   Deals,
   Favorite,
   GroupOrder,
@@ -45,7 +46,6 @@ export {
   Logout,
   Menu,
   NavMenu,
-  OrderNow,
   OrderTime,
   OrderType,
   Points,

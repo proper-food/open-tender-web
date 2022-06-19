@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 
 import { selectBrand } from '../slices'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderLogoLink = styled.a`
   display: block;
@@ -18,18 +19,32 @@ const HeaderLogoLink = styled.a`
   }
 `
 
-const HeaderLogo = ({ useLight = false }) => {
-  const brand = useSelector(selectBrand)
-  const logoUrl = useLight ? brand.logoLight : brand.logo
+const HeaderLogoButton = styled.button`
+  display: block;
+  max-width: 14rem;
+  margin: 0.4rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 13rem;
+  }
 
-  return (
-    <HeaderLogoLink
-      isMobile={isMobile}
-      href={brand.url}
-      rel="noopener noreferrer"
-    >
+  img {
+    pointer-events: none;
+  }
+`
+
+const HeaderLogo = ({ useLight = false }) => {
+  const navigate = useNavigate()
+  const { url, logo, logoLight } = useSelector(selectBrand)
+  const logoUrl = useLight ? logoLight : logo
+
+  return url ? (
+    <HeaderLogoLink isMobile={isMobile} href={url} rel="noopener noreferrer">
       <img src={logoUrl} alt="logo" />
     </HeaderLogoLink>
+  ) : (
+    <HeaderLogoButton onClick={() => navigate('/')}>
+      <img src={logoUrl} alt="logo" />
+    </HeaderLogoButton>
   )
 }
 

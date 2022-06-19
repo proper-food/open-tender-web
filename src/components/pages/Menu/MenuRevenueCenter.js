@@ -39,7 +39,7 @@ const MenuRevenueCenterView = styled('div')`
 const MenuRevenueCenterImage = styled(BgImage)`
   position: relative;
   padding: 30% 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.border.radius};
 `
 

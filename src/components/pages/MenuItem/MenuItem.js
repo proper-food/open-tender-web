@@ -76,7 +76,7 @@ const MenuItemBack = styled('div')`
     &:active,
     &:focus {
       color: ${(props) => props.theme.colors.primary};
-      background-color: ${(props) => props.theme.bgColors.secondary};
+      background-color: ${(props) => props.theme.bgColors.tertiary};
     }
   }
 `

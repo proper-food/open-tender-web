@@ -7,7 +7,6 @@ const CardView = styled(Box)`
   position: relative;
   height: 100%;
   padding: 1.5rem 1.5rem 1rem;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
 const CardContainer = styled('div')`

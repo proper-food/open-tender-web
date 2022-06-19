@@ -1,37 +1,19 @@
+import { useEffect } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isBrowser } from 'react-device-detect'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectAnnouncementsPage,
+  fetchAnnouncementPage,
+} from '@open-tender/redux'
 
 import { BackgroundImage, BackgroundLoading, Slider } from '.'
-import { isBrowser } from 'react-device-detect'
 
 const PageHeroView = styled('div')`
-  position: relative;
+  height: 100vh;
+  min-height: 64rem;
   display: flex;
-  flex-direction: column;
-`
-
-const PageHeroContent = styled('div')`
-  flex: 1 0 auto;
-  position: relative;
-  display: flex;
-  height: 50vh;
-  min-height: 44rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: auto;
-    min-height: 32rem;
-  }
-`
-
-const PageHeroGreeting = styled('div')`
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  margin: ${(props) => props.theme.layout.margin} 0;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
 `
 
 const makeImageUrl = (images, isBrowser) => {
@@ -48,42 +30,35 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({ announcements, imageUrl, showHero, style, children }) => {
+const PageHero = ({ page, imageUrl, style }) => {
+  const dispatch = useDispatch()
+  const announcements = useSelector(selectAnnouncementsPage(page))
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
-  const hasHero = imageUrl && showHero
-  const hasImage = slides || hasHero
+
+  useEffect(() => {
+    if (page) dispatch(fetchAnnouncementPage(page))
+  }, [dispatch, page])
 
   return (
-    <PageHeroView style={style} hasImage={hasImage}>
-      {hasImage && (
-        <PageHeroContent>
-          {isLoading ? (
-            <BackgroundLoading />
-          ) : slides ? (
-            <Slider settings={settings} slides={slides} />
-          ) : hasHero ? (
-            <BackgroundImage imageUrl={imageUrl} />
-          ) : null}
-        </PageHeroContent>
-      )}
-      {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
+    <PageHeroView style={style}>
+      {isLoading ? (
+        <BackgroundLoading />
+      ) : slides ? (
+        <Slider settings={settings} slides={slides} />
+      ) : imageUrl ? (
+        <BackgroundImage imageUrl={imageUrl} />
+      ) : null}
     </PageHeroView>
   )
 }
 
 PageHero.displayName = 'PageHero'
 PageHero.propTypes = {
+  page: propTypes.string,
   imageUrl: propTypes.string,
-  announcements: propTypes.object,
-  showHero: propTypes.bool,
-  maxHeight: propTypes.string,
   style: propTypes.object,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
 }
 
 export default PageHero

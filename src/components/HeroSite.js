@@ -6,7 +6,7 @@ import { ClipLoader } from 'react-spinners'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../slices'
 
-const HeroSiteView = styled('div')`
+const HeroSiteView = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@ const HeroSiteBackgroundImage = styled(BgImage)`
   animation: fade-in 0.5s ease-in-out 0s forwards;
 `
 
-const HeroSiteLoading = styled('div')`
+const HeroSiteLoading = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -38,7 +38,7 @@ const HeroSiteLoading = styled('div')`
   align-items: center;
 `
 
-const HeroSiteContent = styled('div')`
+const HeroSiteContent = styled.div`
   position: absolute;
   z-index: 2;
   top: 0;

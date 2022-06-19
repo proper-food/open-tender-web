@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -14,7 +13,7 @@ import { ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const OrderNowIcon = styled('div')`
+const ContinueOrderIcon = styled('div')`
   position: relative;
   margin: 0 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -22,7 +21,7 @@ const OrderNowIcon = styled('div')`
   }
 `
 
-const OrderNowCount = styled('div')`
+const ContinueOrderCount = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0.1rem;
@@ -48,9 +47,8 @@ const OrderNowCount = styled('div')`
   }
 `
 
-const OrderNow = ({ text = 'Order Now', icon = iconMap.ShoppingBag }) => {
+const ContinueOrder = () => {
   const navigate = useNavigate()
-  // const { auth } = useSelector(selectCustomer)
   const { pathname } = useLocation()
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
@@ -70,23 +68,19 @@ const OrderNow = ({ text = 'Order Now', icon = iconMap.ShoppingBag }) => {
   }
 
   return isCurrentOrder ? (
-    <OrderNowIcon>
-      <OrderNowCount>{cartQuantity}</OrderNowCount>
+    <ContinueOrderIcon>
+      <ContinueOrderCount>{cartQuantity}</ContinueOrderCount>
       <ButtonIcon
-        label={isCurrentOrder ? 'Continue Order' : text}
+        label="Continue Order"
         onClick={order}
         size={isBrowser ? 24 : 20}
       >
-        {icon}
+        {iconMap.ShoppingBag}
       </ButtonIcon>
-    </OrderNowIcon>
+    </ContinueOrderIcon>
   ) : null
 }
 
-OrderNow.displayName = 'OrderNow'
-OrderNow.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-}
+ContinueOrder.displayName = 'ContinueOrder'
 
-export default OrderNow
+export default ContinueOrder

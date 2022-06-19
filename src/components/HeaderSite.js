@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
+import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
-import { OrderNow } from './buttons'
 
 const HeaderSiteView = styled('div')`
   position: fixed;
@@ -88,12 +88,12 @@ const links = [
   { path: '/menu', title: 'Menu' },
   { path: '/restaurants', title: 'Locations' },
   { path: '/catering', title: 'Catering' },
-  { path: '/deals', title: 'Offers' },
   { path: '/careers', title: 'Careers' },
   { path: '/about', title: 'About' },
 ]
 
 const HeaderSite = ({ useLight = true, style = null }) => {
+  const navigate = useNavigate()
   const header = useRef(null)
   const [stuck, setStuck] = useState(false)
   const { logo, logoLight, title } = useSelector(selectBrand)
@@ -127,7 +127,9 @@ const HeaderSite = ({ useLight = true, style = null }) => {
               </li>
             ))}
           </ul>
-          <OrderNow size="default" icon={null} />
+          <ButtonStyled color="primary" onClick={() => navigate('/guest')}>
+            Order Now
+          </ButtonStyled>
         </HeaderSiteNav>
       </HeaderSiteView>
     </nav>

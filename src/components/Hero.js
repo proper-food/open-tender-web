@@ -17,17 +17,12 @@ const HeroView = styled('div')`
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     min-height: 18rem;
     padding: ${(props) => props.theme.layout.paddingMobile};
     padding-bottom: 2.5rem;
   }
-
-  // > div {
-  //   opacity: 0;
-  //   animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  // }
 `
 
 const HeroBackgroundImage = styled(BgImage)`

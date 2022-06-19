@@ -4,7 +4,6 @@ import styled from '@emotion/styled'
 import { Container } from '.'
 
 const PageIntroView = styled.div`
-  // background-color: ${(props) => props.theme.bgColors.secondary};
   padding: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: ${(props) => props.theme.layout.marginMobile} 0;
@@ -20,8 +19,7 @@ const PageIntroContent = styled.div`
   p {
     margin: 1em 0;
     line-height: ${(props) => props.theme.lineHeight};
-    font-family: 'Lora', sans-serif;
-    // font-size: 2.5rem;
+    // font-family: 'Lora', sans-serif;
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.big};

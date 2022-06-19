@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import { Header } from '.'
-import { AccountSettings, NavMenu, OrderNow } from './buttons'
+import { AccountSettings, NavMenu, ContinueOrder } from './buttons'
 
 const HeaderUser = ({ maxWidth = '100%' }) => {
   return (
@@ -9,7 +9,7 @@ const HeaderUser = ({ maxWidth = '100%' }) => {
       left={<AccountSettings />}
       right={
         <>
-          <OrderNow />
+          <ContinueOrder />
           <NavMenu />
         </>
       }

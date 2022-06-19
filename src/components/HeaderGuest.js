@@ -5,7 +5,7 @@ import { selectCustomer } from '@open-tender/redux'
 
 import { selectContentSection } from '../slices'
 import { Header, HeaderLogo } from '.'
-import { AccountHome, AccountSettings, NavMenu, OrderNow } from './buttons'
+import { AccountHome, AccountSettings, NavMenu, ContinueOrder } from './buttons'
 
 const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
   const { auth } = useSelector(selectCustomer)
@@ -21,7 +21,7 @@ const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
       title={showLogo ? <HeaderLogo /> : null}
       right={
         <>
-          <OrderNow />
+          <ContinueOrder />
           <NavMenu />
         </>
       }

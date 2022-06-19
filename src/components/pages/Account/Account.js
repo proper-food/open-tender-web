@@ -24,7 +24,7 @@ import {
   Main,
   Welcome,
 } from '../..'
-import { AccountSettings, NavMenu, OrderNow } from '../../buttons'
+import { AccountSettings, NavMenu, ContinueOrder } from '../../buttons'
 import AccountButtons from './AccountButtons'
 import AccountContent from './AccountContent'
 import AccountLoyalty from './AccountLoyalty'
@@ -123,7 +123,7 @@ const Account = () => {
           title={showLogo ? <HeaderLogo /> : null}
           right={
             <>
-              <OrderNow />
+              <ContinueOrder />
               <NavMenu />
             </>
           }
