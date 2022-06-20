@@ -28,8 +28,6 @@ const Home = () => {
     dispatch(closeModal())
   }, [dispatch])
 
-  useEffect(() => {}, [dispatch])
-
   return (
     <>
       <Helmet>
