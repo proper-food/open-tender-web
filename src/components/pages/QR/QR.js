@@ -12,6 +12,7 @@ import {
   selectOrder,
   setOrderServiceType,
   setPrepType,
+  setRequestedAt,
   setTable,
 } from '@open-tender/redux'
 import { ButtonStyled, Text } from '@open-tender/components'
@@ -80,6 +81,7 @@ const QR = () => {
   useEffect(() => {
     if (init && menuSlug !== '/' && prepType) {
       dispatch(setTable(table))
+      dispatch(setRequestedAt('asap'))
       dispatch(setOrderServiceType(orderType, serviceType, false))
       navigate(menuSlug)
     }
