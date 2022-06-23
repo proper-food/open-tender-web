@@ -23,7 +23,7 @@ const CheckoutCustomer = () => {
   const { has_thanx } = useSelector(selectBrand)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const { auth, profile } = useSelector(selectCustomer)
-  const { form, check } = useSelector(selectCheckout)
+  const { form, check, errors } = useSelector(selectCheckout)
   const { sso } = check ? check.customer || {} : {}
   const noCustomer = isEmpty(form.customer)
   const { customer_id, first_name, last_name, email, phone, company } =
@@ -107,7 +107,7 @@ const CheckoutCustomer = () => {
       {/* {check && <CheckoutCompany errors={errors} />} */}
     </CheckoutSection>
   ) : (
-    !isLoggingOut && (
+    !isLoggingOut && !errors && (
       <CheckoutSection>
         <Loading text="Retrieving your info..." style={{ textAlign: 'left' }} />
       </CheckoutSection>
