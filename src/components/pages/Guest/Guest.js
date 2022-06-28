@@ -20,15 +20,22 @@ import GuestContent from './GuestContent'
 import GuestDeals from './GuestDeals'
 import HeaderGuest from '../../HeaderGuest'
 
+const GuestWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+`
+
 const GuestView = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
+  padding-top: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
-    margin: 0 0
-      ${(props) => (props.showHero ? props.theme.layout.navHeight : '0')};
+    padding-top: 0;
   }
 `
 
@@ -38,6 +45,7 @@ const GuestHero = styled.div`
   flex-direction: column;
   overflow: hidden;
   border-radius: ${(props) => props.theme.border.radius};
+  // margin: 4rem 0;
 `
 
 const Guest = () => {
@@ -81,21 +89,19 @@ const Guest = () => {
       <Content maxWidth="76.8rem">
         <HeaderGuest />
         <Main>
-          <GuestView showHero={showHero}>
-            <Welcome title={title} subtitle={subtitle} />
-            <GuestButtons />
-            {displayedSectons}
-            {isMobile && (
-              <>
-                {showHero && (
-                  <GuestHero>
-                    <BackgroundImage imageUrl={mobile} />
-                  </GuestHero>
-                )}
-                <Announcements page="GUEST" />
-              </>
-            )}
-          </GuestView>
+          <GuestWrapper>
+            <GuestView showHero={showHero}>
+              <Welcome title={title} subtitle={subtitle} />
+              {/* {displayedSectons} */}
+              {isMobile && (
+                <GuestHero>
+                  {showHero && <BackgroundImage imageUrl={mobile} />}
+                  <Announcements page="GUEST" />
+                </GuestHero>
+              )}
+              <GuestButtons />
+            </GuestView>
+          </GuestWrapper>
         </Main>
       </Content>
     </>

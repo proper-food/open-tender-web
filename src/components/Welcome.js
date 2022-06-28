@@ -15,21 +15,27 @@ const WelcomeView = styled.div`
 `
 
 const WelcomeTitle = styled.h1`
-  line-height: 1;
+  line-height: ${(props) =>
+    props.theme.welcome.desktop.titleLineHeight || '1.2'};
   font-size: ${(props) => props.theme.welcome.desktop.titleSize};
   margin-left: ${(props) => props.theme.welcome.desktop.titleMarginLeft};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.welcome.mobile.titleSize};
+    line-height: ${(props) =>
+      props.theme.welcome.mobile.titleLineHeight || '1.2'};
     margin-left: ${(props) => props.theme.welcome.mobile.titleMarginLeft};
   }
 `
 
 const WelcomeSubtitle = styled.p`
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) =>
+    props.theme.welcome.desktop.subtitleLineHeight || '1.4'};
   font-size: ${(props) => props.theme.welcome.desktop.subtitleSize};
   margin-top: ${(props) => props.theme.welcome.desktop.subtitleMarginTop};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.welcome.mobile.subtitleSize};
+    line-height: ${(props) =>
+      props.theme.welcome.mobile.subtitleLineHeight || '1.4'};
     margin-top: ${(props) => props.theme.welcome.mobile.subtitleMarginTop};
   }
 `
@@ -38,7 +44,7 @@ const Welcome = ({ title, subtitle }) => {
   return (
     <WelcomeView>
       <WelcomeTitle>{title}</WelcomeTitle>
-      <WelcomeSubtitle>{subtitle}</WelcomeSubtitle>
+      {subtitle && <WelcomeSubtitle>{subtitle}</WelcomeSubtitle>}
     </WelcomeView>
   )
 }
