@@ -7,6 +7,9 @@ const SliderArrowsView = styled.div`
   left: 0;
   right: 0;
   bottom: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    bottom: ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const SliderArrowsContent = styled.div`

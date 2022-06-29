@@ -22,8 +22,8 @@ const BackgroundContentView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.headerHeightSiteMobile}
       ${(props) => props.theme.layout.paddingMobile};
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: ${(props) => props.justifyContent};
+    align-items: ${(props) => props.alignItems};
     text-align: center;
   }
 `

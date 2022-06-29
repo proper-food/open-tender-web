@@ -1,41 +1,40 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { Headline } from '@open-tender/components'
 
 const WelcomeView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  padding: 0 ${(props) => props.theme.layout.padding};
   margin-top: ${(props) => props.theme.welcome.desktop.marginTop};
   margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
   text-align: ${(props) => props.theme.welcome.desktop.textAlign};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin-top: ${(props) => props.theme.welcome.mobile.marginTop};
     margin-bottom: ${(props) => props.theme.welcome.mobile.marginBottom};
     text-align: ${(props) => props.theme.welcome.mobile.textAlign};
   }
 `
 
-const WelcomeTitle = styled.h1`
-  line-height: ${(props) =>
-    props.theme.welcome.desktop.titleLineHeight || '1.2'};
+const WelcomeTitle = styled(Headline)`
+  line-height: ${(props) => props.theme.welcome.desktop.titleLineHeight};
   font-size: ${(props) => props.theme.welcome.desktop.titleSize};
   margin-left: ${(props) => props.theme.welcome.desktop.titleMarginLeft};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.welcome.mobile.titleSize};
-    line-height: ${(props) =>
-      props.theme.welcome.mobile.titleLineHeight || '1.2'};
+    line-height: ${(props) => props.theme.welcome.mobile.titleLineHeight};
     margin-left: ${(props) => props.theme.welcome.mobile.titleMarginLeft};
   }
 `
 
 const WelcomeSubtitle = styled.p`
-  line-height: ${(props) =>
-    props.theme.welcome.desktop.subtitleLineHeight || '1.4'};
+  line-height: ${(props) => props.theme.welcome.desktop.subtitleLineHeight};
   font-size: ${(props) => props.theme.welcome.desktop.subtitleSize};
   margin-top: ${(props) => props.theme.welcome.desktop.subtitleMarginTop};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.welcome.mobile.subtitleSize};
-    line-height: ${(props) =>
-      props.theme.welcome.mobile.subtitleLineHeight || '1.4'};
+    line-height: ${(props) => props.theme.welcome.mobile.subtitleLineHeight};
     margin-top: ${(props) => props.theme.welcome.mobile.subtitleMarginTop};
   }
 `

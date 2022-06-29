@@ -4,21 +4,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import { selectCustomer, selectHasAnnouncementsPage } from '@open-tender/redux'
+import {
+  fetchAnnouncementPage,
+  selectCustomer,
+  selectAnnouncementsPage,
+  selectHasAnnouncementsPage,
+} from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectContentSection } from '../../../slices'
-import {
-  Announcements,
-  Background,
-  BackgroundImage,
-  Content,
-  Main,
-  Welcome,
-} from '../..'
+import { Background, BackgroundImage, Content, Main, Welcome } from '../..'
 import GuestButtons from './GuestButtons'
 import GuestContent from './GuestContent'
 import GuestDeals from './GuestDeals'
 import HeaderGuest from '../../HeaderGuest'
+import GuestSlider from './GuestSlider'
 
 const GuestWrapper = styled.div`
   flex: 1;
@@ -34,28 +33,40 @@ const GuestView = styled.div`
   padding: ${(props) => props.theme.layout.padding};
   padding-top: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-top: 0;
+    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
+`
+
+const GuestMobile = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const GuestHero = styled.div`
   flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border-radius: ${(props) => props.theme.border.radius};
-  // margin: 4rem 0;
+  padding: 0 ${(props) => props.theme.layout.paddingMobile};
+
+  & > div {
+    overflow: hidden;
+    border-radius: ${(props) => props.theme.border.radius};
+  }
 `
 
 const Guest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { auth } = useSelector(selectCustomer)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { title, subtitle, background, mobile, content, showGuest, displayed } =
     useSelector(selectContentSection('guest')) || {}
-  const { auth } = useSelector(selectCustomer)
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
+  const announcements = useSelector(selectAnnouncementsPage('GUEST'))
   const sections = {
     CONTENT: (key) => <GuestContent key={key} content={content} />,
     DEALS: (key) => <GuestDeals key={key} has_deals={has_deals} />,
@@ -63,8 +74,7 @@ const Guest = () => {
   const displayedSectons = displayed
     ? displayed.map((i) => sections[i](i))
     : null
-  const showHero =
-    !hasAnnouncements && displayedSectons.length <= 1 ? true : false
+  const mobileSection = displayedSectons ? displayedSectons[0] : null
 
   useEffect(() => {
     dispatch(closeModal())
@@ -78,6 +88,10 @@ const Guest = () => {
     }
   }, [auth, showGuest, navigate])
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('GUEST'))
+  }, [dispatch])
+
   if (auth || !showGuest) return null
 
   return (
@@ -90,16 +104,23 @@ const Guest = () => {
         <HeaderGuest />
         <Main>
           <GuestWrapper>
-            <GuestView showHero={showHero}>
+            <GuestView>
               <Welcome title={title} subtitle={subtitle} />
-              {/* {displayedSectons} */}
               {isMobile && (
-                <GuestHero>
-                  {showHero && <BackgroundImage imageUrl={mobile} />}
-                  <Announcements page="GUEST" />
-                </GuestHero>
+                <GuestMobile>
+                  {mobileSection ? (
+                    mobileSection
+                  ) : hasAnnouncements ? (
+                    <GuestSlider announcements={announcements} />
+                  ) : (
+                    <GuestHero>
+                      <BackgroundImage imageUrl={mobile} />
+                    </GuestHero>
+                  )}
+                </GuestMobile>
               )}
               <GuestButtons />
+              {!isMobile && displayedSectons}
             </GuestView>
           </GuestWrapper>
         </Main>

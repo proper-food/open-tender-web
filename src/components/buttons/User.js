@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 import { useNavigate } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
-import { ButtonIcon } from '@open-tender/components'
 
 import { openModal } from '../../slices'
 import UserCircle from '../UserCircle'

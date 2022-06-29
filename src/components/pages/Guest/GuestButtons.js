@@ -7,21 +7,21 @@ import { Body, ButtonStyled, Heading } from '@open-tender/components'
 
 import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
-import { ArrowRight, User } from 'react-feather'
+import { ArrowRight } from 'react-feather'
 import { UserCircle } from '../..'
 
 const GuestButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  padding: 0 ${(props) => props.theme.layout.padding};
   margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    margin: ${(props) => props.theme.welcome.mobile.marginBottom} 0 0;
-    // margin: ${(props) => props.theme.layout.marginMobile} 0 0;
-    // margin: 4rem 0 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 4rem 0 0;
   }
 
   button {

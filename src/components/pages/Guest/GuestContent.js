@@ -4,9 +4,10 @@ import styled from '@emotion/styled'
 import { HtmlContent } from '../..'
 
 const GuestContentView = styled.div`
-  padding: 0 0 4rem;
+  width: 100%;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 3rem;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 

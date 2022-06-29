@@ -7,9 +7,10 @@ import { selectDeals } from '@open-tender/redux'
 import { Deals } from '../..'
 
 const GuestDealsView = styled.div`
-  padding: 0 0 4rem;
+  width: 100%;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 2rem;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 

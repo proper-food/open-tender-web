@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { User } from 'react-feather'
 import { useTheme } from '@emotion/react'
+import { User } from 'react-feather'
 
 const UserCircleView = styled.span`
   display: flex;
