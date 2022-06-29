@@ -25,6 +25,7 @@ import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
 import ServiceType from './ServiceType'
 import StartOver from './StartOver'
+import User from './User'
 
 export {
   Account,
@@ -54,4 +55,5 @@ export {
   RevenueCenter,
   ServiceType,
   StartOver,
+  User,
 }

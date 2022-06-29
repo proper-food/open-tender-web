@@ -5,7 +5,13 @@ import { selectCustomer } from '@open-tender/redux'
 
 import { selectContentSection } from '../slices'
 import { Header, HeaderLogo } from '.'
-import { AccountHome, AccountSettings, NavMenu, ContinueOrder } from './buttons'
+import {
+  AccountHome,
+  AccountSettings,
+  NavMenu,
+  ContinueOrder,
+  User,
+} from './buttons'
 
 const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
   const { auth } = useSelector(selectCustomer)
@@ -17,7 +23,7 @@ const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
   return (
     <Header
       maxWidth={maxWidth}
-      left={auth ? <AccountHome /> : <AccountSettings />}
+      left={<User />}
       title={showLogo ? <HeaderLogo /> : null}
       right={
         <>

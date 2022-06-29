@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { resetOrder, selectOrder } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { Body, ButtonStyled, Heading } from '@open-tender/components'
 
 import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
+import { ArrowRight, User } from 'react-feather'
+import { UserCircle } from '../..'
 
 const GuestButtonsView = styled('div')`
   opacity: 0;
@@ -29,12 +31,26 @@ const GuestButtonsView = styled('div')`
       width: 100%;
       min-width: 100%;
       margin: 0;
+      height: 6rem;
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
 
   button:last-of-type {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+`
+
+const GuestButtonContent = styled.span`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    display: block;
   }
 `
 
@@ -62,14 +78,21 @@ const GuestButtons = () => {
   return (
     <GuestButtonsView>
       <ButtonStyled onClick={login} size={buttonSize} color="secondary">
-        Sign in or sign up
+        <GuestButtonContent>
+          <Body>Sign in or sign up</Body>
+          {/* <User size={18} /> */}
+          <UserCircle size={22} padding={2} strokeWidth={1} />
+        </GuestButtonContent>
       </ButtonStyled>
       <ButtonStyled
         onClick={isCurrentOrder ? continueCurrent : startNewOrder}
         size={buttonSize}
         color="primary"
       >
-        {isCurrentOrder ? 'Continue Order' : 'New Order'}
+        <GuestButtonContent>
+          <Heading>{isCurrentOrder ? 'Continue Order' : 'Order Now'}</Heading>
+          <ArrowRight size={22} />
+        </GuestButtonContent>
       </ButtonStyled>
     </GuestButtonsView>
   )
