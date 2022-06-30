@@ -31,9 +31,6 @@ const GuestButtonsView = styled('div')`
       width: 100%;
       min-width: 100%;
       margin: 0;
-      height: 6rem;
-      padding-top: 0;
-      padding-bottom: 0;
     }
   }
 
@@ -45,6 +42,7 @@ const GuestButtonsView = styled('div')`
 
 const GuestButtonContent = styled.span`
   width: 100%;
+  height: 2.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
