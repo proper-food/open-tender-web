@@ -8,11 +8,11 @@ import { Deals } from '../..'
 
 const AccountDealsView = styled.div`
   width: 100%;
-  padding: ${(props) => props.theme.layout.padding};
-  padding-bottom: 0;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: ${(props) => props.theme.layout.margin} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-bottom: 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
   }
 `
 

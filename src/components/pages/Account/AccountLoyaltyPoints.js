@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
-import { makeProgress, makeStatus, formatQuantity } from '@open-tender/js'
-import { Headline, Heading, Preface, Text } from '@open-tender/components'
+import { formatQuantity } from '@open-tender/js'
+import { Headline, Heading, Preface } from '@open-tender/components'
 import { PointsProgress, SeeMoreLink } from '../..'
-import Loading from '../../Loading'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import iconMap from '../../iconMap'
 
 const AccountLoyaltyPointsView = styled.div``
 
@@ -21,7 +16,6 @@ const AccountPointsView = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  // background-color: pink;
 `
 
 const AccountPointsCount = styled.div`
@@ -29,7 +23,6 @@ const AccountPointsCount = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  // background-color: palegreen;
   margin-bottom: -0.2 rem;
 
   span {
@@ -42,33 +35,27 @@ const AccountPointsLabel = styled(Preface)`
   margin: 0 0 0.3rem 0.6rem;
 `
 
-const AccountPoints = ({ points }) => {
+const AccountPoints = ({ points, name }) => {
   return (
     <AccountPointsView>
       <AccountPointsCount>
-        <Headline size="h1">{formatQuantity(400)}</Headline>
-        <AccountPointsLabel size="xSmall">Rewards Points</AccountPointsLabel>
+        <Headline size="h1">{formatQuantity(points)}</Headline>
+        <AccountPointsLabel size="xSmall">{name}</AccountPointsLabel>
       </AccountPointsCount>
       <SeeMoreLink text="See Details" to="/loyalty" />
     </AccountPointsView>
   )
 }
 
+const thresholds = [
+  { points: 100 },
+  { points: 200 },
+  { points: 300 },
+  { points: 400 },
+]
+
 const AccountLoyaltyPoints = ({ program }) => {
-  const {
-    loyalty_type,
-    points,
-    spend,
-    redemption,
-    credit,
-    remaining,
-    towards,
-    progress,
-    tiers,
-    status,
-  } = program || {}
-  const currentStatus =
-    tiers && status ? makeStatus(tiers, status, points) : null
+  const { points } = program || {}
 
   return (
     <AccountLoyaltyPointsView>
@@ -76,7 +63,7 @@ const AccountLoyaltyPoints = ({ program }) => {
         <Heading as="p">Your rewards...</Heading>
       </AccountLoyaltyPointsTitle>
       <AccountPoints {...points} />
-      <PointsProgress {...currentStatus} />
+      <PointsProgress {...points} thresholds={thresholds} />
     </AccountLoyaltyPointsView>
   )
 }

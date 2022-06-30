@@ -11,6 +11,7 @@ const AccountLoyaltyProgram = () => {
   const dispatch = useDispatch()
   const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
   const hasProgram = program ? true : false
+  const { points } = program || {}
 
   useEffect(() => {
     dispatch(fetchCustomerLoyalty())
@@ -18,7 +19,7 @@ const AccountLoyaltyProgram = () => {
 
   return loading === 'pending' && !hasProgram ? (
     <Loading text="Retrieving your loyalty status..." />
-  ) : program.points ? (
+  ) : points ? (
     <AccountLoyaltyPoints program={program} />
   ) : null
 }

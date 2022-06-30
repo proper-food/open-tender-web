@@ -1,153 +1,102 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { openModal } from '../slices'
-import { useDispatch } from 'react-redux'
+import { Heading } from '@open-tender/components'
+import { TriangleDown } from './icons'
 
-const ProgressPointsView = styled('div')`
+const ProgressPointsView = styled.div`
   position: relative;
   width: 100%;
   border-style: solid;
   border-width: 0.05rem;
   border-color: ${(props) => props.theme.border.color};
   background-color: ${(props) => props.theme.bgColors.primary};
+  margin: 5.5rem 0 0;
 `
 
-const ProgressPointsFill = styled('div')`
+const ProgressPointsFill = styled.div`
   width: 0;
   height: 1.2rem;
   animation: fill-bar 0.5s ease-in-out 0.5s forwards;
   background-color: ${(props) => props.theme.bgColors.success};
 `
 
-const ProgressPoint = styled('div')`
+const ProgressPoint = styled.div`
   position: absolute;
-  top: -0.7rem;
-  margin-left: -1rem;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 1rem;
-  background-color: ${(props) =>
-    props.isFilled
-      ? props.theme.colors.primary
-      : props.theme.bgColors.tertiary};
-`
-
-const ProgressPointContainer = styled('div')`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`
-
-const ProgressPointButton = styled('button')`
-  position: absolute;
-  z-index: 1;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 1rem;
-  text-indent: -5000px;
-
-  &:hover ~ div {
-    opacity: 1;
-    visiblity: visible;
-    transform: translateY(0);
-  }
-`
-
-const ProgressPointHover = styled('div')`
-  position: absolute;
-  bottom: 125%;
-  left: 0;
-  width: 16rem;
-  height: 10rem;
+  top: -3rem;
+  height: 3rem;
+  width: 4rem;
+  padding: 0 0 0.4rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  transition: all 250ms ease;
-  opacity: 0;
-  visiblity: hidden;
-  transform: translateY(1rem);
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    display: none;
-  }
-
-  & > span {
-    display: block;
-    background-color: ${(props) => props.theme.bgColors.primary};
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    box-shadow: ${(props) => props.theme.boxShadow.outer};
-    text-align: center;
-
-    & > span {
-      display: block;
-
-      &:first-of-type {
-        color: ${(props) => props.color};
-        font-size: ${(props) => props.theme.fonts.sizes.small};
-        margin: 0 0 0.5rem;
-      }
-
-      &:last-of-type {
-        font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-      }
-    }
-  }
+  justify-content: space-between;
+  align-items: ${(props) =>
+    props.isFirst ? 'flex-start' : props.isLast ? 'flex-end' : 'center'};
+  text-align: ${(props) =>
+    props.isFirst ? 'left' : props.isLast ? 'right' : 'center'};
+  margin-left: ${(props) =>
+    props.isFirst ? '0' : props.isLast ? '-4rem' : '-2rem'};
 `
 
-const ProgressAmount = styled('div')`
-  position: absolute;
-  top: 2.2rem;
-  width: 5rem;
-  margin-left: -2.6rem;
-  text-align: center;
+const ProgressPointText = styled.span`
+  display: block;
+  width: 100%;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const ProgressPoints = ({ progress, tiers = [] }) => {
-  const dispatch = useDispatch()
-  const style = { width: `${progress || 0}%` }
+const ProgressPointCircle = styled.div`
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.4rem;
+  border-style: solid;
+  border-width: 0.05rem;
+  border-color: ${(props) => props.theme.border.color};
+  background-color: ${(props) =>
+    props.isFilled
+      ? props.theme.bgColors.success
+      : props.theme.bgColors.primary};
+`
 
-  const showTier = (evt, tier) => {
-    evt.preventDefault()
-    dispatch(openModal({ type: 'loyaltyTier', args: { tier } }))
-  }
+const ProgressPointPoints = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const ProgressPoints = ({ points, thresholds = [] }) => {
+  const maxThreshold = Math.max(...thresholds.map((i) => i.points))
+  const progress = Math.min((points / maxThreshold) * 100, 100)
+  const style = { width: `${progress || 0}%` }
+  let withZero = [{ points: 0 }, ...thresholds]
+  withZero = points > maxThreshold ? withZero.slice(0, -1) : withZero
+  const progressPoints = withZero.reduce((arr, i) => {
+    return [
+      ...arr,
+      {
+        ...i,
+        percentage: (i.points / maxThreshold) * 100,
+        isFilled: points > i.points,
+      },
+    ]
+  }, [])
 
   return (
     <ProgressPointsView>
       <div style={style}>
         <ProgressPointsFill />
       </div>
-      {/* {tiers.map((tier) => (
+      {progressPoints.map((i, index) => (
         <ProgressPoint
-          key={tier.percentage}
-          isFilled={progress > tier.percentage}
-          style={{
-            left: `${tier.percentage.toFixed(5)}%`,
-          }}
+          style={{ left: `${i.percentage.toFixed(5)}%` }}
+          isFirst={index === 0}
+          isLast={index === thresholds.length}
         >
-          <ProgressPointContainer>
-            <ProgressPointButton onClick={(evt) => showTier(evt, tier)}>
-              {tier.name}
-            </ProgressPointButton>
-            <ProgressPointHover color={tier.color}>
-              <span>
-                <span>{tier.name} Tier</span>
-                <span>Click for details</span>
-              </span>
-            </ProgressPointHover>
-          </ProgressPointContainer>
+          <ProgressPointText>{i.points}</ProgressPointText>
+          <ProgressPointCircle {...i} />
         </ProgressPoint>
       ))}
-      {tiers.map((tier) => (
-        <ProgressAmount
-          key={tier.percentage}
-          style={{ left: `${tier.percentage.toFixed(5)}%` }}
-        >
-          {tier.value}
-        </ProgressAmount>
-      ))} */}
+      <ProgressPoint style={{ left: `${progress}%` }}>
+        <ProgressPointPoints>{points}</ProgressPointPoints>
+        <TriangleDown />
+      </ProgressPoint>
     </ProgressPointsView>
   )
 }

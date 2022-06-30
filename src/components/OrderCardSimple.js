@@ -72,8 +72,6 @@ const OrderCardSimple = ({ order }) => {
   const sorted = cart.sort(
     (a, b) => parseFloat(b.price_total) - parseFloat(a.price_total)
   )
-  console.log(order_id)
-  console.log(sorted.map((i) => i.price_total))
   const itemImages = sorted
     .map((i) =>
       i.images
