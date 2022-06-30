@@ -58,16 +58,12 @@ const OrderCardSimple = ({ order }) => {
   const navigate = useNavigate()
   const {
     order_id,
-    status,
     service_type,
     order_type,
     revenue_center,
     requested_at,
     timezone,
     cart,
-    address,
-    totals,
-    delivery,
   } = order
   const orderTypeName = makeOrderTypeName(order_type, service_type)
   const tz = timezoneMap[timezone]

@@ -75,6 +75,7 @@ import PageTitle from './PageTitle'
 import PageTitleButtons from './PageTitleButtons'
 import PageView from './PageView'
 import PointsBalance from './PointsBalance'
+import PointsProgress from './PointsProgress'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
@@ -88,6 +89,7 @@ import ScrollableSectionHeader from './ScrollableSectionHeader'
 import Section from './Section'
 import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
+import SeeMoreLink from './SeeMoreLink'
 import Sidebar from './Sidebar'
 import SidebarModal from './SidebarModal'
 import SkipLink from './SkipLink'
@@ -178,6 +180,7 @@ export {
   PageTitleButtons,
   PageView,
   PointsBalance,
+  PointsProgress,
   ProgressBar,
   ProgressCircle,
   QRCode,
@@ -192,6 +195,7 @@ export {
   Section,
   SectionHeader,
   SectionTitle,
+  SeeMoreLink,
   Sidebar,
   SidebarModal,
   SkipLink,
