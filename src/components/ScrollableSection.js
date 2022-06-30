@@ -21,6 +21,7 @@ const ScrollableSectionContainer = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     flex-wrap: nowrap;
+    align-items: flex-start;
     overflow-x: auto;
     margin: -0.5rem 0 0;
   }
@@ -34,19 +35,14 @@ const ScrollableSectionItem = styled.div`
     padding: 0.5rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex: 0 0 90%;
-    padding: 1.5rem 1rem 1.5rem 0;
+    flex: 0 0 20rem;
+    padding: 1.5rem 0;
+    margin-right: ${(props) => props.theme.layout.paddingMobile};
   }
 
   &:first-of-type {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding-left: ${(props) => props.theme.layout.paddingMobile};
-    }
-  }
-
-  &:last-of-type {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding-right: ${(props) => props.theme.layout.paddingMobile};
+      margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
   }
 `

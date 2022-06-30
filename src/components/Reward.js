@@ -18,9 +18,6 @@ const RewardButton = styled.button`
 
 const RewardView = styled(Box)`
   position: relative;
-  display: flex;
-  align-items: center;
-  padding: 1rem 1rem;
 `
 
 const RewardTag = styled('div')`
@@ -34,34 +31,39 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 7rem;
-  height: 7rem;
+  width: 100%;
+  padding: 37.5%;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  border-radius: ${(props) => props.theme.cards.default.borderRadius};
-`
-
-const RewardDetails = styled('div')`
-  flex: 1 1 100%;
-  // height: 100%;
-  padding: 0 2rem 0 1.5rem;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 7rem;
-  }
 `
 
 const RewardContent = styled('div')`
-  padding: 0 1rem 0 0;
+  padding: 0.8rem 0 0;
+`
+
+// const RewardTitle = styled('p')`
+//   color: ${(props) => props.theme.colors.primary};
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   // font-weight: ${(props) => props.theme.boldWeight};
+//   line-height: 1.25;
+// `
+
+const RewardTitle = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const RewardDescription = styled('p')`
+  display: none;
+  margin: 0.5rem 0 0;
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
 const RewardNote = styled('div')`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: 0 0 0.5rem;
+  margin: 0.5rem 0 0;
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 
   span {
@@ -76,27 +78,9 @@ const RewardNoteIcon = styled.span`
   margin: 0 0.4rem 0 0;
 `
 
-// const RewardTitle = styled('p')`
-//   color: ${(props) => props.theme.colors.primary};
-//   font-size: ${(props) => props.theme.fonts.sizes.small};
-//   // font-weight: ${(props) => props.theme.boldWeight};
-//   line-height: 1.25;
-// `
-
-const RewardTitle = styled(Heading)`
-  line-height: 1.25;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-`
-
-const RewardDescription = styled('p')`
-  margin: 0.5rem 0 0;
-  line-height: ${(props) => props.theme.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  display: none;
-`
-
 const RewardExpiration = styled('div')`
-  margin: 1rem 0 0;
+  margin: 0.4rem 0 0;
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
@@ -191,7 +175,7 @@ export const makeLimitations = (item) => {
   }
   return (
     <>
-      <span>{iconMap.Star}</span>Valid on all orders
+      <RewardNoteIcon>{iconMap.Star}</RewardNoteIcon>Valid on all orders
     </>
   )
 }
@@ -226,28 +210,22 @@ const Reward = ({ item }) => {
           {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
         </RewardTag>
         <RewardImage style={bgStyle}>&nbsp;</RewardImage>
-        <RewardDetails>
-          <div>
-            <RewardContent>
-              <RewardNote>{reward.limitations}</RewardNote>
-              <RewardTitle as="p">{reward.title}</RewardTitle>
-              {reward.short_description && (
-                <RewardDescription>
-                  {reward.short_description}
-                </RewardDescription>
-              )}
-            </RewardContent>
-            {reward.end_date && (
-              <RewardExpiration>
-                {reward.end_date === today ? (
-                  <p>Valid today only</p>
-                ) : reward.end_date ? (
-                  <p>Use by {reward.expiration}</p>
-                ) : null}
-              </RewardExpiration>
-            )}
-          </div>
-        </RewardDetails>
+        <RewardContent>
+          <RewardTitle as="p">{reward.title}</RewardTitle>
+          {reward.short_description && (
+            <RewardDescription>{reward.short_description}</RewardDescription>
+          )}
+          <RewardNote>{reward.limitations}</RewardNote>
+          {reward.end_date && (
+            <RewardExpiration>
+              {reward.end_date === today ? (
+                <p>Valid today only</p>
+              ) : reward.end_date ? (
+                <p>Use by {reward.expiration}</p>
+              ) : null}
+            </RewardExpiration>
+          )}
+        </RewardContent>
       </RewardView>
     </RewardButton>
   )

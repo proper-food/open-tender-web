@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Headline } from '@open-tender/components'
 
 import { ContainerSite } from '.'
 import BackgroundCta from './BackgroundCta'
@@ -36,13 +36,11 @@ const BackgroundContentText = styled('div')`
   }
 `
 
-const BackgroundContentTitle = styled(Heading)`
-  margin-left: -0.3rem;
-  line-height: 1;
+const BackgroundContentTitle = styled(Headline)`
   color: #${(props) => props.textColor};
   font-size: ${(props) => props.theme.fonts.sizes.mega};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.h1};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
   }
 `
 

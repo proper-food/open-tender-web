@@ -10,10 +10,10 @@ const ScrollableSectionHeaderView = styled.div`
   margin: 0 0 1.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: 0;
+    margin: 0 0 0.7rem;
   }
 
   p {
@@ -23,9 +23,12 @@ const ScrollableSectionHeaderView = styled.div`
 
 const ScrollableSectionTitle = styled.div`
   text-align: left;
+  font-size: ${(props) => props.theme.fonts.sizes.big};
 `
 
 const ScrollableSectionLink = styled.div`
+  margin: 0 -0.5rem 0 0;
+
   p {
     line-height: 1;
     font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -39,13 +42,14 @@ const ScrollableSectionLink = styled.div`
     span {
       display: block;
     }
-
-    span + span {
-      width: 1.2rem;
-      height: 1.2rem;
-      margin: 0 0 0 0.5rem;
-    }
   }
+`
+
+const ScrollableSectionChevron = styled.span`
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.1rem 0 0 0;
+  color: ${(props) => props.theme.colors.primary};
 `
 
 const ScrollableSectionHeader = ({ title, to, style }) => (
@@ -57,8 +61,10 @@ const ScrollableSectionHeader = ({ title, to, style }) => (
       <ScrollableSectionLink>
         <p>
           <Link to={to}>
-            <span>View all</span>
-            <span>{iconMap.ArrowRight}</span>
+            <Heading>View All</Heading>
+            <ScrollableSectionChevron>
+              {iconMap.ChevronRight}
+            </ScrollableSectionChevron>
           </Link>
         </p>
       </ScrollableSectionLink>

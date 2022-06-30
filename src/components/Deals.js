@@ -15,7 +15,7 @@ const Deals = () => {
   const { entities } = useSelector(selectDeals)
   const { customer_id } = profile || {}
   const displayed = !isMobile ? entities.slice(0, 2) : entities
-  const isMore = entities.length > displayed.length
+  const isMore = entities.length > 2
   const hasDeals = has_deals && displayed.length
 
   useEffect(() => {
