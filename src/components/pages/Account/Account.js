@@ -24,7 +24,7 @@ import {
   Main,
   Welcome,
 } from '../..'
-import { AccountSettings, NavMenu, ContinueOrder } from '../../buttons'
+import { NavMenu, User } from '../../buttons'
 import AccountButtons from './AccountButtons'
 import AccountContent from './AccountContent'
 import AccountLoyalty from './AccountLoyalty'
@@ -36,11 +36,10 @@ const AccountView = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => props.theme.layout.padding};
+  padding: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    margin: 0 0
-      ${(props) => (props.showHero ? props.theme.layout.navHeight : '0')};
+    // padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 0 20rem;
   }
 `
 
@@ -75,6 +74,8 @@ const Account = () => {
     firstName && showFirstName
       ? `${title}, ${firstName}${punctuation}`
       : `${title}${punctuation}`
+  const appendSubtitle = true
+  const accountTitle = appendSubtitle ? `${welcome} ${subtitle}` : welcome
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const sections = {
     CONTENT: (key) => <AccountContent key={key} content={content} />,
@@ -116,21 +117,19 @@ const Account = () => {
         </title>
       </Helmet>
       <Background imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      <Content maxWidth="76.8rem" hasFooter={false}>
         <Header
           maxWidth="76.8rem"
-          left={<AccountSettings />}
+          left={<User />}
           title={showLogo ? <HeaderLogo /> : null}
-          right={
-            <>
-              <ContinueOrder />
-              <NavMenu />
-            </>
-          }
+          right={<NavMenu />}
         />
         <Main>
           <AccountView showHero={showHero}>
-            <Welcome title={welcome} subtitle={subtitle} />
+            <Welcome
+              title={accountTitle}
+              subtitle={!appendSubtitle ? subtitle : null}
+            />
             <AccountButtons />
             {displayedSectons}
             {isMobile && (

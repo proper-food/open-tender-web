@@ -56,6 +56,7 @@ import OrderCard from './OrderCard'
 import OrderCardCurrent from './OrderCardCurrent'
 import OrderCardGroup from './OrderCardGroup'
 import OrderCardItem from './OrderCardItem'
+import OrderCardSimple from './OrderCardSimple'
 import OrderFulfillment from './OrderFulfillment'
 import OrderImages from './OrderImages'
 import OrderImage from './OrderImage'
@@ -158,6 +159,7 @@ export {
   OrderCardCurrent,
   OrderCardGroup,
   OrderCardItem,
+  OrderCardSimple,
   OrderFulfillment,
   OrderImages,
   OrderImage,

@@ -8,16 +8,18 @@ import styled from '@emotion/styled'
 
 const UserButton = styled.button`
   display: flex;
-  width: 5rem;
-  height: 5rem;
   justify-content: center;
   align-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin: 0 0 0 -1.1rem;
 `
 
 const User = ({ size = 28 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { auth } = useSelector(selectCustomer)
+  const isFilled = auth ? true : false
 
   const login = () => {
     dispatch(openModal({ type: 'login' }))
@@ -27,7 +29,7 @@ const User = ({ size = 28 }) => {
 
   return (
     <UserButton onClick={auth ? goToSettings : login}>
-      <UserCircle size={size} isFilled={!!auth} />
+      <UserCircle size={size} isFilled={isFilled} />
     </UserButton>
   )
 }

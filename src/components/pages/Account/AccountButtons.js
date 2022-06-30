@@ -3,46 +3,77 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { resetOrder, selectOrder } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { Body, ButtonStyled, Heading } from '@open-tender/components'
 
 import styled from '@emotion/styled'
+import { ArrowRight, PlusCircle } from 'react-feather'
 
 const AccountButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0;
     position: fixed;
     z-index: 10;
+    // left: ${(props) => props.theme.layout.paddingMobile};
+    // right: ${(props) => props.theme.layout.paddingMobile};
+    // bottom: ${(props) => props.theme.layout.paddingMobile};
     left: 0;
     right: 0;
     bottom: 0;
-    margin: 0;
-    height: ${(props) => props.theme.layout.navHeight};
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) => props.theme.layout.paddingMobile};
     background-color: ${(props) => props.theme.bgColors.primary};
-    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -2px 4px rgba(0, 0, 0, 0.05);
-  }
-`
-
-const AccountButtonsContainer = styled.div`
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   button {
     min-width: 16rem;
     margin: 0 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      width: 48%;
-      min-width: 0;
-      padding-left: 0;
-      padding-right: 0;
+      width: 100%;
+      min-width: 100%;
       margin: 0;
+    }
+  }
+
+  button + button {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+`
+
+const AccountButtonContent = styled.span`
+  width: 100%;
+  height: 2.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    display: block;
+  }
+`
+
+const AccountButtonContentPrimary = styled(Heading)`
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.primary.color};
+
+  &:hover {
+    color: ${(props) => props.theme.buttons.colors.primaryHover.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.buttons.colors.primary.color};
+    }
+  }
+`
+
+const AccountButtonContentSecondary = styled(Body)`
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.secondary.color};
+
+  &:hover {
+    color: ${(props) => props.theme.buttons.colors.secondaryHover.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.buttons.colors.secondary.color};
     }
   }
 `
@@ -53,7 +84,7 @@ const AccountButtons = () => {
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
-  const buttonSize = isBrowser ? 'default' : 'default'
+  const buttonSize = isBrowser ? 'big' : 'big'
 
   const continueCurrent = () => {
     navigate(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
@@ -64,44 +95,34 @@ const AccountButtons = () => {
     navigate(`/order-type`)
   }
 
-  const reorder = () => {
-    navigate(`/orders`)
-  }
-
   return (
     <AccountButtonsView>
-      <AccountButtonsContainer>
-        {isCurrentOrder ? (
-          <ButtonStyled
-            onClick={continueCurrent}
-            size={buttonSize}
-            color="primary"
-          >
-            Continue Order
-          </ButtonStyled>
-        ) : (
-          <ButtonStyled
-            onClick={startNewOrder}
-            size={buttonSize}
-            color="primary"
-          >
-            New Order
-          </ButtonStyled>
-        )}
-        {isCurrentOrder ? (
-          <ButtonStyled
-            onClick={startNewOrder}
-            size={buttonSize}
-            color="secondary"
-          >
-            New Order
-          </ButtonStyled>
-        ) : (
-          <ButtonStyled onClick={reorder} size={buttonSize} color="secondary">
-            Reorder
-          </ButtonStyled>
-        )}
-      </AccountButtonsContainer>
+      {isCurrentOrder && (
+        <ButtonStyled
+          onClick={startNewOrder}
+          size={buttonSize}
+          color="secondary"
+        >
+          <AccountButtonContent>
+            <AccountButtonContentSecondary>
+              New Order
+            </AccountButtonContentSecondary>
+            <PlusCircle size={22} strokeWidth={1} />
+          </AccountButtonContent>
+        </ButtonStyled>
+      )}
+      <ButtonStyled
+        onClick={isCurrentOrder ? continueCurrent : startNewOrder}
+        size={buttonSize}
+        color="primary"
+      >
+        <AccountButtonContent>
+          <AccountButtonContentPrimary>
+            {isCurrentOrder ? 'Continue Order' : 'Order Now'}
+          </AccountButtonContentPrimary>
+          <ArrowRight size={22} />
+        </AccountButtonContent>
+      </ButtonStyled>
     </AccountButtonsView>
   )
 }

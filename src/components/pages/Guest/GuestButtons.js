@@ -52,6 +52,30 @@ const GuestButtonContent = styled.span`
   }
 `
 
+const GuestButtonContentPrimary = styled(Heading)`
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.primary.color};
+
+  &:hover {
+    color: ${(props) => props.theme.buttons.colors.primaryHover.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.buttons.colors.primary.color};
+    }
+  }
+`
+
+const GuestButtonContentSecondary = styled(Body)`
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.secondary.color};
+
+  &:hover {
+    color: ${(props) => props.theme.buttons.colors.secondaryHover.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.buttons.colors.secondary.color};
+    }
+  }
+`
+
 const GuestButtons = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -77,7 +101,9 @@ const GuestButtons = () => {
     <GuestButtonsView>
       <ButtonStyled onClick={login} size={buttonSize} color="secondary">
         <GuestButtonContent>
-          <Body>Sign in or sign up</Body>
+          <GuestButtonContentSecondary>
+            Sign in or sign up
+          </GuestButtonContentSecondary>
           {/* <User size={18} /> */}
           <UserCircle size={22} padding={2} strokeWidth={1} />
         </GuestButtonContent>
@@ -88,7 +114,9 @@ const GuestButtons = () => {
         color="primary"
       >
         <GuestButtonContent>
-          <Heading>{isCurrentOrder ? 'Continue Order' : 'Order Now'}</Heading>
+          <GuestButtonContentPrimary>
+            {isCurrentOrder ? 'Continue Order' : 'Order Now'}
+          </GuestButtonContentPrimary>
           <ArrowRight size={22} />
         </GuestButtonContent>
       </ButtonStyled>

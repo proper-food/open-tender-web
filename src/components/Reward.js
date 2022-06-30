@@ -18,6 +18,7 @@ const RewardButton = styled.button`
 
 const RewardView = styled(Box)`
   position: relative;
+  overflow: hidden;
 `
 
 const RewardTag = styled('div')`

@@ -44,6 +44,7 @@ const OrderCard = ({ order, isLast }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
+  console.log(cart)
   const itemImages = cart
     .map((i) =>
       i.images

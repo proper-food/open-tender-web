@@ -7,9 +7,12 @@ import { selectDeals } from '@open-tender/redux'
 import { Deals } from '../..'
 
 const AccountDealsView = styled.div`
-  padding: 0 0 4rem;
+  width: 100%;
+  padding: ${(props) => props.theme.layout.padding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 2rem;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: 0;
   }
 `
 

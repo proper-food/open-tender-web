@@ -33,9 +33,7 @@ const HeaderView = styled('div')`
   padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: 0
-      ${(props) =>
-        props.isMobile ? '0.5rem' : props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 

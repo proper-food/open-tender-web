@@ -12,9 +12,12 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { Reward, ScrollableSection } from '../..'
 
 const AccountRewardsView = styled.div`
-  padding: 0 0 4rem;
+  width: 100%;
+  padding: ${(props) => props.theme.layout.padding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 2rem;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: 0;
   }
 `
 
@@ -29,7 +32,7 @@ const AccountRewards = () => {
   const { entities, error } = rewards
   const hasRewards = entities.length > 0 && !error
   const displayed = !isMobile ? entities.slice(0, 2) : entities
-  const isMore = entities.length > displayed.length
+  const isMore = entities.length > 1
 
   useEffect(() => {
     if (hasCustomer) {
