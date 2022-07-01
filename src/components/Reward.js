@@ -75,12 +75,6 @@ const RewardNoteIcon = styled.span`
   margin: 0 0.4rem 0 0;
 `
 
-const RewardExpiration = styled('div')`
-  margin: 0.4rem 0 0;
-  line-height: ${(props) => props.theme.fonts.body.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-`
-
 const makeImageUrl = (images) => {
   const imagesMap = images
     .filter((i) => i.url)
@@ -179,7 +173,7 @@ export const makeLimitations = (item) => {
 
 const makeReward = (item) => {
   const imageUrl = makeImageUrl(item.images)
-  const expiration = formatDateStr(item.end_date, 'MMMM d, yyyy')
+  const expiration = formatDateStr(item.end_date, 'MMM d')
   const limitations = makeLimitations(item)
   return { ...item, imageUrl, expiration, limitations }
 }
@@ -200,6 +194,14 @@ const Reward = ({ item }) => {
     dispatch(openModal({ type: 'reward', args }))
   }
 
+  const expiration = reward.end_date ? (
+    reward.end_date === today ? (
+      <span>, today only</span>
+    ) : reward.end_date ? (
+      <span>, use by {reward.expiration}</span>
+    ) : null
+  ) : null
+
   return (
     <RewardButton onClick={redeem} label={`Apply ${reward.name}`}>
       <RewardView>
@@ -212,16 +214,10 @@ const Reward = ({ item }) => {
           {reward.short_description && (
             <RewardDescription>{reward.short_description}</RewardDescription>
           )}
-          <RewardNote>{reward.limitations}</RewardNote>
-          {reward.end_date && (
-            <RewardExpiration>
-              {reward.end_date === today ? (
-                <p>Valid today only</p>
-              ) : reward.end_date ? (
-                <p>Use by {reward.expiration}</p>
-              ) : null}
-            </RewardExpiration>
-          )}
+          <RewardNote>
+            {reward.limitations}
+            {expiration}
+          </RewardNote>
         </RewardContent>
       </RewardView>
     </RewardButton>

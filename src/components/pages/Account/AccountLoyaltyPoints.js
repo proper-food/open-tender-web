@@ -3,6 +3,8 @@ import propTypes from 'prop-types'
 import { formatQuantity } from '@open-tender/js'
 import { Headline, Heading, Preface } from '@open-tender/components'
 import { PointsProgress, SeeMoreLink } from '../..'
+import { useSelector } from 'react-redux'
+import { selectContentSection } from '../../../slices'
 
 const AccountLoyaltyPointsView = styled.div``
 
@@ -55,12 +57,16 @@ const thresholds = [
 ]
 
 const AccountLoyaltyPoints = ({ program }) => {
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.loyalty || {}
   const { points } = program || {}
 
   return (
     <AccountLoyaltyPointsView>
       <AccountLoyaltyPointsTitle>
-        <Heading as="p">Your rewards...</Heading>
+        <Heading as="p">
+          {points?.points ? title : 'Create an account to get started...'}
+        </Heading>
       </AccountLoyaltyPointsTitle>
       <AccountPoints {...points} />
       <PointsProgress {...points} thresholds={thresholds} />

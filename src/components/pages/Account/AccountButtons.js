@@ -11,7 +11,8 @@ import { ArrowRight, PlusCircle } from 'react-feather'
 const AccountButtonsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin: 0 0 4rem;
+  // margin: 0 0 4rem;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
     flex-direction: column;
@@ -22,7 +23,7 @@ const AccountButtonsView = styled('div')`
   }
 
   button {
-    min-width: 16rem;
+    min-width: 25rem;
     margin: 0 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
@@ -32,6 +33,7 @@ const AccountButtonsView = styled('div')`
   }
 
   button + button {
+    margin: 0 2rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }

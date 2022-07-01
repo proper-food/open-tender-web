@@ -65,8 +65,9 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
   const maxThreshold = Math.max(...thresholds.map((i) => i.points))
   const progress = Math.min((points / maxThreshold) * 100, 100)
   const style = { width: `${progress || 0}%` }
+  const isOverMax = points > maxThreshold
   let withZero = [{ points: 0 }, ...thresholds]
-  withZero = points > maxThreshold ? withZero.slice(0, -1) : withZero
+  withZero = isOverMax ? withZero.slice(0, -1) : withZero
   const progressPoints = withZero.reduce((arr, i) => {
     return [
       ...arr,
@@ -93,10 +94,12 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
           <ProgressPointCircle {...i} />
         </ProgressPoint>
       ))}
-      <ProgressPoint style={{ left: `${progress}%` }}>
-        <ProgressPointPoints>{points}</ProgressPointPoints>
-        <TriangleDown />
-      </ProgressPoint>
+      {points > 0 ? (
+        <ProgressPoint style={{ left: `${progress}%` }}>
+          <ProgressPointPoints>{points}</ProgressPointPoints>
+          <TriangleDown />
+        </ProgressPoint>
+      ) : null}
     </ProgressPointsView>
   )
 }

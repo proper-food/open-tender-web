@@ -281,7 +281,7 @@ const makeGlobalStyles = (theme) => css`
     }
 
     &::selection {
-      color: ${theme.inputs.bgColor};
+      color: ${theme.colors.light};
       background-color: ${theme.inputs.color};
     }
 

@@ -6,11 +6,12 @@ import { Heading } from '@open-tender/components'
 import iconMap from './iconMap'
 
 const ScrollableSectionHeaderView = styled.div`
-  width: 100%;
-  margin: 0 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  width: 100%;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: 0 0 1.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0 0 0.7rem;
@@ -23,7 +24,10 @@ const ScrollableSectionHeaderView = styled.div`
 
 const ScrollableSectionTitle = styled.div`
   text-align: left;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
 `
 
 const ScrollableSectionLink = styled.div`
@@ -31,7 +35,10 @@ const ScrollableSectionLink = styled.div`
 
   p {
     line-height: 1;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
 
     a {
       display: flex;

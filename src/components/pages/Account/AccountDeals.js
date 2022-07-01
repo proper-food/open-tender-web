@@ -6,7 +6,8 @@ import { selectContentSection } from '../../../slices'
 import AccountSection from './AccountSection'
 
 const AccountDeals = ({ deals }) => {
-  const { title } = useSelector(selectContentSection('deals'))
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.deals || {}
 
   return (
     <AccountSection>

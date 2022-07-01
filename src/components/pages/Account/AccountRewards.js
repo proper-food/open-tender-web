@@ -6,7 +6,8 @@ import { Reward, ScrollableSection } from '../..'
 import AccountSection from './AccountSection'
 
 const AccountRewards = ({ rewards }) => {
-  const { title } = useSelector(selectContentSection('rewards'))
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.rewards || {}
 
   return (
     <AccountSection>

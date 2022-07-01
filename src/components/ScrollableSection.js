@@ -5,40 +5,33 @@ import ScrollableSectionHeader from './ScrollableSectionHeader'
 import Loading from './Loading'
 
 const ScrollableSectionView = styled.div`
-  margin: 0;
+  margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
   }
 `
 
 const ScrollableSectionContainer = styled.div`
-  margin: -0.5rem;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    overflow-x: auto;
-    margin: -0.5rem 0 0;
-  }
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  overflow-x: auto;
+  margin: -0.5rem 0 0;
 `
 
 const ScrollableSectionItem = styled.div`
-  width: 50%;
-  padding: 0.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: 0.5rem;
-  }
+  flex: 0 0 31rem;
+  padding: 1.5rem 0;
+  margin-right: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 20rem;
-    padding: 1.5rem 0;
     margin-right: ${(props) => props.theme.layout.paddingMobile};
   }
 
   &:first-of-type {
+    margin-left: ${(props) => props.theme.layout.padding};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
@@ -46,6 +39,7 @@ const ScrollableSectionItem = styled.div`
 `
 
 const ScrollableSectionLoading = styled.div`
+  padding: 2rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 2rem ${(props) => props.theme.layout.paddingMobile};
   }

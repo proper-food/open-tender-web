@@ -10,8 +10,8 @@ const OrderCardItem = ({ item }) => <OrderCard order={item} />
 const OrderCardSimpleItem = ({ item }) => <OrderCardSimple order={item} />
 
 const AccountOrders = ({ orders }) => {
-  const { recentOrders } = useSelector(selectContentSection('account'))
-  const { title } = recentOrders
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.recentOrders || {}
   const useSimple = true
   const filtered = orders
     .map((i) => ({ ...i, key: i.order_id }))
