@@ -104,7 +104,6 @@ const GuestButtons = () => {
           <GuestButtonContentSecondary>
             Sign in or sign up
           </GuestButtonContentSecondary>
-          {/* <User size={18} /> */}
           <UserCircle size={22} padding={2} strokeWidth={1} />
         </GuestButtonContent>
       </ButtonStyled>

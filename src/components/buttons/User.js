@@ -15,7 +15,7 @@ const UserButton = styled.button`
   margin: 0 0 0 -1.1rem;
 `
 
-const User = ({ size = 28 }) => {
+const User = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { auth } = useSelector(selectCustomer)
@@ -29,7 +29,7 @@ const User = ({ size = 28 }) => {
 
   return (
     <UserButton onClick={auth ? goToSettings : login}>
-      <UserCircle size={size} isFilled={isFilled} />
+      <UserCircle size={28} isFilled={isFilled} />
     </UserButton>
   )
 }

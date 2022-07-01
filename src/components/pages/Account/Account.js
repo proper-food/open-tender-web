@@ -98,12 +98,19 @@ const Account = () => {
     punctuation,
   } = useSelector(selectContentSection('account')) || {}
   const firstName = profile ? profile.first_name : null
-  const welcome =
+  const greeting =
     firstName && showFirstName
       ? `${title}, ${firstName}${punctuation}`
       : `${title}${punctuation}`
   const appendSubtitle = true
-  const accountTitle = appendSubtitle ? `${welcome} ${subtitle}` : welcome
+  const accountTitle = appendSubtitle ? `${greeting} ${subtitle}` : greeting
+  const welcome = (
+    <Welcome
+      title={accountTitle}
+      subtitle={!appendSubtitle ? subtitle : null}
+    />
+  )
+
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const sections = {
@@ -119,7 +126,6 @@ const Account = () => {
   const mobileSections = displayedSectons
     ? displayedSectons.slice(0, 2) || null
     : null
-  // console.log('displayedSectons', displayedSectons)
   const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
 
   useEffect(() => {
@@ -147,7 +153,7 @@ const Account = () => {
     <>
       <Helmet>
         <title>
-          {welcome} | {siteTitle}
+          {greeting} | {siteTitle}
         </title>
       </Helmet>
       <Background imageUrl={background} />
@@ -161,25 +167,29 @@ const Account = () => {
         <Main>
           <AccountWrapper>
             <AccountView>
-              <Welcome
-                title={accountTitle}
-                subtitle={!appendSubtitle ? subtitle : null}
-              />
-              {isMobile && (
-                <AccountMobile>
-                  {mobileSections ? (
-                    mobileSections
-                  ) : hasAnnouncements ? (
-                    <GuestSlider announcements={announcements} />
-                  ) : (
-                    <AccountHero>
-                      <BackgroundImage imageUrl={mobile} />
-                    </AccountHero>
-                  )}
-                </AccountMobile>
+              {isMobile ? (
+                <>
+                  <AccountMobile>
+                    {welcome}
+                    {mobileSections ? (
+                      mobileSections
+                    ) : hasAnnouncements ? (
+                      <GuestSlider announcements={announcements} />
+                    ) : (
+                      <AccountHero>
+                        <BackgroundImage imageUrl={mobile} />
+                      </AccountHero>
+                    )}
+                  </AccountMobile>
+                  <AccountButtons />
+                </>
+              ) : (
+                <>
+                  {welcome}
+                  <AccountButtons />
+                  {displayedSectons}
+                </>
               )}
-              <AccountButtons />
-              {!isMobile && displayedSectons}
             </AccountView>
           </AccountWrapper>
         </Main>
