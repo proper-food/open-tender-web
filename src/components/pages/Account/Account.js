@@ -8,10 +8,16 @@ import {
   fetchAnnouncementPage,
   fetchCustomer,
   fetchCustomerCreditCards,
-  fetchCustomerOrders,
   fetchCustomerFavorites,
+  fetchCustomerOrders,
+  fetchCustomerRewards,
+  fetchDeals,
   selectAnnouncementsPage,
   selectCustomer,
+  selectCustomerLoyaltyProgram,
+  selectCustomerOrders,
+  selectCustomerRewards,
+  selectDeals,
   selectHasAnnouncementsPage,
 } from '@open-tender/redux'
 
@@ -47,7 +53,6 @@ const AccountView = styled.div`
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
   padding-top: 0;
-  // background-color: pink;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -57,13 +62,8 @@ const AccountMobile = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  // background-color: palegreen;
-
-  > div + div {
-    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
-  }
 `
 
 const AccountHero = styled.div`
@@ -71,8 +71,8 @@ const AccountHero = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => props.theme.layout.paddingMobile};
-  padding-bottom: 0;
+  padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  margin: 3.5rem 0 ${(props) => (props.isSection ? '3.5rem' : '0')};
 
   & > div {
     overflow: hidden;
@@ -80,12 +80,35 @@ const AccountHero = styled.div`
   }
 `
 
+const hasEntities = (reducer) => {
+  if (!reducer) return false
+  const { entities, loading, error } = reducer
+  if (loading === 'pending' && !entities.length) return false
+  return !error && entities.length
+}
+
+const checkLoading = (deals, rewards, orders, loyalty) => {
+  return (
+    deals.loading === 'pending' ||
+    rewards.loading === 'pending' ||
+    orders.loading === 'pending' ||
+    loyalty.loading === 'pending'
+  )
+}
+
 const Account = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
-  const { title: siteTitle, has_deals } = useSelector(selectBrand)
+  const {
+    title: siteTitle,
+    has_deals,
+    has_rewards,
+    has_loyalty,
+    has_thanx,
+    has_levelup,
+  } = useSelector(selectBrand)
   const {
     title,
     subtitle,
@@ -101,8 +124,6 @@ const Account = () => {
   const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
-
-  // handle Welcome component
   const firstName = profile ? profile.first_name : null
   const greeting =
     firstName && showFirstName
@@ -110,28 +131,55 @@ const Account = () => {
       : `${title}${punctuation}`
   const appendSubtitle = true
   const accountTitle = appendSubtitle ? `${greeting} ${subtitle}` : greeting
-  const welcome = (
-    <Welcome
-      title={accountTitle}
-      subtitle={!appendSubtitle ? subtitle : null}
-    />
-  )
 
-  // handle displayed sections
+  const hasContent = displayed.includes('CONTENT') && content && content.length
+  const contentSection = hasContent
+    ? (key) => <AccountContent key={key} content={content} />
+    : null
+
+  const deals = useSelector(selectDeals)
+  const hasDeals = has_deals && displayed.includes('DEALS')
+  const displayDeals = hasDeals && hasEntities(deals)
+  const dealsSection = displayDeals
+    ? (key) => <AccountDeals key={key} deals={deals.entities} />
+    : null
+
+  const rewards = useSelector(selectCustomerRewards)
+  const hasRewards = has_rewards && displayed.includes('REWARDS')
+  const displayRewads = hasRewards && hasEntities(rewards)
+  const rewardsSection = displayRewads
+    ? (key) => <AccountRewards key={key} rewards={rewards.entities} />
+    : null
+
+  const orders = useSelector(selectCustomerOrders)
+  const hasOrders = displayed.includes('ORDERS')
+  const displayOrders = hasOrders && hasEntities(orders)
+  const ordersSection = displayOrders
+    ? (key) => <AccountOrders key={key} orders={orders.entities} />
+    : null
+
+  const loyalty = useSelector(selectCustomerLoyaltyProgram)
+  const hasLoyalty = has_loyalty || has_thanx || has_levelup
+  const displayLoyalty = displayed.includes('LOYALTY') && hasLoyalty
+  const loyaltySection = displayLoyalty
+    ? (key) => <AccountLoyalty key={key} />
+    : null
+
+  const isLoading = checkLoading(deals, rewards, orders, loyalty)
+
   const sections = {
-    CONTENT: (key) => <AccountContent key={key} content={content} />,
-    LOYALTY: (key) => <AccountLoyalty key={key} />,
-    REWARDS: (key) => <AccountRewards key={key} />,
-    DEALS: (key) => <AccountDeals key={key} has_deals={has_deals} />,
-    ORDERS: (key) => <AccountOrders key={key} />,
+    CONTENT: contentSection,
+    LOYALTY: loyaltySection,
+    REWARDS: rewardsSection,
+    DEALS: dealsSection,
+    ORDERS: ordersSection,
   }
-  const displayedSectons = displayed
-    ? displayed.map((i) => sections[i](i))
+  const displayedSections = displayed
+    ? displayed.map((i) => sections[i] && sections[i](i)).filter(Boolean)
     : null
-  const mobileSections = displayedSectons
-    ? displayedSectons.slice(0, 2) || null
-    : null
-  // const mobileSections = null
+  const mobileFirst = displayedSections.length > 1 ? displayedSections[0] : null
+  const mobileSecond =
+    displayedSections.length > 1 ? displayedSections[1] : displayedSections[0]
 
   useEffect(() => {
     dispatch(closeModal())
@@ -151,6 +199,14 @@ const Account = () => {
   useEffect(() => {
     dispatch(fetchAnnouncementPage('ACCOUNT'))
   }, [dispatch])
+
+  useEffect(() => {
+    if (hasDeals) dispatch(fetchDeals())
+  }, [hasDeals, dispatch])
+
+  useEffect(() => {
+    if (hasRewards) dispatch(fetchCustomerRewards())
+  }, [hasRewards, dispatch])
 
   if (!auth) return null
 
@@ -172,30 +228,36 @@ const Account = () => {
         <Main>
           <AccountWrapper>
             <AccountView>
+              <Welcome
+                title={accountTitle}
+                subtitle={!appendSubtitle ? subtitle : null}
+              />
               {isMobile ? (
                 <>
                   <AccountMobile>
-                    {welcome}
-                    {mobileSections ? (
-                      mobileSections
-                    ) : hasAnnouncements ? (
+                    {mobileFirst ? (
+                      mobileFirst
+                    ) : hasAnnouncements && !isLoading ? (
                       <GuestSlider
                         announcements={announcements}
-                        style={{ marginTop: '2rem' }}
+                        style={{
+                          marginTop: '3.5rem',
+                          marginBottom: !!mobileSecond ? '3.5rem' : '0',
+                        }}
                       />
-                    ) : (
-                      <AccountHero>
+                    ) : !isLoading ? (
+                      <AccountHero isSection={!!mobileSecond}>
                         <BackgroundImage imageUrl={mobile} />
                       </AccountHero>
-                    )}
+                    ) : null}
                   </AccountMobile>
+                  {mobileSecond}
                   <AccountButtons />
                 </>
               ) : (
                 <>
-                  {welcome}
                   <AccountButtons />
-                  {displayedSectons}
+                  {displayedSections}
                 </>
               )}
             </AccountView>

@@ -1,22 +1,13 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 
 import { HtmlContent } from '../..'
-
-const AccountContentView = styled.div`
-  padding: 0 0 4rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 3rem;
-  }
-`
+import AccountSection from './AccountSection'
 
 const AccountContent = ({ content }) => {
-  const hasContent = !!(content && content.length)
-  if (!hasContent) return null
   return (
-    <AccountContentView>
+    <AccountSection>
       <HtmlContent content={content} />
-    </AccountContentView>
+    </AccountSection>
   )
 }
 

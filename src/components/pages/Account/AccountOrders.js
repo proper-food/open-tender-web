@@ -1,53 +1,39 @@
-import React from 'react'
+import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import styled from '@emotion/styled'
-import { isBrowser } from 'react-device-detect'
-import { selectCustomerOrders } from '@open-tender/redux'
 
 import { OrderCard, OrderCardSimple, ScrollableSection } from '../..'
 import { selectContentSection } from '../../../slices'
-
-const AccountOrdersView = styled.div`
-  width: 100%;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
-`
+import AccountSection from './AccountSection'
 
 const OrderCardItem = ({ item }) => <OrderCard order={item} />
 
 const OrderCardSimpleItem = ({ item }) => <OrderCardSimple order={item} />
 
-const AccountOrders = () => {
-  const { entities: orders, error } = useSelector(selectCustomerOrders)
+const AccountOrders = ({ orders }) => {
   const { recentOrders } = useSelector(selectContentSection('account'))
   const { title } = recentOrders
   const useSimple = true
-  const hasOrders = orders.length > 0 && !error
   const filtered = orders
     .map((i) => ({ ...i, key: i.order_id }))
     .filter((i) => i.order_type !== 'MERCH')
-  const count = isBrowser ? 2 : 5
-  const displayed = filtered.slice(0, count)
-  const isMore = filtered.length > 1
-  console.log('hasOrders', hasOrders)
-
-  if (!hasOrders) return null
+  const displayed = filtered.slice(0, 5)
 
   return (
-    <AccountOrdersView>
+    <AccountSection>
       <ScrollableSection
         title={title}
-        to={isMore ? '/orders' : null}
+        to={displayed.length > 1 ? '/orders' : null}
         items={displayed}
         renderItem={useSimple ? OrderCardSimpleItem : OrderCardItem}
         keyName="order_id"
       />
-    </AccountOrdersView>
+    </AccountSection>
   )
 }
 
 AccountOrders.displayName = 'AccountOrders'
+AccountOrders.propTypes = {
+  orders: propTypes.array,
+}
 
 export default AccountOrders

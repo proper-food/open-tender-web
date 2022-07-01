@@ -5,8 +5,6 @@ import ScrollableSectionHeader from './ScrollableSectionHeader'
 import Loading from './Loading'
 
 const ScrollableSectionView = styled.div`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;

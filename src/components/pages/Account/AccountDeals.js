@@ -1,42 +1,29 @@
-import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
-import { selectDeals } from '@open-tender/redux'
 
-import { Deals } from '../..'
+import { Reward, ScrollableSection } from '../..'
+import { selectContentSection } from '../../../slices'
+import AccountSection from './AccountSection'
 
-const AccountDealsView = styled.div`
-  width: 100%;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  margin: ${(props) => props.theme.layout.margin} 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
-  }
-`
-
-const AccountDeals = ({ has_deals }) => {
-  const [hasFetched, setHasFetched] = useState(false)
-  const { entities, loading } = useSelector(selectDeals)
-  const hasDeals = !hasFetched || entities.length
-
-  useEffect(() => {
-    if (loading === 'pending') setHasFetched(true)
-  }, [loading])
-
-  if (!has_deals || !hasDeals) return null
+const AccountDeals = ({ deals }) => {
+  const { title } = useSelector(selectContentSection('deals'))
 
   return (
-    <AccountDealsView>
-      <Deals />
-    </AccountDealsView>
+    <AccountSection>
+      <ScrollableSection
+        title={title}
+        to={deals.length > 2 ? '/deals' : null}
+        items={deals}
+        renderItem={Reward}
+        keyName="discount_id"
+      />
+    </AccountSection>
   )
 }
 
 AccountDeals.displayName = 'AccountDeals'
 AccountDeals.propTypes = {
-  has_deals: propTypes.bool,
+  deals: propTypes.array,
 }
 
 export default AccountDeals
