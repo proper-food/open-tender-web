@@ -17,17 +17,18 @@ const makeSlides = (items) => {
   }))
 }
 
-const GuestSliderView = styled.div`
+const AccountSliderView = styled.div`
   flex: 1;
   width: 100%;
-  display: flex;
   padding: 0 ${(props) => props.theme.layout.padding};
+  display: none;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: flex;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
-const GuestSlider = ({ announcements, style }) => {
+const AccountSlider = ({ announcements, style }) => {
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
@@ -35,20 +36,20 @@ const GuestSlider = ({ announcements, style }) => {
   if (!slides) return null
 
   return (
-    <GuestSliderView style={style}>
+    <AccountSliderView style={style}>
       {isLoading ? (
         <BackgroundLoading />
       ) : slides ? (
         <Slider settings={settings} slides={slides} />
       ) : null}
-    </GuestSliderView>
+    </AccountSliderView>
   )
 }
 
-GuestSlider.displayName = 'GuestSlider'
-GuestSlider.propTypes = {
+AccountSlider.displayName = 'AccountSlider'
+AccountSlider.propTypes = {
   announcements: propTypes.object,
   style: propTypes.object,
 }
 
-export default GuestSlider
+export default AccountSlider

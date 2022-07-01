@@ -9,25 +9,24 @@ import styled from '@emotion/styled'
 import { ArrowRight, PlusCircle } from 'react-feather'
 
 const AccountButtonsView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  // margin: 0 0 4rem;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     align-items: center;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 4rem 0 0;
   }
 
   button {
-    min-width: 25rem;
-    margin: 0 1rem 0 0;
+    width: 25rem;
+    max-width: calc(50% - 1rem);
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
       min-width: 100%;
+      max-width: 100%;
       margin: 0;
     }
   }

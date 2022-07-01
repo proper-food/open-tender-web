@@ -6,18 +6,21 @@ import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
   fetchAnnouncementPage,
+  fetchDeals,
   selectCustomer,
   selectAnnouncementsPage,
+  selectDeals,
   selectHasAnnouncementsPage,
 } from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectContentSection } from '../../../slices'
 import { Background, BackgroundImage, Content, Main, Welcome } from '../..'
-import GuestButtons from './GuestButtons'
-import GuestContent from './GuestContent'
-import GuestDeals from './GuestDeals'
 import HeaderGuest from '../../HeaderGuest'
-import GuestSlider from './GuestSlider'
+import AccountSlider from '../Account/AccountSlider'
+import AccountContent from '../Account/AccountContent'
+import AccountDeals from '../Account/AccountDeals'
+import AccountLoyalty from '../Account/AccountLoyalty'
+import GuestButtons from './GuestButtons'
 
 const GuestWrapper = styled.div`
   flex: 1;
@@ -30,8 +33,7 @@ const GuestView = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => props.theme.layout.padding};
-  padding-top: 0;
+  padding: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -59,23 +61,58 @@ const GuestHero = styled.div`
   }
 `
 
+const hasEntities = (reducer) => {
+  if (!reducer) return false
+  const { entities, loading, error } = reducer
+  if (loading === 'pending' && !entities.length) return false
+  return !error && entities.length
+}
+
 const Guest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
-  const { title: siteTitle, has_deals } = useSelector(selectBrand)
+  const {
+    title: siteTitle,
+    has_deals,
+    has_loyalty,
+    has_thanx,
+    has_levelup,
+  } = useSelector(selectBrand)
   const { title, subtitle, background, mobile, content, showGuest, displayed } =
     useSelector(selectContentSection('guest')) || {}
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
   const announcements = useSelector(selectAnnouncementsPage('GUEST'))
-  const sections = {
-    CONTENT: (key) => <GuestContent key={key} content={content} />,
-    DEALS: (key) => <GuestDeals key={key} has_deals={has_deals} />,
-  }
-  const displayedSectons = displayed
-    ? displayed.map((i) => sections[i](i))
+
+  const hasContent = displayed.includes('CONTENT') && content && content.length
+  const contentSection = hasContent
+    ? (key) => <AccountContent key={key} content={content} />
     : null
-  const mobileSection = displayedSectons ? displayedSectons[0] : null
+
+  const deals = useSelector(selectDeals)
+  const hasDeals = has_deals && displayed.includes('DEALS')
+  const displayDeals = hasDeals && hasEntities(deals)
+  const dealsSection = displayDeals
+    ? (key) => <AccountDeals key={key} deals={deals.entities} />
+    : null
+
+  const hasLoyalty = has_loyalty || has_thanx || has_levelup
+  const displayLoyalty = displayed.includes('LOYALTY') && hasLoyalty
+  const loyaltySection = displayLoyalty
+    ? (key) => <AccountLoyalty key={key} />
+    : null
+
+  const isLoading = deals.loading === 'pending'
+
+  const sections = {
+    CONTENT: contentSection,
+    LOYALTY: loyaltySection,
+    DEALS: dealsSection,
+  }
+  const displayedSections = displayed
+    ? displayed.map((i) => sections[i] && sections[i](i)).filter(Boolean)
+    : null
+  const mobileSection = displayedSections ? displayedSections[0] : null
 
   useEffect(() => {
     dispatch(closeModal())
@@ -92,6 +129,10 @@ const Guest = () => {
   useEffect(() => {
     dispatch(fetchAnnouncementPage('GUEST'))
   }, [dispatch])
+
+  useEffect(() => {
+    if (hasDeals) dispatch(fetchDeals())
+  }, [hasDeals, dispatch])
 
   if (auth || !showGuest) return null
 
@@ -111,20 +152,20 @@ const Guest = () => {
                 <GuestMobile>
                   {mobileSection ? (
                     mobileSection
-                  ) : hasAnnouncements ? (
-                    <GuestSlider
+                  ) : hasAnnouncements && !isLoading ? (
+                    <AccountSlider
                       announcements={announcements}
                       style={{ marginTop: '3.5rem' }}
                     />
-                  ) : (
+                  ) : !isLoading ? (
                     <GuestHero>
                       <BackgroundImage imageUrl={mobile} />
                     </GuestHero>
-                  )}
+                  ) : null}
                 </GuestMobile>
               )}
               <GuestButtons />
-              {!isMobile && displayedSectons}
+              {!isMobile && displayedSections}
             </GuestView>
           </GuestWrapper>
         </Main>

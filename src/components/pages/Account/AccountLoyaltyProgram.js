@@ -21,7 +21,11 @@ const AccountLoyaltyProgram = () => {
     <Loading text="Retrieving your loyalty status..." />
   ) : points ? (
     <AccountLoyaltyPoints program={program} />
-  ) : null
+  ) : (
+    <AccountLoyaltyPoints
+      program={{ points: { points: 0, name: 'Rewards Points' } }}
+    />
+  )
 }
 
 AccountLoyaltyProgram.displayName = 'AccountLoyaltyProgram'

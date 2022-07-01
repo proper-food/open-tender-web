@@ -11,30 +11,30 @@ import { ArrowRight } from 'react-feather'
 import { UserCircle } from '../..'
 
 const GuestButtonsView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     align-items: center;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 4rem 0 0;
   }
 
   button {
-    min-width: 16rem;
-    margin: 0 1rem 0 0;
+    width: 25rem;
+    max-width: calc(50% - 1rem);
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
       min-width: 100%;
+      max-width: 100%;
       margin: 0;
     }
   }
 
-  button:last-of-type {
+  button + button {
+    margin: 0 2rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }

@@ -38,7 +38,7 @@ import AccountLoyalty from './AccountLoyalty'
 import AccountRewards from './AccountRewards'
 import AccountDeals from './AccountDeals'
 import AccountOrders from './AccountOrders'
-import GuestSlider from '../Guest/GuestSlider'
+import AccountSlider from './AccountSlider'
 
 const AccountWrapper = styled.div`
   flex: 1;
@@ -231,13 +231,13 @@ const Account = () => {
                 title={accountTitle}
                 subtitle={!appendSubtitle ? subtitle : null}
               />
-              {isMobile ? (
+              {isMobile && (
                 <>
                   <AccountMobile>
                     {mobileFirst ? (
                       mobileFirst
                     ) : hasAnnouncements && !isLoading ? (
-                      <GuestSlider
+                      <AccountSlider
                         announcements={announcements}
                         style={{
                           marginTop: '3.5rem',
@@ -251,14 +251,10 @@ const Account = () => {
                     ) : null}
                   </AccountMobile>
                   {mobileSecond}
-                  <AccountButtons />
-                </>
-              ) : (
-                <>
-                  <AccountButtons />
-                  {displayedSections}
                 </>
               )}
+              <AccountButtons />
+              {!isMobile && displayedSections}
             </AccountView>
           </AccountWrapper>
         </Main>
