@@ -8,11 +8,10 @@ import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
 const AccountLoyaltView = styled.div`
+  width: 100%;
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: ${(props) => props.theme.layout.margin} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
   }
 `
 

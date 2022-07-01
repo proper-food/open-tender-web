@@ -13,17 +13,12 @@ const AccountButtonsView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0;
-    position: fixed;
-    z-index: 10;
-    // left: ${(props) => props.theme.layout.paddingMobile};
-    // right: ${(props) => props.theme.layout.paddingMobile};
-    // bottom: ${(props) => props.theme.layout.paddingMobile};
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    background-color: ${(props) => props.theme.bgColors.primary};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 4rem 0 0;
   }
 
   button {

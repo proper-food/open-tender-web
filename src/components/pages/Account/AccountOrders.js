@@ -8,11 +8,10 @@ import { OrderCard, OrderCardSimple, ScrollableSection } from '../..'
 import { selectContentSection } from '../../../slices'
 
 const AccountOrdersView = styled.div`
+  width: 100%;
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: ${(props) => props.theme.layout.margin} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: ${(props) => props.theme.layout.marginMobile} 0 0;
   }
 `
 
@@ -32,6 +31,7 @@ const AccountOrders = () => {
   const count = isBrowser ? 2 : 5
   const displayed = filtered.slice(0, count)
   const isMore = filtered.length > 1
+  console.log('hasOrders', hasOrders)
 
   if (!hasOrders) return null
 
