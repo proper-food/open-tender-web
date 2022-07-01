@@ -9,7 +9,7 @@ const ScrollableSectionView = styled.div`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 -${(props) => props.theme.layout.paddingMobile};
+    margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
   }
 `
 

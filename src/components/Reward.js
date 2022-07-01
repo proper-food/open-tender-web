@@ -33,20 +33,16 @@ const RewardTag = styled('div')`
 
 const RewardImage = styled(BgImage)`
   width: 100%;
-  padding: 37.5%;
+  padding: 37.5% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 33.33333% 0;
+  }
 `
 
 const RewardContent = styled('div')`
   padding: 0.8rem 0 0;
 `
-
-// const RewardTitle = styled('p')`
-//   color: ${(props) => props.theme.colors.primary};
-//   font-size: ${(props) => props.theme.fonts.sizes.small};
-//   // font-weight: ${(props) => props.theme.boldWeight};
-//   line-height: 1.25;
-// `
 
 const RewardTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};

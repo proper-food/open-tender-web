@@ -24,7 +24,7 @@ const OrderCardSimpleView = styled(Box)`
   overflow: hidden;
 `
 
-const OrderCardSimpleTag = styled('div')`
+const OrderCardSimpleTag = styled.div`
   position: absolute;
   top: -0.9rem;
   right: 1rem;
@@ -36,11 +36,14 @@ const OrderCardSimpleTag = styled('div')`
 
 const OrderCardSimpleImage = styled(BgImage)`
   width: 100%;
-  padding: 37.5%;
+  padding: 37.5% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 33.33333% 0;
+  }
 `
 
-const OrderCardSimpleContent = styled('div')`
+const OrderCardSimpleContent = styled.div`
   padding: 0.8rem 0 0;
 `
 

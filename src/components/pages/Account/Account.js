@@ -47,6 +47,7 @@ const AccountView = styled.div`
   flex-direction: column;
   padding: ${(props) => props.theme.layout.padding};
   padding-top: 0;
+  // background-color: pink;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -56,8 +57,9 @@ const AccountMobile = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  // background-color: palegreen;
 
   > div + div {
     margin: 2rem 0 0;
