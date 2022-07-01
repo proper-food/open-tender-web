@@ -118,7 +118,6 @@ const Account = () => {
     ? displayedSectons.slice(0, 2) || null
     : null
   // console.log('displayedSectons', displayedSectons)
-  const oneSection = displayedSectons && displayedSectons.length <= 1
   const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
 
   useEffect(() => {
