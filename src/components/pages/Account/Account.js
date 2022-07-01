@@ -62,7 +62,7 @@ const AccountMobile = styled.div`
   // background-color: palegreen;
 
   > div + div {
-    margin: 2rem 0 0;
+    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 `
 
@@ -71,7 +71,8 @@ const AccountHero = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  padding: ${(props) => props.theme.layout.paddingMobile};
+  padding-bottom: 0;
 
   & > div {
     overflow: hidden;
@@ -97,6 +98,11 @@ const Account = () => {
     showFirstName,
     punctuation,
   } = useSelector(selectContentSection('account')) || {}
+  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
+  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
+  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
+
+  // handle Welcome component
   const firstName = profile ? profile.first_name : null
   const greeting =
     firstName && showFirstName
@@ -111,8 +117,7 @@ const Account = () => {
     />
   )
 
-  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
-  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
+  // handle displayed sections
   const sections = {
     CONTENT: (key) => <AccountContent key={key} content={content} />,
     LOYALTY: (key) => <AccountLoyalty key={key} />,
@@ -126,7 +131,7 @@ const Account = () => {
   const mobileSections = displayedSectons
     ? displayedSectons.slice(0, 2) || null
     : null
-  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
+  // const mobileSections = null
 
   useEffect(() => {
     dispatch(closeModal())
@@ -174,7 +179,10 @@ const Account = () => {
                     {mobileSections ? (
                       mobileSections
                     ) : hasAnnouncements ? (
-                      <GuestSlider announcements={announcements} />
+                      <GuestSlider
+                        announcements={announcements}
+                        style={{ marginTop: '2rem' }}
+                      />
                     ) : (
                       <AccountHero>
                         <BackgroundImage imageUrl={mobile} />

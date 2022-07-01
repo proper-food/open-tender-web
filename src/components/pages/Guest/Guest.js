@@ -51,6 +51,7 @@ const GuestHero = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  margin-top: 3.5rem;
 
   & > div {
     overflow: hidden;
@@ -111,7 +112,10 @@ const Guest = () => {
                   {mobileSection ? (
                     mobileSection
                   ) : hasAnnouncements ? (
-                    <GuestSlider announcements={announcements} />
+                    <GuestSlider
+                      announcements={announcements}
+                      style={{ marginTop: '3.5rem' }}
+                    />
                   ) : (
                     <GuestHero>
                       <BackgroundImage imageUrl={mobile} />
