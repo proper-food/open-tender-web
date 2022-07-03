@@ -3,13 +3,14 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 import { isMobile } from 'react-device-detect'
+import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
-import { ContainerSite } from '.'
-import { useTheme } from '@emotion/react'
 import { NavMenu } from './buttons'
+import { ContainerSite, UserCircle } from '.'
 
 const HeaderSiteView = styled.div`
   position: fixed;
@@ -42,7 +43,7 @@ const HeaderSiteLogo = styled.div`
   margin: 0.4rem 0 0;
   margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    max-width: 14rem;
+    max-width: 13rem;
   }
 
   img {
@@ -53,19 +54,15 @@ const HeaderSiteLogo = styled.div`
 const HeaderSiteNav = styled.div`
   position: relative;
   z-index: 2;
-  display: block;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
-  }
+`
 
-  ul {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
+const HeaderSiteLinks = styled.ul`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
   li {
     display: block;
@@ -79,6 +76,29 @@ const HeaderSiteNav = styled.div`
     &:active {
       color: ${(props) => props.theme.links.light.hover};
     }
+  }
+`
+
+const HeaderSiteNavUser = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  transition: ${(props) => props.theme.links.transition};
+  margin: 0 -0.5rem 0 0;
+
+  span {
+    background-color: transparent;
+    border-color: ${(props) => props.theme.bgColors.primary};
+  }
+`
+
+const HeaderSiteNavButton = styled.div`
+  margin: 0 0.5rem 0 0;
+
+  button {
+    padding: 0.9rem 1.3rem;
   }
 `
 
@@ -97,6 +117,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
   const { logo, logoLight, title } = useSelector(selectBrand)
   const logoUrl = useLight || stuck ? logoLight : logo
   const theme = useTheme()
+  const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -120,22 +141,44 @@ const HeaderSite = ({ useLight = true, style = null }) => {
                 <img src={logoUrl} alt={title} />
               </Link>
             </HeaderSiteLogo>
-            {isMobile ? (
-              <NavMenu color={theme.colors.light} />
-            ) : (
-              <HeaderSiteNav useLight={useLight} stuck={stuck}>
-                <ul>
-                  {links.map((link) => (
-                    <li key={link.path}>
-                      <Link to={link.path}>{link.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-                <ButtonStyled color="light" onClick={() => navigate('/guest')}>
-                  Order Now
-                </ButtonStyled>
-              </HeaderSiteNav>
-            )}
+            <HeaderSiteNav useLight={useLight} stuck={stuck}>
+              {isMobile ? (
+                <>
+                  {auth ? (
+                    <HeaderSiteNavUser onClick={() => navigate('/guest')}>
+                      <UserCircle size={28} isFilled={true} />
+                    </HeaderSiteNavUser>
+                  ) : (
+                    <HeaderSiteNavButton>
+                      <ButtonStyled
+                        color="light"
+                        size="small"
+                        onClick={() => navigate('/guest')}
+                      >
+                        Order Now
+                      </ButtonStyled>
+                    </HeaderSiteNavButton>
+                  )}
+                  <NavMenu color={theme.colors.light} />
+                </>
+              ) : (
+                <>
+                  <HeaderSiteLinks>
+                    {links.map((link) => (
+                      <li key={link.path}>
+                        <Link to={link.path}>{link.title}</Link>
+                      </li>
+                    ))}
+                  </HeaderSiteLinks>
+                  <ButtonStyled
+                    color="light"
+                    onClick={() => navigate('/guest')}
+                  >
+                    Order Now
+                  </ButtonStyled>
+                </>
+              )}
+            </HeaderSiteNav>
           </HeaderSiteContainer>
         </ContainerSite>
       </HeaderSiteView>

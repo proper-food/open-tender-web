@@ -13,6 +13,7 @@ const UserButton = styled.button`
   width: 5rem;
   height: 5rem;
   margin: 0 0 0 -1.1rem;
+  transition: ${(props) => props.theme.links.transition};
 `
 
 const User = () => {
