@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import { selectCustomer } from '@open-tender/redux'
 import { useNavigate } from 'react-router-dom'
 
 import { openModal } from '../../slices'
 import UserCircle from '../UserCircle'
-import styled from '@emotion/styled'
 
 const UserButton = styled.button`
   display: flex;

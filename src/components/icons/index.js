@@ -1,3 +1,4 @@
+import Hamburger from './Hamburger'
 import TriangleDown from './TriangleDown'
 
-export { TriangleDown }
+export { Hamburger, TriangleDown }

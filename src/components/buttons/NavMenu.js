@@ -1,30 +1,28 @@
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
-import { ButtonIcon } from '@open-tender/components'
+import styled from '@emotion/styled'
+import { useDispatch } from 'react-redux'
 
 import { toggleNav } from '../../slices'
-import iconMap from '../iconMap'
-import { isBrowser } from 'react-device-detect'
+import { Hamburger } from '../icons'
+
+const NavMenuButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin: 0 -1.5rem 0 0;
+  transition: ${(props) => props.theme.links.transition};
+`
 
 const NavMenu = ({ color }) => {
   const dispatch = useDispatch()
-  const { auth } = useSelector(selectCustomer)
 
   return (
-    <ButtonIcon
-      label={auth ? 'Account Navigation' : 'Login'}
-      color={color}
-      size={isBrowser ? 24 : 20}
-      style={
-        isBrowser
-          ? { width: '2.6rem', marginTop: '0.2rem' }
-          : { marginTop: '0' }
-      }
-      onClick={() => dispatch(toggleNav())}
-    >
-      {iconMap.Menu}
-    </ButtonIcon>
+    <NavMenuButton onClick={() => dispatch(toggleNav())}>
+      <Hamburger color={color} />
+    </NavMenuButton>
   )
 }
 

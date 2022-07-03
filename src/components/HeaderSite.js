@@ -8,6 +8,8 @@ import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
 import { ContainerSite } from '.'
+import { useTheme } from '@emotion/react'
+import { NavMenu } from './buttons'
 
 const HeaderSiteView = styled.div`
   position: fixed;
@@ -94,6 +96,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
   const [stuck, setStuck] = useState(false)
   const { logo, logoLight, title } = useSelector(selectBrand)
   const logoUrl = useLight || stuck ? logoLight : logo
+  const theme = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,18 +120,22 @@ const HeaderSite = ({ useLight = true, style = null }) => {
                 <img src={logoUrl} alt={title} />
               </Link>
             </HeaderSiteLogo>
-            <HeaderSiteNav useLight={useLight} stuck={stuck}>
-              <ul>
-                {links.map((link) => (
-                  <li key={link.path}>
-                    <Link to={link.path}>{link.title}</Link>
-                  </li>
-                ))}
-              </ul>
-              <ButtonStyled color="light" onClick={() => navigate('/guest')}>
-                Order Now
-              </ButtonStyled>
-            </HeaderSiteNav>
+            {isMobile ? (
+              <NavMenu color={theme.colors.light} />
+            ) : (
+              <HeaderSiteNav useLight={useLight} stuck={stuck}>
+                <ul>
+                  {links.map((link) => (
+                    <li key={link.path}>
+                      <Link to={link.path}>{link.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+                <ButtonStyled color="light" onClick={() => navigate('/guest')}>
+                  Order Now
+                </ButtonStyled>
+              </HeaderSiteNav>
+            )}
           </HeaderSiteContainer>
         </ContainerSite>
       </HeaderSiteView>
