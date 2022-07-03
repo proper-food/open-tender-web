@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
 import { TriangleDown } from './icons'
 
-const ProgressPointsView = styled.div`
+export const ProgressPointsView = styled.div`
   position: relative;
   width: 100%;
   border-style: solid;
@@ -14,14 +14,14 @@ const ProgressPointsView = styled.div`
   margin: 5.5rem 0 0;
 `
 
-const ProgressPointsFill = styled.div`
+export const ProgressPointsFill = styled.div`
   width: 0;
   height: 1.2rem;
   animation: fill-bar 0.5s ease-in-out 0.5s forwards;
   background-color: ${(props) => props.theme.bgColors.success};
 `
 
-const ProgressPoint = styled.div`
+export const ProgressPoint = styled.div`
   position: absolute;
   top: -3rem;
   height: 3rem;
@@ -38,13 +38,13 @@ const ProgressPoint = styled.div`
     props.isFirst ? '0' : props.isLast ? '-4rem' : '-2rem'};
 `
 
-const ProgressPointText = styled.span`
+export const ProgressPointText = styled.span`
   display: block;
   width: 100%;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const ProgressPointCircle = styled.div`
+export const ProgressPointCircle = styled.div`
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 0.4rem;
@@ -57,7 +57,7 @@ const ProgressPointCircle = styled.div`
       : props.theme.bgColors.primary};
 `
 
-const ProgressPointPoints = styled(Heading)`
+export const ProgressPointPoints = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
@@ -106,7 +106,8 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
 
 ProgressPoints.displayName = 'ProgressPoints'
 ProgressPoints.propTypes = {
-  progress: propTypes.number,
+  points: propTypes.number,
+  thresholds: propTypes.array,
 }
 
 export default ProgressPoints

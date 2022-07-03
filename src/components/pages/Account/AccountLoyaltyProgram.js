@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchCustomerLoyalty,
   selectCustomerLoyaltyProgram,
 } from '@open-tender/redux'
+
+import { selectBrand } from '../../../slices'
 import Loading from '../../Loading'
-import { useDispatch, useSelector } from 'react-redux'
 import AccountLoyaltyPoints from './AccountLoyaltyPoints'
+import AccountLoyaltySpend from './AccountLoyaltySpend'
 
 const AccountLoyaltyProgram = () => {
   const dispatch = useDispatch()
+  const { loyalty } = useSelector(selectBrand)
+  const { terms = {} } = loyalty || {}
   const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
   const hasProgram = program ? true : false
-  const { points } = program || {}
+  const { points, credit, redemption, spend } = program || {}
 
   useEffect(() => {
     dispatch(fetchCustomerLoyalty())
@@ -20,10 +25,27 @@ const AccountLoyaltyProgram = () => {
   return loading === 'pending' && !hasProgram ? (
     <Loading text="Retrieving your loyalty status..." />
   ) : points ? (
-    <AccountLoyaltyPoints program={program} />
-  ) : (
+    <AccountLoyaltyPoints terms={points} thresholds={terms.thresholds} />
+  ) : credit ? (
+    <AccountLoyaltySpend
+      credit={credit.current}
+      spend={spend.current}
+      threshold={redemption.threshold}
+      reward={redemption.reward}
+    />
+  ) : terms.thresholds ? (
     <AccountLoyaltyPoints
-      program={{ points: { points: 0, name: 'Rewards Points' } }}
+      isGuest={true}
+      terms={{ points: 0, ...terms }}
+      thresholds={terms.thresholds}
+    />
+  ) : (
+    <AccountLoyaltySpend
+      credit="0.00"
+      spend="0.00"
+      threshold={terms.threshold}
+      reward={terms.reward}
+      isGuest={true}
     />
   )
 }

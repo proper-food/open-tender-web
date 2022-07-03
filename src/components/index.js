@@ -75,9 +75,10 @@ import PageTitle from './PageTitle'
 import PageTitleButtons from './PageTitleButtons'
 import PageView from './PageView'
 import PointsBalance from './PointsBalance'
-import PointsProgress from './PointsProgress'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
+import ProgressPoints from './ProgressPoints'
+import ProgressSpend from './ProgressSpend'
 import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Reward from './Reward'
@@ -180,9 +181,10 @@ export {
   PageTitleButtons,
   PageView,
   PointsBalance,
-  PointsProgress,
   ProgressBar,
   ProgressCircle,
+  ProgressPoints,
+  ProgressSpend,
   QRCode,
   RevenueCenter,
   RevenueCenterChild,

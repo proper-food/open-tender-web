@@ -63,6 +63,7 @@ const AccountMobile = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  ${(props) => (props.isSecond ? 'margin: 1rem 0 2rem' : '')}
 `
 
 const AccountHero = styled.div`
@@ -233,7 +234,7 @@ const Account = () => {
               />
               {isMobile && (
                 <>
-                  <AccountMobile>
+                  <AccountMobile isSecond={!!mobileSecond}>
                     {mobileFirst ? (
                       mobileFirst
                     ) : hasAnnouncements && !isLoading ? (

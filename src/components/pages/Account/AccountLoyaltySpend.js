@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
-import { formatQuantity } from '@open-tender/js'
+import { formatDollars } from '@open-tender/js'
 import { Headline, Heading, Preface } from '@open-tender/components'
-import { ProgressPoints, SeeMoreLink } from '../..'
+import { ProgressSpend, SeeMoreLink } from '../..'
 import { useSelector } from 'react-redux'
 import { selectContentSection } from '../../../slices'
 
-const AccountLoyaltyPointsView = styled.div``
+const AccountLoyaltySpendView = styled.div``
 
-const AccountLoyaltyPointsTitle = styled.div`
+const AccountLoyaltySpendTitle = styled.div`
   margin: 0 0 1.5rem;
   text-align: left;
   font-size: ${(props) => props.theme.fonts.sizes.big};
@@ -37,41 +37,48 @@ const AccountPointsLabel = styled(Preface)`
   margin: 0 0 0.3rem 0.6rem;
 `
 
-const AccountPoints = ({ points, name }) => {
+const AccountCredit = ({ credit }) => {
   return (
     <AccountPointsView>
       <AccountPointsCount>
-        <Headline size="h1">{formatQuantity(points)}</Headline>
-        <AccountPointsLabel size="xSmall">{name}</AccountPointsLabel>
+        <Headline size="h1">{formatDollars(credit, '', 0)}</Headline>
+        <AccountPointsLabel size="xSmall">Available Credit</AccountPointsLabel>
       </AccountPointsCount>
       <SeeMoreLink text="See Details" to="/loyalty" />
     </AccountPointsView>
   )
 }
 
-const AccountLoyaltyPoints = ({ terms, thresholds, isGuest = false }) => {
+const AccountLoyaltySpend = ({
+  credit,
+  spend,
+  threshold,
+  reward,
+  isGuest = false,
+}) => {
   const account = useSelector(selectContentSection('account'))
   const { title } = account?.loyalty || {}
-  const { points, name } = terms
 
   return (
-    <AccountLoyaltyPointsView>
-      <AccountLoyaltyPointsTitle>
+    <AccountLoyaltySpendView>
+      <AccountLoyaltySpendTitle>
         <Heading as="p">
           {!isGuest ? title : 'Create an account to get started...'}
         </Heading>
-      </AccountLoyaltyPointsTitle>
-      <AccountPoints points={points} name={name} />
-      <ProgressPoints points={points} thresholds={thresholds} />
-    </AccountLoyaltyPointsView>
+      </AccountLoyaltySpendTitle>
+      <AccountCredit credit={credit} />
+      <ProgressSpend spend={spend} threshold={threshold} reward={reward} />
+    </AccountLoyaltySpendView>
   )
 }
 
-AccountLoyaltyPoints.displayName = 'AccountLoyaltyPoints'
-AccountLoyaltyPoints.propTypes = {
+AccountLoyaltySpend.displayName = 'AccountLoyaltySpend'
+AccountLoyaltySpend.propTypes = {
   isGuest: propTypes.bool,
-  terms: propTypes.object,
-  thresholds: propTypes.array,
+  credit: propTypes.string,
+  spend: propTypes.string,
+  threshold: propTypes.string,
+  reward: propTypes.string,
 }
 
-export default AccountLoyaltyPoints
+export default AccountLoyaltySpend
