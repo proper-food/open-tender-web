@@ -68,10 +68,17 @@ const GuestButtonContentSecondary = styled(Body)`
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.secondary.color};
 
-  &:hover {
+  button:hover & {
     color: ${(props) => props.theme.buttons.colors.secondaryHover.color};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       color: ${(props) => props.theme.buttons.colors.secondary.color};
+    }
+
+    svg {
+      fill: ${(props) => props.theme.buttons.colors.secondaryHover.color};
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        fill: ${(props) => props.theme.buttons.colors.secondary.color};
+      }
     }
   }
 `

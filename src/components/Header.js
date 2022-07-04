@@ -72,19 +72,6 @@ const HeaderNav = styled('div')`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
-  ${(props) =>
-    props.isBrowser
-      ? `
-    button {
-    margin: 0 0 0 ${props.theme.layout.padding};
-
-    &:first-of-type {
-      margin: 0
-    }
-    }
-  `
-      : ``}
 `
 
 const Header = ({

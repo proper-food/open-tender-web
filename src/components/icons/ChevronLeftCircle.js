@@ -1,6 +1,5 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 
 const ChevronLeftCircleView = styled.span`
   display: block;
@@ -12,19 +11,17 @@ const ChevronLeftCircleView = styled.span`
   }
 `
 
-const ChevronLeftCircle = ({ size = 25, color = null }) => {
-  const theme = useTheme()
-  const lineColor = color || theme.colors.primary
+const ChevronLeftCircle = ({ size = 25 }) => {
   return (
     <ChevronLeftCircleView size={size}>
       <svg viewBox="0 0 25 25" fill="none">
         <path
           d="M15 18L9 12L15 6"
-          stroke={lineColor}
+          stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="12.5" cy="12.5" r="12" stroke={lineColor} />
+        <circle cx="12.5" cy="12.5" r="12" stroke="currentColor" />
       </svg>
     </ChevronLeftCircleView>
   )

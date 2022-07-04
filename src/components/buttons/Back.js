@@ -1,24 +1,14 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeftCircle } from '../icons'
-
-const BackButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 5rem;
-  height: 5rem;
-  margin: 0 0 0 -1.25rem;
-  transition: ${(props) => props.theme.links.transition};
-`
+import Icon from './Icon'
 
 const Back = ({ path = '/account' }) => {
   const navigate = useNavigate()
   return (
-    <BackButton onClick={() => navigate(path)}>
+    <Icon margin="0 0 0 -1.25rem" onClick={() => navigate(path)}>
       <ChevronLeftCircle />
-    </BackButton>
+    </Icon>
   )
 }
 

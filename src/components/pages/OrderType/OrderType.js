@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
@@ -11,7 +11,7 @@ import {
   selectBrand,
   selectCateringOnly,
 } from '../../../slices'
-import { AccountHome, Back, NavMenu } from '../../buttons'
+import { Back, NavMenu } from '../../buttons'
 import {
   Background,
   Content,

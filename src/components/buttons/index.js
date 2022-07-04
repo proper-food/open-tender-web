@@ -12,6 +12,7 @@ import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
 import GroupOrder from './GroupOrder'
 import Home from './Home'
+import Icon from './Icon'
 import LeaveGroup from './LeaveGroup'
 import Locations from './Locations'
 import Logout from './Logout'
@@ -42,6 +43,7 @@ export {
   GroupOrder,
   GroupGuest,
   Home,
+  Icon,
   LeaveGroup,
   Locations,
   Logout,

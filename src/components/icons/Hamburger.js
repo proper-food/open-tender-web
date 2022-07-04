@@ -1,6 +1,5 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 
 const HamburgerView = styled.span`
   display: block;
@@ -12,9 +11,7 @@ const HamburgerView = styled.span`
   }
 `
 
-const Hamburger = ({ size = 20, color = null }) => {
-  const theme = useTheme()
-  const lineColor = color || theme.colors.primary
+const Hamburger = ({ size = 20 }) => {
   return (
     <HamburgerView size={size}>
       <svg viewBox="0 0 20 11" fill="none">
@@ -23,7 +20,7 @@ const Hamburger = ({ size = 20, color = null }) => {
           y1="0.5"
           x2="19.5"
           y2="0.5"
-          stroke={lineColor}
+          stroke="currentColor"
           strokeLinecap="square"
         />
         <line
@@ -31,7 +28,7 @@ const Hamburger = ({ size = 20, color = null }) => {
           y1="5.5"
           x2="19.5"
           y2="5.5"
-          stroke={lineColor}
+          stroke="currentColor"
           strokeLinecap="square"
         />
         <line
@@ -39,7 +36,7 @@ const Hamburger = ({ size = 20, color = null }) => {
           y1="10.5"
           x2="19.5"
           y2="10.5"
-          stroke={lineColor}
+          stroke="currentColor"
           strokeLinecap="square"
         />
       </svg>
