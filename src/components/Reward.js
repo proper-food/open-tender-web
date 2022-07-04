@@ -35,24 +35,38 @@ const RewardImage = styled(BgImage)`
   width: 100%;
   padding: 37.5% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 33.33333% 0;
   }
 `
 
-const RewardContent = styled('div')`
-  padding: 0.8rem 0 0;
+const RewardContent = styled.div`
+  padding: ${(props) =>
+    props.theme.cards.default.bgColor === 'transparent'
+      ? '0.8rem 0 0'
+      : '1.3rem 1.3rem 1.2rem'};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) =>
+      props.theme.cards.default.bgColor === 'transparent'
+        ? '0.8rem 0 0'
+        : '1rem 1rem 0.8rem'};
+  }
 `
 
 const RewardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const RewardDescription = styled('p')`
   display: none;
   margin: 0.5rem 0 0;
   line-height: ${(props) => props.theme.fonts.body.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const RewardNote = styled('div')`
@@ -61,7 +75,9 @@ const RewardNote = styled('div')`
   align-items: center;
   margin: 0.5rem 0 0;
   line-height: ${(props) => props.theme.fonts.body.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 
   span {
     display: block;
@@ -70,9 +86,14 @@ const RewardNote = styled('div')`
 `
 
 const RewardNoteIcon = styled.span`
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0 0.4rem 0 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: -0.2rem 0.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0 0.4rem 0 0;
+  }
 `
 
 const makeImageUrl = (images) => {
@@ -208,7 +229,7 @@ const Reward = ({ item }) => {
         <RewardTag>
           {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
         </RewardTag>
-        <RewardImage style={bgStyle}>&nbsp;</RewardImage>
+        <RewardImage style={bgStyle} />
         <RewardContent>
           <RewardTitle as="p">{reward.title}</RewardTitle>
           {reward.short_description && (

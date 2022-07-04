@@ -38,23 +38,37 @@ const OrderCardSimpleImage = styled(BgImage)`
   width: 100%;
   padding: 37.5% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 33.33333% 0;
   }
 `
 
 const OrderCardSimpleContent = styled.div`
-  padding: 0.8rem 0 0;
+  padding: ${(props) =>
+    props.theme.cards.default.bgColor === 'transparent'
+      ? '0.8rem 0 0'
+      : '1.3rem 1.3rem 1.2rem'};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) =>
+      props.theme.cards.default.bgColor === 'transparent'
+        ? '0.8rem 0 0'
+        : '1rem 1rem 0.8rem'};
+  }
 `
 
 const OrderCardSimpleTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const OrderCardSimpleDescription = styled('p')`
   margin: 0.5rem 0 0;
   line-height: ${(props) => props.theme.fonts.body.lineHeight};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const OrderCardSimple = ({ order }) => {

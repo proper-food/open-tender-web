@@ -6,7 +6,7 @@ import Loading from './Loading'
 
 const ScrollableSectionView = styled.div`
   margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
   }
 `
@@ -25,14 +25,14 @@ const ScrollableSectionItem = styled.div`
   flex: 0 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 20rem;
     margin-right: ${(props) => props.theme.layout.paddingMobile};
   }
 
   &:first-of-type {
     margin-left: ${(props) => props.theme.layout.padding};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
   }
@@ -40,7 +40,7 @@ const ScrollableSectionItem = styled.div`
 
 const ScrollableSectionLoading = styled.div`
   padding: 2rem ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 2rem ${(props) => props.theme.layout.paddingMobile};
   }
 `
