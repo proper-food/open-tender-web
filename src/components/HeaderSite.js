@@ -57,6 +57,7 @@ const HeaderSiteNav = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  color: ${(props) => props.theme.colors.light};
 `
 
 const HeaderSiteLinks = styled.ul`

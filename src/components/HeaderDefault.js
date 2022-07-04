@@ -2,12 +2,10 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { Header } from '.'
-import { AccountHome, NavMenu } from './buttons'
+import { Back, NavMenu } from './buttons'
 
 const HeaderDefault = ({ maxWidth = '100%' }) => {
-  return (
-    <Header maxWidth={maxWidth} left={<AccountHome />} right={<NavMenu />} />
-  )
+  return <Header maxWidth={maxWidth} left={<Back />} right={<NavMenu />} />
 }
 
 HeaderDefault.displayName = 'HeaderDefault'

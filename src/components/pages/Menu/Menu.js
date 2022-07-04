@@ -2,7 +2,6 @@ import { useEffect, createContext, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isMobile } from 'react-device-detect'
 import { animateScroll as scroll } from 'react-scroll'
 import {
   selectOrder,
@@ -14,7 +13,6 @@ import {
   selectCustomer,
   selectDeals,
   resetRevenueCenter,
-  // fetchRevenueCenter,
   fetchLocation,
   fetchMenu,
   fetchAllergens,
@@ -142,13 +140,11 @@ const MenuPage = () => {
               pointsProgram,
             }}
           >
-            {isMobile && (
-              <MenuMobileMenu
-                order={order}
-                showMenu={showMenu}
-                setShowMenu={setShowMenu}
-              />
-            )}
+            <MenuMobileMenu
+              order={order}
+              showMenu={showMenu}
+              setShowMenu={setShowMenu}
+            />
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
             <MenuContent />
           </MenuContext.Provider>

@@ -40,7 +40,9 @@ const NavButtonView = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
-    border-bottom: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-bottom: 0;
+    }
   }
 `
 

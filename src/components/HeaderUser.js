@@ -1,12 +1,12 @@
 import propTypes from 'prop-types'
 import { Header } from '.'
-import { AccountSettings, NavMenu, ContinueOrder } from './buttons'
+import { Back, ContinueOrder, NavMenu } from './buttons'
 
 const HeaderUser = ({ maxWidth = '100%' }) => {
   return (
     <Header
       maxWidth={maxWidth}
-      left={<AccountSettings />}
+      left={<Back path="/account/settings" />}
       right={
         <>
           <ContinueOrder />

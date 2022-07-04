@@ -103,7 +103,7 @@ const RevenueCenters = () => {
             orderType === 'CATERING' ? (
               <Back path="/catering-address" />
             ) : (
-              <Back />
+              <Back path="/order-type" />
             )
           }
           right={<NavMenu />}

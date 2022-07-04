@@ -1,7 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectGroupOrder,
@@ -13,8 +12,8 @@ import { Preface, Heading } from '@open-tender/components'
 
 import { Header } from '../..'
 import {
-  AccountHome,
   Allergens,
+  Back,
   CancelEdit,
   GroupGuest,
   GroupOrder,
@@ -46,12 +45,6 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   > span {
     display: inline-block;
     color: ${(props) => props.theme.buttons.colors.header.color};
-
-    // &:first-of-type {
-    //   margin: 0.3rem 0.4rem 0 0;
-    //   width: 1.6rem;
-    //   height: 1.6rem;
-    // }
 
     &:last-of-type {
       margin: 0.2rem 0 0 0.5rem;
@@ -117,71 +110,40 @@ MenuHeaderTitle.propTypes = {
   setShowMenu: propTypes.func,
 }
 
-const MenuHeader = ({
-  maxWidth = '100%',
-  bgColor,
-  borderColor,
-  showMenu,
-  setShowMenu,
-}) => {
+const MenuHeader = ({ showMenu, setShowMenu }) => {
   const { auth } = useSelector(selectCustomer)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
 
+  const desktopNav = cartGuest ? (
+    <>
+      <Allergens />
+      <GroupGuest />
+    </>
+  ) : (
+    <>
+      <RevenueCenter />
+      <ServiceType />
+      <RequestedAt />
+      <Allergens />
+      <GroupOrder />
+      <CancelEdit />
+      {auth ? <Points /> : null}
+    </>
+  )
+
   return (
     <Header
       title={
-        isBrowser ? null : (
-          <MenuHeaderTitle
-            {...order}
-            showMenu={showMenu}
-            setShowMenu={setShowMenu}
-          />
-        )
+        <MenuHeaderTitle
+          {...order}
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+        />
       }
-      maxWidth={maxWidth}
-      bgColor={bgColor}
-      borderColor={showMenu ? 'secondary' : borderColor}
-      left={
-        cartGuest ? (
-          <LeaveGroup />
-        ) : (
-          <>
-            <AccountHome />
-            {/* {isBrowser && <Locations />} */}
-          </>
-        )
-      }
-      right={
-        <>
-          {isBrowser ? (
-            <>
-              {cartGuest ? (
-                <>
-                  <Allergens />
-                  <GroupGuest />
-                </>
-              ) : (
-                <>
-                  <RevenueCenter />
-                  <ServiceType />
-                  <RequestedAt />
-                  <Allergens />
-                  <GroupOrder />
-                  <CancelEdit />
-                  {auth ? <Points /> : null}
-                  <NavMenu />
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <Allergens />
-              {/* <NavMenu /> */}
-            </>
-          )}
-        </>
-      }
+      borderColor={showMenu ? 'secondary' : 'primary'}
+      left={cartGuest ? <LeaveGroup /> : <Back path="/locations" />}
+      right={<NavMenu />}
     />
   )
 }
