@@ -28,7 +28,7 @@ import {
   setGeoLoading,
   selectSettings,
 } from '../../../slices'
-import { NavButtons, ButtonLarge } from '../..'
+import { NavButtons } from '../..'
 import OrderTypeLinks from './OrderTypeLinks'
 import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
@@ -41,15 +41,15 @@ const OrderTypesView = styled.div`
 
 `
 
-const OrderTypesButtons = styled.div`
-  margin: 0 auto;
+// const OrderTypesButtons = styled.div`
+//   margin: 0 auto;
 
-  button {
-    display: block;
-    width: 100%;
-    margin: 0 0 1rem;
-  }
-`
+//   button {
+//     display: block;
+//     width: 100%;
+//     margin: 0 0 1rem;
+//   }
+// `
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
@@ -166,12 +166,11 @@ const OrderTypes = () => {
     <div>
       {hasOrderTypes ? (
         <OrderTypesView showDesc={showDesc} isMobile={isMobile}>
-          {/* <NavButtons buttons={buttons} /> */}
-          <OrderTypesButtons>
+          <NavButtons buttons={buttons} />
+          {/* <OrderTypesButtons>
             {buttons.map((button, index) => (
               <ButtonLarge
                 key={button.title}
-                // delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
                 text={button.title}
                 onClick={button.onClick}
                 color="secondary"
@@ -179,7 +178,7 @@ const OrderTypes = () => {
                 {button.icon}
               </ButtonLarge>
             ))}
-          </OrderTypesButtons>
+          </OrderTypesButtons> */}
           <OrderTypeLinks
             orderLinks={orderLinks}
             contentTypes={contentTypes}

@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ArrowRight, ChevronRight } from 'react-feather'
+import { ArrowRight } from 'react-feather'
 import { Body, Heading } from '@open-tender/components'
 
 const NavButtonView = styled('button')`
@@ -22,8 +22,13 @@ const NavButtonView = styled('button')`
   background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 6.6rem;
-    padding: 0 1rem 0 2rem;
+    // height: 6.4rem;
+    padding: 0 0rem 0 1.5rem;
+    margin: 0;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
   }
 
   &:hover {
@@ -35,6 +40,7 @@ const NavButtonView = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
+    border-bottom: 0;
   }
 `
 
@@ -47,8 +53,8 @@ const NavButtonIcon = styled('span')`
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.large.iconColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 1.6rem;
+    height: 1.6rem;
   }
 
   button:hover & {
@@ -71,12 +77,13 @@ const NavButtonText = styled.span`
 
 const NavButtonTitle = styled(Heading)`
   display: block;
-  margin: 0 0 0.1rem -0.1rem;
+  margin: 0 0 0 -0.1rem;
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.large.color};
   font-size: ${(props) => props.theme.fonts.sizes.big};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
+    // font-size: 1.6rem;
   }
 
   button:hover & {
@@ -86,9 +93,10 @@ const NavButtonTitle = styled(Heading)`
 
 const NavButtonSubtitle = styled(Body)`
   display: block;
+  margin: 0.1rem 0 0;
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
@@ -133,8 +141,7 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
         {subtitle && <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>}
       </NavButtonText>
       <NavButtonArrow>
-        {/* <ChevronRight size={null} strokeWidth={1} /> */}
-        <ArrowRight size={null} strokeWidth={1} />
+        <ArrowRight size={null} strokeWidth={2} />
       </NavButtonArrow>
     </NavButtonView>
   )
