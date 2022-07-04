@@ -7,8 +7,8 @@ import { Body, ButtonStyled, Heading } from '@open-tender/components'
 
 import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
+import { UserCircle } from '../../icons'
 import { ArrowRight } from 'react-feather'
-import { UserCircle } from '../..'
 
 const GuestButtonsView = styled('div')`
   display: flex;
@@ -104,7 +104,7 @@ const GuestButtons = () => {
           <GuestButtonContentSecondary>
             Sign in or sign up
           </GuestButtonContentSecondary>
-          <UserCircle size={22} padding={2} strokeWidth={1} />
+          <UserCircle size={22} />
         </GuestButtonContent>
       </ButtonStyled>
       <ButtonStyled

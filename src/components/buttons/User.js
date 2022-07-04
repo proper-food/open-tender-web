@@ -4,7 +4,8 @@ import { selectCustomer } from '@open-tender/redux'
 import { useNavigate } from 'react-router-dom'
 
 import { openModal } from '../../slices'
-import UserCircle from '../UserCircle'
+import { UserCircle } from '../icons'
+import { useTheme } from '@emotion/react'
 
 const UserButton = styled.button`
   display: flex;
@@ -20,7 +21,10 @@ const User = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { auth } = useSelector(selectCustomer)
-  const isFilled = auth ? true : false
+  const theme = useTheme()
+  const { colors, bgColors } = theme
+  const color = auth ? bgColors.primary : colors.primary
+  const bgColor = auth ? colors.primary : bgColors.primary
 
   const login = () => {
     dispatch(openModal({ type: 'login' }))
@@ -30,7 +34,7 @@ const User = () => {
 
   return (
     <UserButton onClick={auth ? goToSettings : login}>
-      <UserCircle size={28} isFilled={isFilled} />
+      <UserCircle color={color} bgColor={bgColor} />
     </UserButton>
   )
 }

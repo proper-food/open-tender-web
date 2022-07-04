@@ -142,7 +142,7 @@ const Guest = () => {
         <title>Welcome | {siteTitle}</title>
       </Helmet>
       <Background imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      <Content maxWidth="76.8rem" hasFooter={false}>
         <HeaderGuest />
         <Main>
           <GuestWrapper>
