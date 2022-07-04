@@ -1,13 +1,13 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { User } from 'react-feather'
+import { User } from './icons'
 
 const UserCircleView = styled.span`
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
-  padding: ${(props) => `${(props.padding / 10).toFixed(1)}rem`};
+  // padding: ${(props) => `${(props.padding / 10).toFixed(1)}rem`};
   width: ${(props) => `${(props.size / 10).toFixed(1)}rem`};
   height: ${(props) => `${(props.size / 10).toFixed(1)}rem`};
   border-radius: ${(props) => `${(props.size / 20).toFixed(1)}rem`};
@@ -27,9 +27,10 @@ const UserCircle = ({
   const { colors, bgColors } = theme
   const color = isFilled ? bgColors.primary : colors.primary
   const bgColor = isFilled ? colors.primary : bgColors.primary
+  const userSize = `${(size - padding * 2).toFixed(2)}rem`
   return (
     <UserCircleView size={size} padding={padding} bgColor={bgColor}>
-      <User size={null} strokeWidth={strokeWidth} color={color} />
+      <User size={userSize} strokeWidth={strokeWidth} color={color} />
     </UserCircleView>
   )
 }
