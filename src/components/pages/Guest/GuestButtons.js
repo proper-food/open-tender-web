@@ -1,14 +1,11 @@
-import React from 'react'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { ArrowRight } from 'react-feather'
 import { resetOrder, selectOrder } from '@open-tender/redux'
-import { Body, ButtonStyled, Heading } from '@open-tender/components'
-
-import styled from '@emotion/styled'
 import { openModal } from '../../../slices'
 import { UserCircle } from '../../icons'
-import { ArrowRight } from 'react-feather'
+import { ButtonLarge } from '../..'
 
 const GuestButtonsView = styled('div')`
   display: flex;
@@ -40,56 +37,12 @@ const GuestButtonsView = styled('div')`
   }
 `
 
-const GuestButtonContent = styled.span`
-  width: 100%;
-  height: 2.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  span {
-    display: block;
-  }
-`
-
-const GuestButtonContentPrimary = styled(Heading)`
-  transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.buttons.colors.primary.color};
-
-  &:hover {
-    color: ${(props) => props.theme.buttons.colors.primaryHover.color};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      color: ${(props) => props.theme.buttons.colors.primary.color};
-    }
-  }
-`
-
-const GuestButtonContentSecondary = styled(Body)`
-  transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.buttons.colors.secondary.color};
-
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.secondaryHover.color};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      color: ${(props) => props.theme.buttons.colors.secondary.color};
-    }
-
-    svg {
-      fill: ${(props) => props.theme.buttons.colors.secondaryHover.color};
-      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-        fill: ${(props) => props.theme.buttons.colors.secondary.color};
-      }
-    }
-  }
-`
-
 const GuestButtons = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
-  const buttonSize = isBrowser ? 'big' : 'big'
 
   const continueCurrent = () => {
     navigate(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
@@ -106,26 +59,16 @@ const GuestButtons = () => {
 
   return (
     <GuestButtonsView>
-      <ButtonStyled onClick={login} size={buttonSize} color="secondary">
-        <GuestButtonContent>
-          <GuestButtonContentSecondary>
-            Sign in or sign up
-          </GuestButtonContentSecondary>
-          <UserCircle size={22} />
-        </GuestButtonContent>
-      </ButtonStyled>
-      <ButtonStyled
+      <ButtonLarge onClick={login} text="Sign in or sign up" color="secondary">
+        <UserCircle size={22} />
+      </ButtonLarge>
+      <ButtonLarge
         onClick={isCurrentOrder ? continueCurrent : startNewOrder}
-        size={buttonSize}
+        text={isCurrentOrder ? 'Continue Order' : 'Order Now'}
         color="primary"
       >
-        <GuestButtonContent>
-          <GuestButtonContentPrimary>
-            {isCurrentOrder ? 'Continue Order' : 'Order Now'}
-          </GuestButtonContentPrimary>
-          <ArrowRight size={22} />
-        </GuestButtonContent>
-      </ButtonStyled>
+        <ArrowRight size={22} />
+      </ButtonLarge>
     </GuestButtonsView>
   )
 }
