@@ -1,10 +1,7 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading, Text } from '@open-tender/components'
-import { isMobileOnly } from 'react-device-detect'
-
-import iconMap from '../iconMap'
+import { ArrowRight, ChevronRight } from 'react-feather'
+import { Body, Heading } from '@open-tender/components'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -12,7 +9,7 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  height: 7.5rem;
+  height: 7rem;
   padding: 0 2rem 0 2.5rem;
   margin: 0 0 1rem;
   opacity: 0;
@@ -43,8 +40,8 @@ const NavButtonView = styled('button')`
 
 const NavButtonIcon = styled('span')`
   position: relative;
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   flex-shrink: 0;
   line-height: 0;
   transition: ${(props) => props.theme.links.transition};
@@ -59,47 +56,52 @@ const NavButtonIcon = styled('span')`
   }
 `
 
-const NavButtonTitle = styled.span`
+const NavButtonText = styled.span`
   flex-grow: 1;
   line-height: ${(props) => props.theme.lineHeight};
   text-align: left;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 3rem;
+  padding: 0 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 2rem;
   }
+`
 
-  & > span {
-    display: block;
-    transition: ${(props) => props.theme.links.transition};
+const NavButtonTitle = styled(Heading)`
+  display: block;
+  margin: 0 0 0.1rem -0.1rem;
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.color};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 
-  & > span:first-of-type {
-    // line-height: ${(props) => (props.subtitle ? '1.2' : '1')};
-    line-height: 1.2;
-    margin: 0 0 0.1rem -0.1rem;
-    color: ${(props) => props.theme.buttons.colors.large.color};
-  }
-
-  & > span + span {
-    color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
-  }
-
-  button:hover & > span:first-of-type {
+  button:hover & {
     color: ${(props) => props.theme.buttons.colors.largeHover.color};
   }
+`
 
-  button:hover & > span + span {
+const NavButtonSubtitle = styled(Body)`
+  display: block;
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  button:hover & {
     color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
   }
 `
 
 const NavButtonArrow = styled('span')`
   position: relative;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
   line-height: 0;
   flex-shrink: 0;
   color: ${(props) => props.theme.buttons.colors.large.iconColor};
@@ -126,17 +128,14 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
   return (
     <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
-      <NavButtonTitle>
-        <Heading size={isMobileOnly ? 'medium' : 'big'} subtitle={subtitle}>
-          {title}
-        </Heading>
-        {subtitle && (
-          <Text size={isMobileOnly ? 'xSmall' : 'small'} color="tertiary">
-            {subtitle}
-          </Text>
-        )}
-      </NavButtonTitle>
-      <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
+      <NavButtonText>
+        <NavButtonTitle>{title}</NavButtonTitle>
+        {subtitle && <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>}
+      </NavButtonText>
+      <NavButtonArrow>
+        {/* <ChevronRight size={null} strokeWidth={1} /> */}
+        <ArrowRight size={null} strokeWidth={1} />
+      </NavButtonArrow>
     </NavButtonView>
   )
 }

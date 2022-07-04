@@ -128,15 +128,17 @@ const OrderTypes = () => {
     DONATIONS: handleDonations,
   }
 
+  const iconProps = { size: null, strokeWidth: 1 }
+
   const icons = {
-    OUTPOST: <Flag size={null} />,
-    WALKIN: <Coffee size={null} />,
-    PICKUP: <ShoppingBag size={null} />,
-    DELIVERY: <Truck size={null} />,
-    CATERING: <Users size={null} />,
-    MERCH: <ShoppingCart size={null} />,
-    GIFT_CARDS: <Gift size={null} />,
-    DONATIONS: <DollarSign size={null} />,
+    OUTPOST: <Flag {...iconProps} />,
+    WALKIN: <Coffee {...iconProps} />,
+    PICKUP: <ShoppingBag {...iconProps} />,
+    DELIVERY: <Truck {...iconProps} />,
+    CATERING: <Users {...iconProps} />,
+    MERCH: <ShoppingCart {...iconProps} />,
+    GIFT_CARDS: <Gift {...iconProps} />,
+    DONATIONS: <DollarSign {...iconProps} />,
   }
 
   const buttons = orderButtons
