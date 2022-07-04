@@ -1,21 +1,24 @@
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
-import { ButtonIcon } from '@open-tender/components'
+import { ChevronLeftCircle } from '../icons'
 
-import iconMap from '../iconMap'
+const BackButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  margin: 0 0 0 -1.25rem;
+  transition: ${(props) => props.theme.links.transition};
+`
 
-const Back = ({ path = '/order-type' }) => {
+const Back = ({ path = '/account' }) => {
   const navigate = useNavigate()
   return (
-    <ButtonIcon
-      label="Order Type"
-      onClick={() => navigate(path)}
-      size={isBrowser ? 24 : 20}
-      style={isBrowser ? { width: '2.4rem' } : {}}
-    >
-      {iconMap.ArrowLeft}
-    </ButtonIcon>
+    <BackButton onClick={() => navigate(path)}>
+      <ChevronLeftCircle />
+    </BackButton>
   )
 }
 

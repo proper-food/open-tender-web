@@ -11,7 +11,7 @@ import {
   selectBrand,
   selectCateringOnly,
 } from '../../../slices'
-import { AccountHome, NavMenu } from '../../buttons'
+import { AccountHome, Back, NavMenu } from '../../buttons'
 import {
   Background,
   Content,
@@ -71,11 +71,7 @@ const OrderType = () => {
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
         {showGuest ? (
-          <Header
-            maxWidth="76.8rem"
-            left={<AccountHome />}
-            right={<NavMenu />}
-          />
+          <Header maxWidth="76.8rem" left={<Back />} right={<NavMenu />} />
         ) : (
           <HeaderGuest />
         )}

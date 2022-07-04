@@ -1,8 +1,8 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { Headline } from '@open-tender/components'
 
-const PageTitleView = styled('div')`
+const PageTitleView = styled.div`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   text-align: center;
@@ -13,23 +13,15 @@ const PageTitleView = styled('div')`
   }
 
   h1 {
-    line-height: 1;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
-  }
-
-  h2 {
-    line-height: 1;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    margin: 0 0 0 -0.2rem;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.h3};
     }
   }
 
   & > p {
-    line-height: ${(props) => props.theme.lineHeight};
     margin: 1rem 0 0;
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: 0.5rem 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -48,7 +40,7 @@ const PageTitle = ({ title, subtitle, preface, children, style = null }) => {
   return (
     <PageTitleView style={style}>
       {preface && <PageTitlePreface>{preface}</PageTitlePreface>}
-      {title && <h1>{title}</h1>}
+      {title && <Headline as="h1">{title}</Headline>}
       {subtitle && <p>{subtitle}</p>}
       {children}
     </PageTitleView>
