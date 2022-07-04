@@ -34,6 +34,7 @@ import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
 import MenuMobileMenu from './MenuMobileMenu'
+import MenuNew from './MenuNew'
 
 export const MenuContext = createContext(null)
 
@@ -146,7 +147,8 @@ const MenuPage = () => {
               setShowMenu={setShowMenu}
             />
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
-            <MenuContent />
+            {/* <MenuContent /> */}
+            <MenuNew />
           </MenuContext.Provider>
         </Main>
       </Content>

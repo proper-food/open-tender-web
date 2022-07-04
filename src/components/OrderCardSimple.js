@@ -26,7 +26,7 @@ const OrderCardSimpleView = styled(Box)`
 
 const OrderCardSimpleTag = styled.div`
   position: absolute;
-  top: -0.9rem;
+  top: 1rem;
   right: 1rem;
 
   & > span {

@@ -96,7 +96,6 @@ const RevenueCenters = () => {
       <Content maxWidth="76.8rem">
         <Header
           maxWidth="76.8rem"
-          borderColor={isMobile ? 'transparent' : 'primary'}
           title={isMobile ? 'Choose Location' : null}
           style={{ boxShadow: 'none' }}
           left={

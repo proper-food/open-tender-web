@@ -29,7 +29,7 @@ const HeaderView = styled('div')`
   border-bottom-width: 0.1rem;
   border-style: solid;
   border-color: ${(props) =>
-    props.theme.header[props.stuck ? 'stuck' : 'primary']};
+    props.borderColor || props.theme.header[props.stuck ? 'stuck' : 'primary']};
   padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
@@ -79,7 +79,7 @@ const Header = ({
   title,
   right,
   bgColor = 'primary',
-  borderColor = 'primary',
+  borderColor = null,
   maxWidth = '100%',
   style = null,
 }) => {
@@ -101,9 +101,6 @@ const Header = ({
     }
   }, [])
 
-  const adjustedBorderColor =
-    borderColor === 'primary' && stuck ? 'secondary' : borderColor
-
   return (
     <HeaderContainer
       ref={header}
@@ -114,7 +111,7 @@ const Header = ({
         height={height}
         stuck={stuck}
         bgColor={bgColor}
-        borderColor={adjustedBorderColor}
+        borderColor={borderColor}
         maxWidth={maxWidth}
         isMobile={isMobile}
         style={style}

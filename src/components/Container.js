@@ -1,6 +1,9 @@
 import styled from '@emotion/styled'
 
-const Container = styled('div')`
+const Container = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  max-width: ${(props) => props.theme.layout.containerMaxWidth};
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};

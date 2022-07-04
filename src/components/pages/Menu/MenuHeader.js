@@ -25,6 +25,7 @@ import {
   ServiceType,
 } from '../../buttons'
 import iconMap from '../../iconMap'
+import { useTheme } from '@emotion/react'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
@@ -114,6 +115,7 @@ const MenuHeader = ({ showMenu, setShowMenu }) => {
   const { auth } = useSelector(selectCustomer)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
+  const theme = useTheme()
 
   const desktopNav = cartGuest ? (
     <>
@@ -141,7 +143,7 @@ const MenuHeader = ({ showMenu, setShowMenu }) => {
           setShowMenu={setShowMenu}
         />
       }
-      borderColor={showMenu ? 'secondary' : 'primary'}
+      borderColor={theme.colors.primary}
       left={cartGuest ? <LeaveGroup /> : <Back path="/locations" />}
       right={<NavMenu />}
     />
