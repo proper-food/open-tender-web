@@ -9,6 +9,7 @@ import {
   AccountCreditCards,
   AccountGiftCards,
   AccountSettings,
+  Category,
   Catering,
   CateringSite,
   Checkout,
@@ -73,9 +74,10 @@ const AppRoutes = () => {
       <Route path="catering-address" element={<Catering />} />
       <Route path="locations" element={<RevenueCenters />} />
       <Route path="locations/:slug" element={<RevenueCenter />} />
-      <Route path="menu/favorites" element={<MenuFavorites />} />
       <Route path="menu/:slug">
         <Route index element={<Menu />} />
+        <Route path="favorites" element={<MenuFavorites />} />
+        <Route path="category/:categorySlug" element={<Category />} />
         <Route path="item/:itemSlug" element={<MenuItem />} />
       </Route>
       <Route path="join/:token" element={<GroupOrderGuest />} />

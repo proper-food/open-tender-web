@@ -8,6 +8,7 @@ import {
   selectCustomerFavorites,
   selectCustomerOrders,
   selectMenu,
+  selectMenuSlug,
 } from '@open-tender/redux'
 import {
   makeUniqueDisplayItems,
@@ -19,7 +20,7 @@ import { Heading } from '@open-tender/components'
 
 import { selectMenuSection, setMenuSection } from '../../../slices'
 import { Container, SeeMoreLink } from '../..'
-import MenuFavoriteItem from './MenuFavoriteItem'
+import MenuItem from './MenuItem'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -106,6 +107,7 @@ const MenuFavorites = () => {
   const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
+  const menuSlug = useSelector(selectMenuSlug)
   const { categories, soldOut } = useSelector(selectMenu)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
 
@@ -121,6 +123,7 @@ const MenuFavorites = () => {
   const updating = favCount !== count
   const loadingFavs = favs.loading === 'pending' && !hasFavorites ? true : false
   const moreFavorites = favorites.length > 1 && menuSection === 'favorites'
+  const favoritesPath = `${menuSlug}/favorites`
 
   // handle recents
   const orders = useSelector(selectCustomerOrders)
@@ -137,6 +140,7 @@ const MenuFavorites = () => {
     orders.loading === 'pending' && !hasRecents ? true : false
   const displayedRecents = hasRecents ? recents.slice(0, 4) : []
   const moreRecents = recents.length > 4 && menuSection === 'recents'
+  const recentsPath = `${menuSlug}/recents`
 
   const showLoading = loadingRecents || loadingFavs
   const hasItems = hasRecents || hasFavorites
@@ -178,16 +182,16 @@ const MenuFavorites = () => {
           </MenuFavoritesNav>
           <MenuFavoritesMore>
             {moreFavorites && (
-              <SeeMoreLink text="View All" to="/menu/favorites" />
+              <SeeMoreLink text="View All" to={favoritesPath} />
             )}
-            {moreRecents && <SeeMoreLink text="View All" to="/menu/recents" />}
+            {moreRecents && <SeeMoreLink text="View All" to={recentsPath} />}
           </MenuFavoritesMore>
         </MenuFavoritesHeader>
         {hasRecents && menuSection === 'recents' ? (
           <MenuFavoritesItems>
             {displayedRecents.map((item, index) => (
               <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
-                <MenuFavoriteItem item={item} />
+                <MenuItem item={item} />
               </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>
@@ -196,7 +200,7 @@ const MenuFavorites = () => {
           <MenuFavoritesItems>
             {displayedFavs.map((item, index) => (
               <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
-                <MenuFavoriteItem item={item} />
+                <MenuItem item={item} />
               </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>

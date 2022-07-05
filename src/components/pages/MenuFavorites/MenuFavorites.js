@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchCustomerFavorites,
@@ -11,63 +12,15 @@ import {
   selectMenuSlug,
 } from '@open-tender/redux'
 import { makeMenuItemLookup, makeFavorites } from '@open-tender/js'
-import { Heading } from '@open-tender/components'
 
-import { Container, Content, Loading, Main } from '../..'
-import { MenuHeader, MenuFavoriteItem } from '../Menu'
-import { Helmet } from 'react-helmet'
 import { selectBrand } from '../../../slices'
+import { Container, Content, Loading, Main } from '../..'
+import { MenuCategoryHeader, MenuHeader, MenuItems, MenuItem } from '../Menu'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
-  }
-`
-
-const MenuFavoritesHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0 2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 0rem;
-  }
-`
-
-const MenuFavoritesTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.xBig};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
-`
-
-const MenuFavoritesItems = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  overflow-x: auto;
-  margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
-  }
-`
-
-const MenuFavoritesItemsItem = styled.div`
-  flex: 0 0 31rem;
-  padding: 1.5rem 0;
-  margin-right: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex: 0 0 20rem;
-    margin-right: ${(props) => props.theme.layout.paddingMobile};
-  }
-
-  &:first-of-type {
-    margin-left: ${(props) => props.theme.layout.padding};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin-left: ${(props) => props.theme.layout.paddingMobile};
-    }
   }
 `
 
@@ -120,19 +73,15 @@ const MenuFavorites = () => {
         <Main>
           <MenuFavoritesView>
             <Container>
-              <MenuFavoritesHeader>
-                <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
-              </MenuFavoritesHeader>
+              <MenuCategoryHeader title="Favorites" />
               {showLoading || updating ? (
                 <Loading />
               ) : (
-                <MenuFavoritesItems>
+                <MenuItems>
                   {favorites.map((item, index) => (
-                    <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
-                      <MenuFavoriteItem item={item} />
-                    </MenuFavoritesItemsItem>
+                    <MenuItem key={`${item.id}-${index}`} item={item} />
                   ))}
-                </MenuFavoritesItems>
+                </MenuItems>
               )}
             </Container>
           </MenuFavoritesView>

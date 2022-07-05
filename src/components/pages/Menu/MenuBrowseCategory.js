@@ -1,8 +1,11 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { slugify } from '@open-tender/js'
-import { BgImage, Body, Heading } from '@open-tender/components'
 import { ArrowRight } from 'react-feather'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { slugify } from '@open-tender/js'
+import { selectMenuSlug, setCurrentCategory } from '@open-tender/redux'
+import { BgImage, Body, Heading } from '@open-tender/components'
 
 const MenuBrowseCategoryView = styled.div`
   width: 33.3333%;
@@ -103,16 +106,24 @@ const MenuBrowseCategoryArrow = styled('span')`
 `
 
 const MenuBrowseCategory = ({ category }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const menuSlug = useSelector(selectMenuSlug)
   const { name, description, small_image_url, large_image_url, app_image_url } =
     category
   const imageUrl = app_image_url || small_image_url || large_image_url
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+
+  const view = (evt) => {
+    evt.preventDefault()
+    dispatch(setCurrentCategory(category))
+    navigate(`${menuSlug}/category/${slugify(category.name)}`)
+  }
+
   return (
     <MenuBrowseCategoryView>
-      <MenuBrowseCategoryButton>
-        <MenuBrowseCategoryImage style={bgStyle}>
-          &nbsp;
-        </MenuBrowseCategoryImage>
+      <MenuBrowseCategoryButton onClick={view}>
+        <MenuBrowseCategoryImage style={bgStyle} />
         <MenuBrowseCategoryText>
           <MenuBrowseCategoryTitle>{name}</MenuBrowseCategoryTitle>
           <MenuBrowseCategorySubtitle>{description}</MenuBrowseCategorySubtitle>
