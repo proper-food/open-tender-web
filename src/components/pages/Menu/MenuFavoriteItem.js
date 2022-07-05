@@ -17,12 +17,13 @@ import {
   formatDollars,
   prepareMenuItem,
   rehydrateOrderItem,
+  slugify,
 } from '@open-tender/js'
 import {
   BgImage,
   Body,
-  Box,
   ButtonStyled,
+  CardMenuItem,
   Heading,
   useBuilder,
 } from '@open-tender/components'
@@ -38,22 +39,20 @@ import iconMap from '../../iconMap'
 import { Tag } from '../..'
 import { useTheme } from '@emotion/react'
 
-const MenuFavoriteItemView = styled(Box)`
+const MenuFavoriteItemView = styled(CardMenuItem)`
   position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  // background-color: palegreen;
 `
 
 const MenuFavoriteItemButton = styled.button`
   flex-grow: 1;
   display: block;
   width: 100%;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.3rem;
   text-align: left;
-  // background-color: skyblue;
 `
 
 const MenuFavoriteItemContainer = styled.div`
@@ -146,9 +145,9 @@ const MenuFavoriteItemAlert = styled('div')`
 `
 
 const MenuFavoriteItemContent = styled.div`
-  padding: ${(props) => (props.hasBox ? '1.3rem 1.3rem 0' : '1.1rem 0 0')};
+  padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => (props.hasBox ? '1rem 1rem 0' : '1.1rem 0 0')};
+    padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
   }
 `
 
@@ -160,12 +159,15 @@ const MenuFavoriteItemInfo = styled('div')`
 
 const MenuFavoriteItemName = styled(Heading)`
   display: block;
-  flex-grow: 1;
+  flex: 1 1 auto;
+  padding: 0 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.big};
 `
 
 const MenuFavoriteItemPriceCals = styled.div`
   flex-grow: 0;
+  flex-shrink: 0;
+  text-align: right;
 `
 
 const MenuFavoriteItemPrice = styled(Heading)`
@@ -188,6 +190,10 @@ const MenuFavoriteItemButtons = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
+  }
 `
 
 const MenuFavoriteItemButtonsCustomize = styled.div`
@@ -208,25 +214,17 @@ const MenuFavoriteItem = ({ item }) => {
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const { soldOut } = useSelector(selectMenu)
   const displaySettings = useSelector(selectDisplaySettings)
+  const { builderType } = displaySettings
   const cartCounts = useSelector(selectCartCounts)
-  const {
-    imageUrl,
-    price,
-    cals,
-    tags,
-    allergens,
-    allergenAlert,
-    isSoldOut,
-    showQuickAdd,
-    cartCount,
-  } = prepareMenuItem(
-    item,
-    allergenAlerts,
-    soldOut,
-    displaySettings,
-    cartCounts,
-    isBrowser
-  )
+  const { imageUrl, allergenAlert, isSoldOut, showQuickAdd, cartCount } =
+    prepareMenuItem(
+      item,
+      allergenAlerts,
+      soldOut,
+      displaySettings,
+      cartCounts,
+      isBrowser
+    )
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   const soldOutMsg = menuContent.soldOutMessage || 'Sold out for day'
   const orderItem = item.favorite
@@ -248,14 +246,25 @@ const MenuFavoriteItem = ({ item }) => {
 
   const view = () => {
     if (!isSoldOut) {
-      dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+      dispatch(setCurrentItem(orderItem))
+      if (builderType === 'PAGE') {
+        const mainElement = document.getElementById('main')
+        const mainOffset = mainElement.getBoundingClientRect().top
+        dispatch(setTopOffset(-mainOffset))
+        navigate(`${menuSlug}/item/${slugify(item.name)}`)
+      } else if (builderType === 'SIDEBAR') {
+        dispatch(toggleSidebarModal())
+      } else {
+        dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+      }
     }
   }
 
   const add = () => {
     if (!isSoldOut && !isIncomplete) {
-      dispatch(addItemToCart(builtItem))
+      const cartItem = { ...builtItem }
+      if (cartItem.index === -1) delete cartItem.index
+      dispatch(addItemToCart(cartItem))
       dispatch(showNotification(`${builtItem.name} added to cart!`))
     }
   }
@@ -321,7 +330,7 @@ const MenuFavoriteItem = ({ item }) => {
           </MenuFavoriteItemContent>
         </MenuFavoriteItemContainer>
       </MenuFavoriteItemButton>
-      <MenuFavoriteItemButtons>
+      <MenuFavoriteItemButtons hasBox={hasBox}>
         <ButtonStyled
           onClick={add}
           size="small"
