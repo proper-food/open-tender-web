@@ -53,6 +53,10 @@ const MenuFavoriteItemButton = styled.button`
   width: 100%;
   margin: 0 0 1.3rem;
   text-align: left;
+
+  &:disabled {
+    opacity: 1;
+  }
 `
 
 const MenuFavoriteItemContainer = styled.div`
@@ -146,8 +150,8 @@ const MenuFavoriteItemAlert = styled('div')`
 
 const MenuFavoriteItemContent = styled.div`
   padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '0.7rem 0 0')};
   }
 `
 
@@ -155,6 +159,11 @@ const MenuFavoriteItemInfo = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 `
 
 const MenuFavoriteItemName = styled(Heading)`
@@ -162,27 +171,43 @@ const MenuFavoriteItemName = styled(Heading)`
   flex: 1 1 auto;
   padding: 0 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const MenuFavoriteItemPriceCals = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   text-align: right;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: left;
+    margin: 0 0 0;
+  }
 `
 
 const MenuFavoriteItemPrice = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const MenuFavoriteItemCals = styled(Body)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const MenuFavoriteItemDescription = styled(Body)`
   display: block;
   margin: 0.8rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
   line-height: 1.2;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 `
 
 const MenuFavoriteItemButtons = styled.div`
@@ -191,8 +216,8 @@ const MenuFavoriteItemButtons = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
   }
 `
 
@@ -289,7 +314,7 @@ const MenuFavoriteItem = ({ item }) => {
       {!imageUrl && itemTag ? (
         <MenuFavoriteItemAlert>{itemTag}</MenuFavoriteItemAlert>
       ) : null}
-      <MenuFavoriteItemButton onClick={() => view()} isSoldOut={isSoldOut}>
+      <MenuFavoriteItemButton onClick={() => view()} disabled={isSoldOut}>
         <MenuFavoriteItemContainer>
           {imageUrl && (
             <MenuFavoriteItemImage style={bgStyle}>
@@ -333,13 +358,18 @@ const MenuFavoriteItem = ({ item }) => {
       <MenuFavoriteItemButtons hasBox={hasBox}>
         <ButtonStyled
           onClick={add}
-          size="small"
           disabled={!showQuickAdd && !isIncomplete}
+          size="small"
         >
           Add To Order
         </ButtonStyled>
         <MenuFavoriteItemButtonsCustomize>
-          <ButtonStyled onClick={view} size="small" color="secondary">
+          <ButtonStyled
+            onClick={view}
+            disabled={isSoldOut}
+            size="small"
+            color="secondary"
+          >
             Customize
           </ButtonStyled>
         </MenuFavoriteItemButtonsCustomize>

@@ -16,27 +16,47 @@ import {
   makeRecents,
 } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
-import { Container, Loading } from '../..'
-import MenuItem from './MenuItem'
+
+import { selectMenuSection, setMenuSection } from '../../../slices'
+import { Container, SeeMoreLink } from '../..'
 import MenuFavoriteItem from './MenuFavoriteItem'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
 const MenuFavoritesHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 0 0rem;
+  }
+`
+
+const MenuFavoritesNav = styled.div`
+  flex: 1;
+`
+
+const MenuFavoritesMore = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
 `
 
 const MenuFavoritesButton = styled.button`
-  padding: 0 0 0.5rem;
+  padding: 0 0 0.2rem;
   margin: 0 4rem 0 0;
   border-bottom: ${(props) => props.theme.border.width} solid transparent;
   border-color: ${(props) =>
     props.isActive ? props.theme.border.color : 'transparent'};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 3rem 0 0;
+  }
 
   span {
     font-weight: ${(props) =>
@@ -46,25 +66,10 @@ const MenuFavoritesButton = styled.button`
 
 const MenuFavoritesTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 `
-
-// const MenuFavoritesItems = styled.div`
-//   // display: flex;
-//   // justify-content: flex-start;
-//   // align-items: stretch;
-//   display: grid;
-//   justify-content: center;
-//   align-items: stretch;
-//   grid-template-columns: repeat(4, 1fr);
-//   gap: 2rem;
-//   margin: 0;
-//   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-//     grid-template-columns: repeat(3, 1fr);
-//   }
-// `
 
 const MenuFavoritesItems = styled.div`
   display: flex;
@@ -73,7 +78,7 @@ const MenuFavoritesItems = styled.div`
   align-items: stretch;
   overflow-x: auto;
   margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
   }
 `
@@ -84,14 +89,14 @@ const MenuFavoritesItemsItem = styled.div`
   flex: 0 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 20rem;
     margin-right: ${(props) => props.theme.layout.paddingMobile};
   }
 
   &:first-of-type {
     margin-left: ${(props) => props.theme.layout.padding};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
   }
@@ -100,7 +105,7 @@ const MenuFavoritesItemsItem = styled.div`
 const MenuFavorites = () => {
   const dispatch = useDispatch()
   const [count, setCount] = useState(0)
-  const [selected, setSelected] = useState('recents')
+  const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
   const { categories, soldOut } = useSelector(selectMenu)
@@ -112,13 +117,14 @@ const MenuFavorites = () => {
     () => makeFavorites(favs.entities, itemLookup, soldOut),
     [favs.entities, itemLookup, soldOut]
   )
-  console.log(favorites)
   const hasFavorites = favorites && favorites.length > 0
   const favCount = hasFavorites ? favorites.length : 0
   const displayedFavs = hasFavorites ? favorites.slice(0, 4) : []
   const updating = favCount !== count
-  const showLoading = favs.loading === 'pending' && !hasFavorites
+  const loadingFavs = favs.loading === 'pending' && !hasFavorites ? true : false
+  const moreFavorites = favorites.length > 1 && menuSection === 'favorites'
 
+  // handle recents
   const orders = useSelector(selectCustomerOrders)
   const displayItems = useMemo(
     () => makeUniqueDisplayItems(orders.entities),
@@ -128,9 +134,14 @@ const MenuFavorites = () => {
     () => makeRecents(displayItems, itemLookup, soldOut),
     [displayItems, itemLookup, soldOut]
   )
-  // const showLoading = !entities.length && orders.loading === 'pending' ? true : false
   const hasRecents = recents && recents.length > 0
+  const loadingRecents =
+    orders.loading === 'pending' && !hasRecents ? true : false
   const displayedRecents = hasRecents ? recents.slice(0, 4) : []
+  const moreRecents = recents.length > 4 && menuSection === 'recents'
+
+  const showLoading = loadingRecents || loadingFavs
+  const hasItems = hasRecents || hasFavorites
 
   useEffect(() => {
     if (hasCustomer) {
@@ -143,39 +154,38 @@ const MenuFavorites = () => {
     setCount(favCount)
   }, [favCount])
 
+  if (showLoading || updating || !hasItems) return null
+
   return (
     <MenuFavoritesView>
-      {/* {showLoading || updating ? (
-        <Loading isLoading={showLoading} />
-      ) : hasFavorites ? (
-        <ScrollableSection
-        title={title}
-        to={deals.length > 2 ? '/deals' : null}
-        items={favorites}
-        renderItem={Reward}
-        keyName="discount_id"
-      />
-      ) : null} */}
       <Container>
         <MenuFavoritesHeader>
-          {hasRecents && (
-            <MenuFavoritesButton
-              isActive={selected === 'recents'}
-              onClick={() => setSelected('recents')}
-            >
-              <MenuFavoritesTitle>Recents</MenuFavoritesTitle>
-            </MenuFavoritesButton>
-          )}
-          {hasFavorites && (
-            <MenuFavoritesButton
-              isActive={selected === 'favorites'}
-              onClick={() => setSelected('favorites')}
-            >
-              <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
-            </MenuFavoritesButton>
-          )}
+          <MenuFavoritesNav>
+            {hasRecents && (
+              <MenuFavoritesButton
+                isActive={menuSection === 'recents'}
+                onClick={() => dispatch(setMenuSection('recents'))}
+              >
+                <MenuFavoritesTitle>Recents</MenuFavoritesTitle>
+              </MenuFavoritesButton>
+            )}
+            {hasFavorites && (
+              <MenuFavoritesButton
+                isActive={menuSection === 'favorites'}
+                onClick={() => dispatch(setMenuSection('favorites'))}
+              >
+                <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
+              </MenuFavoritesButton>
+            )}
+          </MenuFavoritesNav>
+          <MenuFavoritesMore>
+            {moreFavorites && (
+              <SeeMoreLink text="View All" to="/menu/favorites" />
+            )}
+            {moreRecents && <SeeMoreLink text="View All" to="/menu/recents" />}
+          </MenuFavoritesMore>
         </MenuFavoritesHeader>
-        {selected === 'recents' && (
+        {hasRecents && menuSection === 'recents' ? (
           <MenuFavoritesItems>
             {displayedRecents.map((item, index) => (
               <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
@@ -183,8 +193,8 @@ const MenuFavorites = () => {
               </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>
-        )}
-        {selected === 'favorites' && (
+        ) : null}
+        {hasFavorites && menuSection === 'favorites' ? (
           <MenuFavoritesItems>
             {displayedFavs.map((item, index) => (
               <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
@@ -192,7 +202,7 @@ const MenuFavorites = () => {
               </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>
-        )}
+        ) : null}
       </Container>
     </MenuFavoritesView>
   )
