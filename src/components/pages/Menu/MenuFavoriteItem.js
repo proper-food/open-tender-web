@@ -22,6 +22,7 @@ import {
   BgImage,
   Body,
   Box,
+  ButtonStyled,
   Heading,
   useBuilder,
 } from '@open-tender/components'
@@ -35,29 +36,36 @@ import {
 } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
-import { MenuItemButton, MenuItemImage } from '.'
-import { Plus } from 'react-feather'
+import { useTheme } from '@emotion/react'
 
-const MenuFavoriteItemView = styled.div`
+const MenuFavoriteItemView = styled(Box)`
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // background-color: palegreen;
 `
 
 const MenuFavoriteItemButton = styled.button`
+  flex-grow: 1;
   display: block;
   width: 100%;
-  // height: 100%;
+  margin: 0 0 1.5rem;
   text-align: left;
+  // background-color: skyblue;
 `
 
-const MenuFavoriteItemContainer = styled(Box)`
-  position: relative;
-  overflow: hidden;
+const MenuFavoriteItemContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 const MenuFavoriteItemImage = styled(BgImage)`
   position: relative;
   width: 100%;
-  padding: 37.5% 0;
+  padding: 33.33333% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 33.33333% 0;
@@ -87,80 +95,7 @@ export const MenuFavoriteItemOverlay = styled.div`
       : 'transparent'};
 `
 
-const MenuFavoriteItemAdd = styled('button')`
-  position: absolute;
-  z-index: 3;
-  bottom: 1.1rem;
-  right: 1.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    bottom: 0.6rem;
-    right: 0.6rem;
-    width: 2.8rem;
-    height: 3.2rem;
-    align-items: flex-end;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    top: 10.6rem;
-    bottom: auto;
-    width: 2.8rem;
-    height: 2.8rem;
-  }
-
-  span {
-    display: block;
-    width: 2.6rem;
-    height: 2.6rem;
-    border-radius: 1.3rem;
-    padding: 0.2rem;
-    border-width: 0.2rem;
-    border-style: solid;
-    transition: ${(props) => props.theme.links.transition};
-    color: ${(props) => props.theme.colors.primary};
-    background-color: transparent;
-    border-color: ${(props) => props.theme.colors.primary};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      width: 2.8rem;
-      height: 2.8rem;
-      border-radius: 1.4rem;
-      padding: 0.2rem;
-      border-width: 0.2rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      background-color: ${(props) => props.theme.bgColors.primary};
-      padding: 0.3rem;
-      border-width: 0.1rem;
-    }
-  }
-
-  &:hover:enabled,
-  &:active:enabled {
-    span {
-      color: ${(props) => props.theme.colors.light};
-      background-color: ${(props) => props.theme.colors.primary};
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        color: ${(props) => props.theme.colors.primary};
-        background-color: transparent;
-      }
-      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-        background-color: ${(props) => props.theme.bgColors.primary};
-      }
-    }
-  }
-
-  &:disabled {
-    span {
-      background-color: transparent;
-      opacity: 0.5;
-    }
-  }
-`
-
-const MenuFavoriteItemCount = styled('div')`
+const MenuFavoriteItemCount = styled.div`
   position: absolute;
   z-index: 3;
   top: -1.1rem;
@@ -211,15 +146,9 @@ const MenuFavoriteItemAlert = styled('div')`
 `
 
 const MenuFavoriteItemContent = styled.div`
-  padding: ${(props) =>
-    props.theme.cards.default.bgColor === 'transparent'
-      ? '0.8rem 0 0'
-      : '1.3rem 1.3rem 1.2rem'};
+  padding: ${(props) => (props.hasBox ? '1.3rem 1.3rem 0' : '1.1rem 0 0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) =>
-      props.theme.cards.default.bgColor === 'transparent'
-        ? '0.8rem 0 0'
-        : '1rem 1rem 0.8rem'};
+    padding: ${(props) => (props.hasBox ? '1rem 1rem 0' : '1.1rem 0 0')};
   }
 `
 
@@ -254,9 +183,26 @@ const MenuFavoriteItemDescription = styled(Body)`
   line-height: 1.2;
 `
 
+const MenuFavoriteItemButtons = styled.div`
+  flex-grow: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const MenuFavoriteItemButtonsCustomize = styled.div`
+  button {
+    border: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+`
+
 const MenuFavoriteItem = ({ item }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const theme = useTheme()
+  const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
   const { menu: menuContent } = useSelector(selectContent)
   const menuSlug = useSelector(selectMenuSlug)
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
@@ -300,17 +246,14 @@ const MenuFavoriteItem = ({ item }) => {
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
 
-  const view = (evt) => {
-    evt.preventDefault()
+  const view = () => {
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
       dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
   }
 
-  const add = (evt) => {
-    evt.preventDefault()
-    evt.stopPropagation()
+  const add = () => {
     if (!isSoldOut && !isIncomplete) {
       dispatch(addItemToCart(builtItem))
       dispatch(showNotification(`${builtItem.name} added to cart!`))
@@ -337,7 +280,7 @@ const MenuFavoriteItem = ({ item }) => {
       {!imageUrl && itemTag ? (
         <MenuFavoriteItemAlert>{itemTag}</MenuFavoriteItemAlert>
       ) : null}
-      <MenuFavoriteItemButton onClick={view} isSoldOut={isSoldOut}>
+      <MenuFavoriteItemButton onClick={() => view()} isSoldOut={isSoldOut}>
         <MenuFavoriteItemContainer>
           {imageUrl && (
             <MenuFavoriteItemImage style={bgStyle}>
@@ -351,7 +294,7 @@ const MenuFavoriteItem = ({ item }) => {
               )}
             </MenuFavoriteItemImage>
           )}
-          <MenuFavoriteItemContent>
+          <MenuFavoriteItemContent hasBox={hasBox}>
             <MenuFavoriteItemInfo>
               <MenuFavoriteItemName>
                 <Heading>{item.name}</Heading>
@@ -378,6 +321,20 @@ const MenuFavoriteItem = ({ item }) => {
           </MenuFavoriteItemContent>
         </MenuFavoriteItemContainer>
       </MenuFavoriteItemButton>
+      <MenuFavoriteItemButtons>
+        <ButtonStyled
+          onClick={add}
+          size="small"
+          disabled={!showQuickAdd && !isIncomplete}
+        >
+          Add To Order
+        </ButtonStyled>
+        <MenuFavoriteItemButtonsCustomize>
+          <ButtonStyled onClick={view} size="small" color="secondary">
+            Customize
+          </ButtonStyled>
+        </MenuFavoriteItemButtonsCustomize>
+      </MenuFavoriteItemButtons>
     </MenuFavoriteItemView>
   )
 }

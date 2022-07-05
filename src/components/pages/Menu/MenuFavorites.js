@@ -33,7 +33,10 @@ const MenuFavoritesHeader = styled.div`
 
 const MenuFavoritesButton = styled.button`
   padding: 0 0 0.5rem;
-  margin: 0 2rem 0 0;
+  margin: 0 4rem 0 0;
+  border-bottom: ${(props) => props.theme.border.width} solid transparent;
+  border-color: ${(props) =>
+    props.isActive ? props.theme.border.color : 'transparent'};
 
   span {
     font-weight: ${(props) =>
@@ -48,18 +51,49 @@ const MenuFavoritesTitle = styled(Heading)`
   }
 `
 
+// const MenuFavoritesItems = styled.div`
+//   // display: flex;
+//   // justify-content: flex-start;
+//   // align-items: stretch;
+//   display: grid;
+//   justify-content: center;
+//   align-items: stretch;
+//   grid-template-columns: repeat(4, 1fr);
+//   gap: 2rem;
+//   margin: 0;
+//   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+//     grid-template-columns: repeat(3, 1fr);
+//   }
+// `
+
 const MenuFavoritesItems = styled.div`
-  // display: flex;
-  // justify-content: flex-start;
-  // align-items: stretch;
-  display: grid;
-  justify-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: stretch;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  margin: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    grid-template-columns: repeat(3, 1fr);
+  overflow-x: auto;
+  margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
+  }
+`
+
+const MenuFavoritesItemsItem = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  flex: 0 0 31rem;
+  padding: 1.5rem 0;
+  margin-right: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 20rem;
+    margin-right: ${(props) => props.theme.layout.paddingMobile};
+  }
+
+  &:first-of-type {
+    margin-left: ${(props) => props.theme.layout.padding};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      margin-left: ${(props) => props.theme.layout.paddingMobile};
+    }
   }
 `
 
@@ -144,14 +178,18 @@ const MenuFavorites = () => {
         {selected === 'recents' && (
           <MenuFavoritesItems>
             {displayedRecents.map((item, index) => (
-              <MenuFavoriteItem key={`${item.id}-${index}`} item={item} />
+              <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
+                <MenuFavoriteItem item={item} />
+              </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>
         )}
         {selected === 'favorites' && (
           <MenuFavoritesItems>
             {displayedFavs.map((item, index) => (
-              <MenuFavoriteItem key={`${item.id}-${index}`} item={item} />
+              <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
+                <MenuFavoriteItem item={item} />
+              </MenuFavoritesItemsItem>
             ))}
           </MenuFavoritesItems>
         )}
