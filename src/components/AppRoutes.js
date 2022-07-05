@@ -32,6 +32,7 @@ import {
   Locations,
   Loyalty,
   Menu,
+  MenuFavorites,
   MenuItem,
   MenuSite,
   NotFound,
@@ -72,6 +73,7 @@ const AppRoutes = () => {
       <Route path="catering-address" element={<Catering />} />
       <Route path="locations" element={<RevenueCenters />} />
       <Route path="locations/:slug" element={<RevenueCenter />} />
+      <Route path="menu/favorites" element={<MenuFavorites />} />
       <Route path="menu/:slug">
         <Route index element={<Menu />} />
         <Route path="item/:itemSlug" element={<MenuItem />} />

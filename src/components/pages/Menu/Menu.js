@@ -31,10 +31,9 @@ import {
   setTopOffset,
 } from '../../../slices'
 import { Content, Main, ScreenreaderTitle } from '../..'
-import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
-import MenuMobileMenu from './MenuMobileMenu'
 import MenuNew from './MenuNew'
+// import MenuContent from './MenuContent'
 
 export const MenuContext = createContext(null)
 
@@ -43,7 +42,6 @@ const MenuPage = () => {
   const dispatch = useDispatch()
   const topOffset = useSelector(selectTopOffset)
   const [init, setInit] = useState(true)
-  const [showMenu, setShowMenu] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
@@ -122,7 +120,7 @@ const MenuPage = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content scrollTop={false}>
-        <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} />
+        <MenuHeader />
         <Main>
           <MenuContext.Provider
             value={{
@@ -141,11 +139,6 @@ const MenuPage = () => {
               pointsProgram,
             }}
           >
-            <MenuMobileMenu
-              order={order}
-              showMenu={showMenu}
-              setShowMenu={setShowMenu}
-            />
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
             {/* <MenuContent /> */}
             <MenuNew />

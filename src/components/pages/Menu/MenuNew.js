@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import styled from '@emotion/styled'
 import { MenuContext } from './Menu'
 import MenuBrowse from './MenuBrowse'
-import MenuFavorites from './MenuFavorites'
+import MenuFavsRecents from './MenuFavsRecents'
 
 const MenuNewView = styled.div``
 
@@ -20,7 +20,7 @@ const MenuNew = () => {
 
   return (
     <MenuNewView>
-      <MenuFavorites />
+      <MenuFavsRecents />
       <MenuBrowse categories={categories} />
     </MenuNewView>
   )

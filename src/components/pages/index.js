@@ -31,6 +31,7 @@ import LevelUp from './LevelUp'
 import Locations from './Locations'
 import Loyalty from './Loyalty'
 import Menu from './Menu'
+import MenuFavorites from './MenuFavorites'
 import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
 import NotFound from './NotFound'
@@ -83,6 +84,7 @@ export {
   Locations,
   Loyalty,
   Menu,
+  MenuFavorites,
   MenuItem,
   MenuSite,
   NotFound,

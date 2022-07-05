@@ -1,31 +1,16 @@
-import React from 'react'
+import { useState } from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import {
-  selectGroupOrder,
-  selectOrder,
-  selectCustomer,
-} from '@open-tender/redux'
+import { useTheme } from '@emotion/react'
+import { useSelector } from 'react-redux'
+import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
 
 import { Header } from '../..'
-import {
-  Allergens,
-  Back,
-  CancelEdit,
-  GroupGuest,
-  GroupOrder,
-  LeaveGroup,
-  NavMenu,
-  Points,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-} from '../../buttons'
+import { Back, LeaveGroup, NavMenu } from '../../buttons'
 import iconMap from '../../iconMap'
-import { useTheme } from '@emotion/react'
+import MenuMobileMenu from './MenuMobileMenu'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
@@ -66,13 +51,8 @@ const MenuHeaderName = styled('span')`
   }
 `
 
-const MenuHeaderTitle = ({
-  serviceType,
-  revenueCenter,
-  prepType,
-  showMenu,
-  setShowMenu,
-}) => {
+const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
+  const { serviceType, revenueCenter, prepType } = order
   let serviceTypeName = serviceTypeNamesMap[serviceType]
   serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
   const orderTypeName =
@@ -104,59 +84,43 @@ const MenuHeaderTitle = ({
 
 MenuHeaderTitle.displayName = 'MenuHeaderTitle'
 MenuHeaderTitle.propTypes = {
-  serviceType: propTypes.string,
-  revenueCenter: propTypes.object,
-  prepType: propTypes.string,
+  order: propTypes.object,
   showMenu: propTypes.bool,
   setShowMenu: propTypes.func,
 }
 
-const MenuHeader = ({ showMenu, setShowMenu }) => {
-  const { auth } = useSelector(selectCustomer)
+const MenuHeader = ({ backPath = '/locations' }) => {
+  const theme = useTheme()
+  const [showMenu, setShowMenu] = useState(false)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
-  const theme = useTheme()
-
-  const desktopNav = cartGuest ? (
-    <>
-      <Allergens />
-      <GroupGuest />
-    </>
-  ) : (
-    <>
-      <RevenueCenter />
-      <ServiceType />
-      <RequestedAt />
-      <Allergens />
-      <GroupOrder />
-      <CancelEdit />
-      {auth ? <Points /> : null}
-    </>
-  )
 
   return (
-    <Header
-      title={
-        <MenuHeaderTitle
-          {...order}
-          showMenu={showMenu}
-          setShowMenu={setShowMenu}
-        />
-      }
-      borderColor={theme.colors.primary}
-      left={cartGuest ? <LeaveGroup /> : <Back path="/locations" />}
-      right={<NavMenu />}
-    />
+    <>
+      <Header
+        title={
+          <MenuHeaderTitle
+            order={order}
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+          />
+        }
+        borderColor={theme.colors.primary}
+        left={cartGuest ? <LeaveGroup /> : <Back path={backPath} />}
+        right={<NavMenu />}
+      />
+      <MenuMobileMenu
+        order={order}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+      />
+    </>
   )
 }
 
 MenuHeader.displayName = 'MenuHeader'
 MenuHeader.propTypes = {
-  maxWidth: propTypes.string,
-  bgColor: propTypes.string,
-  borderColor: propTypes.string,
-  showMenu: propTypes.bool,
-  setShowMenu: propTypes.func,
+  backPath: propTypes.string,
 }
 
 export default MenuHeader
