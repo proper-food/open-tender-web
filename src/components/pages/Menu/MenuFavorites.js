@@ -9,80 +9,16 @@ import {
   selectCustomerOrders,
   selectMenu,
 } from '@open-tender/redux'
-import { makeUniqueDisplayItems } from '@open-tender/js'
+import {
+  makeUniqueDisplayItems,
+  makeMenuItemLookup,
+  makeFavorites,
+  makeRecents,
+} from '@open-tender/js'
 import { Heading } from '@open-tender/components'
 import { Container, Loading } from '../..'
 import MenuItem from './MenuItem'
-
-export const makeItemLookup = (categories) => {
-  const cats = categories.reduce((arr, cat) => {
-    return [...arr, cat, ...(cat.children || [])]
-  }, [])
-  return cats.reduce((obj, category) => {
-    const items = category.items.reduce((o, i) => ({ ...o, [i.id]: i }), {})
-    return { ...obj, ...items }
-  }, {})
-}
-
-export const makeGroupsLookup = (menuItem) => {
-  if (!menuItem.option_groups) return {}
-  return menuItem.option_groups.reduce((grpObj, i) => {
-    const options = i.option_items.reduce((optObj, o) => {
-      optObj[o.id] = o
-      return optObj
-    }, {})
-    grpObj[i.id] = { ...i, options }
-    return grpObj
-  }, {})
-}
-
-const validateFavorite = (item, menuItem, soldOut) => {
-  const groupsLookup = makeGroupsLookup(menuItem)
-  let missingGroups = [],
-    missingOptions = []
-  item.groups.forEach((group) => {
-    const menuItemGroup = groupsLookup[group.id]
-    if (menuItemGroup) {
-      group.options.forEach((option) => {
-        const menuItemOption = menuItemGroup.options[option.id]
-        if (!menuItemOption || soldOut.includes(option.id)) {
-          missingOptions.push(option)
-        }
-      })
-    } else {
-      missingGroups.push(group)
-    }
-  })
-  return missingGroups.length || missingOptions.length ? false : true
-}
-
-const makeFavorites = (favorites, itemLookup, soldOut) => {
-  return favorites.reduce((arr, favorite) => {
-    const menuItem = itemLookup[favorite.item.id]
-    if (!menuItem) return arr
-    const isValid = validateFavorite(favorite.item, menuItem, soldOut)
-    return isValid ? [...arr, { ...menuItem, favorite }] : arr
-  }, [])
-}
-
-const makeRecents = (recents, itemLookup, soldOut) => {
-  return recents.reduce((arr, item) => {
-    const menuItem = itemLookup[item.id]
-    if (!menuItem) return arr
-    const isValid = validateFavorite(item, menuItem, soldOut)
-    if (!isValid) return arr
-    const favorite = { item }
-    return isValid
-      ? [
-          ...arr,
-          {
-            ...menuItem,
-            favorite: { item: { ...favorite.item, quantity: 1 } },
-          },
-        ]
-      : arr
-  }, [])
-}
+import MenuFavoriteItem from './MenuFavoriteItem'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -134,7 +70,7 @@ const MenuFavorites = () => {
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
   const { categories, soldOut } = useSelector(selectMenu)
-  const itemLookup = useMemo(() => makeItemLookup(categories), [categories])
+  const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
 
   // handle favorites
   const favs = useSelector(selectCustomerFavorites)
@@ -208,14 +144,14 @@ const MenuFavorites = () => {
         {selected === 'recents' && (
           <MenuFavoritesItems>
             {displayedRecents.map((item, index) => (
-              <MenuItem key={`${item.id}-${index}`} item={item} />
+              <MenuFavoriteItem key={`${item.id}-${index}`} item={item} />
             ))}
           </MenuFavoritesItems>
         )}
         {selected === 'favorites' && (
           <MenuFavoritesItems>
             {displayedFavs.map((item, index) => (
-              <MenuItem key={`${item.id}-${index}`} item={item} />
+              <MenuFavoriteItem key={`${item.id}-${index}`} item={item} />
             ))}
           </MenuFavoritesItems>
         )}

@@ -1606,14 +1606,6 @@
     "@googlemaps/js-api-loader" "^1.14.3"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.0.3.tgz#ba7b409074560d2dd22d5a5cddd53d8f01922f29"
-  integrity sha512-6Phb8Q7RqCBfeAE6TTcH1R3YDLLWEVg3yubFPSt0lSxiIjx3d3NQrsir5toaFHNIybSOemQiFuvjmflZkPxS1g==
-  dependencies:
-    date-fns "^2.28.0"
-    date-fns-tz "^1.3.4"
-
 "@open-tender/redux@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-3.0.4.tgz#52cbc7c43f71767d132b6b3315081cacc19222cc"
@@ -3567,16 +3559,6 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
-
-date-fns-tz@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.3.4.tgz#8b0e75beb771c7e9f1597aba467dc14431bb5403"
-  integrity sha512-O47vEyz85F2ax/ZdhMBJo187RivZGjH6V0cPjPzpm/yi6YffJg4upD/8ibezO11ezZwP3QYlBHh/t4JhRNx0Ow==
-
-date-fns@^2.28.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
-  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
 
 debug@2.6.9, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
