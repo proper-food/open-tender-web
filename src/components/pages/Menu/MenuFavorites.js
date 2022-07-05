@@ -142,6 +142,7 @@ const MenuFavorites = () => {
     () => makeFavorites(favs.entities, itemLookup, soldOut),
     [favs.entities, itemLookup, soldOut]
   )
+  console.log(favorites)
   const hasFavorites = favorites && favorites.length > 0
   const favCount = hasFavorites ? favorites.length : 0
   const displayedFavs = hasFavorites ? favorites.slice(0, 4) : []

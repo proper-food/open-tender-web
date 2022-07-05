@@ -109,7 +109,7 @@ const OrderCardSimple = ({ order }) => {
         <OrderCardSimpleTag>
           {isUpcoming && <Tag text="Coming Up" icon={null} bgColor="alert" />}
         </OrderCardSimpleTag>
-        <OrderCardSimpleImage style={bgStyle}>&nbsp;</OrderCardSimpleImage>
+        <OrderCardSimpleImage style={bgStyle} />
         <OrderCardSimpleContent>
           <OrderCardSimpleTitle as="p">
             {orderTypeName} from {revenue_center.name}
