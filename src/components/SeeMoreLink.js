@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'react-feather'
 import { Heading } from '@open-tender/components'
+import { ArrowRightLong } from './icons'
 
 const SeeMoreLinkView = styled.div`
   flex-grow: 0;
@@ -17,9 +18,27 @@ const SeeMoreLinkView = styled.div`
 const SeeMoreLinkText = styled(Heading)`
   display: block;
   line-height: 1;
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.links.primary.color};
   font-size: ${(props) => props.theme.fonts.sizes.big};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+
+  a:hover &,
+  a:active & {
+    color: ${(props) => props.theme.links.primary.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.links.primary.color};
+    }
+  }
+`
+
+const SeeMoreLinkArrow = styled.div`
+  margin: 0 0 0 1.5rem;
+  display: block;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
   }
 `
 
@@ -39,6 +58,9 @@ const SeeMoreLink = ({ text, to }) => (
   <SeeMoreLinkView>
     <Link to={to}>
       <SeeMoreLinkText>{text}</SeeMoreLinkText>
+      <SeeMoreLinkArrow>
+        <ArrowRightLong />
+      </SeeMoreLinkArrow>
       <SeeMoreLinkChevron>
         <ChevronRight size={null} />
       </SeeMoreLinkChevron>

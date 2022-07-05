@@ -29,8 +29,7 @@ const ChevronLeftCircle = ({ size = 25 }) => {
 
 ChevronLeftCircle.displayName = 'ChevronLeftCircle'
 ChevronLeftCircle.propTypes = {
-  size: propTypes.string,
-  color: propTypes.string,
+  size: propTypes.number,
 }
 
 export default ChevronLeftCircle

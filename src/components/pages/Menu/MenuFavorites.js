@@ -84,8 +84,6 @@ const MenuFavoritesItems = styled.div`
 `
 
 const MenuFavoritesItemsItem = styled.div`
-  // display: flex;
-  // flex-direction: column;
   flex: 0 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};

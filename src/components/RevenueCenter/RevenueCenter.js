@@ -11,6 +11,7 @@ import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
 import { selectDisplaySettings } from '../../slices'
 import { isMobileOnly } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
@@ -43,7 +44,7 @@ const RevenueCenterImage = styled(BgImage)`
   }
 `
 
-const RevenueCenterContent = styled('div')`
+const RevenueCenterContent = styled.div`
   padding: 0 ${(props) => (props.showImage ? `24rem` : null)} 0 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -51,14 +52,15 @@ const RevenueCenterContent = styled('div')`
   }
 
   > div {
-    padding: 2rem 2.5rem 2.5rem;
+    padding: ${(props) =>
+      props.hasBox ? '2rem 2.5rem 2.5rem' : '0 2.5rem 0 0'};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       padding: 0;
     }
   }
 `
 
-const RevenueCenterHeader = styled('div')`
+const RevenueCenterHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -115,7 +117,7 @@ const RevenueCenterImageMobile = styled(BgImage)`
   }
 `
 
-const RevenueCenterActions = styled('div')`
+const RevenueCenterActions = styled.div`
   a,
   button {
     display: block;
@@ -124,7 +126,7 @@ const RevenueCenterActions = styled('div')`
   }
 `
 
-const RevenueCenterDesc = styled('div')`
+const RevenueCenterDesc = styled.div`
   margin: 0.75rem 0 0;
 
   p {
@@ -181,6 +183,8 @@ const RevenueCenter = ({
   isLanding,
   style = null,
 }) => {
+  const theme = useTheme()
+  const hasBox = theme.cards.default.bgColor !== 'transparent'
   const { cartGuest } = useSelector(selectGroupOrder)
   const { storePhone = true } = useSelector(selectDisplaySettings)
   const { address, images, hours, is_outpost, description } = revenueCenter
@@ -202,7 +206,10 @@ const RevenueCenter = ({
       {showImage && !isMobileOnly && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
-      <RevenueCenterContent showImage={showImage && !isMobileOnly}>
+      <RevenueCenterContent
+        showImage={showImage && !isMobileOnly}
+        hasBox={hasBox}
+      >
         <div>
           <RevenueCenterFlex>
             <RevenueCenterFlexContent>
@@ -214,7 +221,6 @@ const RevenueCenter = ({
                   </RevenueCenterCheckmark>
                 )}
               </RevenueCenterHeader>
-
               <RevenueCenterActions>
                 <a
                   href={revenueCenter.directions_url}

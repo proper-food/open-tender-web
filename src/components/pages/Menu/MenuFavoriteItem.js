@@ -50,9 +50,12 @@ const MenuFavoriteItemView = styled(CardMenuItem)`
 const MenuFavoriteItemButton = styled.button`
   flex-grow: 1;
   display: block;
+  text-align: left;
   width: 100%;
   margin: 0 0 1.3rem;
-  text-align: left;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0;
+  }
 
   &:disabled {
     opacity: 1;
@@ -70,7 +73,7 @@ const MenuFavoriteItemImage = styled(BgImage)`
   width: 100%;
   padding: 33.33333% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 33.33333% 0;
   }
 `
@@ -116,7 +119,7 @@ const MenuFavoriteItemCount = styled.div`
   color: ${(props) => props.theme.counts.alerts.color};
   background-color: ${(props) => props.theme.counts.alerts.bgColor};
   border-color: ${(props) => props.theme.counts.alerts.borderColor};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     top: -1rem;
     right: -0.9rem;
     min-width: 2.2rem;
@@ -131,7 +134,7 @@ const MenuFavoriteItemCount = styled.div`
     font-size: ${(props) => props.theme.counts.alerts.fontSize};
     -webkit-font-smoothing: ${(props) =>
       props.theme.counts.alerts.fontSmoothing};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.counts.alerts.fontSizeMobile};
     }
   }
