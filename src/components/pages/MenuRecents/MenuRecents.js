@@ -16,7 +16,7 @@ import {
   makeUniqueDisplayItems,
 } from '@open-tender/js'
 
-import { selectBrand } from '../../../slices'
+import { selectBrand, selectDisplaySettings } from '../../../slices'
 import { Container, Content, Loading, Main } from '../..'
 import { MenuCategoryHeader, MenuHeader, MenuItems, MenuItem } from '../Menu'
 
@@ -31,6 +31,7 @@ const MenuRecents = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
+  const { itemsTwoPerRowMobile: showTwo } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
@@ -80,7 +81,7 @@ const MenuRecents = () => {
               {showLoading ? (
                 <Loading />
               ) : (
-                <MenuItems>
+                <MenuItems perRow={showTwo ? 2 : 1}>
                   {recents.map((item, index) => (
                     <MenuItem key={`${item.id}-${index}`} item={item} />
                   ))}
