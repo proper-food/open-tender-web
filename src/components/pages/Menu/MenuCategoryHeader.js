@@ -3,9 +3,6 @@ import propTypes from 'prop-types'
 import { Body, Heading } from '@open-tender/components'
 
 const MenuCategoryHeaderView = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 0 2rem;

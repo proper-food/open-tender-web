@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
 import { selectMenuSlug, setCurrentCategory } from '@open-tender/redux'
-import { BgImage, Body, Heading } from '@open-tender/components'
+import { BgImage, Heading } from '@open-tender/components'
 
 const MenuBrowseCategoryView = styled.div`
   width: 33.3333%;
@@ -36,8 +36,11 @@ const MenuBrowseCategoryButton = styled.button`
 `
 
 const MenuBrowseCategoryImage = styled(BgImage)`
+  flex-shrink: 0;
   width: 7rem;
   height: 7rem;
+  background-size: cover;
+  transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.tertiary};
 `
 
@@ -70,20 +73,20 @@ const MenuBrowseCategoryTitle = styled(Heading)`
   }
 `
 
-const MenuBrowseCategorySubtitle = styled(Body)`
-  display: block;
-  margin: 0.1rem 0 0;
-  transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
+// const MenuBrowseCategorySubtitle = styled(Body)`
+//   display: block;
+//   margin: 0.1rem 0 0;
+//   transition: ${(props) => props.theme.links.transition};
+//   color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+//     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+//   }
 
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
-  }
-`
+//   button:hover & {
+//     color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
+//   }
+// `
 
 const MenuBrowseCategoryArrow = styled('span')`
   position: relative;
@@ -109,8 +112,7 @@ const MenuBrowseCategory = ({ category }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const menuSlug = useSelector(selectMenuSlug)
-  const { name, description, small_image_url, large_image_url, app_image_url } =
-    category
+  const { name, small_image_url, large_image_url, app_image_url } = category
   const imageUrl = app_image_url || small_image_url || large_image_url
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
@@ -126,7 +128,7 @@ const MenuBrowseCategory = ({ category }) => {
         <MenuBrowseCategoryImage style={bgStyle} />
         <MenuBrowseCategoryText>
           <MenuBrowseCategoryTitle>{name}</MenuBrowseCategoryTitle>
-          <MenuBrowseCategorySubtitle>{description}</MenuBrowseCategorySubtitle>
+          {/* <MenuBrowseCategorySubtitle>{description}</MenuBrowseCategorySubtitle> */}
         </MenuBrowseCategoryText>
         <MenuBrowseCategoryArrow>
           <ArrowRight size={null} strokeWidth={2} />

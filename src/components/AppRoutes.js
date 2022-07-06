@@ -34,6 +34,7 @@ import {
   Loyalty,
   Menu,
   MenuFavorites,
+  MenuRecents,
   MenuItem,
   MenuSite,
   NotFound,
@@ -77,6 +78,7 @@ const AppRoutes = () => {
       <Route path="menu/:slug">
         <Route index element={<Menu />} />
         <Route path="favorites" element={<MenuFavorites />} />
+        <Route path="recents" element={<MenuRecents />} />
         <Route path="category/:categorySlug" element={<Category />} />
         <Route path="item/:itemSlug" element={<MenuItem />} />
       </Route>
