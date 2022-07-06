@@ -12,6 +12,15 @@ const SeeMoreLinkView = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    color: ${(props) => props.theme.links.dark.color};
+
+    &:hover,
+    &:active {
+      color: ${(props) => props.theme.links.dark.hover};
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        color: ${(props) => props.theme.links.dark.color};
+      }
+    }
   }
 `
 
@@ -19,7 +28,7 @@ const SeeMoreLinkText = styled(Heading)`
   display: block;
   line-height: 1;
   transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.links.primary.color};
+  color: ${(props) => props.theme.links.dark.color};
   font-size: ${(props) => props.theme.fonts.sizes.big};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -27,9 +36,9 @@ const SeeMoreLinkText = styled(Heading)`
 
   a:hover &,
   a:active & {
-    color: ${(props) => props.theme.links.primary.hover};
+    color: ${(props) => props.theme.links.dark.hover};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      color: ${(props) => props.theme.links.primary.color};
+      color: ${(props) => props.theme.links.dark.color};
     }
   }
 `

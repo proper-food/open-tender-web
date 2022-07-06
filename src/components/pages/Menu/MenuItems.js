@@ -15,12 +15,17 @@ const MenuItems = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     gap: ${(props) => props.theme.layout.paddingMobile};
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    gap: 1.5rem;
+  @media (max-width: 650px) {
+    column-gap: 1.5rem;
+    row-gap: ${(props) => props.theme.layout.paddingMobile};
+    grid-template-columns: repeat(${(props) => props.perRow || '1'}, 1fr);
   }
 
   & > div {
     margin: 0 0 2rem;
+    @media (max-width: 650px) {
+      margin: 0;
+    }
   }
 `
 

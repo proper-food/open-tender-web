@@ -15,8 +15,8 @@ const NotificationView = styled('li')`
   border-radius: 0.5rem;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.links.primary.color};
+  color: ${(props) => props.theme.colors.toast};
+  background-color: ${(props) => props.theme.bgColors.toast};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     float: left;
     clear: left;

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -19,7 +20,6 @@ import {
   slugify,
 } from '@open-tender/js'
 import {
-  BgImage,
   Body,
   ButtonStyled,
   CardMenuItem,
@@ -37,8 +37,9 @@ import {
 } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
-import { useTheme } from '@emotion/react'
-import MenuItemCount from './MenuIItemCount'
+
+import MenuItemCount from './MenuItemCount'
+import MenuItemImage from './MenuItemImage'
 
 const MenuItemView = styled(CardMenuItem)`
   position: relative;
@@ -54,8 +55,11 @@ const MenuItemButton = styled.button`
   text-align: left;
   width: 100%;
   margin: 0 0 1.3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0;
+    }
   }
 
   &:disabled {
@@ -67,16 +71,6 @@ const MenuItemContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-`
-
-const MenuItemImage = styled(BgImage)`
-  position: relative;
-  width: 100%;
-  padding: 33.33333% 0;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 33.33333% 0;
-  }
 `
 
 export const MenuItemOverlay = styled.div`
@@ -115,8 +109,11 @@ const MenuItemAlert = styled('div')`
 
 const MenuItemContent = styled.div`
   padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '0.7rem 0 0')};
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding: ${(props) => (props.hasBox ? '0.9rem 0.9rem' : '0.7rem 0 0')};
+    }
   }
 `
 
@@ -124,10 +121,13 @@ const MenuItemInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
   }
 `
 
@@ -136,8 +136,11 @@ const MenuItemName = styled(Heading)`
   flex: 1 1 auto;
   padding: 0 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.big};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 
@@ -145,23 +148,32 @@ const MenuItemPriceCals = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   text-align: right;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    text-align: left;
-    margin: 0 0 0;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0.1rem 0 0;
+      text-align: left;
+    }
   }
 `
 
 const MenuItemPrice = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
 const MenuItemCals = styled(Body)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -171,6 +183,12 @@ const MenuItemTagsAllergens = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin: 0.8rem 0 0;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      display: none;
+    }
+  }
 
   span {
     display: block;
@@ -182,14 +200,12 @@ const MenuItemTagsAllergens = styled.div`
 `
 
 const MenuItemTag = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  font-size: 0.9rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
 `
 
 const MenuItemAllergen = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  font-size: 0.9rem;
-  color: ${(props) => props.theme.colors.alert};
+  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  color: ${(props) => props.theme.colors.allergens};
 `
 
 const MenuItemDescription = styled(Body)`
@@ -197,8 +213,11 @@ const MenuItemDescription = styled(Body)`
   margin: 0.8rem 0 0;
   line-height: 1.2;
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      display: none;
+    }
   }
 `
 
@@ -208,8 +227,11 @@ const MenuItemButtons = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
+
+  .compact & {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      display: none;
+    }
   }
 `
 
@@ -241,6 +263,7 @@ const MenuItem = ({ item }) => {
     isSoldOut,
     showQuickAdd,
     cartCount,
+    showTwo,
   } = prepareMenuItem(
     item,
     allergenAlerts,
@@ -250,7 +273,6 @@ const MenuItem = ({ item }) => {
     isBrowser
   )
   const hasTagsAllergens = tags.length || allergens.length ? true : false
-  const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   const soldOutMsg = menuContent.soldOutMessage || 'Sold out for day'
   const orderItem = item.favorite
     ? { ...rehydrateOrderItem(item, item.favorite.item), index: -1 }
@@ -302,7 +324,7 @@ const MenuItem = ({ item }) => {
   ) : null
 
   return (
-    <MenuItemView>
+    <MenuItemView className={showTwo ? 'compact' : ''}>
       {cartCount > 0 && (
         <MenuItemCount>
           <span>{cartCount}</span>
@@ -312,7 +334,7 @@ const MenuItem = ({ item }) => {
       <MenuItemButton onClick={() => view()} disabled={isSoldOut}>
         <MenuItemContainer>
           {imageUrl && (
-            <MenuItemImage style={bgStyle}>
+            <MenuItemImage imageUrl={imageUrl}>
               {itemTag && (
                 <MenuItemOverlay isSoldOut={isSoldOut} isAlert={allergenAlert}>
                   <div>{itemTag}</div>
@@ -337,10 +359,10 @@ const MenuItem = ({ item }) => {
             {hasTagsAllergens && (
               <MenuItemTagsAllergens>
                 {tags.map((tag) => (
-                  <MenuItemTag>{tag}</MenuItemTag>
+                  <MenuItemTag key={tag}>{tag}</MenuItemTag>
                 ))}
                 {allergens.map((allergen) => (
-                  <MenuItemAllergen>{allergen}</MenuItemAllergen>
+                  <MenuItemAllergen key={allergen}>{allergen}</MenuItemAllergen>
                 ))}
               </MenuItemTagsAllergens>
             )}
@@ -351,7 +373,7 @@ const MenuItem = ({ item }) => {
       <MenuItemButtons hasBox={hasBox}>
         <ButtonStyled
           onClick={add}
-          disabled={!showQuickAdd && !isIncomplete}
+          disabled={!showQuickAdd || isIncomplete}
           size="small"
         >
           Add To Order

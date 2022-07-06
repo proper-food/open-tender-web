@@ -85,9 +85,12 @@ const MenuFavoritesItems = styled.div`
 `
 
 const MenuFavoritesItemsItem = styled.div`
-  flex: 0 0 31rem;
+  flex: 1 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
+  @media (max-width: 1390px) {
+    flex: 0 0 31rem;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 20rem;
     margin-right: ${(props) => props.theme.layout.paddingMobile};
@@ -98,6 +101,10 @@ const MenuFavoritesItemsItem = styled.div`
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
+  }
+
+  & > div {
+    height: 100%;
   }
 `
 

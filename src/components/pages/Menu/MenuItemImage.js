@@ -5,23 +5,21 @@ import { isBrowser } from 'react-device-detect'
 import { BgImage, useImage } from '@open-tender/components'
 import { ImageSpinner } from '../..'
 
-const MenuItemImageView = styled('div')`
+const MenuItemImageView = styled.div`
   position: relative;
   z-index: 1;
-  padding: 30% 0;
+  padding: 33.33333% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   overflow: hidden;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 14rem;
-    padding: 0;
-    border-radius: 0;
+    padding: 33.33333% 0;
   }
 `
 
-const MenuItemImageLoading = styled('div')`
+const MenuItemImageLoading = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -40,8 +38,6 @@ const MenuItemBackgroundImage = styled(BgImage)`
   bottom: 0;
   left: 0;
   right: 0;
-  // opacity: 1;
-  // animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
 const MenuItemImage = ({ imageUrl, children }) => {
