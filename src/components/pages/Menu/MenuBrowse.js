@@ -12,10 +12,18 @@ const MenuBrowseView = styled.div`
 `
 
 const MenuBrowseHeader = styled.div`
-  margin: 0 0 2rem;
+  padding: 0 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    border: 0;
+    border-style: solid;
+    border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
+    border-bottom-width: ${(props) =>
+      props.theme.buttons.sizes.large.borderWidth};
+  }
 `
 
 const MenuBrowseTitle = styled(Heading)`
+  line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};

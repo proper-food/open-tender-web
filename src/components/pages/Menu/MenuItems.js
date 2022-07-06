@@ -23,8 +23,9 @@ const MenuItems = styled.div`
 
   & > div {
     margin: 0 0 2rem;
+
     @media (max-width: 650px) {
-      margin: 0;
+      margin: ${(props) => (props.perRow === 1 ? '0 0 2rem' : '0')};
     }
   }
 `

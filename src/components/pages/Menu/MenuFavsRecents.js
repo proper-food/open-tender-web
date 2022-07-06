@@ -166,7 +166,7 @@ const MenuFavorites = () => {
   if (showLoading || updating || !hasItems) return null
 
   return (
-    <MenuFavoritesView>
+    <MenuFavoritesView className="compact">
       <Container>
         <MenuFavoritesHeader>
           <MenuFavoritesNav>
