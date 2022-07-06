@@ -10,6 +10,7 @@ const MenuCategoryHeaderView = styled.div`
 `
 
 const MenuCategoryHeaderTitle = styled(Heading)`
+  margin: 0 0 0 -0.1rem;
   font-size: ${(props) =>
     props.theme.fonts.sizes[props.isChild ? 'big' : 'xBig']};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -22,7 +23,7 @@ const MenuCategoryHeaderSubtitle = styled(Body)`
   margin: 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 

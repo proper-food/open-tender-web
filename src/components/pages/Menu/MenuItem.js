@@ -298,11 +298,7 @@ const MenuItem = ({ item }) => {
   const itemTag = isSoldOut ? (
     <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
   ) : allergenAlert ? (
-    <Tag
-      icon={iconMap.AlertCircle}
-      text={allergenAlert.join(', ')}
-      bgColor="alert"
-    />
+    <Tag icon={iconMap.AlertCircle} text={allergenAlert} bgColor="alert" />
   ) : null
 
   return (

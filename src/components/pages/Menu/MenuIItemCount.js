@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 const MenuItemCount = styled.div`
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   top: -1.1rem;
   right: -1.1rem;
   display: flex;
