@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { selectContentSection } from '../slices'
 import { Header, HeaderLogo } from '.'
-import { NavMenu, ContinueOrder, User } from './buttons'
+import { Cart, NavMenu, User } from './buttons'
 
 const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
   const { displayLogo, displayLogoMobile } = useSelector(
@@ -19,7 +19,7 @@ const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
       title={showLogo ? <HeaderLogo /> : null}
       right={
         <>
-          <ContinueOrder />
+          <Cart />
           <NavMenu />
         </>
       }

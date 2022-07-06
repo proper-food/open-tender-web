@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import { Header } from '.'
-import { Back, ContinueOrder, NavMenu } from './buttons'
+import { Back, Cart, NavMenu } from './buttons'
 
 const HeaderUser = ({ maxWidth = '100%' }) => {
   return (
@@ -9,7 +9,7 @@ const HeaderUser = ({ maxWidth = '100%' }) => {
       left={<Back path="/account/settings" />}
       right={
         <>
-          <ContinueOrder />
+          <Cart />
           <NavMenu />
         </>
       }

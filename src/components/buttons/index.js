@@ -6,7 +6,6 @@ import Back from './Back'
 import ButtonBoth from './ButtonBoth'
 import CancelEdit from './CancelEdit'
 import Cart from './Cart'
-import ContinueOrder from './ContinueOrder'
 import Deals from './Deals'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
@@ -37,7 +36,6 @@ export {
   ButtonBoth,
   CancelEdit,
   Cart,
-  ContinueOrder,
   Deals,
   Favorite,
   GroupOrder,

@@ -27,7 +27,7 @@ import {
   ScreenreaderTitle,
 } from '../..'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import { Back, NavMenu } from '../../buttons'
+import { Back, Cart, NavMenu } from '../../buttons'
 
 const RevenueCenters = () => {
   const navigate = useNavigate()
@@ -105,7 +105,12 @@ const RevenueCenters = () => {
               <Back path="/order-type" />
             )
           }
-          right={<NavMenu />}
+          right={
+            <>
+              <Cart />
+              <NavMenu />
+            </>
+          }
         />
         <Main>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>

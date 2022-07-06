@@ -31,7 +31,7 @@ import {
   Main,
   Welcome,
 } from '../..'
-import { NavMenu, User } from '../../buttons'
+import { Cart, NavMenu, User } from '../../buttons'
 import AccountButtons from './AccountButtons'
 import AccountContent from './AccountContent'
 import AccountLoyalty from './AccountLoyalty'
@@ -223,7 +223,12 @@ const Account = () => {
           maxWidth="76.8rem"
           left={<User />}
           title={showLogo ? <HeaderLogo /> : null}
-          right={<NavMenu />}
+          right={
+            <>
+              <Cart />
+              <NavMenu />
+            </>
+          }
         />
         <Main>
           <AccountWrapper>

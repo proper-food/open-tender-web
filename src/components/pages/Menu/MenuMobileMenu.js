@@ -15,11 +15,11 @@ import {
   ServiceType,
 } from '../../buttons'
 
-const MenuMobileMenuView = styled('div')`
+const MenuMobileMenuView = styled.div`
   label: MenuMobileMenuView;
   position: fixed;
   z-index: 12;
-  top: ${(props) => props.theme.layout.navHeightMobile};
+  top: ${(props) => props.theme.layout.navHeight};
   left: 0;
   right: 0;
   padding: ${(props) => props.theme.layout.paddingMobile};
@@ -27,9 +27,12 @@ const MenuMobileMenuView = styled('div')`
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   transform: translateY(${(props) => (props.show ? '0' : '-100%')});
   background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
-const MenuMobileMenuOverlay = styled('div')`
+const MenuMobileMenuOverlay = styled.div`
   position: fixed;
   z-index: 11;
   top: 0;
@@ -40,11 +43,13 @@ const MenuMobileMenuOverlay = styled('div')`
 `
 
 const MenuMobileMenuContainer = styled(Box)`
+  width: 100%;
+  max-width: 48rem;
   padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  margin-top: ${(props) => props.theme.layout.paddingMobile};
+  margin: ${(props) => props.theme.layout.paddingMobile} auto 0;
 `
 
-const MenuMobileMenuButtons = styled('div')`
+const MenuMobileMenuButtons = styled.div`
   padding: 0 ${(props) => props.theme.layout.paddingMobile};
   display: flex;
   justify-content: center;

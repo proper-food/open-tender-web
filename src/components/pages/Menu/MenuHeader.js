@@ -8,7 +8,7 @@ import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
 
 import { Header } from '../..'
-import { Back, LeaveGroup, NavMenu } from '../../buttons'
+import { Back, Cart, LeaveGroup, NavMenu } from '../../buttons'
 import iconMap from '../../iconMap'
 import MenuMobileMenu from './MenuMobileMenu'
 
@@ -16,8 +16,11 @@ const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
   line-height: 1;
   margin: 0.5rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   color: ${(props) => props.theme.buttons.colors.header.color};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  }
 `
 
 const MenuHeaderTitleRevenueCenter = styled.button`
@@ -48,6 +51,10 @@ const MenuHeaderName = styled.span`
 
   span {
     color: ${(props) => props.theme.buttons.colors.header.color};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+    }
   }
 `
 
@@ -107,7 +114,12 @@ const MenuHeader = ({ backPath = '/locations' }) => {
         }
         borderColor={theme.colors.primary}
         left={cartGuest ? <LeaveGroup /> : <Back path={backPath} />}
-        right={<NavMenu />}
+        right={
+          <>
+            <Cart />
+            <NavMenu />
+          </>
+        }
       />
       <MenuMobileMenu
         order={order}

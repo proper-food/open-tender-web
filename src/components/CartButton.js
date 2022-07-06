@@ -8,7 +8,7 @@ import { selectCartQuantity } from '@open-tender/redux'
 
 import { toggleSidebar } from '../slices'
 
-const CartButtonView = styled('div')`
+const CartButtonView = styled.div`
   position: fixed;
   z-index: 10;
   bottom: 2rem;
@@ -19,7 +19,7 @@ const CartButtonView = styled('div')`
   }
 `
 
-const CartButtonContainer = styled('div')`
+const CartButtonContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ const CartButtonContainer = styled('div')`
   }
 `
 
-const CartButtonButton = styled('button')`
+const CartButtonButton = styled.button`
   display: block;
   width: 100%;
   height: 100%;
@@ -74,7 +74,7 @@ const CartButtonButton = styled('button')`
   }
 `
 
-const CartButtonIcon = styled('div')`
+const CartButtonIcon = styled.div`
   width: 3rem;
   height: 3rem;
   margin: 0 auto;
@@ -84,7 +84,7 @@ const CartButtonIcon = styled('div')`
   }
 `
 
-const CartButtonCount = styled('div')`
+const CartButtonCount = styled.div`
   position: absolute;
   top: -0.3rem;
   right: -0.2rem;
