@@ -273,7 +273,9 @@ const MenuItem = ({ item }) => {
     isBrowser
   )
   const hasTagsAllergens = tags.length || allergens.length ? true : false
-  const soldOutMsg = menuContent.soldOutMessage || 'Sold out for day'
+  const soldOutMsg = isBrowser
+    ? menuContent.soldOutMessage || 'Sold out for day'
+    : 'Sold out'
   const orderItem = item.favorite
     ? { ...rehydrateOrderItem(item, item.favorite.item), index: -1 }
     : item

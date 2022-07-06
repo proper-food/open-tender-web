@@ -12,7 +12,11 @@ import {
 } from '@open-tender/redux'
 import { makeMenuItemLookup, makeFavorites } from '@open-tender/js'
 
-import { selectBrand } from '../../../slices'
+import {
+  selectBrand,
+  selectContentSection,
+  selectDisplaySettings,
+} from '../../../slices'
 import { Container, Content, Loading, Main } from '../..'
 import { MenuCategoryHeader, MenuHeader, MenuItems, MenuItem } from '../Menu'
 
@@ -28,6 +32,8 @@ const MenuFavorites = () => {
   const navigate = useNavigate()
   const [count, setCount] = useState(0)
   const { title: siteTitle } = useSelector(selectBrand)
+  const { title, subtitle } = useSelector(selectContentSection('favorites'))
+  const { itemsTwoPerRowMobile: showTwo } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
@@ -71,11 +77,11 @@ const MenuFavorites = () => {
         <Main>
           <MenuFavoritesView>
             <Container>
-              <MenuCategoryHeader title="Favorites" />
+              <MenuCategoryHeader title={title} subtitle={subtitle} />
               {showLoading || updating ? (
                 <Loading />
               ) : (
-                <MenuItems>
+                <MenuItems perRow={showTwo ? 2 : 1}>
                   {favorites.map((item, index) => (
                     <MenuItem key={`${item.id}-${index}`} item={item} />
                   ))}
