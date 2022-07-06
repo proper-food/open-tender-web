@@ -20,7 +20,7 @@ const MenuHeaderTitleServiceType = styled(Preface)`
   color: ${(props) => props.theme.buttons.colors.header.color};
 `
 
-const MenuHeaderTitleRevenueCenter = styled('button')`
+const MenuHeaderTitleRevenueCenter = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   }
 `
 
-const MenuHeaderName = styled('span')`
+const MenuHeaderName = styled.span`
   max-width: 20rem;
   white-space: nowrap;
   overflow: hidden;

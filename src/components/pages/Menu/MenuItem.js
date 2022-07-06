@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import {
   addItemToCart,
@@ -34,6 +34,7 @@ import {
   setTopOffset,
   toggleSidebarModal,
   selectContent,
+  setMenuPath,
 } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
@@ -247,6 +248,7 @@ const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const theme = useTheme()
+  const { pathname } = useLocation()
   const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
   const { menu: menuContent } = useSelector(selectContent)
   const menuSlug = useSelector(selectMenuSlug)
@@ -296,6 +298,7 @@ const MenuItem = ({ item }) => {
 
   const view = () => {
     if (!isSoldOut) {
+      dispatch(setMenuPath(pathname || menuSlug))
       dispatch(setCurrentItem(orderItem))
       if (builderType === 'PAGE') {
         const mainElement = document.getElementById('main')

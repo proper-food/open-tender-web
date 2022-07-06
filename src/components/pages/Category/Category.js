@@ -1,12 +1,8 @@
 import { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectCurrentCategory,
-  selectMenuSlug,
-  setCurrentCategory,
-} from '@open-tender/redux'
+import { useSelector } from 'react-redux'
+import { selectCurrentCategory, selectMenuSlug } from '@open-tender/redux'
 
 import { Content, Main, ScreenreaderTitle } from '../..'
 import { MenuHeader, MenuCategory } from '../Menu'
@@ -16,7 +12,6 @@ import { selectBrand } from '../../../slices'
 const MenuCategoryView = styled.div``
 
 const Category = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const category = useSelector(selectCurrentCategory)
   const { title: siteTitle } = useSelector(selectBrand)
@@ -25,10 +20,6 @@ const Category = () => {
   useEffect(() => {
     if (!category) navigate(menuSlug)
   }, [category, navigate, menuSlug])
-
-  useEffect(() => {
-    return () => dispatch(setCurrentCategory(null))
-  }, [dispatch])
 
   if (!category) return null
 

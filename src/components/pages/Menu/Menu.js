@@ -119,7 +119,7 @@ const MenuPage = () => {
       <Helmet>
         <title>Menu | {siteTitle}</title>
       </Helmet>
-      <Content scrollTop={false}>
+      <Content>
         <MenuHeader />
         <Main>
           <MenuContext.Provider

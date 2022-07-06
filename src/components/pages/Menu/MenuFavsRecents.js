@@ -127,7 +127,7 @@ const MenuFavorites = () => {
   const hasFavorites = favorites && favorites.length > 0
   const favCount = hasFavorites ? favorites.length : 0
   const displayedFavs = hasFavorites ? favorites.slice(0, 4) : []
-  const updating = favCount !== count
+  const updating = favCount !== count && count !== 0
   const loadingFavs = favs.loading === 'pending' && !hasFavorites ? true : false
   const moreFavorites = favorites.length > 1 && menuSection === 'favorites'
   const favoritesPath = `${menuSlug}/favorites`
@@ -157,7 +157,11 @@ const MenuFavorites = () => {
       dispatch(fetchCustomerFavorites())
       dispatch(fetchCustomerOrders(11))
     }
-  }, [dispatch, hasCustomer])
+  }, [hasCustomer, dispatch])
+
+  useEffect(() => {
+    if (!menuSection) dispatch(setMenuSection('recents'))
+  }, [menuSection, dispatch])
 
   useEffect(() => {
     setCount(favCount)

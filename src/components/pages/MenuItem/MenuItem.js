@@ -18,7 +18,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { selectDisplaySettings } from '../../../slices'
+import { selectDisplaySettings, selectMenuPath } from '../../../slices'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
 import MenuItemBuilder from './MenuItemBuilder'
 import iconMap from '../../iconMap'
@@ -84,6 +84,7 @@ const MenuItemBack = styled('div')`
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
@@ -100,8 +101,8 @@ const MenuItem = () => {
     : null
 
   useEffect(() => {
-    if (!item) navigate(menuSlug)
-  }, [item, navigate, menuSlug])
+    if (!item) navigate(menuPath || menuSlug)
+  }, [item, navigate, menuSlug, menuPath])
 
   const cancel = () => {
     dispatch(setCurrentItem(null))
@@ -111,7 +112,6 @@ const MenuItem = () => {
     dispatch(addItemToCart(item))
     dispatch(showNotification(`${item.name} added to cart`))
     dispatch(setCurrentItem(null))
-    // if (item.index) dispatch(toggleSidebar())
   }
 
   if (!item) return null
