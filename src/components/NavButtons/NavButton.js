@@ -23,7 +23,7 @@ const NavButtonView = styled('button')`
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     // height: 6.4rem;
-    padding: 0 0rem 0 1.5rem;
+    padding: 0 0rem 0 1.75rem;
     margin: 0;
     border-top: 0;
     border-right: 0;
@@ -73,19 +73,23 @@ const NavButtonText = styled.span`
   align-items: flex-start;
   padding: 0 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 2rem;
+    padding: 0 2.25rem;
   }
 `
 
 const NavButtonTitle = styled(Heading)`
   display: block;
-  margin: 0 0 0 -0.1rem;
+  margin: 0;
+  margin-left: ${(props) => props.theme.buttons.sizes.large.titleMarginLeft};
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.large.color};
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.buttons.sizes.large.titleFontSize};
+  font-weight: ${(props) => props.theme.buttons.sizes.large.titleFontWeight};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-    // font-size: 1.6rem;
+    margin-left: ${(props) =>
+      props.theme.buttons.sizes.large.titleMarginLeftMobile};
+    font-size: ${(props) =>
+      props.theme.buttons.sizes.large.titleFontSizeMobile};
   }
 
   button:hover & {
@@ -95,12 +99,18 @@ const NavButtonTitle = styled(Heading)`
 
 const NavButtonSubtitle = styled(Body)`
   display: block;
-  margin: 0.1rem 0 0;
+  margin: 0;
+  margin-top: ${(props) => props.theme.buttons.sizes.large.subtitleMarginTop};
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.buttons.sizes.large.subtitleFontSize};
+  font-weight: ${(props) => props.theme.buttons.sizes.large.subtitleFontWeight};
+
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    margin-top: ${(props) =>
+      props.theme.buttons.sizes.large.subtitleMarginTopMobile};
+    font-size: ${(props) =>
+      props.theme.buttons.sizes.large.subtitleFontSizeMobile};
   }
 
   button:hover & {
