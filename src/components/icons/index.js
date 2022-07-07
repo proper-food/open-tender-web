@@ -5,6 +5,8 @@ import TriangleDown from './TriangleDown'
 import User from './User'
 import UserCircle from './UserCircle'
 
+export * from './feather'
+
 export {
   ArrowRightLong,
   ChevronLeftCircle,

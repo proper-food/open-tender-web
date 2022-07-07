@@ -1,5 +1,3 @@
-import React from 'react'
-import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -9,10 +7,10 @@ import {
   closeGroupOrder,
 } from '@open-tender/redux'
 
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+import { Icon } from '.'
+import { ChevronLeftCircle } from '../icons'
 
-const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
+const Reopen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { cart } = useSelector(selectOrder)
@@ -26,13 +24,14 @@ const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
     })
   }
 
-  return <ButtonBoth text={text} icon={icon} onClick={reopen} />
+  return (
+    <Icon margin="0 0 0 -1.25rem" onClick={reopen}>
+      <ChevronLeftCircle />
+    </Icon>
+  )
 }
 
 Reopen.displayName = 'Reopen'
-Reopen.propTypes = {
-  onClick: propTypes.func,
-  icon: propTypes.element,
-}
+Reopen.propTypes = {}
 
 export default Reopen

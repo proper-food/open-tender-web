@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeftCircle } from '../icons'
-import Icon from './Icon'
+import { Icon } from '.'
 
 const Back = ({ path = '/account' }) => {
   const navigate = useNavigate()

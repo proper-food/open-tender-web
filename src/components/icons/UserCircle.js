@@ -44,8 +44,8 @@ const UserCircle = ({ size = 28, isFilled = false }) => {
 
 UserCircle.displayName = 'UserCircle'
 UserCircle.propTypes = {
-  size: propTypes.string,
-  color: propTypes.string,
+  size: propTypes.number,
+  isFilled: propTypes.bool,
 }
 
 export default UserCircle

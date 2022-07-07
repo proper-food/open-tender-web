@@ -58,9 +58,10 @@ const Cart = () => {
     ? theme.buttons.colors.cart.bgColor
     : 'transparent'
   // const showMenu = revenueCenter && (lastOrder || isCurrentOrder)
-  const isItem = pathname.includes('/item/')
+  // const isItem = pathname.includes('/item/')
+  const hideCart = contains(pathname, ['/item/', 'review'])
   const showCart =
-    isCurrentOrder || (contains(pathname, ['menu', 'checkout']) && !isItem)
+    (isCurrentOrder || contains(pathname, ['menu', 'checkout'])) && !hideCart
 
   // const order = () => {
   //   const path = showMenu

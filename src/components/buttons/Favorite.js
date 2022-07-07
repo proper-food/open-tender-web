@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
 import { addCustomerFavorite, removeCustomerFavorite } from '@open-tender/redux'
 import { makeSimpleCart } from '@open-tender/js'
+import { Heart } from '../icons'
 
-import styled from '@emotion/styled'
-import { Heart } from 'react-feather'
-
-const FavoriteView = styled('button')`
+const FavoriteView = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +36,7 @@ const FavoriteView = styled('button')`
   }
 `
 
-const FavoriteIcon = styled('span')`
+const FavoriteIcon = styled.span`
   display: block;
   line-height: 0;
   width: ${(props) => props.theme.favorite.iconSize};
@@ -74,7 +73,7 @@ const Favorite = ({ item, favoriteId }) => {
       filled={filled}
     >
       <FavoriteIcon>
-        <Heart size={null} />
+        <Heart />
       </FavoriteIcon>
     </FavoriteView>
   )

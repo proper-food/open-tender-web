@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { isBrowser } from 'react-device-detect'
 import isEqual from 'lodash/isEqual'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
@@ -27,7 +26,6 @@ import {
 import styled from '@emotion/styled'
 
 import { selectDisplaySettings } from '../../../slices'
-import iconMap from '../../iconMap'
 import {
   Content,
   Main,
@@ -35,19 +33,12 @@ import {
   PageTitle,
   PageContent,
   PageContainer,
-  Header,
   LinkSeparator,
 } from '../..'
-import {
-  Account,
-  Menu,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-} from '../../buttons'
 import GroupOrderLink from '../../GroupOrderLink'
 import GroupOrderTime from '../../GroupOrderTime'
 import { GroupOrderCartView } from './GroupOrderReview'
+import { MenuHeader } from '../Menu'
 
 const GuestSection = styled('div')`
   & + div {
@@ -174,21 +165,7 @@ const GroupOrderReviewOwner = () => {
   return (
     <>
       <Content>
-        <Header
-          left={<Menu />}
-          right={
-            <>
-              {isBrowser ? (
-                <>
-                  <Account />
-                  <RevenueCenter />
-                  <ServiceType />
-                  <RequestedAt />
-                </>
-              ) : null}
-            </>
-          }
-        />
+        <MenuHeader backPath={menuSlug} />
         <Main>
           <PageContainer>
             <PageTitle
@@ -230,20 +207,10 @@ const GroupOrderReviewOwner = () => {
                 delete it altogether.
               </p>
               <p>
-                <ButtonStyled
-                  icon={iconMap.Save}
-                  onClick={save}
-                  size="small"
-                  color="secondary"
-                >
+                <ButtonStyled onClick={save} size="small" color="secondary">
                   Save for Later
                 </ButtonStyled>{' '}
-                <ButtonStyled
-                  icon={iconMap.Trash2}
-                  onClick={cancel}
-                  size="small"
-                  color="secondary"
-                >
+                <ButtonStyled onClick={cancel} size="small" color="secondary">
                   Delete Forever
                 </ButtonStyled>
               </p>

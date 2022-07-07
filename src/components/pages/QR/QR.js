@@ -7,7 +7,6 @@ import styled from '@emotion/styled'
 import {
   fetchLocation,
   resetOrderType,
-  selectCustomer,
   selectMenuSlug,
   selectOrder,
   setOrderServiceType,
@@ -18,7 +17,7 @@ import {
 import { ButtonStyled, Text } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
+import { NavMenu } from '../../buttons'
 import {
   Content,
   Header,
@@ -29,9 +28,8 @@ import {
   PageTitle,
   Loading,
 } from '../..'
-import { Account, Logout } from '../../buttons'
 
-const QRButtons = styled('div')`
+const QRButtons = styled.div`
   label: QRButtons;
   margin: 2rem 0 0;
 
@@ -57,7 +55,6 @@ const QR = () => {
   const [init, setInit] = useState(false)
   const { id: locationId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { auth } = useSelector(selectCustomer)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const { prepType, revenueCenter, loading, error } = order
@@ -102,7 +99,7 @@ const QR = () => {
         <title>Dine In | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header left={<HeaderLogo />} right={auth ? <Logout /> : <Account />} />
+        <Header left={<HeaderLogo />} right={<NavMenu />} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageContent>
@@ -120,14 +117,12 @@ const QR = () => {
                   />
                   <QRButtons>
                     <ButtonStyled
-                      icon={iconMap.Coffee}
                       onClick={() => dispatch(setPrepType('EAT_HERE'))}
                       size={isMobile ? 'small' : 'default'}
                     >
                       Eat Here
                     </ButtonStyled>
                     <ButtonStyled
-                      icon={iconMap.ShoppingBag}
                       onClick={() => dispatch(setPrepType('TAKE_OUT'))}
                       size={isMobile ? 'small' : 'default'}
                     >

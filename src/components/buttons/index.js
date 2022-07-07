@@ -1,4 +1,3 @@
-import Account from './Account'
 import AccountHome from './AccountHome'
 import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
@@ -28,7 +27,6 @@ import StartOver from './StartOver'
 import User from './User'
 
 export {
-  Account,
   AccountHome,
   AccountSettings,
   Allergens,

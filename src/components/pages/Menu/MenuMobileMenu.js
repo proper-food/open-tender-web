@@ -5,7 +5,6 @@ import { selectAutoSelect, selectGroupOrder } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import {
-  Account,
   CancelEdit,
   GroupGuest,
   GroupOrder,
@@ -80,7 +79,6 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
             </>
           ) : (
             <>
-              <Account useButton={true} />
               <GroupOrder useButton={true} />
               <CancelEdit useButton={true} />
             </>

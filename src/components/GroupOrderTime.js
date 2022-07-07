@@ -3,8 +3,9 @@ import { makeGroupOrderTimeStr } from '@open-tender/js'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectGroupOrder,
-  selectTimezone,
   selectGroupOrderPrepTimes,
+  selectOrder,
+  selectTimezone,
 } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 
@@ -12,14 +13,27 @@ import { openModal } from '../slices'
 
 const GroupOrderTime = () => {
   const dispatch = useDispatch()
+  const { requestedAt, revenueCenter, serviceType, orderType } =
+    useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
-  const { requestedAt, cutoffAt } = useSelector(selectGroupOrder)
+  const { order_times } = revenueCenter || {}
+  const orderTimes = order_times ? order_times[serviceType] : null
+  const { cutoffAt } = useSelector(selectGroupOrder)
   const orderTime = makeGroupOrderTimeStr(requestedAt, tz)
   const cutoffTime = makeGroupOrderTimeStr(cutoffAt, tz)
   const { prepTime } = useSelector(selectGroupOrderPrepTimes)
+  const args = {
+    focusFirst: true,
+    skipClose: true,
+    style: orderTimes ? { alignItems: 'flex-start' } : {},
+    revenueCenter,
+    serviceType,
+    orderType,
+    requestedAt,
+  }
 
   const adjustTime = () => {
-    dispatch(openModal({ type: 'requestedAt' }))
+    dispatch(openModal({ type: 'requestedAt', args }))
   }
 
   return (

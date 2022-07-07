@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { ButtonStyled } from '@open-tender/components'
+import { Clipboard } from './icons'
 
-import iconMap from './iconMap'
-import styled from '@emotion/styled'
-
-const CopyResult = styled('p')`
+const CopyResult = styled.p`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   ${(props) => (props.copied ? `color: ${props.theme.colors.success};` : null)}
@@ -32,7 +31,7 @@ const GroupOrderLink = ({
       <p>
         <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
           <ButtonStyled
-            icon={iconMap.Clipboard}
+            icon={<Clipboard strokeWidth={2} />}
             onClick={copy}
             size="small"
             color="cart"
