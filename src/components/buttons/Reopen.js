@@ -26,7 +26,7 @@ const Reopen = () => {
 
   return (
     <Icon margin="0 0 0 -1.25rem" onClick={reopen}>
-      <ChevronLeftCircle />
+      <ChevronLeftCircle size={25} />
     </Icon>
   )
 }

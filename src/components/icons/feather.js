@@ -259,6 +259,11 @@ export const Truck = (props) => {
   return <RF.Truck size={null} strokeWidth={icons.strokeWidth} {...props} />
 }
 
+export const User = (props) => {
+  const { icons } = useTheme()
+  return <RF.User size={null} strokeWidth={icons.strokeWidth} {...props} />
+}
+
 export const Users = (props) => {
   const { icons } = useTheme()
   return <RF.Users size={null} strokeWidth={icons.strokeWidth} {...props} />

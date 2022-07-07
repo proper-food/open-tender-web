@@ -9,8 +9,8 @@ import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand } from '../slices'
-import { NavMenu } from './buttons'
-import { ContainerSite, UserCircle } from '.'
+import { NavMenu, User } from './buttons'
+import { ContainerSite } from '.'
 
 const HeaderSiteView = styled.div`
   position: fixed;
@@ -147,7 +147,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
                 <>
                   {auth ? (
                     <HeaderSiteNavUser onClick={() => navigate('/guest')}>
-                      <UserCircle size={28} isFilled={true} />
+                      <User />
                     </HeaderSiteNavUser>
                   ) : (
                     <HeaderSiteNavButton>

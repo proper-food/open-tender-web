@@ -7,7 +7,7 @@ const Back = ({ path = '/account' }) => {
   const navigate = useNavigate()
   return (
     <Icon margin="0 0 0 -1.25rem" onClick={() => navigate(path)}>
-      <ChevronLeftCircle />
+      <ChevronLeftCircle size={25} />
     </Icon>
   )
 }

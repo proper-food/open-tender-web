@@ -1,36 +1,52 @@
 import React from 'react'
+import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
-import styled from '@emotion/styled'
-
 import { openModal, selectBrand, toggleNav } from '../../slices'
 import NavClose from './NavClose'
-import iconMap from '../iconMap'
+import {
+  Award,
+  CreditCard,
+  DollarSign,
+  Gift,
+  Heart,
+  Home,
+  LogOut,
+  Mail,
+  MapPin,
+  PlusCircle,
+  ShoppingBag,
+  Sliders,
+  Smile,
+  Tag,
+  User,
+  UserCircle,
+} from '../icons'
 
 const guestButtons = [
   {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'Home',
     path: '/account',
   },
   {
-    icon: iconMap.Tag,
+    icon: <Tag />,
     title: 'Deals',
     path: '/deals',
   },
   {
-    icon: iconMap.Gift,
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/gift-cards',
   },
   {
-    icon: iconMap.DollarSign,
+    icon: <DollarSign />,
     title: 'Donations',
     path: '/donations',
   },
   {
-    icon: iconMap.PlusCircle,
+    icon: <PlusCircle />,
     title: 'Sign Up',
     path: '/signup',
   },
@@ -38,78 +54,78 @@ const guestButtons = [
 
 const navButtons = [
   {
-    icon: iconMap.Home,
-    title: 'Home',
+    icon: <UserCircle />,
+    title: 'Account',
     path: '/account',
   },
   {
-    icon: iconMap.ShoppingBag,
+    icon: <ShoppingBag />,
     title: 'Order History',
     path: '/orders',
   },
   {
-    icon: iconMap.Heart,
+    icon: <Heart />,
     title: 'Favorites',
     path: '/favorites',
   },
   {
-    icon: iconMap.Smile,
+    icon: <Smile />,
     title: 'Loyalty',
     path: '/loyalty',
   },
   {
-    icon: iconMap.Award,
+    icon: <Award />,
     title: 'Rewards',
     path: '/rewards',
   },
   {
-    icon: iconMap.Tag,
+    icon: <Tag />,
     title: 'Deals',
     path: '/deals',
   },
   {
-    icon: iconMap.User,
+    icon: <User />,
     title: 'Profile',
     path: '/account/profile',
   },
   {
-    icon: iconMap.Mail,
+    icon: <Mail />,
     title: 'Communication Preferences',
     path: '/account/communications',
   },
   {
-    icon: iconMap.Sliders,
+    icon: <Sliders />,
     title: 'Dietary Preferences',
     path: '/account/allergens',
   },
   {
-    icon: iconMap.CreditCard,
+    icon: <CreditCard />,
     title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
-    icon: iconMap.Gift,
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.MapPin,
+    icon: <MapPin />,
     title: 'Addresses',
     path: '/account/addresses',
   },
   {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'House Accounts',
     path: '/account/house-accounts',
   },
   {
-    icon: iconMap.DollarSign,
+    icon: <DollarSign />,
     title: 'Donations',
     path: '/donations',
   },
 ]
 
-const NavView = styled('nav')`
+const NavView = styled.nav`
   position: fixed;
   z-index: 101;
   top: 0;
@@ -122,7 +138,7 @@ const NavView = styled('nav')`
   background-color: ${(props) => props.theme.bgColors.primary};
 `
 
-const NavContainer = styled('div')`
+const NavContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -130,21 +146,12 @@ const NavContainer = styled('div')`
   flex-direction: column;
 `
 
-// const NavHeader = styled('div')`
-//   width: 100%;
-//   padding: 2.5rem 0 1rem;
-
-//   button span {
-//     font-size: ${(props) => props.theme.fonts.sizes.h3};
-//   }
-// `
-
-const NavItems = styled('nav')`
+const NavItems = styled.nav`
   width: 100%;
   padding: 2rem 0 2rem;
 `
 
-const NavItem = styled('button')`
+const NavItem = styled.button`
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -154,10 +161,6 @@ const NavItem = styled('button')`
   padding: 1.25rem 1rem 1.25rem 3.5rem;
   color: ${(props) => props.theme.links.dark.color};
 
-  span {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
-
   &:hover {
     color: ${(props) => props.theme.links.dark.hover};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -166,7 +169,7 @@ const NavItem = styled('button')`
   }
 `
 
-const NavIcon = styled('span')`
+const NavIcon = styled.span`
   display: block;
   line-height: 0;
   position: relative;
@@ -176,13 +179,13 @@ const NavIcon = styled('span')`
   line-height: 0;
 `
 
-const NavTitle = styled('p')`
+const NavTitle = styled.span`
+  display: block;
   flex-grow: 1;
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  line-height: 1.2;
 `
 
-const NavFooter = styled('div')`
+const NavFooter = styled.div`
   width: 100%;
   padding: 0 0 2rem;
 `
@@ -190,7 +193,7 @@ const NavFooter = styled('div')`
 const Nav = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { profile } = useSelector(selectCustomer)
+  const { auth } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
   const {
     has_rewards,
@@ -217,7 +220,7 @@ const Nav = React.forwardRef((props, ref) => {
   if (!has_allergens) removed.push('/account/allergens')
   if (!has_house_accounts) removed.push('/account/house-accounts')
   if (!has_favorites) removed.push('/favorites')
-  const buttons = profile ? navButtons : guestButtons
+  const buttons = auth ? navButtons : guestButtons
   const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
 
   const closeGo = (evt, path) => {
@@ -248,18 +251,6 @@ const Nav = React.forwardRef((props, ref) => {
     <NavView ref={ref}>
       <NavContainer>
         <NavClose />
-        {/* <NavHeader>
-          {profile && (
-            <>
-              <NavItem onClick={(evt) => closeGo(evt, '/')}>
-                <NavIcon>{iconMap.Smile}</NavIcon>
-                <NavTitle style={{ marginLeft: '-0.2rem' }}>
-                  Hi, {profile.first_name}
-                </NavTitle>
-              </NavItem>
-            </>
-          )}
-        </NavHeader> */}
         <NavItems>
           {filteredButtons.map((i) => (
             <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
@@ -269,15 +260,19 @@ const Nav = React.forwardRef((props, ref) => {
           ))}
         </NavItems>
         <NavFooter>
-          {profile ? (
+          {auth ? (
             <NavItem onClick={logout}>
-              <NavIcon>{iconMap.LogOut}</NavIcon>
-              <NavTitle>Logout</NavTitle>
+              <NavIcon>
+                <LogOut />
+              </NavIcon>
+              <NavTitle>Sign Out</NavTitle>
             </NavItem>
           ) : (
             <NavItem onClick={login}>
-              <NavIcon>{iconMap.User}</NavIcon>
-              <NavTitle>Login</NavTitle>
+              <NavIcon>
+                <UserCircle />
+              </NavIcon>
+              <NavTitle>Sign In</NavTitle>
             </NavItem>
           )}
         </NavFooter>

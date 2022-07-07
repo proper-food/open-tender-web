@@ -1,13 +1,12 @@
 import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight } from 'react-feather'
 import { resetOrder, selectOrder } from '@open-tender/redux'
 import { openModal } from '../../../slices'
-import { UserCircle } from '../../icons'
+import { ArrowRight, UserCircle } from '../../icons'
 import { ButtonLarge } from '../..'
 
-const GuestButtonsView = styled('div')`
+const GuestButtonsView = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-direction: row-reverse;
@@ -67,7 +66,7 @@ const GuestButtons = () => {
         text={isCurrentOrder ? 'Continue Order' : 'Order Now'}
         color="primary"
       >
-        <ArrowRight size={22} />
+        <ArrowRight size={22} strokeWidth={2} />
       </ButtonLarge>
     </GuestButtonsView>
   )

@@ -1,35 +1,31 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 
-const ChevronLeftCircleView = styled.span`
-  display: block;
-  line-height: 0;
-  width: ${(props) => `${(props.size / 10).toFixed(2)}rem`};
-
-  svg {
-    width: 100%;
-  }
-`
-
-const ChevronLeftCircle = ({ size = 25 }) => {
+const ChevronLeftCircle = ({ size, strokeWidth, ...rest }) => {
+  const { icons } = useTheme()
   return (
-    <ChevronLeftCircleView size={size}>
-      <svg viewBox="0 0 25 25" fill="none">
-        <path
-          d="M15 18L9 12L15 6"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="12.5" cy="12.5" r="12" stroke="currentColor" />
-      </svg>
-    </ChevronLeftCircleView>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 25 25"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth || icons.strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      overflow="visible"
+      {...rest}
+    >
+      <path d="M15 18L9 12L15 6" />
+      <circle cx="12.5" cy="12.5" r="12" />
+    </svg>
   )
 }
 
 ChevronLeftCircle.displayName = 'ChevronLeftCircle'
 ChevronLeftCircle.propTypes = {
   size: propTypes.number,
+  strokeWidth: propTypes.number,
 }
 
 export default ChevronLeftCircle

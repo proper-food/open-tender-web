@@ -8,7 +8,7 @@ const NavMenu = () => {
 
   return (
     <Icon margin="0 -1.5rem 0 0" onClick={() => dispatch(toggleNav())}>
-      <Hamburger />
+      <Hamburger size={20} />
     </Icon>
   )
 }

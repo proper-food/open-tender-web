@@ -1,53 +1,30 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 
-const HamburgerView = styled.span`
-  display: block;
-  line-height: 0;
-  width: ${(props) => `${(props.size / 10).toFixed(2)}rem`};
-
-  svg {
-    width: 100%;
-  }
-`
-
-const Hamburger = ({ size = 20 }) => {
+const Hamburger = ({ size, strokeWidth, ...rest }) => {
+  const { icons } = useTheme()
   return (
-    <HamburgerView size={size}>
-      <svg viewBox="0 0 20 11" fill="none">
-        <line
-          x1="0.5"
-          y1="0.5"
-          x2="19.5"
-          y2="0.5"
-          stroke="currentColor"
-          strokeLinecap="square"
-        />
-        <line
-          x1="0.5"
-          y1="5.5"
-          x2="19.5"
-          y2="5.5"
-          stroke="currentColor"
-          strokeLinecap="square"
-        />
-        <line
-          x1="0.5"
-          y1="10.5"
-          x2="19.5"
-          y2="10.5"
-          stroke="currentColor"
-          strokeLinecap="square"
-        />
-      </svg>
-    </HamburgerView>
+    <svg
+      width={size}
+      viewBox="0 0 20 11"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth || icons.strokeWidth}
+      strokeLinecap="square"
+      overflow="visible"
+      {...rest}
+    >
+      <line x1="0.5" y1="0.5" x2="19.5" y2="0.5" />
+      <line x1="0.5" y1="5.5" x2="19.5" y2="5.5" />
+      <line x1="0.5" y1="10.5" x2="19.5" y2="10.5" />
+    </svg>
   )
 }
 
 Hamburger.displayName = 'Hamburger'
 Hamburger.propTypes = {
-  size: propTypes.string,
-  color: propTypes.string,
+  size: propTypes.number,
+  strokeWidth: propTypes.number,
 }
 
 export default Hamburger

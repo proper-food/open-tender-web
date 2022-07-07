@@ -18,7 +18,7 @@ const User = () => {
 
   return (
     <Icon margin="0 0 0 -1.1rem" onClick={auth ? goToSettings : login}>
-      <UserCircle isFilled={!!auth} />
+      <UserCircle size={28} isFilled={!!auth} />
     </Icon>
   )
 }
