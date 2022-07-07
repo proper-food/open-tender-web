@@ -1,31 +1,16 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 
-const TriangleDownView = styled.span`
-  display: block;
-  line-height: 0;
-  width: ${(props) => `${(props.size / 10).toFixed(2)}rem`};
-
-  svg {
-    width: 100%;
-    fill: ${(props) => props.color || props.theme.colors.primary};
-  }
-`
-
-const TriangleDown = ({ size = 12, color = null }) => {
+const TriangleDown = ({ size = 12 }) => {
   return (
-    <TriangleDownView size={size} color={color}>
-      <svg viewBox="0 0 12 9" fill="none">
-        <path d="M6 9L0.803847 -2.51245e-08L11.1962 8.834e-07L6 9Z" />
-      </svg>
-    </TriangleDownView>
+    <svg width={size} viewBox="0 0 12 9" fill="currentColor">
+      <path d="M6 9L0.803847 -2.51245e-08L11.1962 8.834e-07L6 9Z" />
+    </svg>
   )
 }
 
 TriangleDown.displayName = 'TriangleDown'
 TriangleDown.propTypes = {
-  size: propTypes.string,
-  color: propTypes.string,
+  size: propTypes.number,
 }
 
 export default TriangleDown
