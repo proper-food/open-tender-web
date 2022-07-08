@@ -39,7 +39,7 @@ import {
   MenuSite,
   NotFound,
   Order,
-  Orders,
+  OrderHistory,
   OrderType,
   Profile,
   QR,
@@ -96,7 +96,7 @@ const AppRoutes = () => {
       <Route path="loyalty" element={<Loyalty />} />
       <Route path="rewards" element={<Rewards />} />
       <Route path="favorites" element={<Favorites />} />
-      <Route path="orders" element={<Orders />} />
+      <Route path="orders" element={<OrderHistory />} />
       <Route path="orders/:id" element={<Order />} />
       <Route path="group-orders" element={<GroupOrders />} />
       <Route path="guest" element={<Guest />} />

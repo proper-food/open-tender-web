@@ -4,8 +4,6 @@ import { isMobile } from 'react-device-detect'
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { ButtonStyled } from '@open-tender/components'
-
-import iconMap from './iconMap'
 import { NavScroll } from '.'
 
 const NavStickyView = styled('div')`
@@ -114,7 +112,6 @@ const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
               </NavStickyLogo>
               <div>
                 <ButtonStyled
-                  icon={iconMap.RefreshCw}
                   onClick={() => change(null)}
                   size="small"
                   color="secondary"

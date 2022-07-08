@@ -3,7 +3,7 @@ import { Body, ButtonStyled, Heading } from '@open-tender/components'
 
 const ButtonLargeContent = styled.span`
   width: 100%;
-  height: 2.6rem;
+  height: 2.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

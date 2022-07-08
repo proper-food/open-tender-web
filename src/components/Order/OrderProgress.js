@@ -1,7 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
-import iconMap from '../iconMap'
+import { Check } from '../icons'
 
 const OrderProgressView = styled.div`
   position: relative;
@@ -70,7 +69,9 @@ const OrderProgress = ({ prepStatus }) => {
         <OrderProgressPoint key={step} top={step} filled={percent >= step}>
           {percent >= step && (
             <OrderProgressPointCheck>
-              <span>{iconMap.Check}</span>
+              <span>
+                <Check strokeWidth={3} />
+              </span>
             </OrderProgressPointCheck>
           )}
         </OrderProgressPoint>

@@ -42,6 +42,7 @@ const MenuBrowseCategoryImage = styled(BgImage)`
   background-size: cover;
   transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  border-radius: ${(props) => props.theme.border.radiusSmall};
 `
 
 const MenuBrowseCategoryText = styled.span`

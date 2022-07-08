@@ -19,7 +19,7 @@ import {
   PageError,
   PageTitle,
 } from '../..'
-import OrdersList from '../Orders/OrdersList'
+import OrdersList from '../OrderHistory/OrdersList'
 
 const GroupOrders = () => {
   const dispatch = useDispatch()

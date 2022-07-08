@@ -38,7 +38,7 @@ import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
 import NotFound from './NotFound'
 import Order from './Order'
-import Orders from './Orders'
+import OrderHistory from './OrderHistory'
 import OrderType from './OrderType'
 import Profile from './Profile'
 import QR from './QR'
@@ -93,7 +93,7 @@ export {
   MenuSite,
   NotFound,
   Order,
-  Orders,
+  OrderHistory,
   OrderType,
   Profile,
   QR,

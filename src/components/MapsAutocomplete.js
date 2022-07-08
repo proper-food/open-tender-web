@@ -1,11 +1,9 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { setAddress, selectOrder } from '@open-tender/redux'
 import { GoogleMapsAutocomplete } from '@open-tender/components'
-
-import iconMap from './iconMap'
+import { Navigation } from './icons'
 
 const MapsAutocompleteView = styled('div')`
   position: fixed;
@@ -53,7 +51,7 @@ const MapsAutocomplete = ({
         formattedAddress={formattedAddress}
         setAddress={(address) => dispatch(setAddress(address))}
         setCenter={setCenter}
-        icon={iconMap.Navigation}
+        icon={<Navigation strokeWidth={2} />}
         placeholder={placeholder}
       />
     </MapsAutocompleteView>

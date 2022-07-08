@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,8 +15,6 @@ import {
   makeOrderTypeName,
 } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
-
-import iconMap from './iconMap'
 import { Card } from '.'
 
 const OrderCardGroup = ({ order }) => {
@@ -77,19 +75,10 @@ const OrderCardGroup = ({ order }) => {
       }
       footer={
         <>
-          <ButtonStyled
-            icon={iconMap.RefreshCw}
-            onClick={handleReopen}
-            size="small"
-          >
+          <ButtonStyled onClick={handleReopen} size="small">
             Reopen
           </ButtonStyled>
-          <ButtonStyled
-            icon={iconMap.Trash2}
-            onClick={handleDelete}
-            size="small"
-            color="secondary"
-          >
+          <ButtonStyled onClick={handleDelete} size="small" color="secondary">
             Delete
           </ButtonStyled>
         </>

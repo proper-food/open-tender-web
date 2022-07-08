@@ -18,7 +18,6 @@ import {
   PlusCircle,
   ShoppingBag,
   Sliders,
-  Smile,
   Tag,
   User,
   UserCircle,
@@ -63,13 +62,13 @@ const navButtons = [
     title: 'Order History',
     path: '/orders',
   },
+  // {
+  //   icon: <Heart />,
+  //   title: 'Favorites',
+  //   path: '/favorites',
+  // },
   {
     icon: <Heart />,
-    title: 'Favorites',
-    path: '/favorites',
-  },
-  {
-    icon: <Smile />,
     title: 'Loyalty',
     path: '/loyalty',
   },

@@ -37,6 +37,11 @@ export const Calendar = (props) => {
   return <RF.Calendar size={null} strokeWidth={icons.strokeWidth} {...props} />
 }
 
+export const Check = (props) => {
+  const { icons } = useTheme()
+  return <RF.Check size={null} strokeWidth={icons.strokeWidth} {...props} />
+}
+
 export const CheckCircle = (props) => {
   const { icons } = useTheme()
   return (
