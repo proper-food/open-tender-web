@@ -15,7 +15,6 @@ const AccountGroupOrders = ({ orders }) => {
   const { title } = account?.groupOrders || {}
   const useSimple = true
   const displayed = orders.slice(0, 5)
-  console.log(displayed)
 
   return (
     <AccountSection>

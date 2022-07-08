@@ -12,7 +12,7 @@ import {
 import { makeOrderTypeName } from '@open-tender/js'
 import { Box, ButtonStyled, Heading } from '@open-tender/components'
 
-const OrderCardGroupSimpleButton = styled.button`
+const OrderCardGroupSimpleButton = styled.div`
   display: block;
   width: 100%;
   height: 100%;
@@ -97,10 +97,7 @@ const OrderCardGroupSimple = ({ order }) => {
   }, [open, menuSlug, navigate])
 
   return (
-    <OrderCardGroupSimpleButton
-      onClick={handleReopen}
-      label={`Reopen ${orderTypeName} order from ${name}`}
-    >
+    <OrderCardGroupSimpleButton>
       <OrderCardGroupSimpleView>
         {/* <OrderCardGroupSimpleImage style={bgStyle} /> */}
         <OrderCardGroupSimpleContent>

@@ -147,7 +147,6 @@ const RevenueCentersSelect = () => {
       if (orderType === 'CATERING' && requestedAt) {
         params = { ...params, requestedAt }
       }
-      // dispatch(fetchRevenueCenters(params))
       dispatch(fetchLocations(params))
     }
   }, [orderType, isOutpost, coords, requestedAt, dispatch])
