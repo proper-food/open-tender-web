@@ -85,7 +85,7 @@ const MenuFavoritesItems = styled.div`
 `
 
 const MenuFavoritesItemsItem = styled.div`
-  flex: 1 0 31rem;
+  flex: ${(props) => (props.count >= 4 ? '1' : '0')} 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
   @media (max-width: 1390px) {
@@ -201,7 +201,10 @@ const MenuFavorites = () => {
         {hasRecents && menuSection === 'recents' ? (
           <MenuFavoritesItems>
             {displayedRecents.map((item, index) => (
-              <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
+              <MenuFavoritesItemsItem
+                count={displayedRecents.length}
+                key={`${item.id}-${index}`}
+              >
                 <MenuItem item={item} />
               </MenuFavoritesItemsItem>
             ))}
@@ -210,7 +213,10 @@ const MenuFavorites = () => {
         {hasFavorites && menuSection === 'favorites' ? (
           <MenuFavoritesItems>
             {displayedFavs.map((item, index) => (
-              <MenuFavoritesItemsItem key={`${item.id}-${index}`}>
+              <MenuFavoritesItemsItem
+                count={displayedFavs.length}
+                key={`${item.id}-${index}`}
+              >
                 <MenuItem item={item} />
               </MenuFavoritesItemsItem>
             ))}

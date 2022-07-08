@@ -353,12 +353,12 @@ const MenuItem = ({ item }) => {
                 <Heading>{item.name}</Heading>
               </MenuItemName>
               <MenuItemPriceCals>
-                {totalPrice && (
+                {totalPrice ? (
                   <MenuItemPrice>{formatDollars(totalPrice)}</MenuItemPrice>
-                )}
-                {totalCals && (
+                ) : null}
+                {totalCals ? (
                   <MenuItemCals> &mdash; {totalCals} Cal</MenuItemCals>
-                )}
+                ) : null}
               </MenuItemPriceCals>
             </MenuItemInfo>
             {hasTagsAllergens && (
