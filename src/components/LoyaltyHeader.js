@@ -4,6 +4,9 @@ import { Body, Heading } from '@open-tender/components'
 const LoyaltyHeaderView = styled.div`
   text-align: left;
   margin: 0 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 0 1rem;
+  }
 `
 
 const LoyaltyHeaderTitle = styled(Heading)`
@@ -14,7 +17,7 @@ const LoyaltyHeaderTitle = styled(Heading)`
 `
 
 const LoyaltyHeaderSubitle = styled(Body)`
-  margin: 0.5rem 0 0;
+  margin: 0.5rem 0 1.5rem;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};

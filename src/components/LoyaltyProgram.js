@@ -24,6 +24,7 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
           subtitle={description}
           terms={points}
           thresholds={thresholds}
+          showThresholds={true}
         />
       ) : credit ? (
         <LoyaltySpend

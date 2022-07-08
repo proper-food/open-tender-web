@@ -69,7 +69,7 @@ export const ProgressPointFootnote = styled.div`
   }
 `
 
-const ProgressPoints = ({ points, thresholds = [] }) => {
+const ProgressPoints = ({ name, points, thresholds = [] }) => {
   const maxThreshold = Math.max(...thresholds.map((i) => i.points))
   const progress = Math.min((points / maxThreshold) * 100, 100)
   const style = { width: `${progress || 0}%` }
@@ -112,7 +112,7 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
       </ProgressPointsView>
       {isOverMax && (
         <ProgressPointFootnote>
-          <p>You're off the charts! Start using those points!</p>
+          <p>You're off the charts! Start using those {name.toLowerCase()}!</p>
         </ProgressPointFootnote>
       )}
     </>
@@ -121,6 +121,7 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
 
 ProgressPoints.displayName = 'ProgressPoints'
 ProgressPoints.propTypes = {
+  name: propTypes.string,
   points: propTypes.number,
   thresholds: propTypes.array,
 }

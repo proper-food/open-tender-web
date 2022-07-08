@@ -1,11 +1,24 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { formatQuantity } from '@open-tender/js'
-import { LoyaltyHeader, LoyaltyStatus, ProgressPoints, SeeMoreLink } from '.'
+import {
+  LoyaltyHeader,
+  LoyaltyStatus,
+  LoyaltyThresholds,
+  ProgressPoints,
+  SeeMoreLink,
+} from '.'
 
 const LoyaltyPointsView = styled.div``
 
-const LoyaltyPoints = ({ title, subtitle, terms, thresholds, to }) => {
+const LoyaltyPoints = ({
+  title,
+  subtitle,
+  terms,
+  thresholds,
+  to,
+  showThresholds = false,
+}) => {
   const { points, name } = terms
 
   return (
@@ -14,7 +27,10 @@ const LoyaltyPoints = ({ title, subtitle, terms, thresholds, to }) => {
       <LoyaltyStatus count={formatQuantity(points)} name={name}>
         {to && <SeeMoreLink text="See Details" to={to} />}
       </LoyaltyStatus>
-      <ProgressPoints points={points} thresholds={thresholds} />
+      <ProgressPoints name={name} points={points} thresholds={thresholds} />
+      {showThresholds && (
+        <LoyaltyThresholds name={name} thresholds={thresholds} />
+      )}
     </LoyaltyPointsView>
   )
 }
@@ -25,6 +41,7 @@ LoyaltyPoints.propTypes = {
   subtitle: propTypes.string,
   terms: propTypes.object,
   thresholds: propTypes.array,
+  showThresholds: propTypes.bool,
 }
 
 export default LoyaltyPoints
