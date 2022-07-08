@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
@@ -61,6 +60,15 @@ export const ProgressPointPoints = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
+export const ProgressPointFootnote = styled.div`
+  margin: 1rem 0 0;
+  text-align: left;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
 const ProgressPoints = ({ points, thresholds = [] }) => {
   const maxThreshold = Math.max(...thresholds.map((i) => i.points))
   const progress = Math.min((points / maxThreshold) * 100, 100)
@@ -80,27 +88,34 @@ const ProgressPoints = ({ points, thresholds = [] }) => {
   }, [])
 
   return (
-    <ProgressPointsView>
-      <div style={style}>
-        <ProgressPointsFill />
-      </div>
-      {progressPoints.map((i, index) => (
-        <ProgressPoint
-          style={{ left: `${i.percentage.toFixed(5)}%` }}
-          isFirst={index === 0}
-          isLast={index === thresholds.length}
-        >
-          <ProgressPointText>{i.points}</ProgressPointText>
-          <ProgressPointCircle {...i} />
-        </ProgressPoint>
-      ))}
-      {points > 0 ? (
-        <ProgressPoint style={{ left: `${progress}%` }}>
-          <ProgressPointPoints>{points}</ProgressPointPoints>
-          <TriangleDown />
-        </ProgressPoint>
-      ) : null}
-    </ProgressPointsView>
+    <>
+      <ProgressPointsView>
+        <div style={style}>
+          <ProgressPointsFill />
+        </div>
+        {progressPoints.map((i, index) => (
+          <ProgressPoint
+            style={{ left: `${i.percentage.toFixed(5)}%` }}
+            isFirst={index === 0}
+            isLast={index === thresholds.length}
+          >
+            <ProgressPointText>{i.points}</ProgressPointText>
+            <ProgressPointCircle {...i} />
+          </ProgressPoint>
+        ))}
+        {points > 0 ? (
+          <ProgressPoint style={{ left: `${progress}%` }}>
+            <ProgressPointPoints>{points}</ProgressPointPoints>
+            <TriangleDown />
+          </ProgressPoint>
+        ) : null}
+      </ProgressPointsView>
+      {isOverMax && (
+        <ProgressPointFootnote>
+          <p>You're off the charts! Start using those points!</p>
+        </ProgressPointFootnote>
+      )}
+    </>
   )
 }
 

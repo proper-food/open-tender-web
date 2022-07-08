@@ -4,16 +4,15 @@ import {
   fetchCustomerLoyalty,
   selectCustomerLoyaltyProgram,
 } from '@open-tender/redux'
-
-import { selectBrand } from '../../../slices'
-import Loading from '../../Loading'
-import AccountLoyaltyPoints from './AccountLoyaltyPoints'
-import AccountLoyaltySpend from './AccountLoyaltySpend'
+import { selectBrand, selectContentSection } from '../../../slices'
+import { Loading, LoyaltyPoints, LoyaltySpend } from '../..'
 
 const AccountLoyaltyProgram = () => {
   const dispatch = useDispatch()
   const { loyalty } = useSelector(selectBrand)
   const { terms = {} } = loyalty || {}
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.loyalty || {}
   const { program, loading } = useSelector(selectCustomerLoyaltyProgram)
   const hasProgram = program ? true : false
   const { points, credit, redemption, spend } = program || {}
@@ -25,27 +24,36 @@ const AccountLoyaltyProgram = () => {
   return loading === 'pending' && !hasProgram ? (
     <Loading text="Retrieving your loyalty status..." />
   ) : points ? (
-    <AccountLoyaltyPoints terms={points} thresholds={terms.thresholds} />
+    <LoyaltyPoints
+      title={title}
+      terms={points}
+      thresholds={terms.thresholds}
+      to="/loyalty"
+    />
   ) : credit ? (
-    <AccountLoyaltySpend
+    <LoyaltySpend
+      title={title}
       credit={credit.current}
       spend={spend.current}
       threshold={redemption.threshold}
       reward={redemption.reward}
+      to="/loyalty"
     />
   ) : terms.thresholds ? (
-    <AccountLoyaltyPoints
-      isGuest={true}
+    <LoyaltyPoints
+      title="Create an account to get started..."
       terms={{ points: 0, ...terms }}
       thresholds={terms.thresholds}
+      to="/loyalty"
     />
   ) : (
-    <AccountLoyaltySpend
+    <LoyaltySpend
+      title="Create an account to get started..."
       credit="0.00"
       spend="0.00"
       threshold={terms.threshold}
       reward={terms.reward}
-      isGuest={true}
+      to="/loyalty"
     />
   )
 }

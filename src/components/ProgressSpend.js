@@ -1,6 +1,4 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { formatDollars } from '@open-tender/js'
 import { TriangleDown } from './icons'
 import {
@@ -10,15 +8,8 @@ import {
   ProgressPointText,
   ProgressPointCircle,
   ProgressPointPoints,
+  ProgressPointFootnote,
 } from './ProgressPoints'
-
-const ProgressSpendRemaining = styled.div`
-  margin: 1rem 0 0;
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
 
 const ProgressSpend = ({ spend, threshold, reward }) => {
   const s = parseFloat(spend)
@@ -43,12 +34,12 @@ const ProgressSpend = ({ spend, threshold, reward }) => {
           <TriangleDown />
         </ProgressPoint>
       </ProgressPointsView>
-      <ProgressSpendRemaining>
+      <ProgressPointFootnote>
         <p>
-          {formatDollars(remaining)} away from your next ${formatDollars(r)}{' '}
-          off!
+          {formatDollars(remaining, '', 0)} away from your next $
+          {formatDollars(r, '', 0)} off!
         </p>
-      </ProgressSpendRemaining>
+      </ProgressPointFootnote>
     </>
   )
 }

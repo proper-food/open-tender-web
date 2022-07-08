@@ -21,7 +21,7 @@ const LoyaltyPrograms = () => {
   }, [dispatch])
 
   return (
-    <>
+    <PageContent>
       {error ? (
         <PageError error={error} />
       ) : entities.length ? (
@@ -36,16 +36,12 @@ const LoyaltyPrograms = () => {
             )
           })}
         </LoyaltyProgamsView>
+      ) : isLoading ? (
+        <Loading text="Retrieving your loyalty status..." />
       ) : (
-        <PageContent>
-          {isLoading ? (
-            <Loading text="Retrieving your loyalty status..." />
-          ) : (
-            <p>Looks like you don't have any reward programs yet.</p>
-          )}
-        </PageContent>
+        <p>Looks like you don't have any reward programs yet.</p>
       )}
-    </>
+    </PageContent>
   )
 }
 

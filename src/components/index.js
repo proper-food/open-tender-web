@@ -40,7 +40,11 @@ import ItemsStacked from './ItemsStacked'
 import LinkIcon from './LinkIcon'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
+import LoyaltyPoints from './LoyaltyPoints'
 import LoyaltyProgram from './LoyaltyProgram'
+import LoyaltySpend from './LoyaltySpend'
+import LoyaltyStatus from './LoyaltyStatus'
+import LoyaltyHeader from './LoyaltyHeader'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
@@ -141,7 +145,11 @@ export {
   LinkIcon,
   LinkSeparator,
   Loading,
+  LoyaltyPoints,
   LoyaltyProgram,
+  LoyaltySpend,
+  LoyaltyStatus,
+  LoyaltyHeader,
   Main,
   MapsAutocomplete,
   Modal,
