@@ -8,19 +8,22 @@ import { selectContentSection } from '../../../slices'
 
 const AccountLoyaltyPointsView = styled.div``
 
-const AccountLoyaltyPointsTitle = styled.div`
+export const AccountLoyaltyTitle = styled.div`
   margin: 0 0 1.5rem;
   text-align: left;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
 `
 
-const AccountPointsView = styled.div`
+export const AccountPointsView = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
 `
 
-const AccountPointsCount = styled.div`
+export const AccountPointsCount = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: flex-start;
@@ -33,7 +36,7 @@ const AccountPointsCount = styled.div`
   }
 `
 
-const AccountPointsLabel = styled(Preface)`
+export const AccountPointsLabel = styled(Preface)`
   margin: 0 0 0.3rem 0.6rem;
 `
 
@@ -56,11 +59,11 @@ const AccountLoyaltyPoints = ({ terms, thresholds, isGuest = false }) => {
 
   return (
     <AccountLoyaltyPointsView>
-      <AccountLoyaltyPointsTitle>
+      <AccountLoyaltyTitle>
         <Heading as="p">
           {!isGuest ? title : 'Create an account to get started...'}
         </Heading>
-      </AccountLoyaltyPointsTitle>
+      </AccountLoyaltyTitle>
       <AccountPoints points={points} name={name} />
       <ProgressPoints points={points} thresholds={thresholds} />
     </AccountLoyaltyPointsView>

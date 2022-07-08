@@ -6,10 +6,9 @@ import { useSelector } from 'react-redux'
 import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
-
-import { Header } from '../..'
 import { Back, Cart, LeaveGroup, NavMenu } from '../../buttons'
-import iconMap from '../../iconMap'
+import { ChevronDown, ChevronUp } from '../../icons'
+import { Header } from '../..'
 import MenuMobileMenu from './MenuMobileMenu'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
@@ -83,7 +82,7 @@ const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
         <MenuHeaderName>
           <Heading>{revenueCenter.name}</Heading>
         </MenuHeaderName>
-        <span>{showMenu ? iconMap.ChevronUp : iconMap.ChevronDown}</span>
+        <span>{showMenu ? <ChevronUp /> : <ChevronDown />}</span>
       </MenuHeaderTitleRevenueCenter>
     </>
   ) : null

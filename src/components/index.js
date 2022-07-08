@@ -53,6 +53,7 @@ import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderCardGroup from './OrderCardGroup'
+import OrderCardGroupSimple from './OrderCardGroupSimple'
 import OrderCardItem from './OrderCardItem'
 import OrderCardSimple from './OrderCardSimple'
 import OrderFulfillment from './OrderFulfillment'
@@ -156,6 +157,7 @@ export {
   OrderAddress,
   OrderCard,
   OrderCardGroup,
+  OrderCardGroupSimple,
   OrderCardItem,
   OrderCardSimple,
   OrderFulfillment,

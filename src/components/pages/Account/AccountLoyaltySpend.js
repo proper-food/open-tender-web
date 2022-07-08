@@ -1,41 +1,18 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { formatDollars } from '@open-tender/js'
-import { Headline, Heading, Preface } from '@open-tender/components'
+import { Headline, Heading } from '@open-tender/components'
 import { ProgressSpend, SeeMoreLink } from '../..'
 import { useSelector } from 'react-redux'
 import { selectContentSection } from '../../../slices'
+import {
+  AccountLoyaltyTitle,
+  AccountPointsView,
+  AccountPointsCount,
+  AccountPointsLabel,
+} from './AccountLoyaltyPoints'
 
 const AccountLoyaltySpendView = styled.div``
-
-const AccountLoyaltySpendTitle = styled.div`
-  margin: 0 0 1.5rem;
-  text-align: left;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-`
-
-const AccountPointsView = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-`
-
-const AccountPointsCount = styled.div`
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin-bottom: -0.2 rem;
-
-  span {
-    display: block;
-    line-height: 1;
-  }
-`
-
-const AccountPointsLabel = styled(Preface)`
-  margin: 0 0 0.3rem 0.6rem;
-`
 
 const AccountCredit = ({ credit }) => {
   return (
@@ -61,11 +38,11 @@ const AccountLoyaltySpend = ({
 
   return (
     <AccountLoyaltySpendView>
-      <AccountLoyaltySpendTitle>
+      <AccountLoyaltyTitle>
         <Heading as="p">
           {!isGuest ? title : 'Create an account to get started...'}
         </Heading>
-      </AccountLoyaltySpendTitle>
+      </AccountLoyaltyTitle>
       <AccountCredit credit={credit} />
       <ProgressSpend spend={spend} threshold={threshold} reward={reward} />
     </AccountLoyaltySpendView>

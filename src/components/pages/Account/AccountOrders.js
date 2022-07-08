@@ -1,6 +1,5 @@
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-
 import { OrderCard, OrderCardSimple, ScrollableSection } from '../..'
 import { selectContentSection } from '../../../slices'
 import AccountSection from './AccountSection'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile, isMobileOnly } from 'react-device-detect'
@@ -9,11 +9,13 @@ import {
   fetchCustomer,
   fetchCustomerCreditCards,
   fetchCustomerFavorites,
+  fetchCustomerGroupOrders,
   fetchCustomerOrders,
   fetchCustomerRewards,
   fetchDeals,
   selectAnnouncementsPage,
   selectCustomer,
+  selectCustomerGroupOrders,
   selectCustomerLoyaltyProgram,
   selectCustomerOrders,
   selectCustomerRewards,
@@ -37,6 +39,7 @@ import AccountContent from './AccountContent'
 import AccountLoyalty from './AccountLoyalty'
 import AccountRewards from './AccountRewards'
 import AccountDeals from './AccountDeals'
+import AccountGroupOrders from './AccountGroupOrders'
 import AccountOrders from './AccountOrders'
 import AccountSlider from './AccountSlider'
 
@@ -158,6 +161,13 @@ const Account = () => {
     ? (key) => <AccountOrders key={key} orders={orders.entities} />
     : null
 
+  const groupOrders = useSelector(selectCustomerGroupOrders)
+  const hasGroupOrders = displayed.includes('GROUP_ORDERS')
+  const displayGroupOrders = hasGroupOrders && hasEntities(groupOrders)
+  const groupOrdersSection = displayGroupOrders
+    ? (key) => <AccountGroupOrders key={key} orders={groupOrders.entities} />
+    : null
+
   const loyalty = useSelector(selectCustomerLoyaltyProgram)
   const hasLoyalty = has_loyalty || has_thanx || has_levelup
   const displayLoyalty = displayed.includes('LOYALTY') && hasLoyalty
@@ -173,6 +183,7 @@ const Account = () => {
     REWARDS: rewardsSection,
     DEALS: dealsSection,
     ORDERS: ordersSection,
+    GROUP_ORDERS: groupOrdersSection,
   }
   const displayedSections = displayed
     ? displayed.map((i) => sections[i] && sections[i](i)).filter(Boolean)
@@ -194,6 +205,7 @@ const Account = () => {
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
+    dispatch(fetchCustomerGroupOrders())
   }, [token, dispatch, navigate])
 
   useEffect(() => {

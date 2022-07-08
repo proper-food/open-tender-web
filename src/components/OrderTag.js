@@ -1,9 +1,7 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import Tag from './Tag'
-
-import iconMap from './iconMap'
 import styled from '@emotion/styled'
+import Tag from './Tag'
+import { AlertCircle, CheckCircle } from './icons'
 
 const OrderTagView = styled('div')`
   position: absolute;
@@ -15,7 +13,7 @@ const OrderTag = ({ isUpcoming, status }) => {
   const tag = isUpcoming
     ? {
         text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
-        icon: iconMap.AlertCircle,
+        icon: <AlertCircle />,
         bgColor: 'alert',
       }
     : status === 'REFUNDED'
@@ -25,7 +23,7 @@ const OrderTag = ({ isUpcoming, status }) => {
       }
     : {
         text: 'Completed',
-        icon: iconMap.CheckCircle,
+        icon: <CheckCircle />,
         bgColor: 'success',
       }
 
