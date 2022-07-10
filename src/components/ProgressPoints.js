@@ -1,5 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { formatQuantity } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
 import { TriangleDown } from './icons'
 
@@ -58,6 +59,7 @@ export const ProgressPointCircle = styled.div`
 
 export const ProgressPointPoints = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  background-color: ${(props) => props.theme.bgColors.primary};
 `
 
 export const ProgressPointFootnote = styled.div`
@@ -71,17 +73,18 @@ export const ProgressPointFootnote = styled.div`
 
 const ProgressPoints = ({ name, points, thresholds = [] }) => {
   const maxThreshold = Math.max(...thresholds.map((i) => i.points))
-  const progress = Math.min((points / maxThreshold) * 100, 100)
+  const total = maxThreshold * 1.1
+  const progress = Math.min((points / total) * 100, 100)
   const style = { width: `${progress || 0}%` }
   const isOverMax = points > maxThreshold
   let withZero = [{ points: 0 }, ...thresholds]
-  withZero = isOverMax ? withZero.slice(0, -1) : withZero
+  // withZero = isOverMax ? withZero.slice(0, -1) : withZero
   const progressPoints = withZero.reduce((arr, i) => {
     return [
       ...arr,
       {
         ...i,
-        percentage: (i.points / maxThreshold) * 100,
+        percentage: (i.points / total) * 100,
         isFilled: points > i.points,
       },
     ]
@@ -97,7 +100,7 @@ const ProgressPoints = ({ name, points, thresholds = [] }) => {
           <ProgressPoint
             style={{ left: `${i.percentage.toFixed(5)}%` }}
             isFirst={index === 0}
-            isLast={index === thresholds.length}
+            // isLast={index === thresholds.length}
           >
             <ProgressPointText>{i.points}</ProgressPointText>
             <ProgressPointCircle {...i} />
@@ -105,7 +108,7 @@ const ProgressPoints = ({ name, points, thresholds = [] }) => {
         ))}
         {points > 0 ? (
           <ProgressPoint style={{ left: `${progress}%` }}>
-            <ProgressPointPoints>{points}</ProgressPointPoints>
+            <ProgressPointPoints>{formatQuantity(points)}</ProgressPointPoints>
             <TriangleDown />
           </ProgressPoint>
         ) : null}

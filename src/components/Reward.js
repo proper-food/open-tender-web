@@ -1,12 +1,10 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { BgImage, Box, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
-
 import { openModal } from '../slices'
-import iconMap from './iconMap'
+import { Grid, ShoppingBag, Star, Truck } from './icons'
 import { Tag } from '.'
 
 const RewardButton = styled.button`
@@ -108,19 +106,28 @@ const makeServiceType = (serviceType) => {
     case 'WALKIN':
       return (
         <>
-          <RewardNoteIcon>{iconMap.Grid}</RewardNoteIcon>In-store only
+          <RewardNoteIcon>
+            <Grid />
+          </RewardNoteIcon>
+          In-store only
         </>
       )
     case 'PICKUP':
       return (
         <>
-          <RewardNoteIcon>{iconMap.ShoppingBag}</RewardNoteIcon>Pickup only
+          <RewardNoteIcon>
+            <ShoppingBag />
+          </RewardNoteIcon>
+          Pickup only
         </>
       )
     case 'DELIVERY':
       return (
         <>
-          <RewardNoteIcon>{iconMap.Truck}</RewardNoteIcon>Delivery only
+          <RewardNoteIcon>
+            <Truck />
+          </RewardNoteIcon>
+          Delivery only
         </>
       )
     default:
@@ -187,7 +194,10 @@ export const makeLimitations = (item) => {
   }
   return (
     <>
-      <RewardNoteIcon>{iconMap.Star}</RewardNoteIcon>Valid on all orders
+      <RewardNoteIcon>
+        <Star />
+      </RewardNoteIcon>
+      Valid on all orders
     </>
   )
 }

@@ -230,7 +230,7 @@ const Account = () => {
         </title>
       </Helmet>
       <Background imageUrl={background} />
-      <Content maxWidth="76.8rem" hasFooter={false}>
+      <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
         <Header
           maxWidth="76.8rem"
           left={<User />}

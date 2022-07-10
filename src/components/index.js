@@ -35,7 +35,6 @@ import HeroSlides from './HeroSlides'
 import HtmlContent from './HtmlContent'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
-import ItemsScrollable from './ItemsScrollable'
 import ItemsStacked from './ItemsStacked'
 import LinkIcon from './LinkIcon'
 import LinkSeparator from './LinkSeparator'
@@ -91,9 +90,6 @@ import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import ScrollableSection from './ScrollableSection'
 import ScrollableSectionHeader from './ScrollableSectionHeader'
-import Section from './Section'
-import SectionHeader from './SectionHeader'
-import SectionTitle from './SectionTitle'
 import SeeMoreLink from './SeeMoreLink'
 import Sidebar from './Sidebar'
 import SidebarModal from './SidebarModal'
@@ -141,7 +137,6 @@ export {
   HtmlContent,
   ImageSpinner,
   ItemCards,
-  ItemsScrollable,
   ItemsStacked,
   LinkIcon,
   LinkSeparator,
@@ -201,9 +196,6 @@ export {
   ScreenreaderTitle,
   ScrollableSection,
   ScrollableSectionHeader,
-  Section,
-  SectionHeader,
-  SectionTitle,
   SeeMoreLink,
   Sidebar,
   SidebarModal,

@@ -78,7 +78,7 @@ const Cart = () => {
       <ButtonIcon
         label={`Cart with ${cartQuantity} items`}
         onClick={() => dispatch(toggleSidebar())}
-        size={isBrowser ? 24 : 20}
+        size={isBrowser ? 24 : 24}
       >
         <ShoppingBag size={null} strokeWidth={1} fill={fill} />
       </ButtonIcon>
