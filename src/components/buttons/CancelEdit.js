@@ -20,7 +20,7 @@ const CancelEdit = ({
   const cancel = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    navigate(`/`)
+    navigate(`/account`)
   }
 
   if (!orderId) return null

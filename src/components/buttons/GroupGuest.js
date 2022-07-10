@@ -1,12 +1,6 @@
-import React from 'react'
-import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {
-  // isoToDate,
-  makeReadableDateStrFromIso,
-  // minutesLeft,
-} from '@open-tender/js'
+import { makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   selectGroupOrder,
   selectTimezone,
@@ -15,15 +9,10 @@ import {
   addMessage,
   resetMessages,
 } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
+import { ShoppingBag } from '../icons'
 
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
-
-const GroupGuest = ({
-  icon = iconMap.ShoppingBag,
-  useButton = false,
-  style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
-}) => {
+const GroupGuest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const tz = useSelector(selectTimezone)
@@ -54,22 +43,18 @@ const GroupGuest = ({
   if (!cartGuest) return null
 
   return (
-    <ButtonBoth
-      text={text}
-      icon={icon}
+    <ButtonStyled
+      icon={<ShoppingBag strokeWidth={2} />}
       onClick={onClick}
-      color="cart"
-      useButton={useButton}
-      style={style}
-    />
+      color="header"
+      size="header"
+    >
+      {text}
+    </ButtonStyled>
   )
 }
 
 GroupGuest.displayName = 'GroupGuest'
-GroupGuest.propTypes = {
-  icon: propTypes.element,
-  useButton: propTypes.bool,
-  style: propTypes.object,
-}
+GroupGuest.propTypes = {}
 
 export default GroupGuest

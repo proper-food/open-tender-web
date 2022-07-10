@@ -2,15 +2,22 @@ import { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { useSelector } from 'react-redux'
-import { selectGroupOrder, selectOrder } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { isBrowser, isMobile } from 'react-device-detect'
+import {
+  resetOrderType,
+  resetGroupOrder,
+  resetCheckout,
+  selectGroupOrder,
+  selectOrder,
+} from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
-import { Allergens, Back, Cart, LeaveGroup, NavMenu } from '../../buttons'
+import { Allergens, Back, Cart, NavMenu } from '../../buttons'
 import { ChevronDown, ChevronUp } from '../../icons'
 import { Header } from '../..'
 import MenuMobileMenu from './MenuMobileMenu'
-import { isBrowser, isMobile } from 'react-device-detect'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
@@ -97,10 +104,19 @@ MenuHeaderTitle.propTypes = {
 }
 
 const MenuHeader = ({ backPath = '/locations' }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const theme = useTheme()
   const [showMenu, setShowMenu] = useState(false)
   const order = useSelector(selectOrder)
   const { cartGuest } = useSelector(selectGroupOrder)
+
+  const leave = () => {
+    dispatch(resetOrderType())
+    dispatch(resetGroupOrder())
+    dispatch(resetCheckout())
+    navigate(`/account`)
+  }
 
   return (
     <>
@@ -113,7 +129,7 @@ const MenuHeader = ({ backPath = '/locations' }) => {
           />
         }
         borderColor={theme.colors.primary}
-        left={cartGuest ? <LeaveGroup /> : <Back path={backPath} />}
+        left={cartGuest ? <Back onClick={leave} /> : <Back path={backPath} />}
         right={
           <>
             <Allergens style={isMobile ? { width: '3rem' } : null} />

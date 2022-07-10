@@ -1,5 +1,3 @@
-import React from 'react'
-import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
@@ -7,15 +5,10 @@ import {
   resetGroupOrder,
   resetCheckout,
 } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
+import { XCircle } from '../icons'
 
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
-
-const LeaveGroup = ({
-  text = 'Leave Group Order',
-  icon = iconMap.ArrowLeft,
-  useButton = false,
-}) => {
+const LeaveGroup = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -23,19 +16,21 @@ const LeaveGroup = ({
     dispatch(resetOrderType())
     dispatch(resetGroupOrder())
     dispatch(resetCheckout())
-    navigate(`/`)
+    navigate(`/account`)
   }
 
   return (
-    <ButtonBoth text={text} icon={icon} onClick={leave} useButton={useButton} />
+    <ButtonStyled
+      onClick={leave}
+      icon={<XCircle strokeWidth={2} />}
+      color="header"
+      size="header"
+    >
+      Leave Group Order
+    </ButtonStyled>
   )
 }
 
 LeaveGroup.displayName = 'LeaveGroup'
-LeaveGroup.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-  useButton: propTypes.bool,
-}
 
 export default LeaveGroup

@@ -1,19 +1,11 @@
-import React from 'react'
-import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectGroupOrder } from '@open-tender/redux'
-
+import { ButtonStyled } from '@open-tender/components'
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+import { Users } from '../icons'
 
-const GroupOrder = ({
-  text = 'Group Order',
-  icon = iconMap.Users,
-  style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
-  useButton = false,
-}) => {
+const GroupOrder = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
@@ -21,7 +13,7 @@ const GroupOrder = ({
   const settings = revenueCenter ? revenueCenter.settings || revenueCenter : {}
   const hasGroupOrdering = settings.group_ordering
 
-  const onClick = () => {
+  const review = () => {
     const reviewOrders = () => navigate(`/review`)
     dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
   }
@@ -29,24 +21,19 @@ const GroupOrder = ({
   if (!hasGroupOrdering || cartGuest) return null
 
   return (
-    <ButtonBoth
-      text={text}
-      label="Start A Group Order"
-      icon={icon}
-      onClick={onClick}
-      color={isCartOwner ? 'cart' : 'header'}
-      style={isCartOwner ? style : null}
-      useButton={useButton}
-    />
+    <>
+      <ButtonStyled
+        onClick={review}
+        icon={<Users />}
+        color="header"
+        size="header"
+      >
+        {isCartOwner ? 'Manage Group Order' : 'Start Group Order'}
+      </ButtonStyled>
+    </>
   )
 }
 
 GroupOrder.displayName = 'GroupOrder'
-GroupOrder.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-  style: propTypes.object,
-  useButton: propTypes.bool,
-}
 
 export default GroupOrder
