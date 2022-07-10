@@ -6,10 +6,11 @@ import { useSelector } from 'react-redux'
 import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
-import { Back, Cart, LeaveGroup, NavMenu } from '../../buttons'
+import { Allergens, Back, Cart, LeaveGroup, NavMenu } from '../../buttons'
 import { ChevronDown, ChevronUp } from '../../icons'
 import { Header } from '../..'
 import MenuMobileMenu from './MenuMobileMenu'
+import { isBrowser, isMobile } from 'react-device-detect'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
@@ -35,7 +36,7 @@ const MenuHeaderTitleRevenueCenter = styled.button`
     color: ${(props) => props.theme.buttons.colors.header.color};
 
     &:last-of-type {
-      margin: 0.2rem 0 0 0.5rem;
+      margin: 0.2rem 0 0 0.2rem;
       width: 1.6rem;
       height: 1.6rem;
     }
@@ -78,7 +79,7 @@ const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
         {serviceTypeName}
       </MenuHeaderTitleServiceType>
       <MenuHeaderTitleRevenueCenter onClick={toggle}>
-        <span>&nbsp;</span>
+        {/* <span>&nbsp;</span> */}
         <MenuHeaderName>
           <Heading>{revenueCenter.name}</Heading>
         </MenuHeaderName>
@@ -115,7 +116,8 @@ const MenuHeader = ({ backPath = '/locations' }) => {
         left={cartGuest ? <LeaveGroup /> : <Back path={backPath} />}
         right={
           <>
-            <Cart />
+            <Allergens style={isMobile ? { width: '3rem' } : null} />
+            {isBrowser && <Cart />}
             <NavMenu />
           </>
         }

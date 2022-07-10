@@ -1,31 +1,31 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { isBrowser } from 'react-device-detect'
+import { ButtonIcon } from '@open-tender/components'
 import { selectDisplaySettings, openModal } from '../../slices'
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+import { Sliders } from '../icons'
 
-const Allergens = ({ text = 'Allergens', icon = iconMap.Sliders }) => {
+const Allergens = ({ style }) => {
   const dispatch = useDispatch()
   const { allergens: showAllergens } = useSelector(selectDisplaySettings)
 
   if (!showAllergens) return null
 
   return (
-    <ButtonBoth
-      text={text}
+    <ButtonIcon
       label="Highlight allergens on the menu"
-      icon={icon}
       onClick={() => dispatch(openModal({ type: 'allergens' }))}
-    />
+      size={isBrowser ? 20 : 20}
+      style={style}
+    >
+      <Sliders />
+    </ButtonIcon>
   )
 }
 
 Allergens.displayName = 'Allergens'
 Allergens.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
+  style: propTypes.object,
 }
 
 export default Allergens

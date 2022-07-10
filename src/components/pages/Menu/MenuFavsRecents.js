@@ -19,7 +19,7 @@ import {
 import { Heading } from '@open-tender/components'
 
 import { selectMenuSection, setMenuSection } from '../../../slices'
-import { Container, SeeMoreLink } from '../..'
+import { Container, Loading, SeeMoreLink } from '../..'
 import MenuItem from './MenuItem'
 
 const MenuFavoritesView = styled.div`
@@ -129,7 +129,7 @@ const MenuFavorites = () => {
   const displayedFavs = hasFavorites ? favorites.slice(0, 4) : []
   const updating = favCount !== count && count !== 0
   const loadingFavs = favs.loading === 'pending' && !hasFavorites ? true : false
-  const moreFavorites = favorites.length > 1 && menuSection === 'favorites'
+  const moreFavorites = favorites.length > 4 && menuSection === 'favorites'
   const favoritesPath = `${menuSlug}/favorites`
 
   // handle recents
@@ -149,13 +149,14 @@ const MenuFavorites = () => {
   const moreRecents = recents.length > 4 && menuSection === 'recents'
   const recentsPath = `${menuSlug}/recents`
 
-  const showLoading = loadingRecents || loadingFavs
+  const isLoading = loadingRecents || loadingFavs || updating
   const hasItems = hasRecents || hasFavorites
+  const showLoading = isLoading && !hasItems
 
   useEffect(() => {
     if (hasCustomer) {
       dispatch(fetchCustomerFavorites())
-      dispatch(fetchCustomerOrders(11))
+      dispatch(fetchCustomerOrders(20))
     }
   }, [hasCustomer, dispatch])
 
@@ -164,64 +165,81 @@ const MenuFavorites = () => {
   }, [menuSection, dispatch])
 
   useEffect(() => {
+    if (hasFavorites && !hasRecents) {
+      dispatch(setMenuSection('favorites'))
+    }
+    if (hasRecents && !hasFavorites) {
+      dispatch(setMenuSection('recents'))
+    }
+  }, [hasFavorites, hasRecents, dispatch])
+
+  useEffect(() => {
     setCount(favCount)
   }, [favCount])
 
-  if (showLoading || updating || !hasItems) return null
+  if (!isLoading && !hasItems) return null
 
   return (
     <MenuFavoritesView className="compact">
       <Container>
-        <MenuFavoritesHeader>
-          <MenuFavoritesNav>
-            {hasRecents && (
-              <MenuFavoritesButton
-                isActive={menuSection === 'recents'}
-                onClick={() => dispatch(setMenuSection('recents'))}
-              >
-                <MenuFavoritesTitle>Recents</MenuFavoritesTitle>
-              </MenuFavoritesButton>
-            )}
-            {hasFavorites && (
-              <MenuFavoritesButton
-                isActive={menuSection === 'favorites'}
-                onClick={() => dispatch(setMenuSection('favorites'))}
-              >
-                <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
-              </MenuFavoritesButton>
-            )}
-          </MenuFavoritesNav>
-          <MenuFavoritesMore>
-            {moreFavorites && (
-              <SeeMoreLink text="View All" to={favoritesPath} />
-            )}
-            {moreRecents && <SeeMoreLink text="View All" to={recentsPath} />}
-          </MenuFavoritesMore>
-        </MenuFavoritesHeader>
-        {hasRecents && menuSection === 'recents' ? (
-          <MenuFavoritesItems>
-            {displayedRecents.map((item, index) => (
-              <MenuFavoritesItemsItem
-                count={displayedRecents.length}
-                key={`${item.id}-${index}`}
-              >
-                <MenuItem item={item} />
-              </MenuFavoritesItemsItem>
-            ))}
-          </MenuFavoritesItems>
-        ) : null}
-        {hasFavorites && menuSection === 'favorites' ? (
-          <MenuFavoritesItems>
-            {displayedFavs.map((item, index) => (
-              <MenuFavoritesItemsItem
-                count={displayedFavs.length}
-                key={`${item.id}-${index}`}
-              >
-                <MenuItem item={item} />
-              </MenuFavoritesItemsItem>
-            ))}
-          </MenuFavoritesItems>
-        ) : null}
+        {showLoading ? (
+          <Loading text="Checking for recents and favorites..." />
+        ) : (
+          <>
+            <MenuFavoritesHeader>
+              <MenuFavoritesNav>
+                {hasRecents && (
+                  <MenuFavoritesButton
+                    isActive={menuSection === 'recents'}
+                    onClick={() => dispatch(setMenuSection('recents'))}
+                  >
+                    <MenuFavoritesTitle>Recents</MenuFavoritesTitle>
+                  </MenuFavoritesButton>
+                )}
+                {hasFavorites && (
+                  <MenuFavoritesButton
+                    isActive={menuSection === 'favorites'}
+                    onClick={() => dispatch(setMenuSection('favorites'))}
+                  >
+                    <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
+                  </MenuFavoritesButton>
+                )}
+              </MenuFavoritesNav>
+              <MenuFavoritesMore>
+                {moreFavorites && (
+                  <SeeMoreLink text="View All" to={favoritesPath} />
+                )}
+                {moreRecents && (
+                  <SeeMoreLink text="View All" to={recentsPath} />
+                )}
+              </MenuFavoritesMore>
+            </MenuFavoritesHeader>
+            {hasRecents && menuSection === 'recents' ? (
+              <MenuFavoritesItems>
+                {displayedRecents.map((item, index) => (
+                  <MenuFavoritesItemsItem
+                    count={displayedRecents.length}
+                    key={`${item.id}-${index}`}
+                  >
+                    <MenuItem item={item} />
+                  </MenuFavoritesItemsItem>
+                ))}
+              </MenuFavoritesItems>
+            ) : null}
+            {hasFavorites && menuSection === 'favorites' ? (
+              <MenuFavoritesItems>
+                {displayedFavs.map((item, index) => (
+                  <MenuFavoritesItemsItem
+                    count={displayedFavs.length}
+                    key={`${item.id}-${index}`}
+                  >
+                    <MenuItem item={item} />
+                  </MenuFavoritesItemsItem>
+                ))}
+              </MenuFavoritesItems>
+            ) : null}
+          </>
+        )}
       </Container>
     </MenuFavoritesView>
   )

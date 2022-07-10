@@ -11,7 +11,7 @@ import { toggleSidebar } from '../../slices'
 
 const CartIcon = styled('div')`
   position: relative;
-  margin: 0 1rem 0 0;
+  margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 -0.5rem 0 0.5rem;
   }

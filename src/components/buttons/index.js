@@ -1,4 +1,3 @@
-import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
 import Back from './Back'
 import ButtonBoth from './ButtonBoth'
@@ -25,7 +24,6 @@ import StartOver from './StartOver'
 import User from './User'
 
 export {
-  AccountSettings,
   Allergens,
   Back,
   ButtonBoth,
