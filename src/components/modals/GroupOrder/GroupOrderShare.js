@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -7,11 +6,9 @@ import {
   removeCustomerGroupOrder,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
-import { GroupOrderLink, GroupOrderTime } from '../..'
 import { ModalContent } from '../../Modal'
+import { GroupOrderLink, GroupOrderTime } from '../..'
 
 const GroupOrderShare = () => {
   const navigate = useNavigate()
@@ -51,20 +48,10 @@ const GroupOrderShare = () => {
             Change your mind? Save this order for later or cancel it altogether.
           </p>
           <div>
-            <ButtonStyled
-              icon={iconMap.Save}
-              onClick={save}
-              color="secondary"
-              size="small"
-            >
+            <ButtonStyled onClick={save} color="secondary" size="small">
               Save for Later
             </ButtonStyled>
-            <ButtonStyled
-              icon={iconMap.Trash2}
-              onClick={cancel}
-              color="secondary"
-              size="small"
-            >
+            <ButtonStyled onClick={cancel} color="secondary" size="small">
               Delete Forever
             </ButtonStyled>
           </div>
@@ -79,14 +66,8 @@ const GroupOrderShare = () => {
           the orders that have been submitted by others.
         </p>
         <p>
-          <ButtonStyled icon={iconMap.ShoppingBag} onClick={proceed}>
-            Review All Orders
-          </ButtonStyled>
-          <ButtonStyled
-            icon={iconMap.Map}
-            onClick={backToMenu}
-            color="secondary"
-          >
+          <ButtonStyled onClick={proceed}>Review All Orders</ButtonStyled>
+          <ButtonStyled onClick={backToMenu} color="secondary">
             Back To Menu
           </ButtonStyled>
         </p>

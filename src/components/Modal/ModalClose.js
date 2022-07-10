@@ -1,12 +1,10 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import { useEffect, useCallback, useMemo } from 'react'
+import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
 import { ButtonStyled } from '@open-tender/components'
-
 import { closeModal } from '../../slices'
-import styled from '@emotion/styled'
-import iconMap from '../iconMap'
+import { X } from '../icons'
 
 const ModalCloseX = styled('button')`
   position: absolute;
@@ -67,7 +65,7 @@ const ModalClose = ({ onClick, isButton = false }) => {
   return isButton ? (
     <ModalCloseButton>
       <ButtonStyled
-        icon={iconMap.X}
+        icon={<X strokeWidth={2} />}
         onClick={handleClose}
         size="small"
         color="header"
@@ -82,7 +80,7 @@ const ModalClose = ({ onClick, isButton = false }) => {
       onClick={handleClose}
       aria-label="Close dialog"
     >
-      <X size={20} />
+      <X size={20} strokeWidth={2} />
     </ModalCloseX>
   )
 }

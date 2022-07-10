@@ -1,9 +1,6 @@
-import React from 'react'
 import { useDispatch } from 'react-redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
-
 import { openModal, closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import { ModalContent } from '../../Modal'
 
 const GroupOrderGuest = () => {
@@ -33,11 +30,7 @@ const GroupOrderGuest = () => {
       <div>
         <p>You must be logged into your accout to start a group order.</p>
         <p>
-          <ButtonStyled
-            icon={iconMap.User}
-            onClick={() => login('login')}
-            color="primary"
-          >
+          <ButtonStyled onClick={() => login('login')} color="primary">
             Click here to login
           </ButtonStyled>
         </p>
@@ -45,7 +38,7 @@ const GroupOrderGuest = () => {
       <div style={{ margin: '3rem 0 0' }}>
         <p>
           Don't have an account?{' '}
-          <ButtonLink icon={iconMap.User} onClick={() => login('signUp')}>
+          <ButtonLink onClick={() => login('signUp')}>
             Click here to create one.
           </ButtonLink>
         </p>

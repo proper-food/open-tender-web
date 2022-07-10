@@ -29,7 +29,7 @@ import {
   PageTitle,
   ScreenreaderTitle,
 } from '../..'
-import { NavMenu, OrderType } from '../../buttons'
+import { Back, NavMenu } from '../../buttons'
 import CateringAutocomplete from './CateringAutocomplete'
 
 const CateringView = styled.div`
@@ -124,7 +124,7 @@ const CateringPage = () => {
           <Header
             maxWidth="76.8rem"
             title={isMobile ? 'Order Catering' : null}
-            left={<OrderType />}
+            left={<Back path="/order-type" />}
             right={<NavMenu />}
           />
         )}

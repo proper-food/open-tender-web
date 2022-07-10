@@ -13,7 +13,6 @@ import {
 import { Message, CartItem, ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, selectDisplaySettings } from '../../../slices'
-import iconMap from '../../iconMap'
 import {
   Content,
   Header,
@@ -24,7 +23,7 @@ import {
   PageContainer,
   PageContent,
 } from '../..'
-import { Menu, StartOver } from '../../buttons'
+import { Back } from '../../buttons'
 import { GroupOrderCartView } from './GroupOrderReview'
 
 const makeSubtitle = (error, cart, firstName, config) => {
@@ -59,6 +58,7 @@ const GroupOrderReviewGuest = () => {
   const firstName = cartOwner ? cartOwner.first_name : ''
   const isLoading = loading === 'pending'
   const subtitle = makeSubtitle(error, groupCart, firstName, config)
+  console.log(error)
 
   useEffect(() => {
     error ? dispatch(reloadGuestOrder()) : dispatch(updateGroupOrder())
@@ -74,7 +74,7 @@ const GroupOrderReviewGuest = () => {
     <>
       <Content>
         <Header
-          left={closed || error ? <StartOver /> : <Menu />}
+          left={closed || error ? null : <Back path={menuSlug} />}
           right={null}
         />
         <Main>
@@ -107,7 +107,7 @@ const GroupOrderReviewGuest = () => {
                     below.
                   </p>
                   <p>
-                    <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                    <ButtonStyled onClick={startOver}>
                       Start A New Order
                     </ButtonStyled>
                   </p>

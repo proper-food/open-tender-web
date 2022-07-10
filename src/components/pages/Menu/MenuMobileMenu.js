@@ -98,7 +98,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
               {orderId && (
                 <MenuMobileMenuRow>
                   <Preface size="xSmall">Editing Order #{orderId}</Preface>
-                  <CancelEdit useButton={true} />
+                  <CancelEdit />
                 </MenuMobileMenuRow>
               )}
               {revenueCenter && !autoSelect && (

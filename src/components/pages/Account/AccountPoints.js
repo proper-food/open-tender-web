@@ -1,16 +1,15 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { formatQuantity } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
+import { Star } from '../../icons'
 
-import iconMap from '../../iconMap'
-import { Link } from 'react-router-dom'
-
-const AccountPointsView = styled('div')`
+const AccountPointsView = styled.div`
   flex-grow: 0;
 `
 
-const AccountPointsCount = styled('div')`
+const AccountPointsCount = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -56,7 +55,9 @@ const AccountPoints = ({ name, points }) => {
     <AccountPointsView>
       <AccountPointsCount>
         <Heading as="p">{formatQuantity(points)}</Heading>
-        <span>{iconMap.Star}</span>
+        <span>
+          <Star />
+        </span>
       </AccountPointsCount>
       {/* <AccountPointsBalance>{name} Balance</AccountPointsBalance> */}
       <AccountPointsBalance>

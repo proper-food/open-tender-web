@@ -25,7 +25,6 @@ import {
 } from '@open-tender/components'
 
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
 import { Favorite } from '../buttons'
 import { FormSection, Loading } from '..'
 import OrderAddress from '../OrderAddress'
@@ -35,9 +34,8 @@ import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
 import OrderFulfillment from './OrderFulfillment'
 import OrderPrep from './OrderPrep'
-import { isDesktop } from 'react-device-detect'
 
-const OrderView = styled('div')`
+const OrderView = styled.div`
   margin: 4rem auto;
   max-width: 54rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -45,7 +43,7 @@ const OrderView = styled('div')`
   }
 `
 
-const OrderHeader = styled(`div`)`
+const OrderHeader = styled.div`
   text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     text-align: left;
@@ -71,7 +69,7 @@ const OrderHeader = styled(`div`)`
   }
 `
 
-const OrderButtons = styled(`div`)`
+const OrderButtons = styled.div`
   margin: 3rem 0;
   display: flex;
   justify-content: center;
@@ -86,19 +84,19 @@ const OrderButtons = styled(`div`)`
   }
 `
 
-const OrderDetails = styled('div')`
+const OrderDetails = styled.div`
   margin: 3rem 0 0;
 `
 
-const OrderItems = styled('div')`
+const OrderItems = styled.div`
   margin: 3rem 0 0;
 `
 
-const OrderFavorite = styled('div')`
+const OrderFavorite = styled.div`
   margin: 0 0 0;
 `
 
-const OrderCentered = styled('div')`
+const OrderCentered = styled.div`
   display: flex;
   justify-content: center;
   max-width: 54rem;
@@ -197,23 +195,17 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           <OrderButtons>
             {order.is_editable && (
               <ButtonStyled
-                icon={isDesktop ? iconMap.Edit : null}
                 onClick={() => dispatch(editOrder(order))}
                 size="small"
               >
                 Edit
               </ButtonStyled>
             )}
-            <ButtonStyled
-              icon={isDesktop ? iconMap.RefreshCw : null}
-              onClick={handleReorder}
-              size="small"
-            >
+            <ButtonStyled onClick={handleReorder} size="small">
               Reorder
             </ButtonStyled>
             {!isUpcoming && (
               <ButtonStyled
-                icon={isDesktop ? iconMap.Star : null}
                 onClick={updateRating}
                 size="small"
                 color="secondary"

@@ -1,12 +1,10 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 import { makeServiceTypeName } from '@open-tender/js'
-
 import { openModal, selectOutpostName } from '../../slices'
-import iconMap from '../iconMap'
+import { Calendar, Coffee, ShoppingBag, Truck } from '../icons'
 import { ButtonBoth } from '.'
 
 const ServiceType = ({ style = null, useButton = false }) => {
@@ -23,16 +21,15 @@ const ServiceType = ({ style = null, useButton = false }) => {
     outpostName
   )
   const name = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
-  const icon =
-    iconMap[
-      isCatering
-        ? 'Calendar'
-        : serviceType === 'DELIVERY'
-        ? 'Truck'
-        : serviceType === 'WALKIN' && prepType !== 'TAKE_OUT'
-        ? 'Coffee'
-        : 'ShoppingBag'
-    ]
+  const icon = isCatering ? (
+    <Calendar />
+  ) : serviceType === 'DELIVERY' ? (
+    <Truck />
+  ) : serviceType === 'WALKIN' && prepType !== 'TAKE_OUT' ? (
+    <Coffee />
+  ) : (
+    <ShoppingBag />
+  )
 
   if (!serviceType) return null
 

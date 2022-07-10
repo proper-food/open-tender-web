@@ -1,8 +1,6 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
-import iconMap from '../iconMap'
+import { Star } from '../icons'
 
 const OrderRatingView = styled.div`
   p + p {
@@ -37,7 +35,9 @@ const OrderRating = ({ rating, comments }) => {
       <p>
         <OrderRatingStars>
           {stars.map((star) => (
-            <span key={star}>{iconMap.Star}</span>
+            <span key={star}>
+              <Star />
+            </span>
           ))}
         </OrderRatingStars>
       </p>

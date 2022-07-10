@@ -22,7 +22,7 @@ const LeaveGroup = () => {
   return (
     <ButtonStyled
       onClick={leave}
-      icon={<XCircle strokeWidth={2} />}
+      icon={<XCircle />}
       color="header"
       size="header"
     >

@@ -44,7 +44,7 @@ const GroupGuest = () => {
 
   return (
     <ButtonStyled
-      icon={<ShoppingBag strokeWidth={2} />}
+      icon={<ShoppingBag />}
       onClick={onClick}
       color="header"
       size="header"

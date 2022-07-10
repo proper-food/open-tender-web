@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
-import { ShoppingBag } from 'react-feather'
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 import { selectOrder, selectCartQuantity } from '@open-tender/redux'
 import { contains } from '@open-tender/js'
 import { ButtonIcon } from '@open-tender/components'
-import { useTheme } from '@emotion/react'
 import { toggleSidebar } from '../../slices'
+import { ShoppingBag } from '../icons'
 
 const CartIcon = styled('div')`
   position: relative;
@@ -80,7 +80,7 @@ const Cart = () => {
         onClick={() => dispatch(toggleSidebar())}
         size={isBrowser ? 24 : 24}
       >
-        <ShoppingBag size={null} strokeWidth={1} fill={fill} />
+        <ShoppingBag size={null} fill={fill} />
       </ButtonIcon>
     </CartIcon>
   ) : null

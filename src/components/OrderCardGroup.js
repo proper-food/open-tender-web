@@ -44,11 +44,11 @@ const OrderCardGroup = ({ order }) => {
       : isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const menuSlug = useSelector(selectMenuSlug)
 
-  const handleDelete = () => {
+  const deleteOrder = () => {
     dispatch(removeCustomerGroupOrder(cart_id))
   }
 
-  const handleReopen = () => {
+  const reopenOrder = () => {
     const data = { orderId: null, orderType, serviceType, isOutpost, address }
     dispatch(updateOrder(data))
     dispatch(reopenGroupOrder(order)).then(() => setOpen(true))
@@ -75,10 +75,10 @@ const OrderCardGroup = ({ order }) => {
       }
       footer={
         <>
-          <ButtonStyled onClick={handleReopen} size="small">
+          <ButtonStyled onClick={reopenOrder} size="small">
             Reopen
           </ButtonStyled>
-          <ButtonStyled onClick={handleDelete} size="small" color="secondary">
+          <ButtonStyled onClick={deleteOrder} size="small" color="secondary">
             Delete
           </ButtonStyled>
         </>

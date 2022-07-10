@@ -1,11 +1,19 @@
 import styled from '@emotion/styled'
-import { useSelector } from 'react-redux'
-import { selectCheckout, selectGroupOrder } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  closeGroupOrder,
+  selectCheckout,
+  selectGroupOrder,
+  selectMenuSlug,
+  selectOrder,
+  setCart,
+} from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
 import { isMobile } from 'react-device-detect'
 
-import { Cart, Menu, Reopen } from '../../buttons'
+import { Back, Cart } from '../../buttons'
 import { Header } from '../..'
+import { useNavigate } from 'react-router-dom'
 
 const CheckoutHeaderView = styled('div')`
   position: absolute;
@@ -32,18 +40,28 @@ const CheckoutHeaderView = styled('div')`
 `
 
 const CheckoutHeader = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const menuSlug = useSelector(selectMenuSlug)
+  const { cart } = useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
   const { check } = useSelector(selectCheckout)
   const amount = check ? formatDollars(check.totals.total) : ''
 
+  const reopen = () => {
+    const customerCart = cart.filter((i) => i.customer_id)
+    dispatch(setCart(customerCart))
+    dispatch(closeGroupOrder(cartId, false)).then(() => {
+      navigate('/review')
+    })
+  }
+
+  const back = cartId ? <Back onClick={reopen} /> : <Back path={menuSlug} />
+
   return isMobile ? (
-    <Header
-      title={`Checkout ${amount}`}
-      left={cartId ? <Reopen /> : <Menu />}
-      right={<Cart />}
-    />
+    <Header title={`Checkout ${amount}`} left={back} right={<Cart />} />
   ) : (
-    <CheckoutHeaderView>{cartId ? <Reopen /> : <Menu />}</CheckoutHeaderView>
+    <CheckoutHeaderView>{back}</CheckoutHeaderView>
   )
 }
 

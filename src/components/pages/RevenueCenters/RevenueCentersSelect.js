@@ -187,7 +187,7 @@ const RevenueCentersSelect = () => {
     missingAddress,
   ])
 
-  const handleStartOver = () => {
+  const startOver = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
     navigate(`/`)
@@ -227,10 +227,7 @@ const RevenueCentersSelect = () => {
               </RevenueCentersSelectList>
             ) : (
               <div style={{ margin: '3rem auto 0', textAlign: 'center' }}>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={handleStartOver}
-                >
+                <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
                   Start Over
                 </ButtonStyled>
               </div>

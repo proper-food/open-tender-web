@@ -79,11 +79,11 @@ const OrderCardGroupSimple = ({ order }) => {
   const orderTypeName = makeOrderTypeName(orderType, serviceType)
   const menuSlug = useSelector(selectMenuSlug)
 
-  const handleDelete = () => {
+  const deleteOrder = () => {
     dispatch(removeCustomerGroupOrder(cart_id))
   }
 
-  const handleReopen = () => {
+  const reopenOrder = () => {
     const data = { orderId: null, orderType, serviceType, isOutpost, address }
     dispatch(updateOrder(data))
     dispatch(reopenGroupOrder(order)).then(() => setOpen(true))
@@ -108,10 +108,10 @@ const OrderCardGroupSimple = ({ order }) => {
             {guest_count} guests have submitted orders
           </OrderCardGroupSimpleDescription>
           <OrderCardGroupSimpleButtons>
-            <ButtonStyled onClick={handleReopen} size="small">
+            <ButtonStyled onClick={reopenOrder} size="small">
               Reopen
             </ButtonStyled>
-            <ButtonStyled onClick={handleDelete} size="small" color="secondary">
+            <ButtonStyled onClick={deleteOrder} size="small" color="secondary">
               Delete
             </ButtonStyled>
           </OrderCardGroupSimpleButtons>

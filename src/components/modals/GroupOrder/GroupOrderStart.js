@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectOrder,
   selectGroupOrder,
@@ -9,10 +10,8 @@ import { makeGroupOrderTime } from '@open-tender/js'
 import { ButtonLink, ButtonStyled, Input, Text } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
 import { ModalContent } from '../../Modal'
-import styled from '@emotion/styled'
 
 const formatOrderTime = (s) => {
   return s ? s.replace('Today', 'today').replace('Tomorrow', 'tomorrow') : ''
@@ -93,12 +92,7 @@ const GroupOrderStart = () => {
       }
       footer={
         <div>
-          <ButtonStyled
-            icon={iconMap.Users}
-            onClick={start}
-            color="primary"
-            disabled={isLoading}
-          >
+          <ButtonStyled onClick={start} color="primary" disabled={isLoading}>
             {isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
           </ButtonStyled>
           <ButtonStyled color="secondary" onClick={cancel}>

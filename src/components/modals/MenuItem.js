@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
@@ -15,14 +14,13 @@ import {
   selectCustomerPointsProgram,
 } from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
-
 import { closeModal, selectDisplaySettings } from '../../slices'
-import iconMap from '../iconMap'
+import { Minus, Plus, Star } from '../icons'
 import { ModalClose, ImageSpinner } from '..'
 
 const menuItemsIconMap = {
-  plus: iconMap.Plus,
-  minus: iconMap.Minus,
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
 }
 
 const MenuItemModalView = styled('div')`
@@ -59,7 +57,7 @@ const MenuItem = () => {
   const displaySettings = useSelector(selectDisplaySettings)
   const { orderType } = useSelector(selectOrder)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
-  const pointsIcon = pointsProgram ? iconMap.Star : null
+  const pointsIcon = pointsProgram ? <Star /> : null
   const { cartId } = useSelector(selectGroupOrder)
 
   const cancel = () => {

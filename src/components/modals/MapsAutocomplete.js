@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
@@ -12,9 +12,8 @@ import {
   GoogleMapsAutocomplete,
 } from '@open-tender/components'
 import { ClipLoader } from 'react-spinners'
-
 import { closeModal, selectSettings } from '../../slices'
-import iconMap from '../iconMap'
+import { Navigation } from '../icons'
 import { ModalContent, ModalView } from '..'
 
 const MapView = styled('div')`
@@ -68,7 +67,7 @@ const MapsAutocompleteInput = ({
       formattedAddress={formattedAddress}
       setCenter={setCenter}
       setAddress={setAddress}
-      icon={iconMap.Navigation}
+      icon={<Navigation strokeWidth={2} />}
       placeholder="please enter your address"
     />
   </MapsAutocompleteInputView>

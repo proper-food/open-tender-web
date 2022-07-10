@@ -1,18 +1,12 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectTimezone } from '@open-tender/redux'
 import { makeRequestedAtStr } from '@open-tender/js'
-
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
+import { Clock } from '../icons'
 import { ButtonBoth } from '.'
 
-const RequestedAt = ({
-  icon = iconMap.Clock,
-  style = null,
-  useButton = false,
-}) => {
+const RequestedAt = ({ style = null, useButton = false }) => {
   const dispatch = useDispatch()
   const { requestedAt, revenueCenter, serviceType, orderType } =
     useSelector(selectOrder)
@@ -35,7 +29,7 @@ const RequestedAt = ({
   return (
     <ButtonBoth
       text={requestedAtText}
-      icon={icon}
+      icon={<Clock />}
       onClick={() => dispatch(openModal({ type: 'requestedAt', args }))}
       style={style}
       useButton={useButton}
@@ -45,7 +39,6 @@ const RequestedAt = ({
 
 RequestedAt.displayName = 'RequestedAt'
 RequestedAt.propTypes = {
-  icon: propTypes.element,
   style: propTypes.object,
   useButton: propTypes.bool,
 }

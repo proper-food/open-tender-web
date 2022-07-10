@@ -177,6 +177,8 @@ const MenuFavorites = () => {
     setCount(favCount)
   }, [favCount])
 
+  if (!auth) return null
+
   if (!isLoading && !hasItems) return null
 
   return (
