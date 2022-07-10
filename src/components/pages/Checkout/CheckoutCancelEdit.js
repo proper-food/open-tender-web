@@ -21,7 +21,7 @@ const CheckoutCancelEdit = () => {
   const handleCancelEdit = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    navigate(`/`)
+    navigate(`/account`)
   }
 
   return orderId ? (

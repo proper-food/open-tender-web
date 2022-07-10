@@ -98,6 +98,7 @@ const ProgressPoints = ({ name, points, thresholds = [] }) => {
         </div>
         {progressPoints.map((i, index) => (
           <ProgressPoint
+            key={i.percentage}
             style={{ left: `${i.percentage.toFixed(5)}%` }}
             isFirst={index === 0}
             // isLast={index === thresholds.length}
