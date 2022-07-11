@@ -5,7 +5,7 @@ import { slugify } from '@open-tender/js'
 
 import MenuCategory from './MenuCategory'
 
-const MenuCategoriesView = styled('div')`
+const MenuCategoriesView = styled.div`
   margin: 0 0 6rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 3rem;

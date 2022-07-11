@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
+import { animateScroll as scroll } from 'react-scroll'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchCustomerFavorites,
@@ -21,6 +22,8 @@ import { Heading } from '@open-tender/components'
 import { selectMenuSection, setMenuSection } from '../../../slices'
 import { Container, Loading, SeeMoreLink } from '../..'
 import MenuItem from './MenuItem'
+import { useTheme } from '@emotion/react'
+import { isBrowser } from 'react-device-detect'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -110,6 +113,11 @@ const MenuFavoritesItemsItem = styled.div`
 
 const MenuFavorites = () => {
   const dispatch = useDispatch()
+  const theme = useTheme()
+  const { navHeight, navHeightMobile } = theme.layout
+  const height = isBrowser ? navHeight : navHeightMobile
+  const heightInPixels = parseInt(height.replace('rem', '')) * 10
+  const topOffset = heightInPixels + 30
   const [count, setCount] = useState(0)
   const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
@@ -152,6 +160,18 @@ const MenuFavorites = () => {
   const isLoading = loadingRecents || loadingFavs || updating
   const hasItems = hasRecents || hasFavorites
   const showLoading = isLoading && !hasItems
+
+  const scrollToMenu = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    const element = document.getElementById('full-menu')
+    const position = element.offsetTop - topOffset
+    scroll.scrollTo(position, {
+      duration: 500,
+      smooth: true,
+      offset: 0,
+    })
+  }
 
   useEffect(() => {
     if (hasCustomer) {
@@ -206,13 +226,24 @@ const MenuFavorites = () => {
                     <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
                   </MenuFavoritesButton>
                 )}
+                {isBrowser && (
+                  <MenuFavoritesButton isActive={false} onClick={scrollToMenu}>
+                    <MenuFavoritesTitle>Full Menu</MenuFavoritesTitle>
+                  </MenuFavoritesButton>
+                )}
               </MenuFavoritesNav>
               <MenuFavoritesMore>
                 {moreFavorites && (
-                  <SeeMoreLink text="View All" to={favoritesPath} />
+                  <SeeMoreLink
+                    text={`View All${isBrowser ? ' Favorites' : ''}`}
+                    to={favoritesPath}
+                  />
                 )}
                 {moreRecents && (
-                  <SeeMoreLink text="View All" to={recentsPath} />
+                  <SeeMoreLink
+                    text={`View All${isBrowser ? ' Recents' : ''}`}
+                    to={recentsPath}
+                  />
                 )}
               </MenuFavoritesMore>
             </MenuFavoritesHeader>
