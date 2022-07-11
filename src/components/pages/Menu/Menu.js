@@ -17,8 +17,7 @@ import {
   fetchMenu,
   fetchAllergens,
   fetchDeals,
-  fetchAnnouncementPage,
-  selectAnnouncementsPage,
+  // fetchAnnouncementPage,
   fetchCustomerLoyalty,
   selectCustomerPointsProgram,
 } from '@open-tender/redux'
@@ -45,7 +44,6 @@ const MenuPage = () => {
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
-  const announcements = useSelector(selectAnnouncementsPage('MENU'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
@@ -84,7 +82,7 @@ const MenuPage = () => {
       dispatch(fetchAllergens())
       dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
-      dispatch(fetchAnnouncementPage('MENU'))
+      // dispatch(fetchAnnouncementPage('MENU'))
     }
   }, [
     revenueCenterId,
@@ -135,7 +133,6 @@ const MenuPage = () => {
               loadingMessage,
               error,
               deals: validDeals,
-              announcements,
               pointsProgram,
             }}
           >

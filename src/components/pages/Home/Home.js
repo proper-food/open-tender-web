@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { useTheme } from '@emotion/react'
-import { selectConfig, closeModal, selectBrand } from '../../../slices'
+import { closeModal, selectBrand, selectContentSection } from '../../../slices'
 import { BackgroundContent, Content, HeaderSite, Main, PageIntro } from '../..'
 import PageHero from '../../PageHero'
 
@@ -11,8 +11,9 @@ const Home = () => {
   const dispatch = useDispatch()
   const { colors } = useTheme()
   const brand = useSelector(selectBrand)
-  const { home } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle, content } = home
+  const { background, mobile, title, subtitle, content } = useSelector(
+    selectContentSection('home')
+  )
   const hasContent = !!(content && content.length)
 
   useEffect(() => {

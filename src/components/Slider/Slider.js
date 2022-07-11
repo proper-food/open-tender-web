@@ -9,6 +9,7 @@ import SliderArrows from './SliderArrows'
 import SliderArrow from './SliderArrow'
 import SliderDots from './SliderDots'
 import SliderDot from './SliderDot'
+import { useTheme } from '@emotion/react'
 
 const SliderView = styled.div`
   position: relative;
@@ -47,6 +48,9 @@ const defaultSettings = {
 }
 
 const Slider = ({ settings = {}, slides, bgColor }) => {
+  const { layout } = useTheme()
+  const { headerHeightSite, headerHeightSiteMobile, padding, paddingMobile } =
+    layout
   const timer = useRef(null)
   const slider = useRef(null)
   const [pause, setPause] = useState(false)
@@ -76,6 +80,13 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
     (index > lastIndex && !(index === last && lastIndex === 0)) ||
     (index === 0 && lastIndex === last)
   const moveRight = !moveLeft
+  const paddingVertical = showDots
+    ? isBrowser
+      ? headerHeightSite
+      : headerHeightSiteMobile
+    : isBrowser
+    ? padding
+    : paddingMobile
 
   const config = {
     delta: 10,
@@ -146,7 +157,10 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
               active={active}
             >
               <BackgroundImage {...slide} bgColor={bgColor}>
-                <BackgroundContent {...slide} />
+                <BackgroundContent
+                  {...slide}
+                  paddingVertical={paddingVertical}
+                />
               </BackgroundImage>
             </Slide>
           )

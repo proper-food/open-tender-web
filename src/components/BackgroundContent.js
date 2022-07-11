@@ -14,14 +14,20 @@ const BackgroundContentView = styled.div`
   left: 0;
   right: 0;
   display: flex;
-  padding: ${(props) => props.theme.layout.headerHeightSite}
-    ${(props) => props.theme.layout.padding};
+  padding: ${(props) => props.theme.layout.padding};
+  padding-top: ${(props) =>
+    props.paddingVertical || props.theme.layout.headerHeightSite};
+  padding-bottom: ${(props) =>
+    props.paddingVertical || props.theme.layout.headerHeightSite};
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.headerHeightSiteMobile}
-      ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-top: ${(props) =>
+      props.paddingVertical || props.theme.layout.headerHeightSiteMobile};
+    padding-bottom: ${(props) =>
+      props.paddingVertical || props.theme.layout.headerHeightSiteMobile};
     justify-content: ${(props) => props.justifyContent};
     align-items: ${(props) => props.alignItems};
     text-align: center;
@@ -30,9 +36,9 @@ const BackgroundContentView = styled.div`
 
 const BackgroundContentText = styled.div`
   max-width: 96rem;
-  padding: ${(props) => props.theme.layout.padding} 0;
+  // padding: ${(props) => props.theme.layout.padding} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile} 0;
+    // padding: ${(props) => props.theme.layout.paddingMobile} 0;
   }
 `
 
@@ -77,6 +83,7 @@ const BackgroundContent = ({
   vertical = 'BOTTOM',
   horizontal = 'CENTER',
   hide_text = false,
+  paddingVertical,
   children,
 }) => {
   if (!title && !subtitle) return null
@@ -90,6 +97,7 @@ const BackgroundContent = ({
       justifyContent={justifyContent}
       alignItems={alignItems}
       textAlign={horizontal}
+      paddingVertical={paddingVertical}
     >
       <Container>
         <BackgroundContentText>
