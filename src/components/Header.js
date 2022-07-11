@@ -1,15 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { isBrowser, isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
-const HeaderContainer = styled('nav')`
-  // display: block;
-  // width: 100%;
-`
+const HeaderContainer = styled.nav``
 
-const HeaderView = styled('div')`
+const HeaderView = styled.div`
   position: fixed;
   z-index: 14;
   top: 0;
@@ -37,7 +34,7 @@ const HeaderView = styled('div')`
   }
 `
 
-const HeaderTitle = styled('div')`
+const HeaderTitle = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -66,7 +63,7 @@ const HeaderTitle = styled('div')`
   }
 `
 
-const HeaderNav = styled('div')`
+const HeaderNav = styled.div`
   position: relative;
   z-index: 2;
   display: flex;
