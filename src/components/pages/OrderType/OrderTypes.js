@@ -1,16 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {
-  Flag,
-  ShoppingBag,
-  Truck,
-  Users,
-  Gift,
-  Coffee,
-  ShoppingCart,
-  DollarSign,
-} from 'react-feather'
+import { isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 import {
   resetRevenueCenters,
   resetOrderType,
@@ -20,7 +12,6 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { Message, useGeolocation } from '@open-tender/components'
-
 import {
   selectContent,
   setGeoLatLng,
@@ -28,10 +19,18 @@ import {
   setGeoLoading,
   selectSettings,
 } from '../../../slices'
+import {
+  Coffee,
+  DollarSign,
+  Flag,
+  Gift,
+  ShoppingBag,
+  ShoppingCart,
+  Truck,
+  Users,
+} from '../../icons'
 import { NavButtons } from '../..'
 import OrderTypeLinks from './OrderTypeLinks'
-import { isMobile } from 'react-device-detect'
-import styled from '@emotion/styled'
 
 const OrderTypesView = styled.div`
 
@@ -138,7 +137,7 @@ const OrderTypes = () => {
     DONATIONS: handleDonations,
   }
 
-  const iconProps = { size: 18, strokeWidth: 1 }
+  const iconProps = { size: 18 }
 
   const icons = {
     OUTPOST: <Flag {...iconProps} />,

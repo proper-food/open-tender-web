@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -7,10 +7,9 @@ import { useTheme } from '@emotion/react'
 import { isMobile } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { selectBrand } from '../slices'
 import { NavMenu, User } from './buttons'
-import { ContainerSite } from '.'
+import { Container } from '.'
 
 const HeaderSiteView = styled.div`
   position: fixed;
@@ -135,7 +134,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
   return (
     <nav ref={header} role="navigation" aria-label="Primary Navigation">
       <HeaderSiteView stuck={stuck} isMobile={isMobile} style={style}>
-        <ContainerSite>
+        <Container>
           <HeaderSiteContainer>
             <HeaderSiteLogo>
               <Link to="/">
@@ -181,7 +180,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
               )}
             </HeaderSiteNav>
           </HeaderSiteContainer>
-        </ContainerSite>
+        </Container>
       </HeaderSiteView>
     </nav>
   )

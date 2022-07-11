@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { PlusCircle, XCircle } from 'react-feather'
 import { Checkmark, Heading, Text } from '@open-tender/components'
+import { PlusCircle, XCircle } from '../../icons'
 
 const CheckoutButtonView = styled.button`
   position: relative;
@@ -226,7 +226,7 @@ const CheckoutButton = ({
             ) : (
               <>
                 <CheckoutButtonButtonIcon isApplied={isApplied}>
-                  <XCircle size={null} />
+                  <XCircle />
                 </CheckoutButtonButtonIcon>
                 <CheckoutButtonRemove>Remove</CheckoutButtonRemove>
               </>
@@ -235,7 +235,7 @@ const CheckoutButton = ({
         ) : (
           <>
             <CheckoutButtonButtonIcon>
-              <PlusCircle size={null} />
+              <PlusCircle />
             </CheckoutButtonButtonIcon>
             <CheckoutButtonApply>{applyText}</CheckoutButtonApply>
           </>

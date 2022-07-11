@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import styled from '@emotion/styled'
 import {
   selectOrder,
   setRevenueCenter,
@@ -13,11 +14,8 @@ import {
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
 import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
-
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
 import { Container, Loading, PageContent, RevenueCenter } from '../..'
-import styled from '@emotion/styled'
-import iconMap from '../../iconMap'
 
 const RevenueCentersSelectView = styled('div')`
   position: relative;
@@ -227,9 +225,7 @@ const RevenueCentersSelect = () => {
               </RevenueCentersSelectList>
             ) : (
               <div style={{ margin: '3rem auto 0', textAlign: 'center' }}>
-                <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
-                  Start Over
-                </ButtonStyled>
+                <ButtonStyled onClick={startOver}>Start Over</ButtonStyled>
               </div>
             )}
           </>

@@ -1,17 +1,15 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import { isMobileOnly } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
 import { BgImage, Box, Checkmark, Heading } from '@open-tender/components'
-
-import iconMap from '../iconMap'
+import { selectDisplaySettings } from '../../slices'
+import { AlertCircle, Clock, MapPin, Phone } from '../icons'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
-import { selectDisplaySettings } from '../../slices'
-import { isMobileOnly } from 'react-device-detect'
-import { useTheme } from '@emotion/react'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
@@ -157,7 +155,7 @@ export const RevenueCenterChild = ({ revenueCenter, style }) => {
             )}
             {hoursDesc && (
               <RevenueCenterAction
-                icon={iconMap['Clock']}
+                icon={<Clock />}
                 text={hoursDesc}
                 arrow={null}
               />
@@ -195,7 +193,7 @@ const RevenueCenter = ({
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const desc = description ? stripTags(description) : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
-  const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
+  const hoursDescIcon = is_outpost ? <AlertCircle /> : <Clock />
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
       ? revenueCenter.distance
@@ -228,7 +226,7 @@ const RevenueCenter = ({
                   target="_blank"
                 >
                   <RevenueCenterAction
-                    icon={iconMap.MapPin}
+                    icon={<MapPin />}
                     text={
                       <span>
                         {address.street}{' '}
@@ -244,7 +242,7 @@ const RevenueCenter = ({
                 {storePhone && phoneUrl && !isMobileOnly && (
                   <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
                     <RevenueCenterAction
-                      icon={iconMap.Phone}
+                      icon={<Phone />}
                       text={address.phone}
                     />
                   </a>

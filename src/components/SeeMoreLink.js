@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { ChevronRight } from 'react-feather'
+
 import { Heading } from '@open-tender/components'
-import { ArrowRightLong } from './icons'
+import { ArrowRightLong, ChevronRight } from './icons'
 
 const SeeMoreLinkView = styled.div`
   flex-grow: 0;
@@ -71,7 +71,7 @@ const SeeMoreLink = ({ text, to }) => (
         <ArrowRightLong />
       </SeeMoreLinkArrow>
       <SeeMoreLinkChevron>
-        <ChevronRight size={null} />
+        <ChevronRight />
       </SeeMoreLinkChevron>
     </Link>
   </SeeMoreLinkView>

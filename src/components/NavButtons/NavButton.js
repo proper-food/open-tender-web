@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ArrowRight } from 'react-feather'
 import { Body, Heading } from '@open-tender/components'
+import { ArrowRight } from '../icons'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -153,7 +153,7 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
         {subtitle && <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>}
       </NavButtonText>
       <NavButtonArrow>
-        <ArrowRight size={null} strokeWidth={2} />
+        <ArrowRight strokeWidth={2} />
       </NavButtonArrow>
     </NavButtonView>
   )

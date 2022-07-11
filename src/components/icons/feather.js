@@ -222,6 +222,13 @@ export const ShoppingBag = (props) => {
   )
 }
 
+export const ShoppingCart = (props) => {
+  const { icons } = useTheme()
+  return (
+    <RF.ShoppingCart size={null} strokeWidth={icons.strokeWidth} {...props} />
+  )
+}
+
 export const Slash = (props) => {
   const { icons } = useTheme()
   return <RF.Slash size={null} strokeWidth={icons.strokeWidth} {...props} />

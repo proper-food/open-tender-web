@@ -157,7 +157,7 @@ const NavItem = styled.button`
   align-items: center;
   text-align: left;
   line-height: 0;
-  padding: 1.25rem 1rem 1.25rem 3.5rem;
+  padding: 1.25rem 1rem 1.25rem 3rem;
   color: ${(props) => props.theme.links.dark.color};
 
   &:hover {

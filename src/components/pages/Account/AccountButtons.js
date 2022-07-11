@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight } from 'react-feather'
 import { resetOrder, selectOrder } from '@open-tender/redux'
 import { ButtonLarge } from '../..'
+import { ArrowRight } from '../../icons'
 
 const AccountButtonsView = styled('div')`
   display: flex;
@@ -58,7 +58,7 @@ const AccountButtons = () => {
         text={isCurrentOrder ? 'Continue Order' : 'Order Now'}
         color="primary"
       >
-        <ArrowRight size={22} />
+        <ArrowRight size={22} strokeWidth={2} />
       </ButtonLarge>
     </AccountButtonsView>
   )

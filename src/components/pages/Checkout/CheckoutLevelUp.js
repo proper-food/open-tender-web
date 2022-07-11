@@ -1,13 +1,13 @@
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { Grid } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, validateOrder } from '@open-tender/redux'
 import { ButtonLink, FormError, Text } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
 import CheckoutButton from './CheckoutButton'
+import { Grid } from '../../icons'
 
 const CheckoutLevelUpView = styled.div``
 
@@ -56,7 +56,7 @@ const CheckoutLevelUp = ({ apply, remove, isPaid }) => {
       <FormError errMsg={errMsg} />
       {levelup.connected ? (
         <CheckoutButton
-          icon={<Grid width={18} height={18} />}
+          icon={<Grid size={18} />}
           title="Pay with LevelUp"
           subtitle={`Currently connected via your ${levelup.email} email address`}
           onPress={onPress}

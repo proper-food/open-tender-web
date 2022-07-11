@@ -1,16 +1,14 @@
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { isMobileOnly } from 'react-device-detect'
 import {
   setOrderServiceType,
   setAddress,
   setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
-import { isMobileOnly } from 'react-device-detect'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
@@ -65,7 +63,6 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
       {hasWalkin && (
         <ButtonStyled
           label={`Order Dine-in from ${name}`}
-          icon={iconMap.Coffee}
           onClick={handleWalkin}
           size={isMobileOnly ? 'small' : 'default'}
         >
@@ -75,7 +72,6 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
       {hasPickup && (
         <ButtonStyled
           label={`Order Pickup from ${name}`}
-          icon={iconMap.ShoppingBag}
           onClick={handlePickup}
           size={isMobileOnly ? 'small' : 'default'}
         >
@@ -85,7 +81,6 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
       {hasDelivery && (
         <ButtonStyled
           label={`Order Delivery from ${name}`}
-          icon={iconMap.Truck}
           onClick={handleDelivery}
           size={isMobileOnly ? 'small' : 'default'}
         >

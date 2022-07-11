@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import iconMap from '../iconMap'
+import { ArrowLeft, ArrowRight } from '../icons'
 
 const SliderArrowView = styled.button`
   display: block;
@@ -29,10 +29,6 @@ const SliderArrowView = styled.button`
     display: block;
     width: 100%;
     height: 100%;
-
-    svg {
-      stroke-width: ${(props) => (props.strokeWidth / 10).toFixed(2)}rem;
-    }
   }
 
   button + & {
@@ -40,24 +36,15 @@ const SliderArrowView = styled.button`
   }
 `
 
-const SliderArrow = ({
-  direction,
-  size,
-  disabled,
-  onClick,
-  strokeWidth = 2,
-}) => {
+const SliderArrow = ({ direction, size, disabled, onClick }) => {
   return (
     <SliderArrowView
       direction={direction}
       size={size}
       disabled={disabled}
       onClick={onClick}
-      strokeWidth={strokeWidth}
     >
-      <span>
-        {direction === 'LEFT' ? iconMap.ArrowLeft : iconMap.ArrowRight}
-      </span>
+      <span>{direction === 'LEFT' ? <ArrowLeft /> : <ArrowRight />}</span>
     </SliderArrowView>
   )
 }

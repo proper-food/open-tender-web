@@ -3,9 +3,8 @@ import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCheckout, selectCustomer } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
-import { AlertCircle } from 'react-feather'
-
 import { openModal } from '../../../slices'
+import { AlertCircle } from '../../icons'
 
 const makeCompanyConfig = (check) => {
   if (!check || !check.config) return {}

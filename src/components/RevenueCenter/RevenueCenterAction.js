@@ -1,8 +1,6 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
-import iconMap from '../iconMap'
+import { ArrowRight } from '../icons'
 
 const RevenueCenterActionView = styled('div')`
   display: flex;
@@ -53,20 +51,16 @@ const RevenueCenterActionArrowText = styled('div')`
   }
 `
 
-const RevenueCenterAction = ({
-  icon,
-  text,
-  arrow = 'ArrowRight',
-  style = null,
-}) => {
-  const iconArrow = arrow === null ? ' ' : iconMap[arrow]
+const RevenueCenterAction = ({ icon, text, style = null }) => {
   return (
     <RevenueCenterActionView style={style}>
       <RevenueCenterActionIcon>{icon}</RevenueCenterActionIcon>
       <RevenueCenterActionArrowText>
         <p>{text}</p>
       </RevenueCenterActionArrowText>
-      <RevenueCenterActionArrow>{iconArrow}</RevenueCenterActionArrow>
+      <RevenueCenterActionArrow>
+        <ArrowRight />
+      </RevenueCenterActionArrow>
     </RevenueCenterActionView>
   )
 }
@@ -75,7 +69,6 @@ RevenueCenterAction.displayName = 'RevenueCenterAction'
 RevenueCenterAction.propTypes = {
   icon: propTypes.element,
   text: propTypes.oneOfType([propTypes.string, propTypes.element]),
-  arrow: propTypes.string,
   style: propTypes.object,
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectCurrentItem,
@@ -11,17 +12,14 @@ import {
   selectGroupOrder,
 } from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
-
 import { toggleSidebarModal, selectDisplaySettings } from '../../../slices'
-
-import iconMap from '../../iconMap'
+import { Minus, Plus } from '../icons'
 import { ImageSpinner } from '../..'
 import SidebarModalClose from '../../SidebarModal/SidebarModalClose'
-import { isMobile } from 'react-device-detect'
 
 const menuItemsIconMap = {
-  plus: iconMap.Plus,
-  minus: iconMap.Minus,
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
 }
 
 const BuilderView = styled('aside')`

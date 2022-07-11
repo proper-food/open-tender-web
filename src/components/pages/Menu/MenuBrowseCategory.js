@@ -1,11 +1,11 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ArrowRight } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
 import { selectMenuSlug, setCurrentCategory } from '@open-tender/redux'
 import { BgImage, Heading } from '@open-tender/components'
+import { ArrowRight } from '../../icons'
 
 const MenuBrowseCategoryView = styled.div`
   width: 33.3333%;
@@ -132,7 +132,7 @@ const MenuBrowseCategory = ({ category }) => {
           {/* <MenuBrowseCategorySubtitle>{description}</MenuBrowseCategorySubtitle> */}
         </MenuBrowseCategoryText>
         <MenuBrowseCategoryArrow>
-          <ArrowRight size={null} strokeWidth={2} />
+          <ArrowRight strokeWidth={2} />
         </MenuBrowseCategoryArrow>
       </MenuBrowseCategoryButton>
     </MenuBrowseCategoryView>

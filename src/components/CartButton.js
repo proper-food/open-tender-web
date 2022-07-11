@@ -1,12 +1,10 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { ShoppingBag } from 'react-feather'
 import styled from '@emotion/styled'
 import { contains } from '@open-tender/js'
 import { selectCartQuantity } from '@open-tender/redux'
-
 import { toggleSidebar } from '../slices'
+import { ShoppingBag } from './icons'
 
 const CartButtonView = styled.div`
   position: fixed;
@@ -55,12 +53,6 @@ const CartButtonButton = styled.button`
   &:focus {
     outline: none;
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
-    // border: 0.2rem solid
-    //   ${(props) => props.theme.buttons.colors.cartHover.color};
-    // box-shadow: 0 5px 15px 0
-    //   ${(props) => props.theme.buttons.colors.cart.bgColor};
-    // box-shadow: 0 0 0 2px
-    //   ${(props) => props.theme.buttons.colors.cartHover.bgColor};
   }
 
   &:disabled {
@@ -147,7 +139,7 @@ const CartButton = () => {
           aria-label="Open cart to review order, press escape key to access at any time"
         >
           <CartButtonIcon>
-            <ShoppingBag size={null} />
+            <ShoppingBag />
           </CartButtonIcon>
         </CartButtonButton>
       </CartButtonContainer>

@@ -7,15 +7,14 @@ import {
   BuilderOption,
   useBuilder,
 } from '@open-tender/components'
-
-import iconMap from '../../iconMap'
+import { Plus, Minus, Star } from '../../icons'
 
 const footerHeight = '8rem'
 const footerHeightMobile = '7rem'
 
 const menuItemsIconMap = {
-  plus: iconMap.Plus,
-  minus: iconMap.Minus,
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
 }
 
 const MenuItemBuilderView = styled('form')`
@@ -81,7 +80,7 @@ const MenuItemBuilder = ({
         <BuilderHeader
           item={item}
           displaySettings={headerDisplaySettings}
-          pointsIcon={hasPoints ? iconMap.Star : null}
+          pointsIcon={hasPoints ? <Star /> : null}
         />
         <BuilderBody
           allergens={allergenAlerts}
@@ -106,7 +105,7 @@ const MenuItemBuilder = ({
           setQuantity={setQuantity}
           increment={increment}
           decrement={decrement}
-          pointsIcon={hasPoints ? iconMap.Star : null}
+          pointsIcon={hasPoints ? <Star /> : null}
         />
       </MenuItemBuilderFooterContainer>
     </MenuItemBuilderView>

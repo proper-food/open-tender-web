@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -16,8 +16,8 @@ import {
   Message,
   OrderRatingForm,
 } from '@open-tender/components'
-
 import { selectBrand } from '../../../slices'
+import { Star } from '../../icons'
 import {
   Content,
   HeaderDefault,
@@ -27,7 +27,6 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
-import iconMap from '../../iconMap'
 
 const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   if (unsubscribe) {
@@ -144,7 +143,7 @@ const Rating = () => {
                   <OrderRatingForm
                     orderId={ratingUuid}
                     orderRating={adjustedRating}
-                    icon={iconMap.Star}
+                    icon={<Star />}
                     updateRating={updateRating}
                     callback={callback}
                   />

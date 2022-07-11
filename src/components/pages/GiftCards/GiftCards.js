@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { Minus, Plus } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { GiftCardsForm, FormWrapper } from '@open-tender/components'
 import {
@@ -14,8 +13,8 @@ import {
   selectCustomerCreditCardsForPayment,
   setAlert,
 } from '@open-tender/redux'
-
 import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
+import { Minus, Plus } from '../../icons'
 import {
   Content,
   Main,
@@ -25,9 +24,9 @@ import {
   PageContainer,
 } from '../..'
 
-const iconMap = {
-  plus: <Plus size={null} />,
-  minus: <Minus size={null} />,
+const giftCardIconMap = {
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
 }
 
 const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
@@ -83,7 +82,7 @@ const GiftCards = () => {
                 purchasedCards={giftCards}
                 loading={loading}
                 error={error}
-                iconMap={iconMap}
+                iconMap={giftCardIconMap}
                 recaptchaKey={includeRecaptcha ? recaptchaKey : null}
               />
             </FormWrapper>

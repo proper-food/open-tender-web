@@ -1,6 +1,5 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Plus, Minus } from 'react-feather'
+import { useNavigate } from 'react-router-dom'
 import {
   setCurrentItem,
   incrementItemInCart,
@@ -11,7 +10,6 @@ import {
 } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
 import { CartItem, BuilderQuantity } from '@open-tender/components'
-
 import {
   openModal,
   selectDisplaySettings,
@@ -19,11 +17,11 @@ import {
   toggleSidebar,
   toggleSidebarModal,
 } from '../slices'
-import { useNavigate } from 'react-router-dom'
+import { Minus, Plus } from './icons'
 
-const iconMap = {
-  plus: <Plus size={null} />,
-  minus: <Minus size={null} />,
+const cartIconMap = {
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
 }
 
 const Cart = () => {
@@ -72,7 +70,7 @@ const Cart = () => {
               decrement={() => dispatch(decrementItemInCart(item))}
               incrementDisabled={item.quantity === item.max}
               decrementDisabled={false}
-              iconMap={iconMap}
+              iconMap={cartIconMap}
             />
           </CartItem>
         )

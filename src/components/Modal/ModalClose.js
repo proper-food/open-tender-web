@@ -6,21 +6,26 @@ import { ButtonStyled } from '@open-tender/components'
 import { closeModal } from '../../slices'
 import { X } from '../icons'
 
-const ModalCloseX = styled('button')`
+const ModalCloseX = styled.button`
   position: absolute;
   z-index: 2;
   top: 7px;
   right: 7px;
   display: inline;
   font-size: inherit;
-  color: ${(props) => props.theme.links.primary.color};
+  color: ${(props) => props.theme.links.dark.color};
+
   &:hover,
   &:active,
   &:focus {
-    color: ${(props) => props.theme.links.primary.hover};
+    color: ${(props) => props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.links.dark.color};
+    }
   }
+
   &:disabled {
-    color: ${(props) => props.theme.links.primary.color};
+    color: ${(props) => props.theme.links.dark.color};
     opacity: 0.5;
   }
 `
@@ -65,7 +70,7 @@ const ModalClose = ({ onClick, isButton = false }) => {
   return isButton ? (
     <ModalCloseButton>
       <ButtonStyled
-        icon={<X strokeWidth={2} />}
+        icon={<X />}
         onClick={handleClose}
         size="small"
         color="header"
@@ -80,7 +85,7 @@ const ModalClose = ({ onClick, isButton = false }) => {
       onClick={handleClose}
       aria-label="Close dialog"
     >
-      <X size={20} strokeWidth={2} />
+      <X size={20} />
     </ModalCloseX>
   )
 }

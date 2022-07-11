@@ -68,7 +68,6 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
   const showArrows = isBrowser ? show_arrows : show_arrows_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
   const size = isBrowser ? 3.6 : 2.4
-  const strokeWidth = 2
   const count = slides.length
   const last = count - 1
   const prevIndex = index === 0 ? last : index - 1
@@ -158,13 +157,11 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
           <SliderArrow
             direction="LEFT"
             size={size}
-            strokeWidth={strokeWidth}
             onClick={(evt) => showSlide(evt, index === 0 ? last : index - 1)}
           />
           <SliderArrow
             direction="RIGHT"
             size={size}
-            strokeWidth={strokeWidth}
             onClick={(evt) => showSlide(evt, index === last ? 0 : index + 1)}
           />
         </SliderArrows>

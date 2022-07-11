@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ContainerSite } from '..'
+import { Container } from '..'
 
 const SliderArrowsView = styled.div`
   position: absolute;
@@ -22,11 +22,11 @@ const SliderArrowsContent = styled.div`
 const SliderArrows = ({ position = 'RIGHT', children }) => {
   return (
     <SliderArrowsView>
-      <ContainerSite>
+      <Container>
         <SliderArrowsContent position={position}>
           {children}
         </SliderArrowsContent>
-      </ContainerSite>
+      </Container>
     </SliderArrowsView>
   )
 }

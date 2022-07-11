@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -14,9 +13,7 @@ import {
   setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled, Message, Text } from '@open-tender/components'
-
 import { selectConfig, openModal } from '../../slices'
-import iconMap from '../iconMap'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 const RevenueCenterOrderView = styled('div')`
@@ -76,21 +73,11 @@ const RevenueCenterChange = ({ autoSelect }) => {
 
   return (
     <RevenueCenterOrderButtons>
-      <ButtonStyled
-        icon={iconMap.RefreshCw}
-        onClick={() => navigate(`/locations`)}
-        size="small"
-      >
+      <ButtonStyled onClick={() => navigate(`/locations`)} size="small">
         Change Location
       </ButtonStyled>
     </RevenueCenterOrderButtons>
   )
-}
-
-const icons = {
-  WALKIN: iconMap.Coffee,
-  PICKUP: iconMap.ShoppingBag,
-  DELIVERY: iconMap.Truck,
 }
 
 const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
@@ -140,17 +127,11 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   return (
     <RevenueCenterOrderButtons>
       {!isCatering && firstTimes && (
-        <ButtonStyled
-          icon={icons[serviceType]}
-          onClick={orderAsap}
-          disabled={!hasAsap}
-          size="small"
-        >
+        <ButtonStyled onClick={orderAsap} disabled={!hasAsap} size="small">
           Order ASAP
         </ButtonStyled>
       )}
       <ButtonStyled
-        icon={isCatering ? icons[serviceType] : iconMap.Clock}
         onClick={orderLater}
         size="small"
         color={isCatering || !firstTimes ? 'primary' : 'secondary'}

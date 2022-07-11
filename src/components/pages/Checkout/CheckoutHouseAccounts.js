@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
 import CheckoutButton from './CheckoutButton'
-import { Home } from 'react-feather'
+import { Home } from '../../icons'
 
 const CheckoutHouseAccountsView = styled.div``
 
@@ -64,7 +64,7 @@ const CheckoutHouseAccounts = ({ apply, remove, isPaid }) => {
         return (
           <CheckoutButton
             key={house_account_id}
-            icon={<Home width={18} height={18} />}
+            icon={<Home size={18} />}
             title={title}
             subtitle={subtitle}
             onPress={onPress}

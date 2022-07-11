@@ -7,18 +7,14 @@ import {
   selectCustomerOrder,
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
-
 import { selectBrand } from '../../../slices'
 import {
   Content,
   HeaderDefault,
-  LinkIcon,
   Main,
   Order as OrderSummary,
   PageContainer,
-  PageTitle,
 } from '../..'
-import iconMap from '../../iconMap'
 
 const Order = () => {
   const dispatch = useDispatch()
@@ -45,17 +41,9 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderDefault />
+        <HeaderDefault path="/orders" />
         <Main>
           <PageContainer>
-            <PageTitle>
-              <LinkIcon
-                to="/orders"
-                icon={iconMap.ArrowLeft}
-                text="Back to all orders"
-                isBefore={true}
-              />
-            </PageTitle>
             <OrderSummary {...customerOrder} />
           </PageContainer>
         </Main>
