@@ -46,7 +46,7 @@ const defaultSettings = {
   show_dots_mobile: true,
 }
 
-const SliderNew = ({ settings = {}, slides }) => {
+const Slider = ({ settings = {}, slides, bgColor }) => {
   const timer = useRef(null)
   const slider = useRef(null)
   const [pause, setPause] = useState(false)
@@ -146,7 +146,7 @@ const SliderNew = ({ settings = {}, slides }) => {
               shift={shift}
               active={active}
             >
-              <BackgroundImage {...slide}>
+              <BackgroundImage {...slide} bgColor={bgColor}>
                 <BackgroundContent {...slide} />
               </BackgroundImage>
             </Slide>
@@ -184,10 +184,11 @@ const SliderNew = ({ settings = {}, slides }) => {
   )
 }
 
-SliderNew.displayName = 'SliderNew'
-SliderNew.propTypes = {
+Slider.displayName = 'Slider'
+Slider.propTypes = {
   settings: propTypes.object,
   slides: propTypes.array,
+  bgColor: propTypes.string,
 }
 
-export default SliderNew
+export default Slider

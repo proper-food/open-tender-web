@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
@@ -17,11 +17,9 @@ import {
   Heading,
   Text,
 } from '@open-tender/components'
-
 import { toggleSidebar, selectSidebar } from '../../../slices'
 import { Loading } from '../..'
-import { useEffect } from 'react'
-import iconMap from '../../iconMap'
+import { Star } from '../../icons'
 
 const CheckoutCartView = styled('div')`
   padding: 0 0 ${(props) => props.theme.layout.navHeight};
@@ -147,7 +145,7 @@ const CheckoutCart = () => {
         applied: form.points || [],
         apply: applyPoints,
         remove: removePoints,
-        icon: iconMap.Star,
+        icon: <Star strokeWidth={2} />,
       }
     : null
 

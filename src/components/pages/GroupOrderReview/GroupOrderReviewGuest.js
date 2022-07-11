@@ -58,7 +58,6 @@ const GroupOrderReviewGuest = () => {
   const firstName = cartOwner ? cartOwner.first_name : ''
   const isLoading = loading === 'pending'
   const subtitle = makeSubtitle(error, groupCart, firstName, config)
-  console.log(error)
 
   useEffect(() => {
     error ? dispatch(reloadGuestOrder()) : dispatch(updateGroupOrder())

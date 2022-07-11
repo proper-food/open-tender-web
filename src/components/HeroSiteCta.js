@@ -3,7 +3,9 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
 
-const HeroSiteCtaView = styled('div')`
+const HeroSiteCtaView = styled.div`
+  position: relative;
+  z-index: 2;
   max-width: ${(props) => props.width || '72rem'};
 
   h1 {

@@ -1,7 +1,8 @@
-import React, { useEffect, useCallback } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import styled from '@emotion/styled'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
@@ -20,9 +21,7 @@ import {
   FormWrapper,
   ButtonStyled,
 } from '@open-tender/components'
-
 import { selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
 import {
   Content,
   HeaderLogo,
@@ -32,9 +31,7 @@ import {
   PageTitle,
   PageContainer,
 } from '../..'
-
 import GroupOrderError from './GroupOrderError'
-import styled from '@emotion/styled'
 
 const formatTime = (time) => {
   return time
@@ -256,10 +253,7 @@ const GroupOrderGuest = () => {
                       cartOwnerName={cartOwnerName}
                     />
                     <p>
-                      <ButtonStyled
-                        icon={iconMap.RefreshCw}
-                        onClick={startOver}
-                      >
+                      <ButtonStyled onClick={startOver}>
                         Start A New Order
                       </ButtonStyled>
                     </p>

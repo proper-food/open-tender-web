@@ -1,11 +1,17 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-import { NavButtons } from '../..'
 import { selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
+import {
+  CreditCard,
+  Gift,
+  Home,
+  Mail,
+  MapPin,
+  Sliders,
+  User,
+} from '../../icons'
+import { NavButtons } from '../..'
 
 const AccountButtonsView = styled('div')`
   max-width: 54rem;
@@ -18,37 +24,37 @@ const AccountButtonsView = styled('div')`
 
 const navButtons = [
   {
-    icon: iconMap.User,
+    icon: <User />,
     title: 'Profile',
     path: '/account/profile',
   },
   {
-    icon: iconMap.Mail,
+    icon: <Mail />,
     title: 'Communicaton Preferences',
     path: '/account/communications',
   },
   {
-    icon: iconMap.Sliders,
+    icon: <Sliders />,
     title: 'Dietary Preferences',
     path: '/account/allergens',
   },
   {
-    icon: iconMap.Gift,
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.CreditCard,
+    icon: <CreditCard />,
     title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
-    icon: iconMap.MapPin,
+    icon: <MapPin />,
     title: 'Addresses',
     path: '/account/addresses',
   },
   {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'House Accounts',
     path: '/account/house-accounts',
   },

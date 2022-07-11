@@ -27,7 +27,6 @@ import {
   Preface,
   useBuilder,
 } from '@open-tender/components'
-
 import {
   selectDisplaySettings,
   openModal,
@@ -36,9 +35,8 @@ import {
   selectContent,
   setMenuPath,
 } from '../../../slices'
-import iconMap from '../../iconMap'
+import { AlertCircle, Slash } from '../../icons'
 import { Tag } from '../..'
-
 import MenuItemCount from './MenuItemCount'
 import MenuItemImage from './MenuItemImage'
 
@@ -323,9 +321,9 @@ const MenuItem = ({ item }) => {
   }
 
   const itemTag = isSoldOut ? (
-    <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
+    <Tag icon={<Slash />} text={soldOutMsg} bgColor="alert" />
   ) : allergenAlert ? (
-    <Tag icon={iconMap.AlertCircle} text={allergenAlert} bgColor="alert" />
+    <Tag icon={<AlertCircle />} text={allergenAlert} bgColor="alert" />
   ) : null
 
   return (

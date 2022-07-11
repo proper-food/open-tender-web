@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -17,11 +17,10 @@ import {
   selectCustomerPointsProgram,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { selectDisplaySettings, selectMenuPath } from '../../../slices'
+import { ArrowLeft } from '../../icons'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
 import MenuItemBuilder from './MenuItemBuilder'
-import iconMap from '../../iconMap'
 import MenuItemClose from './MenuItemClose'
 
 const MenuItemView = styled('div')`
@@ -126,7 +125,7 @@ const MenuItem = () => {
           <MenuItemBack>
             <ButtonStyled
               onClick={cancel}
-              icon={iconMap.ArrowLeft}
+              icon={<ArrowLeft />}
               color="header"
               size="small"
             >

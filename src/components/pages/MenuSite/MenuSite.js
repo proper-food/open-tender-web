@@ -10,14 +10,15 @@ import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, selectBrand } from '../../../slices'
 import {
+  BackgroundContent,
   Content,
-  HeroSite,
   Main,
   HeaderSite,
-  HeroSiteCta,
+  PageHero,
   PageIntro,
 } from '../..'
 import MenuSiteCategory from './MenuSiteCategory'
+import { useTheme } from '@emotion/react'
 
 const MenuSiteView = styled.div``
 
@@ -28,6 +29,7 @@ const MenuSiteMenu = styled.div`
 
 const MenuSite = () => {
   const dispatch = useDispatch()
+  const { colors } = useTheme()
   const brand = useSelector(selectBrand)
   const { menuSite } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = menuSite
@@ -59,13 +61,20 @@ const MenuSite = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <HeroSite imageUrl={isBrowser ? background : mobile}>
-            <HeroSiteCta title={title} subtitle={subtitle}>
-              <ButtonStyled onClick={scrollToMenu}>
-                Browse Our Menu
+          <PageHero page="MENU" imageUrl={isBrowser ? background : mobile}>
+            <BackgroundContent
+              title={title}
+              subtitle={subtitle}
+              title_color={colors.light}
+              subtitle_color={colors.light}
+              vertical="BOTTOM"
+              horizontal="LEFT"
+            >
+              <ButtonStyled onClick={scrollToMenu} size="big" color="light">
+                Browse The Menu
               </ButtonStyled>
-            </HeroSiteCta>
-          </HeroSite>
+            </BackgroundContent>
+          </PageHero>
           <MenuSiteView>
             <PageIntro content={content} />
             <Element name="menuSite">

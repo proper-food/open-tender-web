@@ -3,10 +3,10 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Headline } from '@open-tender/components'
 
-import { ContainerSite } from '.'
+import { Container } from '.'
 import BackgroundCta from './BackgroundCta'
 
-const BackgroundContentView = styled('div')`
+const BackgroundContentView = styled.div`
   position: absolute;
   z-index: 3;
   top: 0;
@@ -28,8 +28,8 @@ const BackgroundContentView = styled('div')`
   }
 `
 
-const BackgroundContentText = styled('div')`
-  max-width: 72rem;
+const BackgroundContentText = styled.div`
+  max-width: 96rem;
   padding: ${(props) => props.theme.layout.padding} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile} 0;
@@ -77,6 +77,7 @@ const BackgroundContent = ({
   vertical = 'BOTTOM',
   horizontal = 'CENTER',
   hide_text = false,
+  children,
 }) => {
   if (!title && !subtitle) return null
   const justifyContent = makeAlignment(horizontal)
@@ -90,21 +91,28 @@ const BackgroundContent = ({
       alignItems={alignItems}
       textAlign={horizontal}
     >
-      <ContainerSite>
+      <Container>
         <BackgroundContentText>
           {title && (
-            <BackgroundContentTitle as="p" textColor={title_color}>
+            <BackgroundContentTitle
+              as="p"
+              textColor={title_color.replace('#', '')}
+            >
               {title}
             </BackgroundContentTitle>
           )}
           {subtitle && (
-            <BackgroundContentSubtitle textColor={subtitle_color}>
+            <BackgroundContentSubtitle
+              textColor={subtitle_color.replace('#', '')}
+            >
               {subtitle}
             </BackgroundContentSubtitle>
           )}
-          <BackgroundCta url={url} urlText={url_text} />
+          <BackgroundCta url={url} urlText={url_text}>
+            {children}
+          </BackgroundCta>
         </BackgroundContentText>
-      </ContainerSite>
+      </Container>
     </BackgroundContentView>
   )
 }
@@ -117,6 +125,11 @@ BackgroundContent.propTypes = {
   subtitle_color: propTypes.string,
   vertical: propTypes.string,
   horizontal: propTypes.string,
+  hide_text: propTypes.bool,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default BackgroundContent

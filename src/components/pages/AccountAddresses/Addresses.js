@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -8,10 +7,8 @@ import {
   setAddress,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
-
 import { openModal } from '../../../slices'
 import { LinkSeparator, OrderAddress, Row } from '../..'
-import iconMap from '../../iconMap'
 
 const Addresses = ({ addresses, isLoading }) => {
   const dispatch = useDispatch()
@@ -89,7 +86,6 @@ const Addresses = ({ addresses, isLoading }) => {
             actions={
               <ButtonStyled
                 onClick={() => handleReorder(address)}
-                icon={iconMap.RefreshCw}
                 size="small"
                 disabled={isLoading}
               >

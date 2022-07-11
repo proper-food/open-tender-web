@@ -6,10 +6,13 @@ import {
   selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
-import { BackgroundImage, BackgroundContent } from '../..'
-import AccountSection from './AccountSection'
-import AccountSectionHeader from './AccountSectionHeader'
 import { selectContent } from '../../../slices'
+import {
+  BackgroundImage,
+  BackgroundContent,
+  ScrollableSectionHeader,
+} from '../..'
+import AccountSection from './AccountSection'
 import AccountHero from './AccountHero'
 
 const makeImageUrl = (images, isBrowser) => {
@@ -70,7 +73,7 @@ const AccountAnnouncements = () => {
   return slides ? (
     <AccountSection>
       {title ? (
-        <AccountSectionHeader title={title} style={{ marginBottom: 12 }} />
+        <ScrollableSectionHeader title={title} style={{ marginBottom: 12 }} />
       ) : null}
       <AccountAnnouncementsView>
         {slides.map((slide) => {

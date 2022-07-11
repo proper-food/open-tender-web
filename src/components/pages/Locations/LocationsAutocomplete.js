@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import {
   setAddress,
@@ -8,9 +9,7 @@ import {
   setOrderServiceType,
 } from '@open-tender/redux'
 import { ButtonStyled, GoogleMapsAutocomplete } from '@open-tender/components'
-
-import iconMap from '../../iconMap'
-import { useNavigate } from 'react-router-dom'
+import { Navigation } from '../../icons'
 
 const LocationsAutocompleteView = styled('div')`
   position: absolute;
@@ -149,7 +148,7 @@ const LocationsAutocomplete = ({
           formattedAddress={formattedAddress}
           setAddress={(address) => dispatch(setAddress(address))}
           setCenter={setCenter}
-          icon={iconMap.Navigation}
+          icon={<Navigation strokeWidth={2} />}
           placeholder={placeholder}
         />
         <LocationsAutocompleteButtons>

@@ -1,9 +1,7 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import styled from '@emotion/styled'
 import { ButtonStyled, Heading } from '@open-tender/components'
-
 import { MenuContext } from './Menu'
-import iconMap from '../../iconMap'
 
 const MenuErrorView = styled('div')`
   max-width: 48rem;
@@ -40,9 +38,7 @@ const MenuError = () => {
       <div>
         <p>{error}</p>
       </div>
-      <ButtonStyled icon={iconMap.RefreshCw} onClick={changeRevenueCenter}>
-        Change Location
-      </ButtonStyled>
+      <ButtonStyled onClick={changeRevenueCenter}>Change Location</ButtonStyled>
     </MenuErrorView>
   ) : null
 }

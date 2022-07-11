@@ -4,17 +4,17 @@ import { isBrowser } from 'react-device-detect'
 import { scroller, Element } from 'react-scroll'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 import { slugify } from '@open-tender/js'
 import { fetchMenu, fetchAllergens, selectMenu } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { selectConfig, selectBrand } from '../../../slices'
 import {
+  BackgroundContent,
   Content,
-  HeroSite,
   Main,
   HeaderSite,
-  HeroSiteCta,
+  PageHero,
   PageIntro,
 } from '../..'
 import CateringSiteCategory from './CateringSiteCategory'
@@ -28,6 +28,7 @@ const CateringSiteMenu = styled.div`
 
 const CateringSite = () => {
   const dispatch = useDispatch()
+  const { colors } = useTheme()
   const brand = useSelector(selectBrand)
   const { cateringSite } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = cateringSite
@@ -59,13 +60,20 @@ const CateringSite = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <HeroSite imageUrl={isBrowser ? background : mobile}>
-            <HeroSiteCta title={title} subtitle={subtitle}>
-              <ButtonStyled onClick={scrollToMenu}>
+          <PageHero page="MENU" imageUrl={isBrowser ? background : mobile}>
+            <BackgroundContent
+              title={title}
+              subtitle={subtitle}
+              title_color={colors.light}
+              subtitle_color={colors.light}
+              vertical="BOTTOM"
+              horizontal="LEFT"
+            >
+              <ButtonStyled onClick={scrollToMenu} size="big" color="light">
                 Browse Our Catering Menu
               </ButtonStyled>
-            </HeroSiteCta>
-          </HeroSite>
+            </BackgroundContent>
+          </PageHero>
           <CateringSiteView>
             <PageIntro content={content} />
             <Element name="cateringSite">

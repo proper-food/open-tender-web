@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeCustomerGiftCard } from '@open-tender/redux'
 import { formatDateStr, dateStrToDate } from '@open-tender/js'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
-
 import { openModal, selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
 import { LinkSeparator, QRCode, Row } from '../..'
 
 const GiftCardButton = styled('button')`
@@ -95,7 +93,6 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
               !expired ? (
                 <ButtonStyled
                   onClick={() => handleAddValue(giftCard)}
-                  icon={iconMap.PlusCircle}
                   size="small"
                   disabled={isLoading}
                 >

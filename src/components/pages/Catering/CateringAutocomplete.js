@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { setAddress, selectOrder } from '@open-tender/redux'
 import { GoogleMap, GoogleMapsAutocomplete } from '@open-tender/components'
-
 import { selectSettings } from '../../../slices'
-import iconMap from '../../iconMap'
+import { Navigation } from '../../icons'
 
 const CateringMapView = styled('div')`
   position: fixed;
@@ -50,7 +49,7 @@ const CateringAutocompleteInput = ({
       formattedAddress={formattedAddress}
       setCenter={setCenter}
       setAddress={setAddress}
-      icon={iconMap.Navigation}
+      icon={<Navigation strokeWidth={2} />}
       placeholder="please enter your address"
     />
   </CateringAutocompleteInputView>

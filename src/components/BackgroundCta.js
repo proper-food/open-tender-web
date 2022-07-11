@@ -15,16 +15,18 @@ const BackgroundCtaView = styled.div`
   }
 `
 
-const BackgroundCta = ({ url, urlText }) => {
+const BackgroundCta = ({ url, urlText, children }) => {
   const navigate = useNavigate()
   const isNavigate = url ? url.includes(window.location.origin) : false
   const linkUrl = isNavigate ? url.replace(window.location.origin, '') : url
 
-  if (!url || !urlText) return null
+  if (!children && (!url || !urlText)) return null
 
   return (
     <BackgroundCtaView>
-      {isNavigate ? (
+      {children ? (
+        children
+      ) : isNavigate ? (
         <ButtonStyled
           onClick={() => navigate(linkUrl)}
           size="big"

@@ -1,24 +1,15 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-
-import { ButtonStyled } from '@open-tender/components'
-
+import { useTheme } from '@emotion/react'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
-import {
-  Content,
-  HeaderSite,
-  HeroSite,
-  HeroSiteCta,
-  Main,
-  PageIntro,
-} from '../..'
+import { BackgroundContent, Content, HeaderSite, Main, PageIntro } from '../..'
 import PageHero from '../../PageHero'
 
 const Home = () => {
   const dispatch = useDispatch()
+  const { colors } = useTheme()
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = home
@@ -36,14 +27,16 @@ const Home = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          {/* <HeroSite imageUrl={isBrowser ? background : mobile}>
-            <HeroSiteCta title={title} subtitle={subtitle} width="56rem">
-              <ButtonStyled onClick={() => navigate('/account')}>
-                Order Now
-              </ButtonStyled>
-            </HeroSiteCta>
-          </HeroSite> */}
-          <PageHero page="HOME" imageUrl={isBrowser ? background : mobile} />
+          <PageHero page="HOME" imageUrl={isBrowser ? background : mobile}>
+            <BackgroundContent
+              title={title}
+              subtitle={subtitle}
+              title_color={colors.light}
+              subtitle_color={colors.light}
+              vertical="BOTTOM"
+              horizontal="LEFT"
+            />
+          </PageHero>
           {hasContent && <PageIntro content={content} />}
         </Main>
       </Content>

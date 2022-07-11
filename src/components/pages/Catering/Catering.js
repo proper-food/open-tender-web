@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
@@ -11,14 +11,12 @@ import {
   setOrderType,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled, Message } from '@open-tender/components'
-
 import {
   selectBrand,
   selectCateringOnly,
   selectContent,
   selectHasCatering,
 } from '../../../slices'
-import iconMap from '../../iconMap'
 import {
   Background,
   Content,
@@ -141,7 +139,6 @@ const CateringPage = () => {
                 <CateringAutocomplete />
                 <CateringButtons>
                   <ButtonStyled
-                    icon={iconMap.Truck}
                     onClick={() => chooseServiceType('DELIVERY')}
                     disabled={!address}
                     size={isMobile ? 'small' : 'default'}
@@ -149,7 +146,6 @@ const CateringPage = () => {
                     Order Delivery
                   </ButtonStyled>
                   <ButtonStyled
-                    icon={iconMap.ShoppingBag}
                     onClick={() => chooseServiceType('PICKUP')}
                     disabled={!address}
                     size={isMobile ? 'small' : 'default'}
@@ -171,9 +167,7 @@ const CateringPage = () => {
                 <Message color="alert" as="p">
                   This merchant isn't currently accepting catering orders.
                 </Message>
-                <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
-                  Start Over
-                </ButtonStyled>
+                <ButtonStyled onClick={startOver}>Start Over</ButtonStyled>
               </CateringError>
             )}
             {hasContent && (

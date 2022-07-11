@@ -9,6 +9,7 @@ import {
 } from '@open-tender/redux'
 
 import { BackgroundImage, BackgroundLoading, Slider } from '.'
+import { useTheme } from '@emotion/react'
 
 const PageHeroView = styled('div')`
   height: 100vh;
@@ -30,8 +31,9 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({ page, imageUrl, style }) => {
+const PageHero = ({ page, imageUrl, style, children }) => {
   const dispatch = useDispatch()
+  const theme = useTheme()
   const announcements = useSelector(selectAnnouncementsPage(page))
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
@@ -46,9 +48,15 @@ const PageHero = ({ page, imageUrl, style }) => {
       {isLoading ? (
         <BackgroundLoading />
       ) : slides ? (
-        <Slider settings={settings} slides={slides} />
+        <Slider
+          settings={settings}
+          slides={slides}
+          bgColor={theme.bgColors.dark}
+        />
       ) : imageUrl ? (
-        <BackgroundImage imageUrl={imageUrl} />
+        <BackgroundImage imageUrl={imageUrl} bgColor={theme.bgColors.dark}>
+          {children}
+        </BackgroundImage>
       ) : null}
     </PageHeroView>
   )
@@ -59,6 +67,10 @@ PageHero.propTypes = {
   page: propTypes.string,
   imageUrl: propTypes.string,
   style: propTypes.object,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default PageHero

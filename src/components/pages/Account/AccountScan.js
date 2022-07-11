@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { fetchCustomerQRCode, selectCustomerQRCode } from '@open-tender/redux'
-
 import { openModal, selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
+import { Grid } from '../../icons'
 
 const AccountScanView = styled('div')`
   display: inline-block;
@@ -61,7 +60,9 @@ const AccountScan = () => {
           )
         }
       >
-        <AccountScanIcon>{iconMap.Grid}</AccountScanIcon>
+        <AccountScanIcon>
+          <Grid />
+        </AccountScanIcon>
         <AccountScanText>Scan to pay</AccountScanText>
       </AccountScanButton>
     </AccountScanView>

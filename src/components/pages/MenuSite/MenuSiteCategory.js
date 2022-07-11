@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 import { Container } from '../..'
-import MenuItem from '../Menu/MenuItemOld'
+import MenuItem from '../Menu/MenuItem'
 
 export const MenuSiteCategoryView = styled('div')`
   opacity: 0;

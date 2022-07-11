@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Sentry from '@sentry/react'
 import { Helmet } from 'react-helmet'
 import { resetOrderType, resetCheckout } from '@open-tender/redux'
 import { ButtonStyled, ButtonLink } from '@open-tender/components'
-
 import { selectBrand, selectConfig } from '../../../slices'
-import iconMap from '../../iconMap'
 import {
   Content,
   Header,
@@ -74,9 +72,7 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
             <PageTitle {...config} />
             <PageContent>
               <p>
-                <ButtonStyled icon={iconMap.RefreshCw} onClick={handleReset}>
-                  Start Over
-                </ButtonStyled>
+                <ButtonStyled onClick={handleReset}>Start Over</ButtonStyled>
               </p>
               <ErrorReportView>
                 {eventId && (
