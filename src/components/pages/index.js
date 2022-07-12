@@ -50,6 +50,7 @@ import RevenueCenter from './RevenueCenter'
 import Rewards from './Rewards'
 import SignUp from './SignUp'
 import Thanx from './Thanx'
+import Vendor from './Vendor'
 import VerifyAccount from './VerifyAccount'
 
 export {
@@ -105,5 +106,6 @@ export {
   Rewards,
   SignUp,
   Thanx,
+  Vendor,
   VerifyAccount,
 }

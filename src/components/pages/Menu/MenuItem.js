@@ -30,7 +30,6 @@ import {
 import {
   selectDisplaySettings,
   openModal,
-  setTopOffset,
   toggleSidebarModal,
   selectContent,
   setMenuPath,
@@ -299,9 +298,6 @@ const MenuItem = ({ item }) => {
       dispatch(setMenuPath(pathname || menuSlug))
       dispatch(setCurrentItem(orderItem))
       if (builderType === 'PAGE') {
-        const mainElement = document.getElementById('main')
-        const mainOffset = mainElement.getBoundingClientRect().top
-        dispatch(setTopOffset(-mainOffset))
         navigate(`${menuSlug}/item/${slugify(item.name)}`)
       } else if (builderType === 'SIDEBAR') {
         dispatch(toggleSidebarModal())

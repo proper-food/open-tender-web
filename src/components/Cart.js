@@ -13,7 +13,6 @@ import { CartItem, BuilderQuantity } from '@open-tender/components'
 import {
   openModal,
   selectDisplaySettings,
-  setTopOffset,
   toggleSidebar,
   toggleSidebarModal,
 } from '../slices'
@@ -37,9 +36,6 @@ const Cart = () => {
     dispatch(setCurrentItem(item))
     if (builderType === 'PAGE') {
       dispatch(toggleSidebar())
-      const mainElement = document.getElementById('main')
-      const mainOffset = mainElement.getBoundingClientRect().top
-      dispatch(setTopOffset(-mainOffset))
       navigate(`${menuSlug}/item/${slugify(item.name)}`)
     } else if (builderType === 'SIDEBAR') {
       dispatch(toggleSidebarModal())

@@ -51,6 +51,7 @@ import {
   Rewards,
   SignUp,
   Thanx,
+  Vendor,
   VerifyAccount,
 } from './pages'
 
@@ -79,6 +80,7 @@ const AppRoutes = () => {
         <Route index element={<Menu />} />
         <Route path="favorites" element={<MenuFavorites />} />
         <Route path="recents" element={<MenuRecents />} />
+        <Route path="vendor/:vendorSlug" element={<Vendor />} />
         <Route path="category/:categorySlug" element={<Category />} />
         <Route path="item/:itemSlug" element={<MenuItem />} />
       </Route>

@@ -26,8 +26,8 @@ import { makeValidDeals } from '@open-tender/js'
 import {
   selectBrand,
   selectConfig,
-  selectTopOffset,
-  setTopOffset,
+  selectMenuBrowse,
+  setMenuBrowse,
 } from '../../../slices'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuHeader from './MenuHeader'
@@ -39,7 +39,7 @@ export const MenuContext = createContext(null)
 const MenuPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const topOffset = useSelector(selectTopOffset)
+  const menuBrowse = useSelector(selectMenuBrowse)
   const [init, setInit] = useState(true)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
@@ -63,20 +63,20 @@ const MenuPage = () => {
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
-
-  useEffect(() => {
-    if (!init) dispatch(setTopOffset(null))
-  }, [init, dispatch])
+  console.log('init', init)
+  console.log('menuBrowse', menuBrowse)
 
   useEffect(() => {
     if (!revenueCenterId) {
       return navigate('/locations')
     } else if (groupOrderClosed) {
       return navigate('/review')
-    } else if (topOffset) {
-      scroll.scrollTo(topOffset || 0, { duration: 0, smooth: false })
+    } else if (menuBrowse) {
+      console.log('returning to menu page')
+      dispatch(setMenuBrowse(false))
       setInit(false)
     } else if (init) {
+      console.log('this is happening')
       scroll.scrollTo(0, { duration: 0, smooth: false })
       setInit(false)
       dispatch(fetchAllergens())
@@ -92,7 +92,7 @@ const MenuPage = () => {
     dispatch,
     navigate,
     groupOrderClosed,
-    topOffset,
+    menuBrowse,
     init,
   ])
 
@@ -103,10 +103,10 @@ const MenuPage = () => {
   }, [has_deals, customer_id, isLoading, dispatch, cartGuest])
 
   useEffect(() => {
-    if (init && !topOffset && customer_id) {
+    if (init && customer_id) {
       dispatch(fetchCustomerLoyalty())
     }
-  }, [init, topOffset, customer_id, dispatch])
+  }, [init, customer_id, dispatch])
 
   const changeRevenueCenter = () => {
     dispatch(resetRevenueCenter())
