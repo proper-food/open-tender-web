@@ -5,9 +5,14 @@ import { scroller, Element } from 'react-scroll'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
-import { fetchMenu, fetchAllergens, selectMenu } from '@open-tender/redux'
+import {
+  fetchAllergens,
+  fetchAnnouncementPage,
+  fetchMenu,
+  selectAnnouncementsPage,
+  selectMenu,
+} from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-
 import { selectConfig, selectBrand } from '../../../slices'
 import {
   BackgroundContent,
@@ -37,6 +42,7 @@ const MenuSite = () => {
   const serviceType = 'WALKIN'
   const requestedAt = '2022-02-03T17:00:00Z'
   const { categories } = useSelector(selectMenu)
+  const announcements = useSelector(selectAnnouncementsPage('MENU'))
 
   const scrollToMenu = () => {
     scroller.scrollTo('menuSite', {
@@ -53,6 +59,10 @@ const MenuSite = () => {
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch])
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('MENU'))
+  }, [dispatch])
+
   return (
     <>
       <Helmet>
@@ -61,7 +71,10 @@ const MenuSite = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <PageHero page="MENU" imageUrl={isBrowser ? background : mobile}>
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+          >
             <BackgroundContent
               title={title}
               subtitle={subtitle}

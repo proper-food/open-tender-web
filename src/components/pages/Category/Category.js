@@ -14,8 +14,8 @@ const MenuCategoryView = styled.div``
 
 const Category = () => {
   const navigate = useNavigate()
-  const category = useSelector(selectCurrentCategory)
   const { title: siteTitle } = useSelector(selectBrand)
+  const category = useSelector(selectCurrentCategory)
   const menuSlug = useSelector(selectMenuSlug)
   const navItems = category.children.map(({ name }) => name)
 

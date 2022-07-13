@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -7,18 +7,14 @@ import {
   fetchCustomerFavorites,
   selectCustomer,
   selectCustomerFavorites,
-  selectMenu,
   selectMenuSlug,
 } from '@open-tender/redux'
 import { makeMenuItemLookup, makeFavorites } from '@open-tender/js'
 
-import {
-  selectBrand,
-  selectContentSection,
-  selectDisplaySettings,
-} from '../../../slices'
+import { selectContentSection } from '../../../slices'
 import { Container, Content, Loading, Main } from '../..'
 import { MenuCategoryHeader, MenuHeader, MenuItems, MenuItem } from '../Menu'
+import { MenuContext } from '../Menu/Menu'
 
 const MenuFavoritesView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -31,13 +27,14 @@ const MenuFavorites = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [count, setCount] = useState(0)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { categories, soldOut, siteTitle, displaySettings } =
+    useContext(MenuContext)
+  const { itemsTwoPerRowMobile: showTwo } = displaySettings
   const { title, subtitle } = useSelector(selectContentSection('favorites'))
-  const { itemsTwoPerRowMobile: showTwo } = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const { auth } = useSelector(selectCustomer)
   const hasCustomer = auth ? true : false
-  const { categories, soldOut } = useSelector(selectMenu)
+
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
   const favs = useSelector(selectCustomerFavorites)
   const favorites = useMemo(

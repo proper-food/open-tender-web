@@ -9,7 +9,6 @@ import {
   setCurrentVendor,
 } from '@open-tender/redux'
 import { BgImage, Heading } from '@open-tender/components'
-import { setMenuBrowse } from '../../../slices'
 import { ArrowRight } from '../../icons'
 
 const MenuBrowseCategoryView = styled.div`
@@ -130,7 +129,6 @@ const MenuBrowseCategory = ({ category }) => {
 
   const view = (evt) => {
     evt.preventDefault()
-    dispatch(setMenuBrowse(true))
     if (revenue_center_id) {
       dispatch(setCurrentVendor(category))
       navigate(`${menuSlug}/vendor/${slugify(category.name)}`)

@@ -1,49 +1,39 @@
-import { useEffect, createContext, useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, createContext, useMemo, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Helmet } from 'react-helmet'
-import { animateScroll as scroll } from 'react-scroll'
 import {
-  selectOrder,
-  selectMenuVars,
-  selectGroupOrderClosed,
-  selectGroupOrder,
-  selectMenu,
-  selectSelectedAllergenNames,
-  selectCustomer,
-  selectDeals,
-  resetRevenueCenter,
+  fetchAnnouncementPage,
+  fetchAllergens,
+  fetchCustomerLoyalty,
+  fetchDeals,
   fetchLocation,
   fetchMenu,
-  fetchAllergens,
-  fetchDeals,
-  // fetchAnnouncementPage,
-  fetchCustomerLoyalty,
+  selectAnnouncementsPage,
+  selectCustomer,
   selectCustomerPointsProgram,
+  selectDeals,
+  selectGroupOrder,
+  selectGroupOrderClosed,
+  selectMenu,
+  selectMenuVars,
+  selectOrder,
+  selectSelectedAllergenNames,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
-
 import {
   selectBrand,
-  selectConfig,
-  selectMenuBrowse,
-  setMenuBrowse,
+  selectContentSection,
+  selectDisplaySettings,
 } from '../../../slices'
-import { Content, Main, ScreenreaderTitle } from '../..'
-import MenuHeader from './MenuHeader'
-import MenuNew from './MenuNew'
-// import MenuContent from './MenuContent'
 
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const menuBrowse = useSelector(selectMenuBrowse)
   const [init, setInit] = useState(true)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
-  const { menu: menuConfig } = useSelector(selectConfig)
-  const { loadingMessage } = menuConfig
+  const menuContent = useSelector(selectContentSection('menu'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
@@ -63,33 +53,30 @@ const MenuPage = () => {
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const displaySettings = useSelector(selectDisplaySettings)
 
   useEffect(() => {
     if (!revenueCenterId) {
       return navigate('/locations')
     } else if (groupOrderClosed) {
       return navigate('/review')
-    } else if (menuBrowse) {
-      dispatch(setMenuBrowse(false))
-      setInit(false)
     } else if (init) {
-      scroll.scrollTo(0, { duration: 0, smooth: false })
       setInit(false)
       dispatch(fetchAllergens())
       dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
-      // dispatch(fetchAnnouncementPage('MENU'))
+      dispatch(fetchAnnouncementPage('MENU'))
     }
   }, [
+    init,
     revenueCenterId,
     orderType,
     serviceType,
     requestedAt,
+    groupOrderClosed,
     dispatch,
     navigate,
-    groupOrderClosed,
-    menuBrowse,
-    init,
   ])
 
   useEffect(() => {
@@ -99,45 +86,32 @@ const MenuPage = () => {
   }, [has_deals, customer_id, isLoading, dispatch, cartGuest])
 
   useEffect(() => {
-    if (init && customer_id) {
+    if (customer_id) {
       dispatch(fetchCustomerLoyalty())
     }
-  }, [init, customer_id, dispatch])
-
-  const changeRevenueCenter = () => {
-    dispatch(resetRevenueCenter())
-  }
+  }, [customer_id, dispatch])
 
   return (
     <>
-      <Helmet>
-        <title>Menu | {siteTitle}</title>
-      </Helmet>
-      <Content>
-        <MenuHeader />
-        <Main>
-          <MenuContext.Provider
-            value={{
-              menuConfig,
-              revenueCenter,
-              categories,
-              revenueCenters,
-              changeRevenueCenter,
-              soldOut,
-              allergenAlerts,
-              isLoading,
-              loadingMessage,
-              error,
-              deals: validDeals,
-              pointsProgram,
-            }}
-          >
-            <ScreenreaderTitle>Menu</ScreenreaderTitle>
-            {/* <MenuContent /> */}
-            <MenuNew />
-          </MenuContext.Provider>
-        </Main>
-      </Content>
+      <MenuContext.Provider
+        value={{
+          siteTitle,
+          menuContent,
+          revenueCenter,
+          categories,
+          revenueCenters,
+          soldOut,
+          allergenAlerts,
+          isLoading,
+          error,
+          deals: validDeals,
+          pointsProgram,
+          announcements,
+          displaySettings,
+        }}
+      >
+        <Outlet />
+      </MenuContext.Provider>
     </>
   )
 }

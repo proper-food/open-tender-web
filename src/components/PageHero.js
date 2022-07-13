@@ -1,15 +1,8 @@
-import { useEffect } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { isBrowser } from 'react-device-detect'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectAnnouncementsPage,
-  fetchAnnouncementPage,
-} from '@open-tender/redux'
-
-import { BackgroundImage, BackgroundLoading, Slider } from '.'
 import { useTheme } from '@emotion/react'
+import { isBrowser } from 'react-device-detect'
+import { BackgroundImage, BackgroundLoading, Slider } from '.'
 
 const PageHeroView = styled.div`
   display: flex;
@@ -34,18 +27,12 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({ page, imageUrl, height, style, children }) => {
-  const dispatch = useDispatch()
+const PageHero = ({ announcements, imageUrl, height, style, children }) => {
   const theme = useTheme()
-  const announcements = useSelector(selectAnnouncementsPage(page))
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
   const hideHero = !slides && !imageUrl
-
-  useEffect(() => {
-    if (page) dispatch(fetchAnnouncementPage(page))
-  }, [dispatch, page])
 
   if (hideHero) return null
 
@@ -70,7 +57,7 @@ const PageHero = ({ page, imageUrl, height, style, children }) => {
 
 PageHero.displayName = 'PageHero'
 PageHero.propTypes = {
-  page: propTypes.string,
+  announcements: propTypes.object,
   imageUrl: propTypes.string,
   height: propTypes.string,
   style: propTypes.object,

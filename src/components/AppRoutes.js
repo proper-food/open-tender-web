@@ -54,6 +54,7 @@ import {
   Vendor,
   VerifyAccount,
 } from './pages'
+import MenuNew from './pages/Menu/MenuNew'
 
 const AppRoutes = () => {
   return (
@@ -76,8 +77,8 @@ const AppRoutes = () => {
       <Route path="catering-address" element={<Catering />} />
       <Route path="locations" element={<RevenueCenters />} />
       <Route path="locations/:slug" element={<RevenueCenter />} />
-      <Route path="menu/:slug">
-        <Route index element={<Menu />} />
+      <Route path="menu/:slug" element={<Menu />}>
+        <Route index element={<MenuNew />} />
         <Route path="favorites" element={<MenuFavorites />} />
         <Route path="recents" element={<MenuRecents />} />
         <Route path="vendor/:vendorSlug" element={<Vendor />} />

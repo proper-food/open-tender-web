@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { useTheme } from '@emotion/react'
+import {
+  fetchAnnouncementPage,
+  selectAnnouncementsPage,
+} from '@open-tender/redux'
 import { closeModal, selectBrand, selectContentSection } from '../../../slices'
 import { BackgroundContent, Content, HeaderSite, Main, PageIntro } from '../..'
 import PageHero from '../../PageHero'
@@ -15,9 +19,14 @@ const Home = () => {
     selectContentSection('home')
   )
   const hasContent = !!(content && content.length)
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
 
   useEffect(() => {
     dispatch(closeModal())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('HOME'))
   }, [dispatch])
 
   return (
@@ -28,7 +37,10 @@ const Home = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <PageHero page="HOME" imageUrl={isBrowser ? background : mobile}>
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+          >
             <BackgroundContent
               title={title}
               subtitle={subtitle}

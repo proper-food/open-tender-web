@@ -6,7 +6,13 @@ import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { slugify } from '@open-tender/js'
-import { fetchMenu, fetchAllergens, selectMenu } from '@open-tender/redux'
+import {
+  fetchAllergens,
+  fetchAnnouncementPage,
+  fetchMenu,
+  selectAnnouncementsPage,
+  selectMenu,
+} from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 import { selectConfig, selectBrand } from '../../../slices'
 import {
@@ -36,6 +42,7 @@ const CateringSite = () => {
   const serviceType = 'DELIVERY'
   const requestedAt = '2022-02-03T17:00:00Z'
   const { categories } = useSelector(selectMenu)
+  const announcements = useSelector(selectAnnouncementsPage('CATERING'))
 
   const scrollToMenu = () => {
     scroller.scrollTo('cateringSite', {
@@ -52,6 +59,10 @@ const CateringSite = () => {
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch])
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('CATERING'))
+  }, [dispatch])
+
   return (
     <>
       <Helmet>
@@ -60,7 +71,10 @@ const CateringSite = () => {
       <Content>
         <HeaderSite />
         <Main style={{ paddingTop: '0' }}>
-          <PageHero page="MENU" imageUrl={isBrowser ? background : mobile}>
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+          >
             <BackgroundContent
               title={title}
               subtitle={subtitle}
