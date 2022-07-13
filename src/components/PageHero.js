@@ -1,14 +1,15 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { BackgroundImage, BackgroundLoading, Slider } from '.'
 
 const PageHeroView = styled.div`
+  label: PageHero;
   display: flex;
-  height: 100vh;
-  height: -webkit-fill-available;
   min-height: 64rem;
+  height: 100vh;
+  ${(props) => (props.isMobile ? `height: -webkit-fill-available;` : '')}
   ${(props) =>
     props.ht ? `height: ${props.ht}; min-height: ${props.ht};` : ''}
 `
@@ -37,7 +38,7 @@ const PageHero = ({ announcements, imageUrl, height, style, children }) => {
   if (hideHero) return null
 
   return (
-    <PageHeroView ht={height} style={style}>
+    <PageHeroView ht={height} isMobile={isMobile} style={style}>
       {isLoading ? (
         <BackgroundLoading />
       ) : slides ? (
