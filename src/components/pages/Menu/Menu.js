@@ -63,8 +63,6 @@ const MenuPage = () => {
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
-  console.log('init', init)
-  console.log('menuBrowse', menuBrowse)
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -72,11 +70,9 @@ const MenuPage = () => {
     } else if (groupOrderClosed) {
       return navigate('/review')
     } else if (menuBrowse) {
-      console.log('returning to menu page')
       dispatch(setMenuBrowse(false))
       setInit(false)
     } else if (init) {
-      console.log('this is happening')
       scroll.scrollTo(0, { duration: 0, smooth: false })
       setInit(false)
       dispatch(fetchAllergens())

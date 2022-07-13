@@ -13,21 +13,13 @@ const MenuNewView = styled.div``
 const MenuAnnouncements = styled.div``
 
 const MenuNew = () => {
-  const {
-    // revenueCenter,
-    categories,
-    revenueCenters,
-    // isLoading,
-    // loadingMessage,
-    // error,
-  } = useContext(MenuContext)
   const heroRef = useRef()
+  const { categories, revenueCenters } = useContext(MenuContext)
   const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const { background, mobile } = useSelector(selectContentSection('menu'))
   const showHero = isMobile ? menuHeroMobile : menuHero
   const imageUrl = showHero ? (isMobile ? mobile : background) : null
   const heroHeight = isMobile ? '24rem' : '48rem'
-  // console.log('isLoading', isLoading)
 
   return (
     <MenuNewView>
