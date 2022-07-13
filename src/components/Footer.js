@@ -150,7 +150,7 @@ const FooterVersion = styled('div')`
 `
 
 const Footer = ({ hasRouter = true }) => {
-  const { logoLight, url, has_deals, has_gift_cards, has_donations } =
+  const { logoLight, url, has_gift_cards, has_donations } =
     useSelector(selectBrand)
   const { orderTypes = [] } = useSelector(selectSettings)
   const hasGiftCards = has_gift_cards && orderTypes.includes('GIFT_CARDS')
@@ -174,11 +174,6 @@ const Footer = ({ hasRouter = true }) => {
                       <a href={url} rel="noopener noreferrer">
                         Back to Website
                       </a>
-                    </li>
-                  )}
-                  {has_deals && (
-                    <li>
-                      <Link to="/deals">Deals</Link>
                     </li>
                   )}
                   {hasGiftCards && (

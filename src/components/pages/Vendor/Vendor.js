@@ -1,16 +1,12 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import {
-  selectCurrentVendor,
-  selectMenu,
-  selectMenuSlug,
-} from '@open-tender/redux'
+import { selectCurrentVendor, selectMenuSlug } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { selectBrand, selectDisplaySettings } from '../../../slices'
 import { Content, Main, PageHero, ScreenreaderTitle } from '../..'
+import { MenuContext } from '../Menu/Menu'
 import { MenuHeader, MenuCategory } from '../Menu'
 import CategoryNav from '../Category/CategoryNav'
 import VendorInfo from './VendorInfo'
@@ -34,12 +30,9 @@ const VendorHero = styled.div`
 
 const Vendor = () => {
   const navigate = useNavigate()
-  const { title: siteTitle } = useSelector(selectBrand)
   const menuSlug = useSelector(selectMenuSlug)
-  const { categories } = useSelector(selectMenu)
-  const { menuHeroChild, menuHeroChildMobile } = useSelector(
-    selectDisplaySettings
-  )
+  const { categories, siteTitle, displaySettings } = useContext(MenuContext)
+  const { menuHeroChild, menuHeroChildMobile } = displaySettings
   const showHero =
     menuHeroChild === undefined
       ? true
@@ -64,7 +57,7 @@ const Vendor = () => {
     <>
       <Helmet>
         <title>
-          {name} | {siteTitle}
+          Menu - {name} | {siteTitle}
         </title>
       </Helmet>
       <Content>

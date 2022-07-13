@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -8,6 +8,8 @@ import {
   selectCurrentItem,
   setCurrentItem,
   addItemToCart,
+  selectSoldOut,
+  selectSelectedAllergenNames,
   selectGroupOrder,
   selectMenuSlug,
   showNotification,
@@ -15,12 +17,11 @@ import {
   selectCustomerPointsProgram,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-import { selectMenuPath } from '../../../slices'
+import { selectDisplaySettings, selectMenuPath } from '../../../slices'
 import { ArrowLeft } from '../../icons'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
 import MenuItemBuilder from './MenuItemBuilder'
 import MenuItemClose from './MenuItemClose'
-import { MenuContext } from '../Menu/Menu'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -82,11 +83,12 @@ const MenuItemBack = styled('div')`
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { soldOut, siteTitle, displaySettings, allergenAlerts } =
-    useContext(MenuContext)
   const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
+  const soldOut = useSelector(selectSoldOut)
+  const allergens = useSelector(selectSelectedAllergenNames)
+  const displaySettings = useSelector(selectDisplaySettings)
   const { orderType } = useSelector(selectOrder)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const { cartId } = useSelector(selectGroupOrder)
@@ -116,9 +118,7 @@ const MenuItem = () => {
   return (
     <>
       <Helmet>
-        <title>
-          Menu - {item.name} | {siteTitle}
-        </title>
+        <title>Menu | {item.name}</title>
       </Helmet>
       <Content hasFooter={false}>
         {isBrowser && (
@@ -146,7 +146,7 @@ const MenuItem = () => {
                 addItemToCart={addItem}
                 cancel={cancel}
                 soldOut={soldOut}
-                allergenAlerts={allergenAlerts}
+                allergenAlerts={allergens}
                 displaySettings={displaySettings}
                 cartId={cartId}
                 hasPoints={!!pointsProgram}

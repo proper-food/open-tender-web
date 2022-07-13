@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { selectCurrentCategory, selectMenuSlug } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { selectBrand } from '../../../slices'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import { MenuHeader, MenuCategory } from '../Menu'
 import CategoryNav from './CategoryNav'
+import { MenuContext } from '../Menu/Menu'
 
 const MenuCategoryView = styled.div``
 
 const Category = () => {
   const navigate = useNavigate()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { siteTitle } = useContext(MenuContext)
   const category = useSelector(selectCurrentCategory)
   const menuSlug = useSelector(selectMenuSlug)
   const navItems = category.children.map(({ name }) => name)
@@ -29,7 +29,7 @@ const Category = () => {
     <>
       <Helmet>
         <title>
-          {category.name} | {siteTitle}
+          Menu - {category.name} | {siteTitle}
         </title>
       </Helmet>
       <Content>
