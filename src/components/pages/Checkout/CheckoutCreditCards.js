@@ -21,6 +21,9 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
   const appliedCardId = appliedCard.customer_card_id || null
   const defaultCard = useMemo(() => cards.find((i) => i.is_default), [cards])
   const defaultCardId = defaultCard ? defaultCard.customer_card_id : null
+  const cardIds = cards.map((i) => i.customer_card_id)
+  const missingCard = appliedCardId && !cardIds.includes(appliedCardId)
+  console.log(missingCard)
 
   // if customer adds new default card, replace the current credit tender
   useEffect(() => {
@@ -39,6 +42,10 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
     cardCount,
     cards.length,
   ])
+
+  useEffect(() => {
+    if (missingCard) remove()
+  }, [missingCard, remove])
 
   if (!hasCards) return null
 

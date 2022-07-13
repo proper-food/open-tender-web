@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   fetchAnnouncementPage,
   fetchAllergens,
+  fetchCustomerFavorites,
   fetchCustomerLoyalty,
+  fetchCustomerOrders,
   fetchDeals,
   fetchLocation,
   fetchMenu,
@@ -46,7 +48,8 @@ const MenuPage = () => {
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const { cartGuest } = useSelector(selectGroupOrder)
   const { profile } = useSelector(selectCustomer)
-  const { customer_id } = profile || {}
+  const { customer_id = null } = profile || {}
+  const [customerId, setCustomerId] = useState(null)
   const { entities } = useSelector(selectDeals)
   const deals = has_deals && entities.length ? entities : null
   const validDeals = useMemo(
@@ -87,9 +90,16 @@ const MenuPage = () => {
 
   useEffect(() => {
     if (customer_id) {
-      dispatch(fetchCustomerLoyalty())
+      if (customer_id !== customerId) {
+        setCustomerId(customer_id)
+        dispatch(fetchCustomerLoyalty())
+        dispatch(fetchCustomerFavorites())
+        dispatch(fetchCustomerOrders(20))
+      }
+    } else {
+      setCustomerId(null)
     }
-  }, [customer_id, dispatch])
+  }, [customer_id, customerId, dispatch])
 
   return (
     <>

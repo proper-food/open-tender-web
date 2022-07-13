@@ -3,8 +3,6 @@ import styled from '@emotion/styled'
 import { animateScroll as scroll } from 'react-scroll'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  fetchCustomerFavorites,
-  fetchCustomerOrders,
   selectCustomer,
   selectCustomerFavorites,
   selectCustomerOrders,
@@ -121,7 +119,7 @@ const MenuFavorites = () => {
   const [count, setCount] = useState(0)
   const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
-  const hasCustomer = auth ? true : false
+  // const hasCustomer = auth ? true : false
   const menuSlug = useSelector(selectMenuSlug)
   const { categories, soldOut } = useSelector(selectMenu)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
@@ -172,13 +170,6 @@ const MenuFavorites = () => {
       offset: 0,
     })
   }
-
-  useEffect(() => {
-    if (hasCustomer) {
-      dispatch(fetchCustomerFavorites())
-      dispatch(fetchCustomerOrders(20))
-    }
-  }, [hasCustomer, dispatch])
 
   useEffect(() => {
     if (!menuSection) dispatch(setMenuSection('recents'))

@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
 import { selectDisplaySettings } from '../../../slices'
-import { Content, Main, PageHero, ScreenreaderTitle } from '../..'
+import { Content, Loading, Main, PageHero, ScreenreaderTitle } from '../..'
 import { MenuContext } from './Menu'
 import MenuHeader from './MenuHeader'
 import MenuBrowse from './MenuBrowse'
@@ -14,11 +14,24 @@ const MenuNewView = styled.div``
 
 const MenuAnnouncements = styled.div``
 
+const MenuLoading = styled.div`
+  margin: ${(props) => props.theme.layout.margin} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
+  }
+`
+
 const MenuNew = () => {
   const heroRef = useRef()
-  const { announcements, categories, revenueCenters, siteTitle, menuContent } =
-    useContext(MenuContext)
-  const { background, mobile } = menuContent
+  const {
+    announcements,
+    categories,
+    revenueCenters,
+    siteTitle,
+    menuContent,
+    isLoading,
+  } = useContext(MenuContext)
+  const { background, mobile, loadingMessage } = menuContent
   const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const showHero = isMobile ? menuHeroMobile : menuHero
   const imageUrl = showHero ? (isMobile ? mobile : background) : null
@@ -41,8 +54,16 @@ const MenuNew = () => {
                 imageUrl={imageUrl}
               />
             </MenuAnnouncements>
-            <MenuFavsRecents />
-            <MenuBrowse categories={revenueCenters || categories} />
+            {isLoading ? (
+              <MenuLoading>
+                <Loading text={loadingMessage} />
+              </MenuLoading>
+            ) : (
+              <>
+                <MenuFavsRecents />
+                <MenuBrowse categories={revenueCenters || categories} />
+              </>
+            )}
           </MenuNewView>
         </Main>
       </Content>
