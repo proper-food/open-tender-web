@@ -5,31 +5,91 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
-  selectCurrentItem,
-  setCurrentItem,
   addItemToCart,
+  selectCartCounts,
+  selectCurrentItem,
+  selectCustomerPointsProgram,
   selectGroupOrder,
+  selectOrder,
+  setCurrentItem,
   selectMenuSlug,
   showNotification,
-  selectOrder,
-  selectCustomerPointsProgram,
 } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { prepareMenuItem } from '@open-tender/js'
+import {
+  BuilderBody,
+  BuilderFooter,
+  BuilderHeader,
+  BuilderOption,
+  ButtonStyled,
+  useBuilder,
+} from '@open-tender/components'
 import { selectMenuPath } from '../../../slices'
-import { ArrowLeft } from '../../icons'
+import { ArrowLeft, Minus, Plus, Star } from '../../icons'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
 import MenuItemBuilder from './MenuItemBuilder'
 import MenuItemClose from './MenuItemClose'
+import { MenuHeader } from '../Menu'
 import { MenuContext } from '../Menu/Menu'
+import { useTheme } from '@emotion/react'
+import MenuItemHeader from './MenuItemHeader'
+import MenuItemAccordion from './MenuItemAccordion'
 
-const MenuItemView = styled('div')`
+const footerHeight = '8rem'
+const footerHeightMobile = '7rem'
+
+const menuItemsIconMap = {
+  plus: <Plus strokeWidth={2} />,
+  minus: <Minus strokeWidth={2} />,
+}
+
+const MenuItemView = styled.div`
   position: relative;
   z-index: 2;
+  height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
 `
 
-const MenuItemBuilderView = styled('div')`
+const MenuItemAdd = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: ${(props) => props.theme.bgColors.primary};
+`
+
+const MenuItemAddContent = styled.div`
+  flex: 0 0 100%;
+  max-width: ${(props) => props.maxWidth};
+  padding: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 100%;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const MenuItemCustomize = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+`
+
+const MenuItemCustomizeContent = styled.div`
+  flex: 0 0 100%;
+  max-width: ${(props) => props.maxWidth};
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 100%;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const MenuItemBuilderView = styled.div`
   width: 64rem;
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -38,7 +98,7 @@ const MenuItemBuilderView = styled('div')`
   }
 `
 
-const MenuItemImage = styled('div')`
+const MenuItemImage = styled.div`
   position: fixed;
   display: flex;
   z-index: 1;
@@ -54,7 +114,7 @@ const MenuItemImage = styled('div')`
   }
 `
 
-const MenuItemBack = styled('div')`
+const MenuItemBack = styled.div`
   position: fixed;
   z-index: 5;
   top: 0;
@@ -82,20 +142,20 @@ const MenuItemBack = styled('div')`
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { layout } = useTheme()
+  const maxWidth = parseInt(layout.containerMaxWidth.replace('rem', '')) / 2
+  const maxWidthRem = `${maxWidth.toFixed(0)}rem`
   const { soldOut, siteTitle, displaySettings, allergenAlerts } =
     useContext(MenuContext)
   const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
-  const { orderType } = useSelector(selectOrder)
-  const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const { cartId } = useSelector(selectGroupOrder)
-  const imageUrl = item
-    ? item.large_image_url ||
-      item.small_image_url ||
-      item.app_image_url ||
-      item.imageUrl
-    : null
+  const { orderType } = useSelector(selectOrder)
+  const cartCounts = useSelector(selectCartCounts)
+  const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
+  const hasPoints = !!pointsProgram
+  const pointsIcon = hasPoints ? <Star /> : null
 
   useEffect(() => {
     if (!item) navigate(menuPath || menuSlug)
@@ -111,6 +171,30 @@ const MenuItem = () => {
     dispatch(setCurrentItem(null))
   }
 
+  const menuItem = prepareMenuItem(
+    item || {},
+    allergenAlerts,
+    soldOut,
+    displaySettings,
+    cartCounts,
+    isBrowser
+  )
+
+  const {
+    item: builtItem,
+    increment,
+    decrement,
+    setQuantity,
+    setMadeFor,
+    setNotes,
+    toggleOption,
+    incrementOption,
+    decrementOption,
+    setOptionQuantity,
+  } = useBuilder(item || {}, soldOut, hasPoints)
+
+  // console.log(builtItem.groups)
+
   if (!item) return null
 
   return (
@@ -121,6 +205,7 @@ const MenuItem = () => {
         </title>
       </Helmet>
       <Content hasFooter={false}>
+        {/* <MenuHeader backPath={menuSlug} /> */}
         {isBrowser && (
           <MenuItemBack>
             <ButtonStyled
@@ -133,25 +218,68 @@ const MenuItem = () => {
             </ButtonStyled>
           </MenuItemBack>
         )}
-        <Main style={{ padding: '0' }}>
+        <Main style={{ height: '100%', padding: '0' }}>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
-          <MenuItemImage>
+          {/* <MenuHeader backClick={cancel} /> */}
+          {/* <MenuItemImage>
             <BackgroundImage imageUrl={imageUrl} />
-          </MenuItemImage>
+          </MenuItemImage> */}
           <MenuItemView>
-            <MenuItemClose onClick={cancel} isButton={!isBrowser} />
-            <MenuItemBuilderView>
-              <MenuItemBuilder
-                menuItem={item}
-                addItemToCart={addItem}
-                cancel={cancel}
-                soldOut={soldOut}
-                allergenAlerts={allergenAlerts}
-                displaySettings={displaySettings}
-                cartId={cartId}
-                hasPoints={!!pointsProgram}
-              />
-            </MenuItemBuilderView>
+            {/* <MenuItemClose onClick={cancel} isButton={!isBrowser} /> */}
+            <MenuItemAdd>
+              <MenuItemAddContent maxWidth={maxWidthRem}>
+                <MenuItemHeader
+                  menuItem={menuItem}
+                  builtItem={builtItem}
+                  displaySettings={displaySettings}
+                  pointsIcon={pointsIcon}
+                />
+                <MenuItemAccordion
+                  builtItem={builtItem}
+                  setQuantity={setQuantity}
+                  increment={increment}
+                  decrement={decrement}
+                  toggleOption={toggleOption}
+                />
+                {/* <BuilderFooter
+                  item={builderItem}
+                  iconMap={menuItemsIconMap}
+                  addItemToCart={addItem}
+                  setQuantity={setQuantity}
+                  increment={increment}
+                  decrement={decrement}
+                  pointsIcon={pointsIcon}
+                /> */}
+              </MenuItemAddContent>
+            </MenuItemAdd>
+            <MenuItemCustomize>
+              <MenuItemCustomizeContent maxWidth={maxWidthRem}>
+                {/* <MenuItemBuilder
+                  menuItem={builderItem}
+                  addItemToCart={addItem}
+                  cancel={cancel}
+                  soldOut={soldOut}
+                  allergenAlerts={allergenAlerts}
+                  displaySettings={displaySettings}
+                  cartId={cartId}
+                  hasPoints={!!pointsProgram}
+                /> */}
+                <BuilderBody
+                  allergens={allergenAlerts}
+                  renderOption={(props) => <BuilderOption {...props} />}
+                  iconMap={menuItemsIconMap}
+                  displaySettings={displaySettings}
+                  cartId={cartId}
+                  item={builtItem}
+                  setMadeFor={setMadeFor}
+                  setNotes={setNotes}
+                  toggleOption={toggleOption}
+                  incrementOption={incrementOption}
+                  decrementOption={decrementOption}
+                  setOptionQuantity={setOptionQuantity}
+                />
+              </MenuItemCustomizeContent>
+            </MenuItemCustomize>
           </MenuItemView>
         </Main>
       </Content>

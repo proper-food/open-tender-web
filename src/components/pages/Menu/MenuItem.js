@@ -209,7 +209,7 @@ const MenuItemAllergen = styled(Preface)`
 const MenuItemDescription = styled(Body)`
   display: block;
   margin: 0.8rem 0 0;
-  line-height: 1.2;
+  // line-height: 1.2;
   font-size: ${(props) => props.theme.fonts.sizes.small};
 
   .compact & {
@@ -256,6 +256,7 @@ const MenuItem = ({ item }) => {
   const cartCounts = useSelector(selectCartCounts)
   const {
     imageUrl,
+    price,
     tags,
     allergens,
     allergenAlert,
@@ -280,6 +281,7 @@ const MenuItem = ({ item }) => {
     : item
   const { item: builtItem } = useBuilder(orderItem, soldOut)
   const { groups, totalPrice, totalCals } = builtItem
+  const displayPrice = totalPrice ? formatDollars(totalPrice) : price
   const optionNames = item.favorite
     ? item.favorite.item.groups
         .reduce((arr, group) => {
@@ -347,8 +349,8 @@ const MenuItem = ({ item }) => {
                 <Heading>{item.name}</Heading>
               </MenuItemName>
               <MenuItemPriceCals>
-                {totalPrice ? (
-                  <MenuItemPrice>{formatDollars(totalPrice)}</MenuItemPrice>
+                {displayPrice ? (
+                  <MenuItemPrice>{displayPrice}</MenuItemPrice>
                 ) : null}
                 {totalCals ? (
                   <MenuItemCals> &mdash; {totalCals} Cal</MenuItemCals>

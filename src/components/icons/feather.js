@@ -176,6 +176,13 @@ export const Minus = (props) => {
   return <RF.Minus size={null} strokeWidth={icons.strokeWidth} {...props} />
 }
 
+export const MinusCircle = (props) => {
+  const { icons } = useTheme()
+  return (
+    <RF.MinusCircle size={null} strokeWidth={icons.strokeWidth} {...props} />
+  )
+}
+
 export const Navigation = (props) => {
   const { icons } = useTheme()
   return (

@@ -103,7 +103,7 @@ MenuHeaderTitle.propTypes = {
   setShowMenu: propTypes.func,
 }
 
-const MenuHeader = ({ backPath = '/locations' }) => {
+const MenuHeader = ({ backPath = '/locations', backClick }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const theme = useTheme()
@@ -118,6 +118,8 @@ const MenuHeader = ({ backPath = '/locations' }) => {
     navigate(`/account`)
   }
 
+  const onClick = cartGuest ? leave : backClick
+
   return (
     <>
       <Header
@@ -129,7 +131,7 @@ const MenuHeader = ({ backPath = '/locations' }) => {
           />
         }
         borderColor={theme.colors.primary}
-        left={cartGuest ? <Back onClick={leave} /> : <Back path={backPath} />}
+        left={onClick ? <Back onClick={onClick} /> : <Back path={backPath} />}
         right={
           <>
             <Allergens style={isMobile ? { width: '3rem' } : null} />
