@@ -53,7 +53,13 @@ const MenuItemFooterWarning = styled.div`
   }
 `
 
-const MenuItemFooter = ({ builtItem, addItem, setFooterHeight }) => {
+const MenuItemFooter = ({
+  builtItem,
+  addItem,
+  isCustomize,
+  setIsCustomize,
+  setFooterHeight,
+}) => {
   const { groups, quantity, totalPrice } = builtItem
   const sizeGroup = groups.find((g) => g.isSize)
   const missingSize = sizeGroup
@@ -77,36 +83,62 @@ const MenuItemFooter = ({ builtItem, addItem, setFooterHeight }) => {
     <MenuItemFooterView ref={onRefChange}>
       {isIncomplete && (
         <MenuItemFooterWarning>
-          <Body as="p">
-            {missingSize
-              ? 'Please select a size to add a bag!'
-              : 'Item requires customization. Please make selections.'}
-          </Body>
+          {isCustomize ? (
+            <Body as="p">Certain groups are below the minimum.</Body>
+          ) : (
+            <Body as="p">
+              {missingSize
+                ? 'Please select a size to add a bag!'
+                : 'Item requires customization. Please make selections.'}
+            </Body>
+          )}
         </MenuItemFooterWarning>
       )}
-      <MenuItemFooterButtons>
-        {hasCustomize && (
+      {isCustomize ? (
+        <MenuItemFooterButtons>
           <MenuItemFooterButton>
             <ButtonStyled
-              onClick={() => addItem(builtItem)}
+              onClick={() => setIsCustomize(false)}
               size="big"
               color="secondary"
             >
-              Customize
+              Cancel
             </ButtonStyled>
           </MenuItemFooterButton>
-        )}
-        <MenuItemFooterButton>
-          <ButtonStyled
-            onClick={() => addItem(builtItem)}
-            disabled={isIncomplete}
-            builtItem
-            size="big"
-          >
-            Add to bag
-          </ButtonStyled>
-        </MenuItemFooterButton>
-      </MenuItemFooterButtons>
+          <MenuItemFooterButton>
+            <ButtonStyled
+              onClick={() => setIsCustomize(false)}
+              disabled={isIncomplete}
+              size="big"
+            >
+              All Done
+            </ButtonStyled>
+          </MenuItemFooterButton>
+        </MenuItemFooterButtons>
+      ) : (
+        <MenuItemFooterButtons>
+          {hasCustomize && (
+            <MenuItemFooterButton>
+              <ButtonStyled
+                onClick={() => setIsCustomize(true)}
+                size="big"
+                color="secondary"
+              >
+                Customize
+              </ButtonStyled>
+            </MenuItemFooterButton>
+          )}
+          <MenuItemFooterButton>
+            <ButtonStyled
+              onClick={() => addItem(builtItem)}
+              disabled={isIncomplete}
+              size="big"
+            >
+              Add to bag
+            </ButtonStyled>
+          </MenuItemFooterButton>
+        </MenuItemFooterButtons>
+      )}
     </MenuItemFooterView>
   )
 }
@@ -115,6 +147,8 @@ MenuItemFooter.displayName = 'MenuItemFooter'
 MenuItemFooter.propTypes = {
   builtItem: propTypes.object,
   addItem: propTypes.func,
+  isCustomize: propTypes.func,
+  setIsCustomize: propTypes.func,
   setFooterHeight: propTypes.func,
 }
 

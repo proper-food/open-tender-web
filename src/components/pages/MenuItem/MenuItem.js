@@ -23,6 +23,8 @@ import { MenuContext } from '../Menu/Menu'
 import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
+import MenuItemGroups from './MenuItemGroups'
+import MenuItemOption from './MenuItemOption'
 
 const MenuItemView = styled.div`
   position: relative;
@@ -60,6 +62,7 @@ const MenuItemImage = styled.div`
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [isCustomize, setIsCustomize] = useState(false)
   const [footerHeight, setFooterHeight] = useState(null)
   const footerHeightRem = footerHeight
     ? `${(footerHeight / 10).toFixed(1)}rem`
@@ -125,37 +128,39 @@ const MenuItem = () => {
                 builtItem={builtItem}
                 displaySettings={displaySettings}
                 pointsIcon={pointsIcon}
+                isCustomize={isCustomize}
               />
-              <MenuItemAccordion
-                builtItem={builtItem}
-                setQuantity={setQuantity}
-                increment={increment}
-                decrement={decrement}
-                toggleOption={toggleOption}
-                setMadeFor={setMadeFor}
-                setNotes={setNotes}
-                displaySettings={displaySettings}
-                cartId={cartId}
-              />
+              {isCustomize ? (
+                <MenuItemGroups
+                  builtItem={builtItem}
+                  allergenAlerts={allergenAlerts}
+                  displaySettings={displaySettings}
+                  renderOption={(props) => <MenuItemOption {...props} />}
+                  toggleOption={toggleOption}
+                  incrementOption={incrementOption}
+                  decrementOption={decrementOption}
+                  setOptionQuantity={setOptionQuantity}
+                />
+              ) : (
+                <MenuItemAccordion
+                  builtItem={builtItem}
+                  setQuantity={setQuantity}
+                  increment={increment}
+                  decrement={decrement}
+                  toggleOption={toggleOption}
+                  setMadeFor={setMadeFor}
+                  setNotes={setNotes}
+                  displaySettings={displaySettings}
+                  cartId={cartId}
+                />
+              )}
               <MenuItemFooter
                 builtItem={builtItem}
                 addItem={addItem}
+                isCustomize={isCustomize}
+                setIsCustomize={setIsCustomize}
                 setFooterHeight={setFooterHeight}
               />
-              {/* <BuilderBody
-                allergens={allergenAlerts}
-                renderOption={(props) => <BuilderOption {...props} />}
-                iconMap={menuItemsIconMap}
-                displaySettings={displaySettings}
-                cartId={cartId}
-                item={builtItem}
-                setMadeFor={setMadeFor}
-                setNotes={setNotes}
-                toggleOption={toggleOption}
-                incrementOption={incrementOption}
-                decrementOption={decrementOption}
-                setOptionQuantity={setOptionQuantity}
-              /> */}
             </MenuItemBuilderView>
           </MenuItemView>
         </Main>

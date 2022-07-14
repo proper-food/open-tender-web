@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { formatDollars } from '@open-tender/js'
+import { formatDollars, makeModifierNames } from '@open-tender/js'
 import { ClipLoader } from 'react-spinners'
 import { Body, Heading, Points, Preface } from '@open-tender/components'
 import MenuItemImage from './MenuItemImage'
@@ -63,7 +63,24 @@ const MenuItemDesc = styled(Body)`
   }
 `
 
-const MenuItemHeader = ({ builtItem, displaySettings, pointsIcon }) => {
+const MenuItemSelections = styled.p`
+  margin: 1rem 0 0;
+`
+
+const MenuItemSelectionsTitle = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const MenuItemSelectionsOptions = styled(Body)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const MenuItemHeader = ({
+  builtItem,
+  displaySettings,
+  pointsIcon,
+  isCustomize,
+}) => {
   const { bgColors } = useTheme()
   const {
     builderImages: showImage,
@@ -98,8 +115,9 @@ const MenuItemHeader = ({ builtItem, displaySettings, pointsIcon }) => {
     : price
   const displayPrice = formatDollars(currentPrice)
   const displayCals = showCals ? (totalPrice ? totalCals : cals) : null
-  // const zeroPrice = !!(item.price === '0.00' || item.price === 0)
   const displayImageUrl = showImage && imageUrl ? imageUrl : null
+  const nonSizeGroups = groups.filter((i) => !i.isSize)
+  const currentSelections = makeModifierNames({ groups })
 
   return (
     <MenuItemHeaderView>
@@ -125,19 +143,36 @@ const MenuItemHeader = ({ builtItem, displaySettings, pointsIcon }) => {
             </MenuItemPoints>
           )}
         </MenuItemPriceCals>
-        {hasTagsAllergens && (
-          <MenuItemTagsAllergens>
-            {hasTags
-              ? tags.map((tag) => <MenuItemTag key={tag}>{tag}</MenuItemTag>)
-              : null}
-            {hasAllergens
-              ? allergens.map((allergen) => (
-                  <MenuItemAllergen key={allergen}>{allergen}</MenuItemAllergen>
-                ))
-              : null}
-          </MenuItemTagsAllergens>
+        {isCustomize ? (
+          <MenuItemSelections>
+            <MenuItemSelectionsTitle>
+              Current Selections:{' '}
+            </MenuItemSelectionsTitle>
+            <MenuItemSelectionsOptions>
+              {currentSelections}
+            </MenuItemSelectionsOptions>
+          </MenuItemSelections>
+        ) : (
+          <>
+            {hasTagsAllergens && (
+              <MenuItemTagsAllergens>
+                {hasTags
+                  ? tags.map((tag) => (
+                      <MenuItemTag key={tag}>{tag}</MenuItemTag>
+                    ))
+                  : null}
+                {hasAllergens
+                  ? allergens.map((allergen) => (
+                      <MenuItemAllergen key={allergen}>
+                        {allergen}
+                      </MenuItemAllergen>
+                    ))
+                  : null}
+              </MenuItemTagsAllergens>
+            )}
+            {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
+          </>
         )}
-        {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
       </MenuItemInfo>
     </MenuItemHeaderView>
   )

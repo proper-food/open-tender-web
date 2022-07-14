@@ -5,7 +5,7 @@ import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import CategoryNavScroll from './CategoryNavScroll'
 
-const CategoryNavView = styled('div')`
+const CategoryNavView = styled.div`
   width: 100%;
   height: ${(props) => props.theme.layout.navHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -13,7 +13,7 @@ const CategoryNavView = styled('div')`
   }
 `
 
-const CategoryNavInner = styled('div')`
+const CategoryNavInner = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.bgColors.dark};
   ${(props) =>
@@ -34,7 +34,7 @@ const CategoryNavInner = styled('div')`
   }
 `
 
-const CategoryNavContainer = styled('div')`
+const CategoryNavContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
