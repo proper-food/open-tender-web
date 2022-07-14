@@ -2,16 +2,21 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { BgImage, useImage } from '@open-tender/components'
 
-const MenuItemImageView = styled('div')`
+const MenuItemImageView = styled.div`
+  display: none;
   position: relative;
   z-index: 1;
   width: 100%;
-  // padding: 33% 0;
-  height: 36rem;
+  padding: 33% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  margin: 0 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: block;
+    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
-const MenuItemImageLoading = styled('div')`
+const MenuItemImageLoading = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;

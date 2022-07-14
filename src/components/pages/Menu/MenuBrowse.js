@@ -47,7 +47,7 @@ const MenuBrowse = ({ categories }) => {
     <Container>
       <MenuBrowseView id="full-menu">
         <MenuBrowseHeader>
-          <MenuBrowseTitle>Menu</MenuBrowseTitle>
+          <MenuBrowseTitle>Browse by category</MenuBrowseTitle>
         </MenuBrowseHeader>
         <MenuBrowseCategories>
           {categories.map((category) => (

@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
+// import { useTheme } from '@emotion/react'
 import {
   addItemToCart,
   selectCartCounts,
@@ -15,25 +15,17 @@ import {
   selectMenuSlug,
   showNotification,
 } from '@open-tender/redux'
-import { prepareMenuItem } from '@open-tender/js'
-import {
-  BuilderBody,
-  BuilderFooter,
-  BuilderHeader,
-  BuilderOption,
-  ButtonStyled,
-  useBuilder,
-} from '@open-tender/components'
+import { useBuilder } from '@open-tender/components'
 import { selectMenuPath } from '../../../slices'
-import { ArrowLeft, Minus, Plus, Star } from '../../icons'
+import { Star } from '../../icons'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
-import MenuItemBuilder from './MenuItemBuilder'
-import MenuItemClose from './MenuItemClose'
+// import MenuItemClose from './MenuItemClose'
 import { MenuHeader } from '../Menu'
 import { MenuContext } from '../Menu/Menu'
-import { useTheme } from '@emotion/react'
+
 import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
+import MenuItemFooter from './MenuItemFooter'
 
 const footerHeight = '8rem'
 const footerHeightMobile = '7rem'
@@ -48,11 +40,13 @@ const MenuItemView = styled.div`
 const MenuItemBuilderView = styled.div`
   width: 64rem;
   padding: ${(props) => props.theme.layout.padding};
+  padding-bottom: 9.5rem;
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    margin: 24rem 0 0;
+    // margin: 24rem 0 0;
     padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: ${footerHeightMobile};
   }
 `
 
@@ -66,81 +60,16 @@ const MenuItemImage = styled.div`
   right: 64rem;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: ${(props) => props.theme.layout.navHeightMobile};
-    right: 0;
-    bottom: auto;
-    height: 24rem;
-  }
-`
-
-const MenuItemBack = styled.div`
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  display: flex;
-  align-items: center;
-  left: ${(props) => props.theme.layout.padding};
-  height: ${(props) => props.theme.layout.navHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: none;
   }
-
-  button {
-    color: ${(props) => props.theme.colors.primary};
-    background-color: ${(props) => props.theme.bgColors.primary};
-
-    &:hover,
-    &:active,
-    &:focus {
-      color: ${(props) => props.theme.colors.primary};
-      background-color: ${(props) => props.theme.bgColors.tertiary};
-    }
-  }
 `
 
-// const MenuItemAdd = styled.div`
-//   width: 50%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: flex-end;
-//   background-color: ${(props) => props.theme.bgColors.primary};
-// `
-
-// const MenuItemAddContent = styled.div`
-//   flex: 0 0 100%;
-//   max-width: ${(props) => props.maxWidth};
-//   padding: ${(props) => props.theme.layout.padding};
-//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-//     flex: 0 0 100%;
-//     padding: ${(props) => props.theme.layout.paddingMobile};
-//   }
-// `
-
-// const MenuItemCustomize = styled.div`
-//   width: 50%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: flex-start;
-//   overflow-y: scroll;
-//   background-color: ${(props) => props.theme.bgColors.tertiary};
-// `
-
-// const MenuItemCustomizeContent = styled.div`
-//   flex: 0 0 100%;
-//   max-width: ${(props) => props.maxWidth};
-//   padding: 0 ${(props) => props.theme.layout.padding};
-//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-//     flex: 0 0 100%;
-//     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-//   }
-// `
-
 const MenuItem = () => {
+  const footer = useRef(null)
+  // const [footerHeight, setFooterHeight] = useState(null)
+  console.log(footer.current?.getBoundingClientRect().height)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { layout } = useTheme()
-  const maxWidth = parseInt(layout.containerMaxWidth.replace('rem', '')) / 2
-  const maxWidthRem = `${maxWidth.toFixed(0)}rem`
   const { soldOut, siteTitle, displaySettings, allergenAlerts } =
     useContext(MenuContext)
   const menuPath = useSelector(selectMenuPath)
@@ -148,19 +77,9 @@ const MenuItem = () => {
   const item = useSelector(selectCurrentItem)
   const { cartId } = useSelector(selectGroupOrder)
   const { orderType } = useSelector(selectOrder)
-  const cartCounts = useSelector(selectCartCounts)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const hasPoints = !!pointsProgram
   const pointsIcon = hasPoints ? <Star /> : null
-  const menuItem = prepareMenuItem(
-    item || {},
-    allergenAlerts,
-    soldOut,
-    displaySettings,
-    cartCounts,
-    isBrowser
-  )
-  const { imageUrl } = menuItem
   const {
     item: builtItem,
     increment,
@@ -178,9 +97,11 @@ const MenuItem = () => {
     dispatch(setCurrentItem(null))
   }
 
-  const addItem = (item) => {
-    dispatch(addItemToCart(item))
-    dispatch(showNotification(`${item.name} added to cart`))
+  const addItem = (builtItem) => {
+    const cartItem = { ...builtItem }
+    if (cartItem.index === -1) delete cartItem.index
+    dispatch(addItemToCart(cartItem))
+    dispatch(showNotification(`${cartItem.name} added to cart`))
     dispatch(setCurrentItem(null))
   }
 
@@ -188,7 +109,6 @@ const MenuItem = () => {
     if (!item) navigate(menuPath || menuSlug)
   }, [item, navigate, menuSlug, menuPath])
 
-  // console.log(builtItem.groups)
   if (!item) return null
 
   return (
@@ -199,37 +119,15 @@ const MenuItem = () => {
         </title>
       </Helmet>
       <Content hasFooter={false}>
-        {/* {isBrowser && (
-          <MenuItemBack>
-            <ButtonStyled
-              onClick={cancel}
-              icon={<ArrowLeft />}
-              color="header"
-              size="small"
-            >
-              Back to Menu
-            </ButtonStyled>
-          </MenuItemBack>
-        )} */}
         <MenuHeader backClick={cancel} />
         <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
           <MenuItemView>
-            {/* <MenuItemClose onClick={cancel} isButton={!isBrowser} /> */}
-            {/* <MenuItemAdd>
-              <MenuItemAddContent maxWidth={maxWidthRem}></MenuItemAddContent>
-            </MenuItemAdd>
-            <MenuItemCustomize>
-              <MenuItemCustomizeContent
-                maxWidth={maxWidthRem}
-              ></MenuItemCustomizeContent>
-            </MenuItemCustomize> */}
             <MenuItemImage>
-              <BackgroundImage imageUrl={imageUrl} />
+              <BackgroundImage imageUrl={builtItem.imageUrl} />
             </MenuItemImage>
             <MenuItemBuilderView>
               <MenuItemHeader
-                menuItem={menuItem}
                 builtItem={builtItem}
                 displaySettings={displaySettings}
                 pointsIcon={pointsIcon}
@@ -245,16 +143,12 @@ const MenuItem = () => {
                 displaySettings={displaySettings}
                 cartId={cartId}
               />
-              {/* <BuilderFooter
-                item={builtItem}
-                iconMap={menuItemsIconMap}
-                addItemToCart={addItem}
-                setQuantity={setQuantity}
-                increment={increment}
-                decrement={decrement}
-                pointsIcon={pointsIcon}
+              <MenuItemFooter
+                ref={footer}
+                builtItem={builtItem}
+                addItem={addItem}
               />
-              <BuilderBody
+              {/* <BuilderBody
                 allergens={allergenAlerts}
                 renderOption={(props) => <BuilderOption {...props} />}
                 iconMap={menuItemsIconMap}
@@ -267,16 +161,6 @@ const MenuItem = () => {
                 incrementOption={incrementOption}
                 decrementOption={decrementOption}
                 setOptionQuantity={setOptionQuantity}
-              />
-              <MenuItemBuilder
-                menuItem={builtItem}
-                addItemToCart={addItem}
-                cancel={cancel}
-                soldOut={soldOut}
-                allergenAlerts={allergenAlerts}
-                displaySettings={displaySettings}
-                cartId={cartId}
-                hasPoints={!!pointsProgram}
               /> */}
             </MenuItemBuilderView>
           </MenuItemView>

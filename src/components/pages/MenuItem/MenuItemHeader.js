@@ -26,24 +26,6 @@ const MenuItemName = styled(Heading)`
   }
 `
 
-// const MenuItemPriceCals = styled.div`
-//   margin: 1rem 0 0;
-// `
-
-// const MenuItemPrice = styled(Heading)`
-//   font-size: ${(props) => props.theme.fonts.sizes.small};
-//   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-//     font-size: ${(props) => props.theme.fonts.sizes.small};
-//   }
-// `
-
-// const MenuItemCals = styled(Body)`
-//   font-size: ${(props) => props.theme.fonts.sizes.small};
-//   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-//     font-size: ${(props) => props.theme.fonts.sizes.small};
-//   }
-// `
-
 const MenuItemPoints = styled.span`
   display: inline-block;
   margin: 0 0 0 1.5rem;
@@ -81,22 +63,51 @@ const MenuItemDesc = styled(Body)`
   }
 `
 
-const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
+const MenuItemHeader = ({ builtItem, displaySettings, pointsIcon }) => {
   const { bgColors } = useTheme()
-  const { imageUrl, price, cals, tags, allergens } = menuItem
-  const { name, description, points, totalPrice, totalCals } = builtItem
-  const hasTagsAllergens = tags.length || allergens.length ? true : false
-  const displayPrice = totalPrice ? formatDollars(totalPrice) : price
-  const displayCals = totalPrice ? totalCals : cals
+  const {
+    builderImages: showImage,
+    calories: showCals,
+    tags: showTags,
+    allergens: showAllergens,
+  } = displaySettings
+  const {
+    name,
+    description,
+    price,
+    totalPrice,
+    cals,
+    totalCals,
+    imageUrl,
+    totalPoints,
+    tags,
+    allergens,
+    groups,
+  } = builtItem
+  const hasTags = showTags && tags.length ? true : false
+  const hasAllergens = showAllergens && allergens.length ? true : false
+  const hasTagsAllergens = hasTags || hasAllergens ? true : false
+  const sizeGroup = groups.find((i) => i.isSize)
+  const defaultOption = !sizeGroup
+    ? null
+    : sizeGroup.options.find((i) => i.isDefault) || sizeGroup.options[0]
+  const currentPrice = totalPrice
+    ? totalPrice
+    : defaultOption
+    ? defaultOption.price
+    : price
+  const displayPrice = formatDollars(currentPrice)
+  const displayCals = showCals ? (totalPrice ? totalCals : cals) : null
   // const zeroPrice = !!(item.price === '0.00' || item.price === 0)
+  const displayImageUrl = showImage && imageUrl ? imageUrl : null
 
   return (
     <MenuItemHeaderView>
-      {/* {imageUrl && (
-        <MenuItemImage imageUrl={imageUrl}>
+      {displayImageUrl && (
+        <MenuItemImage imageUrl={displayImageUrl}>
           <ClipLoader size={30} loading={true} color={bgColors.primary} />
         </MenuItemImage>
-      )} */}
+      )}
       <MenuItemInfo>
         <MenuItemName as="p">{name}</MenuItemName>
         <MenuItemPriceCals
@@ -104,22 +115,26 @@ const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
           cals={displayCals}
           style={{ margin: '1rem 0 0' }}
         >
-          <MenuItemPoints>
-            <Points
-              points={points}
-              icon={pointsIcon}
-              title="Points can be applied at checkout"
-            />
-          </MenuItemPoints>
+          {totalPoints && (
+            <MenuItemPoints>
+              <Points
+                points={totalPoints}
+                icon={pointsIcon}
+                title="Points can be applied at checkout"
+              />
+            </MenuItemPoints>
+          )}
         </MenuItemPriceCals>
         {hasTagsAllergens && (
           <MenuItemTagsAllergens>
-            {tags.map((tag) => (
-              <MenuItemTag key={tag}>{tag}</MenuItemTag>
-            ))}
-            {allergens.map((allergen) => (
-              <MenuItemAllergen key={allergen}>{allergen}</MenuItemAllergen>
-            ))}
+            {hasTags
+              ? tags.map((tag) => <MenuItemTag key={tag}>{tag}</MenuItemTag>)
+              : null}
+            {hasAllergens
+              ? allergens.map((allergen) => (
+                  <MenuItemAllergen key={allergen}>{allergen}</MenuItemAllergen>
+                ))
+              : null}
           </MenuItemTagsAllergens>
         )}
         {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
@@ -130,8 +145,8 @@ const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
 
 MenuItemHeader.displayName = 'MenuItemHeader'
 MenuItemHeader.propTypes = {
-  menuItem: propTypes.object,
   builtItem: propTypes.object,
+  displaySettings: propTypes.object,
   pointsIcon: propTypes.element,
 }
 

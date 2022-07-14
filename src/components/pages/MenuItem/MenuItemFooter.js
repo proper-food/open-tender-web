@@ -1,150 +1,110 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { formatDollars, formatQuantity } from '@open-tender/js'
-import { ButtonStyled, Points } from '..'
-import BuilderQuantity from './BuilderQuantity'
+import { Body, ButtonStyled } from '@open-tender/components'
+import React, { useCallback, useEffect, useRef } from 'react'
 
-const BuilderFooterView = styled('div')`
-  width: 100%;
-  padding: 0 ${(props) => props.theme.layout.padding};
+const MenuItemFooterView = styled.div`
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  width: 64rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: palegreen;
+  padding: 1.5rem ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    padding: 1.5rem ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const MenuItemFooterButtons = styled.div`
+  height: 100%;
+  margin: 0 -0.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
 `
 
-const BuilderPriceView = styled('div')`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  line-height: 1;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 8rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
+const MenuItemFooterButton = styled.div`
+  flex: 1 1 50%;
+  padding: 0 0.6rem;
 
-  & > span {
-    display: block;
-  }
+  button {
+    width: 100%;
+    max-height: 5rem;
 
-  & > span + span {
-    margin: 0 0 0 1.5rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.5rem 0 0;
+    &:disabled {
+      opacity: 1;
+      color: ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.bgColors.tertiary};
+      border-color: ${(props) => props.theme.bgColors.tertiary};
     }
   }
 `
 
-const BuilderPrice = styled('span')`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  font-weight: ${(props) => props.theme.boldWeight};
-  color: ${(props) => props.theme.colors.primary};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+const MenuItemFooterWarning = styled.div`
+  padding: 0 0 1.5rem;
+  text-align: center;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    color: ${(props) => props.theme.colors.error};
   }
 `
 
-const BuilderCals = styled('span')`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
-    // display: ${(props) => (props.hasPoints ? 'none' : 'block')} !important;
-  }
-`
-
-const BuilderPoints = styled('span')`
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: ${(props) => (props.hasCals ? 'none' : 'block')} !important;
-  }
-`
-
-const BuilderActions = styled('div')`
-  display: flex;
-  align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-grow: 1;
-  }
-`
-
-const BuilderQuantityView = styled('div')`
-  display: inline-block;
-`
-
-const BuilderSubmit = styled('div')`
-  display: inline-block;
-  margin: 0 0 0 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-grow: 1;
-    button {
-      width: 100%;
-    }
-  }
-`
-
-const BuilderFooter = ({
-  item,
-  iconMap,
-  addItemToCart,
-  setQuantity,
-  increment,
-  decrement,
-  pointsIcon,
-}) => {
-  const { groups, totalPrice } = item
+const MenuItemFooter = React.forwardRef(({ builtItem, addItem }, ref) => {
+  const { groups, quantity, totalPrice } = builtItem
+  const sizeGroup = groups.find((g) => g.isSize)
+  const missingSize = sizeGroup
+    ? !sizeGroup.options.find((i) => i.quantity >= 1)
+    : false
+  const hasCustomize = groups.filter((g) => !g.isSize).length > 0
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
-  const isIncomplete =
-    totalPrice === 0 || item.quantity === '' || groupsBelowMin
+  const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
+
   return (
-    <BuilderFooterView>
-      <BuilderPriceView>
-        <BuilderPrice>{formatDollars(totalPrice)}</BuilderPrice>
-        {item.totalCals ? (
-          <BuilderCals>{formatQuantity(item.totalCals)} cal</BuilderCals>
-        ) : null}
-        {item.totalPoints && (
-          <BuilderPoints hasCals={!!item.totalCals}>
-            <Points points={item.totalPoints} icon={pointsIcon} />
-          </BuilderPoints>
+    <MenuItemFooterView ref={ref}>
+      {isIncomplete && (
+        <MenuItemFooterWarning>
+          <Body as="p">
+            {missingSize
+              ? 'Please select a size to add a bag!'
+              : 'Item requires customization. Please make selections.'}
+          </Body>
+        </MenuItemFooterWarning>
+      )}
+      <MenuItemFooterButtons>
+        {hasCustomize && (
+          <MenuItemFooterButton>
+            <ButtonStyled
+              onClick={() => addItem(builtItem)}
+              size="big"
+              color="secondary"
+            >
+              Customize
+            </ButtonStyled>
+          </MenuItemFooterButton>
         )}
-      </BuilderPriceView>
-      <BuilderActions>
-        <BuilderQuantityView>
-          <BuilderQuantity
-            item={item}
-            adjust={setQuantity}
-            increment={increment}
-            decrement={decrement}
-            iconMap={iconMap}
-          />
-        </BuilderQuantityView>
-        <BuilderSubmit>
+        <MenuItemFooterButton>
           <ButtonStyled
-            onClick={() => addItemToCart(item)}
+            onClick={() => addItem(builtItem)}
             disabled={isIncomplete}
+            builtItem
             size="big"
           >
             Add to bag
           </ButtonStyled>
-        </BuilderSubmit>
-      </BuilderActions>
-    </BuilderFooterView>
+        </MenuItemFooterButton>
+      </MenuItemFooterButtons>
+    </MenuItemFooterView>
   )
+})
+
+MenuItemFooter.displayName = 'MenuItemFooter'
+MenuItemFooter.propTypes = {
+  builtItem: propTypes.object,
+  addItem: propTypes.func,
 }
 
-BuilderFooter.displayName = 'BuilderFooter'
-BuilderFooter.propTypes = {
-  item: propTypes.object,
-  iconMap: propTypes.object,
-  addItemToCart: propTypes.func,
-  setQuantity: propTypes.func,
-  increment: propTypes.func,
-  decrement: propTypes.func,
-  pointsIcon: propTypes.element,
-}
-
-export default BuilderFooter
+export default MenuItemFooter
