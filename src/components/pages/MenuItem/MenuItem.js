@@ -1,12 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-// import { useTheme } from '@emotion/react'
 import {
   addItemToCart,
-  selectCartCounts,
   selectCurrentItem,
   selectCustomerPointsProgram,
   selectGroupOrder,
@@ -19,16 +17,12 @@ import { useBuilder } from '@open-tender/components'
 import { selectMenuPath } from '../../../slices'
 import { Star } from '../../icons'
 import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
-// import MenuItemClose from './MenuItemClose'
 import { MenuHeader } from '../Menu'
 import { MenuContext } from '../Menu/Menu'
 
 import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
-
-const footerHeight = '8rem'
-const footerHeightMobile = '7rem'
 
 const MenuItemView = styled.div`
   position: relative;
@@ -40,13 +34,12 @@ const MenuItemView = styled.div`
 const MenuItemBuilderView = styled.div`
   width: 64rem;
   padding: ${(props) => props.theme.layout.padding};
-  padding-bottom: 9.5rem;
+  margin-bottom: ${(props) => props.footerHeight || '10rem'};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    // margin: 24rem 0 0;
     padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-bottom: ${footerHeightMobile};
+    margin-bottom: ${(props) => props.footerHeight || '10rem'};
   }
 `
 
@@ -65,11 +58,12 @@ const MenuItemImage = styled.div`
 `
 
 const MenuItem = () => {
-  const footer = useRef(null)
-  // const [footerHeight, setFooterHeight] = useState(null)
-  console.log(footer.current?.getBoundingClientRect().height)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [footerHeight, setFooterHeight] = useState(null)
+  const footerHeightRem = footerHeight
+    ? `${(footerHeight / 10).toFixed(1)}rem`
+    : null
   const { soldOut, siteTitle, displaySettings, allergenAlerts } =
     useContext(MenuContext)
   const menuPath = useSelector(selectMenuPath)
@@ -126,7 +120,7 @@ const MenuItem = () => {
             <MenuItemImage>
               <BackgroundImage imageUrl={builtItem.imageUrl} />
             </MenuItemImage>
-            <MenuItemBuilderView>
+            <MenuItemBuilderView footerHeight={footerHeightRem}>
               <MenuItemHeader
                 builtItem={builtItem}
                 displaySettings={displaySettings}
@@ -144,9 +138,9 @@ const MenuItem = () => {
                 cartId={cartId}
               />
               <MenuItemFooter
-                ref={footer}
                 builtItem={builtItem}
                 addItem={addItem}
+                setFooterHeight={setFooterHeight}
               />
               {/* <BuilderBody
                 allergens={allergenAlerts}

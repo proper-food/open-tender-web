@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Body, ButtonStyled } from '@open-tender/components'
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback } from 'react'
 
 const MenuItemFooterView = styled.div`
   position: fixed;
@@ -10,7 +10,7 @@ const MenuItemFooterView = styled.div`
   right: 0;
   width: 64rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-  background-color: palegreen;
+  // background-color: palegreen;
   padding: 1.5rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
@@ -53,7 +53,7 @@ const MenuItemFooterWarning = styled.div`
   }
 `
 
-const MenuItemFooter = React.forwardRef(({ builtItem, addItem }, ref) => {
+const MenuItemFooter = ({ builtItem, addItem, setFooterHeight }) => {
   const { groups, quantity, totalPrice } = builtItem
   const sizeGroup = groups.find((g) => g.isSize)
   const missingSize = sizeGroup
@@ -63,8 +63,18 @@ const MenuItemFooter = React.forwardRef(({ builtItem, addItem }, ref) => {
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
 
+  const onRefChange = useCallback(
+    (node) => {
+      if (node !== null) {
+        setFooterHeight(node.offsetHeight)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isIncomplete, setFooterHeight]
+  )
+
   return (
-    <MenuItemFooterView ref={ref}>
+    <MenuItemFooterView ref={onRefChange}>
       {isIncomplete && (
         <MenuItemFooterWarning>
           <Body as="p">
@@ -99,12 +109,13 @@ const MenuItemFooter = React.forwardRef(({ builtItem, addItem }, ref) => {
       </MenuItemFooterButtons>
     </MenuItemFooterView>
   )
-})
+}
 
 MenuItemFooter.displayName = 'MenuItemFooter'
 MenuItemFooter.propTypes = {
   builtItem: propTypes.object,
   addItem: propTypes.func,
+  setFooterHeight: propTypes.func,
 }
 
 export default MenuItemFooter

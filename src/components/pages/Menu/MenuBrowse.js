@@ -5,7 +5,7 @@ import { Container } from '../..'
 import MenuBrowseCategory from './MenuBrowseCategory'
 
 const MenuBrowseView = styled.div`
-  margin: ${(props) => props.theme.layout.margin} 0 100rem;
+  margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
