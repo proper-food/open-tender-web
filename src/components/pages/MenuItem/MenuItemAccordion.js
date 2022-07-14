@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { formatDollars } from '@open-tender/js'
 import {
-  makeDisplayPrice,
-  formatDollars,
-  formatQuantity,
-} from '@open-tender/js'
-import { Body, Heading, Preface } from '@open-tender/components'
+  Body,
+  ButtonStyled,
+  Checkmark,
+  Heading,
+  Input,
+} from '@open-tender/components'
 import { ChevronDown, ChevronUp } from '../../icons'
 import MenuItemQuantity from './MenuItemQuantity'
 import MenuItemNutrition from './MenuItemNutrition'
@@ -20,6 +22,7 @@ const MenuItemAccordionView = styled.div`
 `
 
 const MenuItemAccordionRow = styled.div`
+  width: 100%;
   height: 4rem;
   display: flex;
   justify-content: space-between;
@@ -28,30 +31,41 @@ const MenuItemAccordionRow = styled.div`
     ${(props) => props.theme.border.color};
 `
 
-const MenuItemAccordionSectionView = styled.div`
-  padding: 0 0 1rem;
-  margin: -1rem 0 0;
-`
-
-const MenuItemAccordionSection = ({ show = false, children }) => {
+const MenuItemAccordionRowButton = ({ name, open, setOpen, children }) => {
+  const isOpen = name === open
+  const onClick = () => {
+    setOpen(isOpen ? null : name)
+  }
   return (
-    <TransitionGroup component={null}>
-      {show ? (
-        <CSSTransition
-          key="nutritionalInfo"
-          classNames="reveal"
-          timeout={{ enter: 250, exit: 250 }}
-        >
-          <MenuItemAccordionSectionView>
-            {children}
-          </MenuItemAccordionSectionView>
-        </CSSTransition>
-      ) : null}
-    </TransitionGroup>
+    <MenuItemAccordionRow as="button" onClick={onClick}>
+      {children}
+    </MenuItemAccordionRow>
   )
 }
 
-const MenuItemAccordionLabel = styled.div``
+const MenuItemAccordionLabel = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  span {
+    display: block;
+  }
+`
+
+const MenuItemAccordionLabelRequired = styled.span`
+  color: ${(props) => props.theme.colors.error};
+  margin: 0 0 0 0.3rem;
+`
+
+const MenuItemAccordionLabelCheckmark = styled.span`
+  margin: 0 0 0 0.5rem;
+
+  & > span {
+    border-color: ${(props) => props.theme.bgColors.success};
+    background-color: ${(props) => props.theme.bgColors.success};
+  }
+`
 
 const MenuItemAccordionToggleView = styled.div`
   display: flex;
@@ -59,23 +73,19 @@ const MenuItemAccordionToggleView = styled.div`
   align-items: center;
 `
 
-const MenuItemAccordionToggleButton = styled.button`
-  width: 3.8rem;
-  height: 3.8rem;
-  padding: 0.4rem 0 0 1.4rem;
+const MenuItemAccordionToggleIcon = styled.div`
+  width: 2.4rem;
+  padding: 0 0 0 0.5rem;
+  margin: 0.2rem 0 0 0;
 `
 
-const MenuItemAccordionToggle = ({ name, open, setOpen, children }) => {
-  const isOpen = name === open
-  const onClick = () => {
-    setOpen(isOpen ? null : name)
-  }
+const MenuItemAccordionToggle = ({ isOpen, children }) => {
   return (
     <MenuItemAccordionToggleView>
       {children}
-      <MenuItemAccordionToggleButton onClick={onClick}>
+      <MenuItemAccordionToggleIcon>
         {isOpen ? <ChevronUp /> : <ChevronDown />}
-      </MenuItemAccordionToggleButton>
+      </MenuItemAccordionToggleIcon>
     </MenuItemAccordionToggleView>
   )
 }
@@ -88,6 +98,29 @@ const MenuItemAccordionMissingSize = styled(Body)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
   color: ${(props) => props.theme.colors.error};
 `
+
+const MenuItemAccordionSectionView = styled.div`
+  padding: 0 0 1rem;
+  margin: 0 0 0;
+`
+
+const MenuItemAccordionSection = ({ isOpen = false, style, children }) => {
+  return (
+    <TransitionGroup component={null}>
+      {isOpen ? (
+        <CSSTransition
+          key="nutritionalInfo"
+          classNames="reveal"
+          timeout={{ enter: 250, exit: 250 }}
+        >
+          <MenuItemAccordionSectionView style={style}>
+            {children}
+          </MenuItemAccordionSectionView>
+        </CSSTransition>
+      ) : null}
+    </TransitionGroup>
+  )
+}
 
 const MenuItemAccordionOptionButton = styled.button`
   width: 100%;
@@ -103,6 +136,10 @@ const MenuItemAccordionOptionButton = styled.button`
   color: ${(props) => props.theme.colors.primary};
   background-color: ${(props) =>
     props.checked ? props.theme.bgColors.success : 'transparent'};
+
+  &:first-of-type {
+    margin: 0;
+  }
 
   span {
     transition: ${(props) => props.theme.links.transition};
@@ -136,43 +173,131 @@ const MenuItemAccordionOption = ({ name, price, cals, quantity, toggle }) => {
   )
 }
 
+const MenuItemAccordionInstructionsView = styled.div`
+  padding: ${(props) => props.theme.layout.padding};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+// const MenuItemAccordionInstructionsTitle = styled(Heading)``
+
+const MenuItemAccordionInstructionsInput = styled.div`
+  width: 100%;
+  margin: 0 0 2rem;
+
+  label {
+    margin: 0;
+  }
+
+  // & + div {
+  //   margin: 2rem 0 0;
+  // }
+`
+
+const MenuItemAccordionInstructionsFooter = styled.div`
+  margin: 3rem 0 0;
+  text-align: center;
+`
+
+const MenuItemAccordionInstructions = ({
+  hasMadeFor,
+  madeFor,
+  setMadeFor,
+  hasNotes,
+  notes,
+  setNotes,
+  allDone,
+}) => {
+  return (
+    <MenuItemAccordionInstructionsView>
+      {hasMadeFor && (
+        <MenuItemAccordionInstructionsInput>
+          {/* <MenuItemAccordionInstructionsTitle>
+            Who is this order for?
+          </MenuItemAccordionInstructionsTitle> */}
+          <Input
+            label="Who is this order for?"
+            name="made-for"
+            type="text"
+            value={madeFor || ''}
+            onChange={(evt) => setMadeFor(evt.target.value)}
+          />
+        </MenuItemAccordionInstructionsInput>
+      )}
+      {hasNotes && (
+        <MenuItemAccordionInstructionsInput>
+          {/* <MenuItemAccordionInstructionsTitle>
+            Any special instructions?
+          </MenuItemAccordionInstructionsTitle> */}
+          <Input
+            label="Any special instructions?"
+            name="notes"
+            type="text"
+            value={notes || ''}
+            onChange={(evt) => setNotes(evt.target.value)}
+          />
+        </MenuItemAccordionInstructionsInput>
+      )}
+      <MenuItemAccordionInstructionsFooter>
+        <ButtonStyled onClick={allDone}>All Done</ButtonStyled>
+      </MenuItemAccordionInstructionsFooter>
+    </MenuItemAccordionInstructionsView>
+  )
+}
+
 const MenuItemAccordion = ({
   builtItem,
   setQuantity,
   increment,
   decrement,
   toggleOption,
+  setMadeFor,
+  setNotes,
+  displaySettings,
+  cartId,
 }) => {
+  const {
+    calories: showCals,
+    madeFor: showMadeFor,
+    notes: showNotes,
+  } = displaySettings
   const [open, setOpen] = useState(null)
-  // const [showInfo, setShowInfo] = useState(false)
-  // const [showIngredients, setShowIngredients] = useState(false)
-  const { groups, totalPrice, ingredients, nutritionalInfo } = builtItem
-  console.log(groups)
+  const { groups, ingredients, nutritionalInfo, madeFor, notes } = builtItem
+  const hasMadeFor = showMadeFor && !cartId ? true : false
+  const hasNotes = showNotes ? true : false
+  const hasInstructions = hasMadeFor || hasNotes
+  const hasCals = showCals && builtItem.cals
+  const hasIngredients = ingredients && ingredients.length > 0
   const sizeGroup = groups.find((i) => i.isSize)
   const selectedSize = sizeGroup
     ? sizeGroup.options.find((i) => i.quantity >= 1)
     : null
-  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
-  const isIncomplete =
-    totalPrice === 0 || builtItem.quantity === '' || groupsBelowMin
 
-  // const toggleShowInfo = () => {
-  //   if (showIngredients) setShowIngredients(false)
-  //   setShowInfo(!showInfo)
-  // }
-
-  // const toggleShowIngredients = () => {
-  //   if (showInfo) setShowInfo(false)
-  //   setShowIngredients(!showIngredients)
-  // }
+  const toggleSize = (optionId) => {
+    toggleOption(sizeGroup.id, optionId)
+    setOpen(null)
+  }
 
   return (
     <MenuItemAccordionView>
       {sizeGroup && (
         <>
-          <MenuItemAccordionRow>
-            <MenuItemAccordionLabel>Size</MenuItemAccordionLabel>
-            <MenuItemAccordionToggle name="SIZE" open={open} setOpen={setOpen}>
+          <MenuItemAccordionRowButton name="SIZE" open={open} setOpen={setOpen}>
+            <MenuItemAccordionLabel>
+              Size
+              {!selectedSize ? (
+                <MenuItemAccordionLabelRequired>
+                  *
+                </MenuItemAccordionLabelRequired>
+              ) : (
+                <MenuItemAccordionLabelCheckmark>
+                  <Checkmark />
+                </MenuItemAccordionLabelCheckmark>
+              )}
+            </MenuItemAccordionLabel>
+            <MenuItemAccordionToggle isOpen={open === 'SIZE'}>
               {selectedSize ? (
                 <MenuItemAccordionSelectedSize>
                   {selectedSize.name}
@@ -183,12 +308,12 @@ const MenuItemAccordion = ({
                 </MenuItemAccordionMissingSize>
               )}
             </MenuItemAccordionToggle>
-          </MenuItemAccordionRow>
-          <MenuItemAccordionSection show={open === 'SIZE'}>
+          </MenuItemAccordionRowButton>
+          <MenuItemAccordionSection isOpen={open === 'SIZE'}>
             {sizeGroup.options.map((option) => (
               <MenuItemAccordionOption
                 key={option.id}
-                toggle={() => toggleOption(sizeGroup.id, option.id)}
+                toggle={() => toggleSize(option.id)}
                 {...option}
               />
             ))}
@@ -204,12 +329,64 @@ const MenuItemAccordion = ({
           decrement={decrement}
         />
       </MenuItemAccordionRow>
-      {/* {showCals && (
-        <MenuItemNutrition nutritionalInfo={nutritionalInfo} show={showInfo} />
+      {hasInstructions && (
+        <>
+          <MenuItemAccordionRowButton
+            name="INSTRUCTIONS"
+            open={open}
+            setOpen={setOpen}
+          >
+            <MenuItemAccordionLabel>
+              <span>Name / Special Instructions</span>
+              {madeFor || notes ? (
+                <MenuItemAccordionLabelCheckmark>
+                  <Checkmark />
+                </MenuItemAccordionLabelCheckmark>
+              ) : null}
+            </MenuItemAccordionLabel>
+            <MenuItemAccordionToggle isOpen={open === 'INSTRUCTIONS'} />
+          </MenuItemAccordionRowButton>
+          <MenuItemAccordionSection isOpen={open === 'INSTRUCTIONS'}>
+            <MenuItemAccordionInstructions
+              hasMadeFor={hasMadeFor}
+              madeFor={madeFor}
+              setMadeFor={setMadeFor}
+              hasNotes={hasNotes}
+              notes={notes}
+              setNotes={setNotes}
+              allDone={() => setOpen(null)}
+            />
+          </MenuItemAccordionSection>
+        </>
+      )}
+      {hasCals && (
+        <>
+          <MenuItemAccordionRowButton name="INFO" open={open} setOpen={setOpen}>
+            <MenuItemAccordionLabel>
+              Nutritional Information
+            </MenuItemAccordionLabel>
+            <MenuItemAccordionToggle isOpen={open === 'INFO'} />
+          </MenuItemAccordionRowButton>
+          <MenuItemAccordionSection isOpen={open === 'INFO'}>
+            <MenuItemNutrition nutritionalInfo={nutritionalInfo} />
+          </MenuItemAccordionSection>
+        </>
       )}
       {hasIngredients && (
-        <MenuItemIngredients ingredients={ingredients} show={showIngredients} />
-      )} */}
+        <>
+          <MenuItemAccordionRowButton
+            name="INGREDIENTS"
+            open={open}
+            setOpen={setOpen}
+          >
+            <MenuItemAccordionLabel>Ingredients</MenuItemAccordionLabel>
+            <MenuItemAccordionToggle isOpen={open === 'INGREDIENTS'} />
+          </MenuItemAccordionRowButton>
+          <MenuItemAccordionSection isOpen={open === 'INGREDIENTS'}>
+            <MenuItemIngredients ingredients={ingredients} />
+          </MenuItemAccordionSection>
+        </>
+      )}
     </MenuItemAccordionView>
   )
 }

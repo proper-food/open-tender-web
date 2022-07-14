@@ -240,6 +240,10 @@ const MenuItem = () => {
                 increment={increment}
                 decrement={decrement}
                 toggleOption={toggleOption}
+                setMadeFor={setMadeFor}
+                setNotes={setNotes}
+                displaySettings={displaySettings}
+                cartId={cartId}
               />
               {/* <BuilderFooter
                 item={builtItem}
