@@ -38,63 +38,21 @@ import MenuItemAccordion from './MenuItemAccordion'
 const footerHeight = '8rem'
 const footerHeightMobile = '7rem'
 
-const menuItemsIconMap = {
-  plus: <Plus strokeWidth={2} />,
-  minus: <Minus strokeWidth={2} />,
-}
-
 const MenuItemView = styled.div`
   position: relative;
   z-index: 2;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-`
-
-const MenuItemAdd = styled.div`
-  width: 50%;
-  height: 100%;
   display: flex;
   justify-content: flex-end;
-  background-color: ${(props) => props.theme.bgColors.primary};
-`
-
-const MenuItemAddContent = styled.div`
-  flex: 0 0 100%;
-  max-width: ${(props) => props.maxWidth};
-  padding: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 100%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-  }
-`
-
-const MenuItemCustomize = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  overflow-y: scroll;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
-`
-
-const MenuItemCustomizeContent = styled.div`
-  flex: 0 0 100%;
-  max-width: ${(props) => props.maxWidth};
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 100%;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
 `
 
 const MenuItemBuilderView = styled.div`
   width: 64rem;
+  padding: ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     margin: 24rem 0 0;
+    padding: ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -102,12 +60,13 @@ const MenuItemImage = styled.div`
   position: fixed;
   display: flex;
   z-index: 1;
-  top: 0;
+  top: ${(props) => props.theme.layout.navHeight};
   bottom: 0;
   left: 0;
   right: 64rem;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: ${(props) => props.theme.layout.navHeightMobile};
     right: 0;
     bottom: auto;
     height: 24rem;
@@ -139,6 +98,43 @@ const MenuItemBack = styled.div`
   }
 `
 
+// const MenuItemAdd = styled.div`
+//   width: 50%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: flex-end;
+//   background-color: ${(props) => props.theme.bgColors.primary};
+// `
+
+// const MenuItemAddContent = styled.div`
+//   flex: 0 0 100%;
+//   max-width: ${(props) => props.maxWidth};
+//   padding: ${(props) => props.theme.layout.padding};
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     flex: 0 0 100%;
+//     padding: ${(props) => props.theme.layout.paddingMobile};
+//   }
+// `
+
+// const MenuItemCustomize = styled.div`
+//   width: 50%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: flex-start;
+//   overflow-y: scroll;
+//   background-color: ${(props) => props.theme.bgColors.tertiary};
+// `
+
+// const MenuItemCustomizeContent = styled.div`
+//   flex: 0 0 100%;
+//   max-width: ${(props) => props.maxWidth};
+//   padding: 0 ${(props) => props.theme.layout.padding};
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     flex: 0 0 100%;
+//     padding: 0 ${(props) => props.theme.layout.paddingMobile};
+//   }
+// `
+
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -156,21 +152,6 @@ const MenuItem = () => {
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const hasPoints = !!pointsProgram
   const pointsIcon = hasPoints ? <Star /> : null
-
-  useEffect(() => {
-    if (!item) navigate(menuPath || menuSlug)
-  }, [item, navigate, menuSlug, menuPath])
-
-  const cancel = () => {
-    dispatch(setCurrentItem(null))
-  }
-
-  const addItem = (item) => {
-    dispatch(addItemToCart(item))
-    dispatch(showNotification(`${item.name} added to cart`))
-    dispatch(setCurrentItem(null))
-  }
-
   const menuItem = prepareMenuItem(
     item || {},
     allergenAlerts,
@@ -179,7 +160,7 @@ const MenuItem = () => {
     cartCounts,
     isBrowser
   )
-
+  const { imageUrl } = menuItem
   const {
     item: builtItem,
     increment,
@@ -193,8 +174,21 @@ const MenuItem = () => {
     setOptionQuantity,
   } = useBuilder(item || {}, soldOut, hasPoints)
 
-  // console.log(builtItem.groups)
+  const cancel = () => {
+    dispatch(setCurrentItem(null))
+  }
 
+  const addItem = (item) => {
+    dispatch(addItemToCart(item))
+    dispatch(showNotification(`${item.name} added to cart`))
+    dispatch(setCurrentItem(null))
+  }
+
+  useEffect(() => {
+    if (!item) navigate(menuPath || menuSlug)
+  }, [item, navigate, menuSlug, menuPath])
+
+  // console.log(builtItem.groups)
   if (!item) return null
 
   return (
@@ -205,8 +199,7 @@ const MenuItem = () => {
         </title>
       </Helmet>
       <Content hasFooter={false}>
-        {/* <MenuHeader backPath={menuSlug} /> */}
-        {isBrowser && (
+        {/* {isBrowser && (
           <MenuItemBack>
             <ButtonStyled
               onClick={cancel}
@@ -217,69 +210,71 @@ const MenuItem = () => {
               Back to Menu
             </ButtonStyled>
           </MenuItemBack>
-        )}
-        <Main style={{ height: '100%', padding: '0' }}>
+        )} */}
+        <MenuHeader backClick={cancel} />
+        <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
-          {/* <MenuHeader backClick={cancel} /> */}
-          {/* <MenuItemImage>
-            <BackgroundImage imageUrl={imageUrl} />
-          </MenuItemImage> */}
           <MenuItemView>
             {/* <MenuItemClose onClick={cancel} isButton={!isBrowser} /> */}
-            <MenuItemAdd>
-              <MenuItemAddContent maxWidth={maxWidthRem}>
-                <MenuItemHeader
-                  menuItem={menuItem}
-                  builtItem={builtItem}
-                  displaySettings={displaySettings}
-                  pointsIcon={pointsIcon}
-                />
-                <MenuItemAccordion
-                  builtItem={builtItem}
-                  setQuantity={setQuantity}
-                  increment={increment}
-                  decrement={decrement}
-                  toggleOption={toggleOption}
-                />
-                {/* <BuilderFooter
-                  item={builderItem}
-                  iconMap={menuItemsIconMap}
-                  addItemToCart={addItem}
-                  setQuantity={setQuantity}
-                  increment={increment}
-                  decrement={decrement}
-                  pointsIcon={pointsIcon}
-                /> */}
-              </MenuItemAddContent>
+            {/* <MenuItemAdd>
+              <MenuItemAddContent maxWidth={maxWidthRem}></MenuItemAddContent>
             </MenuItemAdd>
             <MenuItemCustomize>
-              <MenuItemCustomizeContent maxWidth={maxWidthRem}>
-                {/* <MenuItemBuilder
-                  menuItem={builderItem}
-                  addItemToCart={addItem}
-                  cancel={cancel}
-                  soldOut={soldOut}
-                  allergenAlerts={allergenAlerts}
-                  displaySettings={displaySettings}
-                  cartId={cartId}
-                  hasPoints={!!pointsProgram}
-                /> */}
-                <BuilderBody
-                  allergens={allergenAlerts}
-                  renderOption={(props) => <BuilderOption {...props} />}
-                  iconMap={menuItemsIconMap}
-                  displaySettings={displaySettings}
-                  cartId={cartId}
-                  item={builtItem}
-                  setMadeFor={setMadeFor}
-                  setNotes={setNotes}
-                  toggleOption={toggleOption}
-                  incrementOption={incrementOption}
-                  decrementOption={decrementOption}
-                  setOptionQuantity={setOptionQuantity}
-                />
-              </MenuItemCustomizeContent>
-            </MenuItemCustomize>
+              <MenuItemCustomizeContent
+                maxWidth={maxWidthRem}
+              ></MenuItemCustomizeContent>
+            </MenuItemCustomize> */}
+            <MenuItemImage>
+              <BackgroundImage imageUrl={imageUrl} />
+            </MenuItemImage>
+            <MenuItemBuilderView>
+              <MenuItemHeader
+                menuItem={menuItem}
+                builtItem={builtItem}
+                displaySettings={displaySettings}
+                pointsIcon={pointsIcon}
+              />
+              <MenuItemAccordion
+                builtItem={builtItem}
+                setQuantity={setQuantity}
+                increment={increment}
+                decrement={decrement}
+                toggleOption={toggleOption}
+              />
+              {/* <BuilderFooter
+                item={builtItem}
+                iconMap={menuItemsIconMap}
+                addItemToCart={addItem}
+                setQuantity={setQuantity}
+                increment={increment}
+                decrement={decrement}
+                pointsIcon={pointsIcon}
+              />
+              <BuilderBody
+                allergens={allergenAlerts}
+                renderOption={(props) => <BuilderOption {...props} />}
+                iconMap={menuItemsIconMap}
+                displaySettings={displaySettings}
+                cartId={cartId}
+                item={builtItem}
+                setMadeFor={setMadeFor}
+                setNotes={setNotes}
+                toggleOption={toggleOption}
+                incrementOption={incrementOption}
+                decrementOption={decrementOption}
+                setOptionQuantity={setOptionQuantity}
+              />
+              <MenuItemBuilder
+                menuItem={builtItem}
+                addItemToCart={addItem}
+                cancel={cancel}
+                soldOut={soldOut}
+                allergenAlerts={allergenAlerts}
+                displaySettings={displaySettings}
+                cartId={cartId}
+                hasPoints={!!pointsProgram}
+              /> */}
+            </MenuItemBuilderView>
           </MenuItemView>
         </Main>
       </Content>

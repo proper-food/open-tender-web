@@ -7,20 +7,16 @@ import {
   formatDollars,
   formatQuantity,
 } from '@open-tender/js'
-import { Heading, Preface } from '@open-tender/components'
-import { ChevronDown, ChevronUp, Minus, Plus } from '../../icons'
+import { Body, Heading, Preface } from '@open-tender/components'
+import { ChevronDown, ChevronUp } from '../../icons'
 import MenuItemQuantity from './MenuItemQuantity'
 import MenuItemNutrition from './MenuItemNutrition'
 import MenuItemIngredients from './MenuItemIngredients'
 import MenuItemPriceCals from './MenuItemPriceCals'
 
-const quantityIconMap = {
-  plus: <Plus strokeWidth={2} />,
-  minus: <Minus strokeWidth={2} />,
-}
-
 const MenuItemAccordionView = styled.div`
-  border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
+  border-bottom: ${(props) => props.theme.border.width} solid
+    ${(props) => props.theme.border.color};
 `
 
 const MenuItemAccordionRow = styled.div`
@@ -28,7 +24,8 @@ const MenuItemAccordionRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 0.1rem solid ${(props) => props.theme.border.color};
+  border-top: ${(props) => props.theme.border.width} solid
+    ${(props) => props.theme.border.color};
 `
 
 const MenuItemAccordionSectionView = styled.div`
@@ -83,6 +80,15 @@ const MenuItemAccordionToggle = ({ name, open, setOpen, children }) => {
   )
 }
 
+const MenuItemAccordionSelectedSize = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const MenuItemAccordionMissingSize = styled(Body)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  color: ${(props) => props.theme.colors.error};
+`
+
 const MenuItemAccordionOptionButton = styled.button`
   width: 100%;
   display: flex;
@@ -90,7 +96,28 @@ const MenuItemAccordionOptionButton = styled.button`
   align-items: center;
   padding: 1rem 1rem 0.8rem;
   margin: 0.6rem 0 0;
-  border: 0.1rem solid ${(props) => props.theme.border.color};
+  border-style: solid;
+  border-width: ${(props) => props.theme.border.width};
+  // border-color: ${(props) => props.theme.border.color};
+  border-color: ${(props) => props.theme.bgColors.success};
+  color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) =>
+    props.checked ? props.theme.bgColors.success : 'transparent'};
+
+  span {
+    transition: ${(props) => props.theme.links.transition};
+    color: ${(props) => props.theme.colors.primary};
+  }
+
+  &:hover,
+  &:active {
+    border-color: ${(props) => props.theme.bgColors.success};
+    background-color: ${(props) => props.theme.bgColors.success};
+
+    span {
+      color: ${(props) => props.theme.colors.primary};
+    }
+  }
 `
 
 const MenuItemAccordionOptionName = styled(Heading)`
@@ -99,12 +126,10 @@ const MenuItemAccordionOptionName = styled(Heading)`
   text-transform: uppercase;
 `
 
-const MenuItemAccordionOption = ({ name, price, cals }) => {
-  console.log(name, price, cals)
+const MenuItemAccordionOption = ({ name, price, cals, quantity, toggle }) => {
   const displayPrice = price ? formatDollars(price) : null
-  console.log(displayPrice)
   return (
-    <MenuItemAccordionOptionButton>
+    <MenuItemAccordionOptionButton onClick={toggle} checked={quantity >= 1}>
       <MenuItemAccordionOptionName>{name}</MenuItemAccordionOptionName>
       <MenuItemPriceCals price={displayPrice} cals={cals} />
     </MenuItemAccordionOptionButton>
@@ -124,6 +149,9 @@ const MenuItemAccordion = ({
   const { groups, totalPrice, ingredients, nutritionalInfo } = builtItem
   console.log(groups)
   const sizeGroup = groups.find((i) => i.isSize)
+  const selectedSize = sizeGroup
+    ? sizeGroup.options.find((i) => i.quantity >= 1)
+    : null
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || builtItem.quantity === '' || groupsBelowMin
@@ -144,15 +172,25 @@ const MenuItemAccordion = ({
         <>
           <MenuItemAccordionRow>
             <MenuItemAccordionLabel>Size</MenuItemAccordionLabel>
-            <MenuItemAccordionToggle
-              name="SIZE"
-              open={open}
-              setOpen={setOpen}
-            ></MenuItemAccordionToggle>
+            <MenuItemAccordionToggle name="SIZE" open={open} setOpen={setOpen}>
+              {selectedSize ? (
+                <MenuItemAccordionSelectedSize>
+                  {selectedSize.name}
+                </MenuItemAccordionSelectedSize>
+              ) : (
+                <MenuItemAccordionMissingSize>
+                  Select Size...
+                </MenuItemAccordionMissingSize>
+              )}
+            </MenuItemAccordionToggle>
           </MenuItemAccordionRow>
           <MenuItemAccordionSection show={open === 'SIZE'}>
             {sizeGroup.options.map((option) => (
-              <MenuItemAccordionOption key={option.id} {...option} />
+              <MenuItemAccordionOption
+                key={option.id}
+                toggle={() => toggleOption(sizeGroup.id, option.id)}
+                {...option}
+              />
             ))}
           </MenuItemAccordionSection>
         </>

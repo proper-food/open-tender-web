@@ -7,13 +7,15 @@ import { Body, Heading, Points, Preface } from '@open-tender/components'
 import MenuItemImage from './MenuItemImage'
 import MenuItemPriceCals from './MenuItemPriceCals'
 
-const MenuItemInfo = styled('div')`
+const MenuItemHeaderView = styled.div``
+
+const MenuItemInfo = styled.div`
   background-color: ${(props) => props.theme.bgColors.primary};
-  padding: ${(props) => props.theme.layout.padding} 0;
-  padding: 2rem 0;
+  padding: 0 0 ${(props) => props.theme.layout.padding};
+  // padding: 0 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) => props.theme.layout.paddingMobile} 0;
-    padding: 1.5rem 0;
+    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    // padding: 0 0 1.5rem;
   }
 `
 
@@ -89,12 +91,12 @@ const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
   // const zeroPrice = !!(item.price === '0.00' || item.price === 0)
 
   return (
-    <div>
-      {imageUrl && (
+    <MenuItemHeaderView>
+      {/* {imageUrl && (
         <MenuItemImage imageUrl={imageUrl}>
           <ClipLoader size={30} loading={true} color={bgColors.primary} />
         </MenuItemImage>
-      )}
+      )} */}
       <MenuItemInfo>
         <MenuItemName as="p">{name}</MenuItemName>
         <MenuItemPriceCals
@@ -107,8 +109,6 @@ const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
               points={points}
               icon={pointsIcon}
               title="Points can be applied at checkout"
-              // size="main"
-              // sizeMobile="small"
             />
           </MenuItemPoints>
         </MenuItemPriceCals>
@@ -124,7 +124,7 @@ const MenuItemHeader = ({ menuItem, builtItem, pointsIcon }) => {
         )}
         {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
       </MenuItemInfo>
-    </div>
+    </MenuItemHeaderView>
   )
 }
 
