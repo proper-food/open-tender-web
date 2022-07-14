@@ -24,7 +24,6 @@ import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
-import MenuItemOption from './MenuItemOption'
 
 const MenuItemView = styled.div`
   position: relative;
@@ -35,12 +34,12 @@ const MenuItemView = styled.div`
 
 const MenuItemBuilderView = styled.div`
   width: 64rem;
-  padding: ${(props) => props.theme.layout.padding};
+  // padding: ${(props) => props.theme.layout.padding} 0;
   margin-bottom: ${(props) => props.footerHeight || '10rem'};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
+    // padding: ${(props) => props.theme.layout.paddingMobile} 0;
     margin-bottom: ${(props) => props.footerHeight || '10rem'};
   }
 `
@@ -135,7 +134,6 @@ const MenuItem = () => {
                   builtItem={builtItem}
                   allergenAlerts={allergenAlerts}
                   displaySettings={displaySettings}
-                  renderOption={(props) => <MenuItemOption {...props} />}
                   toggleOption={toggleOption}
                   incrementOption={incrementOption}
                   decrementOption={decrementOption}

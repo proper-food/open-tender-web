@@ -17,6 +17,13 @@ import MenuItemIngredients from './MenuItemIngredients'
 import MenuItemPriceCals from './MenuItemPriceCals'
 
 const MenuItemAccordionView = styled.div`
+  padding: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const MenuItemAccordionContainer = styled.div`
   border-bottom: ${(props) => props.theme.border.width} solid
     ${(props) => props.theme.border.color};
 `
@@ -282,111 +289,121 @@ const MenuItemAccordion = ({
 
   return (
     <MenuItemAccordionView>
-      {sizeGroup && (
-        <>
-          <MenuItemAccordionRowButton name="SIZE" open={open} setOpen={setOpen}>
-            <MenuItemAccordionLabel>
-              Size
-              {!selectedSize ? (
-                <MenuItemAccordionLabelRequired>
-                  *
-                </MenuItemAccordionLabelRequired>
-              ) : (
-                <MenuItemAccordionLabelCheckmark>
-                  <Checkmark />
-                </MenuItemAccordionLabelCheckmark>
-              )}
-            </MenuItemAccordionLabel>
-            <MenuItemAccordionToggle isOpen={open === 'SIZE'}>
-              {selectedSize ? (
-                <MenuItemAccordionSelectedSize>
-                  {selectedSize.name}
-                </MenuItemAccordionSelectedSize>
-              ) : (
-                <MenuItemAccordionMissingSize>
-                  Select Size...
-                </MenuItemAccordionMissingSize>
-              )}
-            </MenuItemAccordionToggle>
-          </MenuItemAccordionRowButton>
-          <MenuItemAccordionSection isOpen={open === 'SIZE'}>
-            {sizeGroup.options.map((option) => (
-              <MenuItemAccordionOption
-                key={option.id}
-                toggle={() => toggleSize(option.id)}
-                {...option}
+      <MenuItemAccordionContainer>
+        {sizeGroup && (
+          <>
+            <MenuItemAccordionRowButton
+              name="SIZE"
+              open={open}
+              setOpen={setOpen}
+            >
+              <MenuItemAccordionLabel>
+                Size
+                {!selectedSize ? (
+                  <MenuItemAccordionLabelRequired>
+                    *
+                  </MenuItemAccordionLabelRequired>
+                ) : (
+                  <MenuItemAccordionLabelCheckmark>
+                    <Checkmark />
+                  </MenuItemAccordionLabelCheckmark>
+                )}
+              </MenuItemAccordionLabel>
+              <MenuItemAccordionToggle isOpen={open === 'SIZE'}>
+                {selectedSize ? (
+                  <MenuItemAccordionSelectedSize>
+                    {selectedSize.name}
+                  </MenuItemAccordionSelectedSize>
+                ) : (
+                  <MenuItemAccordionMissingSize>
+                    Select Size...
+                  </MenuItemAccordionMissingSize>
+                )}
+              </MenuItemAccordionToggle>
+            </MenuItemAccordionRowButton>
+            <MenuItemAccordionSection isOpen={open === 'SIZE'}>
+              {sizeGroup.options.map((option) => (
+                <MenuItemAccordionOption
+                  key={option.id}
+                  toggle={() => toggleSize(option.id)}
+                  {...option}
+                />
+              ))}
+            </MenuItemAccordionSection>
+          </>
+        )}
+        <MenuItemAccordionRow>
+          <MenuItemAccordionLabel>Quantity</MenuItemAccordionLabel>
+          <MenuItemQuantity
+            item={builtItem}
+            adjust={setQuantity}
+            increment={increment}
+            decrement={decrement}
+          />
+        </MenuItemAccordionRow>
+        {hasInstructions && (
+          <>
+            <MenuItemAccordionRowButton
+              name="INSTRUCTIONS"
+              open={open}
+              setOpen={setOpen}
+            >
+              <MenuItemAccordionLabel>
+                <span>Name / Special Instructions</span>
+                {madeFor || notes ? (
+                  <MenuItemAccordionLabelCheckmark>
+                    <Checkmark />
+                  </MenuItemAccordionLabelCheckmark>
+                ) : null}
+              </MenuItemAccordionLabel>
+              <MenuItemAccordionToggle isOpen={open === 'INSTRUCTIONS'} />
+            </MenuItemAccordionRowButton>
+            <MenuItemAccordionSection isOpen={open === 'INSTRUCTIONS'}>
+              <MenuItemAccordionInstructions
+                hasMadeFor={hasMadeFor}
+                madeFor={madeFor}
+                setMadeFor={setMadeFor}
+                hasNotes={hasNotes}
+                notes={notes}
+                setNotes={setNotes}
+                allDone={() => setOpen(null)}
               />
-            ))}
-          </MenuItemAccordionSection>
-        </>
-      )}
-      <MenuItemAccordionRow>
-        <MenuItemAccordionLabel>Quantity</MenuItemAccordionLabel>
-        <MenuItemQuantity
-          item={builtItem}
-          adjust={setQuantity}
-          increment={increment}
-          decrement={decrement}
-        />
-      </MenuItemAccordionRow>
-      {hasInstructions && (
-        <>
-          <MenuItemAccordionRowButton
-            name="INSTRUCTIONS"
-            open={open}
-            setOpen={setOpen}
-          >
-            <MenuItemAccordionLabel>
-              <span>Name / Special Instructions</span>
-              {madeFor || notes ? (
-                <MenuItemAccordionLabelCheckmark>
-                  <Checkmark />
-                </MenuItemAccordionLabelCheckmark>
-              ) : null}
-            </MenuItemAccordionLabel>
-            <MenuItemAccordionToggle isOpen={open === 'INSTRUCTIONS'} />
-          </MenuItemAccordionRowButton>
-          <MenuItemAccordionSection isOpen={open === 'INSTRUCTIONS'}>
-            <MenuItemAccordionInstructions
-              hasMadeFor={hasMadeFor}
-              madeFor={madeFor}
-              setMadeFor={setMadeFor}
-              hasNotes={hasNotes}
-              notes={notes}
-              setNotes={setNotes}
-              allDone={() => setOpen(null)}
-            />
-          </MenuItemAccordionSection>
-        </>
-      )}
-      {hasCals && (
-        <>
-          <MenuItemAccordionRowButton name="INFO" open={open} setOpen={setOpen}>
-            <MenuItemAccordionLabel>
-              Nutritional Information
-            </MenuItemAccordionLabel>
-            <MenuItemAccordionToggle isOpen={open === 'INFO'} />
-          </MenuItemAccordionRowButton>
-          <MenuItemAccordionSection isOpen={open === 'INFO'}>
-            <MenuItemNutrition nutritionalInfo={nutritionalInfo} />
-          </MenuItemAccordionSection>
-        </>
-      )}
-      {hasIngredients && (
-        <>
-          <MenuItemAccordionRowButton
-            name="INGREDIENTS"
-            open={open}
-            setOpen={setOpen}
-          >
-            <MenuItemAccordionLabel>Ingredients</MenuItemAccordionLabel>
-            <MenuItemAccordionToggle isOpen={open === 'INGREDIENTS'} />
-          </MenuItemAccordionRowButton>
-          <MenuItemAccordionSection isOpen={open === 'INGREDIENTS'}>
-            <MenuItemIngredients ingredients={ingredients} />
-          </MenuItemAccordionSection>
-        </>
-      )}
+            </MenuItemAccordionSection>
+          </>
+        )}
+        {hasCals && (
+          <>
+            <MenuItemAccordionRowButton
+              name="INFO"
+              open={open}
+              setOpen={setOpen}
+            >
+              <MenuItemAccordionLabel>
+                Nutritional Information
+              </MenuItemAccordionLabel>
+              <MenuItemAccordionToggle isOpen={open === 'INFO'} />
+            </MenuItemAccordionRowButton>
+            <MenuItemAccordionSection isOpen={open === 'INFO'}>
+              <MenuItemNutrition nutritionalInfo={nutritionalInfo} />
+            </MenuItemAccordionSection>
+          </>
+        )}
+        {hasIngredients && (
+          <>
+            <MenuItemAccordionRowButton
+              name="INGREDIENTS"
+              open={open}
+              setOpen={setOpen}
+            >
+              <MenuItemAccordionLabel>Ingredients</MenuItemAccordionLabel>
+              <MenuItemAccordionToggle isOpen={open === 'INGREDIENTS'} />
+            </MenuItemAccordionRowButton>
+            <MenuItemAccordionSection isOpen={open === 'INGREDIENTS'}>
+              <MenuItemIngredients ingredients={ingredients} />
+            </MenuItemAccordionSection>
+          </>
+        )}
+      </MenuItemAccordionContainer>
     </MenuItemAccordionView>
   )
 }

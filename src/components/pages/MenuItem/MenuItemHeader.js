@@ -7,16 +7,15 @@ import { Body, Heading, Points, Preface } from '@open-tender/components'
 import MenuItemImage from './MenuItemImage'
 import MenuItemPriceCals from './MenuItemPriceCals'
 
-const MenuItemHeaderView = styled.div``
+const MenuItemHeaderView = styled.div`
+  padding: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
 
 const MenuItemInfo = styled.div`
   background-color: ${(props) => props.theme.bgColors.primary};
-  padding: 0 0 ${(props) => props.theme.layout.padding};
-  // padding: 0 0 2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
-    // padding: 0 0 1.5rem;
-  }
 `
 
 const MenuItemName = styled(Heading)`

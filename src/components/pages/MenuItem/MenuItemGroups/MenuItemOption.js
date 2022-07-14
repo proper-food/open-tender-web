@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import { CartItem } from '@open-tender/components'
 import MenuItemCheckbox from './MenuItemCheckbox'
-import MenuItemQuantity from './MenuItemBuilderQuantity'
+import MenuItemOptionQuantity from './MenuItemOptionQuantity'
 
 const MenuItemOption = ({
   group,
@@ -39,7 +39,7 @@ const MenuItemOption = ({
           incrementDisabled={incrementDisabled}
         />
       ) : (
-        <MenuItemQuantity
+        <MenuItemOptionQuantity
           item={option}
           adjust={adjust}
           increment={increment}

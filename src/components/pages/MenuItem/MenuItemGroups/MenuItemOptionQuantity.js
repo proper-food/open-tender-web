@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const MenuItemQuantityView = styled('div')`
+const MenuItemOptionQuantityView = styled('div')`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@ const MenuItemQuantityView = styled('div')`
   }
 `
 
-const MenuItemQuantityAdd = styled('button')`
+const MenuItemOptionQuantityAdd = styled('button')`
   display: block;
   width: 2.4rem;
   height: 2.4rem;
@@ -42,7 +42,7 @@ const MenuItemQuantityAdd = styled('button')`
   color: ${(props) => props.theme.colors.secondary};
 `
 
-const MenuItemQuantityInput = styled('input')`
+const MenuItemOptionQuantityInput = styled('input')`
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 1.2rem;
@@ -73,14 +73,14 @@ const MenuItemQuantityInput = styled('input')`
   }
 `
 
-const MenuItemQuantityIncrement = styled('button')`
+const MenuItemOptionQuantityIncrement = styled('button')`
   width: 3.2rem;
   height: 3.2rem;
   padding: 0.8rem;
   color: ${(props) => props.theme.colors.secondary};
 `
 
-const MenuItemQuantity = ({
+const MenuItemOptionQuantity = ({
   item,
   adjust,
   increment,
@@ -119,18 +119,18 @@ const MenuItemQuantity = ({
   }
 
   return showAdd && item.quantity === 0 ? (
-    <MenuItemQuantityView>
-      <MenuItemQuantityAdd
+    <MenuItemOptionQuantityView>
+      <MenuItemOptionQuantityAdd
         onClick={handleAdd}
         disabled={incrementDisabled || item.isSoldOut}
         aria-label="Increase quantity"
       >
         {iconMap.plus || '+'}
-      </MenuItemQuantityAdd>
-    </MenuItemQuantityView>
+      </MenuItemOptionQuantityAdd>
+    </MenuItemOptionQuantityView>
   ) : (
-    <MenuItemQuantityView bgColor="secondary">
-      <MenuItemQuantityIncrement
+    <MenuItemOptionQuantityView bgColor="secondary">
+      <MenuItemOptionQuantityIncrement
         ref={decrementRef}
         style={{ marginLeft: '0.2rem' }}
         onClick={handleDecrement}
@@ -138,9 +138,9 @@ const MenuItemQuantity = ({
         aria-label="Decrease quantity"
       >
         {iconMap.minus || '-'}
-      </MenuItemQuantityIncrement>
+      </MenuItemOptionQuantityIncrement>
       <label htmlFor={item.id}>
-        <MenuItemQuantityInput
+        <MenuItemOptionQuantityInput
           id={item.id}
           type="number"
           value={item.quantity}
@@ -148,7 +148,7 @@ const MenuItemQuantity = ({
           aria-label={item.name}
         />
       </label>
-      <MenuItemQuantityIncrement
+      <MenuItemOptionQuantityIncrement
         ref={incrementRef}
         style={{ marginRight: '0.2rem' }}
         onClick={handleIncrement}
@@ -156,13 +156,13 @@ const MenuItemQuantity = ({
         aria-label="Increase quantity"
       >
         {iconMap.plus || '+'}
-      </MenuItemQuantityIncrement>
-    </MenuItemQuantityView>
+      </MenuItemOptionQuantityIncrement>
+    </MenuItemOptionQuantityView>
   )
 }
 
-MenuItemQuantity.displayName = 'MenuItemQuantity'
-MenuItemQuantity.propTypes = {
+MenuItemOptionQuantity.displayName = 'MenuItemOptionQuantity'
+MenuItemOptionQuantity.propTypes = {
   item: propTypes.object,
   adjust: propTypes.func,
   increment: propTypes.func,
@@ -173,4 +173,4 @@ MenuItemQuantity.propTypes = {
   showAdd: propTypes.bool,
 }
 
-export default MenuItemQuantity
+export default MenuItemOptionQuantity
