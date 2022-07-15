@@ -62,6 +62,7 @@ const MenuItemGroupsNavScrollView = styled.div`
     position: relative;
     display: inline-flex;
     align-items: center;
+    height: 4.5rem;
 
     li {
       display: block;
@@ -94,40 +95,42 @@ const smoothHorizontalScrolling = (container, time, amount, start) => {
 }
 
 const shs = (e, sc, eAmt, start) => {
-  e.scrollLeft = eAmt * sc + start
+  const scrolledAmount = eAmt * sc + start
+  e.scrollLeft = scrolledAmount
 }
 
-const getActiveElement = (elements, topOffset) => {
+const getActiveElement = (elements, navOffset) => {
   return elements
-    .filter((i) => i.getBoundingClientRect().top <= topOffset)
-    .reduce(
-      (max, i) =>
-        max && max.getBoundingClientRect().top > i.getBoundingClientRect().top
-          ? max
-          : i,
-      null
-    )
+    .filter((i) => i.getBoundingClientRect().top <= navOffset)
+    .reduce((max, i) => {
+      // console.log(i, i.getBoundingClientRect().top)
+      return max &&
+        max.getBoundingClientRect().top > i.getBoundingClientRect().top
+        ? max
+        : i
+    }, null)
 }
 
 const MenuItemGroupsNavScroll = ({ items }) => {
+  const theme = useTheme()
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
-  const theme = useTheme()
   const { navHeight, navHeightMobile } = theme.layout
   const headerHeight = isBrowser ? navHeight : navHeightMobile
   const headerHeightInPixels = parseInt(headerHeight.replace('rem', '')) * 10
   const navBarHeight = navRef.current?.offsetHeight || 45
-  const topOffset = headerHeightInPixels * 2 + navBarHeight
+  const itemHeaderHeight = 60 // set to 60 for all brands
+  const topOffset = headerHeightInPixels + itemHeaderHeight + navBarHeight
   const paddingTop = 30
   const navOffset = topOffset + paddingTop
   const elements = Array.from(document.getElementsByName('section'))
-  const scrollOffset = headerHeightInPixels + navBarHeight + paddingTop - 1
+  const scrollOffset = itemHeaderHeight + navBarHeight + paddingTop - 1
 
   useEffect(() => {
     const handleScroll = () => {
       if (elements.length) {
-        setActive(getActiveElement(elements, navOffset + 2))
+        setActive(getActiveElement(elements, navOffset + 5))
       }
     }
     window.addEventListener('scroll', handleScroll)
@@ -140,13 +143,13 @@ const MenuItemGroupsNavScroll = ({ items }) => {
     if (active) {
       const navActive = document.getElementById(`nav-${active.id}`)
       if (navActive) {
-        const navOffset = navActive.getBoundingClientRect().x
+        const itemOffset = navActive.getBoundingClientRect().x
         const parentOffset = navActive.offsetParent.getBoundingClientRect().x
         if (navRef.current) {
           smoothHorizontalScrolling(
             navRef.current,
             250,
-            -navOffset,
+            itemOffset,
             -parentOffset
           )
         }

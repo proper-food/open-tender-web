@@ -14,6 +14,9 @@ const quantityIconMap = {
 
 const MenuItemGroupsView = styled.div`
   padding-top: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding-top: 6rem;
+  }
 `
 
 const MenuItemGroupsList = styled.div`

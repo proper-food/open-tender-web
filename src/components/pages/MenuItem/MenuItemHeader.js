@@ -25,7 +25,7 @@ const MenuItemHeaderView = styled.div`
 
   &.isCustomize {
     position: fixed;
-    z-index: 10;
+    z-index: 11;
     top: ${(props) => props.theme.layout.navHeight};
     right: 0;
     width: 64rem;
@@ -35,7 +35,7 @@ const MenuItemHeaderView = styled.div`
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       width: 100%;
       top: ${(props) => props.theme.layout.navHeightMobile};
-      height: ${(props) => props.theme.layout.navHeightMobile};
+      height: 6rem;
     }
   }
 `

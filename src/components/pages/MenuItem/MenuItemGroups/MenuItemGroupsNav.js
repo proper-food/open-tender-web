@@ -52,7 +52,7 @@ const MenuItemGroupsNav = ({ items }) => {
   const { navHeight, navHeightMobile } = theme.layout
   const height = isMobile ? navHeightMobile : navHeight
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
-  const topOffset = heightInPixels * 2
+  const topOffset = heightInPixels + 60
 
   useEffect(() => {
     const handleScroll = () => {
