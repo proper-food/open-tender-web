@@ -301,7 +301,7 @@ const MenuItemAccordion = ({
   return (
     <MenuItemAccordionView>
       <MenuItemAccordionContainer>
-        {sizeGroup && (
+        {!!sizeGroup && (
           <>
             <MenuItemAccordionRowButton
               name="SIZE"
@@ -352,7 +352,7 @@ const MenuItemAccordion = ({
             decrement={decrement}
           />
         </MenuItemAccordionRow>
-        {hasInstructions && (
+        {!!hasInstructions && (
           <>
             <MenuItemAccordionRowButton
               name="INSTRUCTIONS"
@@ -382,7 +382,7 @@ const MenuItemAccordion = ({
             </MenuItemAccordionSection>
           </>
         )}
-        {hasCals && (
+        {!!hasCals && (
           <>
             <MenuItemAccordionRowButton
               name="INFO"
@@ -399,7 +399,7 @@ const MenuItemAccordion = ({
             </MenuItemAccordionSection>
           </>
         )}
-        {hasIngredients && (
+        {!!hasIngredients && (
           <>
             <MenuItemAccordionRowButton
               name="INGREDIENTS"

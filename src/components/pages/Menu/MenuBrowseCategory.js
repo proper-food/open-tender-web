@@ -37,6 +37,8 @@ const MenuBrowseCategoryButton = styled.button`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 1rem 0;
   }
+
+  ${(props) => (props.isLast ? 'border: 0;' : '')}
 `
 
 const MenuBrowseCategoryImage = styled(BgImage)`
@@ -113,7 +115,7 @@ const MenuBrowseCategoryArrow = styled('span')`
   }
 `
 
-const MenuBrowseCategory = ({ category }) => {
+const MenuBrowseCategory = ({ category, isLast = false }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const menuSlug = useSelector(selectMenuSlug)
@@ -140,7 +142,7 @@ const MenuBrowseCategory = ({ category }) => {
 
   return (
     <MenuBrowseCategoryView>
-      <MenuBrowseCategoryButton onClick={view}>
+      <MenuBrowseCategoryButton onClick={view} isLast={isLast}>
         <MenuBrowseCategoryImage style={bgStyle} />
         <MenuBrowseCategoryText>
           <MenuBrowseCategoryTitle>{name}</MenuBrowseCategoryTitle>

@@ -38,6 +38,7 @@ import { AlertCircle, Slash } from '../../icons'
 import { Tag } from '../..'
 import MenuItemCount from './MenuItemCount'
 import MenuItemImage from './MenuItemImage'
+import { useState } from 'react'
 
 const MenuItemView = styled(CardMenuItem)`
   position: relative;
@@ -221,9 +222,6 @@ const MenuItemDescription = styled(Body)`
 
 const MenuItemButtons = styled.div`
   flex-grow: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
 
   .compact & {
@@ -231,6 +229,34 @@ const MenuItemButtons = styled.div`
       display: none;
     }
   }
+`
+
+const MenuItemButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const MenuItemButtonsWarning = styled(Body)`
+  display: block;
+  width: 100%;
+  margin: 0 0 1rem;
+  // text-align: center;
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  color: ${(props) => props.theme.colors.error};
+`
+
+const MenuItemButtonsAdd = styled.div`
+  ${(props) =>
+    props.disabled
+      ? `
+    button, button:active, button:hover {
+    opacity: 0.5;
+    color: ${props.theme.colors.primary};
+    background-color: ${props.theme.bgColors.tertiary};
+    border-color: ${props.theme.bgColors.tertiary};
+  }`
+      : ''}
 `
 
 const MenuItemButtonsCustomize = styled.div`
@@ -244,6 +270,7 @@ const MenuItemButtonsCustomize = styled.div`
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [clicked, setClicked] = useState(false)
   const theme = useTheme()
   const { pathname } = useLocation()
   const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
@@ -376,25 +403,36 @@ const MenuItem = ({ item }) => {
           </MenuItemContent>
         </MenuItemContainer>
       </MenuItemButton>
-      <MenuItemButtons hasBox={hasBox}>
-        <ButtonStyled
-          onClick={add}
-          disabled={!showQuickAdd || isIncomplete}
-          size="small"
-        >
-          Add To Order
-        </ButtonStyled>
-        <MenuItemButtonsCustomize>
-          <ButtonStyled
-            onClick={view}
-            disabled={isSoldOut}
-            size="small"
-            color="secondary"
-          >
-            {sizeOnly ? 'Choose Size' : 'Customize'}
-          </ButtonStyled>
-        </MenuItemButtonsCustomize>
-      </MenuItemButtons>
+      {showQuickAdd && (
+        <MenuItemButtons hasBox={hasBox}>
+          {clicked && (
+            <MenuItemButtonsWarning>
+              Item requires customization. Tap "Customize".
+            </MenuItemButtonsWarning>
+          )}
+          <MenuItemButtonsContainer>
+            <MenuItemButtonsAdd disabled={isIncomplete}>
+              <ButtonStyled
+                onClick={isIncomplete ? () => setClicked(true) : add}
+                // disabled={isIncomplete}
+                size="small"
+              >
+                Add To Order
+              </ButtonStyled>
+            </MenuItemButtonsAdd>
+            <MenuItemButtonsCustomize>
+              <ButtonStyled
+                onClick={view}
+                disabled={isSoldOut}
+                size="small"
+                color="secondary"
+              >
+                {sizeOnly ? 'Choose Size' : 'Customize'}
+              </ButtonStyled>
+            </MenuItemButtonsCustomize>
+          </MenuItemButtonsContainer>
+        </MenuItemButtons>
+      )}
     </MenuItemView>
   )
 }
