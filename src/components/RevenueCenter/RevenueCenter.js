@@ -121,6 +121,7 @@ const RevenueCenterActions = styled.div`
     display: block;
     width: 100%;
     text-align: left;
+    text-decoration: none;
   }
 `
 

@@ -283,6 +283,7 @@ const MenuItem = ({ item }) => {
   const { groups, totalPrice, totalCals } = builtItem
   const sizeGroup = groups.find((i) => i.isSize)
   const sizeOnly = sizeGroup && groups.length === 1
+  console.log(totalPrice, price)
   const displayPrice = totalPrice ? formatDollars(totalPrice) : price
   const optionNames = item.favorite
     ? item.favorite.item.groups
@@ -350,14 +351,16 @@ const MenuItem = ({ item }) => {
               <MenuItemName>
                 <Heading>{item.name}</Heading>
               </MenuItemName>
-              <MenuItemPriceCals>
-                {displayPrice ? (
-                  <MenuItemPrice>{displayPrice}</MenuItemPrice>
-                ) : null}
-                {totalCals ? (
-                  <MenuItemCals> &mdash; {totalCals} Cal</MenuItemCals>
-                ) : null}
-              </MenuItemPriceCals>
+              {displayPrice ? (
+                <MenuItemPriceCals>
+                  {displayPrice ? (
+                    <MenuItemPrice>{displayPrice}</MenuItemPrice>
+                  ) : null}
+                  {totalCals ? (
+                    <MenuItemCals> &mdash; {totalCals} Cal</MenuItemCals>
+                  ) : null}
+                </MenuItemPriceCals>
+              ) : null}
             </MenuItemInfo>
             {hasTagsAllergens && (
               <MenuItemTagsAllergens>

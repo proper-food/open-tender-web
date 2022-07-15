@@ -12,6 +12,7 @@ const SeeMoreLinkView = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    text-decoration: none;
     color: ${(props) => props.theme.links.dark.color};
 
     &:hover,

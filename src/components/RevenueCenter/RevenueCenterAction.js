@@ -2,13 +2,13 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ArrowRight } from '../icons'
 
-const RevenueCenterActionView = styled('div')`
+const RevenueCenterActionView = styled.div`
   display: flex;
   align-items: center;
   margin: 0.75rem 0 0;
 `
 
-const RevenueCenterActionIcon = styled('div')`
+const RevenueCenterActionIcon = styled.div`
   position: relative;
   top: 0.1rem;
   width: 1.4rem;
@@ -34,7 +34,7 @@ const RevenueCenterActionArrow = styled(RevenueCenterActionIcon)`
   }
 `
 
-const RevenueCenterActionArrowText = styled('div')`
+const RevenueCenterActionArrowText = styled.div`
   width: 100%;
   padding: 0 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

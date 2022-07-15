@@ -102,6 +102,7 @@ const FooterTerms = styled('nav')`
     }
 
     a {
+      text-decoration: none;
       color: ${(props) => props.theme.links.light.color};
     }
 
