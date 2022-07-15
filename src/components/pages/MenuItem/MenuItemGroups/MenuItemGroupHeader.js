@@ -1,6 +1,7 @@
 import propTypes from 'prop-types'
 import React from 'react'
 import styled from '@emotion/styled'
+import { Heading } from '@open-tender/components'
 import MenuItemGroupWarning from './MenuItemGroupWarning'
 
 const MenuItemGroupHeaderView = styled('div')`
@@ -10,13 +11,19 @@ const MenuItemGroupHeaderView = styled('div')`
   align-items: flex-end;
 `
 
-const MenuItemGroupHeaderName = styled('h3')`
+const MenuItemGroupHeaderName = styled(Heading)`
   margin-bottom: 0.5rem;
-  font-size: ${(props) => props.theme.fonts.sizes.h6};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+  }
 `
 
-const MenuItemGroupHeaderDescription = styled('p')`
+const MenuItemGroupHeaderDescription = styled.p`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const MenuItemGroupHeader = ({ group }) => {
@@ -24,7 +31,7 @@ const MenuItemGroupHeader = ({ group }) => {
   return (
     <MenuItemGroupHeaderView>
       <div>
-        <MenuItemGroupHeaderName>
+        <MenuItemGroupHeaderName as="p">
           {group.name}
           {included !== 0 && max !== 1 ? ` (${included} included)` : null}
         </MenuItemGroupHeaderName>

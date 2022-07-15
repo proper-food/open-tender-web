@@ -236,7 +236,7 @@ const makeGlobalStyles = (theme) => css`
 
   a {
     cursor: pointer;
-    text-decoration: ${theme.links.textDecoration};
+    // text-decoration: ${theme.links.textDecoration};
     transition: ${theme.links.transition};
     color: ${theme.links.primary.color};
     &:hover,

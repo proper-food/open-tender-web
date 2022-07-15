@@ -89,7 +89,7 @@ const MenuItemFooter = ({
             <Body as="p">
               {missingSize
                 ? 'Please select a size to add a bag!'
-                : 'Item requires customization. Please make selections.'}
+                : 'Item requires customization. Tap the Customize button.'}
             </Body>
           )}
         </MenuItemFooterWarning>

@@ -12,7 +12,7 @@ const MenuItemImageView = styled.div`
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: block;
-    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 0 0 1.5rem;
   }
 `
 

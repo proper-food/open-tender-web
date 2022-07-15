@@ -128,6 +128,7 @@ const MenuItem = () => {
                 displaySettings={displaySettings}
                 pointsIcon={pointsIcon}
                 isCustomize={isCustomize}
+                setIsCustomize={setIsCustomize}
               />
               {isCustomize ? (
                 <MenuItemGroups

@@ -281,6 +281,8 @@ const MenuItem = ({ item }) => {
     : item
   const { item: builtItem } = useBuilder(orderItem, soldOut)
   const { groups, totalPrice, totalCals } = builtItem
+  const sizeGroup = groups.find((i) => i.isSize)
+  const sizeOnly = sizeGroup && groups.length === 1
   const displayPrice = totalPrice ? formatDollars(totalPrice) : price
   const optionNames = item.favorite
     ? item.favorite.item.groups
@@ -386,7 +388,7 @@ const MenuItem = ({ item }) => {
             size="small"
             color="secondary"
           >
-            Customize
+            {sizeOnly ? 'Choose Size' : 'Customize'}
           </ButtonStyled>
         </MenuItemButtonsCustomize>
       </MenuItemButtons>

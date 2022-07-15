@@ -188,6 +188,15 @@ const MenuItemAccordionInstructionsView = styled.div`
   }
 `
 
+const MenuItemAccordionInstructionsContainer = styled.div`
+  border-radius: ${(props) => props.theme.border.radius};
+  padding: ${(props) => props.theme.layout.padding};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
 // const MenuItemAccordionInstructionsTitle = styled(Heading)``
 
 const MenuItemAccordionInstructionsInput = styled.div`
@@ -219,37 +228,39 @@ const MenuItemAccordionInstructions = ({
 }) => {
   return (
     <MenuItemAccordionInstructionsView>
-      {hasMadeFor && (
-        <MenuItemAccordionInstructionsInput>
-          {/* <MenuItemAccordionInstructionsTitle>
+      <MenuItemAccordionInstructionsContainer>
+        {hasMadeFor && (
+          <MenuItemAccordionInstructionsInput>
+            {/* <MenuItemAccordionInstructionsTitle>
             Who is this order for?
           </MenuItemAccordionInstructionsTitle> */}
-          <Input
-            label="Who is this order for?"
-            name="made-for"
-            type="text"
-            value={madeFor || ''}
-            onChange={(evt) => setMadeFor(evt.target.value)}
-          />
-        </MenuItemAccordionInstructionsInput>
-      )}
-      {hasNotes && (
-        <MenuItemAccordionInstructionsInput>
-          {/* <MenuItemAccordionInstructionsTitle>
+            <Input
+              label="Who is this order for?"
+              name="made-for"
+              type="text"
+              value={madeFor || ''}
+              onChange={(evt) => setMadeFor(evt.target.value)}
+            />
+          </MenuItemAccordionInstructionsInput>
+        )}
+        {hasNotes && (
+          <MenuItemAccordionInstructionsInput>
+            {/* <MenuItemAccordionInstructionsTitle>
             Any special instructions?
           </MenuItemAccordionInstructionsTitle> */}
-          <Input
-            label="Any special instructions?"
-            name="notes"
-            type="text"
-            value={notes || ''}
-            onChange={(evt) => setNotes(evt.target.value)}
-          />
-        </MenuItemAccordionInstructionsInput>
-      )}
-      <MenuItemAccordionInstructionsFooter>
-        <ButtonStyled onClick={allDone}>All Done</ButtonStyled>
-      </MenuItemAccordionInstructionsFooter>
+            <Input
+              label="Any special instructions?"
+              name="notes"
+              type="text"
+              value={notes || ''}
+              onChange={(evt) => setNotes(evt.target.value)}
+            />
+          </MenuItemAccordionInstructionsInput>
+        )}
+        <MenuItemAccordionInstructionsFooter>
+          <ButtonStyled onClick={allDone}>All Done</ButtonStyled>
+        </MenuItemAccordionInstructionsFooter>
+      </MenuItemAccordionInstructionsContainer>
     </MenuItemAccordionInstructionsView>
   )
 }

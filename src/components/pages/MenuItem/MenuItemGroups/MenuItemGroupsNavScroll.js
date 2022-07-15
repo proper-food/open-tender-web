@@ -9,6 +9,7 @@ import { Heading } from '@open-tender/components'
 
 const MenuItemGroupsNavScrollButtonView = styled.button`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  padding: 1rem 0 0;
   height: 4.5rem;
 `
 
@@ -17,7 +18,7 @@ const MenuItemGroupsNavScrollButtonActive = styled(Heading)`
   justify-content: flex-start;
   align-items: center;
   height: 4.5rem;
-  padding: 0.1rem 0 0;
+  padding: 1.1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   border-bottom: ${(props) => props.theme.border.width} solid
     ${(props) => props.theme.border.color};
@@ -117,18 +118,16 @@ const MenuItemGroupsNavScroll = ({ items }) => {
   const headerHeight = isBrowser ? navHeight : navHeightMobile
   const headerHeightInPixels = parseInt(headerHeight.replace('rem', '')) * 10
   const navBarHeight = navRef.current?.offsetHeight || 45
-  const topOffset = headerHeightInPixels + navBarHeight
+  const topOffset = headerHeightInPixels * 2 + navBarHeight
   const paddingTop = 30
   const navOffset = topOffset + paddingTop
-  console.log(navOffset)
   const elements = Array.from(document.getElementsByName('section'))
-  // console.log(elements.map((i) => i.getBoundingClientRect().top))
-  console.log()
+  const scrollOffset = headerHeightInPixels + navBarHeight + paddingTop - 1
 
   useEffect(() => {
     const handleScroll = () => {
       if (elements.length) {
-        setActive(getActiveElement(elements, navOffset + 1))
+        setActive(getActiveElement(elements, navOffset + 2))
       }
     }
     window.addEventListener('scroll', handleScroll)
@@ -165,7 +164,7 @@ const MenuItemGroupsNavScroll = ({ items }) => {
             <li key={`${sectionId}-${index}`} id={`nav-${sectionId}`}>
               <MenuItemGroupsNavScrollButton
                 name={name}
-                offset={navBarHeight + paddingTop - 1}
+                offset={scrollOffset}
                 active={activeId === sectionId}
               />
             </li>

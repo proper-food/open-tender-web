@@ -12,7 +12,9 @@ const quantityIconMap = {
   minus: <Minus strokeWidth={2} />,
 }
 
-const MenuItemGroupsView = styled.div``
+const MenuItemGroupsView = styled.div`
+  padding-top: ${(props) => props.theme.layout.navHeight};
+`
 
 const MenuItemGroupsList = styled.div`
   padding: ${(props) => props.theme.layout.padding};

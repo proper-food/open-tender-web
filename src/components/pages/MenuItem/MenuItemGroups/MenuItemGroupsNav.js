@@ -20,7 +20,7 @@ const MenuItemGroupsNavInner = styled.div`
     props.stuck &&
     `position: fixed;
       z-index: 10;
-      top: ${props.theme.layout.navHeight};
+      top: calc(${props.theme.layout.navHeight} + ${props.theme.layout.navHeight});
       right: 0;
       width: 64rem;`}
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -28,7 +28,7 @@ const MenuItemGroupsNavInner = styled.div`
       props.stuck &&
       `position: fixed;
       z-index: 10;
-      top: ${props.theme.layout.navHeightMobile};
+      top: calc(${props.theme.layout.navHeightMobile} + ${props.theme.layout.navHeightMobile});
       right: 0;
       width: 100%;`}
   }
@@ -52,7 +52,7 @@ const MenuItemGroupsNav = ({ items }) => {
   const { navHeight, navHeightMobile } = theme.layout
   const height = isMobile ? navHeightMobile : navHeight
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
-  const topOffset = heightInPixels
+  const topOffset = heightInPixels * 2
 
   useEffect(() => {
     const handleScroll = () => {

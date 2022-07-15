@@ -1,27 +1,69 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { formatDollars, makeModifierNames } from '@open-tender/js'
+import { formatDollars, getItemOptions } from '@open-tender/js'
 import { ClipLoader } from 'react-spinners'
-import { Body, Heading, Points, Preface } from '@open-tender/components'
+import {
+  Body,
+  ButtonLink,
+  Heading,
+  Points,
+  Preface,
+} from '@open-tender/components'
 import MenuItemImage from './MenuItemImage'
 import MenuItemPriceCals from './MenuItemPriceCals'
 
 const MenuItemHeaderView = styled.div`
+  transition: ${(props) => props.theme.links.transition};
+  background-color: ${(props) => props.theme.bgColors.primary};
   padding: ${(props) => props.theme.layout.padding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: 0;
+  }
+
+  &.isCustomize {
+    position: fixed;
+    z-index: 10;
+    top: ${(props) => props.theme.layout.navHeight};
+    right: 0;
+    width: 64rem;
+    height: ${(props) => props.theme.layout.navHeight};
+    padding-top: 1.5rem;
+    padding-bottom: 0rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      width: 100%;
+      top: ${(props) => props.theme.layout.navHeightMobile};
+      height: ${(props) => props.theme.layout.navHeightMobile};
+    }
   }
 `
 
 const MenuItemInfo = styled.div`
-  background-color: ${(props) => props.theme.bgColors.primary};
+  transition: ${(props) => props.theme.links.transition};
+
+  &.isCustomize {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `
 
 const MenuItemName = styled(Heading)`
+  display: block;
+  transition: ${(props) => props.theme.links.transition};
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
+
+  &.isCustomize {
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 
@@ -63,15 +105,25 @@ const MenuItemDesc = styled(Body)`
 `
 
 const MenuItemSelections = styled.p`
-  margin: 1rem 0 0;
+  margin: 1.5rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+
+  &.isCustomize {
+    margin: 0.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
-const MenuItemSelectionsTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-`
+const MenuItemSelectionsTitle = styled(Heading)``
 
 const MenuItemSelectionsOptions = styled(Body)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  & > span {
+    padding: 0 0.5rem 0 0;
+  }
 `
 
 const MenuItemHeader = ({
@@ -79,6 +131,7 @@ const MenuItemHeader = ({
   displaySettings,
   pointsIcon,
   isCustomize,
+  setIsCustomize,
 }) => {
   const { bgColors } = useTheme()
   const {
@@ -115,22 +168,31 @@ const MenuItemHeader = ({
   const displayPrice = formatDollars(currentPrice)
   const displayCals = showCals ? (totalPrice ? totalCals : cals) : null
   const displayImageUrl = showImage && imageUrl ? imageUrl : null
+  const hasCustomize = groups.filter((g) => !g.isSize).length > 0
   const nonSizeGroups = groups.filter((i) => !i.isSize)
-  const currentSelections = makeModifierNames({ groups })
+  const currentOptions = getItemOptions({ groups: nonSizeGroups })
+  const currentSelections = currentOptions
+    .map((i) => {
+      return i.quantity === 1 ? i.name : `${i.name} x ${i.quantity}`
+    })
+    .join(', ')
+  const klass = isCustomize ? 'isCustomize' : ''
 
   return (
-    <MenuItemHeaderView>
-      {displayImageUrl && (
+    <MenuItemHeaderView className={klass}>
+      {!isCustomize && displayImageUrl ? (
         <MenuItemImage imageUrl={displayImageUrl}>
           <ClipLoader size={30} loading={true} color={bgColors.primary} />
         </MenuItemImage>
-      )}
-      <MenuItemInfo>
-        <MenuItemName as="p">{name}</MenuItemName>
+      ) : null}
+      <MenuItemInfo className={klass}>
+        <MenuItemName as="p" className={klass}>
+          {name}
+        </MenuItemName>
         <MenuItemPriceCals
           price={displayPrice}
           cals={displayCals}
-          style={{ margin: '1rem 0 0' }}
+          style={isCustomize ? {} : { margin: '1rem 0 0' }}
         >
           {totalPoints && (
             <MenuItemPoints>
@@ -142,37 +204,49 @@ const MenuItemHeader = ({
             </MenuItemPoints>
           )}
         </MenuItemPriceCals>
-        {isCustomize ? (
-          <MenuItemSelections>
-            <MenuItemSelectionsTitle>
-              Current Selections:{' '}
-            </MenuItemSelectionsTitle>
-            <MenuItemSelectionsOptions>
-              {currentSelections}
-            </MenuItemSelectionsOptions>
-          </MenuItemSelections>
-        ) : (
-          <>
-            {hasTagsAllergens && (
-              <MenuItemTagsAllergens>
-                {hasTags
-                  ? tags.map((tag) => (
-                      <MenuItemTag key={tag}>{tag}</MenuItemTag>
-                    ))
-                  : null}
-                {hasAllergens
-                  ? allergens.map((allergen) => (
-                      <MenuItemAllergen key={allergen}>
-                        {allergen}
-                      </MenuItemAllergen>
-                    ))
-                  : null}
-              </MenuItemTagsAllergens>
-            )}
-            {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
-          </>
-        )}
       </MenuItemInfo>
+      {!isCustomize && (
+        <>
+          {hasTagsAllergens && (
+            <MenuItemTagsAllergens>
+              {hasTags
+                ? tags.map((tag) => <MenuItemTag key={tag}>{tag}</MenuItemTag>)
+                : null}
+              {hasAllergens
+                ? allergens.map((allergen) => (
+                    <MenuItemAllergen key={allergen}>
+                      {allergen}
+                    </MenuItemAllergen>
+                  ))
+                : null}
+            </MenuItemTagsAllergens>
+          )}
+          {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
+        </>
+      )}
+      {hasCustomize && (
+        <MenuItemSelections className={klass}>
+          <MenuItemSelectionsTitle>
+            Current Selections:{' '}
+          </MenuItemSelectionsTitle>
+          <MenuItemSelectionsOptions>
+            {currentSelections ? (
+              <span>{currentSelections}</span>
+            ) : isCustomize ? (
+              <span>please make your selections below</span>
+            ) : (
+              ''
+            )}{' '}
+            {!isCustomize && (
+              <ButtonLink onClick={() => setIsCustomize(true)}>
+                {currentSelections
+                  ? 'edit your selections'
+                  : 'make your selections'}
+              </ButtonLink>
+            )}
+          </MenuItemSelectionsOptions>
+        </MenuItemSelections>
+      )}
     </MenuItemHeaderView>
   )
 }
@@ -182,6 +256,8 @@ MenuItemHeader.propTypes = {
   builtItem: propTypes.object,
   displaySettings: propTypes.object,
   pointsIcon: propTypes.element,
+  isCustomize: propTypes.bool,
+  setIsCustomize: propTypes.func,
 }
 
 export default MenuItemHeader
