@@ -12,10 +12,14 @@ const GuestButtonsView = styled.div`
   flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+    // right: 0;
     flex-direction: column;
     align-items: center;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: 4rem 0 0;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    background-color: ${(props) => props.theme.bgColors.primary};
   }
 
   button {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
@@ -14,8 +14,14 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, closeModal, selectContentSection } from '../../../slices'
-import { Background, BackgroundImage, Content, Main, Welcome } from '../..'
-import HeaderGuest from '../../HeaderGuest'
+import {
+  Background,
+  BackgroundImage,
+  Content,
+  HeaderGuest,
+  Main,
+  Welcome,
+} from '../..'
 import AccountSlider from '../Account/AccountSlider'
 import AccountContent from '../Account/AccountContent'
 import AccountDeals from '../Account/AccountDeals'
@@ -35,7 +41,7 @@ const GuestView = styled.div`
   flex-direction: column;
   padding: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0;
   }
 `
 
@@ -53,7 +59,7 @@ const GuestHero = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  margin-top: 3.5rem;
+  margin: ${(props) => props.theme.layout.paddingMobile} 0;
 
   & > div {
     overflow: hidden;
@@ -143,20 +149,17 @@ const Guest = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
-        <HeaderGuest />
+        <HeaderGuest maxWidth="100%" />
         <Main>
           <GuestWrapper>
             <GuestView>
-              <Welcome title={title} subtitle={subtitle} />
+              <Welcome title={title} subtitle={!isMobile ? subtitle : null} />
               {isMobile && (
                 <GuestMobile>
                   {mobileSection ? (
                     mobileSection
                   ) : hasAnnouncements && !isLoading ? (
-                    <AccountSlider
-                      announcements={announcements}
-                      style={{ marginTop: '3.5rem' }}
-                    />
+                    <AccountSlider announcements={announcements} />
                   ) : !isLoading ? (
                     <GuestHero>
                       <BackgroundImage imageUrl={mobile} />

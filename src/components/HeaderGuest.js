@@ -1,24 +1,25 @@
 import propTypes from 'prop-types'
-import { isMobileOnly } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
-
+import { useTheme } from '@emotion/react'
 import { selectContentSection } from '../slices'
 import { Header, HeaderLogo } from '.'
 import { Cart, NavMenu, User } from './buttons'
 
 const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
-  const { displayLogo, displayLogoMobile } = useSelector(
-    selectContentSection('guest')
-  )
-  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
+  const theme = useTheme()
+  const { displayLogoMobile } = useSelector(selectContentSection('guest'))
 
   return (
     <Header
+      style={{ boxShadow: 'none' }}
       maxWidth={maxWidth}
-      left={<User />}
-      title={showLogo ? <HeaderLogo /> : null}
+      borderColor={!isMobile ? theme.colors.primary : undefined}
+      title={displayLogoMobile ? <HeaderLogo /> : null}
+      left={isMobile ? <User /> : <HeaderLogo />}
       right={
         <>
+          {!isMobile && <User />}
           <Cart />
           <NavMenu />
         </>

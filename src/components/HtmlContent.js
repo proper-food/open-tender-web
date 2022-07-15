@@ -7,9 +7,10 @@ const HtmlContentView = styled.div`
 
   p {
     margin: 1em 0;
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     line-height: ${(props) => props.theme.fonts.body.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      // font-size: ${(props) => props.theme.fonts.sizes.small};
+      font-size: ${(props) => props.theme.fonts.sizes.main};
       margin: 1em 0;
     }
 
@@ -34,9 +35,10 @@ const HtmlContentView = styled.div`
   ul li,
   ol li {
     margin: 0.5em 0;
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     line-height: ${(props) => props.theme.fonts.body.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      // font-size: ${(props) => props.theme.fonts.sizes.small};
+      font-size: ${(props) => props.theme.fonts.sizes.main};
       margin: 0.5em 0;
     }
   }

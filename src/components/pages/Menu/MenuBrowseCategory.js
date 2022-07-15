@@ -36,9 +36,8 @@ const MenuBrowseCategoryButton = styled.button`
     props.theme.buttons.sizes.large.borderWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 1rem 0;
+    ${(props) => (props.isLast ? 'border: 0;' : '')}
   }
-
-  ${(props) => (props.isLast ? 'border: 0;' : '')}
 `
 
 const MenuBrowseCategoryImage = styled(BgImage)`
@@ -49,6 +48,15 @@ const MenuBrowseCategoryImage = styled(BgImage)`
   transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.border.radiusSmall};
+  transform: scale(1);
+
+  button:hover & {
+    transform: scale(1.1);
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      transform: scale(1);
+    }
+  }
 `
 
 const MenuBrowseCategoryText = styled.span`

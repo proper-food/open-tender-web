@@ -18,13 +18,19 @@ const makeSlides = (items) => {
 }
 
 const AccountSliderView = styled.div`
+  display: none;
   flex: 1;
   width: 100%;
   padding: 0 ${(props) => props.theme.layout.padding};
-  display: none;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: ${(props) => props.theme.layout.paddingMobile} 0;
+  }
+
+  & > div {
+    overflow: hidden;
+    border-radius: ${(props) => props.theme.border.radius};
   }
 `
 

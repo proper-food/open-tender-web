@@ -1,5 +1,4 @@
 import propTypes from 'prop-types'
-
 import { HtmlContent } from '../..'
 import AccountSection from './AccountSection'
 

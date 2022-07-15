@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isMobile, isMobileOnly } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 import {
   fetchAnnouncementPage,
   fetchCustomer,
@@ -56,7 +57,7 @@ const AccountView = styled.div`
   flex-direction: column;
   padding: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0;
   }
 `
 
@@ -102,6 +103,7 @@ const checkLoading = (deals, rewards, orders, loyalty) => {
 const Account = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const {
@@ -118,13 +120,13 @@ const Account = () => {
     background,
     mobile,
     content,
-    displayLogo,
+    // displayLogo,
     displayLogoMobile,
     displayed,
     showFirstName,
     punctuation,
   } = useSelector(selectContentSection('account')) || {}
-  const showLogo = isMobileOnly ? displayLogoMobile : displayLogo
+  const showLogo = isMobile ? displayLogoMobile : false
   const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
   const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const firstName = profile ? profile.first_name : null
@@ -132,8 +134,6 @@ const Account = () => {
     firstName && showFirstName
       ? `${title}, ${firstName}${punctuation}`
       : `${title}${punctuation}`
-  const appendSubtitle = true
-  const accountTitle = appendSubtitle ? `${greeting} ${subtitle}` : greeting
 
   const hasContent = displayed.includes('CONTENT') && content && content.length
   const contentSection = hasContent
@@ -232,11 +232,14 @@ const Account = () => {
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
         <Header
-          maxWidth="76.8rem"
-          left={<User />}
+          style={{ boxShadow: 'none' }}
+          maxWidth="100%"
+          borderColor={!isMobile ? theme.colors.primary : undefined}
           title={showLogo ? <HeaderLogo /> : null}
+          left={isMobile ? <User /> : <HeaderLogo />}
           right={
             <>
+              {!isMobile && <User />}
               <Cart />
               <NavMenu />
             </>
@@ -246,8 +249,8 @@ const Account = () => {
           <AccountWrapper>
             <AccountView>
               <Welcome
-                title={accountTitle}
-                subtitle={!appendSubtitle ? subtitle : null}
+                title={greeting}
+                subtitle={!isMobile ? subtitle : null}
               />
               {isMobile && (
                 <>

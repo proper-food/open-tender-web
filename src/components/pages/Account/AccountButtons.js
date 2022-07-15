@@ -13,8 +13,8 @@ const AccountButtonsView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-direction: column;
     align-items: center;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: 4rem 0 0;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    background-color: ${(props) => props.theme.bgColors.primary};
   }
 
   button {
