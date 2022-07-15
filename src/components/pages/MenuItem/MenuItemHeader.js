@@ -21,6 +21,7 @@ const MenuItemHeaderView = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
     padding-bottom: 0;
+    padding-top: 0;
   }
 
   &.isCustomize {
@@ -36,6 +37,7 @@ const MenuItemHeaderView = styled.div`
       width: 100%;
       top: ${(props) => props.theme.layout.navHeightMobile};
       height: 6rem;
+      padding-top: 0.5rem;
     }
   }
 `
@@ -62,7 +64,7 @@ const MenuItemName = styled(Heading)`
   &.isCustomize {
     font-size: ${(props) => props.theme.fonts.sizes.main};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
+      font-size: ${(props) => props.theme.fonts.sizes.main};
     }
   }
 `
@@ -118,7 +120,13 @@ const MenuItemSelections = styled.p`
   }
 `
 
-const MenuItemSelectionsTitle = styled(Heading)``
+const MenuItemSelectionsTitle = styled(Heading)`
+  color: ${(props) => props.theme.colors.alert};
+
+  .isCustomize & {
+    color: ${(props) => props.theme.colors.primary};
+  }
+`
 
 const MenuItemSelectionsOptions = styled(Body)`
   & > span {
@@ -179,7 +187,7 @@ const MenuItemHeader = ({
   const klass = isCustomize ? 'isCustomize' : ''
 
   return (
-    <MenuItemHeaderView className={klass}>
+    <MenuItemHeaderView className={klass} showImage={showImage}>
       {!isCustomize && displayImageUrl ? (
         <MenuItemImage imageUrl={displayImageUrl}>
           <ClipLoader size={30} loading={true} color={bgColors.primary} />

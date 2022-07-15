@@ -123,6 +123,7 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
   return (
     <>
       <Header
+        style={{ boxShadow: 'none' }}
         title={
           <MenuHeaderTitle
             order={order}

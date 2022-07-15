@@ -16,7 +16,13 @@ import {
 import { useBuilder } from '@open-tender/components'
 import { selectMenuPath } from '../../../slices'
 import { Star } from '../../icons'
-import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
+import {
+  BackgroundImage,
+  Content,
+  Header,
+  Main,
+  ScreenreaderTitle,
+} from '../..'
 import { MenuHeader } from '../Menu'
 import { MenuContext } from '../Menu/Menu'
 
@@ -24,6 +30,8 @@ import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
+import { isMobile } from 'react-device-detect'
+import { Back, NavMenu } from '../../buttons'
 
 const MenuItemView = styled.div`
   position: relative;
@@ -34,12 +42,10 @@ const MenuItemView = styled.div`
 
 const MenuItemBuilderView = styled.div`
   width: 64rem;
-  // padding: ${(props) => props.theme.layout.padding} 0;
   margin-bottom: ${(props) => props.footerHeight || '10rem'};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    // padding: ${(props) => props.theme.layout.paddingMobile} 0;
     margin-bottom: ${(props) => props.footerHeight || '10rem'};
   }
 `
@@ -101,6 +107,8 @@ const MenuItem = () => {
     dispatch(setCurrentItem(null))
   }
 
+  const backClick = isCustomize ? () => setIsCustomize(false) : cancel
+
   useEffect(() => {
     if (!item) navigate(menuPath || menuSlug)
   }, [item, navigate, menuSlug, menuPath])
@@ -115,7 +123,15 @@ const MenuItem = () => {
         </title>
       </Helmet>
       <Content hasFooter={false}>
-        <MenuHeader backClick={cancel} />
+        {isMobile ? (
+          <Header
+            style={{ boxShadow: 'none' }}
+            left={<Back onClick={backClick} />}
+            right={<NavMenu />}
+          />
+        ) : (
+          <MenuHeader backClick={backClick} />
+        )}
         <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
           <MenuItemView>

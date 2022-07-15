@@ -97,6 +97,10 @@ const MenuItemAccordionToggle = ({ isOpen, children }) => {
   )
 }
 
+const MenuItemAccordionQuantity = styled.div`
+  margin-right: -0.8rem;
+`
+
 const MenuItemAccordionSelectedSize = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
@@ -345,12 +349,14 @@ const MenuItemAccordion = ({
         )}
         <MenuItemAccordionRow>
           <MenuItemAccordionLabel>Quantity</MenuItemAccordionLabel>
-          <MenuItemQuantity
-            item={builtItem}
-            adjust={setQuantity}
-            increment={increment}
-            decrement={decrement}
-          />
+          <MenuItemAccordionQuantity>
+            <MenuItemQuantity
+              item={builtItem}
+              adjust={setQuantity}
+              increment={increment}
+              decrement={decrement}
+            />
+          </MenuItemAccordionQuantity>
         </MenuItemAccordionRow>
         {!!hasInstructions && (
           <>

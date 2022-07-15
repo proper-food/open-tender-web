@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { animateScroll as scroll } from 'react-scroll'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -49,6 +48,8 @@ const RevenueCenters = () => {
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
   const missingAddress = serviceType === 'DELIVERY' && !address
+  const backPath =
+    orderType === 'CATERING' ? '/catering-address' : '/order-type'
 
   useEffect(() => {
     let paramOrderType = null
@@ -96,15 +97,8 @@ const RevenueCenters = () => {
       <Content maxWidth="76.8rem">
         <Header
           maxWidth="76.8rem"
-          title={isMobile ? 'Choose Location' : null}
           style={{ boxShadow: 'none' }}
-          left={
-            orderType === 'CATERING' ? (
-              <Back path="/catering-address" />
-            ) : (
-              <Back path="/order-type" />
-            )
-          }
+          left={<Back path={backPath} />}
           right={
             <>
               <Cart />
