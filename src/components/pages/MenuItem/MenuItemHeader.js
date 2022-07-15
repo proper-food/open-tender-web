@@ -243,7 +243,7 @@ const MenuItemHeader = ({
             ) : isCustomize ? (
               <span>please make your selections below</span>
             ) : (
-              ''
+              <span>nothing selected</span>
             )}{' '}
             {!isCustomize && (
               <ButtonLink onClick={() => setIsCustomize(true)}>

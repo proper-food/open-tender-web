@@ -136,8 +136,8 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
         right={
           <>
             <Allergens style={isMobile ? { width: '3rem' } : null} />
-            {isBrowser && <Cart />}
-            <NavMenu />
+            <Cart />
+            {isBrowser && <NavMenu />}
           </>
         }
       />

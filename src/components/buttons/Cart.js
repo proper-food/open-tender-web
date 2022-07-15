@@ -13,7 +13,7 @@ const CartIcon = styled('div')`
   position: relative;
   margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 -0.5rem 0 0.5rem;
+    margin: 0 -1.5rem 0 0.5rem;
   }
 
   button {
@@ -34,8 +34,8 @@ const CartCount = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 1.5rem;
-  height: 1.5rem;
+  min-width: 1.7rem;
+  height: 1.7rem;
   border-radius: 1.2rem;
   padding-bottom: 0.1rem;
   font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
@@ -45,32 +45,16 @@ const CartCount = styled.div`
 
 const Cart = () => {
   const dispatch = useDispatch()
-  // const navigate = useNavigate()
   const theme = useTheme()
   const { pathname } = useLocation()
   const cartQuantity = useSelector(selectCartQuantity)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType } = currentOrder
-  // const { entities: orders } = useSelector(selectCustomerOrders)
-  // const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   const isCurrentOrder = revenueCenter && serviceType && cartQuantity > 0
-  const fill = isCurrentOrder
-    ? theme.buttons.colors.cart.bgColor
-    : 'transparent'
-  // const showMenu = revenueCenter && (lastOrder || isCurrentOrder)
-  // const isItem = pathname.includes('/item/')
+  const fill = isCurrentOrder ? theme.colors.alert : 'transparent'
   const hideCart = contains(pathname, ['/item/', 'review'])
   const showCart =
     (isCurrentOrder || contains(pathname, ['menu', 'checkout'])) && !hideCart
-
-  // const order = () => {
-  //   const path = showMenu
-  //     ? `/menu/${revenueCenter.slug}`
-  //     : pathname === '/account'
-  //     ? '/order-type'
-  //     : '/account'
-  //   navigate(path)
-  // }
 
   return showCart ? (
     <CartIcon>
@@ -80,7 +64,7 @@ const Cart = () => {
         onClick={() => dispatch(toggleSidebar())}
         size={isBrowser ? 24 : 24}
       >
-        <ShoppingBag size={null} fill={fill} />
+        <ShoppingBag fill={fill} />
       </ButtonIcon>
     </CartIcon>
   ) : null
