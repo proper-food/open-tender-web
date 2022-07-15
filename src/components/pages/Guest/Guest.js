@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-import styled from '@emotion/styled'
 import {
   fetchAnnouncementPage,
   fetchDeals,
@@ -22,50 +21,17 @@ import {
   Main,
   Welcome,
 } from '../..'
-import AccountSlider from '../Account/AccountSlider'
-import AccountContent from '../Account/AccountContent'
-import AccountDeals from '../Account/AccountDeals'
-import AccountLoyalty from '../Account/AccountLoyalty'
+import {
+  AccountContent,
+  AccountDeals,
+  AccountHero,
+  AccountLoyalty,
+  AccountMobile,
+  AccountSlider,
+  AccountView,
+  AccountWrapper,
+} from '../Account'
 import GuestButtons from './GuestButtons'
-
-const GuestWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-`
-
-const GuestView = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
-  }
-`
-
-const GuestMobile = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-const GuestHero = styled.div`
-  flex: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  margin: ${(props) => props.theme.layout.paddingMobile} 0;
-
-  & > div {
-    overflow: hidden;
-    border-radius: ${(props) => props.theme.border.radius};
-  }
-`
 
 const hasEntities = (reducer) => {
   if (!reducer) return false
@@ -85,10 +51,17 @@ const Guest = () => {
     has_thanx,
     has_levelup,
   } = useSelector(selectBrand)
-  const { title, subtitle, background, mobile, content, showGuest, displayed } =
-    useSelector(selectContentSection('guest')) || {}
-  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
-  const announcements = useSelector(selectAnnouncementsPage('GUEST'))
+  const {
+    title,
+    subtitle,
+    background,
+    mobile,
+    content,
+    showGuest,
+    displayed: displayedDesktop,
+    displayedMobile,
+  } = useSelector(selectContentSection('guest')) || {}
+  const displayed = isMobile ? displayedMobile : displayedDesktop
 
   const hasContent = displayed.includes('CONTENT') && content && content.length
   const contentSection = hasContent
@@ -108,17 +81,39 @@ const Guest = () => {
     ? (key) => <AccountLoyalty key={key} />
     : null
 
-  const isLoading = deals.loading === 'pending'
+  const hasHero = isMobile ? mobile : background
+  const displayHero = displayed.includes('HERO') && hasHero
+  const heroSection = displayHero
+    ? (key) => (
+        <AccountHero key={key}>
+          <BackgroundImage imageUrl={mobile} />
+        </AccountHero>
+      )
+    : null
+
+  const announcements = useSelector(selectAnnouncementsPage('GUEST'))
+  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('GUEST'))
+  const displayAnnouncements =
+    displayed.includes('ANNOUNCEMENTS') && hasAnnouncements
+  const announcementsSection = displayAnnouncements
+    ? (key) => <AccountSlider announcements={announcements} key={key} />
+    : null
 
   const sections = {
     CONTENT: contentSection,
     LOYALTY: loyaltySection,
     DEALS: dealsSection,
+    HERO: heroSection,
+    ANNOUNCEMENTS: announcementsSection,
   }
   const displayedSections = displayed
     ? displayed.map((i) => sections[i] && sections[i](i)).filter(Boolean)
     : null
-  const mobileSection = displayedSections ? displayedSections[0] : null
+
+  const buttons = useRef(null)
+  const buttonsHeight = buttons.current?.offsetHeight || 100
+  const buttonsHeightRem = `${(buttonsHeight / 10).toFixed(1)}rem`
+  const buttonsStyle = isMobile ? { paddingBottom: buttonsHeightRem } : null
 
   useEffect(() => {
     dispatch(closeModal())
@@ -151,26 +146,14 @@ const Guest = () => {
       <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
         <HeaderGuest maxWidth="100%" />
         <Main>
-          <GuestWrapper>
-            <GuestView>
+          <AccountWrapper>
+            <AccountView style={buttonsStyle}>
               <Welcome title={title} subtitle={!isMobile ? subtitle : null} />
-              {isMobile && (
-                <GuestMobile>
-                  {mobileSection ? (
-                    mobileSection
-                  ) : hasAnnouncements && !isLoading ? (
-                    <AccountSlider announcements={announcements} />
-                  ) : !isLoading ? (
-                    <GuestHero>
-                      <BackgroundImage imageUrl={mobile} />
-                    </GuestHero>
-                  ) : null}
-                </GuestMobile>
-              )}
-              <GuestButtons />
-              {!isMobile && displayedSections}
-            </GuestView>
-          </GuestWrapper>
+              {isMobile && <AccountMobile>{displayedSections}</AccountMobile>}
+              <GuestButtons ref={buttons} />
+              {!isMobile && <AccountMobile>{displayedSections}</AccountMobile>}
+            </AccountView>
+          </AccountWrapper>
         </Main>
       </Content>
     </>

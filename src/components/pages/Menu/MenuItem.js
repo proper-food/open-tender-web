@@ -310,7 +310,6 @@ const MenuItem = ({ item }) => {
   const { groups, totalPrice, totalCals } = builtItem
   const sizeGroup = groups.find((i) => i.isSize)
   const sizeOnly = sizeGroup && groups.length === 1
-  console.log(totalPrice, price)
   const displayPrice = totalPrice ? formatDollars(totalPrice) : price
   const optionNames = item.favorite
     ? item.favorite.item.groups

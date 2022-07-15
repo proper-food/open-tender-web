@@ -4,13 +4,19 @@ import { useNavigate } from 'react-router-dom'
 import { resetOrder, selectOrder } from '@open-tender/redux'
 import { ButtonLarge } from '../..'
 import { ArrowRight } from '../../icons'
+import React from 'react'
 
-const AccountButtonsView = styled('div')`
+export const AccountButtonsView = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
     flex-direction: column;
     align-items: center;
     padding: ${(props) => props.theme.layout.paddingMobile};
@@ -35,7 +41,7 @@ const AccountButtonsView = styled('div')`
   }
 `
 
-const AccountButtons = () => {
+const AccountButtons = React.forwardRef((props, ref) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
@@ -52,7 +58,7 @@ const AccountButtons = () => {
   }
 
   return (
-    <AccountButtonsView>
+    <AccountButtonsView ref={ref}>
       <ButtonLarge
         onClick={isCurrentOrder ? continueCurrent : startNewOrder}
         text={isCurrentOrder ? 'Continue Order' : 'Order Now'}
@@ -62,7 +68,7 @@ const AccountButtons = () => {
       </ButtonLarge>
     </AccountButtonsView>
   )
-}
+})
 
 AccountButtons.displayName = 'AccountButtons'
 

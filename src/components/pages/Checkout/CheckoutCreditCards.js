@@ -23,7 +23,6 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
   const defaultCardId = defaultCard ? defaultCard.customer_card_id : null
   const cardIds = cards.map((i) => i.customer_card_id)
   const missingCard = appliedCardId && !cardIds.includes(appliedCardId)
-  console.log(missingCard)
 
   // if customer adds new default card, replace the current credit tender
   useEffect(() => {

@@ -24,8 +24,10 @@ const AccountSliderView = styled.div`
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: flex;
+    min-height: 16rem;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: ${(props) => props.theme.layout.paddingMobile} 0;
+    // margin: calc(${(props) => props.theme.layout.marginMobile} / 2) 0;
+    margin: 2rem 0;
   }
 
   & > div {

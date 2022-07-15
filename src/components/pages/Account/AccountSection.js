@@ -6,7 +6,8 @@ const AccountSection = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: 0;
+    // margin: calc(${(props) => props.theme.layout.marginMobile} / 2) 0;
+    margin: 2rem 0;
   }
 `
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
@@ -17,7 +17,7 @@ import {
   selectAnnouncementsPage,
   selectCustomer,
   selectCustomerGroupOrders,
-  selectCustomerLoyaltyProgram,
+  // selectCustomerLoyaltyProgram,
   selectCustomerOrders,
   selectCustomerRewards,
   selectDeals,
@@ -44,39 +44,44 @@ import AccountGroupOrders from './AccountGroupOrders'
 import AccountOrders from './AccountOrders'
 import AccountSlider from './AccountSlider'
 
-const AccountWrapper = styled.div`
+export const AccountWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   padding-bottom: env(safe-area-inset-bottom, 0);
 `
 
-const AccountView = styled.div`
+export const AccountView = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
+  padding: 0 0 ${(props) => props.theme.layout.margin};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 0 10rem;
   }
 `
 
-const AccountMobile = styled.div`
+export const AccountMobile = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  ${(props) => (props.isSecond ? 'margin: 1rem 0 2rem' : '')}
 `
 
-const AccountHero = styled.div`
+export const AccountHero = styled.div`
   flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  margin: 3.5rem 0 ${(props) => (props.isSection ? '3.5rem' : '0')};
+  min-height: 32rem;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: ${(props) => props.theme.layout.margin} 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    min-height: 16rem;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 2rem 0;
+  }
 
   & > div {
     overflow: hidden;
@@ -91,14 +96,14 @@ const hasEntities = (reducer) => {
   return !error && entities.length
 }
 
-const checkLoading = (deals, rewards, orders, loyalty) => {
-  return (
-    deals.loading === 'pending' ||
-    rewards.loading === 'pending' ||
-    orders.loading === 'pending' ||
-    loyalty.loading === 'pending'
-  )
-}
+// const checkLoading = (deals, rewards, orders, loyalty) => {
+//   return (
+//     deals.loading === 'pending' ||
+//     rewards.loading === 'pending' ||
+//     orders.loading === 'pending' ||
+//     loyalty.loading === 'pending'
+//   )
+// }
 
 const Account = () => {
   const navigate = useNavigate()
@@ -122,18 +127,18 @@ const Account = () => {
     content,
     // displayLogo,
     displayLogoMobile,
-    displayed,
+    displayed: displayedDesktop,
+    displayedMobile,
     showFirstName,
     punctuation,
   } = useSelector(selectContentSection('account')) || {}
   const showLogo = isMobile ? displayLogoMobile : false
-  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
-  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const firstName = profile ? profile.first_name : null
   const greeting =
     firstName && showFirstName
       ? `${title}, ${firstName}${punctuation}`
       : `${title}${punctuation}`
+  const displayed = isMobile ? displayedMobile : displayedDesktop
 
   const hasContent = displayed.includes('CONTENT') && content && content.length
   const contentSection = hasContent
@@ -168,14 +173,30 @@ const Account = () => {
     ? (key) => <AccountGroupOrders key={key} orders={groupOrders.entities} />
     : null
 
-  const loyalty = useSelector(selectCustomerLoyaltyProgram)
+  // const loyalty = useSelector(selectCustomerLoyaltyProgram)
   const hasLoyalty = has_loyalty || has_thanx || has_levelup
   const displayLoyalty = displayed.includes('LOYALTY') && hasLoyalty
   const loyaltySection = displayLoyalty
     ? (key) => <AccountLoyalty key={key} />
     : null
 
-  const isLoading = checkLoading(deals, rewards, orders, loyalty)
+  const hasHero = isMobile ? mobile : background
+  const displayHero = displayed.includes('HERO') && hasHero
+  const heroSection = displayHero
+    ? (key) => (
+        <AccountHero key={key}>
+          <BackgroundImage imageUrl={mobile} />
+        </AccountHero>
+      )
+    : null
+
+  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
+  const hasAnnouncements = useSelector(selectHasAnnouncementsPage('ACCOUNT'))
+  const displayAnnouncements =
+    displayed.includes('ANNOUNCEMENTS') && hasAnnouncements
+  const announcementsSection = displayAnnouncements
+    ? (key) => <AccountSlider announcements={announcements} key={key} />
+    : null
 
   const sections = {
     CONTENT: contentSection,
@@ -184,13 +205,19 @@ const Account = () => {
     DEALS: dealsSection,
     ORDERS: ordersSection,
     GROUP_ORDERS: groupOrdersSection,
+    HERO: heroSection,
+    ANNOUNCEMENTS: announcementsSection,
   }
   const displayedSections = displayed
     ? displayed.map((i) => sections[i] && sections[i](i)).filter(Boolean)
     : null
-  const mobileFirst = displayedSections.length > 1 ? displayedSections[0] : null
-  const mobileSecond =
-    displayedSections.length > 1 ? displayedSections[1] : displayedSections[0]
+
+  // const isLoading = checkLoading(deals, rewards, orders, loyalty)
+
+  const buttons = useRef(null)
+  const buttonsHeight = buttons.current?.offsetHeight || 100
+  const buttonsHeightRem = `${(buttonsHeight / 10).toFixed(1)}rem`
+  const buttonsStyle = isMobile ? { paddingBottom: buttonsHeightRem } : null
 
   useEffect(() => {
     dispatch(closeModal())
@@ -247,35 +274,14 @@ const Account = () => {
         />
         <Main>
           <AccountWrapper>
-            <AccountView>
+            <AccountView style={buttonsStyle}>
               <Welcome
                 title={greeting}
                 subtitle={!isMobile ? subtitle : null}
               />
-              {isMobile && (
-                <>
-                  <AccountMobile isSecond={!!mobileSecond}>
-                    {mobileFirst ? (
-                      mobileFirst
-                    ) : hasAnnouncements && !isLoading ? (
-                      <AccountSlider
-                        announcements={announcements}
-                        style={{
-                          marginTop: '3.5rem',
-                          marginBottom: !!mobileSecond ? '3.5rem' : '0',
-                        }}
-                      />
-                    ) : !isLoading ? (
-                      <AccountHero isSection={!!mobileSecond}>
-                        <BackgroundImage imageUrl={mobile} />
-                      </AccountHero>
-                    ) : null}
-                  </AccountMobile>
-                  {mobileSecond}
-                </>
-              )}
-              <AccountButtons />
-              {!isMobile && displayedSections}
+              {isMobile && <AccountMobile>{displayedSections}</AccountMobile>}
+              <AccountButtons ref={buttons} />
+              {!isMobile && <AccountMobile>{displayedSections}</AccountMobile>}
             </AccountView>
           </AccountWrapper>
         </Main>

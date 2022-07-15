@@ -1,10 +1,11 @@
-import styled from '@emotion/styled'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { resetOrder, selectOrder } from '@open-tender/redux'
 import { openModal } from '../../../slices'
 import { ArrowRight, UserCircle } from '../../icons'
 import { ButtonLarge } from '../..'
+import styled from '@emotion/styled'
 
 const GuestButtonsView = styled.div`
   display: flex;
@@ -12,10 +13,11 @@ const GuestButtonsView = styled.div`
   flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // position: fixed;
-    // bottom: 0;
-    // left: 0;
-    // right: 0;
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
     flex-direction: column;
     align-items: center;
     padding: ${(props) => props.theme.layout.paddingMobile};
@@ -40,7 +42,7 @@ const GuestButtonsView = styled.div`
   }
 `
 
-const GuestButtons = () => {
+const GuestButtons = React.forwardRef((props, ref) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
@@ -61,7 +63,7 @@ const GuestButtons = () => {
   }
 
   return (
-    <GuestButtonsView>
+    <GuestButtonsView ref={ref}>
       <ButtonLarge onClick={login} text="Sign in or sign up" color="secondary">
         <UserCircle size={22} />
       </ButtonLarge>
@@ -74,7 +76,7 @@ const GuestButtons = () => {
       </ButtonLarge>
     </GuestButtonsView>
   )
-}
+})
 
 GuestButtons.displayName = 'GuestButtons'
 
