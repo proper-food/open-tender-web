@@ -114,6 +114,10 @@ const MenuItemSelections = styled.p`
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
+  button {
+    color: ${(props) => props.theme.colors.alert};
+  }
+
   &.isCustomize {
     margin: 0.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
@@ -121,11 +125,11 @@ const MenuItemSelections = styled.p`
 `
 
 const MenuItemSelectionsTitle = styled(Heading)`
-  color: ${(props) => props.theme.colors.alert};
+  // color: ${(props) => props.theme.colors.alert};
 
-  .isCustomize & {
-    color: ${(props) => props.theme.colors.primary};
-  }
+  // .isCustomize & {
+  //   color: ${(props) => props.theme.colors.primary};
+  // }
 `
 
 const MenuItemSelectionsOptions = styled(Body)`

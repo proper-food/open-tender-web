@@ -50,13 +50,14 @@ const MenuItemGroups = ({
   setOptionQuantity,
 }) => {
   const { groups } = builtItem
-  const navItems = groups.map(({ name }) => name)
+  const nonSizeGroups = groups.filter((i) => !i.isSize)
+  const navItems = nonSizeGroups.map(({ name }) => name)
 
   return (
     <MenuItemGroupsView>
       <MenuItemGroupsNav items={navItems} />
       <MenuItemGroupsList>
-        {groups.map((group) => (
+        {nonSizeGroups.map((group) => (
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
             <MenuItemGroupHeader group={group} />
             <MenuItemOptions>
