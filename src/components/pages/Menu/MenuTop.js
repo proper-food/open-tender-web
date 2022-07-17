@@ -25,14 +25,14 @@ import { Container, Loading, SeeMoreLink } from '../..'
 import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
 
-const MenuFavsRecentsView = styled.div`
+const MenuTopView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
-const MenuFavsRecentsHeader = styled.div`
+const MenuTopHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,16 +42,16 @@ const MenuFavsRecentsHeader = styled.div`
   }
 `
 
-const MenuFavsRecentsNav = styled.div`
+const MenuTopNav = styled.div`
   flex: 1;
 `
 
-const MenuFavsRecentsMore = styled.div`
+const MenuTopMore = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
 `
 
-const MenuFavsRecentsButtonView = styled.button`
+const MenuTopButtonView = styled.button`
   padding: 0 0 0.2rem;
   margin: 0 4rem 0 0;
   border-bottom: ${(props) => props.theme.border.width} solid transparent;
@@ -68,32 +68,29 @@ const MenuFavsRecentsButtonView = styled.button`
   }
 `
 
-const MenuFavsRecentsButton = ({ title, section, menuSection, onClick }) => {
+const MenuTopButton = ({ title, section, menuSection, onClick }) => {
   return (
-    <MenuFavsRecentsButtonView
-      isActive={menuSection === section}
-      onClick={onClick}
-    >
-      <MenuFavsRecentsTitle>{title}</MenuFavsRecentsTitle>
-    </MenuFavsRecentsButtonView>
+    <MenuTopButtonView isActive={menuSection === section} onClick={onClick}>
+      <MenuTopTitle>{title}</MenuTopTitle>
+    </MenuTopButtonView>
   )
 }
 
-MenuFavsRecentsButton.displayName = 'MenuFavsRecentsButton'
-MenuFavsRecentsButton.propTypes = {
+MenuTopButton.displayName = 'MenuTopButton'
+MenuTopButton.propTypes = {
   section: propTypes.string,
   menuSection: propTypes.string,
   onClick: propTypes.func,
 }
 
-const MenuFavsRecentsTitle = styled(Heading)`
+const MenuTopTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 `
 
-const MenuFavsRecentsItems = styled.div`
+const MenuTopItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -105,7 +102,7 @@ const MenuFavsRecentsItems = styled.div`
   }
 `
 
-const MenuFavsRecentsItemsItem = styled.div`
+const MenuTopItemsItem = styled.div`
   flex: ${(props) => (props.count >= 4 ? '1' : '0')} 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
@@ -129,7 +126,7 @@ const MenuFavsRecentsItemsItem = styled.div`
   }
 `
 
-const MenuFavsRecents = () => {
+const MenuTop = () => {
   const dispatch = useDispatch()
   const theme = useTheme()
   const { navHeight, navHeightMobile } = theme.layout
@@ -212,62 +209,62 @@ const MenuFavsRecents = () => {
   if (!isLoading && !hasItems) return null
 
   return (
-    <MenuFavsRecentsView className="compact">
+    <MenuTopView className="compact">
       <Container>
         {showLoading ? (
           <Loading text="Checking for recents and favorites..." />
         ) : (
           <>
-            <MenuFavsRecentsHeader>
-              <MenuFavsRecentsNav>
+            <MenuTopHeader>
+              <MenuTopNav>
                 {displayedKeys.map((section) => (
-                  <MenuFavsRecentsButton
+                  <MenuTopButton
                     title={capitalize(section)}
                     section={section}
                     menuSection={menuSection}
                     onClick={() => dispatch(setMenuSection(section))}
                   >
-                    <MenuFavsRecentsTitle>Recents</MenuFavsRecentsTitle>
-                  </MenuFavsRecentsButton>
+                    <MenuTopTitle>Recents</MenuTopTitle>
+                  </MenuTopButton>
                 ))}
                 {isBrowser && (
-                  <MenuFavsRecentsButton
+                  <MenuTopButton
                     title="Full Menu"
                     section="FULL_MENU"
                     menuSection={menuSection}
                     onClick={scrollToMenu}
                   />
                 )}
-              </MenuFavsRecentsNav>
-              <MenuFavsRecentsMore>
+              </MenuTopNav>
+              <MenuTopMore>
                 {displayMore && (
                   <SeeMoreLink
                     text={`View All${currentTitle}`}
                     to={`${menuSlug}/${menuSection.toLowerCase()}`}
                   />
                 )}
-              </MenuFavsRecentsMore>
-            </MenuFavsRecentsHeader>
+              </MenuTopMore>
+            </MenuTopHeader>
             {currentDisplayed.length > 0 ? (
-              <MenuFavsRecentsItems>
+              <MenuTopItems>
                 {currentDisplayed.map((item, index) => (
-                  <MenuFavsRecentsItemsItem
+                  <MenuTopItemsItem
                     count={currentDisplayed.length}
                     key={`${menuSection}-${item.id}-${index}`}
                   >
                     <MenuItem item={item} />
-                  </MenuFavsRecentsItemsItem>
+                  </MenuTopItemsItem>
                 ))}
-              </MenuFavsRecentsItems>
+              </MenuTopItems>
             ) : null}
           </>
         )}
       </Container>
-    </MenuFavsRecentsView>
+    </MenuTopView>
   )
 }
 
-MenuFavsRecents.displayName = 'MenuFavsRecents'
-MenuFavsRecents.propTypes = {}
+MenuTop.displayName = 'MenuTop'
+MenuTop.propTypes = {}
 
-export default MenuFavsRecents
+export default MenuTop

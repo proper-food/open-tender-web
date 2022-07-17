@@ -8,7 +8,7 @@ import { Content, Loading, Main, PageHero, ScreenreaderTitle } from '../..'
 import { MenuContext } from './Menu'
 import MenuHeader from './MenuHeader'
 import MenuBrowse from './MenuBrowse'
-import MenuFavsRecents from './MenuFavsRecents'
+import MenuTop from './MenuTop'
 
 const MenuNewView = styled.div``
 
@@ -60,7 +60,7 @@ const MenuNew = () => {
               </MenuLoading>
             ) : (
               <>
-                <MenuFavsRecents />
+                <MenuTop />
                 <MenuBrowse categories={revenueCenters || categories} />
               </>
             )}
