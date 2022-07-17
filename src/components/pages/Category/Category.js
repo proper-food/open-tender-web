@@ -7,17 +7,24 @@ import { selectCurrentCategory, selectMenuSlug } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import { MenuHeader, MenuCategory } from '../Menu'
-import CategoryNav from './CategoryNav'
+// import CategoryNav from './CategoryNav'
 import { MenuContext } from '../Menu/Menu'
+import CategoryBrowse from './CategoryBrowse'
 
-const MenuCategoryView = styled.div``
+const MenuCategoryView = styled.div`
+  margin-top: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    // margin-top: ${(props) => props.theme.layout.navHeightMobile};
+    margin-top: 0;
+  }
+`
 
 const Category = () => {
   const navigate = useNavigate()
   const { siteTitle } = useContext(MenuContext)
   const category = useSelector(selectCurrentCategory)
   const menuSlug = useSelector(selectMenuSlug)
-  const navItems = category.children.map(({ name }) => name)
+  // const navItems = category.children.map(({ name }) => name)
 
   useEffect(() => {
     if (!category) navigate(menuSlug)
@@ -36,7 +43,8 @@ const Category = () => {
         <MenuHeader backPath={menuSlug} />
         <Main>
           <ScreenreaderTitle>{category.name}</ScreenreaderTitle>
-          {navItems.length > 0 && <CategoryNav items={navItems} />}
+          <CategoryBrowse />
+          {/* {navItems.length > 0 && <CategoryNav items={navItems} />} */}
           <MenuCategoryView>
             <MenuCategory category={category} />
             {category.children.map((child) => (
