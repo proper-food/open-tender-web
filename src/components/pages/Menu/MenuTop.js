@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { animateScroll as scroll } from 'react-scroll'
 import {
-  selectCustomer,
   selectCustomerFavorites,
   selectCustomerOrders,
   selectMenuSlug,
@@ -150,7 +149,6 @@ const MenuTop = () => {
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
   const topOffset = heightInPixels + 30
   const menuSection = useSelector(selectMenuSection)
-  const { auth } = useSelector(selectCustomer)
   const menuSlug = useSelector(selectMenuSlug)
   const { categories, soldOut, menuContent, deals } = useContext(MenuContext)
   const { displayed: displayedDesktop, displayedMobile } = menuContent
@@ -159,7 +157,6 @@ const MenuTop = () => {
 
   // handle featured
   const featured = makeFeatured(categories)
-  console.log(featured)
 
   // handle favorites
   const favs = useSelector(selectCustomerFavorites)
@@ -192,11 +189,9 @@ const MenuTop = () => {
     DEALS: deals,
   }
   const displayedSections = displayed.reduce((obj, i) => {
-    console.log(i, sections[i])
     return sections[i].length > 0 ? { ...obj, [i]: sections[i] } : obj
   }, {})
   const displayedKeys = Object.keys(displayedSections)
-  console.log(displayedKeys)
   const marginRight = displayedKeys.length > 2 ? '1.5' : '3'
   const fontSize = displayedKeys.length > 2 ? 'main' : 'big'
   const firstSection = displayedKeys[0] || null
@@ -227,8 +222,6 @@ const MenuTop = () => {
   useEffect(() => {
     if (!hasSection) dispatch(setMenuSection(firstSection))
   }, [hasSection, firstSection, dispatch])
-
-  if (!auth) return null
 
   if (!isLoading && !hasItems) return null
 
