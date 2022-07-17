@@ -31,7 +31,6 @@ import Hero from './Hero'
 import HeroContent from './HeroContent'
 import HeroSite from './HeroSite'
 import HeroSiteCta from './HeroSiteCta'
-import HeroSlides from './HeroSlides'
 import HtmlContent from './HtmlContent'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
@@ -133,7 +132,6 @@ export {
   HeroContent,
   HeroSite,
   HeroSiteCta,
-  HeroSlides,
   HtmlContent,
   ImageSpinner,
   ItemCards,

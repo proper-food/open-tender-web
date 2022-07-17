@@ -256,7 +256,11 @@ const Account = () => {
           {greeting} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={background} />
+      <Background
+        imageUrl={background}
+        announcements={displayAnnouncements ? announcements : null}
+        style={{ top: theme.layout.navHeight }}
+      />
       <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
         <Header
           style={{ boxShadow: 'none' }}

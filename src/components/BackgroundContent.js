@@ -44,7 +44,7 @@ const BackgroundContentText = styled.div`
 
 const BackgroundContentTitle = styled(Headline)`
   color: #${(props) => props.textColor};
-  font-size: ${(props) => props.theme.fonts.sizes.mega};
+  font-size: ${(props) => props.fontSize || props.theme.fonts.sizes.mega};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
   }
@@ -54,7 +54,7 @@ const BackgroundContentSubtitle = styled.p`
   margin: 0.5em 0;
   line-height: ${(props) => props.theme.lineHeight};
   color: #${(props) => props.textColor};
-  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  font-size: ${(props) => props.fontSize || props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
@@ -80,6 +80,8 @@ const BackgroundContent = ({
   url_text,
   title_color = 'ffffff',
   subtitle_color = 'ffffff',
+  title_size = null,
+  subtitle_size = null,
   vertical = 'BOTTOM',
   horizontal = 'CENTER',
   hide_text = false,
@@ -89,6 +91,10 @@ const BackgroundContent = ({
   if (!title && !subtitle) return null
   const justifyContent = makeAlignment(horizontal)
   const alignItems = makeAlignment(vertical)
+  const titleSize = title_size ? `${(title_size / 10).toFixed(1)}rem` : null
+  const subtitleSize = subtitle_size
+    ? `${(subtitle_size / 10).toFixed(1)}rem`
+    : null
 
   if (hide_text) return null
 
@@ -105,6 +111,7 @@ const BackgroundContent = ({
             <BackgroundContentTitle
               as="p"
               textColor={title_color.replace('#', '')}
+              fontSize={titleSize}
             >
               {title}
             </BackgroundContentTitle>
@@ -112,6 +119,7 @@ const BackgroundContent = ({
           {subtitle && (
             <BackgroundContentSubtitle
               textColor={subtitle_color.replace('#', '')}
+              fontSize={subtitleSize}
             >
               {subtitle}
             </BackgroundContentSubtitle>
@@ -131,6 +139,8 @@ BackgroundContent.propTypes = {
   subtitle: propTypes.string,
   title_color: propTypes.string,
   subtitle_color: propTypes.string,
+  title_size: propTypes.number,
+  subtitle_size: propTypes.number,
   vertical: propTypes.string,
   horizontal: propTypes.string,
   hide_text: propTypes.bool,

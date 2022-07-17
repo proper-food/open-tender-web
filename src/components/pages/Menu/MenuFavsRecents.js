@@ -1,36 +1,38 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { animateScroll as scroll } from 'react-scroll'
+import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
+import { animateScroll as scroll } from 'react-scroll'
 import {
   selectCustomer,
   selectCustomerFavorites,
   selectCustomerOrders,
-  selectMenu,
   selectMenuSlug,
 } from '@open-tender/redux'
 import {
-  makeUniqueDisplayItems,
-  makeMenuItemLookup,
+  capitalize,
   makeFavorites,
+  makeFeatured,
+  makeMenuItemLookup,
   makeRecents,
+  makeUniqueDisplayItems,
 } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
-
 import { selectMenuSection, setMenuSection } from '../../../slices'
 import { Container, Loading, SeeMoreLink } from '../..'
+import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
-import { useTheme } from '@emotion/react'
-import { isBrowser } from 'react-device-detect'
 
-const MenuFavoritesView = styled.div`
+const MenuFavsRecentsView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `
 
-const MenuFavoritesHeader = styled.div`
+const MenuFavsRecentsHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,16 +42,16 @@ const MenuFavoritesHeader = styled.div`
   }
 `
 
-const MenuFavoritesNav = styled.div`
+const MenuFavsRecentsNav = styled.div`
   flex: 1;
 `
 
-const MenuFavoritesMore = styled.div`
+const MenuFavsRecentsMore = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
 `
 
-const MenuFavoritesButton = styled.button`
+const MenuFavsRecentsButtonView = styled.button`
   padding: 0 0 0.2rem;
   margin: 0 4rem 0 0;
   border-bottom: ${(props) => props.theme.border.width} solid transparent;
@@ -66,14 +68,32 @@ const MenuFavoritesButton = styled.button`
   }
 `
 
-const MenuFavoritesTitle = styled(Heading)`
+const MenuFavsRecentsButton = ({ title, section, menuSection, onClick }) => {
+  return (
+    <MenuFavsRecentsButtonView
+      isActive={menuSection === section}
+      onClick={onClick}
+    >
+      <MenuFavsRecentsTitle>{title}</MenuFavsRecentsTitle>
+    </MenuFavsRecentsButtonView>
+  )
+}
+
+MenuFavsRecentsButton.displayName = 'MenuFavsRecentsButton'
+MenuFavsRecentsButton.propTypes = {
+  section: propTypes.string,
+  menuSection: propTypes.string,
+  onClick: propTypes.func,
+}
+
+const MenuFavsRecentsTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 `
 
-const MenuFavoritesItems = styled.div`
+const MenuFavsRecentsItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -85,7 +105,7 @@ const MenuFavoritesItems = styled.div`
   }
 `
 
-const MenuFavoritesItemsItem = styled.div`
+const MenuFavsRecentsItemsItem = styled.div`
   flex: ${(props) => (props.count >= 4 ? '1' : '0')} 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
@@ -109,20 +129,23 @@ const MenuFavoritesItemsItem = styled.div`
   }
 `
 
-const MenuFavorites = () => {
+const MenuFavsRecents = () => {
   const dispatch = useDispatch()
   const theme = useTheme()
   const { navHeight, navHeightMobile } = theme.layout
   const height = isBrowser ? navHeight : navHeightMobile
   const heightInPixels = parseInt(height.replace('rem', '')) * 10
   const topOffset = heightInPixels + 30
-  const [count, setCount] = useState(0)
   const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
-  // const hasCustomer = auth ? true : false
   const menuSlug = useSelector(selectMenuSlug)
-  const { categories, soldOut } = useSelector(selectMenu)
+  const { categories, soldOut, menuContent } = useContext(MenuContext)
+  const { displayed: displayedDesktop, displayedMobile } = menuContent
+  const displayed = isBrowser ? displayedDesktop : displayedMobile
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
+
+  // handle featured
+  const featured = makeFeatured(categories)
 
   // handle favorites
   const favs = useSelector(selectCustomerFavorites)
@@ -131,12 +154,7 @@ const MenuFavorites = () => {
     [favs.entities, itemLookup, soldOut]
   )
   const hasFavorites = favorites && favorites.length > 0
-  const favCount = hasFavorites ? favorites.length : 0
-  const displayedFavs = hasFavorites ? favorites.slice(0, 4) : []
-  const updating = favCount !== count && count !== 0
   const loadingFavs = favs.loading === 'pending' && !hasFavorites ? true : false
-  const moreFavorites = favorites.length > 4 && menuSection === 'favorites'
-  const favoritesPath = `${menuSlug}/favorites`
 
   // handle recents
   const orders = useSelector(selectCustomerOrders)
@@ -148,15 +166,29 @@ const MenuFavorites = () => {
     () => makeRecents(displayItems, itemLookup, soldOut),
     [displayItems, itemLookup, soldOut]
   )
-  const hasRecents = recents && recents.length > 0
+  const hasRecents = recents.length > 0
   const loadingRecents =
     orders.loading === 'pending' && !hasRecents ? true : false
-  const displayedRecents = hasRecents ? recents.slice(0, 4) : []
-  const moreRecents = recents.length > 4 && menuSection === 'recents'
-  const recentsPath = `${menuSlug}/recents`
 
-  const isLoading = loadingRecents || loadingFavs || updating
-  const hasItems = hasRecents || hasFavorites
+  // tie it all together
+  const sections = {
+    FEATURED: featured,
+    RECENTS: recents,
+    FAVORITES: favorites,
+  }
+  const displayedSections = displayed.reduce((obj, i) => {
+    return sections[i] ? { ...obj, [i]: sections[i] } : obj
+  }, {})
+  const displayedKeys = Object.keys(displayedSections)
+  const firstSection = displayedKeys[0] || null
+  const currentSection = displayedSections[menuSection] || []
+  const hasSection = currentSection.length > 0
+  const currentTitle = isBrowser ? ` ${capitalize(menuSection)}` : ''
+  const currentDisplayed = currentSection.slice(0, 4)
+  const displayMore = currentSection.length > 4
+
+  const isLoading = loadingRecents || loadingFavs
+  const hasItems = displayedKeys.length > 0
   const showLoading = isLoading && !hasItems
 
   const scrollToMenu = (evt) => {
@@ -172,104 +204,70 @@ const MenuFavorites = () => {
   }
 
   useEffect(() => {
-    if (!menuSection) dispatch(setMenuSection('recents'))
-  }, [menuSection, dispatch])
-
-  useEffect(() => {
-    if (hasFavorites && !hasRecents) {
-      dispatch(setMenuSection('favorites'))
-    }
-    if (hasRecents && !hasFavorites) {
-      dispatch(setMenuSection('recents'))
-    }
-  }, [hasFavorites, hasRecents, dispatch])
-
-  useEffect(() => {
-    setCount(favCount)
-  }, [favCount])
+    if (!hasSection) dispatch(setMenuSection(firstSection))
+  }, [hasSection, firstSection, dispatch])
 
   if (!auth) return null
 
   if (!isLoading && !hasItems) return null
 
   return (
-    <MenuFavoritesView className="compact">
+    <MenuFavsRecentsView className="compact">
       <Container>
         {showLoading ? (
           <Loading text="Checking for recents and favorites..." />
         ) : (
           <>
-            <MenuFavoritesHeader>
-              <MenuFavoritesNav>
-                {hasRecents && (
-                  <MenuFavoritesButton
-                    isActive={menuSection === 'recents'}
-                    onClick={() => dispatch(setMenuSection('recents'))}
+            <MenuFavsRecentsHeader>
+              <MenuFavsRecentsNav>
+                {displayedKeys.map((section) => (
+                  <MenuFavsRecentsButton
+                    title={capitalize(section)}
+                    section={section}
+                    menuSection={menuSection}
+                    onClick={() => dispatch(setMenuSection(section))}
                   >
-                    <MenuFavoritesTitle>Recents</MenuFavoritesTitle>
-                  </MenuFavoritesButton>
-                )}
-                {hasFavorites && (
-                  <MenuFavoritesButton
-                    isActive={menuSection === 'favorites'}
-                    onClick={() => dispatch(setMenuSection('favorites'))}
-                  >
-                    <MenuFavoritesTitle>Favorites</MenuFavoritesTitle>
-                  </MenuFavoritesButton>
-                )}
+                    <MenuFavsRecentsTitle>Recents</MenuFavsRecentsTitle>
+                  </MenuFavsRecentsButton>
+                ))}
                 {isBrowser && (
-                  <MenuFavoritesButton isActive={false} onClick={scrollToMenu}>
-                    <MenuFavoritesTitle>Full Menu</MenuFavoritesTitle>
-                  </MenuFavoritesButton>
-                )}
-              </MenuFavoritesNav>
-              <MenuFavoritesMore>
-                {moreFavorites && (
-                  <SeeMoreLink
-                    text={`View All${isBrowser ? ' Favorites' : ''}`}
-                    to={favoritesPath}
+                  <MenuFavsRecentsButton
+                    title="Full Menu"
+                    section="FULL_MENU"
+                    menuSection={menuSection}
+                    onClick={scrollToMenu}
                   />
                 )}
-                {moreRecents && (
+              </MenuFavsRecentsNav>
+              <MenuFavsRecentsMore>
+                {displayMore && (
                   <SeeMoreLink
-                    text={`View All${isBrowser ? ' Recents' : ''}`}
-                    to={recentsPath}
+                    text={`View All${currentTitle}`}
+                    to={`${menuSlug}/${menuSection.toLowerCase()}`}
                   />
                 )}
-              </MenuFavoritesMore>
-            </MenuFavoritesHeader>
-            {hasRecents && menuSection === 'recents' ? (
-              <MenuFavoritesItems>
-                {displayedRecents.map((item, index) => (
-                  <MenuFavoritesItemsItem
-                    count={displayedRecents.length}
-                    key={`${item.id}-${index}`}
+              </MenuFavsRecentsMore>
+            </MenuFavsRecentsHeader>
+            {currentDisplayed.length > 0 ? (
+              <MenuFavsRecentsItems>
+                {currentDisplayed.map((item, index) => (
+                  <MenuFavsRecentsItemsItem
+                    count={currentDisplayed.length}
+                    key={`${menuSection}-${item.id}-${index}`}
                   >
                     <MenuItem item={item} />
-                  </MenuFavoritesItemsItem>
+                  </MenuFavsRecentsItemsItem>
                 ))}
-              </MenuFavoritesItems>
-            ) : null}
-            {hasFavorites && menuSection === 'favorites' ? (
-              <MenuFavoritesItems>
-                {displayedFavs.map((item, index) => (
-                  <MenuFavoritesItemsItem
-                    count={displayedFavs.length}
-                    key={`${item.id}-${index}`}
-                  >
-                    <MenuItem item={item} />
-                  </MenuFavoritesItemsItem>
-                ))}
-              </MenuFavoritesItems>
+              </MenuFavsRecentsItems>
             ) : null}
           </>
         )}
       </Container>
-    </MenuFavoritesView>
+    </MenuFavsRecentsView>
   )
 }
 
-MenuFavorites.displayName = 'MenuFavorites'
-MenuFavorites.propTypes = {}
+MenuFavsRecents.displayName = 'MenuFavsRecents'
+MenuFavsRecents.propTypes = {}
 
-export default MenuFavorites
+export default MenuFavsRecents

@@ -36,6 +36,9 @@ const Slide = styled.div`
 `
 
 const defaultSettings = {
+  title: null,
+  subtitle: null,
+  transition_type: 'SLIDE',
   autoplay: false,
   transition: 1000,
   transition_mobile: 500,
@@ -43,6 +46,8 @@ const defaultSettings = {
   duration_mobile: 2500,
   show_arrows: true,
   show_arrows_mobile: false,
+  arrows_vertical: 'TOP',
+  arrows_horizontal: 'RIGHT',
   show_dots: true,
   show_dots_mobile: true,
 }
@@ -57,17 +62,20 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
   const [index, setIndex] = useState(0)
   const [lastIndex, setLastIndex] = useState(0)
   const {
+    // transition_type,
     autoplay,
     transition,
-    // transition_mobile,
+    transition_mobile,
     duration,
     duration_mobile,
     show_arrows,
     show_arrows_mobile,
+    arrows_vertical,
+    arrows_horizontal,
     show_dots,
     show_dots_mobile,
   } = settings || defaultSettings
-  const transitionSpeed = isBrowser ? transition : 200
+  const transitionSpeed = isBrowser ? transition : transition_mobile
   const interval = isBrowser ? duration : duration_mobile
   const showArrows = isBrowser ? show_arrows : show_arrows_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
@@ -167,7 +175,7 @@ const Slider = ({ settings = {}, slides, bgColor }) => {
         })}
       </SliderSwipeWrapper>
       {showArrows && (
-        <SliderArrows position="RIGHT">
+        <SliderArrows vertical={arrows_vertical} horizontal={arrows_horizontal}>
           <SliderArrow
             direction="LEFT"
             size={size}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
+import { useTheme } from '@emotion/react'
 import {
   fetchAnnouncementPage,
   fetchDeals,
@@ -43,6 +44,7 @@ const hasEntities = (reducer) => {
 const Guest = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const { auth } = useSelector(selectCustomer)
   const {
     title: siteTitle,
@@ -142,7 +144,11 @@ const Guest = () => {
       <Helmet>
         <title>Welcome | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={background} />
+      <Background
+        imageUrl={background}
+        announcements={displayAnnouncements ? announcements : null}
+        style={{ top: theme.layout.navHeight }}
+      />
       <Content maxWidth="76.8rem" hasFooter={isMobile ? false : true}>
         <HeaderGuest maxWidth="100%" />
         <Main>

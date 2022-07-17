@@ -33,6 +33,7 @@ import Locations from './Locations'
 import Loyalty from './Loyalty'
 import Menu from './Menu'
 import MenuFavorites from './MenuFavorites'
+import MenuFeatured from './MenuFeatured'
 import MenuRecents from './MenuRecents'
 import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
@@ -89,6 +90,7 @@ export {
   Loyalty,
   Menu,
   MenuFavorites,
+  MenuFeatured,
   MenuRecents,
   MenuItem,
   MenuSite,

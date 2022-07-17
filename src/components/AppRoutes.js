@@ -34,6 +34,7 @@ import {
   Loyalty,
   Menu,
   MenuFavorites,
+  MenuFeatured,
   MenuRecents,
   MenuItem,
   MenuSite,
@@ -79,6 +80,7 @@ const AppRoutes = () => {
       <Route path="locations/:slug" element={<RevenueCenter />} />
       <Route path="menu/:slug" element={<Menu />}>
         <Route index element={<MenuNew />} />
+        <Route path="featured" element={<MenuFeatured />} />
         <Route path="favorites" element={<MenuFavorites />} />
         <Route path="recents" element={<MenuRecents />} />
         <Route path="vendor/:vendorSlug" element={<Vendor />} />
