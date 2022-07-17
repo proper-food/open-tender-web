@@ -240,6 +240,7 @@ const MenuTop = () => {
               <MenuTopNav marginRight={marginRight} fontSize={fontSize}>
                 {displayedKeys.map((section) => (
                   <MenuTopButton
+                    key={section}
                     title={capitalize(section)}
                     section={section}
                     menuSection={menuSection}

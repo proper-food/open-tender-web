@@ -51,7 +51,7 @@ const MenuBrowseCategoryImage = styled(BgImage)`
   transform: scale(1);
 
   button:hover & {
-    transform: scale(1.1);
+    transform: scale(1.05);
 
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: scale(1);
