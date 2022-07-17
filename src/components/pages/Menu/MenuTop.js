@@ -159,6 +159,7 @@ const MenuTop = () => {
 
   // handle featured
   const featured = makeFeatured(categories)
+  console.log(featured)
 
   // handle favorites
   const favs = useSelector(selectCustomerFavorites)
@@ -191,9 +192,11 @@ const MenuTop = () => {
     DEALS: deals,
   }
   const displayedSections = displayed.reduce((obj, i) => {
-    return sections[i] ? { ...obj, [i]: sections[i] } : obj
+    console.log(i, sections[i])
+    return sections[i].length > 0 ? { ...obj, [i]: sections[i] } : obj
   }, {})
   const displayedKeys = Object.keys(displayedSections)
+  console.log(displayedKeys)
   const marginRight = displayedKeys.length > 2 ? '1.5' : '3'
   const fontSize = displayedKeys.length > 2 ? 'main' : 'big'
   const firstSection = displayedKeys[0] || null
