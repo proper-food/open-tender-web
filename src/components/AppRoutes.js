@@ -33,6 +33,7 @@ import {
   Locations,
   Loyalty,
   Menu,
+  MenuDeals,
   MenuFavorites,
   MenuFeatured,
   MenuRecents,
@@ -83,6 +84,7 @@ const AppRoutes = () => {
         <Route path="featured" element={<MenuFeatured />} />
         <Route path="favorites" element={<MenuFavorites />} />
         <Route path="recents" element={<MenuRecents />} />
+        <Route path="deals" element={<MenuDeals />} />
         <Route path="vendor/:vendorSlug" element={<Vendor />} />
         <Route path="category/:categorySlug" element={<Category />} />
         <Route path="item/:itemSlug" element={<MenuItem />} />

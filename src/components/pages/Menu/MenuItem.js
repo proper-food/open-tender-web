@@ -210,7 +210,6 @@ const MenuItemAllergen = styled(Preface)`
 const MenuItemDescription = styled(Body)`
   display: block;
   margin: 0.8rem 0 0;
-  // line-height: 1.2;
   font-size: ${(props) => props.theme.fonts.sizes.small};
 
   .compact & {

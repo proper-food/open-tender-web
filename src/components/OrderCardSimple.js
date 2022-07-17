@@ -8,7 +8,7 @@ import {
   isoToDate,
   makeOrderTypeName,
 } from '@open-tender/js'
-import { BgImage, Box, Heading } from '@open-tender/components'
+import { BgImage, Body, Box, Heading } from '@open-tender/components'
 
 import { Tag } from '.'
 
@@ -22,6 +22,7 @@ const OrderCardSimpleButton = styled.button`
 const OrderCardSimpleView = styled(Box)`
   position: relative;
   overflow: hidden;
+  height: 100%;
 `
 
 const OrderCardSimpleTag = styled.div`
@@ -57,16 +58,17 @@ const OrderCardSimpleContent = styled.div`
 `
 
 const OrderCardSimpleTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.main};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 
-const OrderCardSimpleDescription = styled('p')`
-  margin: 0.5rem 0 0;
-  line-height: ${(props) => props.theme.fonts.body.lineHeight};
+const OrderCardSimpleDescription = styled(Body)`
+  margin: 0.8rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -114,7 +116,7 @@ const OrderCardSimple = ({ order }) => {
           <OrderCardSimpleTitle as="p">
             {orderTypeName} from {revenue_center.name}
           </OrderCardSimpleTitle>
-          <OrderCardSimpleDescription>
+          <OrderCardSimpleDescription as="p">
             Ordered on {requestedAt}
           </OrderCardSimpleDescription>
         </OrderCardSimpleContent>

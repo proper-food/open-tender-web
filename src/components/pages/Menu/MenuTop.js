@@ -21,7 +21,7 @@ import {
 } from '@open-tender/js'
 import { Heading } from '@open-tender/components'
 import { selectMenuSection, setMenuSection } from '../../../slices'
-import { Container, Loading, SeeMoreLink } from '../..'
+import { Container, Loading, Reward, SeeMoreLink } from '../..'
 import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
 
@@ -44,6 +44,22 @@ const MenuTopHeader = styled.div`
 
 const MenuTopNav = styled.div`
   flex: 1;
+
+  button {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin-right: ${(props) => props.marginRight}rem;
+
+      span {
+        font-size: ${(props) => props.theme.fonts.sizes[props.fontSize]};
+      }
+    }
+  }
+
+  button:last-of-type {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin-right: 0;
+    }
+  }
 `
 
 const MenuTopMore = styled.div`
@@ -136,7 +152,7 @@ const MenuTop = () => {
   const menuSection = useSelector(selectMenuSection)
   const { auth } = useSelector(selectCustomer)
   const menuSlug = useSelector(selectMenuSlug)
-  const { categories, soldOut, menuContent } = useContext(MenuContext)
+  const { categories, soldOut, menuContent, deals } = useContext(MenuContext)
   const { displayed: displayedDesktop, displayedMobile } = menuContent
   const displayed = isBrowser ? displayedDesktop : displayedMobile
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
@@ -172,17 +188,22 @@ const MenuTop = () => {
     FEATURED: featured,
     RECENTS: recents,
     FAVORITES: favorites,
+    DEALS: deals,
   }
   const displayedSections = displayed.reduce((obj, i) => {
     return sections[i] ? { ...obj, [i]: sections[i] } : obj
   }, {})
   const displayedKeys = Object.keys(displayedSections)
+  const marginRight = displayedKeys.length > 2 ? '1.5' : '3'
+  const fontSize = displayedKeys.length > 2 ? 'main' : 'big'
   const firstSection = displayedKeys[0] || null
   const currentSection = displayedSections[menuSection] || []
   const hasSection = currentSection.length > 0
   const currentTitle = isBrowser ? ` ${capitalize(menuSection)}` : ''
   const currentDisplayed = currentSection.slice(0, 4)
   const displayMore = currentSection.length > 4
+  const isDeals = menuSection === 'DEALS'
+  const itemKey = isDeals ? 'discount_id' : 'id'
 
   const isLoading = loadingRecents || loadingFavs
   const hasItems = displayedKeys.length > 0
@@ -216,7 +237,7 @@ const MenuTop = () => {
         ) : (
           <>
             <MenuTopHeader>
-              <MenuTopNav>
+              <MenuTopNav marginRight={marginRight} fontSize={fontSize}>
                 {displayedKeys.map((section) => (
                   <MenuTopButton
                     title={capitalize(section)}
@@ -250,9 +271,13 @@ const MenuTop = () => {
                 {currentDisplayed.map((item, index) => (
                   <MenuTopItemsItem
                     count={currentDisplayed.length}
-                    key={`${menuSection}-${item.id}-${index}`}
+                    key={`${menuSection}-${item[itemKey]}-${index}`}
                   >
-                    <MenuItem item={item} />
+                    {isDeals ? (
+                      <Reward item={item} />
+                    ) : (
+                      <MenuItem item={item} />
+                    )}
                   </MenuTopItemsItem>
                 ))}
               </MenuTopItems>

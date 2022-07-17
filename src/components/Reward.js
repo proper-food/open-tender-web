@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Box, Heading } from '@open-tender/components'
+import { BgImage, Body, Box, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 import { openModal } from '../slices'
 import { Grid, ShoppingBag, Star, Truck } from './icons'
@@ -17,6 +17,7 @@ const RewardButton = styled.button`
 const RewardView = styled(Box)`
   position: relative;
   overflow: hidden;
+  height: 100%;
 `
 
 const RewardTag = styled('div')`
@@ -52,28 +53,30 @@ const RewardContent = styled.div`
 `
 
 const RewardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.main};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 
-const RewardDescription = styled('p')`
+const RewardDescription = styled(Body)`
   display: none;
-  margin: 0.5rem 0 0;
-  line-height: ${(props) => props.theme.fonts.body.lineHeight};
+  margin: 0.8rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
-const RewardNote = styled('div')`
+const RewardNote = styled(Body)`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: 0.5rem 0 0;
-  line-height: ${(props) => props.theme.fonts.body.lineHeight};
+  margin: 0.8rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
@@ -243,9 +246,11 @@ const Reward = ({ item }) => {
         <RewardContent>
           <RewardTitle as="p">{reward.title}</RewardTitle>
           {reward.short_description && (
-            <RewardDescription>{reward.short_description}</RewardDescription>
+            <RewardDescription as="p">
+              {reward.short_description}
+            </RewardDescription>
           )}
-          <RewardNote>
+          <RewardNote as="div">
             {reward.limitations}
             {expiration}
           </RewardNote>
