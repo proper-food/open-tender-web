@@ -266,7 +266,7 @@ const MenuItemButtonsCustomize = styled.div`
   }
 `
 
-const MenuItem = ({ item }) => {
+const MenuItem = ({ item, displayOnly = false }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
@@ -322,6 +322,7 @@ const MenuItem = ({ item }) => {
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
+  const showButtons = !!(!displayOnly && showQuickAdd)
 
   const view = () => {
     if (!isSoldOut) {
@@ -360,7 +361,7 @@ const MenuItem = ({ item }) => {
         </MenuItemCount>
       )}
       {!imageUrl && itemTag ? <MenuItemAlert>{itemTag}</MenuItemAlert> : null}
-      <MenuItemButton onClick={() => view()} disabled={isSoldOut}>
+      <MenuItemButton onClick={view} disabled={isSoldOut || displayOnly}>
         <MenuItemContainer>
           {imageUrl && (
             <MenuItemImage imageUrl={imageUrl}>
@@ -401,7 +402,7 @@ const MenuItem = ({ item }) => {
           </MenuItemContent>
         </MenuItemContainer>
       </MenuItemButton>
-      {showQuickAdd && (
+      {showButtons && (
         <MenuItemButtons hasBox={hasBox}>
           {clicked && (
             <MenuItemButtonsWarning>

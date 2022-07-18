@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { scroller, Element } from 'react-scroll'
@@ -13,7 +13,7 @@ import {
   selectMenu,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-import { selectConfig, selectBrand } from '../../../slices'
+import { selectBrand, selectContentSection } from '../../../slices'
 import {
   BackgroundContent,
   Content,
@@ -35,12 +35,14 @@ const MenuSiteMenu = styled.div`
 const MenuSite = () => {
   const dispatch = useDispatch()
   const { colors } = useTheme()
-  const brand = useSelector(selectBrand)
-  const { menuSite } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle, content } = menuSite
-  const revenueCenterId = 1285
-  const serviceType = 'WALKIN'
-  const requestedAt = '2022-02-03T17:00:00Z'
+  const { olo_id, title: siteTitle } = useSelector(selectBrand)
+  const [revenueCenterId] = useState(olo_id)
+  const { background, mobile, title, subtitle, content } = useSelector(
+    selectContentSection('menuSite')
+  )
+  const serviceType = 'PICKUP'
+  const requestedAt = 'asap'
+  // const geoLatLng = useSelector(selectGeoLatLng)
   const { categories } = useSelector(selectMenu)
   const announcements = useSelector(selectAnnouncementsPage('MENU'))
 
@@ -66,7 +68,7 @@ const MenuSite = () => {
   return (
     <>
       <Helmet>
-        <title>Menu | {brand.title}</title>
+        <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
         <HeaderSite />

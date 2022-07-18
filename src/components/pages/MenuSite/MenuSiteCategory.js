@@ -83,7 +83,7 @@ const MenuSiteCategory = ({ category, isChild }) => {
       {category.items.length > 0 && (
         <MenuItems>
           {category.items.map((item) => (
-            <MenuItem key={item.id} item={item} />
+            <MenuItem key={item.id} item={item} displayOnly={true} />
           ))}
         </MenuItems>
       )}

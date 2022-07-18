@@ -1,11 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { scroller, Element } from 'react-scroll'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { slugify } from '@open-tender/js'
+import {
+  dateForWeekday,
+  dateStrMinutesToIso,
+  dateToZonedDateStr,
+  slugify,
+  timezoneMap,
+} from '@open-tender/js'
 import {
   fetchAllergens,
   fetchAnnouncementPage,
@@ -14,7 +20,7 @@ import {
   selectMenu,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
-import { selectConfig, selectBrand } from '../../../slices'
+import { selectBrand, selectContentSection } from '../../../slices'
 import {
   BackgroundContent,
   Content,
@@ -35,12 +41,16 @@ const CateringSiteMenu = styled.div`
 const CateringSite = () => {
   const dispatch = useDispatch()
   const { colors } = useTheme()
-  const brand = useSelector(selectBrand)
-  const { cateringSite } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle, content } = cateringSite
-  const revenueCenterId = 1408
+  const { catering_id, timezone, title: siteTitle } = useSelector(selectBrand)
+  const [revenueCenterId] = useState(catering_id)
+  const { background, mobile, title, subtitle, content } = useSelector(
+    selectContentSection('cateringSite')
+  )
   const serviceType = 'DELIVERY'
-  const requestedAt = '2022-02-03T17:00:00Z'
+  const tz = timezoneMap[timezone]
+  const nextDate = dateForWeekday('MONDAY')
+  const dateStr = dateToZonedDateStr(nextDate, tz, 'yyyy-MM-dd')
+  const requestedAt = dateStrMinutesToIso(dateStr, 720, tz)
   const { categories } = useSelector(selectMenu)
   const announcements = useSelector(selectAnnouncementsPage('CATERING'))
 
@@ -66,7 +76,7 @@ const CateringSite = () => {
   return (
     <>
       <Helmet>
-        <title>Menu | {brand.title}</title>
+        <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
         <HeaderSite />
