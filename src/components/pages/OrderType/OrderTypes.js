@@ -11,14 +11,8 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import { Message, useGeolocation } from '@open-tender/components'
-import {
-  selectContent,
-  setGeoLatLng,
-  setGeoError,
-  setGeoLoading,
-  selectSettings,
-} from '../../../slices'
+import { Message } from '@open-tender/components'
+import { selectContent, selectSettings } from '../../../slices'
 import {
   Coffee,
   DollarSign,
@@ -53,7 +47,6 @@ const OrderTypesView = styled.div`
 const OrderTypes = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { geoLatLng, geoError } = useGeolocation()
   const { orderType: orderTypeContent, home: homeContent } =
     useSelector(selectContent)
   const contentTypes =
@@ -70,7 +63,6 @@ const OrderTypes = () => {
   const orderLinks = orderTypes.filter((i) => asLinks.includes(i))
 
   useEffect(() => {
-    dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
     dispatch(resetCheckout())
@@ -79,14 +71,6 @@ const OrderTypes = () => {
   useEffect(() => {
     if (cartGuestId) dispatch(resetGroupOrder())
   }, [dispatch, cartGuestId])
-
-  useEffect(() => {
-    if (geoLatLng) {
-      dispatch(setGeoLatLng(geoLatLng))
-    } else if (geoError) {
-      dispatch(setGeoError(geoError))
-    }
-  }, [geoLatLng, geoError, dispatch])
 
   const handleOutpost = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))

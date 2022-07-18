@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Helmet from 'react-helmet'
-// import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import {
   selectContent,
@@ -15,7 +14,6 @@ import { Back, NavMenu } from '../../buttons'
 import {
   Background,
   Content,
-  Geolocation,
   Header,
   HtmlContent,
   Main,
@@ -49,7 +47,6 @@ const OrderType = () => {
   const { showGuest } = guest || {}
   const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
-  // const announcements = useSelector(selectAnnouncements)
 
   useEffect(() => {
     dispatch(closeModal())
@@ -58,10 +55,6 @@ const OrderType = () => {
   useEffect(() => {
     if (cateringOnly) navigate('/catering-address')
   }, [cateringOnly, navigate])
-
-  // useEffect(() => {
-  //   dispatch(fetchAnnouncementPage('ORDER_TYPE'))
-  // }, [dispatch])
 
   return (
     <>
@@ -76,7 +69,6 @@ const OrderType = () => {
           <HeaderGuest />
         )}
         <Main>
-          <Geolocation />
           <OrderTypeView>
             <PageTitle
               title={title}

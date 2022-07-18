@@ -23,7 +23,6 @@ const PageHero = ({ announcements, imageUrl, height, style, children }) => {
   const slides = error ? null : makeSlides(entities, isMobile)
   const isLoading = loading === 'pending'
   const hideHero = !slides && !imageUrl
-  console.log(imageUrl)
 
   if (hideHero) return null
 

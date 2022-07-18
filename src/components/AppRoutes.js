@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import Geolocation from './Geolocation'
 import {
   About,
   Accessibility,
@@ -68,16 +69,21 @@ const AppRoutes = () => {
       </Route>
       <Route path="thanx/callback" element={<Thanx />} />
       <Route path="qr/:id" element={<QR />} />
-      <Route path="order-type" element={<OrderType />} />
-      <Route path="signup" element={<SignUp />} />
       <Route path="reset-password" element={<ResetPassword />} />
       <Route path="verify" element={<VerifyAccount />} />
-      <Route path="about" element={<About />} />
-      <Route path="menu" element={<MenuSite />} />
-      <Route path="restaurants" element={<Locations />} />
-      <Route path="catering" element={<CateringSite />} />
-      <Route path="catering-address" element={<Catering />} />
-      <Route path="locations" element={<RevenueCenters />} />
+      <Route path="signup" element={<SignUp />} />
+      <Route path="guest" element={<Guest />} />
+      <Route element={<Geolocation />}>
+        <Route path="menu" element={<MenuSite />} />
+        <Route path="restaurants" element={<Locations />} />
+        <Route path="catering" element={<CateringSite />} />
+        <Route path="about" element={<About />} />
+      </Route>
+      <Route element={<Geolocation />}>
+        <Route path="order-type" element={<OrderType />} />
+        <Route path="catering-address" element={<Catering />} />
+        <Route path="locations" element={<RevenueCenters />} />
+      </Route>
       <Route path="locations/:slug" element={<RevenueCenter />} />
       <Route path="menu/:slug" element={<Menu />}>
         <Route index element={<MenuNew />} />
@@ -106,7 +112,6 @@ const AppRoutes = () => {
       <Route path="orders" element={<OrderHistory />} />
       <Route path="orders/:id" element={<Order />} />
       <Route path="group-orders" element={<GroupOrders />} />
-      <Route path="guest" element={<Guest />} />
       <Route path="account">
         <Route index element={<Account />} />
         <Route path="settings" element={<AccountSettings />} />

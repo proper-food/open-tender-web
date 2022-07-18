@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
-import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
+import { Outlet } from 'react-router-dom'
 import { useGeolocation } from '@open-tender/components'
-
 import { setGeoLatLng, setGeoError, setGeoLoading } from '../slices'
 
-const Geolocation = ({ children }) => {
+const Geolocation = () => {
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
 
@@ -21,15 +20,10 @@ const Geolocation = ({ children }) => {
     }
   }, [geoLatLng, geoError, dispatch])
 
-  return children || null
+  return <Outlet />
 }
 
 Geolocation.displayName = 'Geolocation'
-Geolocation.propTypes = {
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
-}
+Geolocation.propTypes = {}
 
 export default Geolocation
