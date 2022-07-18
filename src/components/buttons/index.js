@@ -9,6 +9,7 @@ import GroupOrder from './GroupOrder'
 import Icon from './Icon'
 import LeaveGroup from './LeaveGroup'
 import NavMenu from './NavMenu'
+import NavSiteMenu from './NavSiteMenu'
 import Points from './Points'
 import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
@@ -27,6 +28,7 @@ export {
   Icon,
   LeaveGroup,
   NavMenu,
+  NavSiteMenu,
   Points,
   RequestedAt,
   RevenueCenter,

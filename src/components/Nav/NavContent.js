@@ -126,7 +126,7 @@ const navButtons = [
 
 const NavView = styled.nav`
   position: fixed;
-  z-index: 101;
+  z-index: 102;
   top: 0;
   bottom: 0;
   right: 0;

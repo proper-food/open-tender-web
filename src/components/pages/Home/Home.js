@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { useTheme } from '@emotion/react'

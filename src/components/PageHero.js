@@ -1,39 +1,29 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
+import { makeSlides } from '@open-tender/js'
 import { BackgroundImage, BackgroundLoading, Slider } from '.'
 
 const PageHeroView = styled.div`
   label: PageHero;
+  flex-grow: 1;
   display: flex;
   min-height: 64rem;
   height: 100vh;
-  ${(props) => (props.isMobile ? `height: -webkit-fill-available;` : '')}
+  ${(props) =>
+    props.isMobile ? `height: 100%; height: -webkit-fill-available;` : ''}
   ${(props) =>
     props.ht ? `height: ${props.ht}; min-height: ${props.ht};` : ''}
 `
 
-const makeImageUrl = (images, isBrowser) => {
-  return images.find(
-    (i) => i.type === (isBrowser ? 'FEATURED_IMAGE' : 'SECONDARY_IMAGE')
-  ).url
-}
-
-const makeSlides = (items) => {
-  if (!items || !items.length) return null
-  return items.map((i) => ({
-    ...i,
-    imageUrl: makeImageUrl(i.images, isBrowser),
-  }))
-}
-
 const PageHero = ({ announcements, imageUrl, height, style, children }) => {
   const theme = useTheme()
   const { settings, entities, loading, error } = announcements || {}
-  const slides = error ? null : makeSlides(entities)
+  const slides = error ? null : makeSlides(entities, isMobile)
   const isLoading = loading === 'pending'
   const hideHero = !slides && !imageUrl
+  console.log(imageUrl)
 
   if (hideHero) return null
 

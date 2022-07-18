@@ -110,7 +110,7 @@ const containerStyleMap = {
 
 const ModalContainer = styled('div')`
   position: fixed;
-  z-index: 102;
+  z-index: 110;
   top: 0;
   bottom: 0;
   left: 0;

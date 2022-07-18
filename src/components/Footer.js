@@ -15,7 +15,7 @@ const FooterView = styled('footer')`
   background-color: ${(props) => props.theme.bgColors.dark};
 `
 
-const FooterContainer = styled('div')`
+const FooterContainer = styled.div`
   height: 24rem;
   padding: ${(props) => props.theme.layout.margin} 0
     ${(props) => props.theme.layout.padding};
@@ -31,7 +31,7 @@ const FooterContainer = styled('div')`
   }
 `
 
-const FooterContent = styled('div')`
+const FooterContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -59,7 +59,7 @@ const FooterLogo = styled.a`
   }
 `
 
-const FooterLinks = styled('ul')`
+const FooterLinks = styled.ul`
   margin: 2rem 0 0;
   display: flex;
   font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -76,6 +76,7 @@ const FooterLinks = styled('ul')`
     }
 
     a {
+      text-decoration: none;
       color: ${(props) => props.theme.links.light.color};
     }
 
@@ -87,7 +88,7 @@ const FooterLinks = styled('ul')`
   }
 `
 
-const FooterTerms = styled('nav')`
+const FooterTerms = styled.nav`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -114,7 +115,7 @@ const FooterTerms = styled('nav')`
   }
 `
 
-const FooterOTLogo = styled('div')`
+const FooterOTLogo = styled.div`
   max-width: 14rem;
   display: flex;
   flex-direction: column;
@@ -136,14 +137,13 @@ const FooterOTLogo = styled('div')`
   }
 `
 
-const FooterVersion = styled('div')`
+const FooterVersion = styled.div`
   position: absolute;
   z-index: 2;
   right: ${(props) => props.theme.layout.padding};
   bottom: 1.7rem;
   opacity: 0.3;
   font-size: 0.8rem;
-  // font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   color: ${(props) => props.theme.colors.light};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     left: ${(props) => props.theme.layout.paddingMobile};

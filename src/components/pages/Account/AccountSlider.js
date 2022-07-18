@@ -1,21 +1,8 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
+import { makeSlides } from '@open-tender/js'
 import { BackgroundLoading, Slider } from '../..'
-
-const makeImageUrl = (images) => {
-  return images.find(
-    (i) => i.type === (isMobile ? 'SECONDARY_IMAGE' : 'FEATURED_IMAGE')
-  ).url
-}
-
-const makeSlides = (items) => {
-  if (!items || !items.length) return null
-  return items.map((i) => ({
-    ...i,
-    imageUrl: makeImageUrl(i.images),
-  }))
-}
 
 const AccountSliderView = styled.div`
   display: none;
@@ -38,7 +25,7 @@ const AccountSliderView = styled.div`
 
 const AccountSlider = ({ announcements, style }) => {
   const { settings, entities, loading, error } = announcements || {}
-  const slides = error ? null : makeSlides(entities)
+  const slides = error ? null : makeSlides(entities, isMobile)
   const isLoading = loading === 'pending'
 
   if (!slides) return null

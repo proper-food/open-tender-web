@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 import { selectBrand } from '../slices'
-import { NavMenu, User } from './buttons'
+import { NavSiteMenu, User } from './buttons'
 import { Container } from '.'
 
 const HeaderSiteView = styled.div`
@@ -70,6 +70,7 @@ const HeaderSiteLinks = styled.ul`
   }
 
   a {
+    text-decoration: none;
     color: ${(props) => props.theme.links.light.color};
 
     &:hover,
@@ -95,10 +96,17 @@ const HeaderSiteNavUser = styled.button`
 `
 
 const HeaderSiteNavButton = styled.div`
-  margin: 0 0.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0.5rem 0 0;
+  }
 
   button {
-    padding: 0.9rem 1.3rem;
+    padding: 0.75em 1.25em;
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      // padding: 0.9rem 1.3rem;
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 
@@ -159,7 +167,7 @@ const HeaderSite = ({ useLight = true, style = null }) => {
                       </ButtonStyled>
                     </HeaderSiteNavButton>
                   )}
-                  <NavMenu color={theme.colors.light} />
+                  <NavSiteMenu color={theme.colors.light} />
                 </>
               ) : (
                 <>
@@ -170,12 +178,15 @@ const HeaderSite = ({ useLight = true, style = null }) => {
                       </li>
                     ))}
                   </HeaderSiteLinks>
-                  <ButtonStyled
-                    color="light"
-                    onClick={() => navigate('/guest')}
-                  >
-                    Order Now
-                  </ButtonStyled>
+                  <HeaderSiteNavButton>
+                    <ButtonStyled
+                      color="light"
+                      size="small"
+                      onClick={() => navigate('/guest')}
+                    >
+                      Order Now
+                    </ButtonStyled>
+                  </HeaderSiteNavButton>
                 </>
               )}
             </HeaderSiteNav>

@@ -50,6 +50,7 @@ import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
+import NavSite from './NavSite'
 import NavSticky from './NavSticky'
 import Notifications from './Notifications'
 import Order from './Order'
@@ -154,6 +155,7 @@ export {
   Nav,
   NavButtons,
   NavScroll,
+  NavSite,
   NavSticky,
   Notifications,
   Order,

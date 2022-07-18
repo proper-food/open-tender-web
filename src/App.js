@@ -14,6 +14,7 @@ import {
   ErrorBoundary,
   Modal,
   Nav,
+  NavSite,
   Notifications,
   Sidebar,
 } from './components'
@@ -82,6 +83,7 @@ class App extends React.Component {
                     <AppRoutes />
                     <Sidebar />
                     <Nav />
+                    <NavSite />
                   </BrowserRouter>
                 </ErrorBoundary>
               </AppContext.Provider>

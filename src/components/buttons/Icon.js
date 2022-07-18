@@ -11,12 +11,14 @@ const Icon = styled.button`
   padding: ${(props) => ((50 - props.size) / 20).toFixed(2)}rem;
   margin: ${(props) => props.margin};
   transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.buttons.colors.header.color};
+  color: ${(props) => props.color || props.theme.buttons.colors.header.color};
 
   &:hover {
-    color: ${(props) => props.theme.buttons.colors.headerHover.color};
+    color: ${(props) =>
+      props.color || props.theme.buttons.colors.headerHover.color};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.buttons.colors.header.color};
+      color: ${(props) =>
+        props.color || props.theme.buttons.colors.header.color};
     }
   }
 `

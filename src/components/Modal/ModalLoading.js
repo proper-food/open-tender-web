@@ -9,7 +9,7 @@ import { closeModal } from '../../slices'
 
 const ModalLoadingView = styled('div')`
   position: fixed;
-  z-index: 101;
+  z-index: 109;
   top: 0;
   bottom: 0;
   left: 0;

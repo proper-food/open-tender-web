@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
+import { makeSlides } from '@open-tender/js'
 import styled from '@emotion/styled'
 import {
   selectAnnouncementsPage,
@@ -14,20 +15,6 @@ import {
 } from '../..'
 import AccountSection from './AccountSection'
 import AccountHero from './AccountHero'
-
-const makeImageUrl = (images, isBrowser) => {
-  return images.find(
-    (i) => i.type === (isBrowser ? 'FEATURED_IMAGE' : 'SECONDARY_IMAGE')
-  ).url
-}
-
-const makeSlides = (items) => {
-  if (!items || !items.length) return null
-  return items.map((i) => ({
-    ...i,
-    imageUrl: makeImageUrl(i.images, isBrowser),
-  }))
-}
 
 const AccountAnnouncementsView = styled.div`
   label: AccountAnnouncementsView;
@@ -64,7 +51,7 @@ const AccountAnnouncements = () => {
   const { settings, entities, loading, error } = announcements || {}
   const { title } = settings || {}
   const isLoading = loading === 'pending'
-  const slides = isLoading || error ? null : makeSlides(entities)
+  const slides = isLoading || error ? null : makeSlides(entities, isMobile)
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('ACCOUNT'))
