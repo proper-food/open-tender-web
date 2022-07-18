@@ -42,7 +42,7 @@ const RewardImage = styled(BgImage)`
 const RewardContent = styled.div`
   padding: ${(props) =>
     props.theme.cards.default.bgColor === 'transparent'
-      ? '0.8rem 0 0'
+      ? '1.1rem 0 0'
       : '1.3rem 1.3rem 1.2rem'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) =>

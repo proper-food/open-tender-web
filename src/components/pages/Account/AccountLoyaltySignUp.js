@@ -22,7 +22,7 @@ const AccountLoyaltySignUpView = styled(Box)`
 
   p {
     margin: 0.5rem 0 1.5rem;
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.small};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 0.6rem 0 1.2rem;

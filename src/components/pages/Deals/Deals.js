@@ -51,7 +51,7 @@ const Deals = () => {
             {error ? (
               <PageError error={error} />
             ) : (
-              <PageContent style={{ maxWidth: '82rem' }}>
+              <PageContent style={{ maxWidth: '99rem' }}>
                 {hasDeals ? (
                   <Rewards rewards={deals} />
                 ) : isLoading ? (

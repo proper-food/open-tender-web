@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { isoToDateStr, parseIsoToDate } from '@open-tender/js'
-import OrderProgress from './OrderProgress'
 import { fetchCustomerOrder, selectCustomerOrder } from '@open-tender/redux'
+import { Heading } from '@open-tender/components'
+import OrderProgress from './OrderProgress'
 
 const OrderPrepView = styled.div`
   display: flex;
@@ -47,10 +48,12 @@ const OrderPrepStepView = styled.div`
   justify-content: center;
 `
 
+const OrderPrepStepTitleActive = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
 const OrderPrepStepTitle = styled.p`
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  ${(props) =>
-    props.isActive ? `font-weight: ${props.theme.boldWeight};` : null}
 `
 
 const OrderPrepStepSubtitle = styled.p`
@@ -70,7 +73,11 @@ const OrderPrepStep = ({ title, timestamp, isActive }) => {
   return (
     <OrderPrepStepView>
       <div>
-        <OrderPrepStepTitle isActive={isActive}>{title}</OrderPrepStepTitle>
+        {isActive ? (
+          <OrderPrepStepTitleActive as="p">{title}</OrderPrepStepTitleActive>
+        ) : (
+          <OrderPrepStepTitle>{title}</OrderPrepStepTitle>
+        )}
         <OrderPrepStepSubtitle>{formatDate(timestamp)}</OrderPrepStepSubtitle>
       </div>
     </OrderPrepStepView>

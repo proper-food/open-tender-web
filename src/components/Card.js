@@ -1,50 +1,54 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Box, Preface } from '@open-tender/components'
+import { Box, Heading, Preface } from '@open-tender/components'
+import { useTheme } from '@emotion/react'
 
 const CardView = styled(Box)`
   position: relative;
   height: 100%;
   padding: 1.5rem 1.5rem 1rem;
+  ${(props) =>
+    !props.hasBox
+      ? `border: ${props.theme.border.width} solid ${props.theme.border.color};`
+      : ''};
 `
 
-const CardContainer = styled('div')`
+const CardContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
 `
 
-const CardHeader = styled('div')`
+const CardHeader = styled.div`
   flex-grow: 0;
 `
 
-const CardPreface = styled('p')`
+const CardPreface = styled.p`
   span {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
-const CardTitle = styled('p')`
-  margin: 0.4rem 0;
-  color: ${(props) => props.theme.fonts.headings.color};
+const CardTitle = styled(Heading)`
+  margin: 0.5rem 0;
 `
 
-const CardSubtitle = styled('p')`
+const CardSubtitle = styled.p`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const CardContent = styled('div')`
+const CardContent = styled.div`
   margin: 1rem 0 0;
   flex-grow: 1;
 
   > p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
   }
 `
 
-const CardFooter = styled('div')`
+const CardFooter = styled.div`
   flex-grow: 0;
   margin: 1.9rem 0 0;
 
@@ -62,9 +66,11 @@ const CardFooter = styled('div')`
   }
 `
 
-const Card = ({ tag, preface, title, subtitle, content, footer }) => {
+const Card = ({ tag, preface, title, subtitle, content, footer, style }) => {
+  const theme = useTheme()
+  const hasBox = theme.cards.default.bgColor !== 'transparent'
   return (
-    <CardView>
+    <CardView hasBox={hasBox} style={style}>
       {tag}
       <CardContainer>
         <CardHeader>
@@ -73,7 +79,7 @@ const Card = ({ tag, preface, title, subtitle, content, footer }) => {
               <Preface>{preface}</Preface>
             </CardPreface>
           )}
-          {title && <CardTitle>{title}</CardTitle>}
+          {title && <CardTitle as="p">{title}</CardTitle>}
           {subtitle && <CardSubtitle>{subtitle}</CardSubtitle>}
         </CardHeader>
         <CardContent>{content}</CardContent>
@@ -93,6 +99,7 @@ Card.propTypes = {
   subtitle: propTypes.oneOfType([propTypes.string, propTypes.element]),
   content: propTypes.element,
   footer: propTypes.element,
+  style: propTypes.object,
 }
 
 export default Card

@@ -16,7 +16,12 @@ import {
   closeGroupOrder,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import {
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Headline,
+} from '@open-tender/components'
 
 import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
@@ -44,23 +49,17 @@ const SidebarView = styled.aside`
   }
 `
 
-const SidebarHeader = styled('div')`
+const SidebarHeader = styled.div`
   width: 100%;
   padding: 2rem;
   background-color: ${(props) => props.theme.bgColors.primary};
 
-  h2 {
-    margin: 0 0 1rem;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-  }
-
   p {
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.small};
 
     span {
       padding: 0;
-      color: ${(props) => props.theme.fonts.headings.color};
-      font-weight: ${(props) => props.theme.boldWeight};
     }
   }
 
@@ -77,14 +76,19 @@ const SidebarHeader = styled('div')`
   }
 `
 
-const SidebarCart = styled('div')`
+const SidebarHeaderTitle = styled(Headline)`
+  margin: 0 0 1rem -0.1rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+`
+
+const SidebarCart = styled.div`
   width: 100%;
   flex-grow: 1;
   overflow-y: scroll;
   padding: 0rem 2rem 1rem;
 `
 
-const SidebarFooter = styled('div')`
+const SidebarFooter = styled.div`
   flex-shrink: 0;
   width: 100%;
   height: 7rem;
@@ -97,7 +101,7 @@ const SidebarFooter = styled('div')`
   }
 `
 
-const SidebarButtons = styled('div')`
+const SidebarButtons = styled.div`
   width: 100%;
   height: 7rem;
   display: flex;
@@ -105,12 +109,12 @@ const SidebarButtons = styled('div')`
   align-items: center;
 `
 
-const SidebarBack = styled('div')`
+const SidebarBack = styled.div`
   width: 50%;
   padding: 0 0.5rem 0 2rem;
 `
 
-const SidebarCheckout = styled('div')`
+const SidebarCheckout = styled.div`
   width: 50%;
   padding: 0 2rem 0 0.5rem;
 `
@@ -177,13 +181,15 @@ const Sidebar = React.forwardRef((props, ref) => {
       <div>
         <SidebarClose />
         <SidebarHeader>
-          <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
+          <SidebarHeaderTitle as="h2">
+            {orderId ? `Editing Order ${orderId}` : 'Your Order'}
+          </SidebarHeaderTitle>
           {!notEmpty ? (
             <p>Your cart is currently empty. Please add some items.</p>
           ) : (
             <p>
-              <span>{cartCount} items</span> for a total of{' '}
-              <span>${cartTotal.toFixed(2)}</span> before tax
+              <Heading>{cartCount} items</Heading> for a total of{' '}
+              <Heading>${cartTotal.toFixed(2)}</Heading> before tax
             </p>
           )}
           {cartCount !== 0 && belowMinimum && (

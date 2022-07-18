@@ -9,7 +9,7 @@ const CheckoutCancelView = styled('div')`
   margin: 3rem 0 0;
 
   p {
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
   }
 `
 

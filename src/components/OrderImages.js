@@ -8,6 +8,7 @@ const OrderImagesView = styled('div')`
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
   }
 `
 

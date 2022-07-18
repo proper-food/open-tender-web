@@ -20,7 +20,6 @@ const AccountGroupOrders = ({ orders }) => {
     <AccountSection>
       <ScrollableSection
         title={title}
-        to={displayed.length > 1 ? '/orders' : null}
         items={displayed}
         renderItem={useSimple ? OrderCardGroupSimpleItem : OrderCardGroupItem}
         keyName="cart_id"

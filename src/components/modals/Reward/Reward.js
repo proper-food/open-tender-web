@@ -40,7 +40,7 @@ const RewardHeader = styled('div')`
 
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 1rem 0 0;
   }
 `
@@ -48,7 +48,7 @@ const RewardHeader = styled('div')`
 const RewardFinePrint = styled('div')`
   & > p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     // margin: 0 !important;
   }
 `
@@ -60,7 +60,7 @@ const RewardContent = styled('div')`
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
 
     button {
       margin: 1rem 0 0;

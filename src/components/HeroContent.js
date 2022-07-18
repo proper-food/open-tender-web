@@ -21,10 +21,9 @@ const HeroContentView = styled('div')`
   }
 
   p + p {
-    line-height: ${(props) => props.theme.lineHeight};
     margin: 0.3rem 0 0;
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.main};
-    // font-weight: ${(props) => props.theme.boldWeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 0.2rem 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.small};

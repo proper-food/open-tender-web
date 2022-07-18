@@ -31,7 +31,7 @@ const RevenueCenterOrderView = styled('div')`
 `
 
 const RevenueCenterOrderMessage = styled('div')`
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};

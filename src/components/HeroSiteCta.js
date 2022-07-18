@@ -22,7 +22,7 @@ const HeroSiteCtaView = styled.div`
   p {
     color: ${(props) => props.theme.colors.light};
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
     margin: 1em 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

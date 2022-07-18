@@ -10,9 +10,7 @@ const PageTitleView = styled.div`
   margin: 0 auto ${(props) => props.theme.layout.margin};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 auto ${(props) => props.theme.layout.marginMobile};
-  }
-
-  & > p {
+    text-align: left;
   }
 `
 

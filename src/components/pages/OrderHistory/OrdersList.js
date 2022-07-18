@@ -1,9 +1,8 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { OrderCard, OrderCardGroup } from '../..'
 
-const OrdersListView = styled('div')`
+const OrdersListView = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -11,11 +10,14 @@ const OrdersListView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
-const OrdersListItem = styled('div')`
+const OrdersListItem = styled.div`
   width: 36rem;
   max-width: 100%;
   padding: 0 1rem;
   margin: 0 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `
 
 const OrdersList = ({ orders, isGroup = false }) => {

@@ -18,7 +18,7 @@ const PageIntroContent = styled.div`
 
   p {
     margin: 1em 0;
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     // font-family: 'Lora', sans-serif;
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

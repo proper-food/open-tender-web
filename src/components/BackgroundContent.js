@@ -52,7 +52,7 @@ const BackgroundContentTitle = styled(Headline)`
 
 const BackgroundContentSubtitle = styled.p`
   margin: 0.5em 0;
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   color: #${(props) => props.textColor};
   font-size: ${(props) => props.fontSize || props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

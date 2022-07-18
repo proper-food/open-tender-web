@@ -34,7 +34,7 @@ export const CateringSiteCategoryHeader = styled('div')`
 
   p {
     margin: 0.5rem 0 0;
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};

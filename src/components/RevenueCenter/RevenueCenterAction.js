@@ -44,7 +44,7 @@ const RevenueCenterActionArrowText = styled.div`
   p {
     color: ${(props) => props.theme.fonts.body.color};
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }

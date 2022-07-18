@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { selectGroupOrder } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import { Box } from '@open-tender/components'
+import { Body, Box, Headline } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
 import GroupOrderReviewGuest from './GroupOrderReviewGuest'
@@ -20,13 +20,29 @@ export const GroupOrderCartView = styled(Box)`
     margin: ${(props) => props.theme.layout.paddingMobile} auto;
     padding: ${(props) => props.theme.layout.paddingMobile};
   }
+`
 
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
+export const GroupOrderCartSection = styled.div`
+  margin: 0 0 3rem;
+`
+
+export const GroupOrderCartSectionHeader = styled.div`
+  margin: 0 0 3rem;
+`
+
+export const GroupOrderCartTitle = styled(Headline)`
+  margin: 0 0 0 -0.1rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
+`
+
+export const GroupOrderCartSubtitle = styled(Body)`
+  margin: 1rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
@@ -38,7 +54,7 @@ const GroupOrderReview = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    if (!cartId) navigate(`/`)
+    if (!cartId) navigate(`/account`)
   }, [cartId, navigate])
 
   return (

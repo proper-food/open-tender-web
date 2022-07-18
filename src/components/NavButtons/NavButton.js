@@ -66,7 +66,7 @@ const NavButtonIcon = styled('span')`
 
 const NavButtonText = styled.span`
   flex-grow: 1;
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   text-align: left;
   display: flex;
   flex-direction: column;

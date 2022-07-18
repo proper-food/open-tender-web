@@ -11,7 +11,7 @@ export const MenuItemNutritionView = styled.div`
 
 export const MenuItemNutritionList = styled.ul`
   padding: 1rem 2rem;
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) => props.theme.bgColors.primary};

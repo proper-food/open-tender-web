@@ -5,7 +5,7 @@ const FormHeader = styled('div')`
 
   p {
     margin: 1rem 0 0;
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.main};
 
     &:first-of-type {

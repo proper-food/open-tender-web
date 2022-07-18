@@ -23,13 +23,13 @@ const PointsHeader = styled('div')`
 
   p:first-of-type {
     font-size: ${(props) => props.theme.fonts.sizes.h3};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 0;
   }
 
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 1rem 0 0;
   }
 `
@@ -43,7 +43,7 @@ const PointsContent = styled('div')`
 
   & > div + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
   }
 `
 

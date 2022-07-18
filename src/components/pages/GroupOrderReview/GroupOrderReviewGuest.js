@@ -24,7 +24,7 @@ import {
   PageContent,
 } from '../..'
 import { Back } from '../../buttons'
-import { GroupOrderCartView } from './GroupOrderReview'
+import { GroupOrderCartView, GroupOrderCartTitle } from './GroupOrderReview'
 
 const makeSubtitle = (error, cart, firstName, config) => {
   if (!error) {
@@ -66,7 +66,7 @@ const GroupOrderReviewGuest = () => {
   const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
-    navigate('/')
+    navigate('/guest')
   }
 
   return (
@@ -113,7 +113,9 @@ const GroupOrderReviewGuest = () => {
                 </PageContent>
                 {cart.length > 0 && (
                   <GroupOrderCartView>
-                    <h2>Items submitted to {firstName}'s group order</h2>
+                    <GroupOrderCartTitle as="p">
+                      Items submitted to {firstName}'s group order
+                    </GroupOrderCartTitle>
                     <ul>
                       {cart.map((item, index) => {
                         return (

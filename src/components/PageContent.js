@@ -9,10 +9,11 @@ const PageContent = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.paddingMobile} auto;
     font-size: ${(props) => props.theme.fonts.sizes.small};
+    text-align: left;
   }
 
   & > p {
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 1em 0;
   }
 `

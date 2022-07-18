@@ -7,7 +7,7 @@ import {
   addCustomerGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Input, Text } from '@open-tender/components'
+import { Body, ButtonLink, ButtonStyled, Input } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
 import GroupOrderSteps from './GroupOrderSteps'
@@ -16,6 +16,13 @@ import { ModalContent } from '../../Modal'
 const formatOrderTime = (s) => {
   return s ? s.replace('Today', 'today').replace('Tomorrow', 'tomorrow') : ''
 }
+
+const GroupOrderSummary = styled.div`
+  & > p + p {
+    margin: 0 0 1.5em;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const SpendingLimitForm = styled('form')`
   margin: 0;
@@ -104,32 +111,33 @@ const GroupOrderStart = () => {
       {orderTime && (
         <>
           {orderTime.prepTime ? (
-            <div>
-              <Text as="p" color="primary" bold={true}>
+            <GroupOrderSummary>
+              <Body as="p">
                 The current wait time for group orders is {orderTime.prepTime}{' '}
                 minutes from the time the order is submitted.{' '}
+              </Body>
+              <Body as="p">
                 <ButtonLink onClick={adjust}>
-                  Choose a specific order time.
+                  Choose a specific order time
                 </ButtonLink>
-              </Text>
-            </div>
+              </Body>
+            </GroupOrderSummary>
           ) : (
-            <div>
-              <Text as="p" color="primary" bold={true}>
+            <GroupOrderSummary>
+              <Body as="p">
                 {orderTime.isAdjusted
                   ? 'The first available group order time is'
                   : 'Your currently selected group order time is'}{' '}
-                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                <Text color="alert">
-                  all orders must be submitted by{' '}
-                  {formatOrderTime(orderTime.cutoffDateStr)}
-                </Text>
-                .{' '}
+                {formatOrderTime(orderTime.dateStr)}, which means that all
+                orders must be submitted by{' '}
+                {formatOrderTime(orderTime.cutoffDateStr)}.
+              </Body>
+              <Body as="p">
                 <ButtonLink onClick={adjust}>
-                  Choose a different time.
+                  Choose a different time
                 </ButtonLink>
-              </Text>
-            </div>
+              </Body>
+            </GroupOrderSummary>
           )}
         </>
       )}
@@ -143,9 +151,7 @@ const GroupOrderStart = () => {
           error={null}
         />
       </SpendingLimitForm>
-      <Text as="div" size="small">
-        <GroupOrderSteps />
-      </Text>
+      <GroupOrderSteps />
     </ModalContent>
   )
 }

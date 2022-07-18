@@ -15,7 +15,7 @@ const VerifyAccountView = styled('div')`
   margin: 2rem 0;
 
   p {
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 
