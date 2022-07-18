@@ -67,6 +67,9 @@ const CategoryNavScrollView = styled.div`
   overflow-x: scroll;
   transition: all 500ms ease;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    text-align: left;
+  }
 
   ul {
     position: relative;
@@ -76,6 +79,7 @@ const CategoryNavScrollView = styled.div`
     height: ${(props) => props.theme.layout.navHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       height: ${(props) => props.theme.layout.navHeightMobile};
+      justify-content: flex-start;
     }
 
     li {
