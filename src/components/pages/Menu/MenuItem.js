@@ -278,6 +278,7 @@ const MenuItem = ({ item, displayOnly = false }) => {
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const { soldOut } = useSelector(selectMenu)
   const displaySettings = useSelector(selectDisplaySettings)
+  console.log(displaySettings)
   const { builderType } = displaySettings
   const cartCounts = useSelector(selectCartCounts)
   const {

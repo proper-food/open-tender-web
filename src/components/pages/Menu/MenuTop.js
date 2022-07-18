@@ -151,7 +151,8 @@ const MenuTop = () => {
   const topOffset = heightInPixels + 30
   const menuSection = useSelector(selectMenuSection)
   const menuSlug = useSelector(selectMenuSlug)
-  const { categories, soldOut, menuContent, deals } = useContext(MenuContext)
+  const { categories, soldOut, menuContent, deals, setHasTop } =
+    useContext(MenuContext)
   const { displayed: displayedDesktop, displayedMobile } = menuContent
   const displayed = isBrowser ? displayedDesktop : displayedMobile
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
@@ -223,6 +224,10 @@ const MenuTop = () => {
   useEffect(() => {
     if (!hasSection) dispatch(setMenuSection(firstSection))
   }, [hasSection, firstSection, dispatch])
+
+  useEffect(() => {
+    setHasTop(hasItems)
+  }, [hasItems, setHasTop])
 
   if (!isLoading && !hasItems) return null
 

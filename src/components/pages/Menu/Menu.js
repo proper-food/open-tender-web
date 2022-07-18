@@ -34,6 +34,7 @@ const MenuPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [init, setInit] = useState(true)
+  const [hasTop, setHasTop] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const menuContent = useSelector(selectContentSection('menu'))
   const order = useSelector(selectOrder)
@@ -118,6 +119,8 @@ const MenuPage = () => {
           pointsProgram,
           announcements,
           displaySettings,
+          hasTop,
+          setHasTop,
         }}
       >
         <Outlet />
