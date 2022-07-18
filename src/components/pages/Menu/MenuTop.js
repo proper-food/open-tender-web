@@ -64,6 +64,7 @@ const MenuTopNav = styled.div`
 const MenuTopMore = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
+  margin: 0 0 0.2rem;
 `
 
 const MenuTopButtonView = styled.button`
