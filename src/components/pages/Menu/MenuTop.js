@@ -117,6 +117,10 @@ const MenuTopItems = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
   }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const MenuTopItemsItem = styled.div`

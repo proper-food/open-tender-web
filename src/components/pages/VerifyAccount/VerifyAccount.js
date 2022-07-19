@@ -33,7 +33,7 @@ const VerifyAccount = () => {
 
   useEffect(() => {
     if (!verifyToken) {
-      return navigate('/')
+      return navigate('/account')
     } else {
       dispatch(verifyAccount(verifyToken))
     }
@@ -65,7 +65,7 @@ const VerifyAccount = () => {
                   <div>
                     <p>
                       <ButtonLink
-                        onClick={() => navigate(auth ? '/account' : '/')}
+                        onClick={() => navigate(auth ? '/account' : '/guest')}
                       >
                         {auth
                           ? 'Head back to your account'

@@ -229,7 +229,7 @@ const Checkout = () => {
     } else if (cartTotal === 0) {
       navigate(menuSlug)
     } else if (!revenueCenterId || !serviceType) {
-      navigate('/')
+      navigate('/account')
     } else if (!hasCustomer && !hasFormCustomer) {
       navigate('/checkout/guest')
     }

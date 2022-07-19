@@ -19,6 +19,9 @@ const ScrollableSectionContainer = styled.div`
   align-items: flex-start;
   overflow-x: auto;
   margin: -0.5rem 0 0;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const ScrollableSectionItem = styled.div`

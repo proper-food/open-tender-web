@@ -58,6 +58,10 @@ const MenuItemGroupsNavScrollView = styled.div`
   overflow-x: scroll;
   transition: all 500ms ease;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   ul {
     position: relative;
     display: inline-flex;

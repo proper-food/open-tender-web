@@ -60,7 +60,7 @@ const RevenueCenters = () => {
         if (paramOrderType[0] === 'CATERING') navigate('/catering-address')
       }
     }
-    if (!hasTypes && !paramOrderType) navigate('/')
+    if (!hasTypes && !paramOrderType) navigate('/account')
   }, [hasTypes, param, dispatch, navigate])
 
   const setActive = useCallback(

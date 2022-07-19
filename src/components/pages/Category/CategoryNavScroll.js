@@ -71,6 +71,10 @@ const CategoryNavScrollView = styled.div`
     text-align: left;
   }
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   ul {
     position: relative;
     display: inline-flex;

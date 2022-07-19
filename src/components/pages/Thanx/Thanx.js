@@ -40,7 +40,7 @@ const Thanx = () => {
   const canCheckout =
     canOrder && cartCount !== 0 && !belowMinimum && !aboveMaximum
   const canMenu = canOrder && cartCount !== 0 && menuSlug
-  const redirect = canCheckout ? '/checkout' : canMenu ? menuSlug : '/'
+  const redirect = canCheckout ? '/checkout' : canMenu ? menuSlug : '/account'
   const isLoading = loading === 'pending'
   const errMsg = error
     ? isObject(error)
@@ -60,7 +60,7 @@ const Thanx = () => {
     } else if (code) {
       dispatch(authCustomerThanx(code))
     } else {
-      navigate('/')
+      navigate('/account')
     }
   }, [auth, code, redirect, navigate, dispatch])
 

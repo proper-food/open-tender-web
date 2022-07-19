@@ -41,14 +41,14 @@ const ResetPassword = () => {
   const resetForm = useCallback(() => dispatch(resetPasswordReset), [dispatch])
 
   useEffect(() => {
-    if (auth) return navigate('/')
-    if (!resetToken) return navigate('/')
+    if (auth) return navigate('/account')
+    if (!resetToken) return navigate('/account')
   }, [auth, resetToken, navigate])
 
   const handleLogin = () => {
     const args = {
       type: 'login',
-      args: { callback: () => navigate('/') },
+      args: { callback: () => navigate('/account') },
     }
     dispatch(openModal(args))
   }

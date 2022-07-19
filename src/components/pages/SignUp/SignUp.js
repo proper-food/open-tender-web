@@ -77,7 +77,7 @@ const SignUp = () => {
   useEffect(() => {
     if (auth) {
       if (posToken) {
-        dispatch(linkPosToken(posToken)).finally(navigate('/'))
+        dispatch(linkPosToken(posToken)).finally(navigate('/account'))
       } else {
         return navigate('/account')
       }

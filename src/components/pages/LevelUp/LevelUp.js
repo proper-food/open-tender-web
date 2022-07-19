@@ -46,7 +46,7 @@ const LevelUp = () => {
 
   useEffect(() => {
     if (auth) {
-      navigate('/')
+      navigate('/account')
     } else if (token) {
       if (lat && lng) {
         const geoLatLng = { lat: parseFloat(lat), lng: parseFloat(lng) }
@@ -54,7 +54,7 @@ const LevelUp = () => {
       }
       dispatch(fetchLevelUpCustomer(token))
     } else {
-      navigate('/')
+      navigate('/guest')
     }
     return () => dispatch(resetLevelUpCustomer())
   }, [auth, token, lat, lng, navigate, dispatch])

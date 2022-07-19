@@ -63,10 +63,14 @@ const NavScrollButton = ({ name, active, offset = 0 }) => {
   )
 }
 
-const NavScrollView = styled('div')`
+const NavScrollView = styled.div`
   width: 100%;
   overflow-x: scroll;
   transition: all 500ms ease;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   ul {
     position: relative;

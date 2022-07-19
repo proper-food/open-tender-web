@@ -22,7 +22,7 @@ const Fulfillment = () => {
   const fulfillment = useSelector(selectFulfillment)
 
   useEffect(() => {
-    if (!fulfillment) return navigate('/')
+    if (!fulfillment) return navigate('/account')
   }, [fulfillment, navigate])
 
   useEffect(() => {

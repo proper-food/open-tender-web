@@ -55,7 +55,7 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
   const handleReset = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
-    window.location.replace('/')
+    window.location.replace('/guest')
   }
 
   return (

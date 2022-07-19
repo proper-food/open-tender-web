@@ -211,7 +211,7 @@ const GroupOrderGuest = () => {
   const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
-    navigate('/')
+    navigate('/guest')
   }
 
   return (
