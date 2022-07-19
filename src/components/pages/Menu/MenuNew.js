@@ -26,11 +26,15 @@ const MenuNew = () => {
   const {
     announcements,
     categories,
+    displaySettings,
+    isLoading,
+    menuContent,
     revenueCenters,
     siteTitle,
-    menuContent,
-    isLoading,
   } = useContext(MenuContext)
+  const { menuType: menuTypeDesktop, menuTypeMobile } = displaySettings
+  const menuType = isMobile ? menuTypeMobile : menuTypeDesktop
+  const isScrollable = menuType === 'SCROLLABLE'
   const { background, mobile, loadingMessage } = menuContent
   const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const showHero = isMobile ? menuHeroMobile : menuHero
@@ -61,7 +65,9 @@ const MenuNew = () => {
             ) : (
               <>
                 <MenuTop />
-                <MenuBrowse categories={revenueCenters || categories} />
+                {!isScrollable && (
+                  <MenuBrowse categories={revenueCenters || categories} />
+                )}
               </>
             )}
           </MenuNewView>

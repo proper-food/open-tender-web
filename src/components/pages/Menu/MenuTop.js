@@ -23,6 +23,7 @@ import { selectMenuSection, setMenuSection } from '../../../slices'
 import { Container, Loading, Reward, SeeMoreLink } from '../..'
 import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
+import MenuScrollable from './MenuScrollable'
 
 const MenuTopView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -151,10 +152,19 @@ const MenuTop = () => {
   const topOffset = heightInPixels + 30
   const menuSection = useSelector(selectMenuSection)
   const menuSlug = useSelector(selectMenuSlug)
-  const { categories, soldOut, menuContent, deals, setHasTop } =
-    useContext(MenuContext)
+  const {
+    categories,
+    deals,
+    displaySettings,
+    menuContent,
+    setHasTop,
+    soldOut,
+  } = useContext(MenuContext)
   const { displayed: displayedDesktop, displayedMobile } = menuContent
   const displayed = isBrowser ? displayedDesktop : displayedMobile
+  const { menuType: menuTypeDesktop, menuTypeMobile } = displaySettings
+  const menuType = isBrowser ? menuTypeDesktop : menuTypeMobile
+  const isScrollable = menuType === 'SCROLLABLE'
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
 
   // handle featured
@@ -231,62 +241,60 @@ const MenuTop = () => {
 
   if (!isLoading && !hasItems) return null
 
-  return (
+  return showLoading ? (
+    <MenuTopView>
+      <Container>
+        <Loading text="Checking for recents and favorites..." />
+      </Container>
+    </MenuTopView>
+  ) : isScrollable ? (
+    <MenuScrollable displayedSections={displayedSections} />
+  ) : (
     <MenuTopView className="compact">
       <Container>
-        {showLoading ? (
-          <Loading text="Checking for recents and favorites..." />
-        ) : (
-          <>
-            <MenuTopHeader>
-              <MenuTopNav marginRight={marginRight} fontSize={fontSize}>
-                {displayedKeys.map((section) => (
-                  <MenuTopButton
-                    key={section}
-                    title={capitalize(section)}
-                    section={section}
-                    menuSection={menuSection}
-                    onClick={() => dispatch(setMenuSection(section))}
-                  >
-                    <MenuTopTitle>Recents</MenuTopTitle>
-                  </MenuTopButton>
-                ))}
-                {isBrowser && (
-                  <MenuTopButton
-                    title="Full Menu"
-                    section="FULL_MENU"
-                    menuSection={menuSection}
-                    onClick={scrollToMenu}
-                  />
-                )}
-              </MenuTopNav>
-              <MenuTopMore>
-                {displayMore && (
-                  <SeeMoreLink
-                    text={`View All${currentTitle}`}
-                    to={`${menuSlug}/${menuSection.toLowerCase()}`}
-                  />
-                )}
-              </MenuTopMore>
-            </MenuTopHeader>
-            {currentDisplayed.length > 0 ? (
-              <MenuTopItems>
-                {currentDisplayed.map((item, index) => (
-                  <MenuTopItemsItem
-                    count={currentDisplayed.length}
-                    key={`${menuSection}-${item[itemKey]}-${index}`}
-                  >
-                    {isDeals ? (
-                      <Reward item={item} />
-                    ) : (
-                      <MenuItem item={item} />
-                    )}
-                  </MenuTopItemsItem>
-                ))}
-              </MenuTopItems>
-            ) : null}
-          </>
-        )}
+        <MenuTopHeader>
+          <MenuTopNav marginRight={marginRight} fontSize={fontSize}>
+            {displayedKeys.map((section) => (
+              <MenuTopButton
+                key={section}
+                title={capitalize(section)}
+                section={section}
+                menuSection={menuSection}
+                onClick={() => dispatch(setMenuSection(section))}
+              >
+                <MenuTopTitle>Recents</MenuTopTitle>
+              </MenuTopButton>
+            ))}
+            {isBrowser && (
+              <MenuTopButton
+                title="Full Menu"
+                section="FULL_MENU"
+                menuSection={menuSection}
+                onClick={scrollToMenu}
+              />
+            )}
+          </MenuTopNav>
+          <MenuTopMore>
+            {displayMore && (
+              <SeeMoreLink
+                text={`View All${currentTitle}`}
+                to={`${menuSlug}/${menuSection.toLowerCase()}`}
+              />
+            )}
+          </MenuTopMore>
+        </MenuTopHeader>
+        {currentDisplayed.length > 0 ? (
+          <MenuTopItems>
+            {currentDisplayed.map((item, index) => (
+              <MenuTopItemsItem
+                count={currentDisplayed.length}
+                key={`${menuSection}-${item[itemKey]}-${index}`}
+              >
+                {isDeals ? <Reward item={item} /> : <MenuItem item={item} />}
+              </MenuTopItemsItem>
+            ))}
+          </MenuTopItems>
+        ) : null}
       </Container>
     </MenuTopView>
   )

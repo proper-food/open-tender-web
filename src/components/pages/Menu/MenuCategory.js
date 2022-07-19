@@ -28,8 +28,8 @@ const MenuCategory = ({ category, isChild }) => {
         />
         {category.items.length > 0 && (
           <MenuItems perRow={showTwo ? 2 : 1}>
-            {category.items.map((item) => (
-              <MenuItem key={item.id} item={item} />
+            {category.items.map((item, index) => (
+              <MenuItem key={`${item.id}-${index}`} item={item} />
             ))}
           </MenuItems>
         )}

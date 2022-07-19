@@ -86,7 +86,7 @@ const MenuBrowse = ({ categories }) => {
       <MenuBrowseView id="full-menu" hasTop={hasTop}>
         {hasTop && (
           <MenuBrowseHeader>
-            <MenuBrowseTitle>Full Menu</MenuBrowseTitle>
+            <MenuBrowseTitle>Browse by Category</MenuBrowseTitle>
           </MenuBrowseHeader>
         )}
         {displayType === 'VERTICAL' ? (
