@@ -23,9 +23,12 @@ import {
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 import {
+  openModal,
   selectBrand,
   selectContentSection,
   selectDisplaySettings,
+  selectIsGroupOrder,
+  setIsGroupOrder,
 } from '../../../slices'
 
 export const MenuContext = createContext(null)
@@ -59,6 +62,7 @@ const MenuPage = () => {
   )
   const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const displaySettings = useSelector(selectDisplaySettings)
+  const isGroupOrder = useSelector(selectIsGroupOrder)
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -101,6 +105,14 @@ const MenuPage = () => {
       setCustomerId(null)
     }
   }, [customer_id, customerId, dispatch])
+
+  useEffect(() => {
+    if (isGroupOrder) {
+      const reviewOrders = () => navigate(`/review`)
+      dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
+      dispatch(setIsGroupOrder(false))
+    }
+  }, [isGroupOrder, dispatch, navigate])
 
   return (
     <>

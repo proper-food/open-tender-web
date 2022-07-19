@@ -12,9 +12,24 @@ import {
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'
-import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
-import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
+import {
+  makeDisplayedRevenueCenters,
+  renameLocation,
+  serviceTypeNamesMap,
+} from '@open-tender/js'
+import {
+  Body,
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Preface,
+} from '@open-tender/components'
+import {
+  selectConfig,
+  selectSettings,
+  selectGeoLatLng,
+  selectIsGroupOrder,
+} from '../../../slices'
 import { Container, Loading, PageContent, RevenueCenter } from '../..'
 
 const RevenueCentersSelectView = styled('div')`
@@ -43,24 +58,21 @@ const RevenueCentersSelectTitle = styled('div')`
   margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 3rem;
-    text-align: center;
   }
 
   h2 {
-    line-height: 1;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
+      font-size: ${(props) => props.theme.fonts.sizes.big};
     }
   }
 
   & > p {
     margin: 1rem 0 0;
-    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.small};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: 1rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+      // font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
 `
@@ -124,6 +136,7 @@ const RevenueCentersSelect = () => {
     useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
+  const isGroupOrder = useSelector(selectIsGroupOrder)
   const [title, setTitle] = useState(rcConfig.title)
   const [msg, setMsg] = useState(rcConfig.subtitle)
   const [error, setError] = useState(null)
@@ -136,6 +149,8 @@ const RevenueCentersSelect = () => {
   const renamedTitle = renameLocation(title, names)
   const renamedError = renameLocation(error, names)
   const renamedMsg = renameLocation(msg, names)
+  const groupOrderNA = isGroupOrder && !showRevenueCenters
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
 
   useEffect(() => {
     if (orderType) {
@@ -163,7 +178,8 @@ const RevenueCentersSelect = () => {
       serviceType,
       address,
       geoLatLng,
-      maxDistance
+      maxDistance,
+      isGroupOrder
     )
     const count = displayed ? displayed.length : 0
     if (count && autoSelect && !error && !missingAddress) {
@@ -183,12 +199,13 @@ const RevenueCentersSelect = () => {
     autoSelect,
     autoRouteCallack,
     missingAddress,
+    isGroupOrder,
   ])
 
   const startOver = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
-    navigate(`/`)
+    navigate(`/order-type`)
   }
 
   return (
@@ -206,8 +223,22 @@ const RevenueCentersSelect = () => {
                   <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
                 </ButtonLink>
               </RevenueCentersSelectShowMap>
-              <h2>{renamedTitle}</h2>
-              <p>{renamedError || renamedMsg}</p>
+              {groupOrderNA ? (
+                <>
+                  <Heading as="h2">
+                    We're sorry but Group Ordering {serviceTypeName} isn't
+                    available in your area at this time
+                  </Heading>
+                  <Body as="p">
+                    Please go back and choose a different order type
+                  </Body>
+                </>
+              ) : (
+                <>
+                  <Heading as="h2">{renamedTitle}</Heading>
+                  <Body as="p">{renamedError || renamedMsg}</Body>
+                </>
+              )}
             </RevenueCentersSelectTitle>
             {showRevenueCenters ? (
               <RevenueCentersSelectList>
@@ -224,7 +255,7 @@ const RevenueCentersSelect = () => {
                 ))}
               </RevenueCentersSelectList>
             ) : (
-              <div style={{ margin: '3rem auto 0', textAlign: 'center' }}>
+              <div style={{ margin: '3rem auto 0' }}>
                 <ButtonStyled onClick={startOver}>Start Over</ButtonStyled>
               </div>
             )}

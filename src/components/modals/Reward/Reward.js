@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
@@ -16,7 +16,7 @@ import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
 import { makeLimitations } from '../../Reward'
 
-const RewardView = styled('div')`
+const RewardView = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +25,7 @@ const RewardView = styled('div')`
   text-align: center;
 `
 
-const RewardHeader = styled('div')`
+const RewardHeader = styled.div`
   margin: 0 0 1rem;
 
   & > p {
@@ -45,7 +45,7 @@ const RewardHeader = styled('div')`
   }
 `
 
-const RewardFinePrint = styled('div')`
+const RewardFinePrint = styled.div`
   & > p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     line-height: ${(props) => props.theme.fonts.body.lineHeight};
@@ -53,7 +53,7 @@ const RewardFinePrint = styled('div')`
   }
 `
 
-const RewardContent = styled('div')`
+const RewardContent = styled.div`
   label: RewardContent;
   width: 100%;
   margin: 1.5rem 0 1rem;
@@ -68,12 +68,12 @@ const RewardContent = styled('div')`
   }
 `
 
-const RewardQRCodeView = styled('div')`
+const RewardQRCodeView = styled.div`
   width: 16rem;
   margin: 1rem auto;
 `
 
-const RewardNote = styled('div')`
+const RewardNote = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;

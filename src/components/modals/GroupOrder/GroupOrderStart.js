@@ -54,7 +54,20 @@ const GroupOrderStart = () => {
   const [spendingLimit, setSpendingLimit] = useState(null)
   // const [error, setError] = useState(null)
   const dispatch = useDispatch()
-  const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
+  const { requestedAt, revenueCenter, serviceType, orderType } =
+    useSelector(selectOrder)
+  const { order_times } = revenueCenter || {}
+  const orderTimes = order_times ? order_times[serviceType] : null
+  const args = {
+    focusFirst: true,
+    skipClose: true,
+    isGroupOrder: true,
+    style: orderTimes ? { alignItems: 'flex-start' } : {},
+    revenueCenter,
+    serviceType,
+    orderType,
+    requestedAt,
+  }
   const { loading } = useSelector(selectGroupOrder)
   const isLoading = loading === 'pending'
 
@@ -70,7 +83,7 @@ const GroupOrderStart = () => {
   const adjust = () => {
     dispatch(closeModal())
     setTimeout(() => {
-      dispatch(openModal({ type: 'requestedAt' }))
+      dispatch(openModal({ type: 'requestedAt', args }))
     }, 300)
   }
 

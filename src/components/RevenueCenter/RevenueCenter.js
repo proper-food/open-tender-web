@@ -75,9 +75,9 @@ const RevenueCenterHeader = styled.div`
   }
 
   h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.main};
+      font-size: ${(props) => props.theme.fonts.sizes.big};
     }
   }
 

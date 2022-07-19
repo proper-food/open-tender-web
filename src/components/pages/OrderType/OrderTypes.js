@@ -12,7 +12,12 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { Message } from '@open-tender/components'
-import { selectContent, selectSettings } from '../../../slices'
+import {
+  openModal,
+  selectContent,
+  selectSettings,
+  setIsGroupOrder,
+} from '../../../slices'
 import {
   Coffee,
   DollarSign,
@@ -67,6 +72,7 @@ const OrderTypes = () => {
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
     dispatch(resetCheckout())
+    dispatch(setIsGroupOrder(false))
   }, [dispatch])
 
   useEffect(() => {
@@ -93,6 +99,10 @@ const OrderTypes = () => {
     navigate('/locations')
   }
 
+  const handleGroupOrder = () => {
+    dispatch(openModal({ type: 'groupOrderType' }))
+  }
+
   const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     navigate('/catering-address')
@@ -116,6 +126,7 @@ const OrderTypes = () => {
     WALKIN: handleWalkin,
     PICKUP: handlePickup,
     DELIVERY: handleDelivery,
+    GROUP: handleGroupOrder,
     CATERING: handleCatering,
     MERCH: handleMerch,
     GIFT_CARDS: handleGiftCards,

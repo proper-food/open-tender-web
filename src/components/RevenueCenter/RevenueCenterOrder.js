@@ -13,7 +13,7 @@ import {
   setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled, Message, Text } from '@open-tender/components'
-import { selectConfig, openModal } from '../../slices'
+import { selectConfig, openModal, selectIsGroupOrder } from '../../slices'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 const RevenueCenterOrderView = styled('div')`
@@ -95,6 +95,8 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
   const menuSlug = `/menu/${slug}`
   const firstTimes = first_times ? first_times[serviceType] : null
   const orderTimes = order_times ? order_times[serviceType] : null
+  const { cartId } = useSelector(selectGroupOrder)
+  const isGroupOrder = useSelector(selectIsGroupOrder)
 
   if (!firstTimes && !orderTimes) return null
 
@@ -116,6 +118,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
     const args = {
       focusFirst: true,
       skipClose: true,
+      isGroupOrder: isGroupOrder || cartId ? true : false,
       style: orderTimes ? { alignItems: 'flex-start' } : {},
       revenueCenter,
       serviceType,
