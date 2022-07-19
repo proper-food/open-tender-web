@@ -15,7 +15,6 @@ const RequestedAt = ({ style = null, useButton = false }) => {
   const { requestedAt, revenueCenter, serviceType, orderType } =
     useSelector(selectOrder)
   const { cartId } = useSelector(selectGroupOrder)
-  console.log(cartId)
   const tz = useSelector(selectTimezone)
   const requestedAtText = makeRequestedAtStr(requestedAt, tz)
   const { order_times } = revenueCenter || {}

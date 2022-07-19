@@ -16,12 +16,12 @@ import {
   SelectOnly,
 } from '@open-tender/components'
 
-const RequestedAtDateTimeView = styled('div')`
-  label: RequestedAtDateTimeSelects;
+const RequestedAtDateTimeView = styled.div`
+  label: RequestedAtDateTimeView;
   text-align: center;
 `
 
-const RequestedAtDateTimeTitle = styled('p')`
+const RequestedAtDateTimeTitle = styled.p`
   width: 100%;
   margin: 0 0 1rem;
   text-align: center;
@@ -29,7 +29,7 @@ const RequestedAtDateTimeTitle = styled('p')`
   font-size: ${(props) => props.theme.fonts.sizes.h3};
 `
 
-const RequestedAtDateTimeAsap = styled('div')`
+const RequestedAtDateTimeAsap = styled.div`
   label: RequestedAtDateTimeAsap;
 
   margin: 0 0 3rem;
@@ -44,7 +44,7 @@ const RequestedAtDateTimeAsap = styled('div')`
   }
 `
 
-const RequestedAtDateTimeSelects = styled('div')`
+const RequestedAtDateTimeSelects = styled.div`
   label: RequestedAtDateTimeSelects;
 
   width: 100%;
@@ -52,17 +52,34 @@ const RequestedAtDateTimeSelects = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-const RequestedAtDateTimeSelect = styled('div')`
-  width: 47.5%;
-
-  select {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+  & > div + div {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 2rem 0 0;
+    }
   }
 `
 
-const RequestedAtDateTimeNevermind = styled('div')`
+const RequestedAtDateTimeSelect = styled.div`
+  width: 47.5%;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    // max-width: 24rem;
+  }
+
+  select {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    //   font-size: ${(props) => props.theme.fonts.sizes.main};
+    // }
+  }
+`
+
+const RequestedAtDateTimeNevermind = styled.div`
   button {
     width: 100%;
     text-align: center;
@@ -84,7 +101,7 @@ const RequestedAtDateTime = ({
 }) => {
   const {
     name,
-    timezone,
+    timezone: tz,
     first_times,
     holidays,
     days_ahead,
@@ -97,7 +114,7 @@ const RequestedAtDateTime = ({
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const firstTime = first_times[serviceType]
   const selected = requestedAt && requestedAt !== 'asap'
-  const requested = selected ? isoToDateStrMinutes(requestedAt, timezone) : {}
+  const requested = selected ? isoToDateStrMinutes(requestedAt, tz) : {}
   const [date, setDate] = useState(requested.date || firstTime.date)
   const [time, setTime] = useState(requested.minutes || firstTime.minutes)
   const [dateChange, setDateChange] = useState(false)
@@ -112,24 +129,40 @@ const RequestedAtDateTime = ({
       makeTimes(date, firstTime, valid_times, holidays, serviceType, leadTime),
     [date, firstTime, valid_times, holidays, serviceType, leadTime]
   )
-  const firstOrderableTime = timeOptions
-    ? timeOptions.find((i) => !i.disabled)
+  const orderDate = dateOptions.find((i) => i.value === date)
+  const showAsap = firstTime.has_asap && date === firstTime.date ? true : false
+  const firstIso = dateStrMinutesToIso(
+    firstTime.date,
+    firstTime.minutes + leadTime,
+    tz
+  )
+  const asapTime =
+    showAsap && firstTime ? makeReadableDateStrFromIso(firstIso, tz) : null
+  const asapTimeOption = {
+    name: `ASAP (about ${asapTime})`,
+    value: 'asap',
+    disabled: false,
+  }
+  const timeOptionsAsap = showAsap
+    ? [asapTimeOption, ...timeOptions]
+    : timeOptions
+  const firstOrderableTime = timeOptionsAsap
+    ? timeOptionsAsap.find((i) => !i.disabled)
     : null
   const firstMinutes = firstOrderableTime ? firstOrderableTime.value : null
-  const asapTime = firstTime
-    ? makeReadableDateStrFromIso(firstTime.utc, timezone)
+  const defaultTime = timeOptionsAsap.find((i) => i.value === firstMinutes)
+  const orderTime = timeOptionsAsap
+    ? timeOptionsAsap.find((i) => i.value === time) || defaultTime
     : null
-  const orderDate = dateOptions.find((i) => i.value === date)
-  const orderTime = timeOptions
-    ? timeOptions.find((i) => i.value === time) ||
-      timeOptions.find((i) => i.value === firstMinutes)
-    : null
+  const isAsap = orderTime.value === 'asap'
   const orderMsg =
     orderDate && orderTime
-      ? `Order for ${orderDate.name} @ ${orderTime.name}`
+      ? isAsap
+        ? `Order ${orderTime.name}`
+        : `Order for ${orderDate.name} @ ${orderTime.name}`
       : 'Choose Time'
   const timeVal = orderTime ? orderTime.value : time
-  const requestedTime = dateStrMinutesToIso(date, timeVal, timezone)
+  const requestedTime = isAsap ? 'asap' : dateStrMinutesToIso(date, timeVal, tz)
   const closedTimeOptions = [{ name: 'Closed', value: null, disabled: false }]
 
   const changeDate = (evt) => {
@@ -174,24 +207,20 @@ const RequestedAtDateTime = ({
             name="order-time"
             value={time}
             onChange={changeTime}
-            options={timeOptions || closedTimeOptions}
+            options={timeOptionsAsap || closedTimeOptions}
           />
         </RequestedAtDateTimeSelect>
       </RequestedAtDateTimeSelects>
       <RequestedAtDateTimeAsap>
         <ButtonStyled
           onClick={() => chooseTime(requestedTime)}
-          color={
-            firstTime.has_asap && (isReorder || isLanding)
-              ? 'secondary'
-              : 'primary'
-          }
-          disabled={!timeOptions}
+          color="primary"
+          disabled={!timeOptionsAsap}
         >
           {orderMsg}
         </ButtonStyled>
       </RequestedAtDateTimeAsap>
-      {firstTime.has_asap ? (
+      {/* {firstTime.has_asap ? (
         <>
           <RequestedAtDateTimeAsap>
             <ButtonStyled
@@ -203,7 +232,7 @@ const RequestedAtDateTime = ({
             </ButtonStyled>
           </RequestedAtDateTimeAsap>
         </>
-      ) : null}
+      ) : null} */}
       <RequestedAtDateTimeNevermind>
         <ButtonLink onClick={cancel}>
           {isLocation
