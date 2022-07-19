@@ -1,6 +1,10 @@
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectOrder, selectTimezone } from '@open-tender/redux'
+import {
+  selectGroupOrder,
+  selectOrder,
+  selectTimezone,
+} from '@open-tender/redux'
 import { makeRequestedAtStr } from '@open-tender/js'
 import { openModal } from '../../slices'
 import { Clock } from '../icons'
@@ -10,6 +14,8 @@ const RequestedAt = ({ style = null, useButton = false }) => {
   const dispatch = useDispatch()
   const { requestedAt, revenueCenter, serviceType, orderType } =
     useSelector(selectOrder)
+  const { cartId } = useSelector(selectGroupOrder)
+  console.log(cartId)
   const tz = useSelector(selectTimezone)
   const requestedAtText = makeRequestedAtStr(requestedAt, tz)
   const { order_times } = revenueCenter || {}
@@ -17,6 +23,7 @@ const RequestedAt = ({ style = null, useButton = false }) => {
   const args = {
     focusFirst: true,
     skipClose: true,
+    isGroupOrder: cartId ? true : false,
     style: orderTimes ? { alignItems: 'flex-start' } : {},
     revenueCenter,
     serviceType,

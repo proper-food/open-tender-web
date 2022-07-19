@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
@@ -12,15 +11,13 @@ import {
   setRequestedAt,
   setRevenueCenter,
 } from '@open-tender/redux'
-import {
-  ButtonStyled,
-  RequestedAtDateTime,
-  RequestedAtTimes,
-} from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
-import { closeModal, toggleSidebar } from '../../slices'
-import { ModalClose, ModalContent } from '..'
-import ModalView from '../Modal/ModalView'
+import { closeModal, toggleSidebar } from '../../../slices'
+import { ModalClose, ModalContent } from '../..'
+import ModalView from '../../Modal/ModalView'
+import RequestedAtDateTime from './RequestedAtDateTime'
+import RequestedAtTimes from './RequestedAtTimes'
 
 const RequestedAtModalView = styled(ModalView)`
   width: ${(props) => props.width};
@@ -40,6 +37,7 @@ const RequestedAt = ({
   requestedAt,
   openSidebar = false,
   isReorder = false,
+  isGroupOrder = false,
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -97,6 +95,7 @@ const RequestedAt = ({
             isLocation={isLocation}
             isReorder={isReorder}
             isLanding={isLanding}
+            isGroupOrder={isGroupOrder}
           />
         </>
       ) : orderTimes ? (

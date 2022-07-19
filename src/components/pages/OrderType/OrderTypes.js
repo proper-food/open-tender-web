@@ -21,6 +21,7 @@ import {
   ShoppingBag,
   ShoppingCart,
   Truck,
+  UserPlus,
   Users,
 } from '../../icons'
 import { NavButtons } from '../..'
@@ -128,6 +129,7 @@ const OrderTypes = () => {
     WALKIN: <Coffee {...iconProps} />,
     PICKUP: <ShoppingBag {...iconProps} />,
     DELIVERY: <Truck {...iconProps} />,
+    GROUP: <UserPlus {...iconProps} />,
     CATERING: <Users {...iconProps} />,
     MERCH: <ShoppingCart {...iconProps} />,
     GIFT_CARDS: <Gift {...iconProps} />,

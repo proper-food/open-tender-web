@@ -21,6 +21,7 @@ import {
   ButtonStyled,
   CartSummaryItem,
   CheckSummary,
+  Headline,
   Preface,
 } from '@open-tender/components'
 
@@ -49,23 +50,21 @@ const OrderHeader = styled.div`
     text-align: left;
   }
 
-  h1,
-  h2 {
-    line-height: 1;
-    margin: 0.5rem 0;
-    font-size: ${(props) => props.theme.fonts.sizes.h1};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
-  }
-
   & > span {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
+  }
+`
+
+const OrderTitle = styled(Headline)`
+  margin: 0.5rem 0;
+  font-size: ${(props) => props.theme.fonts.sizes.h1};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
   }
 `
 
@@ -190,7 +189,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
         <Preface size="small" color="tertiary">
           Order #{order_id}
         </Preface>
-        {isConfirmation ? <h2>{orderTitle}</h2> : <h1>{orderTitle}</h1>}
+        <OrderTitle as={isConfirmation ? 'h2' : 'h1'}>{orderTitle}</OrderTitle>
         {!isMerch && auth && (
           <OrderButtons>
             {order.is_editable && (

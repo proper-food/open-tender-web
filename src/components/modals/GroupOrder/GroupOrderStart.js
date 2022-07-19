@@ -67,7 +67,7 @@ const GroupOrderStart = () => {
     setOrderTime(groupOrderTime)
   }, [revenueCenter, serviceType, requestedAt])
 
-  const adjust = (type) => {
+  const adjust = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(openModal({ type: 'requestedAt' }))
