@@ -3,21 +3,22 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { isBrowser, isMobile } from 'react-device-detect'
-import {
-  resetOrderType,
-  resetGroupOrder,
-  resetCheckout,
-  selectGroupOrder,
-  selectOrder,
-} from '@open-tender/redux'
+import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
-import { Allergens, Back, Cart, NavMenu } from '../../buttons'
+import {
+  Allergens,
+  Back,
+  Cart,
+  GroupOrderIcon,
+  LeaveGroupIcon,
+  NavMenu,
+} from '../../buttons'
 import { ChevronDown, ChevronUp } from '../../icons'
 import { Header } from '../..'
 import MenuMobileMenu from './MenuMobileMenu'
+import { openModal, selectDisplaySettings } from '../../../slices'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
@@ -41,12 +42,6 @@ const MenuHeaderTitleRevenueCenter = styled.button`
   > span {
     display: inline-block;
     color: ${(props) => props.theme.buttons.colors.header.color};
-
-    &:last-of-type {
-      margin: 0.2rem 0 0 0.2rem;
-      width: 1.6rem;
-      height: 1.6rem;
-    }
   }
 `
 
@@ -65,7 +60,19 @@ const MenuHeaderName = styled.span`
   }
 `
 
-const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
+const MenuHeaderDropdown = styled.span`
+  margin: 0.2rem 0 0 0.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
+`
+
+const MenuHeaderTitle = ({
+  order,
+  isGroupOrder,
+  cartGuest,
+  showMenu,
+  setShowMenu,
+}) => {
   const { serviceType, revenueCenter, prepType } = order
   let serviceTypeName = serviceTypeNamesMap[serviceType]
   serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
@@ -82,15 +89,18 @@ const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
   return revenueCenter ? (
     <>
       <MenuHeaderTitleServiceType>
-        Ordering {orderTypeName}
+        {isGroupOrder ? 'Group Order ' : 'Ordering '} {orderTypeName}
         {serviceTypeName}
       </MenuHeaderTitleServiceType>
       <MenuHeaderTitleRevenueCenter onClick={toggle}>
-        {/* <span>&nbsp;</span> */}
         <MenuHeaderName>
           <Heading>{revenueCenter.name}</Heading>
         </MenuHeaderName>
-        <span>{showMenu ? <ChevronUp /> : <ChevronDown />}</span>
+        {!cartGuest ? (
+          <MenuHeaderDropdown>
+            {showMenu ? <ChevronUp /> : <ChevronDown />}
+          </MenuHeaderDropdown>
+        ) : null}
       </MenuHeaderTitleRevenueCenter>
     </>
   ) : null
@@ -99,23 +109,27 @@ const MenuHeaderTitle = ({ order, showMenu, setShowMenu }) => {
 MenuHeaderTitle.displayName = 'MenuHeaderTitle'
 MenuHeaderTitle.propTypes = {
   order: propTypes.object,
+  isGroupOrder: propTypes.bool,
   showMenu: propTypes.bool,
   setShowMenu: propTypes.func,
 }
 
 const MenuHeader = ({ backPath = '/locations', backClick }) => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const theme = useTheme()
+  const { colors } = useTheme()
   const [showMenu, setShowMenu] = useState(false)
+  const { allergens: displayAllergens } = useSelector(selectDisplaySettings)
   const order = useSelector(selectOrder)
-  const { cartGuest } = useSelector(selectGroupOrder)
+  const { revenueCenter } = order
+  const showGroupOrdering = revenueCenter
+    ? !!revenueCenter.group_ordering
+    : false
+  const { isCartOwner, cartGuest, cartId } = useSelector(selectGroupOrder)
+  const showAllergens =
+    displayAllergens && !(isMobile && showGroupOrdering) ? true : false
 
   const leave = () => {
-    dispatch(resetOrderType())
-    dispatch(resetGroupOrder())
-    dispatch(resetCheckout())
-    navigate(`/account`)
+    dispatch(openModal({ type: 'groupOrderLeave' }))
   }
 
   const onClick = cartGuest ? leave : backClick
@@ -127,15 +141,29 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
         title={
           <MenuHeaderTitle
             order={order}
+            cartGuest={cartGuest}
+            isGroupOrder={!!cartId}
             showMenu={showMenu}
             setShowMenu={setShowMenu}
           />
         }
-        borderColor={theme.colors.primary}
+        borderColor={colors.primary}
         left={onClick ? <Back onClick={onClick} /> : <Back path={backPath} />}
         right={
           <>
-            <Allergens style={isMobile ? { width: '3rem' } : null} />
+            {showAllergens && (
+              <Allergens style={isMobile ? { width: '3rem' } : null} />
+            )}
+            {showGroupOrdering ? (
+              cartGuest ? (
+                <LeaveGroupIcon style={isMobile ? { width: '3rem' } : null} />
+              ) : (
+                <GroupOrderIcon
+                  style={isMobile ? { width: '3rem' } : null}
+                  fill={isCartOwner ? colors.alert : null}
+                />
+              )
+            ) : null}
             <Cart />
             {isBrowser && <NavMenu />}
           </>

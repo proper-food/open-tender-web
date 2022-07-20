@@ -74,9 +74,11 @@ const MenuMobileMenuRow = styled.div`
 const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
   const { orderId, revenueCenter, serviceType, requestedAt } = order
   const autoSelect = useSelector(selectAutoSelect)
-  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartGuest, isCartOwner } = useSelector(selectGroupOrder)
   const settings = revenueCenter ? revenueCenter.settings || revenueCenter : {}
   const hasGroupOrdering = settings.group_ordering
+
+  if (cartGuest) return null
 
   return (
     <>
@@ -101,18 +103,18 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
                   <CancelEdit />
                 </MenuMobileMenuRow>
               )}
-              {revenueCenter && !autoSelect && (
+              {revenueCenter && !autoSelect ? (
                 <MenuMobileMenuRow>
                   <Preface size="xSmall">Location</Preface>
                   <RevenueCenter useButton={true} />
                 </MenuMobileMenuRow>
-              )}
-              {serviceType && (
+              ) : null}
+              {serviceType && !isCartOwner ? (
                 <MenuMobileMenuRow>
                   <Preface size="xSmall">Service Type</Preface>
                   <ServiceType useButton={true} />
                 </MenuMobileMenuRow>
-              )}
+              ) : null}
               {requestedAt && (
                 <MenuMobileMenuRow>
                   <Preface size="xSmall">Requested Time</Preface>

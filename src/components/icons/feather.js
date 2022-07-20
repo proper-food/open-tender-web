@@ -288,6 +288,11 @@ export const Users = (props) => {
   return <RF.Users size={null} strokeWidth={icons.strokeWidth} {...props} />
 }
 
+export const UserMinus = (props) => {
+  const { icons } = useTheme()
+  return <RF.UserMinus size={null} strokeWidth={icons.strokeWidth} {...props} />
+}
+
 export const UserPlus = (props) => {
   const { icons } = useTheme()
   return <RF.UserPlus size={null} strokeWidth={icons.strokeWidth} {...props} />

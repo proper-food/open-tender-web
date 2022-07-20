@@ -5,11 +5,11 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { selectOrder, selectCartQuantity } from '@open-tender/redux'
 import { contains } from '@open-tender/js'
-import { ButtonIcon } from '@open-tender/components'
 import { toggleSidebar } from '../../slices'
 import { ShoppingBag } from '../icons'
+import Icon from './Icon'
 
-const CartIcon = styled('div')`
+const CartIcon = styled.div`
   position: relative;
   margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -17,7 +17,7 @@ const CartIcon = styled('div')`
   }
 
   button {
-    margin: -0.2rem 0 0;
+    // margin: -0.2rem 0 0;
 
     &:hover,
     &:active,
@@ -59,13 +59,9 @@ const Cart = () => {
   return showCart ? (
     <CartIcon>
       {cartQuantity > 0 && <CartCount>{cartQuantity}</CartCount>}
-      <ButtonIcon
-        label={`Cart with ${cartQuantity} items`}
-        onClick={() => dispatch(toggleSidebar())}
-        size={isBrowser ? 24 : 24}
-      >
-        <ShoppingBag fill={fill} />
-      </ButtonIcon>
+      <Icon onClick={() => dispatch(toggleSidebar())}>
+        <ShoppingBag size={isBrowser ? 24 : 24} fill={fill} />
+      </Icon>
     </CartIcon>
   ) : null
 }

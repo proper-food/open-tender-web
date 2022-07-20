@@ -20,6 +20,7 @@ import {
   GiftCardAssign,
   GiftCardAssignOther,
   GroupOrder,
+  GroupOrderLeave,
   GroupOrderType,
   LevelUp,
   Login,
@@ -66,6 +67,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GroupOrder {...args} />
     case 'groupOrderType':
       return <GroupOrderType {...args} />
+    case 'groupOrderLeave':
+      return <GroupOrderLeave {...args} />
     case 'levelup':
       return <LevelUp windowRef={windowRef} {...args} />
     case 'login':
@@ -109,6 +112,7 @@ const containerStyleMap = {
   signUp: { alignItems: 'flex-start' },
   profile: { alignItems: 'flex-start' },
   allergens: { alignItems: 'flex-start' },
+  groupOrder: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`

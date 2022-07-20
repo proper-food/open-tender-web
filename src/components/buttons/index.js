@@ -6,8 +6,10 @@ import Cart from './Cart'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
 import GroupOrder from './GroupOrder'
+import GroupOrderIcon from './GroupOrderIcon'
 import Icon from './Icon'
 import LeaveGroup from './LeaveGroup'
+import LeaveGroupIcon from './LeaveGroupIcon'
 import NavMenu from './NavMenu'
 import NavSiteMenu from './NavSiteMenu'
 import Points from './Points'
@@ -24,9 +26,11 @@ export {
   Cart,
   Favorite,
   GroupOrder,
+  GroupOrderIcon,
   GroupGuest,
   Icon,
   LeaveGroup,
+  LeaveGroupIcon,
   NavMenu,
   NavSiteMenu,
   Points,

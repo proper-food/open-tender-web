@@ -1,25 +1,19 @@
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
-import { ButtonIcon } from '@open-tender/components'
-import { selectDisplaySettings, openModal } from '../../slices'
+import { useDispatch } from 'react-redux'
+import { openModal } from '../../slices'
 import { Sliders } from '../icons'
+import Icon from './Icon'
 
 const Allergens = ({ style }) => {
   const dispatch = useDispatch()
-  const { allergens: showAllergens } = useSelector(selectDisplaySettings)
-
-  if (!showAllergens) return null
 
   return (
-    <ButtonIcon
-      label="Highlight allergens on the menu"
+    <Icon
       onClick={() => dispatch(openModal({ type: 'allergens' }))}
-      size={isBrowser ? 20 : 20}
       style={style}
     >
-      <Sliders />
-    </ButtonIcon>
+      <Sliders size={21} />
+    </Icon>
   )
 }
 

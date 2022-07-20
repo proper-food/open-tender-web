@@ -1,12 +1,10 @@
-import React from 'react'
+import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, setOrderServiceType } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
-
 import { closeModal, openModal, setIsGroupOrder } from '../../slices'
 import { ModalContent, ModalView } from '..'
-import styled from '@emotion/styled'
 
 const GroupOrderTypeView = styled.div`
   display: flex;

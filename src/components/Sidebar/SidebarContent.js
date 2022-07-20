@@ -216,6 +216,14 @@ const Sidebar = React.forwardRef((props, ref) => {
               </ButtonLink>
             </p>
           ) : null}
+          {isCartOwner && (
+            <div>
+              <p>
+                This view displays only the items you've added yourself. Click
+                the "Review All Orders" button to view items added by others.
+              </p>
+            </div>
+          )}
         </SidebarHeader>
         <SidebarCart>
           <Cart />
