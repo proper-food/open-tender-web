@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { slugify } from '@open-tender/js'
+import { slugify, stripTags } from '@open-tender/js'
 import {
   selectMenuSlug,
   setCurrentCategory,
@@ -84,6 +84,7 @@ const MenuBrowseSquare = ({ category, isLast = false }) => {
   } = category
   const imageUrl = app_image_url || small_image_url || large_image_url
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+  const desc = description ? stripTags(description) : null
 
   const view = (evt) => {
     evt.preventDefault()
@@ -103,9 +104,9 @@ const MenuBrowseSquare = ({ category, isLast = false }) => {
           <MenuBrowseSquareImage style={bgStyle} />
           <MenuBrowseSquareContent>
             <MenuBrowseSquareTitle as="p">{name}</MenuBrowseSquareTitle>
-            {description && (
+            {desc && (
               <MenuBrowseSquareDescription as="p">
-                {description}
+                {desc}
               </MenuBrowseSquareDescription>
             )}
           </MenuBrowseSquareContent>
