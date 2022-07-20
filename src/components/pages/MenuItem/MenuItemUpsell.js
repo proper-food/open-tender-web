@@ -86,13 +86,18 @@ const MenuItemUpsellItem = styled.div`
   }
 `
 
-const MenuItemUpsell = ({ showUpsell, upsellItemIds }) => {
+const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
   const dispatch = useDispatch()
   const { categories } = useContext(MenuContext)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
   const upsellItems = upsellItemIds.map((id) => itemLookup[id])
 
   const cancel = () => dispatch(setCurrentItem(null))
+
+  const addToOrder = () => {
+    setShowUpsell(false)
+    setTimeout(cancel, 300)
+  }
 
   return (
     <>
@@ -114,7 +119,7 @@ const MenuItemUpsell = ({ showUpsell, upsellItemIds }) => {
                       count={upsellItems.length}
                       key={`${item.id}-${index}`}
                     >
-                      <MenuItem item={item} addCallback={cancel} />
+                      <MenuItem item={item} addCallback={addToOrder} />
                     </MenuItemUpsellItem>
                   ))}
                 </MenuItemUpsellItems>

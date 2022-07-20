@@ -152,6 +152,7 @@ const MenuItem = () => {
             {hasUpsell && (
               <MenuItemUpsell
                 showUpsell={showUpsell}
+                setShowUpsell={setShowUpsell}
                 upsellItemIds={upsellItemIds}
               />
             )}
