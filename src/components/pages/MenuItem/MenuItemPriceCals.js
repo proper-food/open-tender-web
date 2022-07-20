@@ -46,7 +46,7 @@ const MenuItemPriceCals = ({ price, cals, children, style }) => {
 MenuItemPriceCals.displayName = 'MenuItemPriceCals'
 MenuItemPriceCals.propTypes = {
   price: propTypes.string,
-  cals: propTypes.string,
+  cals: propTypes.oneOfType([propTypes.string, propTypes.number]),
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

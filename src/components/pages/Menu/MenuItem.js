@@ -266,7 +266,7 @@ const MenuItemButtonsCustomize = styled.div`
   }
 `
 
-const MenuItem = ({ item, displayOnly = false }) => {
+const MenuItem = ({ item, displayOnly = false, addCallback }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
@@ -344,6 +344,7 @@ const MenuItem = ({ item, displayOnly = false }) => {
       if (cartItem.index === -1) delete cartItem.index
       dispatch(addItemToCart(cartItem))
       dispatch(showNotification(`${builtItem.name} added to cart!`))
+      if (addCallback) addCallback()
     }
   }
 

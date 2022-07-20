@@ -123,7 +123,7 @@ const MenuTopItems = styled.div`
   }
 `
 
-const MenuTopItemsItem = styled.div`
+const MenuTopItem = styled.div`
   flex: ${(props) => (props.count >= 4 ? '1' : '0')} 0 31rem;
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
@@ -290,12 +290,12 @@ const MenuTop = () => {
         {currentDisplayed.length > 0 ? (
           <MenuTopItems>
             {currentDisplayed.map((item, index) => (
-              <MenuTopItemsItem
+              <MenuTopItem
                 count={currentDisplayed.length}
                 key={`${menuSection}-${item[itemKey]}-${index}`}
               >
                 {isDeals ? <Reward item={item} /> : <MenuItem item={item} />}
-              </MenuTopItemsItem>
+              </MenuTopItem>
             ))}
           </MenuTopItems>
         ) : null}

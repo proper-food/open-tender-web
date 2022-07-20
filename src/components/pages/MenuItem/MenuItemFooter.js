@@ -147,7 +147,7 @@ MenuItemFooter.displayName = 'MenuItemFooter'
 MenuItemFooter.propTypes = {
   builtItem: propTypes.object,
   addItem: propTypes.func,
-  isCustomize: propTypes.func,
+  isCustomize: propTypes.bool,
   setIsCustomize: propTypes.func,
   setFooterHeight: propTypes.func,
 }

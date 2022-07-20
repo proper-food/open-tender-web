@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
   addItemToCart,
+  selectCartIds,
   selectCurrentItem,
   selectCustomerPointsProgram,
   selectGroupOrder,
@@ -32,6 +33,7 @@ import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
 import { isMobile } from 'react-device-detect'
 import { Back, NavMenu } from '../../buttons'
+import MenuItemUpsell from './MenuItemUpsell'
 
 const MenuItemView = styled.div`
   position: relative;
@@ -67,6 +69,7 @@ const MenuItemImage = styled.div`
 const MenuItem = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [showUpsell, setShowUpsell] = useState(false)
   const [isCustomize, setIsCustomize] = useState(false)
   const [footerHeight, setFooterHeight] = useState(null)
   const footerHeightRem = footerHeight
@@ -77,6 +80,13 @@ const MenuItem = () => {
   const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
+  const cartIds = useSelector(selectCartIds)
+  const upsellItemIds = item
+    ? item.upsell_items.filter(
+        (id) => !cartIds.includes(id) && !soldOut.includes(id)
+      )
+    : []
+  const hasUpsell = upsellItemIds.length > 0
   const { cartId } = useSelector(selectGroupOrder)
   const { orderType } = useSelector(selectOrder)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
@@ -104,7 +114,11 @@ const MenuItem = () => {
     if (cartItem.index === -1) delete cartItem.index
     dispatch(addItemToCart(cartItem))
     dispatch(showNotification(`${cartItem.name} added to cart`))
-    dispatch(setCurrentItem(null))
+    if (hasUpsell) {
+      setShowUpsell(true)
+    } else {
+      dispatch(setCurrentItem(null))
+    }
   }
 
   const backClick = isCustomize ? () => setIsCustomize(false) : cancel
@@ -135,6 +149,12 @@ const MenuItem = () => {
         <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
           <MenuItemView>
+            {hasUpsell && (
+              <MenuItemUpsell
+                showUpsell={showUpsell}
+                upsellItemIds={upsellItemIds}
+              />
+            )}
             <MenuItemImage>
               <BackgroundImage imageUrl={builtItem.imageUrl} />
             </MenuItemImage>

@@ -1614,11 +1614,6 @@
     date-fns "^2.28.0"
     date-fns-tz "^1.3.4"
 
-"@open-tender/redux@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-3.0.8.tgz#9f24762f13003186dfa8ad69d4e71e42f7893ef0"
-  integrity sha512-O1mvHU0xogLyuA5HHXst12JnMEAnl2M7GbkpyiIzjcqh9AtMGyB/NguaO8W7ccE2BvffAQmnQ0f9lH36XoH6xw==
-
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.7.tgz#58f8217ba70069cc6a73f5d7e05e85b458c150e2"

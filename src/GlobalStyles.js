@@ -429,6 +429,21 @@ const makeGlobalStyles = (theme) => css`
     transform: translateX(0);
   }
 
+  .tray-enter,
+  .tray-exit.tray-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+  }
+
+  .tray-enter.tray-enter-active,
+  .tray-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
   .overlay-enter,
   .overlay-exit.overlay-exit-active {
     transition: all 250ms ease;
