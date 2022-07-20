@@ -9,6 +9,7 @@ import { ButtonLink } from '@open-tender/components'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
+  DeleteAccount,
   HeaderDefault,
   Main,
   PageContainer,
@@ -57,6 +58,7 @@ const AccountSettings = () => {
               </AccountSettingsLogOut>
             </PageTitle>
             <AccountSettingsButtons />
+            <DeleteAccount />
           </PageContainer>
         </Main>
       </Content>

@@ -16,6 +16,7 @@ import {
   Closed,
   CreditCard,
   CreditCardLinked,
+  DeleteAccount,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,
@@ -95,6 +96,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <RequestedAt {...args} />
     case 'reward':
       return <Reward {...args} />
+    case 'deleteAccount':
+      return <DeleteAccount {...args} />
     case 'signUp':
       return <SignUp windowRef={windowRef} {...args} />
     case 'working':

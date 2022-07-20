@@ -14,6 +14,7 @@ import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
 import ContainerSite from './ContainerSite'
 import Deals from './Deals'
+import DeleteAccount from './DeleteAccount'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import FormSection from './FormSection'
@@ -116,6 +117,7 @@ export {
   ContainerSite,
   Content,
   Deals,
+  DeleteAccount,
   ErrorBoundary,
   Footer,
   FormSection,

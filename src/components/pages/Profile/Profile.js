@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
-  selectCustomer,
   fetchCustomer,
-  updateCustomer,
   resetLoginError,
+  selectCustomer,
+  updateCustomer,
 } from '@open-tender/redux'
 import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Content,
+  DeleteAccount,
   HeaderUser,
   Loading,
   Main,
@@ -68,6 +69,7 @@ const AccountProfile = () => {
                   error={error}
                   update={update}
                 />
+                <DeleteAccount />
               </FormWrapper>
             ) : (
               <PageContent>
