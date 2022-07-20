@@ -127,12 +127,13 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
   const { isCartOwner, cartGuest, cartId } = useSelector(selectGroupOrder)
   const showAllergens =
     displayAllergens && !(isMobile && showGroupOrdering) ? true : false
+  const allowLeave = cartGuest && backPath === '/locations'
 
   const leave = () => {
     dispatch(openModal({ type: 'groupOrderLeave' }))
   }
 
-  const onClick = cartGuest ? leave : backClick
+  const onClick = allowLeave ? leave : backClick
 
   return (
     <>
