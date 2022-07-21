@@ -9,6 +9,7 @@ import { ButtonLink, Heading } from '@open-tender/components'
 import { UpsellItem } from '../..'
 import { MenuContext } from '../Menu/Menu'
 import MenuItemUpsellOverlay from './MenuItemUpsellOverlay'
+import { isBrowser } from 'react-device-detect'
 
 const MenuItemUpsellView = styled.div`
   position: fixed;
@@ -25,9 +26,11 @@ const MenuItemUpsellView = styled.div`
 
 const MenuItemUpsellHeader = styled.div`
   text-align: center;
+  padding: 0 ${(props) => props.theme.layout.padding};
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    text-align: left;
+    // text-align: left;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
@@ -42,6 +45,11 @@ const MenuItemUpsellTitle = styled(Heading)`
 const MenuItemUpsellSubtitle = styled.div`
   margin: 1.5rem 0 0;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1rem 0 0;
+    // text-align: left;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const MenuItemUpsellContainer = styled.div`
@@ -105,16 +113,14 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
   const menuItems = upsellItemIds.map((id) => itemLookup[id])
   // const upsellItems = makeUpsellItems(menuItems)
 
-  const cancel = () => dispatch(setCurrentItem(null))
-
-  const addToOrder = () => {
+  const backToMenu = () => {
     setShowUpsell(false)
-    setTimeout(cancel, 300)
+    setTimeout(() => dispatch(setCurrentItem(null)), 200)
   }
 
   return (
     <>
-      <MenuItemUpsellOverlay isOpen={showUpsell} cancel={cancel} />
+      <MenuItemUpsellOverlay isOpen={showUpsell} cancel={backToMenu} />
       <TransitionGroup component={null}>
         {showUpsell ? (
           <CSSTransition key="upsell" classNames="tray" timeout={250}>
@@ -122,17 +128,21 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
               <MenuItemUpsellHeader>
                 <MenuItemUpsellTitle>May we suggest...</MenuItemUpsellTitle>
                 <MenuItemUpsellSubtitle>
-                  <ButtonLink onClick={cancel}>No, thanks</ButtonLink>
+                  <ButtonLink onClick={backToMenu}>No, thanks</ButtonLink>
                 </MenuItemUpsellSubtitle>
               </MenuItemUpsellHeader>
               <MenuItemUpsellContainer>
-                <MenuItemUpsellItems>
+                <MenuItemUpsellItems className="centered">
                   {menuItems.map((item, index) => (
                     <MenuItemUpsellItem
                       count={menuItems.length}
                       key={`${item.id}-${index}`}
                     >
-                      <UpsellItem menuItem={item} addCallback={addToOrder} />
+                      <UpsellItem
+                        menuItem={item}
+                        addCallback={backToMenu}
+                        showDesc={isBrowser}
+                      />
                     </MenuItemUpsellItem>
                   ))}
                 </MenuItemUpsellItems>

@@ -146,16 +146,16 @@ const MenuItem = () => {
         ) : (
           <MenuHeader backClick={backClick} />
         )}
+        {hasUpsell && (
+          <MenuItemUpsell
+            showUpsell={showUpsell}
+            setShowUpsell={setShowUpsell}
+            upsellItemIds={upsellItemIds}
+          />
+        )}
         <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
           <MenuItemView>
-            {hasUpsell && (
-              <MenuItemUpsell
-                showUpsell={showUpsell}
-                setShowUpsell={setShowUpsell}
-                upsellItemIds={upsellItemIds}
-              />
-            )}
             <MenuItemImage>
               <BackgroundImage imageUrl={builtItem.imageUrl} />
             </MenuItemImage>

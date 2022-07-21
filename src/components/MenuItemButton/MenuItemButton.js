@@ -50,6 +50,17 @@ const MenuItemInfo = styled.div`
       align-items: flex-start;
     }
   }
+
+  .centered & {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
 `
 
 const MenuItemName = styled(Heading)`
@@ -60,6 +71,15 @@ const MenuItemName = styled(Heading)`
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+  }
+
+  .centered & {
+    width: 100%;
+    text-align: center;
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
   }
@@ -76,6 +96,15 @@ const MenuItemPriceCals = styled.div`
       text-align: left;
     }
   }
+
+  .centered & {
+    width: 100%;
+    margin: 0.4rem 0 0;
+    text-align: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      margin: 0.1rem 0 0;
+    }
+  }
 `
 
 const MenuItemPrice = styled(Heading)`
@@ -86,6 +115,12 @@ const MenuItemPrice = styled(Heading)`
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
+
+  .centered & {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
+  }
 `
 
 const MenuItemCals = styled(Body)`
@@ -93,6 +128,12 @@ const MenuItemCals = styled(Body)`
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
+  }
+
+  .centered & {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
@@ -109,6 +150,10 @@ const MenuItemTagsAllergens = styled.div`
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: none;
     }
+  }
+
+  .centered & {
+    justify-content: center;
   }
 
   span {
@@ -138,6 +183,10 @@ const MenuItemDescription = styled(Body)`
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: none;
     }
+  }
+
+  .centered & {
+    display: none;
   }
 `
 

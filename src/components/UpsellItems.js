@@ -69,7 +69,7 @@ const UpsellItems = () => {
       <UpsellItemsHeader>
         <Heading size="big">You may also like...</Heading>
       </UpsellItemsHeader>
-      <UpsellItemsItems>
+      <UpsellItemsItems className="centered">
         {upsellItems.map((item) => (
           <UpsellItemsItem key={item.id}>
             <UpsellItem menuItem={item} showDesc={false} />

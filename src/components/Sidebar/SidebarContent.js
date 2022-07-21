@@ -130,6 +130,7 @@ const SidebarCartContainer = styled.div`
 `
 
 const SidebarCartItems = styled.div`
+  width: 100%;
   flex-grow: 1;
   padding: 0 2rem;
 `
