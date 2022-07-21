@@ -69,7 +69,7 @@ export const MenuItemOverlay = styled.div`
       : 'transparent'};
 `
 
-const MenuItemAlert = styled('div')`
+const MenuItemAlert = styled.div`
   position: absolute;
   z-index: 2;
   bottom: -1.2rem;

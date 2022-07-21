@@ -1,12 +1,13 @@
 import { useContext, useMemo } from 'react'
+import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import styled from '@emotion/styled'
 import { setCurrentItem } from '@open-tender/redux'
 import { makeMenuItemLookup } from '@open-tender/js'
 import { ButtonLink, Heading } from '@open-tender/components'
+import { UpsellItem } from '../..'
 import { MenuContext } from '../Menu/Menu'
-import MenuItem from '../Menu/MenuItem'
 import MenuItemUpsellOverlay from './MenuItemUpsellOverlay'
 
 const MenuItemUpsellView = styled.div`
@@ -86,11 +87,23 @@ const MenuItemUpsellItem = styled.div`
   }
 `
 
+// const makeUpsellItems = (menuItems) => {
+//   const orderItems = menuItems.map((i) => makeOrderItem(i))
+//   const upsellItems = orderItems.reduce((arr, i) => {
+//     const groupsBelowMin = i.groups.filter((g) => g.quantity < g.min)
+//     const nonSizeGroups = groupsBelowMin.filter((g) => !g.isSize)
+//     if (nonSizeGroups.length) return arr
+//     return [...arr, i]
+//   }, [])
+//   return upsellItems
+// }
+
 const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
   const dispatch = useDispatch()
   const { categories } = useContext(MenuContext)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
-  const upsellItems = upsellItemIds.map((id) => itemLookup[id])
+  const menuItems = upsellItemIds.map((id) => itemLookup[id])
+  // const upsellItems = makeUpsellItems(menuItems)
 
   const cancel = () => dispatch(setCurrentItem(null))
 
@@ -114,12 +127,12 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
               </MenuItemUpsellHeader>
               <MenuItemUpsellContainer>
                 <MenuItemUpsellItems>
-                  {upsellItems.map((item, index) => (
+                  {menuItems.map((item, index) => (
                     <MenuItemUpsellItem
-                      count={upsellItems.length}
+                      count={menuItems.length}
                       key={`${item.id}-${index}`}
                     >
-                      <MenuItem item={item} addCallback={addToOrder} />
+                      <UpsellItem menuItem={item} addCallback={addToOrder} />
                     </MenuItemUpsellItem>
                   ))}
                 </MenuItemUpsellItems>
@@ -133,4 +146,10 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
 }
 
 MenuItemUpsell.displayName = 'MenuItemUpsell'
+MenuItemUpsell.propTypes = {
+  showUpsell: propTypes.bool,
+  setShowUpsell: propTypes.func,
+  upsellItemIds: propTypes.array,
+}
+
 export default MenuItemUpsell

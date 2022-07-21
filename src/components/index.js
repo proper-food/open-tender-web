@@ -98,6 +98,7 @@ import SidebarModal from './SidebarModal'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
 import Tag from './Tag'
+import UpsellItem from './UpsellItem'
 import VerifyAccount from './VerifyAccount'
 import Welcome from './Welcome'
 
@@ -206,6 +207,7 @@ export {
   SkipLink,
   Slider,
   Tag,
+  UpsellItem,
   VerifyAccount,
   Welcome,
 }
