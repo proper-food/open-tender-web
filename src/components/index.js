@@ -47,6 +47,7 @@ import LoyaltyStatus from './LoyaltyStatus'
 import LoyaltyThresholds from './LoyaltyThresholds'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
+import MenuItemButton from './MenuItemButton'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
@@ -150,6 +151,7 @@ export {
   LoyaltyThresholds,
   Main,
   MapsAutocomplete,
+  MenuItemButton,
   Modal,
   ModalClose,
   ModalContent,

@@ -1,5 +1,6 @@
-import styled from '@emotion/styled'
+import { useState } from 'react'
 import { useTheme } from '@emotion/react'
+import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -15,6 +16,7 @@ import {
 } from '@open-tender/redux'
 import {
   formatDollars,
+  formatQuantity,
   prepareMenuItem,
   rehydrateOrderItem,
   slugify,
@@ -23,8 +25,6 @@ import {
   Body,
   ButtonStyled,
   CardMenuItem,
-  Heading,
-  Preface,
   useBuilder,
 } from '@open-tender/components'
 import {
@@ -35,10 +35,8 @@ import {
   setMenuPath,
 } from '../../../slices'
 import { AlertCircle, Slash } from '../../icons'
-import { Tag } from '../..'
+import { MenuItemButton, Tag } from '../..'
 import MenuItemCount from './MenuItemCount'
-import MenuItemImage from './MenuItemImage'
-import { useState } from 'react'
 
 const MenuItemView = styled(CardMenuItem)`
   position: relative;
@@ -46,30 +44,6 @@ const MenuItemView = styled(CardMenuItem)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
-
-const MenuItemButton = styled.button`
-  flex-grow: 1;
-  display: block;
-  text-align: left;
-  width: 100%;
-  margin: 0 0 1.3rem;
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0;
-    }
-  }
-
-  &:disabled {
-    opacity: 1;
-  }
-`
-
-const MenuItemContainer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 `
 
 export const MenuItemOverlay = styled.div`
@@ -104,119 +78,6 @@ const MenuItemAlert = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
-const MenuItemContent = styled.div`
-  padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding: ${(props) => (props.hasBox ? '0.9rem 0.9rem' : '0.7rem 0 0')};
-    }
-  }
-`
-
-const MenuItemInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-  }
-`
-
-const MenuItemName = styled(Heading)`
-  display: block;
-  flex: 1 1 auto;
-  padding: 0 0.5rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-  }
-`
-
-const MenuItemPriceCals = styled.div`
-  flex-grow: 0;
-  flex-shrink: 0;
-  text-align: right;
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.1rem 0 0;
-      text-align: left;
-    }
-  }
-`
-
-const MenuItemPrice = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    }
-  }
-`
-
-const MenuItemCals = styled(Body)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    }
-  }
-`
-
-const MenuItemTagsAllergens = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 0.8rem 0 0;
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      display: none;
-    }
-  }
-
-  span {
-    display: block;
-  }
-
-  span + span {
-    margin-left: 2rem;
-  }
-`
-
-const MenuItemTag = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
-`
-
-const MenuItemAllergen = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
-  color: ${(props) => props.theme.colors.allergens};
-`
-
-const MenuItemDescription = styled(Body)`
-  display: block;
-  margin: 0.8rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-
-  .compact & {
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      display: none;
-    }
-  }
 `
 
 const MenuItemButtons = styled.div`
@@ -298,7 +159,6 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
     cartCounts,
     isBrowser
   )
-  const hasTagsAllergens = tags.length || allergens.length ? true : false
   const soldOutMsg = isBrowser
     ? menuContent.soldOutMessage || 'Sold out for day'
     : 'Sold out'
@@ -310,6 +170,7 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
   const sizeGroup = groups.find((i) => i.isSize)
   const sizeOnly = sizeGroup && groups.length === 1
   const displayPrice = totalPrice ? formatDollars(totalPrice) : price
+  const displayCals = totalCals ? formatQuantity(totalCals) : null
   const optionNames = item.favorite
     ? item.favorite.item.groups
         .reduce((arr, group) => {
@@ -354,6 +215,12 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
     <Tag icon={<AlertCircle />} text={allergenAlert} bgColor="alert" />
   ) : null
 
+  const imageOverlay = itemTag ? (
+    <MenuItemOverlay isSoldOut={isSoldOut} isAlert={allergenAlert}>
+      <div>{itemTag}</div>
+    </MenuItemOverlay>
+  ) : null
+
   return (
     <MenuItemView className={showTwo ? 'compact' : ''}>
       {cartCount > 0 && (
@@ -362,47 +229,18 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
         </MenuItemCount>
       )}
       {!imageUrl && itemTag ? <MenuItemAlert>{itemTag}</MenuItemAlert> : null}
-      <MenuItemButton onClick={view} disabled={isSoldOut || displayOnly}>
-        <MenuItemContainer>
-          {imageUrl && (
-            <MenuItemImage imageUrl={imageUrl}>
-              {itemTag && (
-                <MenuItemOverlay isSoldOut={isSoldOut} isAlert={allergenAlert}>
-                  <div>{itemTag}</div>
-                </MenuItemOverlay>
-              )}
-            </MenuItemImage>
-          )}
-          <MenuItemContent hasBox={hasBox}>
-            <MenuItemInfo>
-              <MenuItemName>
-                <Heading>{item.name}</Heading>
-              </MenuItemName>
-              {displayPrice ? (
-                <MenuItemPriceCals>
-                  {displayPrice ? (
-                    <MenuItemPrice>{displayPrice}</MenuItemPrice>
-                  ) : null}
-                  {totalCals ? (
-                    <MenuItemCals> &mdash; {totalCals} Cal</MenuItemCals>
-                  ) : null}
-                </MenuItemPriceCals>
-              ) : null}
-            </MenuItemInfo>
-            {hasTagsAllergens && (
-              <MenuItemTagsAllergens>
-                {tags.map((tag) => (
-                  <MenuItemTag key={tag}>{tag}</MenuItemTag>
-                ))}
-                {allergens.map((allergen) => (
-                  <MenuItemAllergen key={allergen}>{allergen}</MenuItemAllergen>
-                ))}
-              </MenuItemTagsAllergens>
-            )}
-            {desc && <MenuItemDescription>{desc}</MenuItemDescription>}
-          </MenuItemContent>
-        </MenuItemContainer>
-      </MenuItemButton>
+      <MenuItemButton
+        onClick={view}
+        disabled={isSoldOut || displayOnly}
+        imageUrl={imageUrl}
+        imageOverlay={imageOverlay}
+        name={item.name}
+        desc={desc}
+        price={displayPrice}
+        cals={displayCals}
+        tags={tags}
+        allergens={allergens}
+      />
       {showButtons && (
         <MenuItemButtons hasBox={hasBox}>
           {clicked && (
@@ -414,7 +252,6 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
             <MenuItemButtonsAdd disabled={isIncomplete}>
               <ButtonStyled
                 onClick={isIncomplete ? () => setClicked(true) : add}
-                // disabled={isIncomplete}
                 size="small"
               >
                 Add To Order
