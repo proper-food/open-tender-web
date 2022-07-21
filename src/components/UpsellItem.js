@@ -33,7 +33,7 @@ const UpsellItemButtons = styled.div`
   }
 `
 
-const UpsellItem = ({ menuItem, addCallback }) => {
+const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
   const dispatch = useDispatch()
   const theme = useTheme()
   const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
@@ -60,6 +60,7 @@ const UpsellItem = ({ menuItem, addCallback }) => {
     allergens,
     groups,
   } = builtItem
+  const desc = showDesc ? description : null
   const displayImage = showImage ? imageUrl : null
   const sizeGroup = groups.find((i) => i.isSize)
   const defaultOption = !sizeGroup
@@ -108,7 +109,7 @@ const UpsellItem = ({ menuItem, addCallback }) => {
         imageUrl={displayImage}
         imageOverlay={null}
         name={name}
-        desc={description}
+        desc={desc}
         price={displayPrice}
         cals={displayCals}
         tags={displayTags}

@@ -27,6 +27,7 @@ import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
+import { UpsellItems } from '..'
 
 const SidebarView = styled.aside`
   position: fixed;
@@ -81,13 +82,6 @@ const SidebarHeaderTitle = styled(Headline)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
 `
 
-const SidebarCart = styled.div`
-  width: 100%;
-  flex-grow: 1;
-  overflow-y: scroll;
-  padding: 0rem 2rem 1rem;
-`
-
 const SidebarFooter = styled.div`
   flex-shrink: 0;
   width: 100%;
@@ -117,6 +111,32 @@ const SidebarBack = styled.div`
 const SidebarCheckout = styled.div`
   width: 50%;
   padding: 0 2rem 0 0.5rem;
+`
+
+const SidebarCart = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 0 0 1rem;
+`
+
+const SidebarCartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+`
+
+const SidebarCartItems = styled.div`
+  flex-grow: 1;
+  padding: 0 2rem;
+`
+
+const SidebarUpsell = styled.div`
+  flex-grow: 0;
+  width: 100%;
 `
 
 const Sidebar = React.forwardRef((props, ref) => {
@@ -226,7 +246,14 @@ const Sidebar = React.forwardRef((props, ref) => {
           )}
         </SidebarHeader>
         <SidebarCart>
-          <Cart />
+          <SidebarCartContainer>
+            <SidebarCartItems>
+              <Cart />
+            </SidebarCartItems>
+            <SidebarUpsell>
+              <UpsellItems />
+            </SidebarUpsell>
+          </SidebarCartContainer>
         </SidebarCart>
         <SidebarFooter>
           <SidebarButtons>

@@ -99,6 +99,7 @@ import SkipLink from './SkipLink'
 import Slider from './Slider'
 import Tag from './Tag'
 import UpsellItem from './UpsellItem'
+import UpsellItems from './UpsellItems'
 import VerifyAccount from './VerifyAccount'
 import Welcome from './Welcome'
 
@@ -208,6 +209,7 @@ export {
   Slider,
   Tag,
   UpsellItem,
+  UpsellItems,
   VerifyAccount,
   Welcome,
 }
