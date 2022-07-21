@@ -114,9 +114,9 @@ const MenuItemSelections = styled.p`
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
-  button {
-    color: ${(props) => props.theme.colors.alert};
-  }
+  // button {
+  //   color: ${(props) => props.theme.colors.alert};
+  // }
 
   &.isCustomize {
     margin: 0.5rem 0 0;
@@ -138,6 +138,10 @@ const MenuItemSelectionsOptions = styled(Body)`
   }
 `
 
+const MenuItemSelectionsIncomplete = styled.span`
+  color: ${(props) => props.theme.colors.error};
+`
+
 const MenuItemHeader = ({
   builtItem,
   displaySettings,
@@ -155,6 +159,7 @@ const MenuItemHeader = ({
   const {
     name,
     description,
+    quantity,
     price,
     totalPrice,
     cals,
@@ -180,7 +185,13 @@ const MenuItemHeader = ({
   const displayPrice = formatDollars(currentPrice)
   const displayCals = showCals ? (totalPrice ? totalCals : cals) : null
   const displayImageUrl = showImage && imageUrl ? imageUrl : null
+  const missingSize = sizeGroup
+    ? !sizeGroup.options.find((i) => i.quantity >= 1)
+    : false
   const hasCustomize = groups.filter((g) => !g.isSize).length > 0
+  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
+  const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
+  const requiresCustomization = isIncomplete && !missingSize
   const nonSizeGroups = groups.filter((i) => !i.isSize)
   const currentOptions = getItemOptions({ groups: nonSizeGroups })
   const currentSelections = currentOptions
@@ -246,6 +257,10 @@ const MenuItemHeader = ({
               <span>{currentSelections}</span>
             ) : isCustomize ? (
               <span>please make your selections below</span>
+            ) : requiresCustomization ? (
+              <MenuItemSelectionsIncomplete>
+                requires customization
+              </MenuItemSelectionsIncomplete>
             ) : (
               <span>nothing selected</span>
             )}{' '}

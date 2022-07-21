@@ -108,7 +108,7 @@ const RequestedAtDateTime = ({
     valid_times,
     group_ordering,
   } = revenueCenter
-  const { prep_time, lead_time } = group_ordering
+  const { prep_time = 0, lead_time = 0 } = group_ordering || {}
   const leadTime = isGroupOrder ? prep_time + lead_time : 0
   const orderTypeName = orderType === 'CATERING' ? 'Catering ' : ''
   const serviceTypeName = serviceTypeNamesMap[serviceType]

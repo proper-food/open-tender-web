@@ -68,6 +68,7 @@ const MenuItemFooter = ({
   const hasCustomize = groups.filter((g) => !g.isSize).length > 0
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
+  const requiresCustomization = isIncomplete && !missingSize
 
   const onRefChange = useCallback(
     (node) => {
@@ -122,7 +123,7 @@ const MenuItemFooter = ({
               <ButtonStyled
                 onClick={() => setIsCustomize(true)}
                 size="big"
-                color="secondary"
+                color={requiresCustomization ? 'primary' : 'secondary'}
               >
                 Customize
               </ButtonStyled>
