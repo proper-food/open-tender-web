@@ -84,9 +84,8 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
     ? defaultOption.price
     : price
   const displayPrice = formatDollars(currentPrice)
-  const displayCals = showCals
-    ? formatQuantity(totalPrice ? totalCals : cals)
-    : null
+  const itemCals = totalPrice ? totalCals : cals
+  const displayCals = showCals && itemCals ? formatQuantity(itemCals) : null
   const displayTags = showTags ? tags : []
   const displayAllergens = showAllergens ? allergens : []
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0

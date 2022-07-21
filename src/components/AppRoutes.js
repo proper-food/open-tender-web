@@ -54,6 +54,7 @@ import {
   Rewards,
   SignUp,
   Thanx,
+  Upsell,
   Vendor,
   VerifyAccount,
 } from './pages'
@@ -96,6 +97,7 @@ const AppRoutes = () => {
         <Route path="item/:itemSlug" element={<MenuItem />} />
       </Route>
       <Route path="join/:token" element={<GroupOrderGuest />} />
+      <Route path="add-ons" element={<Upsell />} />
       <Route path="review" element={<GroupOrderReview />} />
       <Route path="checkout">
         <Route index element={<Checkout />} />

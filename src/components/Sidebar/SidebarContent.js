@@ -163,6 +163,7 @@ const Sidebar = React.forwardRef((props, ref) => {
   const showReview = cartGuest || (isMenu && isCartOwner)
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
+  const hasUpsell = true
 
   const back = () => {
     dispatch(toggleSidebar())
@@ -177,7 +178,7 @@ const Sidebar = React.forwardRef((props, ref) => {
   const checkout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
-      navigate(auth ? '/checkout' : '/checkout/guest')
+      navigate(hasUpsell ? '/add-ons' : auth ? '/checkout' : '/checkout/guest')
     }
   }
 
