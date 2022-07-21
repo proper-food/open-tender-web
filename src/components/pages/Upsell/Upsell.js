@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -108,12 +108,16 @@ const Upsell = () => {
     (id) => !cartIds.includes(id) && !soldOut.includes(id)
   )
   const upsellItems = filtered.map((id) => itemLookup[id])
+  const hasItems = upsellItems.length > 0
+  const path = auth ? '/checkout' : '/checkout/guest'
 
-  const checkout = () => {
-    navigate(auth ? '/checkout' : '/checkout/guest')
-  }
+  const checkout = () => navigate(path)
 
-  if (!upsellItems.length) return null
+  useEffect(() => {
+    if (!hasItems) navigate(path)
+  }, [hasItems, path, navigate])
+
+  if (!hasItems) return null
 
   return (
     <>
