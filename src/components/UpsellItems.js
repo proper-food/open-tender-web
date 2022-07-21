@@ -31,7 +31,7 @@ const UpsellItemsItem = styled.div`
   padding: 1.5rem 0;
   margin-right: 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 20rem;
+    flex: 0 0 22rem;
     margin-right: 2rem;
   }
 

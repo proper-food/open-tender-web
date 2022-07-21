@@ -27,9 +27,21 @@ const UpsellItemButtons = styled.div`
   button {
     display: block;
   }
+`
 
-  button + button {
-    margin-left: 0.5rem;
+const UpsellItemSizes = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: -0.25rem -0.5rem;
+
+  button {
+    margin: 0.25rem 0.5rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 `
 
@@ -121,15 +133,17 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
             Add To Order
           </ButtonStyled>
         ) : (
-          sizeGroup.options.map((option) => (
-            <ButtonStyled
-              key={option.id}
-              onClick={() => addSize(option.id)}
-              size="small"
-            >
-              {option.name}
-            </ButtonStyled>
-          ))
+          <UpsellItemSizes>
+            {sizeGroup.options.map((option) => (
+              <ButtonStyled
+                key={option.id}
+                onClick={() => addSize(option.id)}
+                size="small"
+              >
+                {option.name}
+              </ButtonStyled>
+            ))}
+          </UpsellItemSizes>
         )}
       </UpsellItemButtons>
     </UpsellItemView>
