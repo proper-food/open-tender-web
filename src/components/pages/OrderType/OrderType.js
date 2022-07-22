@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Helmet from 'react-helmet'
-
+import {
+  fetchAnnouncementPage,
+  selectAnnouncementsPage,
+} from '@open-tender/redux'
 import {
   selectContent,
   closeModal,
@@ -21,10 +24,13 @@ import {
 } from '../..'
 import OrderTypes from './OrderTypes'
 import HeaderGuest from '../../HeaderGuest'
+import { useTheme } from '@emotion/react'
 
 const OrderTypeView = styled('div')`
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: ${(props) => props.theme.layout.padding} 0;
+  margin: ${(props) =>
+      props.showGuest ? props.theme.layout.padding : props.theme.layout.margin}
+    0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: ${(props) => props.theme.layout.marginMobile} 0;
@@ -41,12 +47,14 @@ const OrderTypeContent = styled('div')`
 const OrderType = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const theme = useTheme()
   const { title: siteTitle } = useSelector(selectBrand)
   const cateringOnly = useSelector(selectCateringOnly)
   const { orderType, guest } = useSelector(selectContent)
   const { showGuest } = guest || {}
   const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
+  const announcements = useSelector(selectAnnouncementsPage('GUEST'))
 
   useEffect(() => {
     dispatch(closeModal())
@@ -56,20 +64,28 @@ const OrderType = () => {
     if (cateringOnly) navigate('/catering-address')
   }, [cateringOnly, navigate])
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('GUEST'))
+  }, [dispatch])
+
   return (
     <>
       <Helmet>
         <title>Order Type | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={background} />
+      <Background
+        imageUrl={background}
+        announcements={announcements}
+        style={showGuest ? null : { top: theme.layout.navHeight }}
+      />
       <Content maxWidth="76.8rem">
         {showGuest ? (
           <Header maxWidth="76.8rem" left={<Back />} right={<NavMenu />} />
         ) : (
-          <HeaderGuest />
+          <HeaderGuest maxWidth="100%" />
         )}
         <Main>
-          <OrderTypeView>
+          <OrderTypeView showGuest={showGuest}>
             <PageTitle
               title={title}
               subtitle={subtitle}
