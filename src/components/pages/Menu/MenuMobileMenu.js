@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Box, Preface } from '@open-tender/components'
+import { Preface } from '@open-tender/components'
 import { useSelector } from 'react-redux'
 import { selectAutoSelect, selectGroupOrder } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
@@ -41,10 +41,10 @@ const MenuMobileMenuOverlay = styled.div`
   background-color: ${(props) => props.theme.overlay.dark};
 `
 
-const MenuMobileMenuContainer = styled(Box)`
+const MenuMobileMenuContainer = styled.div`
   width: 100%;
   max-width: 48rem;
-  padding: ${(props) => props.theme.layout.paddingMobile};
+  // padding: ${(props) => props.theme.layout.paddingMobile};
   margin: 0 auto;
 `
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Body, ButtonStyled, Heading } from '@open-tender/components'
+import { ButtonStyled, Heading } from '@open-tender/components'
 
 const ButtonLargeContent = styled.span`
   width: 100%;
@@ -14,6 +14,7 @@ const ButtonLargeContent = styled.span`
 `
 
 const ButtonLargeContentPrimary = styled(Heading)`
+  padding: 0 1.5rem 0 0;
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.primary.color};
 
@@ -25,7 +26,9 @@ const ButtonLargeContentPrimary = styled(Heading)`
   }
 `
 
-const ButtonLargeContentSecondary = styled(Body)`
+const ButtonLargeContentSecondary = styled(Heading)`
+  padding: 0 1.5rem 0 0;
+  font-weight: normal;
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.theme.buttons.colors.secondary.color};
 

@@ -21,14 +21,14 @@ import { toggleSidebar, selectSidebar } from '../../../slices'
 import { Loading } from '../..'
 import { Star } from '../../icons'
 
-const CheckoutCartView = styled('div')`
+const CheckoutCartView = styled.div`
   padding: 0 0 ${(props) => props.theme.layout.navHeight};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
   }
 `
 
-const CheckoutCartHeader = styled('div')`
+const CheckoutCartHeader = styled.div`
   height: ${(props) => props.theme.layout.navHeight};
   display: flex;
   justify-content: center;
@@ -49,7 +49,7 @@ const CheckoutCartHeader = styled('div')`
   }
 `
 
-const CheckoutCartEdit = styled('div')`
+const CheckoutCartEdit = styled.div`
   width: 100%;
   padding: ${(props) => props.theme.layout.padding} 0;
   display: flex;
@@ -68,6 +68,7 @@ const CheckoutCartEdit = styled('div')`
 
   button {
     display: block;
+    text-decoration: none;
     font-size: ${(props) => props.theme.fonts.sizes.small};
     color: ${(props) => props.theme.links.dark.color};
     padding: 0 0 0.2rem;

@@ -25,7 +25,7 @@ const GuestButtonsView = styled.div`
   }
 
   button {
-    width: 25rem;
+    min-width: 25rem;
     max-width: calc(50% - 1rem);
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;

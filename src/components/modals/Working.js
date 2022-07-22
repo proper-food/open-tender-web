@@ -1,8 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import BarLoader from 'react-spinners/BarLoader'
 import styled from '@emotion/styled'
 import { Text } from '@open-tender/components'
+import { Loading } from '..'
 
 const defaultText = 'Please sit tight. This may take a second.'
 
@@ -42,7 +42,7 @@ const Working = ({ text = defaultText }) => {
           </Text>
         </div>
         <div>
-          <BarLoader size={100} loading={true} />
+          <Loading />
         </div>
       </WorkingView>
     </WorkingModalView>

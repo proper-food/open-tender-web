@@ -16,16 +16,7 @@ const RevenueCenterView = styled(Box)`
   overflow: hidden;
   width: 100%;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    ${(props) =>
-      !props.isMenu
-        ? `
-    padding: 0;
-    border-radius: 0;
-    border: 0;
-    margin: 0;
-    background-color: transparent;
-    box-shadow: none;`
-        : `padding: 1.5rem;`}
+    ${(props) => (props.hasBox ? 'padding: 1.5rem' : '')};
   }
 `
 
@@ -64,11 +55,6 @@ const RevenueCenterHeader = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 0rem -0.1rem;
-    // height: 2rem;
-    // align-items: flex-start;
-  }
 
   & > * {
     display: block;
@@ -196,7 +182,12 @@ const RevenueCenter = ({
       : null
 
   return (
-    <RevenueCenterView style={style} isMenu={isMenu} isActive={isActive}>
+    <RevenueCenterView
+      style={style}
+      hasBox={hasBox}
+      isMenu={isMenu}
+      isActive={isActive}
+    >
       {showImage && !isMobileOnly && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}

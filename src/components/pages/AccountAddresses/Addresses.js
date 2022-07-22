@@ -57,7 +57,7 @@ const Addresses = ({ addresses, isLoading }) => {
                     {preface.join(' | ')}
                   </Preface>
                 )}
-                <OrderAddress address={address}>
+                <OrderAddress address={address} isCard={true}>
                   <p>
                     <ButtonLink
                       onClick={() => handleEdit(address)}
