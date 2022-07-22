@@ -244,7 +244,9 @@ const Reward = ({ item }) => {
         </RewardTag>
         <RewardImage style={bgStyle} />
         <RewardContent>
-          <RewardTitle as="p">{reward.title}</RewardTitle>
+          <RewardTitle as="p" className="title">
+            {reward.title}
+          </RewardTitle>
           {reward.short_description && (
             <RewardDescription as="p">
               {reward.short_description}

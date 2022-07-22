@@ -58,7 +58,7 @@ const CreditCards = ({ creditCards, isLoading, showDefault = true }) => {
                   Primary
                 </Preface>
               )}
-              <p>
+              <p className="title">
                 {creditCard.card_type_name} ending in {creditCard.last4}
                 {creditCard.is_default && (
                   <span style={{ paddingLeft: '0.5rem' }}>

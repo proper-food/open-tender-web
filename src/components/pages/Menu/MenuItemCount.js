@@ -31,6 +31,7 @@ const MenuItemCount = styled.div`
     font-family: ${(props) => props.theme.counts.alerts.family};
     font-weight: ${(props) => props.theme.counts.alerts.weight};
     font-size: ${(props) => props.theme.counts.alerts.fontSize};
+    color: ${(props) => props.theme.counts.alerts.color} !important;
     -webkit-font-smoothing: ${(props) =>
       props.theme.counts.alerts.fontSmoothing};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

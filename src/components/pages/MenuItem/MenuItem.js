@@ -82,9 +82,10 @@ const MenuItem = () => {
   const item = useSelector(selectCurrentItem)
   const upsells = useSelector(selectContentSection('upsells')) || {}
   const cartIds = useSelector(selectCartIds)
+  const upsellItems = item ? item.upsell_items || item.upsellItems : null
   const upsellItemIds =
-    item && upsells?.item?.show
-      ? item.upsell_items.filter(
+    upsellItems && upsells?.item?.show
+      ? upsellItems.filter(
           (id) => !cartIds.includes(id) && !soldOut.includes(id)
         )
       : []

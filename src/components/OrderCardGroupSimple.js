@@ -101,7 +101,7 @@ const OrderCardGroupSimple = ({ order }) => {
       <OrderCardGroupSimpleView>
         {/* <OrderCardGroupSimpleImage style={bgStyle} /> */}
         <OrderCardGroupSimpleContent>
-          <OrderCardGroupSimpleTitle as="p">
+          <OrderCardGroupSimpleTitle as="p" className="title">
             {orderTypeName} from {name}
           </OrderCardGroupSimpleTitle>
           <OrderCardGroupSimpleDescription>

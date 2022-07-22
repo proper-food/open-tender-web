@@ -73,17 +73,12 @@ const RevenueCenterHeader = styled.div`
   & > * {
     display: block;
   }
+`
 
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.xBig};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.big};
-    }
-  }
-
-  p {
-    padding-top: 0.4rem;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+const RevenueCenterTitle = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 `
 
@@ -146,7 +141,7 @@ export const RevenueCenterChild = ({ revenueCenter, style }) => {
       <RevenueCenterContent>
         <div>
           <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
+            <RevenueCenterTitle>{revenueCenter.name}</RevenueCenterTitle>
           </RevenueCenterHeader>
           <RevenueCenterActions>
             {desc && (
@@ -213,7 +208,9 @@ const RevenueCenter = ({
           <RevenueCenterFlex>
             <RevenueCenterFlexContent>
               <RevenueCenterHeader>
-                <h2>{revenueCenter.name}</h2>
+                <RevenueCenterTitle as="p" className="title">
+                  {revenueCenter.name}
+                </RevenueCenterTitle>
                 {isActive && (
                   <RevenueCenterCheckmark>
                     <Checkmark />

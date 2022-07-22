@@ -79,7 +79,11 @@ const Card = ({ tag, preface, title, subtitle, content, footer, style }) => {
               <Preface>{preface}</Preface>
             </CardPreface>
           )}
-          {title && <CardTitle as="p">{title}</CardTitle>}
+          {title && (
+            <CardTitle as="p" className="title">
+              {title}
+            </CardTitle>
+          )}
           {subtitle && <CardSubtitle>{subtitle}</CardSubtitle>}
         </CardHeader>
         <CardContent>{content}</CardContent>

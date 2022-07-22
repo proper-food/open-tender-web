@@ -77,7 +77,7 @@ const UpsellItems = () => {
 
   const menuItems = cartIds.map((id) => itemLookup[id])
   const upsellItemIds = menuItems.reduce(
-    (arr, i) => [...arr, ...(i.upsell_items || [])],
+    (arr, i) => [...arr, ...(i?.upsell_items || i?.upsellItems || [])],
     []
   )
   const uniqueIds = [...new Set(upsellItemIds)]

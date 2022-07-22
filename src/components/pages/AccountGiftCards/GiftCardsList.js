@@ -60,7 +60,7 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
             icon={icon}
             content={
               <>
-                <p>{giftCard.card_number}</p>
+                <p className="title">{giftCard.card_number}</p>
                 <p>${giftCard.balance} remaining balance</p>
                 {giftCard.expiration && (
                   <p>

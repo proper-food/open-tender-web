@@ -34,7 +34,7 @@ const HouseAccountsList = ({ houseAccounts }) => {
             }
             content={
               <>
-                <p>{houseAccount.name}</p>
+                <p className="title">{houseAccount.name}</p>
                 <p>
                   {houseAccount.approved_contact
                     ? 'Your account has been specifically approved for this house account'

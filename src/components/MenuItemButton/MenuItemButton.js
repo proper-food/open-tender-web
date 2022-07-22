@@ -213,9 +213,7 @@ const MenuItemButton = ({
         )}
         <MenuItemContent hasBox={hasBox}>
           <MenuItemInfo>
-            <MenuItemName>
-              <Heading>{name}</Heading>
-            </MenuItemName>
+            <MenuItemName className="title">{name}</MenuItemName>
             {price ? (
               <MenuItemPriceCals>
                 {price ? <MenuItemPrice>{price}</MenuItemPrice> : null}

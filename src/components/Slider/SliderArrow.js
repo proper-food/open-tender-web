@@ -52,7 +52,7 @@ const SliderArrow = ({ direction, size, disabled, onClick }) => {
 SliderArrow.displayName = 'SliderArrow'
 SliderArrow.propTypes = {
   direction: propTypes.string,
-  size: propTypes.string,
+  size: propTypes.number,
   disabled: propTypes.bool,
   onClick: propTypes.func,
 }

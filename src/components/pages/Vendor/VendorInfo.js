@@ -74,7 +74,9 @@ export const VendorInfo = ({ vendor }) => {
 
   return (
     <VendorInfoView hasBox={hasBox}>
-      <VendorInfoHeader as="p">{name}</VendorInfoHeader>
+      <VendorInfoHeader as="p" className="title">
+        {name}
+      </VendorInfoHeader>
       {desc && <VendorInfoDesc as="p">{desc}</VendorInfoDesc>}
       {hoursDesc && (
         <VendorInfoHours>
