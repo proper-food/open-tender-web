@@ -4,6 +4,7 @@ import Account from './Account'
 import AccountAddresses from './AccountAddresses'
 import AccountAllergens from './AccountAllergens'
 import AccountCreditCards from './AccountCreditCards'
+import AccountDelete from './AccountDelete'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Category from './Category'
@@ -63,6 +64,7 @@ export {
   AccountAddresses,
   AccountAllergens,
   AccountCreditCards,
+  AccountDelete,
   AccountGiftCards,
   AccountSettings,
   Category,

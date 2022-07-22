@@ -8,6 +8,7 @@ import {
   Account,
   AccountAllergens,
   AccountCreditCards,
+  AccountDelete,
   AccountGiftCards,
   AccountSettings,
   Category,
@@ -124,6 +125,7 @@ const AppRoutes = () => {
         <Route path="house-accounts" element={<HouseAccounts />} />
         <Route path="profile" element={<Profile />} />
         <Route path="communications" element={<CommsPrefs />} />
+        <Route path="delete" element={<AccountDelete />} />
       </Route>
       <Route path="gift-cards" element={<GiftCards />} />
       <Route path="donations" element={<Donations />} />

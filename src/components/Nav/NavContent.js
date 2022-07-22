@@ -17,6 +17,7 @@ import {
   MapPin,
   PlusCircle,
   ShoppingBag,
+  Slash,
   Sliders,
   Tag,
   User,
@@ -260,12 +261,20 @@ const Nav = React.forwardRef((props, ref) => {
         </NavItems>
         <NavFooter>
           {auth ? (
-            <NavItem onClick={logout}>
-              <NavIcon>
-                <LogOut />
-              </NavIcon>
-              <NavTitle>Sign Out</NavTitle>
-            </NavItem>
+            <>
+              <NavItem onClick={logout}>
+                <NavIcon>
+                  <LogOut />
+                </NavIcon>
+                <NavTitle>Sign Out</NavTitle>
+              </NavItem>
+              <NavItem onClick={(evt) => closeGo(evt, '/account/delete')}>
+                <NavIcon>
+                  <Slash />
+                </NavIcon>
+                <NavTitle>Delete Account</NavTitle>
+              </NavItem>
+            </>
           ) : (
             <NavItem onClick={login}>
               <NavIcon>
