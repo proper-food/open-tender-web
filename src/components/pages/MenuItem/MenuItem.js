@@ -15,7 +15,7 @@ import {
   showNotification,
 } from '@open-tender/redux'
 import { useBuilder } from '@open-tender/components'
-import { selectMenuPath } from '../../../slices'
+import { selectContentSection, selectMenuPath } from '../../../slices'
 import { Star } from '../../icons'
 import {
   BackgroundImage,
@@ -80,12 +80,14 @@ const MenuItem = () => {
   const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
+  const upsells = useSelector(selectContentSection('upsells')) || {}
   const cartIds = useSelector(selectCartIds)
-  const upsellItemIds = item
-    ? item.upsell_items.filter(
-        (id) => !cartIds.includes(id) && !soldOut.includes(id)
-      )
-    : []
+  const upsellItemIds =
+    item && upsells?.item?.show
+      ? item.upsell_items.filter(
+          (id) => !cartIds.includes(id) && !soldOut.includes(id)
+        )
+      : []
   const hasUpsell = upsellItemIds.length > 0
   const { cartId } = useSelector(selectGroupOrder)
   const { orderType } = useSelector(selectOrder)

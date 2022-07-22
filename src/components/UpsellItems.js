@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectCartIds, selectMenu } from '@open-tender/redux'
 import { makeMenuItemLookup } from '@open-tender/js'
-import { Heading } from '@open-tender/components'
+import { Body, Heading } from '@open-tender/components'
+import { selectContentSection } from '../slices'
 import UpsellItem from './UpsellItem'
 
 const UpsellItemsView = styled.div`
@@ -12,6 +13,24 @@ const UpsellItemsView = styled.div`
 
 const UpsellItemsHeader = styled.div`
   margin: 0 2rem 0.5rem;
+`
+
+const UpsellItemsTitle = styled(Heading)`
+  display: block;
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
+`
+
+const UpsellItemsSubtitle = styled(Body)`
+  display: block;
+  margin: 0.75rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 `
 
 const UpsellItemsItems = styled.div`
@@ -51,6 +70,11 @@ const UpsellItems = () => {
   const cartIds = useSelector(selectCartIds)
   const { categories, soldOut } = useSelector(selectMenu)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
+  const upsells = useSelector(selectContentSection('upsells')) || {}
+  const { show, title, subtitle } = upsells?.cart || {}
+
+  if (!show) return null
+
   const menuItems = cartIds.map((id) => itemLookup[id])
   const upsellItemIds = menuItems.reduce(
     (arr, i) => [...arr, ...(i.upsell_items || [])],
@@ -67,7 +91,8 @@ const UpsellItems = () => {
   return (
     <UpsellItemsView>
       <UpsellItemsHeader>
-        <Heading size="big">You may also like...</Heading>
+        <UpsellItemsTitle>{title}</UpsellItemsTitle>
+        {subtitle && <UpsellItemsSubtitle>{subtitle}</UpsellItemsSubtitle>}
       </UpsellItemsHeader>
       <UpsellItemsItems className="centered">
         {upsellItems.map((item) => (

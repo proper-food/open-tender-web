@@ -9,10 +9,22 @@ import {
   selectMenuSlug,
 } from '@open-tender/redux'
 import { makeMenuItemLookup } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Heading } from '@open-tender/components'
-import { selectBrand } from '../../../slices'
-import { Back, NavMenu } from '../../buttons'
-import { Container, Content, Header, Main, UpsellItem } from '../..'
+import {
+  Body,
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+} from '@open-tender/components'
+import { selectBrand, selectContentSection } from '../../../slices'
+import { Back } from '../../buttons'
+import {
+  Container,
+  Content,
+  Header,
+  Main,
+  SeeMoreLink,
+  UpsellItem,
+} from '../..'
 import { useNavigate } from 'react-router-dom'
 
 const UpsellView = styled.div`
@@ -35,10 +47,14 @@ const UpsellHeader = styled.div`
 `
 
 const UpsellTitle = styled(Heading)`
+  display: block;
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
+`
+
+const UpsellSubtitle = styled(Body)`
+  display: block;
+  margin: 0.75rem 0 0;
+  // font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
 const UpsellItems = styled.div`
@@ -98,6 +114,8 @@ const Upsell = () => {
   const cartIds = useSelector(selectCartIds)
   const { categories, soldOut } = useSelector(selectMenu)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
+  const upsells = useSelector(selectContentSection('upsells')) || {}
+  const { show, title, subtitle, decline, proceed } = upsells?.checkout || {}
   const menuItems = cartIds.map((id) => itemLookup[id])
   const upsellItemIds = menuItems.reduce(
     (arr, i) => [...arr, ...(i.upsell_items || [])],
@@ -110,14 +128,15 @@ const Upsell = () => {
   const upsellItems = filtered.map((id) => itemLookup[id])
   const hasItems = upsellItems.length > 0
   const path = auth ? '/checkout' : '/checkout/guest'
+  const skip = !show || !hasItems
 
   const checkout = () => navigate(path)
 
   useEffect(() => {
-    if (!hasItems) navigate(path)
-  }, [hasItems, path, navigate])
+    if (skip) navigate(path)
+  }, [skip, path, navigate])
 
-  if (!hasItems) return null
+  if (skip) return null
 
   return (
     <>
@@ -125,12 +144,16 @@ const Upsell = () => {
         <title>Add-ons | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header left={<Back path={menuSlug} />} right={<NavMenu />} />
+        <Header
+          left={<Back path={menuSlug} />}
+          right={<SeeMoreLink to={path} text="Skip" />}
+        />
         <Main>
           <UpsellView>
             <Container>
               <UpsellHeader>
-                <UpsellTitle>You may also like...</UpsellTitle>
+                <UpsellTitle>{title}</UpsellTitle>
+                {subtitle && <UpsellSubtitle>{subtitle}</UpsellSubtitle>}
               </UpsellHeader>
               <UpsellItems className="centered">
                 {upsellItems.map((item) => (
@@ -145,13 +168,9 @@ const Upsell = () => {
               </UpsellItems>
               <UpsellFooter>
                 {itemAdded ? (
-                  <ButtonStyled onClick={checkout}>
-                    All Done, Proceed To Checkout
-                  </ButtonStyled>
+                  <ButtonStyled onClick={checkout}>{proceed}</ButtonStyled>
                 ) : (
-                  <ButtonLink onClick={checkout}>
-                    No, thanks. Procced to checkout.
-                  </ButtonLink>
+                  <ButtonLink onClick={checkout}>{decline}</ButtonLink>
                 )}
               </UpsellFooter>
             </Container>

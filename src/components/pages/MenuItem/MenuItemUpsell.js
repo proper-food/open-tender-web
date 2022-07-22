@@ -1,15 +1,16 @@
 import { useContext, useMemo } from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import styled from '@emotion/styled'
 import { setCurrentItem } from '@open-tender/redux'
 import { makeMenuItemLookup } from '@open-tender/js'
-import { ButtonLink, Heading } from '@open-tender/components'
+import { Body, ButtonLink, Heading } from '@open-tender/components'
 import { UpsellItem } from '../..'
 import { MenuContext } from '../Menu/Menu'
 import MenuItemUpsellOverlay from './MenuItemUpsellOverlay'
 import { isBrowser } from 'react-device-detect'
+import { selectContentSection } from '../../../slices'
 
 const MenuItemUpsellView = styled.div`
   position: fixed;
@@ -29,7 +30,6 @@ const MenuItemUpsellHeader = styled.div`
   padding: 0 ${(props) => props.theme.layout.padding};
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // text-align: left;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -42,12 +42,19 @@ const MenuItemUpsellTitle = styled(Heading)`
   }
 `
 
-const MenuItemUpsellSubtitle = styled.div`
+const MenuItemUpsellSubtitle = styled(Body)`
+  margin: 1rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
+const MenuItemUpsellDecline = styled.div`
   margin: 1.5rem 0 0;
   text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 1rem 0 0;
-    // text-align: left;
     font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
@@ -98,6 +105,8 @@ const MenuItemUpsellItem = styled.div`
 const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
   const dispatch = useDispatch()
   const { categories } = useContext(MenuContext)
+  const upsells = useSelector(selectContentSection('upsells'))
+  const { show, title, subtitle, decline } = upsells?.item || {}
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
   const menuItems = upsellItemIds.map((id) => itemLookup[id])
 
@@ -105,6 +114,8 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
     setShowUpsell(false)
     setTimeout(() => dispatch(setCurrentItem(null)), 200)
   }
+
+  if (!show) return null
 
   return (
     <>
@@ -114,10 +125,15 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
           <CSSTransition key="upsell" classNames="tray" timeout={250}>
             <MenuItemUpsellView>
               <MenuItemUpsellHeader>
-                <MenuItemUpsellTitle>May we suggest...</MenuItemUpsellTitle>
-                <MenuItemUpsellSubtitle>
-                  <ButtonLink onClick={backToMenu}>No, thanks</ButtonLink>
-                </MenuItemUpsellSubtitle>
+                <MenuItemUpsellTitle as="div">{title}</MenuItemUpsellTitle>
+                {subtitle && (
+                  <MenuItemUpsellSubtitle as="div">
+                    {subtitle}
+                  </MenuItemUpsellSubtitle>
+                )}
+                <MenuItemUpsellDecline>
+                  <ButtonLink onClick={backToMenu}>{decline}</ButtonLink>
+                </MenuItemUpsellDecline>
               </MenuItemUpsellHeader>
               <MenuItemUpsellContainer>
                 <MenuItemUpsellItems className="centered">
