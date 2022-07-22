@@ -95,23 +95,11 @@ const MenuItemUpsellItem = styled.div`
   }
 `
 
-// const makeUpsellItems = (menuItems) => {
-//   const orderItems = menuItems.map((i) => makeOrderItem(i))
-//   const upsellItems = orderItems.reduce((arr, i) => {
-//     const groupsBelowMin = i.groups.filter((g) => g.quantity < g.min)
-//     const nonSizeGroups = groupsBelowMin.filter((g) => !g.isSize)
-//     if (nonSizeGroups.length) return arr
-//     return [...arr, i]
-//   }, [])
-//   return upsellItems
-// }
-
 const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
   const dispatch = useDispatch()
   const { categories } = useContext(MenuContext)
   const itemLookup = useMemo(() => makeMenuItemLookup(categories), [categories])
   const menuItems = upsellItemIds.map((id) => itemLookup[id])
-  // const upsellItems = makeUpsellItems(menuItems)
 
   const backToMenu = () => {
     setShowUpsell(false)
