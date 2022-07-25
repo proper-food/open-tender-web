@@ -59,15 +59,14 @@ const RewardTitle = styled(Heading)`
   }
 `
 
-const RewardDescription = styled(Body)`
-  display: none;
-  margin: 0.8rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
+// const RewardDescription = styled(Body)`
+//   margin: 0.8rem 0 0;
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     margin: 0.5rem 0 0;
+//     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+//   }
+// `
 
 const RewardNote = styled(Body)`
   display: flex;
@@ -247,11 +246,11 @@ const Reward = ({ item }) => {
           <RewardTitle as="p" className="title">
             {reward.title}
           </RewardTitle>
-          {reward.short_description && (
+          {/* {reward.short_description && (
             <RewardDescription as="p">
               {reward.short_description}
             </RewardDescription>
-          )}
+          )} */}
           <RewardNote as="div">
             {reward.limitations}
             {expiration}

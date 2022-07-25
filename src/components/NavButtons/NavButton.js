@@ -2,6 +2,8 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Body, Heading } from '@open-tender/components'
 import { ArrowRight } from '../icons'
+import { useTheme } from '@emotion/react'
+import { isMobile } from 'react-device-detect'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -66,7 +68,6 @@ const NavButtonIcon = styled('span')`
 
 const NavButtonText = styled.span`
   flex-grow: 1;
-  line-height: ${(props) => props.theme.fonts.body.lineHeight};
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -139,6 +140,10 @@ const NavButtonArrow = styled('span')`
 `
 
 const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
+  const theme = useTheme()
+  const { showSubtitle, showSubtitleMobile } = theme.buttons.sizes.large
+  const show = isMobile ? showSubtitleMobile : showSubtitle
+
   const onUp = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
@@ -150,7 +155,9 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
       <NavButtonIcon>{icon}</NavButtonIcon>
       <NavButtonText>
         <NavButtonTitle>{title}</NavButtonTitle>
-        {subtitle && <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>}
+        {subtitle && show ? (
+          <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>
+        ) : null}
       </NavButtonText>
       <NavButtonArrow>
         <ArrowRight strokeWidth={2} />

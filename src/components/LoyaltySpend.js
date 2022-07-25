@@ -16,7 +16,7 @@ const LoyaltySpend = ({
 }) => {
   return (
     <LoyaltySpendView>
-      <LoyaltyHeader title={title} />
+      <LoyaltyHeader title={title} subtitle={subtitle} />
       <LoyaltyStatus
         count={formatDollars(credit, '', 0)}
         name="Available Credit"

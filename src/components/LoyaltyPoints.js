@@ -9,7 +9,9 @@ import {
   SeeMoreLink,
 } from '.'
 
-const LoyaltyPointsView = styled.div``
+const LoyaltyPointsView = styled.div`
+  label: LoyaltyPointsView;
+`
 
 const LoyaltyPoints = ({
   title,

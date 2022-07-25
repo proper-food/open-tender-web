@@ -64,7 +64,7 @@ const RevenueCenterHeader = styled.div`
 const RevenueCenterTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 `
 
@@ -97,6 +97,8 @@ const RevenueCenterImageMobile = styled(BgImage)`
 `
 
 const RevenueCenterActions = styled.div`
+  label: RevenueCenterActions;
+
   a,
   button {
     display: block;

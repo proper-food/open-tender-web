@@ -17,7 +17,7 @@ const PageTitleView = styled.div`
 const PageTitleTitle = styled(Headline)`
   margin: 0 0 0 -0.2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
   }
 `
 

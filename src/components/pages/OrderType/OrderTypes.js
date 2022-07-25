@@ -40,16 +40,6 @@ const OrderTypesView = styled.div`
 
 `
 
-// const OrderTypesButtons = styled.div`
-//   margin: 0 auto;
-
-//   button {
-//     display: block;
-//     width: 100%;
-//     margin: 0 0 1rem;
-//   }
-// `
-
 const OrderTypes = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -163,18 +153,6 @@ const OrderTypes = () => {
       {hasOrderTypes ? (
         <OrderTypesView showDesc={showDesc} isMobile={isMobile}>
           <NavButtons buttons={buttons} />
-          {/* <OrderTypesButtons>
-            {buttons.map((button, index) => (
-              <ButtonLarge
-                key={button.title}
-                text={button.title}
-                onClick={button.onClick}
-                color="secondary"
-              >
-                {button.icon}
-              </ButtonLarge>
-            ))}
-          </OrderTypesButtons> */}
           <OrderTypeLinks
             orderLinks={orderLinks}
             contentTypes={contentTypes}

@@ -265,9 +265,7 @@ const MenuTop = () => {
                 section={section}
                 menuSection={menuSection}
                 onClick={() => dispatch(setMenuSection(section))}
-              >
-                <MenuTopTitle>Recents</MenuTopTitle>
-              </MenuTopButton>
+              />
             ))}
             {isBrowser && (
               <MenuTopButton
