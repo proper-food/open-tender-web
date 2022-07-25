@@ -31,6 +31,7 @@ import {
   selectIsGroupOrder,
 } from '../../../slices'
 import { Container, Loading, PageContent, RevenueCenter } from '../..'
+import { useTheme } from '@emotion/react'
 
 const RevenueCentersSelectView = styled('div')`
   position: relative;
@@ -109,9 +110,12 @@ const RevenueCentersSelectList = styled('ul')`
   & > li {
     margin: ${(props) => props.theme.layout.padding} 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding: 0 0 2.5rem;
-      border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
-      margin: 0 0 2rem;
+      padding: 0 0
+        ${(props) => (props.hasBox ? '0' : props.theme.layout.paddingMobile)};
+      border-bottom: ${(props) =>
+          props.hasBox ? '0' : props.theme.border.width}
+        solid ${(props) => props.theme.border.color};
+      margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
     }
 
     &:last-of-type {
@@ -128,6 +132,8 @@ const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [showMap, setShowMap] = useState(false)
+  const theme = useTheme()
+  const hasBox = theme.cards.default.bgColor !== 'transparent'
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
@@ -241,7 +247,7 @@ const RevenueCentersSelect = () => {
               )}
             </RevenueCentersSelectTitle>
             {showRevenueCenters ? (
-              <RevenueCentersSelectList>
+              <RevenueCentersSelectList hasBox={hasBox}>
                 {displayedRevenueCenters.map((revenueCenter) => (
                   <li
                     id={revenueCenter.slug}
