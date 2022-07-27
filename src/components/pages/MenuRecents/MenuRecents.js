@@ -66,7 +66,7 @@ const MenuRecents = () => {
   return (
     <>
       <Helmet>
-        <title>Favorites | {siteTitle}</title>
+        <title>Recents | {siteTitle}</title>
       </Helmet>
       <Content scrollTop={false}>
         <MenuHeader backPath={menuSlug} />
