@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { formatDollars } from '@open-tender/js'
+import { calcNutrition, formatDollars } from '@open-tender/js'
 import {
   Body,
   ButtonStyled,
@@ -289,12 +289,21 @@ const MenuItemAccordion = ({
     notes: showNotes,
   } = displaySettings
   const [open, setOpen] = useState(null)
-  const { groups, ingredients, nutritionalInfo, madeFor, notes } = builtItem
+  const { groups, ingredients, totalCals, madeFor, notes } = builtItem
   const hasMadeFor = showMadeFor && !cartId ? true : false
   const hasNotes = showNotes ? true : false
   const hasInstructions = hasMadeFor || hasNotes
-  const hasCals = showCals && builtItem.cals
+  const hasCals = showCals && totalCals
+  const nutritionalInfo = hasCals ? calcNutrition(builtItem) : null
   const hasIngredients = ingredients && ingredients.length > 0
+  const specialInstructionTitle =
+    hasMadeFor && hasNotes
+      ? 'Name / Special Instructions'
+      : hasMadeFor
+      ? 'Name'
+      : hasNotes
+      ? 'Special Instructions'
+      : ''
   const sizeGroup = groups.find((i) => i.isSize)
   const selectedSize = sizeGroup
     ? sizeGroup.options.find((i) => i.quantity >= 1)
@@ -369,7 +378,7 @@ const MenuItemAccordion = ({
               setOpen={setOpen}
             >
               <MenuItemAccordionLabel>
-                <span>Name / Special Instructions</span>
+                <span>{specialInstructionTitle}</span>
                 {madeFor || notes ? (
                   <MenuItemAccordionLabelCheckmark>
                     <Checkmark />
