@@ -45,39 +45,6 @@ const MenuItemQuantityInput = styled(Heading)`
   padding: 0;
   border: 0;
   text-align: center;
-  // font-size: ${(props) => props.theme.fonts.sizes.small};
-
-  // display: inline-block;
-  // width: 2.4rem;
-  // height: 2.4rem;
-  // border-radius: 1.2rem;
-  // padding: 0;
-  // line-height: 1;
-  // text-align: center;
-  // color: ${(props) => props.theme.buttons.colors.primary.color};
-  // background-color: ${(props) => props.theme.buttons.colors.primary.bgColor};
-  // border-color: ${(props) => props.theme.buttons.colors.primary.borderColor};
-  // padding-top: ${(props) => props.theme.counts.quantity.paddingTop};
-  // padding-bottom: ${(props) => props.theme.counts.quantity.paddingBottom};
-  // font-family: ${(props) => props.theme.counts.quantity.family};
-  // font-weight: ${(props) => props.theme.counts.quantity.weight};
-  // font-size: ${(props) => props.theme.counts.quantity.fontSize};
-  // -webkit-font-smoothing: ${(props) =>
-    props.theme.counts.quantity.fontSmoothing};
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   font-size: ${(props) => props.theme.counts.quantity.fontSizeMobile};
-  // }
-
-  // &:active,
-  // &:focus,
-  // &:disabled,
-  // &:read-only {
-  //   color: ${(props) => props.theme.buttons.colors.primary.color};
-  //   background-color: ${(props) =>
-    props.theme.buttons.colors.primary.bgColor};
-  //   border-color: ${(props) =>
-    props.theme.buttons.colors.primary.borderColor};
-  // }
 `
 
 const MenuItemQuantityIncrement = styled.button`

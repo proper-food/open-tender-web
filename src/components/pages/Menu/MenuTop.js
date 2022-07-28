@@ -243,7 +243,7 @@ const MenuTop = () => {
     setHasTop(hasItems)
   }, [hasItems, setHasTop])
 
-  if (!isLoading && !hasItems) return null
+  if (!isLoading && !hasItems && !isScrollable) return null
 
   return showLoading ? (
     <MenuTopView>
