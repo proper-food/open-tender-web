@@ -55,7 +55,7 @@ const AccountAddresses = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading text="Retrieving your order navigate..." />
+                  <Loading text="Retrieving your addresses..." />
                 ) : (
                   <p>
                     Looks like you haven't added any addresses yet. Please place

@@ -79,7 +79,7 @@ const Orders = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading text="Retrieving your order navigate..." />
+                  <Loading text="Retrieving your order history. Please sit tight." />
                 ) : (
                   <p>Looks like you don't have any orders yet.</p>
                 )}

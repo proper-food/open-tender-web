@@ -85,7 +85,7 @@ const AccountAllergens = () => {
                   </FormWrapper>
                 </AllergenFormView>
               ) : isLoading ? (
-                <Loading text="Retrieving your order navigate..." />
+                <Loading text="Retrieving your dietary preferences..." />
               ) : (
                 <p>Allergens aren't currently listed on our menu.</p>
               )}
