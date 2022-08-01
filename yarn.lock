@@ -1606,13 +1606,13 @@
     "@googlemaps/js-api-loader" "^1.14.3"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/js@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.1.5.tgz#a9ce6fc4ff934aa7b99763cd631eb1927fe5f22c"
-  integrity sha512-AbY+qs+i1CCIRbhyCwX/jLQFYbBv8WedKI38hnpR/JqQCOh+ZYBXzQsnPZPJkUAaOD2RQ1G6oGRSvQ4S+a2nEw==
+"@open-tender/js@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.2.0.tgz#490b5b04e469ce84c0e12961f712a2a9f540b290"
+  integrity sha512-0JE0V1/b/dOhbRYhaY7VV3/tqfayOBr/eFWJI/06Ptx6cpHHCL2XSCj4A4S+u59aOLGx6XZ4Gq/tAiDxf0I43w==
   dependencies:
-    date-fns "^2.28.0"
-    date-fns-tz "^1.3.4"
+    date-fns "^2.29.1"
+    date-fns-tz "^1.3.6"
 
 "@open-tender/redux@^3.0.10":
   version "3.0.10"
@@ -3568,15 +3568,15 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns-tz@^1.3.4:
+date-fns-tz@^1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.3.6.tgz#4195a58a2f86eda55ea69fb477f3ed8a6e2188ac"
   integrity sha512-C8q7mErvG4INw1ZwAFmPlGjEo5Sv4udjKVbTc03zpP9cu6cp5AemFzKhz0V68LGcWEtX5mJudzzg3G04emIxLA==
 
-date-fns@^2.28.0:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
-  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
+date-fns@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.1.tgz#9667c2615525e552b5135a3116b95b1961456e60"
+  integrity sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==
 
 debug@2.6.9, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
