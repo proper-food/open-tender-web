@@ -77,7 +77,7 @@ const LoyaltyThresholds = ({ name, thresholds }) => {
       </LoyaltyThresholdsHeader>
       {thresholds.map((i) => {
         return (
-          <LoyaltyThreshold>
+          <LoyaltyThreshold key={i.points}>
             <LoyaltyThresholdPoints>
               <LoyaltyThresholdPointsText>
                 {i.points}
