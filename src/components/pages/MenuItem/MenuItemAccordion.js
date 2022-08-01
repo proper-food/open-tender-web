@@ -400,6 +400,21 @@ const MenuItemAccordion = ({
             </MenuItemAccordionSection>
           </>
         )}
+        {!!hasIngredients && (
+          <>
+            <MenuItemAccordionRowButton
+              name="INGREDIENTS"
+              open={open}
+              setOpen={setOpen}
+            >
+              <MenuItemAccordionLabel>Ingredients</MenuItemAccordionLabel>
+              <MenuItemAccordionToggle isOpen={open === 'INGREDIENTS'} />
+            </MenuItemAccordionRowButton>
+            <MenuItemAccordionSection isOpen={open === 'INGREDIENTS'}>
+              <MenuItemIngredients ingredients={ingredients} />
+            </MenuItemAccordionSection>
+          </>
+        )}
         {!!hasCals && (
           <>
             <MenuItemAccordionRowButton
@@ -414,21 +429,6 @@ const MenuItemAccordion = ({
             </MenuItemAccordionRowButton>
             <MenuItemAccordionSection isOpen={open === 'INFO'}>
               <MenuItemNutrition nutritionalInfo={nutritionalInfo} />
-            </MenuItemAccordionSection>
-          </>
-        )}
-        {!!hasIngredients && (
-          <>
-            <MenuItemAccordionRowButton
-              name="INGREDIENTS"
-              open={open}
-              setOpen={setOpen}
-            >
-              <MenuItemAccordionLabel>Ingredients</MenuItemAccordionLabel>
-              <MenuItemAccordionToggle isOpen={open === 'INGREDIENTS'} />
-            </MenuItemAccordionRowButton>
-            <MenuItemAccordionSection isOpen={open === 'INGREDIENTS'}>
-              <MenuItemIngredients ingredients={ingredients} />
             </MenuItemAccordionSection>
           </>
         )}

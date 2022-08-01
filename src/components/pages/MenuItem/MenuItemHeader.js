@@ -107,36 +107,39 @@ const MenuItemDesc = styled(Body)`
 `
 
 const MenuItemSelections = styled.p`
-  margin: 1.5rem 0 0;
+  margin: 2rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1rem 0 0;
+    margin: 1.5rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
-
-  // button {
-  //   color: ${(props) => props.theme.colors.alert};
-  // }
 
   &.isCustomize {
-    margin: 0.5rem 0 0;
+    margin: 1rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0.5rem 0 0;
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
+`
+
+const MenuItemSelectionsEdit = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0.5rem;
+  // background-color: palegreen;
 `
 
 const MenuItemSelectionsTitle = styled(Heading)`
-  // color: ${(props) => props.theme.colors.alert};
-
-  // .isCustomize & {
-  //   color: ${(props) => props.theme.colors.primary};
-  // }
-`
-
-const MenuItemSelectionsOptions = styled(Body)`
-  & > span {
-    padding: 0 0.5rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.main};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
+
+const MenuItemSelectionsOptions = styled(Body)``
 
 const MenuItemSelectionsIncomplete = styled.span`
   color: ${(props) => props.theme.colors.error};
@@ -244,14 +247,23 @@ const MenuItemHeader = ({
                 : null}
             </MenuItemTagsAllergens>
           )}
-          {description && <MenuItemDesc as="p">{description}</MenuItemDesc>}
+          {description && !currentSelections ? (
+            <MenuItemDesc as="p">{description}</MenuItemDesc>
+          ) : null}
         </>
       )}
       {hasCustomize && (
         <MenuItemSelections className={klass}>
-          <MenuItemSelectionsTitle>
-            Current Selections:{' '}
-          </MenuItemSelectionsTitle>
+          {!isCustomize && (
+            <MenuItemSelectionsEdit>
+              <MenuItemSelectionsTitle>
+                Current Selections:{' '}
+              </MenuItemSelectionsTitle>
+              <ButtonLink onClick={() => setIsCustomize(true)}>
+                {currentSelections ? 'edit selections' : 'customize item'}
+              </ButtonLink>
+            </MenuItemSelectionsEdit>
+          )}
           <MenuItemSelectionsOptions>
             {currentSelections ? (
               <span>{currentSelections}</span>
@@ -263,13 +275,6 @@ const MenuItemHeader = ({
               </MenuItemSelectionsIncomplete>
             ) : (
               <span>nothing selected</span>
-            )}{' '}
-            {!isCustomize && (
-              <ButtonLink onClick={() => setIsCustomize(true)}>
-                {currentSelections
-                  ? 'edit your selections'
-                  : 'make your selections'}
-              </ButtonLink>
             )}
           </MenuItemSelectionsOptions>
         </MenuItemSelections>
