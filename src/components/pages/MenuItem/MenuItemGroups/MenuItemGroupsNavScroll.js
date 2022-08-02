@@ -134,7 +134,7 @@ const MenuItemGroupsNavScroll = ({ items }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (elements.length) {
-        setActive(getActiveElement(elements, navOffset + 5))
+        setActive(getActiveElement(elements, navOffset + 10))
       }
     }
     window.addEventListener('scroll', handleScroll)

@@ -111,20 +111,25 @@ const MenuItemButtonsAdd = styled.div`
     props.disabled
       ? `
     button, button:active, button:hover {
-    opacity: 0.5;
+    opacity: 1;
     color: ${props.theme.colors.primary};
     background-color: ${props.theme.bgColors.tertiary};
     border-color: ${props.theme.bgColors.tertiary};
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.05);
   }`
       : ''}
 `
 
 const MenuItemButtonsCustomize = styled.div`
+  ${(props) =>
+    !props.customizeIsPrimary
+      ? `
   button {
     border: 0;
     padding-left: 0;
     padding-right: 0;
-  }
+  }`
+      : ''}
 `
 
 const MenuItem = ({ item, displayOnly = false, addCallback }) => {
@@ -184,6 +189,7 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const showButtons = !!(!displayOnly && showQuickAdd)
+  const customizeIsPrimary = isIncomplete && !isSoldOut
 
   const view = () => {
     if (!isSoldOut) {
@@ -257,12 +263,12 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
                 Add To Order
               </ButtonStyled>
             </MenuItemButtonsAdd>
-            <MenuItemButtonsCustomize>
+            <MenuItemButtonsCustomize customizeIsPrimary={customizeIsPrimary}>
               <ButtonStyled
                 onClick={view}
                 disabled={isSoldOut}
                 size="small"
-                color="secondary"
+                color={customizeIsPrimary ? 'primary' : 'secondary'}
               >
                 {sizeOnly ? 'Choose Size' : 'Customize'}
               </ButtonStyled>

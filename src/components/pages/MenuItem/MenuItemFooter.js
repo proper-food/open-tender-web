@@ -1,7 +1,10 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Body, ButtonStyled } from '@open-tender/components'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { selectDisplaySettings } from '../../../slices'
+import { useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 
 const MenuItemFooterView = styled.div`
   position: fixed;
@@ -39,6 +42,7 @@ const MenuItemFooterButton = styled.div`
       color: ${(props) => props.theme.colors.primary};
       background-color: ${(props) => props.theme.bgColors.tertiary};
       border-color: ${(props) => props.theme.bgColors.tertiary};
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.05);
     }
   }
 `
@@ -60,6 +64,12 @@ const MenuItemFooter = ({
   setIsCustomize,
   setFooterHeight,
 }) => {
+  const [init, setInit] = useState(true)
+  const { skipToCustomize, skipToCustomizeMobile } = useSelector(
+    selectDisplaySettings
+  )
+  const skip = isMobile ? skipToCustomizeMobile : skipToCustomize
+  console.log(skipToCustomize, skipToCustomizeMobile, skip)
   const { groups, quantity, totalPrice } = builtItem
   const sizeGroup = groups.find((g) => g.isSize)
   const missingSize = sizeGroup
@@ -69,6 +79,13 @@ const MenuItemFooter = ({
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
   const requiresCustomization = isIncomplete && !missingSize
+
+  useEffect(() => {
+    if (requiresCustomization && init) {
+      setInit(false)
+      if (skip) setIsCustomize(true)
+    }
+  }, [requiresCustomization, init, skip, setIsCustomize])
 
   const onRefChange = useCallback(
     (node) => {
