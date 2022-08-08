@@ -112,10 +112,14 @@ const CheckoutDetails = ({ hasAddress }) => {
   useEffect(() => {
     if (!isEmpty(formDetails)) {
       let updated = {}
-      if (!formDetails.notes && notes) {
+      if (!formDetails.notes && formDetails.notes !== '' && notes) {
         updated = { ...updated, notes }
       }
-      if (!formDetails.person_count && person_count) {
+      if (
+        !formDetails.person_count &&
+        formDetails.person_count !== null &&
+        person_count
+      ) {
         updated = { ...updated, person_count: person_count.toString() }
       }
       if (!formDetails.tax_exempt_id && tax_exempt_id) {

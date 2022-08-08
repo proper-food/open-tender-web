@@ -69,7 +69,6 @@ const MenuItemFooter = ({
     selectDisplaySettings
   )
   const skip = isMobile ? skipToCustomizeMobile : skipToCustomize
-  console.log(skipToCustomize, skipToCustomizeMobile, skip)
   const { groups, quantity, totalPrice } = builtItem
   const sizeGroup = groups.find((g) => g.isSize)
   const missingSize = sizeGroup
