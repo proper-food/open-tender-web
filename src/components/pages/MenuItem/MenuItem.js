@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   addItemToCart,
@@ -16,6 +17,7 @@ import {
 } from '@open-tender/redux'
 import { useBuilder } from '@open-tender/components'
 import { selectContentSection, selectMenuPath } from '../../../slices'
+import { Back, NavMenu } from '../../buttons'
 import { Star } from '../../icons'
 import {
   BackgroundImage,
@@ -26,13 +28,10 @@ import {
 } from '../..'
 import { MenuHeader } from '../Menu'
 import { MenuContext } from '../Menu/Menu'
-
 import MenuItemHeader from './MenuItemHeader'
 import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
-import { isMobile } from 'react-device-detect'
-import { Back, NavMenu } from '../../buttons'
 import MenuItemUpsell from './MenuItemUpsell'
 
 const MenuItemView = styled.div`

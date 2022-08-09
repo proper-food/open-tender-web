@@ -10,30 +10,30 @@ const MenuItemPriceCalsView = styled.span`
 
 const MenuItemPrice = styled(Heading)`
   line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
+  font-size: ${(props) => props.theme.fonts.sizes[props.size]};
 `
 
 const MenuItemCals = styled(Body)`
   line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
+  font-size: ${(props) => props.theme.fonts.sizes[props.size]};
 
   span {
     padding: 0 0.4rem;
   }
 `
 
-const MenuItemPriceCals = ({ price, cals, children, style }) => {
+const MenuItemPriceCals = ({
+  price,
+  cals,
+  size = 'small',
+  children,
+  style,
+}) => {
   return (
     <MenuItemPriceCalsView style={style}>
-      {price ? <MenuItemPrice>{price}</MenuItemPrice> : null}
+      {price ? <MenuItemPrice size={size}>{price}</MenuItemPrice> : null}
       {cals ? (
-        <MenuItemCals>
+        <MenuItemCals size={size}>
           {price ? <span>&mdash;</span> : null}
           {cals} Cal
         </MenuItemCals>

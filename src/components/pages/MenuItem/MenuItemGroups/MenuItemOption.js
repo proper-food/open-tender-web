@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { CartItem } from '@open-tender/components'
+import { CartItem } from '../../..'
 import MenuItemCheckbox from './MenuItemCheckbox'
 import MenuItemOptionQuantity from './MenuItemOptionQuantity'
 
@@ -10,7 +10,6 @@ const MenuItemOption = ({
   increment,
   decrement,
   allergens,
-  iconMap,
   displaySettings,
 }) => {
   const isCheckbox = group.options.filter((i) => i.max !== 1).length === 0
@@ -46,7 +45,6 @@ const MenuItemOption = ({
           decrement={decrement}
           incrementDisabled={incrementDisabled}
           decrementDisabled={decrementDisabled}
-          iconMap={iconMap}
         />
       )}
     </CartItem>

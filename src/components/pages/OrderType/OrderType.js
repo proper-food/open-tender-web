@@ -54,7 +54,7 @@ const OrderType = () => {
   const { showGuest } = guest || {}
   const { background, title, subtitle, content } = orderType
   const hasContent = !!(content && content.length)
-  const announcements = useSelector(selectAnnouncementsPage('GUEST'))
+  const announcements = useSelector(selectAnnouncementsPage('ORDER_TYPE'))
 
   useEffect(() => {
     dispatch(closeModal())
@@ -65,7 +65,7 @@ const OrderType = () => {
   }, [cateringOnly, navigate])
 
   useEffect(() => {
-    dispatch(fetchAnnouncementPage('GUEST'))
+    dispatch(fetchAnnouncementPage('ORDER_TYPE'))
   }, [dispatch])
 
   return (

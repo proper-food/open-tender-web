@@ -10,8 +10,8 @@ import {
   Points,
   Preface,
 } from '@open-tender/components'
+import { MenuItemPriceCals } from '../..'
 import MenuItemImage from './MenuItemImage'
-import MenuItemPriceCals from './MenuItemPriceCals'
 
 const MenuItemHeaderView = styled.div`
   transition: ${(props) => props.theme.links.transition};

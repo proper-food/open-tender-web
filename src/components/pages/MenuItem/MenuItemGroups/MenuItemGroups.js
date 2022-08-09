@@ -1,16 +1,11 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
-import { Minus, Plus } from '../../../icons'
 import MenuItemGroupHeader from './MenuItemGroupHeader'
 import MenuItemRadioGroup from './MenuItemRadioGroup'
 import MenuItemOption from './MenuItemOption'
 import MenuItemGroupsNav from './MenuItemGroupsNav'
-
-const quantityIconMap = {
-  plus: <Plus strokeWidth={2} />,
-  minus: <Minus strokeWidth={2} />,
-}
+import ItemOption from './ItemOption'
 
 const MenuItemGroupsView = styled.div`
   padding-top: ${(props) => props.theme.layout.navHeight};
@@ -61,7 +56,7 @@ const MenuItemGroups = ({
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
             <MenuItemGroupHeader group={group} />
             <MenuItemOptions>
-              {group.min === 1 && group.max === 1 ? (
+              {/* {group.min === 1 && group.max === 1 ? (
                 <MenuItemRadioGroup
                   group={group}
                   handler={toggleOption}
@@ -79,11 +74,21 @@ const MenuItemGroups = ({
                     increment={() => incrementOption(group.id, option.id)}
                     decrement={() => decrementOption(group.id, option.id)}
                     allergens={allergenAlerts}
-                    iconMap={quantityIconMap}
                     displaySettings={displaySettings}
                   />
                 ))
-              )}
+              )} */}
+              {group.options.map((option) => (
+                <ItemOption
+                  key={`${group.id}-${option.id}`}
+                  group={group}
+                  option={option}
+                  toggleOption={toggleOption}
+                  incrementOption={incrementOption}
+                  decrementOption={decrementOption}
+                  setOptionQuantity={setOptionQuantity}
+                />
+              ))}
             </MenuItemOptions>
           </MenuItemGroup>
         ))}

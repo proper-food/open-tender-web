@@ -9,6 +9,8 @@ import ButtonLarge from './ButtonLarge'
 import ButtonText from './ButtonText'
 import Card from './Card'
 import CartButton from './CartButton'
+import CartItem from './CartItem'
+import Collapsible from './Collapsible'
 import Content from './Content'
 import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
@@ -48,6 +50,10 @@ import LoyaltyThresholds from './LoyaltyThresholds'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
 import MenuItemButton from './MenuItemButton'
+import MenuItemIngredients from './MenuItemIngredients'
+import MenuItemNutrition from './MenuItemNutrition'
+import MenuItemPriceCals from './MenuItemPriceCals'
+import MenuItemTagsAllergens from './MenuItemTagsAllergens'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
@@ -85,6 +91,7 @@ import ProgressCircle from './ProgressCircle'
 import ProgressPoints from './ProgressPoints'
 import ProgressSpend from './ProgressSpend'
 import QRCode from './QRCode'
+import Quantity from './Quantity'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Reward from './Reward'
 import Rewards from './Rewards'
@@ -115,7 +122,9 @@ export {
   ButtonText,
   Card,
   CartButton,
+  CartItem,
   CommunicationPrefs,
+  Collapsible,
   Container,
   ContainerSite,
   Content,
@@ -154,6 +163,10 @@ export {
   Main,
   MapsAutocomplete,
   MenuItemButton,
+  MenuItemIngredients,
+  MenuItemNutrition,
+  MenuItemPriceCals,
+  MenuItemTagsAllergens,
   Modal,
   ModalClose,
   ModalContent,
@@ -194,6 +207,7 @@ export {
   ProgressPoints,
   ProgressSpend,
   QRCode,
+  Quantity,
   RevenueCenter,
   RevenueCenterChild,
   Reward,

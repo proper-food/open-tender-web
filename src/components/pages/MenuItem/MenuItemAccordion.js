@@ -11,10 +11,12 @@ import {
   Input,
 } from '@open-tender/components'
 import { ChevronDown, ChevronUp } from '../../icons'
+import {
+  MenuItemIngredients,
+  MenuItemNutrition,
+  MenuItemPriceCals,
+} from '../..'
 import MenuItemQuantity from './MenuItemQuantity'
-import MenuItemNutrition from './MenuItemNutrition'
-import MenuItemIngredients from './MenuItemIngredients'
-import MenuItemPriceCals from './MenuItemPriceCals'
 
 const MenuItemAccordionView = styled.div`
   padding: ${(props) => props.theme.layout.padding};
