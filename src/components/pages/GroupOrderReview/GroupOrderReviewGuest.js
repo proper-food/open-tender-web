@@ -10,15 +10,13 @@ import {
   resetOrder,
   selectMenuSlug,
 } from '@open-tender/redux'
-import { Message, CartItem, ButtonStyled } from '@open-tender/components'
-
-import { selectConfig, selectDisplaySettings } from '../../../slices'
+import { ButtonStyled, CartSummaryItem, Message } from '@open-tender/components'
+import { selectConfig } from '../../../slices'
 import {
   Content,
   Header,
   Loading,
   Main,
-  OrderQuantity,
   PageTitle,
   PageContainer,
   PageContent,
@@ -44,7 +42,6 @@ const GroupOrderReviewGuest = () => {
   const { groupOrders: config } = useSelector(selectConfig)
   const menuSlug = useSelector(selectMenuSlug)
   const { cart } = useSelector(selectOrder)
-  const displaySettings = useSelector(selectDisplaySettings)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     loading,
@@ -113,20 +110,17 @@ const GroupOrderReviewGuest = () => {
                 </PageContent>
                 {cart.length > 0 && (
                   <GroupOrderCartView>
-                    <GroupOrderCartTitle as="p">
+                    <GroupOrderCartTitle
+                      as="p"
+                      style={{ marginBottom: '2rem' }}
+                    >
                       Items submitted to {firstName}'s group order
                     </GroupOrderCartTitle>
                     <ul>
                       {cart.map((item, index) => {
                         return (
                           <li key={`${item.id}-${index}`}>
-                            <CartItem
-                              item={item}
-                              showModifiers={true}
-                              displaySettings={displaySettings}
-                            >
-                              <OrderQuantity item={item} show={false} />
-                            </CartItem>
+                            <CartSummaryItem item={item} />
                           </li>
                         )
                       })}

@@ -2,26 +2,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
   setCurrentItem,
-  incrementItemInCart,
-  decrementItemInCart,
   selectCart,
   removeItemFromCart,
   selectMenuSlug,
 } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { CartItem, BuilderQuantity } from '@open-tender/components'
 import {
   openModal,
   selectDisplaySettings,
   toggleSidebar,
   toggleSidebarModal,
 } from '../slices'
-import { Minus, Plus } from './icons'
-
-const cartIconMap = {
-  plus: <Plus strokeWidth={2} />,
-  minus: <Minus strokeWidth={2} />,
-}
+import CartItem from './CartItem'
 
 const Cart = () => {
   const dispatch = useDispatch()
@@ -30,7 +22,6 @@ const Cart = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const displaySettings = useSelector(selectDisplaySettings)
   const { builderType } = displaySettings
-  const cartDisplaySettings = { ...displaySettings, modifierImage: true }
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
@@ -54,21 +45,9 @@ const Cart = () => {
           <CartItem
             key={`${item.id}-${index}`}
             item={item}
-            showModifiers={true}
             editItem={() => editItem(item)}
             removeItem={() => removeItem(item)}
-            displaySettings={cartDisplaySettings}
-          >
-            <BuilderQuantity
-              item={item}
-              adjust={null}
-              increment={() => dispatch(incrementItemInCart(item))}
-              decrement={() => dispatch(decrementItemInCart(item))}
-              incrementDisabled={item.quantity === item.max}
-              decrementDisabled={false}
-              iconMap={cartIconMap}
-            />
-          </CartItem>
+          />
         )
       })
     : null

@@ -63,7 +63,7 @@ const MenuItemInfo = styled.div`
 const MenuItemNameContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   // background-color: palegreen;
 `
 
@@ -234,14 +234,14 @@ const MenuItemHeader = ({
           <MenuItemName as="p" className={klass}>
             {name}
           </MenuItemName>
-          {auth && (
+          {auth && !isCustomize ? (
             <MenuItemFavorite
               size={isMobile ? 16 : 24}
               favoriteId={favoriteId}
               builtItem={builtItem}
               disabled={isIncomplete}
             />
-          )}
+          ) : null}
         </MenuItemNameContainer>
         <MenuItemPriceCals
           price={displayPrice}

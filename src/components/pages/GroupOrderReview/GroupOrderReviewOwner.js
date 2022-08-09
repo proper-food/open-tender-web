@@ -18,18 +18,15 @@ import {
 } from '@open-tender/redux'
 import { rehydrateCart, isEmpty, combineCarts } from '@open-tender/js'
 import {
-  CartItem,
+  CartSummaryItem,
   ButtonLink,
   ButtonStyled,
   Heading,
 } from '@open-tender/components'
 import styled from '@emotion/styled'
-
-import { selectDisplaySettings } from '../../../slices'
 import {
   Content,
   Main,
-  OrderQuantity,
   PageTitle,
   PageContent,
   PageContainer,
@@ -46,7 +43,13 @@ import {
 } from './GroupOrderReview'
 import { MenuHeader } from '../Menu'
 
-const GuestList = styled.div`
+const GroupOrderReviewOwnerGuestName = styled(Heading)`
+  display: block;
+  margin: 0 0 2rem;
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+`
+
+const GroupOrderReviewOwnerGuestList = styled.div`
   ul {
     margin: 1em 0 0;
   }
@@ -76,7 +79,6 @@ const GroupOrderReviewOwner = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const { entities: menuItems } = useSelector(selectMenuItems)
-  const displaySettings = useSelector(selectDisplaySettings)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     cartId,
@@ -90,6 +92,7 @@ const GroupOrderReviewOwner = () => {
     serviceType,
   } = groupOrder
   const prevGroupCart = usePrevious(groupCart)
+  console.log(guestCartLookup)
 
   useEffect(() => {
     dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
@@ -211,13 +214,7 @@ const GroupOrderReviewOwner = () => {
                     {order.cart.map((item, index) => {
                       return (
                         <li key={`${item.id}-${index}`}>
-                          <CartItem
-                            item={item}
-                            showModifiers={true}
-                            displaySettings={displaySettings}
-                          >
-                            <OrderQuantity item={item} show={false} />
-                          </CartItem>
+                          <CartSummaryItem item={item} />
                         </li>
                       )
                     })}
@@ -255,20 +252,14 @@ const GroupOrderReviewOwner = () => {
                             key={guest.cart_guest_id}
                             style={{ margin: '1.5rem 0 0' }}
                           >
-                            <Heading as="p" size="big">
+                            <GroupOrderReviewOwnerGuestName as="p">
                               {guest.first_name} {guest.last_name}
-                            </Heading>
+                            </GroupOrderReviewOwnerGuestName>
                             <ul>
                               {guestItems.map((item, index) => {
                                 return (
                                   <li key={`${item.id}-${index}`}>
-                                    <CartItem
-                                      item={item}
-                                      showModifiers={true}
-                                      displaySettings={displaySettings}
-                                    >
-                                      <OrderQuantity item={item} show={false} />
-                                    </CartItem>
+                                    <CartSummaryItem item={item} />
                                   </li>
                                 )
                               })}
@@ -278,7 +269,7 @@ const GroupOrderReviewOwner = () => {
                       )
                     })
                   ) : (
-                    <GuestList>
+                    <GroupOrderReviewOwnerGuestList>
                       <ul>
                         {cartGuests.map((guest) => (
                           <li key={guest.cart_guest_id}>
@@ -288,7 +279,7 @@ const GroupOrderReviewOwner = () => {
                           </li>
                         ))}
                       </ul>
-                    </GuestList>
+                    </GroupOrderReviewOwnerGuestList>
                   )
                 ) : (
                   <p>Your guests haven't added any orders yet.</p>
