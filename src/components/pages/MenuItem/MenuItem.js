@@ -41,16 +41,6 @@ const MenuItemView = styled.div`
   justify-content: flex-end;
 `
 
-const MenuItemBuilderView = styled.div`
-  width: 64rem;
-  margin-bottom: ${(props) => props.footerHeight || '10rem'};
-  background-color: ${(props) => props.theme.bgColors.primary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    margin-bottom: ${(props) => props.footerHeight || '10rem'};
-  }
-`
-
 const MenuItemImage = styled.div`
   position: fixed;
   display: flex;
@@ -62,6 +52,16 @@ const MenuItemImage = styled.div`
   background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: none;
+  }
+`
+
+const MenuItemContent = styled.div`
+  width: 64rem;
+  margin-bottom: ${(props) => props.footerHeight || '10rem'};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    margin-bottom: ${(props) => props.footerHeight || '10rem'};
   }
 `
 
@@ -161,7 +161,7 @@ const MenuItem = () => {
             <MenuItemImage>
               <BackgroundImage imageUrl={builtItem.imageUrl} />
             </MenuItemImage>
-            <MenuItemBuilderView footerHeight={footerHeightRem}>
+            <MenuItemContent footerHeight={footerHeightRem}>
               <MenuItemHeader
                 builtItem={builtItem}
                 displaySettings={displaySettings}
@@ -200,7 +200,7 @@ const MenuItem = () => {
                 setIsCustomize={setIsCustomize}
                 setFooterHeight={setFooterHeight}
               />
-            </MenuItemBuilderView>
+            </MenuItemContent>
           </MenuItemView>
         </Main>
       </Content>
