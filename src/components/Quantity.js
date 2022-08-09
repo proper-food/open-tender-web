@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Minus, Plus } from './icons'
+import { Minus, Plus, X } from './icons'
 
 const QuantityView = styled.div`
   display: inline-flex;
@@ -30,14 +30,20 @@ const QuantityAdd = styled.button`
   width: 2.4rem;
   height: 2.4rem;
   padding: 0.4rem;
+  text-align: center;
+  font-weight: bold;
+  line-height: 0;
   border-radius: 1.2rem;
   border-width: 0.1rem;
   border-style: solid;
   border-color: ${(props) => props.theme.border.color};
-  text-align: center;
-  font-weight: bold;
-  line-height: 0;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.primary};
+`
+
+const QuantityRemove = styled(QuantityAdd)`
+  border-color: ${(props) => props.theme.colors.error};
+  color: ${(props) => props.theme.colors.error};
+  background-color: ${(props) => props.theme.bgColors.error};
 `
 
 const QuantityInput = styled.input`
@@ -71,11 +77,11 @@ const QuantityInput = styled.input`
   }
 `
 
-const QuantityIncrement = styled('button')`
+const QuantityIncrement = styled.button`
   width: 3.2rem;
   height: 3.2rem;
   padding: 0.8rem;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.primary};
 `
 
 const Quantity = ({
@@ -85,6 +91,7 @@ const Quantity = ({
   decrement,
   incrementDisabled,
   decrementDisabled,
+  isCheckbox = false,
   showAdd = true,
 }) => {
   const incrementRef = useRef(null)
@@ -124,6 +131,12 @@ const Quantity = ({
       >
         <Plus strokeWidth={2} />
       </QuantityAdd>
+    </QuantityView>
+  ) : isCheckbox ? (
+    <QuantityView>
+      <QuantityRemove onClick={decrement} disabled={decrementDisabled}>
+        <X strokeWidth={2} />
+      </QuantityRemove>
     </QuantityView>
   ) : (
     <QuantityView bgColor="secondary">

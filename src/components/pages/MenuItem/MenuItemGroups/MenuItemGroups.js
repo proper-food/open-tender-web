@@ -2,10 +2,8 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
 import MenuItemGroupHeader from './MenuItemGroupHeader'
-import MenuItemRadioGroup from './MenuItemRadioGroup'
-import MenuItemOption from './MenuItemOption'
 import MenuItemGroupsNav from './MenuItemGroupsNav'
-import ItemOption from './ItemOption'
+import MenuItemOption from './MenuItemOption'
 
 const MenuItemGroupsView = styled.div`
   padding-top: ${(props) => props.theme.layout.navHeight};
@@ -56,31 +54,10 @@ const MenuItemGroups = ({
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
             <MenuItemGroupHeader group={group} />
             <MenuItemOptions>
-              {/* {group.min === 1 && group.max === 1 ? (
-                <MenuItemRadioGroup
-                  group={group}
-                  handler={toggleOption}
-                  displaySettings={displaySettings}
-                />
-              ) : (
-                group.options.map((option) => (
-                  <MenuItemOption
-                    key={`${group.id}-${option.id}`}
-                    group={group}
-                    option={option}
-                    adjust={(quantity) =>
-                      setOptionQuantity(group.id, option.id, quantity)
-                    }
-                    increment={() => incrementOption(group.id, option.id)}
-                    decrement={() => decrementOption(group.id, option.id)}
-                    allergens={allergenAlerts}
-                    displaySettings={displaySettings}
-                  />
-                ))
-              )} */}
-              {group.options.map((option) => (
-                <ItemOption
+              {group.options.map((option, index) => (
+                <MenuItemOption
                   key={`${group.id}-${option.id}`}
+                  index={index}
                   group={group}
                   option={option}
                   toggleOption={toggleOption}

@@ -195,6 +195,7 @@ const MenuItem = () => {
               <MenuItemFooter
                 builtItem={builtItem}
                 addItem={addItem}
+                cancel={cancel}
                 isCustomize={isCustomize}
                 setIsCustomize={setIsCustomize}
                 setFooterHeight={setFooterHeight}

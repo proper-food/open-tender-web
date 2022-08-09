@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Body, ButtonStyled } from '@open-tender/components'
+import { Body, ButtonLink, ButtonStyled } from '@open-tender/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { selectDisplaySettings } from '../../../slices'
 import { useSelector } from 'react-redux'
@@ -60,6 +60,7 @@ const MenuItemFooterWarning = styled.div`
 const MenuItemFooter = ({
   builtItem,
   addItem,
+  cancel,
   isCustomize,
   setIsCustomize,
   setFooterHeight,
@@ -98,7 +99,7 @@ const MenuItemFooter = ({
 
   return (
     <MenuItemFooterView ref={onRefChange}>
-      {isIncomplete && (
+      {isIncomplete ? (
         <MenuItemFooterWarning>
           {isCustomize ? (
             <Body as="p">Certain groups are below the minimum.</Body>
@@ -109,6 +110,14 @@ const MenuItemFooter = ({
                 : 'Item requires customization. Tap the Customize button.'}
             </Body>
           )}
+        </MenuItemFooterWarning>
+      ) : (
+        <MenuItemFooterWarning>
+          <p>
+            <ButtonLink onClick={cancel}>
+              Cancel and head back to menu
+            </ButtonLink>
+          </p>
         </MenuItemFooterWarning>
       )}
       {isCustomize ? (
