@@ -28,6 +28,7 @@ Sentry.init({
     'Could not load "util".',
     "Either header 'client-id' or 'origin' is required",
     'Object Not Found Matching',
+    'Map: Expected mapDiv of type HTMLElement but was passed null.',
   ],
 })
 
