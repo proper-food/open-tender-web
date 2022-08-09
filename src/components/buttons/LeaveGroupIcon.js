@@ -12,7 +12,7 @@ const LeaveGroupIcon = ({ style, fill }) => {
 
   return (
     <Icon onClick={leave} style={style}>
-      <UserMinus size={24} fill={fill || 'none'} />
+      <UserMinus size={22} fill={fill || 'none'} />
     </Icon>
   )
 }

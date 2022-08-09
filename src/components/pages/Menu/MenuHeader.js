@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
@@ -121,12 +121,10 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
   const { allergens: displayAllergens } = useSelector(selectDisplaySettings)
   const order = useSelector(selectOrder)
   const { revenueCenter } = order
-  const showGroupOrdering = revenueCenter
-    ? !!revenueCenter.group_ordering
-    : false
+  const showGroupOrdering =
+    !isMobile && revenueCenter ? !!revenueCenter.group_ordering : false
   const { isCartOwner, cartGuest, cartId } = useSelector(selectGroupOrder)
-  const showAllergens =
-    displayAllergens && !(isMobile && showGroupOrdering) ? true : false
+  const showAllergens = displayAllergens && !isMobile ? true : false
   const allowLeave = cartGuest && backPath === '/locations'
 
   const leave = () => {
@@ -152,21 +150,16 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
         left={onClick ? <Back onClick={onClick} /> : <Back path={backPath} />}
         right={
           <>
-            {showAllergens && (
-              <Allergens style={isMobile ? { width: '3rem' } : null} />
-            )}
+            {showAllergens && <Allergens />}
             {showGroupOrdering ? (
               cartGuest ? (
-                <LeaveGroupIcon style={isMobile ? { width: '3rem' } : null} />
+                <LeaveGroupIcon />
               ) : (
-                <GroupOrderIcon
-                  style={isMobile ? { width: '3rem' } : null}
-                  fill={isCartOwner ? colors.alert : null}
-                />
+                <GroupOrderIcon fill={isCartOwner ? colors.alert : null} />
               )
             ) : null}
             <Cart />
-            {isBrowser && <NavMenu />}
+            <NavMenu />
           </>
         }
       />

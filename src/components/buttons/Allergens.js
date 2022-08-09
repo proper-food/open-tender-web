@@ -12,7 +12,7 @@ const Allergens = ({ style }) => {
       onClick={() => dispatch(openModal({ type: 'allergens' }))}
       style={style}
     >
-      <Sliders size={21} />
+      <Sliders size={19} />
     </Icon>
   )
 }

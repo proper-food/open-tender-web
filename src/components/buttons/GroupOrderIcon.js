@@ -15,7 +15,7 @@ const GroupOrder = ({ style, fill }) => {
 
   return (
     <Icon onClick={review} style={style}>
-      <UserPlus size={24} fill={fill || 'none'} />
+      <UserPlus size={22} fill={fill || 'none'} />
     </Icon>
   )
 }

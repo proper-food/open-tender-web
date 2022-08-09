@@ -8,7 +8,6 @@ const Icon = styled.button`
   align-items: center;
   width: 5rem;
   height: 5rem;
-  padding: ${(props) => ((50 - props.size) / 20).toFixed(2)}rem;
   margin: ${(props) => props.margin || '0'};
   transition: ${(props) => props.theme.links.transition};
   color: ${(props) => props.color || props.theme.buttons.colors.header.color};

@@ -1,7 +1,13 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import { formatDollars, getItemOptions } from '@open-tender/js'
+import { useSelector } from 'react-redux'
+import { selectCustomer, selectCustomerFavorites } from '@open-tender/redux'
+import {
+  formatDollars,
+  getItemOptions,
+  makeItemSignature,
+} from '@open-tender/js'
 import { ClipLoader } from 'react-spinners'
 import {
   Body,
@@ -10,8 +16,9 @@ import {
   Points,
   Preface,
 } from '@open-tender/components'
-import { MenuItemPriceCals } from '../..'
+import { MenuItemFavorite, MenuItemPriceCals } from '../..'
 import MenuItemImage from './MenuItemImage'
+import { isMobile } from 'react-device-detect'
 
 const MenuItemHeaderView = styled.div`
   transition: ${(props) => props.theme.links.transition};
@@ -51,6 +58,13 @@ const MenuItemInfo = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+`
+
+const MenuItemNameContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  // background-color: palegreen;
 `
 
 const MenuItemName = styled(Heading)`
@@ -153,6 +167,10 @@ const MenuItemHeader = ({
   setIsCustomize,
 }) => {
   const { bgColors } = useTheme()
+  const { auth } = useSelector(selectCustomer)
+  const { lookup } = useSelector(selectCustomerFavorites)
+  const signature = makeItemSignature(builtItem)
+  const favoriteId = lookup && signature ? lookup[signature] : null
   const {
     builderImages: showImage,
     calories: showCals,
@@ -212,9 +230,19 @@ const MenuItemHeader = ({
         </MenuItemImage>
       ) : null}
       <MenuItemInfo className={klass}>
-        <MenuItemName as="p" className={klass}>
-          {name}
-        </MenuItemName>
+        <MenuItemNameContainer>
+          <MenuItemName as="p" className={klass}>
+            {name}
+          </MenuItemName>
+          {auth && (
+            <MenuItemFavorite
+              size={isMobile ? 16 : 24}
+              favoriteId={favoriteId}
+              builtItem={builtItem}
+              disabled={isIncomplete}
+            />
+          )}
+        </MenuItemNameContainer>
         <MenuItemPriceCals
           price={displayPrice}
           cals={displayCals}

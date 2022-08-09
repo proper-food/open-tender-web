@@ -23,12 +23,12 @@ import {
 import MenuItemRadio from './MenuItemRadio'
 import { AlertCircle } from '../../../icons'
 
-const ItemOptionView = styled.div`
+const MenuItemOptionView = styled.div`
   width: 100%;
   // background-color: pink;
 `
 
-const ItemOptionContainer = styled.div`
+const MenuItemOptionContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -44,7 +44,7 @@ const ItemOptionContainer = styled.div`
   }
 `
 
-const ItemOptionImage = styled(BgImage)`
+const MenuItemOptionImage = styled(BgImage)`
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
@@ -59,42 +59,49 @@ const ItemOptionImage = styled(BgImage)`
   }
 `
 
-const ItemOptionText = styled.div`
+const MenuItemOptionText = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 0 ${(props) => props.showImage && props.theme.layout.paddingMobile} 0;
+  padding: 0
+    ${(props) => (props.showImage ? props.theme.layout.paddingMobile : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding-right: 0;
+  }
 `
 
-const ItemOptionName = styled(Heading)`
+const MenuItemOptionName = styled(Heading)`
   margin: 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const ItemOptionDescription = styled(Body)`
+const MenuItemOptionDescription = styled(Body)`
   margin: 5px 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const ItemOptionQuantity = styled.div`
+const MenuItemOptionQuantity = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
-  width: 92px;
+  min-width: 9.2rem;
   justify-content: center;
   text-align: center;
 `
 
-const ItemOptionSoldOut = styled(Body)`
+const MenuItemOptionSoldOut = styled(Body)`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   color: ${(props) => props.theme.colors.error};
 `
 
-const BuilderNutritionButtons = styled.div`
-  margin-top: 3px;
+const MenuItemOptionButtons = styled.div`
+  margin-top: 4px;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  }
 `
 
-const ItemOptionOverlay = styled.div`
+const MenuItemOptionOverlay = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -116,29 +123,29 @@ const ItemOptionOverlay = styled.div`
   }
 `
 
-const ItemOptionOverlayAlert = styled.div`
+const MenuItemOptionOverlayAlert = styled.div`
   width: 2.2rem;
   height: 2.2rem;
   color: ${(props) => props.theme.colors.light};
 `
 
-const ItemOptionSoldOutOverlay = () => (
-  <ItemOptionOverlay overlay="dark">
+const MenuItemOptionSoldOutOverlay = () => (
+  <MenuItemOptionOverlay overlay="dark">
     <div>
       <Preface>Sold Out</Preface>
     </div>
-  </ItemOptionOverlay>
+  </MenuItemOptionOverlay>
 )
 
-const ItemOptionAllergenOverlay = () => (
-  <ItemOptionOverlay overlay="alert">
-    <ItemOptionOverlayAlert>
+const MenuItemOptionAllergenOverlay = () => (
+  <MenuItemOptionOverlay overlay="alert">
+    <MenuItemOptionOverlayAlert>
       <AlertCircle />
-    </ItemOptionOverlayAlert>
-  </ItemOptionOverlay>
+    </MenuItemOptionOverlayAlert>
+  </MenuItemOptionOverlay>
 )
 
-const ItemOption = ({
+const MenuItemOption = ({
   index,
   group,
   option,
@@ -208,21 +215,21 @@ const ItemOption = ({
   }
 
   return (
-    <ItemOptionView>
-      <ItemOptionContainer isFirst={isFirst}>
+    <MenuItemOptionView>
+      <MenuItemOptionContainer isFirst={isFirst}>
         {showImage && (
-          <ItemOptionImage style={bgStyle}>
+          <MenuItemOptionImage style={bgStyle}>
             {isSoldOut ? (
-              <ItemOptionSoldOutOverlay />
+              <MenuItemOptionSoldOutOverlay />
             ) : allergenAlert ? (
-              <ItemOptionAllergenOverlay />
+              <MenuItemOptionAllergenOverlay />
             ) : null}
-          </ItemOptionImage>
+          </MenuItemOptionImage>
         )}
-        <ItemOptionText showImage={showImage}>
-          <ItemOptionName>{name}</ItemOptionName>
+        <MenuItemOptionText showImage={showImage}>
+          <MenuItemOptionName>{name}</MenuItemOptionName>
           {showDescription && description ? (
-            <ItemOptionDescription>{description}</ItemOptionDescription>
+            <MenuItemOptionDescription>{description}</MenuItemOptionDescription>
           ) : null}
           <MenuItemPriceCals
             price={price}
@@ -236,7 +243,7 @@ const ItemOption = ({
             style={{ marginTop: '0.5rem' }}
           />
           {hasCals || hasIngredients ? (
-            <BuilderNutritionButtons>
+            <MenuItemOptionButtons>
               {hasCals ? (
                 <ButtonLink onClick={toggleShowInfo} size="xSmall">
                   {!showInfo ? 'show' : 'hide'} nutritional info
@@ -250,12 +257,12 @@ const ItemOption = ({
                   {!showIngredients ? 'show' : 'hide'} ingredients
                 </ButtonLink>
               ) : null}
-            </BuilderNutritionButtons>
+            </MenuItemOptionButtons>
           ) : null}
-        </ItemOptionText>
-        <ItemOptionQuantity>
+        </MenuItemOptionText>
+        <MenuItemOptionQuantity>
           {isSoldOut ? (
-            <ItemOptionSoldOut>Out of stock</ItemOptionSoldOut>
+            <MenuItemOptionSoldOut>Out of stock</MenuItemOptionSoldOut>
           ) : isRadio ? (
             <MenuItemRadio option={option} handler={toggle} />
           ) : (
@@ -270,8 +277,8 @@ const ItemOption = ({
               isCheckbox={isCheckbox}
             />
           )}
-        </ItemOptionQuantity>
-      </ItemOptionContainer>
+        </MenuItemOptionQuantity>
+      </MenuItemOptionContainer>
       {hasCals ? (
         <Collapsible key="nutritionalInfo" show={showInfo}>
           <MenuItemNutrition nutritionalInfo={option.nutritionalInfo} />
@@ -282,12 +289,12 @@ const ItemOption = ({
           <MenuItemIngredients ingredients={option.ingredients} />
         </Collapsible>
       ) : null}
-    </ItemOptionView>
+    </MenuItemOptionView>
   )
 }
 
-ItemOption.displayName = 'ItemOption'
-ItemOption.propTypes = {
+MenuItemOption.displayName = 'MenuItemOption'
+MenuItemOption.propTypes = {
   group: propTypes.object,
   option: propTypes.object,
   toggleOption: propTypes.func,
@@ -296,4 +303,4 @@ ItemOption.propTypes = {
   decrementOption: propTypes.func,
 }
 
-export default ItemOption
+export default MenuItemOption
