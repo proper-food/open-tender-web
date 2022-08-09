@@ -43,7 +43,7 @@ const BuilderView = styled('aside')`
   }
 `
 
-const MenuItem = React.forwardRef((props, ref) => {
+const MenuItemSidebar = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
@@ -100,6 +100,6 @@ const MenuItem = React.forwardRef((props, ref) => {
   )
 })
 
-MenuItem.displayName = 'MenuItem'
+MenuItemSidebar.displayName = 'MenuItemSidebar'
 
-export default MenuItem
+export default MenuItemSidebar

@@ -1,5 +1,3 @@
-import { makeOrderItem } from '@open-tender/js'
-
 const makeProduct = (item) => {
   const { id, name, quantity, category, totalPrice } = item
   const price = (totalPrice / quantity).toFixed(2)
@@ -7,7 +5,7 @@ const makeProduct = (item) => {
 }
 
 const makeProductClick = (item) => {
-  const product = makeProduct(makeOrderItem(item))
+  const product = makeProduct(item)
   delete product.quantity
   return { ...product, position: item.menu_position }
 }

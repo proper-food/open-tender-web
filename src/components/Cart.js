@@ -9,7 +9,7 @@ import {
 import { slugify } from '@open-tender/js'
 import {
   openModal,
-  selectDisplaySettings,
+  // selectDisplaySettings,
   toggleSidebar,
   toggleSidebarModal,
 } from '../slices'
@@ -20,8 +20,9 @@ const Cart = () => {
   const navigate = useNavigate()
   const cart = useSelector(selectCart)
   const menuSlug = useSelector(selectMenuSlug)
-  const displaySettings = useSelector(selectDisplaySettings)
-  const { builderType } = displaySettings
+  // const displaySettings = useSelector(selectDisplaySettings)
+  // const { builderType } = displaySettings
+  const builderType = 'PAGE'
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))

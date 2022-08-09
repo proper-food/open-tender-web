@@ -15,7 +15,7 @@ import {
   selectMenuSlug,
   showNotification,
 } from '@open-tender/redux'
-import { useBuilder } from '@open-tender/components'
+import { useBuilder } from '@open-tender/hooks'
 import { selectContentSection, selectMenuPath } from '../../../slices'
 import { Back, NavMenu } from '../../buttons'
 import { Star } from '../../icons'
@@ -105,7 +105,7 @@ const MenuItem = () => {
     incrementOption,
     decrementOption,
     setOptionQuantity,
-  } = useBuilder(item || {}, soldOut, hasPoints)
+  } = useBuilder(item || {})
 
   const cancel = () => {
     dispatch(setCurrentItem(null))

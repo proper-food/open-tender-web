@@ -47,7 +47,11 @@ const MenuFeatured = () => {
               ) : (
                 <MenuItems perRow={showTwo ? 2 : 1}>
                   {featured.map((item, index) => (
-                    <MenuItem key={`${item.id}-${index}`} item={item} />
+                    <MenuItem
+                      key={`${item.id}-${index}`}
+                      item={item}
+                      isSimple={showTwo}
+                    />
                   ))}
                 </MenuItems>
               )}

@@ -80,7 +80,11 @@ const MenuFavorites = () => {
               ) : (
                 <MenuItems perRow={showTwo ? 2 : 1}>
                   {favorites.map((item, index) => (
-                    <MenuItem key={`${item.id}-${index}`} item={item} />
+                    <MenuItem
+                      key={`${item.id}-${index}`}
+                      item={item}
+                      isSimple={showTwo}
+                    />
                   ))}
                 </MenuItems>
               )}

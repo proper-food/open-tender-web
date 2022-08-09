@@ -1,41 +1,30 @@
 import { useState } from 'react'
+import propTypes from 'prop-types'
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import {
   addItemToCart,
   selectCartCounts,
   selectMenu,
   selectMenuSlug,
+  selectPointsProgram,
   selectSelectedAllergenNames,
   setCurrentItem,
   showNotification,
 } from '@open-tender/redux'
-import {
-  formatDollars,
-  formatQuantity,
-  prepareMenuItem,
-  rehydrateOrderItem,
-  slugify,
-} from '@open-tender/js'
-import {
-  Body,
-  ButtonStyled,
-  CardMenuItem,
-  useBuilder,
-} from '@open-tender/components'
+import { makeOrderItem, rehydrateOrderItem, slugify } from '@open-tender/js'
+import { useOrderItem } from '@open-tender/hooks'
+import { Body, ButtonStyled, CardMenuItem } from '@open-tender/components'
 import {
   selectDisplaySettings,
   openModal,
   toggleSidebarModal,
-  selectContent,
   setMenuPath,
 } from '../../../slices'
-import { AlertCircle, Slash } from '../../icons'
-import { MenuItemButton, Tag } from '../..'
+import { MenuItemButton, MenuItemOverlay, MenuItemTagAlert } from '../..'
 import MenuItemCount from './MenuItemCount'
 
 const MenuItemView = styled(CardMenuItem)`
@@ -44,40 +33,6 @@ const MenuItemView = styled(CardMenuItem)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
-
-export const MenuItemOverlay = styled.div`
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: ${(props) => props.theme.border.radius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  background-color: ${(props) =>
-    props.isSoldOut
-      ? props.theme.overlay.dark
-      : props.isAlert
-      ? props.theme.overlay.alert
-      : 'transparent'};
-`
-
-const MenuItemAlert = styled.div`
-  position: absolute;
-  z-index: 2;
-  bottom: -1.2rem;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `
 
 const MenuItemButtons = styled.div`
@@ -132,71 +87,64 @@ const MenuItemButtonsCustomize = styled.div`
       : ''}
 `
 
-const MenuItem = ({ item, displayOnly = false, addCallback }) => {
+const MenuItem = ({
+  item,
+  isSimple = false,
+  isCentered = false,
+  displayOnly = false,
+  addCallback,
+}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [clicked, setClicked] = useState(false)
   const theme = useTheme()
   const { pathname } = useLocation()
   const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
-  const { menu: menuContent } = useSelector(selectContent)
   const menuSlug = useSelector(selectMenuSlug)
+  const cartCounts = useSelector(selectCartCounts)
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const { soldOut } = useSelector(selectMenu)
   const displaySettings = useSelector(selectDisplaySettings)
-  const { builderType } = displaySettings
-  const cartCounts = useSelector(selectCartCounts)
-  const {
-    imageUrl,
-    price,
-    tags,
-    allergens,
-    allergenAlert,
-    isSoldOut,
-    showQuickAdd,
-    cartCount,
-    showTwo,
-  } = prepareMenuItem(
-    item,
-    allergenAlerts,
-    soldOut,
-    displaySettings,
-    cartCounts,
-    isBrowser
-  )
-  const soldOutMsg = isBrowser
-    ? menuContent.soldOutMessage || 'Sold out for day'
-    : 'Sold out'
+  const pointsProgram = useSelector(selectPointsProgram)
+  const hasPoints = !!pointsProgram
   const orderItem = item.favorite
     ? { ...rehydrateOrderItem(item, item.favorite.item), index: -1 }
-    : item
-  const { item: builtItem } = useBuilder(orderItem, soldOut)
-  const { groups, totalPrice, totalCals } = builtItem
-  const sizeGroup = groups.find((i) => i.isSize)
-  const sizeOnly = sizeGroup && groups.length === 1
-  const displayPrice = totalPrice ? formatDollars(totalPrice) : price
-  const displayCals = totalCals ? formatQuantity(totalCals) : null
-  const optionNames = item.favorite
-    ? item.favorite.item.groups
-        .reduce((arr, group) => {
-          const names = group.options.map((o) => o.name)
-          return [...arr, ...names]
-        }, [])
-        .join(', ')
-    : null
-  const desc = optionNames || item.description
-  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
-  const isIncomplete =
-    totalPrice === 0 || item.quantity === '' || groupsBelowMin
-  const showButtons = !!(!displayOnly && showQuickAdd)
-  const customizeIsPrimary = isIncomplete && !isSoldOut
+    : makeOrderItem(item, null, soldOut, null, hasPoints)
+  const {
+    name,
+    displayImage,
+    displayDesc,
+    displayTags,
+    displayAllergens,
+    displayPrice,
+    displayCals,
+    isIncomplete,
+    isSoldOut,
+    allergenAlert,
+    showQuickAdd,
+    sizeOnly,
+    cartCount,
+  } = useOrderItem(
+    orderItem,
+    item.favorite,
+    soldOut,
+    allergenAlerts,
+    displaySettings,
+    cartCounts,
+    isMobile
+  )
+  const builderType = 'PAGE'
+  const isBig = !isSimple && !isCentered ? true : false
+  const showButtons = !displayOnly && isBig && showQuickAdd ? true : false
+  const addDisabled = isIncomplete || isSoldOut
+  const customizeIsPrimary = addDisabled && !isSoldOut
 
   const view = () => {
     if (!isSoldOut) {
       dispatch(setMenuPath(pathname || menuSlug))
       dispatch(setCurrentItem(orderItem))
       if (builderType === 'PAGE') {
-        navigate(`${menuSlug}/item/${slugify(item.name)}`)
+        navigate(`${menuSlug}/item/${slugify(name)}`)
       } else if (builderType === 'SIDEBAR') {
         dispatch(toggleSidebarModal())
       } else {
@@ -207,46 +155,40 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
 
   const add = () => {
     if (!isSoldOut && !isIncomplete) {
-      const cartItem = { ...builtItem }
+      const cartItem = { ...orderItem }
       if (cartItem.index === -1) delete cartItem.index
       dispatch(addItemToCart(cartItem))
-      dispatch(showNotification(`${builtItem.name} added to cart!`))
+      dispatch(showNotification(`${name} added to cart!`))
       if (addCallback) addCallback()
     }
   }
 
-  const itemTag = isSoldOut ? (
-    <Tag icon={<Slash />} text={soldOutMsg} bgColor="alert" />
-  ) : allergenAlert ? (
-    <Tag icon={<AlertCircle />} text={allergenAlert} bgColor="alert" />
-  ) : null
-
-  const imageOverlay = itemTag ? (
-    <MenuItemOverlay isSoldOut={isSoldOut} isAlert={allergenAlert}>
-      <div>{itemTag}</div>
-    </MenuItemOverlay>
+  const imageOverlay = displayImage ? (
+    <MenuItemOverlay isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
   ) : null
 
   return (
-    <MenuItemView className={showTwo ? 'compact' : ''}>
+    <MenuItemView className={isSimple ? 'compact' : ''}>
       {cartCount > 0 && (
         <MenuItemCount>
           <span>{cartCount}</span>
         </MenuItemCount>
       )}
-      {!imageUrl && itemTag ? <MenuItemAlert>{itemTag}</MenuItemAlert> : null}
       <MenuItemButton
         onClick={view}
         disabled={isSoldOut || displayOnly}
-        imageUrl={imageUrl}
+        imageUrl={displayImage}
         imageOverlay={imageOverlay}
         name={item.name}
-        desc={desc}
+        desc={displayDesc}
         price={displayPrice}
         cals={displayCals}
-        tags={tags}
-        allergens={allergens}
+        tags={displayTags}
+        allergens={displayAllergens}
       />
+      {!displayImage ? (
+        <MenuItemTagAlert isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
+      ) : null}
       {showButtons && (
         <MenuItemButtons hasBox={hasBox}>
           {clicked && (
@@ -255,7 +197,7 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
             </MenuItemButtonsWarning>
           )}
           <MenuItemButtonsContainer>
-            <MenuItemButtonsAdd disabled={isIncomplete}>
+            <MenuItemButtonsAdd disabled={addDisabled}>
               <ButtonStyled
                 onClick={isIncomplete ? () => setClicked(true) : add}
                 size="small"
@@ -283,9 +225,10 @@ const MenuItem = ({ item, displayOnly = false, addCallback }) => {
 MenuItem.displayName = 'MenuItem'
 MenuItem.propTypes = {
   item: propTypes.object,
-  soldOut: propTypes.array,
-  menuConfig: propTypes.object,
-  allergenAlerts: propTypes.array,
+  isSimple: propTypes.bool,
+  isCentered: propTypes.bool,
+  displayOnly: propTypes.bool,
+  addCallback: propTypes.func,
 }
 
 export default MenuItem

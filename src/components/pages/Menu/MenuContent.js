@@ -17,7 +17,7 @@ import MenuCategories from './MenuCategories'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
-import { MenuItem } from '../../sidebarModals'
+import { MenuItemSidebar } from '../../sidebarModals'
 
 const MenuView = styled('div')`
   position: relative;
@@ -137,7 +137,7 @@ const MenuContent = () => {
             </div>
           </MenuView>
           <SidebarModal>
-            <MenuItem />
+            <MenuItemSidebar />
           </SidebarModal>
         </>
       ) : !isLoading ? (

@@ -53,7 +53,9 @@ import MenuItemButton from './MenuItemButton'
 import MenuItemFavorite from './MenuItemFavorite'
 import MenuItemIngredients from './MenuItemIngredients'
 import MenuItemNutrition from './MenuItemNutrition'
+import MenuItemOverlay from './MenuItemOverlay'
 import MenuItemPriceCals from './MenuItemPriceCals'
+import MenuItemTagAlert from './MenuItemTagAlert'
 import MenuItemTagsAllergens from './MenuItemTagsAllergens'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
@@ -167,7 +169,9 @@ export {
   MenuItemFavorite,
   MenuItemIngredients,
   MenuItemNutrition,
+  MenuItemOverlay,
   MenuItemPriceCals,
+  MenuItemTagAlert,
   MenuItemTagsAllergens,
   Modal,
   ModalClose,

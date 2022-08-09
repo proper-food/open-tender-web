@@ -82,7 +82,11 @@ const MenuRecents = () => {
               ) : (
                 <MenuItems perRow={showTwo ? 2 : 1}>
                   {recents.map((item, index) => (
-                    <MenuItem key={`${item.id}-${index}`} item={item} />
+                    <MenuItem
+                      key={`${item.id}-${index}`}
+                      item={item}
+                      isSimple={showTwo}
+                    />
                   ))}
                 </MenuItems>
               )}

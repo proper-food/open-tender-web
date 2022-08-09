@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { addItemToCart, showNotification } from '@open-tender/redux'
-import { formatDollars, formatQuantity } from '@open-tender/js'
-import { ButtonStyled, CardMenuItem, useBuilder } from '@open-tender/components'
-import MenuItemButton from './MenuItemButton'
+import { useTheme } from '@emotion/react'
+import {
+  addItemToCart,
+  selectMenu,
+  selectSelectedAllergenNames,
+  showNotification,
+} from '@open-tender/redux'
+import { makeOrderItem } from '@open-tender/js'
+import { useBuilder, useOrderItem } from '@open-tender/hooks'
+import { ButtonStyled, CardMenuItem } from '@open-tender/components'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectDisplaySettings } from '../slices'
-import { useTheme } from '@emotion/react'
+import { MenuItemButton, MenuItemOverlay, MenuItemTagAlert } from '.'
 
 const UpsellItemView = styled(CardMenuItem)`
   position: relative;
@@ -50,46 +56,29 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
   const theme = useTheme()
   const hasBox = theme.cards.menuItem.bgColor !== 'transparent'
   const [hasSize, setHasSize] = useState(false)
+  const allergenAlerts = useSelector(selectSelectedAllergenNames)
+  const { soldOut } = useSelector(selectMenu)
   const displaySettings = useSelector(selectDisplaySettings)
-  const {
-    menuImages: showImage,
-    calories: showCals,
-    tags: showTags,
-    allergens: showAllergens,
-  } = displaySettings
-  const { item: builtItem, toggleOption } = useBuilder(menuItem)
-  /* imageUrl is menuItem.large_image_url */
+  const orderItem = makeOrderItem(menuItem)
+  const { item: builtItem, toggleOption } = useBuilder(orderItem)
   const {
     name,
-    description,
-    imageUrl,
-    quantity,
-    price,
-    totalPrice,
-    cals,
-    totalCals,
-    tags,
-    allergens,
-    groups,
-  } = builtItem
-  const desc = showDesc ? description : null
-  const displayImage = showImage ? imageUrl : null
+    displayImage,
+    displayDesc,
+    displayTags,
+    displayAllergens,
+    displayPrice,
+    displayCals,
+    isSoldOut,
+    allergenAlert,
+  } = useOrderItem(orderItem, null, soldOut, allergenAlerts, displaySettings)
+  const { quantity, groups, totalPrice } = builtItem
   const sizeGroup = groups.find((i) => i.isSize)
-  const defaultOption = !sizeGroup
-    ? null
-    : sizeGroup.options.find((i) => i.isDefault) || sizeGroup.options[0]
-  const currentPrice = totalPrice
-    ? totalPrice
-    : defaultOption
-    ? defaultOption.price
-    : price
-  const displayPrice = formatDollars(currentPrice)
-  const itemCals = totalPrice ? totalCals : cals
-  const displayCals = showCals && itemCals ? formatQuantity(itemCals) : null
-  const displayTags = showTags ? tags : []
-  const displayAllergens = showAllergens ? allergens : []
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
+  const imageOverlay = displayImage ? (
+    <MenuItemOverlay isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
+  ) : null
 
   const add = () => {
     if (!isIncomplete) {
@@ -118,14 +107,17 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
         onClick={null}
         disabled={true}
         imageUrl={displayImage}
-        imageOverlay={null}
+        imageOverlay={imageOverlay}
         name={name}
-        desc={desc}
+        desc={showDesc ? displayDesc : null}
         price={displayPrice}
         cals={displayCals}
         tags={displayTags}
         allergens={displayAllergens}
       />
+      {!displayImage ? (
+        <MenuItemTagAlert isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
+      ) : null}
       <UpsellItemButtons hasBox={hasBox}>
         {!isIncomplete ? (
           <ButtonStyled onClick={add} size="small">

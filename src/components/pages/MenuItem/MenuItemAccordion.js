@@ -74,8 +74,8 @@ const MenuItemAccordionLabelCheckmark = styled.span`
   margin: 0 0 0 0.5rem;
 
   & > span {
-    border-color: ${(props) => props.theme.bgColors.success};
-    background-color: ${(props) => props.theme.bgColors.success};
+    border-color: ${(props) => props.theme.colors.success};
+    background-color: ${(props) => props.theme.colors.success};
   }
 `
 
