@@ -44,22 +44,27 @@ const MenuItemTagsAllergens = ({
   isCentered,
   style,
 }) => {
-  const hasTagsAllergens = tags.length || allergens.length ? true : false
+  const hasTags = tags?.length > 0
+  const hasAllergens = allergens?.length > 0
 
-  if (!hasTagsAllergens) return null
+  if (!hasTags && !hasAllergens) return null
 
   return (
     <MenuItemTagsAllergensView isCentered={isCentered} style={style}>
-      {tags.map((tag) => (
-        <MenuItemTag key={tag} size={size}>
-          {tag}
-        </MenuItemTag>
-      ))}
-      {allergens.map((allergen) => (
-        <MenuItemAllergen key={allergen} size={size}>
-          {allergen}
-        </MenuItemAllergen>
-      ))}
+      {hasTags
+        ? tags.map((tag) => (
+            <MenuItemTag key={tag} size={size}>
+              {tag}
+            </MenuItemTag>
+          ))
+        : null}
+      {hasAllergens
+        ? allergens.map((allergen) => (
+            <MenuItemAllergen key={allergen} size={size}>
+              {allergen}
+            </MenuItemAllergen>
+          ))
+        : null}
     </MenuItemTagsAllergensView>
   )
 }

@@ -4,12 +4,12 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const CollapsibleView = styled.div``
 
-const Collapsible = ({ key, show, style, children }) => {
+const Collapsible = ({ show, style, children }) => {
   return (
     <TransitionGroup component={null}>
       {show ? (
         <CSSTransition
-          key={key}
+          key="collapsible"
           classNames="reveal"
           timeout={{ enter: 250, exit: 250 }}
         >
@@ -22,7 +22,6 @@ const Collapsible = ({ key, show, style, children }) => {
 
 Collapsible.displayName = 'CartItCollapsibleem'
 Collapsible.propTypes = {
-  key: propTypes.string,
   show: propTypes.bool,
   style: propTypes.object,
   children: propTypes.oneOfType([

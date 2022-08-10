@@ -177,8 +177,8 @@ const MenuItemOption = ({
     (group.included === group.max || group.quantity < group.included)
   const price = hidePrice ? null : formatDollars(option.price)
   const cals = showCals ? option.cals : null
-  const allergens = showAllergens ? option.allergens : null
-  const tags = showTags ? option.tags : null
+  const allergens = showAllergens ? option.allergens : []
+  const tags = showTags ? option.tags : []
   const isRadio = group.min === 1 && group.max === 1
   const hasIngredients = option.ingredients && option.ingredients.length > 0
   const hasCals = cals !== null
@@ -280,12 +280,12 @@ const MenuItemOption = ({
         </MenuItemOptionQuantity>
       </MenuItemOptionContainer>
       {hasCals ? (
-        <Collapsible key="nutritionalInfo" show={showInfo}>
+        <Collapsible show={showInfo}>
           <MenuItemNutrition nutritionalInfo={option.nutritionalInfo} />
         </Collapsible>
       ) : null}
       {hasIngredients ? (
-        <Collapsible key="ingredients" show={showIngredients}>
+        <Collapsible show={showIngredients}>
           <MenuItemIngredients ingredients={option.ingredients} />
         </Collapsible>
       ) : null}

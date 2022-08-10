@@ -52,8 +52,11 @@ const MenuItemFooterWarning = styled.div`
   text-align: center;
 
   p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
     color: ${(props) => props.theme.colors.error};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -102,7 +105,9 @@ const MenuItemFooter = ({
       {isIncomplete ? (
         <MenuItemFooterWarning>
           {isCustomize ? (
-            <Body as="p">Certain groups are below the minimum.</Body>
+            <Body as="p">
+              Certain groups are below their minimums and require selections.
+            </Body>
           ) : (
             <Body as="p">
               {missingSize
@@ -111,7 +116,7 @@ const MenuItemFooter = ({
             </Body>
           )}
         </MenuItemFooterWarning>
-      ) : (
+      ) : !isCustomize ? (
         <MenuItemFooterWarning>
           <p>
             <ButtonLink onClick={cancel}>
@@ -119,7 +124,7 @@ const MenuItemFooter = ({
             </ButtonLink>
           </p>
         </MenuItemFooterWarning>
-      )}
+      ) : null}
       {isCustomize ? (
         <MenuItemFooterButtons>
           <MenuItemFooterButton>

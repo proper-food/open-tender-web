@@ -138,7 +138,7 @@ const MenuItemSelections = styled.p`
   }
 `
 
-const MenuItemSelectionsEdit = styled.div`
+const MenuItemSelectionsEdit = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: center;
