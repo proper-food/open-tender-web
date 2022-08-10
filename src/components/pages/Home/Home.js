@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { useTheme } from '@emotion/react'
 import {
   fetchAnnouncementPage,
   selectAnnouncementsPage,
+  selectCustomer,
 } from '@open-tender/redux'
 import { closeModal, selectBrand, selectContentSection } from '../../../slices'
 import { BackgroundContent, Content, HeaderSite, Main, PageIntro } from '../..'
@@ -13,6 +15,7 @@ import PageHero from '../../PageHero'
 
 const Home = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { colors } = useTheme()
   const brand = useSelector(selectBrand)
   const { background, mobile, title, subtitle, content } = useSelector(
@@ -20,10 +23,15 @@ const Home = () => {
   )
   const hasContent = !!(content && content.length)
   const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
     dispatch(closeModal())
   }, [dispatch])
+
+  useEffect(() => {
+    navigate(auth ? '/account' : '/guest')
+  }, [navigate, auth])
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('HOME'))
