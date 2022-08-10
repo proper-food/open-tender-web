@@ -1606,10 +1606,10 @@
     "@googlemaps/js-api-loader" "^1.14.3"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/hooks@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/hooks/-/hooks-1.0.0.tgz#1ec4eada883f78fa22ec3be8a68698382c739761"
-  integrity sha512-MBvDG6TAaHpI4fCtlE7a+XeOAzDPHvPnQGDf9OgKsEJ3tUqKJoa9oEwyyBBDtsTwa4OcrYhj1HjKslZPSJpxaQ==
+"@open-tender/hooks@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/hooks/-/hooks-1.0.1.tgz#568a541ff96340f3f3d7b0b70fc0493ee67e6b45"
+  integrity sha512-7jN4D/9I1jHlOPy4HAJFw6jvhOToke01iW+E77vTtnwzGqxAiJISk/gGtoX+3HBplUFsfNrV4XvDHcw+wtQ7lw==
 
 "@open-tender/js@^2.2.0":
   version "2.2.0"

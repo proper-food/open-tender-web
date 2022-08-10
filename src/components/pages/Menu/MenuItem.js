@@ -112,7 +112,8 @@ const MenuItem = ({
     : makeOrderItem(item, null, soldOut, null, hasPoints)
   const {
     name,
-    displayImage,
+    showImage,
+    imageUrl,
     displayDesc,
     displayTags,
     displayAllergens,
@@ -163,7 +164,7 @@ const MenuItem = ({
     }
   }
 
-  const imageOverlay = displayImage ? (
+  const imageOverlay = showImage ? (
     <MenuItemOverlay isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
   ) : null
 
@@ -177,7 +178,8 @@ const MenuItem = ({
       <MenuItemButton
         onClick={view}
         disabled={isSoldOut || displayOnly}
-        imageUrl={displayImage}
+        showImage={showImage}
+        imageUrl={imageUrl}
         imageOverlay={imageOverlay}
         name={item.name}
         desc={displayDesc}
@@ -186,7 +188,7 @@ const MenuItem = ({
         tags={displayTags}
         allergens={displayAllergens}
       />
-      {!displayImage ? (
+      {!showImage ? (
         <MenuItemTagAlert isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
       ) : null}
       {showButtons && (

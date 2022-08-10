@@ -63,7 +63,8 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
   const { item: builtItem, toggleOption } = useBuilder(orderItem)
   const {
     name,
-    displayImage,
+    showImage,
+    imageUrl,
     displayDesc,
     displayTags,
     displayAllergens,
@@ -76,7 +77,7 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
   const sizeGroup = groups.find((i) => i.isSize)
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
-  const imageOverlay = displayImage ? (
+  const imageOverlay = showImage ? (
     <MenuItemOverlay isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
   ) : null
 
@@ -106,7 +107,8 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
       <MenuItemButton
         onClick={null}
         disabled={true}
-        imageUrl={displayImage}
+        showImage={showImage}
+        imageUrl={imageUrl}
         imageOverlay={imageOverlay}
         name={name}
         desc={showDesc ? displayDesc : null}
@@ -115,7 +117,7 @@ const UpsellItem = ({ menuItem, addCallback, showDesc = true }) => {
         tags={displayTags}
         allergens={displayAllergens}
       />
-      {!displayImage ? (
+      {!showImage ? (
         <MenuItemTagAlert isSoldOut={isSoldOut} allergenAlert={allergenAlert} />
       ) : null}
       <UpsellItemButtons hasBox={hasBox}>

@@ -22,7 +22,7 @@ const CategoryBrowseView = styled.nav`
   right: 0;
   top: ${(props) => props.theme.layout.navHeight};
   height: ${(props) => props.theme.layout.navHeight};
-  border-bottom: 0.05rem solid
+  border-bottom: ${(props) => props.theme.border.width} solid
     ${(props) => (props.stuck ? props.theme.border.color : 'transparent')};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

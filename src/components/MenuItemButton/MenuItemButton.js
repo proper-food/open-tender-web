@@ -193,6 +193,7 @@ const MenuItemDescription = styled(Body)`
 const MenuItemButton = ({
   onClick,
   disabled,
+  showImage,
   imageUrl,
   imageOverlay,
   name,
@@ -208,7 +209,7 @@ const MenuItemButton = ({
   return (
     <MenuItemButtonView onClick={onClick} disabled={disabled}>
       <MenuItemContainer>
-        {imageUrl && (
+        {showImage && (
           <MenuItemImage imageUrl={imageUrl}>{imageOverlay}</MenuItemImage>
         )}
         <MenuItemContent hasBox={hasBox}>

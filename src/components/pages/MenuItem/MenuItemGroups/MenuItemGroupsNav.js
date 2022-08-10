@@ -13,8 +13,8 @@ const MenuItemGroupsNavView = styled.div`
 
 const MenuItemGroupsNavInner = styled.div`
   width: 100%;
-  border-bottom: 0.05rem solid ${(props) => props.theme.border.color};
-  // border-bottom-width: ${(props) => props.theme.border.width};
+  border-bottom: ${(props) => props.theme.border.width} solid
+    ${(props) => props.theme.border.color};
   background-color: ${(props) => props.theme.bgColors.primary};
   ${(props) =>
     props.stuck &&

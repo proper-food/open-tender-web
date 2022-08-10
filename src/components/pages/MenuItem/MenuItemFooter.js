@@ -15,6 +15,10 @@ const MenuItemFooterView = styled.div`
   background-color: ${(props) => props.theme.bgColors.primary};
   // background-color: palegreen;
   padding: 1.5rem ${(props) => props.theme.layout.padding};
+  box-shadow: ${(props) =>
+    props.isCustomize
+      ? '0 -3px 6px rgba(0, 0, 0, 0.06), 0 -2px 4px rgba(0, 0, 0, 0.05)'
+      : 'none'};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: 1.5rem ${(props) => props.theme.layout.paddingMobile};
@@ -101,7 +105,7 @@ const MenuItemFooter = ({
   )
 
   return (
-    <MenuItemFooterView ref={onRefChange}>
+    <MenuItemFooterView ref={onRefChange} isCustomize={isCustomize}>
       {isIncomplete ? (
         <MenuItemFooterWarning>
           {isCustomize ? (

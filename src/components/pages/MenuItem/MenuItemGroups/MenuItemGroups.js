@@ -13,9 +13,11 @@ const MenuItemGroupsView = styled.div`
 `
 
 const MenuItemGroupsList = styled.div`
-  padding: ${(props) => props.theme.layout.padding};
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: 4.5rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 4.5rem 0;
   }
 `
 
