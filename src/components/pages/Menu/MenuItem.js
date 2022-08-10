@@ -65,7 +65,7 @@ const MenuItemButtonsAdd = styled.div`
   ${(props) =>
     props.disabled
       ? `
-    button, button:active, button:hover {
+    button, button:active, button:hover, button:disabled {
     opacity: 1;
     color: ${props.theme.colors.primary};
     background-color: ${props.theme.bgColors.tertiary};
@@ -79,10 +79,11 @@ const MenuItemButtonsCustomize = styled.div`
   ${(props) =>
     !props.customizeIsPrimary
       ? `
-  button {
+  button, button:active, button:hover, button:disabled {
     border: 0;
     padding-left: 0;
     padding-right: 0;
+    background-color: transparent;
   }`
       : ''}
 `
@@ -203,6 +204,7 @@ const MenuItem = ({
               <ButtonStyled
                 onClick={isIncomplete ? () => setClicked(true) : add}
                 size="small"
+                disabled={addDisabled}
               >
                 Add To Order
               </ButtonStyled>

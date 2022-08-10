@@ -31,7 +31,9 @@ const NavButtonView = styled('button')`
     border-right: 0;
     border-left: 0;
     border-radius: 0;
-  }
+    background-color: transparent;
+    border-bottom: ${(props) => props.theme.border.width} solid ${(props) =>
+  props.theme.border.color};
 
   &:hover {
     border-color: ${(props) =>

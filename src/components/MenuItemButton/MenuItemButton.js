@@ -10,6 +10,7 @@ const MenuItemButtonView = styled.button`
   text-align: left;
   width: 100%;
   margin: 0 0 1.3rem;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -241,12 +242,9 @@ const MenuItemButton = ({
 
 MenuItemButton.displayName = 'MenuItemButton'
 MenuItemButton.propTypes = {
-  item: propTypes.object,
-  soldOut: propTypes.array,
-  menuConfig: propTypes.object,
-  allergenAlerts: propTypes.array,
   onClick: propTypes.func,
   disabled: propTypes.bool,
+  showImage: propTypes.bool,
   imageUrl: propTypes.string,
   imageOverlay: propTypes.element,
   name: propTypes.string,

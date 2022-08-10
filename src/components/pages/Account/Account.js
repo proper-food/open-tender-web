@@ -265,7 +265,7 @@ const Account = () => {
         <Header
           style={{ boxShadow: 'none' }}
           maxWidth="100%"
-          borderColor={!isMobile ? theme.colors.primary : undefined}
+          borderColor={!isMobile ? theme.border.color : undefined}
           title={showLogo ? <HeaderLogo /> : null}
           left={isMobile ? <User /> : <HeaderLogo />}
           right={

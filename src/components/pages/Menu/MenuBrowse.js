@@ -74,7 +74,7 @@ const MenuBrowseVertical = styled.div`
   }
 `
 
-const MenuBrowse = ({ categories }) => {
+const MenuBrowse = ({ categories, isRcs }) => {
   const { hasTop, displaySettings } = useContext(MenuContext)
   const { categoryType, categoryTypeMobile } = displaySettings
   const displayType = isMobile ? categoryTypeMobile : categoryType
@@ -86,7 +86,9 @@ const MenuBrowse = ({ categories }) => {
       <MenuBrowseView id="full-menu" hasTop={hasTop}>
         {hasTop && (
           <MenuBrowseHeader>
-            <MenuBrowseTitle>Browse by Category</MenuBrowseTitle>
+            <MenuBrowseTitle>
+              Browse by {isRcs ? 'Vendor' : 'Category'}
+            </MenuBrowseTitle>
           </MenuBrowseHeader>
         )}
         {displayType === 'VERTICAL' ? (
@@ -118,6 +120,7 @@ const MenuBrowse = ({ categories }) => {
 MenuBrowse.displayName = 'MenuBrowse'
 MenuBrowse.propTypes = {
   categories: propTypes.array,
+  isRcs: propTypes.bool,
 }
 
 export default MenuBrowse

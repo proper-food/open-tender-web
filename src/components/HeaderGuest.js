@@ -15,7 +15,7 @@ const HeaderGuest = ({ maxWidth = '76.8rem' }) => {
     <Header
       style={{ boxShadow: 'none' }}
       maxWidth={maxWidth}
-      borderColor={!isMobile ? theme.colors.primary : undefined}
+      borderColor={!isMobile ? theme.border.color : undefined}
       title={showLogo ? <HeaderLogo /> : null}
       left={isMobile ? <User /> : <HeaderLogo />}
       right={

@@ -40,6 +40,7 @@ const MenuNew = () => {
   const showHero = isMobile ? menuHeroMobile : menuHero
   const imageUrl = showHero ? (isMobile ? mobile : background) : null
   const heroHeight = isMobile ? '24rem' : '48rem'
+  const isRcs = revenueCenters && revenueCenters.length ? true : false
 
   return (
     <>
@@ -66,7 +67,10 @@ const MenuNew = () => {
               <>
                 <MenuTop />
                 {!isScrollable && (
-                  <MenuBrowse categories={revenueCenters || categories} />
+                  <MenuBrowse
+                    isRcs={isRcs}
+                    categories={revenueCenters || categories}
+                  />
                 )}
               </>
             )}

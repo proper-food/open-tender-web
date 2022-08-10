@@ -39,7 +39,9 @@ const MenuItemFooterButton = styled.div`
 
   button {
     width: 100%;
-    max-height: 5rem;
+    height: 5rem;
+    padding-top: 0;
+    padding-bottom: 0;
 
     &:disabled {
       opacity: 1;

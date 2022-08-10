@@ -116,7 +116,7 @@ MenuHeaderTitle.propTypes = {
 
 const MenuHeader = ({ backPath = '/locations', backClick }) => {
   const dispatch = useDispatch()
-  const { colors } = useTheme()
+  const { colors, border } = useTheme()
   const [showMenu, setShowMenu] = useState(false)
   const { allergens: displayAllergens } = useSelector(selectDisplaySettings)
   const order = useSelector(selectOrder)
@@ -146,7 +146,7 @@ const MenuHeader = ({ backPath = '/locations', backClick }) => {
             setShowMenu={setShowMenu}
           />
         }
-        borderColor={colors.primary}
+        borderColor={border.color}
         left={onClick ? <Back onClick={onClick} /> : <Back path={backPath} />}
         right={
           <>

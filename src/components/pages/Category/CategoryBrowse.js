@@ -40,7 +40,7 @@ const CategoryBrowseCategories = styled.div`
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: ${(props) => (props.stuck ? 'flex-end' : 'flex-end')};
   overflow-x: scroll;
   margin: 0 -${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -131,7 +131,7 @@ const CategoryBrowse = () => {
     <CategoryBrowseContainer ref={categoryBrowse}>
       <CategoryBrowseView stuck={stuck}>
         <Container>
-          <CategoryBrowseCategories>
+          <CategoryBrowseCategories stuck={stuck}>
             {categories.map((i) => (
               <CategoryBrowseCategory key={i.id}>
                 {i.id === category.id ? (

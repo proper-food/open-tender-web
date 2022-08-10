@@ -87,12 +87,6 @@ const SidebarFooter = styled.div`
   width: 100%;
   height: 7rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-
-  button {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
 `
 
 const SidebarButtons = styled.div`
@@ -101,6 +95,12 @@ const SidebarButtons = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  button {
+    width: 100%;
+    height: 5rem;
+    padding: 0;
+  }
 `
 
 const SidebarBack = styled.div`
