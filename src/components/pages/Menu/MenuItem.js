@@ -204,7 +204,7 @@ const MenuItem = ({
               <ButtonStyled
                 onClick={isIncomplete ? () => setClicked(true) : add}
                 size="small"
-                disabled={addDisabled}
+                disabled={isSoldOut}
               >
                 Add To Order
               </ButtonStyled>
