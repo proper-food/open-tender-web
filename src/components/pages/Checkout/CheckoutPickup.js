@@ -27,6 +27,7 @@ const CheckoutPickup = () => {
   const tz = timezone ? timezoneMap[timezone] : null
   const requestedTime = tz ? makeRequestedAtStr(requestedAt, tz, true) : null
   const isAsap = requestedTime === 'ASAP' && serviceType === 'PICKUP'
+  const requestedTimeStr = isAsap ? 'Now' : requestedTime
   const waitTime = isAsap ? firstTime.wait_minutes || null : null
   let serviceTypeName = serviceTypeNamesMap[serviceType]
   serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
@@ -53,7 +54,7 @@ const CheckoutPickup = () => {
       <p>{address.street}</p>
       {/* <p>{addressLine2}</p> */}
       <p>
-        {serviceTypeName} Time: {requestedTime}
+        {serviceTypeName} Time: {requestedTimeStr}
         {waitTime && <span> (about {waitTime} mins)</span>}
       </p>
       <CheckoutSectionFootnote>

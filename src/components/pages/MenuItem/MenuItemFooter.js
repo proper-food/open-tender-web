@@ -90,11 +90,11 @@ const MenuItemFooter = ({
   const requiresCustomization = isIncomplete && !missingSize
 
   useEffect(() => {
-    if (requiresCustomization && init) {
+    if (init && hasCustomize) {
       setInit(false)
       if (skip) setIsCustomize(true)
     }
-  }, [requiresCustomization, init, skip, setIsCustomize])
+  }, [init, hasCustomize, skip, setIsCustomize])
 
   const onRefChange = useCallback(
     (node) => {

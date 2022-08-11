@@ -131,7 +131,7 @@ const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
     <RevenueCenterOrderButtons>
       {!isCatering && firstTimes && (
         <ButtonStyled onClick={orderAsap} disabled={!hasAsap} size="small">
-          Order ASAP
+          Order Now
         </ButtonStyled>
       )}
       <ButtonStyled
