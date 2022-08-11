@@ -32,14 +32,19 @@ const NavButtonView = styled('button')`
     border-left: 0;
     border-radius: 0;
     background-color: transparent;
-    border-bottom: ${(props) => props.theme.border.width} solid ${(props) =>
-  props.theme.border.color};
+    border-bottom: ${(props) => props.theme.border.width} solid
+      ${(props) => props.theme.border.color};
+  }
 
   &:hover {
     border-color: ${(props) =>
       props.theme.buttons.colors.largeHover.borderColor};
     background-color: ${(props) =>
       props.theme.buttons.colors.largeHover.bgColor};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-color: ${(props) => props.theme.border.color};
+      background-color: transparent;
+    }
   }
 
   &:last-of-type {
