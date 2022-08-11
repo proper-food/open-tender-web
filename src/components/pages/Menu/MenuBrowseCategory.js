@@ -31,9 +31,8 @@ const MenuBrowseCategoryButton = styled.button`
   padding: 2rem 0;
   border: 0;
   border-style: solid;
-  border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
-  border-bottom-width: ${(props) =>
-    props.theme.buttons.sizes.large.borderWidth};
+  border-color: ${(props) => props.theme.border.color};
+  border-bottom-width: ${(props) => props.theme.border.width};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 1rem 0;
     ${(props) => (props.isLast ? 'border: 0;' : '')}
@@ -76,46 +75,24 @@ const MenuBrowseCategoryTitle = styled(Heading)`
   display: block;
   margin: 0 0 0 -0.1rem;
   transition: ${(props) => props.theme.links.transition};
-  color: ${(props) => props.theme.buttons.colors.large.color};
   font-size: ${(props) => props.theme.fonts.sizes.big};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
-    // font-size: 1.6rem;
-  }
-
-  button:hover & {
-    color: ${(props) => props.theme.buttons.colors.largeHover.color};
   }
 `
 
-// const MenuBrowseCategorySubtitle = styled(Body)`
-//   display: block;
-//   margin: 0.1rem 0 0;
-//   transition: ${(props) => props.theme.links.transition};
-//   color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
-//   font-size: ${(props) => props.theme.fonts.sizes.small};
-//   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-//     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-//   }
-
-//   button:hover & {
-//     color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
-//   }
-// `
-
-const MenuBrowseCategoryArrow = styled('span')`
+const MenuBrowseCategoryArrow = styled.span`
   position: relative;
   width: 2.2rem;
   height: 2.2rem;
   line-height: 0;
   flex-shrink: 0;
-  color: ${(props) => props.theme.buttons.colors.large.iconColor};
+  color: ${(props) => props.theme.fonts.headings.color};
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);
 
   button:hover & {
     transform: translateX(1rem);
-    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
 
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: translateX(0);

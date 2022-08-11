@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { selectCurrentVendor, selectMenuSlug } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
@@ -10,7 +11,6 @@ import { MenuContext } from '../Menu/Menu'
 import { MenuHeader, MenuCategory } from '../Menu'
 import CategoryNav from '../Category/CategoryNav'
 import VendorInfo from './VendorInfo'
-import { isMobile } from 'react-device-detect'
 
 const VendorView = styled.div``
 
@@ -42,7 +42,7 @@ const Vendor = () => {
   const vendor = useSelector(selectCurrentVendor)
   const { revenue_center_id: id, name, large_image_url } = vendor || {}
   const imageUrl = showHero ? large_image_url : null
-  const heroHeight = isMobile ? 'auto' : '48rem'
+  const heroHeight = isMobile ? 'auto' : '36rem'
   const vendorCategories = categories.filter((i) => i.revenue_center_id === id)
   const navItems = vendorCategories.map(({ name }) => name)
   const vendorCategory = { name, description: null, items: [] }

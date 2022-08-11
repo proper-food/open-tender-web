@@ -8,6 +8,7 @@ import { Clock } from '../../icons'
 import { useTheme } from '@emotion/react'
 
 const VendorInfoView = styled(Box)`
+  width: 90%;
   max-width: 44rem;
   padding: 2rem 2rem 2.5rem;
   ${(props) =>
