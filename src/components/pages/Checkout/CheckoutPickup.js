@@ -6,11 +6,11 @@ import {
   serviceTypeNamesMap,
   timezoneMap,
 } from '@open-tender/js'
-import { ButtonLink, Heading } from '@open-tender/components'
-
+import { ButtonLink } from '@open-tender/components'
+import { openModal } from '../../../slices'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
-import { openModal } from '../../../slices'
+import CheckoutSectionTitle from './CheckoutSectionTitle'
 
 const CheckoutPickup = () => {
   const navigate = useNavigate()
@@ -49,7 +49,7 @@ const CheckoutPickup = () => {
 
   return (
     <CheckoutSection title="Location & Time">
-      <Heading as="p">{name}</Heading>
+      <CheckoutSectionTitle>{name}</CheckoutSectionTitle>
       <p>{address.street}</p>
       {/* <p>{addressLine2}</p> */}
       <p>

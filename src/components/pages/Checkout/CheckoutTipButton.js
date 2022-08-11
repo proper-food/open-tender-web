@@ -14,6 +14,7 @@ const CheckoutTipButtonView = styled.button`
   border-style: solid;
   border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
   border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
+  background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
   border-color: ${(props) =>
     props.isApplied
       ? props.theme.colors.success

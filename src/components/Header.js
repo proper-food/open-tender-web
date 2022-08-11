@@ -60,6 +60,9 @@ const HeaderTitle = styled.div`
       props.theme.fonts.headings.fontSmoothing};
     font-size: ${(props) => props.theme.fonts.sizes.big};
     color: ${(props) => props.theme.buttons.colors.header.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+    }
   }
 `
 

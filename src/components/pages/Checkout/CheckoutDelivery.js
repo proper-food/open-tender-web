@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { selectOrder } from '@open-tender/redux'
 import { makeRequestedAtStr, timezoneMap } from '@open-tender/js'
-import { ButtonLink, Heading } from '@open-tender/components'
-
+import { ButtonLink } from '@open-tender/components'
+import { openModal } from '../../../slices'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
-import { openModal } from '../../../slices'
+import CheckoutSectionTitle from './CheckoutSectionTitle'
 
 const CheckoutDelivery = () => {
   const navigate = useNavigate()
@@ -43,7 +43,7 @@ const CheckoutDelivery = () => {
 
   return (
     <CheckoutSection title="Delivery Address & Time">
-      <Heading as="p">{street}</Heading>
+      <CheckoutSectionTitle>{street}</CheckoutSectionTitle>
       <p>{addressLine2}</p>
       <p>{orderTime}</p>
       <CheckoutSectionFootnote>

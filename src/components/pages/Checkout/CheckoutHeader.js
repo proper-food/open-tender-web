@@ -11,7 +11,7 @@ import {
 import { formatDollars } from '@open-tender/js'
 import { isMobile } from 'react-device-detect'
 
-import { Back, Cart } from '../../buttons'
+import { Back, Cart, NavMenu } from '../../buttons'
 import { Header } from '../..'
 import { useNavigate } from 'react-router-dom'
 
@@ -59,7 +59,16 @@ const CheckoutHeader = () => {
   const back = cartId ? <Back onClick={reopen} /> : <Back path={menuSlug} />
 
   return isMobile ? (
-    <Header title={`Checkout ${amount}`} left={back} right={<Cart />} />
+    <Header
+      title={`Checkout - ${amount}`}
+      left={back}
+      right={
+        <>
+          <Cart />
+          <NavMenu />
+        </>
+      }
+    />
   ) : (
     <CheckoutHeaderView>{back}</CheckoutHeaderView>
   )

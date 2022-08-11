@@ -22,13 +22,20 @@ const CheckoutSectionView = styled('div')`
   }
 `
 
+const CheckoutSectionPreface = styled(Preface)`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
 const CheckoutSection = ({ title, subtitle, children, style = null }) => {
   return (
     <CheckoutSectionView style={style}>
       {title ? (
-        <Preface as="div" size="small" color="tertiary">
+        <CheckoutSectionPreface as="div" color="tertiary">
           {title}
-        </Preface>
+        </CheckoutSectionPreface>
       ) : null}
       {subtitle ? (
         <Text as="p" size="small">

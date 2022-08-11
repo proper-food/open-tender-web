@@ -2,10 +2,10 @@ import propTypes from 'prop-types'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
-import { ButtonLink, Heading } from '@open-tender/components'
-
+import { ButtonLink } from '@open-tender/components'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
+import CheckoutSectionTitle from './CheckoutSectionTitle'
 
 const CheckoutGuest = () => {
   const navigate = useNavigate()
@@ -18,9 +18,9 @@ const CheckoutGuest = () => {
 
   return check ? (
     <CheckoutSection title="Contact Info">
-      <Heading as="p">
+      <CheckoutSectionTitle>
         {first_name} {last_name}
-      </Heading>
+      </CheckoutSectionTitle>
       {email && <p>{email}</p>}
       {phone && <p>{phone}</p>}
       <CheckoutSectionFootnote>

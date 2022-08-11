@@ -10,13 +10,13 @@ import {
   validateOrder,
 } from '@open-tender/redux'
 import { isEmpty } from '@open-tender/js'
-import { ButtonLink, Heading } from '@open-tender/components'
-
+import { ButtonLink } from '@open-tender/components'
 import { openModal, selectBrand } from '../../../slices'
 import { Loading } from '../..'
+import CheckoutCompany from './CheckoutCompany'
 import CheckoutSection from './CheckoutSection'
 import CheckoutSectionFootnote from './CheckoutSectionFootnote'
-import CheckoutCompany from './CheckoutCompany'
+import CheckoutSectionTitle from './CheckoutSectionTitle'
 
 const CheckoutCustomer = () => {
   const dispatch = useDispatch()
@@ -92,9 +92,9 @@ const CheckoutCustomer = () => {
 
   return showCustomer ? (
     <CheckoutSection title="Contact Info">
-      <Heading as="p">
+      <CheckoutSectionTitle>
         {first_name} {last_name}
-      </Heading>
+      </CheckoutSectionTitle>
       <CheckoutCompany callback={callback} />
       <p>{email}</p>
       <p>{phone}</p>
