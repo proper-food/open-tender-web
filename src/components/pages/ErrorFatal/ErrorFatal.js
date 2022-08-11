@@ -42,7 +42,7 @@ const makeStyles = () => css`
   }
 `
 
-const LoadingContainer = styled('div')`
+const LoadingContainer = styled.div`
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -52,7 +52,7 @@ const LoadingContainer = styled('div')`
   align-items: center;
 `
 
-const FatalErrorView = styled('div')`
+const FatalErrorView = styled.div`
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -125,7 +125,7 @@ const ErrorFatalPage = ({ error, loading }) => {
           dispatch(fetchConfig())
           dispatch(incrementRetries())
         }, 1000 * (retries + 1))
-      } else if (memoizedError) {
+      } else if (memoizedError && status !== 403) {
         Sentry.withScope((scope) => {
           scope.setExtras(memoizedError)
           const errType = is500 ? '500' : 'Fatal'
@@ -134,7 +134,7 @@ const ErrorFatalPage = ({ error, loading }) => {
         })
       }
     }
-  }, [errMsg, memoizedError, isLoading, is500, retries, dispatch])
+  }, [errMsg, memoizedError, isLoading, is500, retries, dispatch, status])
 
   if (!showLoading && !error) return null
 
@@ -145,6 +145,16 @@ const ErrorFatalPage = ({ error, loading }) => {
         <LoadingContainer>
           <Loading type="Clip" size={32} />
         </LoadingContainer>
+      ) : status === 403 ? (
+        <FatalErrorView>
+          <div>
+            <h1>Inactive Merchant</h1>
+            <p>
+              This merchant account is no longer active. Please contact the
+              restaurant brand if you think this is a mistake.
+            </p>
+          </div>
+        </FatalErrorView>
       ) : error ? (
         <FatalErrorView>
           <div>
