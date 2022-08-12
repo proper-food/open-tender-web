@@ -1,10 +1,10 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 import { Body, ButtonLink, ButtonStyled } from '@open-tender/components'
 import React, { useCallback, useEffect, useState } from 'react'
 import { selectDisplaySettings } from '../../../slices'
 import { useSelector } from 'react-redux'
-import { isMobile } from 'react-device-detect'
 
 const MenuItemFooterView = styled.div`
   position: fixed;
@@ -88,13 +88,14 @@ const MenuItemFooter = ({
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
   const requiresCustomization = isIncomplete && !missingSize
+  const shouldSkip = (hasCustomize && skip) || requiresCustomization
 
   useEffect(() => {
-    if (init && hasCustomize) {
+    if (init) {
       setInit(false)
-      if (skip) setIsCustomize(true)
+      if (shouldSkip) setIsCustomize(true)
     }
-  }, [init, hasCustomize, skip, setIsCustomize])
+  }, [init, shouldSkip, setIsCustomize])
 
   const onRefChange = useCallback(
     (node) => {
@@ -122,7 +123,7 @@ const MenuItemFooter = ({
             </Body>
           )}
         </MenuItemFooterWarning>
-      ) : !isCustomize ? (
+      ) : !isCustomize && !isMobile ? (
         <MenuItemFooterWarning>
           <p>
             <ButtonLink onClick={cancel}>
