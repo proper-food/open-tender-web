@@ -1,21 +1,23 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Box, ButtonLink } from '@open-tender/components'
+import { BgImage, Body, Box, Heading } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
-
 import { openModal } from '../slices'
-import iconMap from './iconMap'
+import { Grid, ShoppingBag, Star, Truck } from './icons'
 import { Tag } from '.'
+
+const RewardButton = styled.button`
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+`
 
 const RewardView = styled(Box)`
   position: relative;
+  overflow: hidden;
   height: 100%;
-  min-height: 11rem;
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
 `
 
 const RewardTag = styled('div')`
@@ -29,70 +31,68 @@ const RewardTag = styled('div')`
 `
 
 const RewardImage = styled(BgImage)`
-  flex: 0 0 25%;
-  height: 100%;
+  width: 100%;
+  padding: 37.5% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-`
-
-const RewardDetails = styled('div')`
-  flex: 1 1 75%;
-  height: 100%;
-  padding: 0 0 0 1rem;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 33.33333% 0;
   }
 `
 
-const RewardContent = styled('div')``
+const RewardContent = styled.div`
+  padding: ${(props) =>
+    props.theme.cards.default.bgColor === 'transparent'
+      ? '1.1rem 0 0'
+      : '1.3rem 1.3rem 1.2rem'};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: ${(props) =>
+      props.theme.cards.default.bgColor === 'transparent'
+        ? '0.8rem 0 0'
+        : '1rem 1rem 0.8rem'};
+  }
+`
 
-const RewardNote = styled('div')`
+const RewardTitle = styled(Heading)`
+  font-size: ${(props) => props.theme.fonts.sizes.main};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
+
+// const RewardDescription = styled(Body)`
+//   margin: 0.8rem 0 0;
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     margin: 0.5rem 0 0;
+//     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+//   }
+// `
+
+const RewardNote = styled(Body)`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin: 0 0 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  margin: 0.8rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
 
   span {
     display: block;
     line-height: 1.4;
   }
+`
 
-  span:first-of-type {
+const RewardNoteIcon = styled.span`
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: -0.2rem 0.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 1.2rem;
     height: 1.2rem;
     margin: 0 0.4rem 0 0;
-    // color: ${(props) => props.theme.links.primary.color};
-`
-
-const RewardTitle = styled('p')`
-  color: ${(props) => props.theme.colors.primary};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  line-height: 1.2;
-`
-
-const RewardDescription = styled('p')`
-  margin: 0.3rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  line-height: 1.2;
-`
-
-const RewardExpiration = styled('div')`
-  margin: 1rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-`
-
-const RewardAction = styled('div')`
-  margin: 0 0 0 0.5rem;
-  // position: absolute;
-  // bottom: 0.4rem;
-  // right: 1rem;
-
-  button {
-    width: 2rem;
-    height: 2rem;
   }
 `
 
@@ -108,19 +108,28 @@ const makeServiceType = (serviceType) => {
     case 'WALKIN':
       return (
         <>
-          <span>{iconMap.Grid}</span>Scan in-store only
+          <RewardNoteIcon>
+            <Grid />
+          </RewardNoteIcon>
+          In-store only
         </>
       )
     case 'PICKUP':
       return (
         <>
-          <span>{iconMap.ShoppingBag}</span>Pickup orders only
+          <RewardNoteIcon>
+            <ShoppingBag />
+          </RewardNoteIcon>
+          Pickup only
         </>
       )
     case 'DELIVERY':
       return (
         <>
-          <span>{iconMap.Truck}</span>Delivery orders only
+          <RewardNoteIcon>
+            <Truck />
+          </RewardNoteIcon>
+          Delivery only
         </>
       )
     default:
@@ -141,30 +150,63 @@ const makeOrderType = (orderType) => {
   }
 }
 
-const makeLimitations = (item) => {
-  const { order_type, service_type } = item
+const RewardChannel = styled.span`
+  color: ${(props) => props.theme.colors.alert};
+`
+
+const RewardDash = styled.span`
+  margin: 0 0.2rem;
+`
+
+const makeChannelType = (channelType) => {
+  switch (channelType) {
+    case 'APP':
+      return <RewardChannel>App Only!</RewardChannel>
+    case 'ONLINE':
+      return <RewardChannel>Online Only!</RewardChannel>
+    case 'POS':
+      return <RewardChannel>At POS Only!</RewardChannel>
+    case 'KIOSK':
+      return <RewardChannel>Kiosk Only!</RewardChannel>
+    default:
+      return null
+  }
+}
+
+export const makeLimitations = (item) => {
+  const { channel_type, order_type, service_type } = item
   const serviceType = makeServiceType(service_type)
   const orderType = makeOrderType(order_type)
+  const channelType = makeChannelType(channel_type)
   const comma = serviceType && orderType ? ', ' : null
-  if (serviceType || orderType) {
+  const dash =
+    (serviceType || orderType) && channelType ? (
+      <RewardDash>-</RewardDash>
+    ) : null
+  if (serviceType || orderType || channelType) {
     return (
       <>
         {serviceType}
         {comma}
         {orderType}
+        {dash}
+        {channelType}
       </>
     )
   }
   return (
     <>
-      <span>{iconMap.Star}</span>Valid on all orders
+      <RewardNoteIcon>
+        <Star />
+      </RewardNoteIcon>
+      Valid on all orders
     </>
   )
 }
 
 const makeReward = (item) => {
   const imageUrl = makeImageUrl(item.images)
-  const expiration = formatDateStr(item.end_date, 'MMMM d, yyyy')
+  const expiration = formatDateStr(item.end_date, 'MMM d')
   const limitations = makeLimitations(item)
   return { ...item, imageUrl, expiration, limitations }
 }
@@ -185,42 +227,37 @@ const Reward = ({ item }) => {
     dispatch(openModal({ type: 'reward', args }))
   }
 
+  const expiration = reward.end_date ? (
+    reward.end_date === today ? (
+      <span>, today only</span>
+    ) : reward.end_date ? (
+      <span>, use by {reward.expiration}</span>
+    ) : null
+  ) : null
+
   return (
-    <RewardView>
-      <RewardTag>
-        {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
-      </RewardTag>
-      <RewardImage style={bgStyle}>&nbsp;</RewardImage>
-      <RewardDetails>
-        <div>
-          <RewardContent>
-            <RewardNote>{reward.limitations}</RewardNote>
-            <RewardTitle>{reward.title}</RewardTitle>
-            {reward.short_description && (
-              <RewardDescription>{reward.short_description}</RewardDescription>
-            )}
-          </RewardContent>
-          <RewardExpiration>
-            {reward.end_date === today ? (
-              <p>Valid today only</p>
-            ) : reward.end_date ? (
-              <p>Use by {reward.expiration}</p>
-            ) : (
-              <p>Expires never!</p>
-            )}
-          </RewardExpiration>
-        </div>
-      </RewardDetails>
-      <RewardAction>
-        <ButtonLink
-          onClick={redeem}
-          disabled={false}
-          label={`Apply ${reward.name}`}
-        >
-          {iconMap.PlusCircle}
-        </ButtonLink>
-      </RewardAction>
-    </RewardView>
+    <RewardButton onClick={redeem} label={`Apply ${reward.name}`}>
+      <RewardView>
+        <RewardTag>
+          {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
+        </RewardTag>
+        <RewardImage style={bgStyle} />
+        <RewardContent>
+          <RewardTitle as="p" className="title">
+            {reward.title}
+          </RewardTitle>
+          {/* {reward.short_description && (
+            <RewardDescription as="p">
+              {reward.short_description}
+            </RewardDescription>
+          )} */}
+          <RewardNote as="div">
+            {reward.limitations}
+            {expiration}
+          </RewardNote>
+        </RewardContent>
+      </RewardView>
+    </RewardButton>
   )
 }
 

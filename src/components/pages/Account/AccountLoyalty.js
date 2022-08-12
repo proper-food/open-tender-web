@@ -1,26 +1,24 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectBrand, selectConfig } from '../../../slices'
-import { PageSection } from '../..'
+import { selectBrand } from '../../../slices'
+import AccountSection from './AccountSection'
 import AccountLoyaltyProgram from './AccountLoyaltyProgram'
 import ThanxLoyalty from '../Rewards/ThanxLoyalty'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 
-const AccountLoyalty = ({ showTitle = true }) => {
-  const { has_rewards, has_thanx, has_levelup } = useSelector(selectBrand)
-  const { account } = useSelector(selectConfig)
-
-  return has_rewards ? (
-    <AccountLoyaltyProgram showTitle={showTitle} />
+const AccountLoyalty = () => {
+  const { has_loyalty, has_thanx, has_levelup } = useSelector(selectBrand)
+  const loyalty = has_loyalty ? (
+    <AccountLoyaltyProgram />
   ) : has_thanx ? (
-    <>
-      <PageSection {...account.loyalty} style={{ marginBottom: '2.5rem' }} />
-      <ThanxLoyalty />
-    </>
+    <ThanxLoyalty isAccount={true} />
   ) : has_levelup ? (
     <LevelUpLoyalty />
   ) : null
+
+  if (!loyalty) return null
+
+  return <AccountSection>{loyalty}</AccountSection>
 }
 
 AccountLoyalty.displayName = 'AccountLoyalty'

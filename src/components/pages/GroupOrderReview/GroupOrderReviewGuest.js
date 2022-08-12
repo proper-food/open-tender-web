@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   selectOrder,
   selectGroupOrder,
@@ -10,22 +10,19 @@ import {
   resetOrder,
   selectMenuSlug,
 } from '@open-tender/redux'
-import { Message, CartItem, ButtonStyled } from '@open-tender/components'
-
-import { selectConfig, selectDisplaySettings } from '../../../slices'
-import iconMap from '../../iconMap'
+import { ButtonStyled, CartSummaryItem, Message } from '@open-tender/components'
+import { selectConfig } from '../../../slices'
 import {
   Content,
   Header,
   Loading,
   Main,
-  OrderQuantity,
   PageTitle,
   PageContainer,
   PageContent,
 } from '../..'
-import { Menu, StartOver } from '../../buttons'
-import { GroupOrderCartView } from './GroupOrderReview'
+import { Back } from '../../buttons'
+import { GroupOrderCartView, GroupOrderCartTitle } from './GroupOrderReview'
 
 const makeSubtitle = (error, cart, firstName, config) => {
   if (!error) {
@@ -41,11 +38,10 @@ const makeSubtitle = (error, cart, firstName, config) => {
 
 const GroupOrderReviewGuest = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { groupOrders: config } = useSelector(selectConfig)
   const menuSlug = useSelector(selectMenuSlug)
   const { cart } = useSelector(selectOrder)
-  const displaySettings = useSelector(selectDisplaySettings)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     loading,
@@ -67,14 +63,14 @@ const GroupOrderReviewGuest = () => {
   const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
-    history.push('/')
+    navigate('/guest')
   }
 
   return (
     <>
       <Content>
         <Header
-          left={closed || error ? <StartOver /> : <Menu />}
+          left={closed || error ? null : <Back path={menuSlug} />}
           right={null}
         />
         <Main>
@@ -107,25 +103,24 @@ const GroupOrderReviewGuest = () => {
                     below.
                   </p>
                   <p>
-                    <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                    <ButtonStyled onClick={startOver}>
                       Start A New Order
                     </ButtonStyled>
                   </p>
                 </PageContent>
                 {cart.length > 0 && (
                   <GroupOrderCartView>
-                    <h2>Items submitted to {firstName}'s group order</h2>
+                    <GroupOrderCartTitle
+                      as="p"
+                      style={{ marginBottom: '2rem' }}
+                    >
+                      Items submitted to {firstName}'s group order
+                    </GroupOrderCartTitle>
                     <ul>
                       {cart.map((item, index) => {
                         return (
                           <li key={`${item.id}-${index}`}>
-                            <CartItem
-                              item={item}
-                              showModifiers={true}
-                              displaySettings={displaySettings}
-                            >
-                              <OrderQuantity item={item} show={false} />
-                            </CartItem>
+                            <CartSummaryItem item={item} />
                           </li>
                         )
                       })}

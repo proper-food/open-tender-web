@@ -1,27 +1,22 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import { isBrowser } from 'react-device-detect'
-import { ButtonStyled, ButtonIcon } from '@open-tender/components'
+import { useNavigate } from 'react-router-dom'
+import { ChevronLeftCircle } from '../icons'
+import { Icon } from '.'
 
-import iconMap from '../iconMap'
+const Back = ({ path = '/account', onClick }) => {
+  const navigate = useNavigate()
+  const back = () => navigate(path)
 
-const Back = ({ icon = iconMap.ArrowLeft, text = 'Back', onClick, color }) => {
-  return isBrowser ? (
-    <ButtonStyled onClick={onClick} icon={icon} color="header" size="header">
-      {text}
-    </ButtonStyled>
-  ) : (
-    <ButtonIcon label={text} color={color} onClick={onClick}>
-      {icon}
-    </ButtonIcon>
+  return (
+    <Icon margin="0 0 0 -1.25rem" onClick={onClick || back}>
+      <ChevronLeftCircle size={25} />
+    </Icon>
   )
 }
 
 Back.displayName = 'Back'
 Back.propTypes = {
-  text: propTypes.string,
-  classes: propTypes.string,
-  icon: propTypes.element,
+  path: propTypes.string,
 }
 
 export default Back

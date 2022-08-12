@@ -1,47 +1,33 @@
-import React, { useContext, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
   fetchCustomerOrder,
   selectCustomerOrder,
 } from '@open-tender/redux'
-import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
-
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
-  LinkIcon,
+  HeaderDefault,
   Main,
   Order as OrderSummary,
   PageContainer,
-  PageTitle,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
-import iconMap from '../../iconMap'
 
 const Order = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { id: orderId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const customerOrder = useSelector(selectCustomerOrder)
   const title = `Order #${orderId}`
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerOrder(orderId))
@@ -55,18 +41,9 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault path="/orders" />
         <Main>
-          {isMobile && <AccountTabs />}
           <PageContainer>
-            <PageTitle>
-              <LinkIcon
-                to="/orders"
-                icon={iconMap.ArrowLeft}
-                text="Back to all orders"
-                isBefore={true}
-              />
-            </PageTitle>
             <OrderSummary {...customerOrder} />
           </PageContainer>
         </Main>

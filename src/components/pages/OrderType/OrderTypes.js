@@ -1,17 +1,8 @@
-import React, { useEffect } from 'react'
-import propTypes from 'prop-types'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import {
-  Flag,
-  ShoppingBag,
-  Truck,
-  Users,
-  Gift,
-  Coffee,
-  ShoppingCart,
-  DollarSign,
-} from 'react-feather'
+import { useNavigate } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 import {
   resetRevenueCenters,
   resetOrderType,
@@ -20,90 +11,104 @@ import {
   setOrderServiceType,
   resetCheckout,
 } from '@open-tender/redux'
-import { Message, useGeolocation } from '@open-tender/components'
-
+import { Message } from '@open-tender/components'
 import {
-  selectConfig,
-  setGeoLatLng,
-  setGeoError,
-  setGeoLoading,
+  openModal,
+  selectContent,
   selectSettings,
+  setIsGroupOrder,
 } from '../../../slices'
+import {
+  Coffee,
+  DollarSign,
+  Flag,
+  Gift,
+  ShoppingBag,
+  ShoppingCart,
+  Truck,
+  UserPlus,
+  Users,
+} from '../../icons'
 import { NavButtons } from '../..'
-import styled from '@emotion/styled'
+import OrderTypeLinks from './OrderTypeLinks'
 
-const OrderTypesView = styled('div')`
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
-  }
+const OrderTypesView = styled.div`
+
+  & > div:first-of-type button {
+    ${(props) =>
+      !props.showDesc ? `height: ${props.isMobile ? '5.6rem' : '6rem'};` : ``}
+
 `
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { geoLatLng, geoError } = useGeolocation()
-  const { home } = useSelector(selectConfig)
+  const navigate = useNavigate()
+  const { orderType: orderTypeContent, home: homeContent } =
+    useSelector(selectContent)
+  const contentTypes =
+    orderTypeContent.orderTypes || homeContent.orderTypes || []
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
   const { cartGuestId } = cartGuest || {}
+  const { showDescriptions, showDescriptionsMobile } = orderTypeContent
+  const showDesc = isMobile ? showDescriptionsMobile : showDescriptions
+  // const asLinks = ['GIFT_CARDS', 'DONATIONS']
+  const asLinks = []
+  const orderButtons = orderTypes.filter((i) => !asLinks.includes(i))
+  const orderLinks = orderTypes.filter((i) => asLinks.includes(i))
 
   useEffect(() => {
-    dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
     dispatch(resetCheckout())
+    dispatch(setIsGroupOrder(false))
   }, [dispatch])
 
   useEffect(() => {
     if (cartGuestId) dispatch(resetGroupOrder())
   }, [dispatch, cartGuestId])
 
-  useEffect(() => {
-    if (geoLatLng) {
-      dispatch(setGeoLatLng(geoLatLng))
-    } else if (geoError) {
-      dispatch(setGeoError(geoError))
-    }
-  }, [geoLatLng, geoError, dispatch])
-
   const handleOutpost = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleWalkin = () => {
     dispatch(setOrderServiceType('OLO', 'WALKIN'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handlePickup = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleDelivery = () => {
     dispatch(setOrderServiceType('OLO', 'DELIVERY'))
-    history.push('/locations')
+    navigate('/locations')
+  }
+
+  const handleGroupOrder = () => {
+    dispatch(openModal({ type: 'groupOrderType' }))
   }
 
   const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
-    history.push('/catering')
+    navigate('/catering-address')
   }
 
   const handleMerch = () => {
     dispatch(setOrderServiceType('MERCH', 'DELIVERY'))
-    history.push('/locations')
+    navigate('/locations')
   }
 
   const handleGiftCards = () => {
-    history.push('/gift-cards')
+    navigate('/gift-cards')
   }
 
   const handleDonations = () => {
-    history.push('/donations')
+    navigate('/donations')
   }
 
   const handlers = {
@@ -111,45 +116,59 @@ const OrderTypes = () => {
     WALKIN: handleWalkin,
     PICKUP: handlePickup,
     DELIVERY: handleDelivery,
+    GROUP: handleGroupOrder,
     CATERING: handleCatering,
     MERCH: handleMerch,
     GIFT_CARDS: handleGiftCards,
     DONATIONS: handleDonations,
   }
 
+  const iconProps = { size: 18 }
+
   const icons = {
-    OUTPOST: <Flag size={null} />,
-    WALKIN: <Coffee size={null} />,
-    PICKUP: <ShoppingBag size={null} />,
-    DELIVERY: <Truck size={null} />,
-    CATERING: <Users size={null} />,
-    MERCH: <ShoppingCart size={null} />,
-    GIFT_CARDS: <Gift size={null} />,
-    DONATIONS: <DollarSign size={null} />,
+    OUTPOST: <Flag {...iconProps} />,
+    WALKIN: <Coffee {...iconProps} />,
+    PICKUP: <ShoppingBag {...iconProps} />,
+    DELIVERY: <Truck {...iconProps} />,
+    GROUP: <UserPlus {...iconProps} />,
+    CATERING: <Users {...iconProps} />,
+    MERCH: <ShoppingCart {...iconProps} />,
+    GIFT_CARDS: <Gift {...iconProps} />,
+    DONATIONS: <DollarSign {...iconProps} />,
   }
 
-  const buttons = orderTypes.map((orderType) => ({
-    ...home.orderTypes[orderType],
-    icon: icons[orderType],
-    onClick: handlers[orderType],
-  }))
+  const buttons = orderButtons
+    .map((orderType) => ({
+      ...contentTypes[orderType],
+      icon: icons[orderType],
+      onClick: handlers[orderType],
+    }))
+    .map((orderType) => ({
+      ...orderType,
+      subtitle: showDesc ? orderType.subtitle : null,
+    }))
 
   return (
-    <OrderTypesView>
+    <div>
       {hasOrderTypes ? (
-        <NavButtons buttons={buttons} />
+        <OrderTypesView showDesc={showDesc} isMobile={isMobile}>
+          <NavButtons buttons={buttons} />
+          <OrderTypeLinks
+            orderLinks={orderLinks}
+            contentTypes={contentTypes}
+            icons={icons}
+            handlers={handlers}
+          />
+        </OrderTypesView>
       ) : (
         <Message color="error">
           This brand is not currently accepting online orders.
         </Message>
       )}
-    </OrderTypesView>
+    </div>
   )
 }
 
 OrderTypes.displayName = 'OrderTypes'
-OrderTypes.propTypes = {
-  content: propTypes.element,
-}
 
 export default OrderTypes

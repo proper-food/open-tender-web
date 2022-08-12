@@ -1,41 +1,40 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  DeleteAccount,
+  HeaderDefault,
   Main,
   PageContainer,
   PageTitle,
   VerifyAccount,
 } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
-import { isBrowser } from 'react-device-detect'
-import AccountTabs from '../Account/AccountTabs'
+
+const AccountSettingsLogOut = styled.div`
+  margin: 1rem 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const AccountSettings = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { accountSettings: config } = useSelector(selectConfig)
   const { auth, profile } = useSelector(selectCustomer)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth) return navigate('/guest')
+  }, [auth, navigate])
 
   return profile ? (
     <>
@@ -45,21 +44,21 @@ const AccountSettings = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config}>
-              <div style={{ margin: '1rem 0 2rem' }}>
+              <AccountSettingsLogOut>
                 <p>
                   <ButtonLink onClick={() => dispatch(logoutCustomer())}>
                     Log out of your account
                   </ButtonLink>
                 </p>
                 <VerifyAccount style={{ margin: '2rem 0 0' }} />
-              </div>
+              </AccountSettingsLogOut>
             </PageTitle>
             <AccountSettingsButtons />
+            <DeleteAccount />
           </PageContainer>
         </Main>
       </Content>

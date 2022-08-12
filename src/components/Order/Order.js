@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -8,6 +8,7 @@ import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
+  resetCustomerOrder,
   editOrder,
 } from '@open-tender/redux'
 import {
@@ -17,63 +18,87 @@ import {
   isoToDate,
 } from '@open-tender/js'
 import {
-  Box,
   ButtonStyled,
-  CartItem,
-  Check,
+  CartSummaryItem,
+  CheckSummary,
+  Headline,
   Preface,
 } from '@open-tender/components'
 
-import { openModal, selectDisplaySettings } from '../../slices'
-import iconMap from '../iconMap'
-import { Loading } from '..'
+import { openModal } from '../../slices'
+import { Favorite } from '../buttons'
+import { FormSection, Loading } from '..'
 import OrderAddress from '../OrderAddress'
-import OrderQuantity from '../OrderQuantity'
 import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
+import OrderFulfillment from './OrderFulfillment'
+import OrderPrep from './OrderPrep'
 
-const OrderView = styled(Box)`
+const OrderView = styled.div`
   margin: 4rem auto;
-  max-width: ${(props) => props.theme.breakpoints.tablet};
-  padding: ${(props) => props.theme.layout.padding};
+  max-width: 54rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
     margin: 3rem auto;
   }
+`
 
-  h1 {
-    line-height: 1;
-    margin: 0.5rem 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
+const OrderHeader = styled.div`
+  text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: left;
+  }
+
+  & > span {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
 `
 
-const OrderButtons = styled(`div`)`
+const OrderTitle = styled(Headline)`
+  margin: 0.5rem 0;
+  font-size: ${(props) => props.theme.fonts.sizes.h1};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
+  }
+`
+
+const OrderButtons = styled.div`
   margin: 3rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: flex-start;
+    margin: 2.5rem 0 3rem;
+  }
 
   button + button {
     margin-left: 1rem;
   }
 `
 
-const OrderSectionHeader = styled('h2')`
-  margin: 4rem 0 1rem -0.1rem;
-  line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.h3};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-  }
+const OrderDetails = styled.div`
+  margin: 3rem 0 0;
 `
 
-const OrderCentered = styled('div')`
+const OrderItems = styled.div`
+  margin: 3rem 0 0;
+`
+
+const OrderFavorite = styled.div`
+  margin: 0 0 0;
+`
+
+const OrderCentered = styled.div`
   display: flex;
   justify-content: center;
-  max-width: ${(props) => props.theme.breakpoints.tablet};
+  max-width: 54rem;
   margin: 4rem auto;
   text-align: center;
 `
@@ -108,32 +133,42 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     taxes,
     totals,
     details,
+    order_fulfillment,
     tenders,
     rating,
+    order_prep,
   } = order || {}
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const isMerch = order_type === 'MERCH'
   const errMsg = handleOrderError(error)
-  const orderTypeName = makeOrderTypeName(order_type, service_type)
+  let orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const { auth } = useSelector(selectCustomer)
-  const displaySettings = useSelector(selectDisplaySettings)
   const check = { gift_cards, surcharges, discounts, taxes, totals, details }
   const {
     eating_utensils,
     serving_utensils,
     person_count,
     notes,
+    notes_internal,
     tax_exempt_id,
   } = details || {}
+  orderTypeName =
+    notes_internal && notes_internal.includes('TAKE OUT')
+      ? 'Take Out'
+      : orderTypeName
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
   const orderTitle = revenue_center
     ? `${orderTypeName} from ${revenue_center.name}`
     : ''
+
+  useEffect(() => {
+    return () => dispatch(resetCustomerOrder())
+  }, [dispatch])
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -150,40 +185,38 @@ const Order = ({ order, loading, error, isConfirmation }) => {
 
   return !isEmpty(order) ? (
     <OrderView>
-      <div>
-        <Preface>Order #{order_id}</Preface>
-        {isConfirmation ? <h2>{orderTitle}</h2> : <h1>{orderTitle}</h1>}
-        {!isMerch && (
+      <OrderHeader>
+        <Preface size="small" color="tertiary">
+          Order #{order_id}
+        </Preface>
+        <OrderTitle as={isConfirmation ? 'h2' : 'h1'}>{orderTitle}</OrderTitle>
+        {!isMerch && auth && (
           <OrderButtons>
-            {auth && order.is_editable && (
+            {order.is_editable && (
               <ButtonStyled
-                icon={iconMap.Edit}
                 onClick={() => dispatch(editOrder(order))}
                 size="small"
               >
                 Edit
               </ButtonStyled>
             )}
-            <ButtonStyled
-              icon={iconMap.RefreshCw}
-              onClick={handleReorder}
-              size="small"
-            >
+            <ButtonStyled onClick={handleReorder} size="small">
               Reorder
             </ButtonStyled>
             {!isUpcoming && (
               <ButtonStyled
-                icon={iconMap.Star}
                 onClick={updateRating}
                 size="small"
+                color="secondary"
               >
-                {rating ? 'Update Rating' : 'Add Rating'}
+                {rating ? 'Update Rating' : 'Rate Order'}
               </ButtonStyled>
             )}
           </OrderButtons>
         )}
-      </div>
-      <div>
+      </OrderHeader>
+      <OrderPrep orderId={order_id} orderPrep={order_prep} />
+      <OrderDetails>
         <OrderSection label="Location">
           <OrderRevenueCenter revenueCenter={revenue_center} />
         </OrderSection>
@@ -205,6 +238,11 @@ const Order = ({ order, loading, error, isConfirmation }) => {
             />
           </OrderSection>
         )}
+        {order_fulfillment && (
+          <OrderSection label="Curbside Pickup">
+            <OrderFulfillment {...order_fulfillment} />
+          </OrderSection>
+        )}
         {notes && notes.length ? (
           <OrderSection label="Notes" noTitle={true}>
             <p>{notes}</p>
@@ -218,7 +256,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
                 {person_count && ` for ${person_count} people`}
               </p>
             ) : (
-              person_count && <p>30 people to be accommodated</p>
+              person_count && <p>{person_count} people to be accommodated</p>
             )}
             {serving_utensils && <p>Serving utensils included</p>}
             {tax_exempt_id && <p>Tax exempt ID of {tax_exempt_id}</p>}
@@ -229,34 +267,27 @@ const Order = ({ order, loading, error, isConfirmation }) => {
             <OrderRating {...rating} />
           </OrderSection>
         ) : null}
-      </div>
-      {displayedItems.length > 0 && (
-        <>
-          <OrderSectionHeader>Items in Your Order</OrderSectionHeader>
-          <ul>
+      </OrderDetails>
+      <FormSection title="Order Summary & Receipt">
+        {displayedItems.length > 0 && (
+          <OrderItems>
             {displayedItems.map((item, index) => {
+              const show = auth && lookup
               const favoriteId = lookup ? lookup[item.signature] || null : null
               return (
-                <li key={`${item.id}-${index}`}>
-                  <CartItem
-                    item={item}
-                    showModifiers={true}
-                    displaySettings={displaySettings}
-                  >
-                    <OrderQuantity
-                      item={item}
-                      show={auth && lookup ? true : false}
-                      favoriteId={favoriteId}
-                    />
-                  </CartItem>
-                </li>
+                <CartSummaryItem key={`${item.id}-${index}`} item={item}>
+                  {show && (
+                    <OrderFavorite>
+                      <Favorite item={item} favoriteId={favoriteId} />
+                    </OrderFavorite>
+                  )}
+                </CartSummaryItem>
               )
             })}
-          </ul>
-        </>
-      )}
-      <OrderSectionHeader>Your Receipt</OrderSectionHeader>
-      <Check check={check} tenders={tenders} />
+          </OrderItems>
+        )}
+        <CheckSummary check={check} tenders={tenders} showTenders={true} />
+      </FormSection>
     </OrderView>
   ) : isLoading ? (
     <OrderCentered>

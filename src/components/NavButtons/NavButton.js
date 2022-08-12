@@ -1,9 +1,9 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-// import { BgImage, Box, ButtonLink } from '@open-tender/components'
-
-import iconMap from '../iconMap'
+import { Body, Heading } from '@open-tender/components'
+import { ArrowRight } from '../icons'
+import { useTheme } from '@emotion/react'
+import { isMobile } from 'react-device-detect'
 
 const NavButtonView = styled('button')`
   width: 100%;
@@ -11,77 +11,146 @@ const NavButtonView = styled('button')`
   justify-content: space-between;
   align-items: center;
   line-height: 1;
-  padding: 2rem 2rem 2rem 2.5rem;
+  height: 7rem;
+  padding: 0 2rem 0 2.5rem;
   margin: 0 0 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  // font-family: ${(props) => props.theme.fonts.headings.family};
-  // font-weight: ${(props) => props.theme.fonts.headings.weight};
-  font-weight: ${(props) => props.theme.boldWeight};
-  color: ${(props) => props.theme.fonts.headings.color};
-  transition: ${(props) => props.theme.links.transition};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
+  transition: ${(props) => props.theme.links.transition};
   border-style: solid;
-  border-width: ${(props) => props.theme.border.width};
-  border-color: ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  box-shadow: ${(props) => props.theme.boxShadow.outer};
+  border-width: ${(props) => props.theme.buttons.sizes.large.borderWidth};
+  border-radius: ${(props) => props.theme.buttons.sizes.large.borderRadius};
+  border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
+  background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 0.5rem;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    // height: 6.4rem;
+    padding: 0 0rem 0 1.75rem;
+    margin: 0;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    background-color: transparent;
+    border-bottom: ${(props) => props.theme.border.width} solid
+      ${(props) => props.theme.border.color};
   }
 
   &:hover {
-    border-style: solid;
-    border-width: ${(props) => props.theme.border.width};
-    border-color: ${(props) => props.theme.border.color};
-    border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) => props.theme.bgColors.tertiary};
+    border-color: ${(props) =>
+      props.theme.buttons.colors.largeHover.borderColor};
+    background-color: ${(props) =>
+      props.theme.buttons.colors.largeHover.bgColor};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-color: ${(props) => props.theme.border.color};
+      background-color: transparent;
+    }
   }
 
   &:last-of-type {
     margin-bottom: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-bottom: 0;
+    }
   }
 `
 
 const NavButtonIcon = styled('span')`
   position: relative;
-  // top: -0.1rem;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.8rem;
+  height: 1.8rem;
   flex-shrink: 0;
   line-height: 0;
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.iconColor};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
+  }
 `
 
-const NavButtonTitle = styled('span')`
+const NavButtonText = styled.span`
   flex-grow: 1;
-  padding: 0 2.5rem;
-  line-height: 1.2;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 2.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 2.25rem;
+  }
+`
+
+const NavButtonTitle = styled(Heading)`
+  display: block;
+  margin: 0;
+  margin-left: ${(props) => props.theme.buttons.sizes.large.titleMarginLeft};
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.color};
+  font-size: ${(props) => props.theme.buttons.sizes.large.titleFontSize};
+  font-weight: ${(props) => props.theme.buttons.sizes.large.titleFontWeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-left: ${(props) =>
+      props.theme.buttons.sizes.large.titleMarginLeftMobile};
+    font-size: ${(props) =>
+      props.theme.buttons.sizes.large.titleFontSizeMobile};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.color};
+  }
+`
+
+const NavButtonSubtitle = styled(Body)`
+  display: block;
+  margin: 0;
+  margin-top: ${(props) => props.theme.buttons.sizes.large.subtitleMarginTop};
+  transition: ${(props) => props.theme.links.transition};
+  color: ${(props) => props.theme.buttons.colors.large.subtitleColor};
+  font-size: ${(props) => props.theme.buttons.sizes.large.subtitleFontSize};
+  font-weight: ${(props) => props.theme.buttons.sizes.large.subtitleFontWeight};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: ${(props) =>
+      props.theme.buttons.sizes.large.subtitleMarginTopMobile};
+    font-size: ${(props) =>
+      props.theme.buttons.sizes.large.subtitleFontSizeMobile};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.buttons.colors.largeHover.subtitleColor};
+  }
 `
 
 const NavButtonArrow = styled('span')`
   position: relative;
-  // top: -0.1rem;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 2.2rem;
+  height: 2.2rem;
   line-height: 0;
   flex-shrink: 0;
+  color: ${(props) => props.theme.buttons.colors.large.iconColor};
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);
 
   button:hover & {
     transform: translateX(1rem);
+    color: ${(props) => props.theme.buttons.colors.largeHover.iconColor};
 
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: translateX(0);
     }
   }
 `
 
-const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
+const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
+  const theme = useTheme()
+  const { showSubtitle, showSubtitleMobile } = theme.buttons.sizes.large
+  const show = isMobile ? showSubtitleMobile : showSubtitle
+
   const onUp = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
@@ -91,8 +160,15 @@ const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
   return (
     <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
-      <NavButtonTitle>{title}</NavButtonTitle>
-      <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
+      <NavButtonText>
+        <NavButtonTitle>{title}</NavButtonTitle>
+        {subtitle && show ? (
+          <NavButtonSubtitle>{subtitle}</NavButtonSubtitle>
+        ) : null}
+      </NavButtonText>
+      <NavButtonArrow>
+        <ArrowRight strokeWidth={2} />
+      </NavButtonArrow>
     </NavButtonView>
   )
 }

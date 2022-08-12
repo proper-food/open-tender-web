@@ -1,14 +1,15 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import styled from '@emotion/styled'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
+  fetchLocation,
   selectGroupOrder,
   resetGroupOrder,
   resetOrder,
-  fetchRevenueCenter,
   selectRevenueCenter,
   selectTimezone,
   joinGroupOrder,
@@ -20,11 +21,7 @@ import {
   FormWrapper,
   ButtonStyled,
 } from '@open-tender/components'
-
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
-import iconMap from '../../iconMap'
 import {
   Content,
   HeaderLogo,
@@ -34,9 +31,7 @@ import {
   PageTitle,
   PageContainer,
 } from '../..'
-
 import GroupOrderError from './GroupOrderError'
-import styled from '@emotion/styled'
 
 const formatTime = (time) => {
   return time
@@ -130,7 +125,7 @@ const GroupOrderGuestIntro = styled('div')`
 
 const GroupOrderGuest = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { token } = useParams()
   const tokenLower = token ? token.toLowerCase() : null
   const { title: siteTitle } = useSelector(selectBrand)
@@ -188,18 +183,11 @@ const GroupOrderGuest = () => {
     [dispatch]
   )
 
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
   useEffect(() => {
     if (isCartOwner) {
-      history.push(`/menu/${slug}`)
+      navigate(`/menu/${slug}`)
     } else if (cartGuestId && currentTokenLower === tokenLower) {
-      if (slug) history.push(`/menu/${slug}`)
+      if (slug) navigate(`/menu/${slug}`)
     } else if (currentTokenLower !== tokenLower) {
       if (profile) dispatch(logoutCustomer())
       dispatch(resetGroupOrder())
@@ -207,7 +195,7 @@ const GroupOrderGuest = () => {
     }
   }, [
     dispatch,
-    history,
+    navigate,
     tokenLower,
     currentTokenLower,
     cartGuestId,
@@ -217,13 +205,13 @@ const GroupOrderGuest = () => {
   ])
 
   useEffect(() => {
-    if (revenueCenterId) dispatch(fetchRevenueCenter(revenueCenterId))
+    if (revenueCenterId) dispatch(fetchLocation(revenueCenterId))
   }, [dispatch, revenueCenterId])
 
   const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
-    history.push('/')
+    navigate('/guest')
   }
 
   return (
@@ -265,10 +253,7 @@ const GroupOrderGuest = () => {
                       cartOwnerName={cartOwnerName}
                     />
                     <p>
-                      <ButtonStyled
-                        icon={iconMap.RefreshCw}
-                        onClick={startOver}
-                      >
+                      <ButtonStyled onClick={startOver}>
                         Start A New Order
                       </ButtonStyled>
                     </p>

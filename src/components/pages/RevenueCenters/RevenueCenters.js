@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { animateScroll as scroll } from 'react-scroll'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -13,14 +12,12 @@ import {
 import { makeOrderTypeFromParam } from '@open-tender/js'
 import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectSettings,
   selectGeoLatLng,
   selectHeaderHeight,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Header,
@@ -29,25 +26,15 @@ import {
   ScreenreaderTitle,
 } from '../..'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import {
-  Account,
-  Back,
-  Home,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-} from '../../buttons'
+import { Back, Cart, NavMenu } from '../../buttons'
 
 const RevenueCenters = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
   const headerHeight = useSelector(selectHeaderHeight)
   const offset = headerHeight + 20
-  // const { revenueCenters: config } = useSelector(selectConfig)
-  // const navTitle =
-  //   config.title && config.title.length < 20 ? config.title : 'Find a Store'
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps } = useSelector(selectSettings)
   const { apiKey, defaultCenter, zoom, styles, icons } = googleMaps
@@ -60,13 +47,9 @@ const RevenueCenters = () => {
   const hasTypes = orderType && serviceType
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
-  const { windowRef } = useContext(AppContext)
   const missingAddress = serviceType === 'DELIVERY' && !address
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
+  const backPath =
+    orderType === 'CATERING' ? '/catering-address' : '/order-type'
 
   useEffect(() => {
     let paramOrderType = null
@@ -74,11 +57,11 @@ const RevenueCenters = () => {
       const [orderType, serviceType, isOutpost] = makeOrderTypeFromParam(param)
       if (paramOrderType) {
         dispatch(setOrderServiceType(orderType, serviceType, isOutpost))
-        if (paramOrderType[0] === 'CATERING') history.push('/catering')
+        if (paramOrderType[0] === 'CATERING') navigate('/catering-address')
       }
     }
-    if (!hasTypes && !paramOrderType) history.push('/')
-  }, [hasTypes, param, dispatch, history])
+    if (!hasTypes && !paramOrderType) navigate('/account')
+  }, [hasTypes, param, dispatch, navigate])
 
   const setActive = useCallback(
     (revenueCenter) => {
@@ -90,14 +73,12 @@ const RevenueCenters = () => {
         if (element) {
           const position = element.offsetTop + offset
           scroll.scrollTo(position, {
-            container: windowRef.current,
             duration: 500,
             smooth: true,
             offset: 0,
           })
         }
       } else {
-        // windowRef.current.scrollTop = 0
         setActiveMarker(null)
         const newCenter = address
           ? { lat: address.lat, lng: address.lng }
@@ -105,7 +86,7 @@ const RevenueCenters = () => {
         setCenter(newCenter)
       }
     },
-    [address, defaultCenter, geoLatLng, windowRef, offset]
+    [address, defaultCenter, geoLatLng, offset]
   )
 
   return (
@@ -116,26 +97,13 @@ const RevenueCenters = () => {
       <Content maxWidth="76.8rem">
         <Header
           maxWidth="76.8rem"
-          borderColor={isMobile ? 'transparent' : 'primary'}
           style={{ boxShadow: 'none' }}
-          left={
-            orderType === 'CATERING' ? (
-              <Back text="Catering" onClick={() => history.push('/catering')} />
-            ) : (
-              <Home />
-            )
-          }
+          left={<Back path={backPath} />}
           right={
-            isMobile ? (
-              <Account />
-            ) : (
-              <>
-                <Account />
-                <RevenueCenter />
-                <ServiceType />
-                <RequestedAt />
-              </>
-            )
+            <>
+              <Cart />
+              <NavMenu />
+            </>
           }
         />
         <Main>

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import { useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
-import { removeMessage } from '@open-tender/redux'
 import styled from '@emotion/styled'
+import { removeMessage } from '@open-tender/redux'
+import { X } from '../icons'
 
-const AlertView = styled('li')`
+const AlertView = styled.li`
   display: block;
   float: right;
   clear: right;
@@ -46,13 +44,8 @@ const AlertView = styled('li')`
   }
 `
 
-const thanxMsg = 'Thanks! Please check your email on this device.'
-
 const Alert = ({ message, id }) => {
   const dispatch = useDispatch()
-  const { pathname } = useLocation()
-  const isCheckout = pathname.includes('checkout')
-  const [skip, setSkip] = useState(false)
 
   const handleRemove = (evt) => {
     evt.preventDefault()
@@ -60,14 +53,6 @@ const Alert = ({ message, id }) => {
     evt.target.blur()
   }
 
-  useEffect(() => {
-    if (message === thanxMsg) {
-      dispatch(removeMessage(id))
-      setSkip(true)
-    }
-  }, [dispatch, message, id, isCheckout])
-
-  if (skip) return null
   return (
     <AlertView>
       <span>

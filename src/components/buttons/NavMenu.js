@@ -1,30 +1,18 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
-import { ButtonIcon } from '@open-tender/components'
-
+import { useDispatch } from 'react-redux'
 import { toggleNav } from '../../slices'
-import iconMap from '../iconMap'
+import { Hamburger } from '../icons'
+import Icon from './Icon'
 
-const NavMenu = ({ color }) => {
+const NavMenu = () => {
   const dispatch = useDispatch()
-  const { auth } = useSelector(selectCustomer)
 
   return (
-    <ButtonIcon
-      label={auth ? 'Account Navigation' : 'Login'}
-      color={color}
-      onClick={() => dispatch(toggleNav())}
-    >
-      {iconMap.Menu}
-    </ButtonIcon>
+    <Icon margin="0 -1.5rem 0 0" onClick={() => dispatch(toggleNav())}>
+      <Hamburger size={20} />
+    </Icon>
   )
 }
 
 NavMenu.displayName = 'NavMenu'
-NavMenu.propTypes = {
-  color: propTypes.string,
-}
 
 export default NavMenu

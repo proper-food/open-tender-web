@@ -1,49 +1,41 @@
-import Account from './Account'
-import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
 import Back from './Back'
 import ButtonBoth from './ButtonBoth'
 import CancelEdit from './CancelEdit'
-import Deals from './Deals'
+import Cart from './Cart'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
 import GroupOrder from './GroupOrder'
-import Home from './Home'
+import GroupOrderIcon from './GroupOrderIcon'
+import Icon from './Icon'
 import LeaveGroup from './LeaveGroup'
-import Locations from './Locations'
-import Logout from './Logout'
-import Menu from './Menu'
+import LeaveGroupIcon from './LeaveGroupIcon'
 import NavMenu from './NavMenu'
-import OrderNow from './OrderNow'
+import NavSiteMenu from './NavSiteMenu'
 import Points from './Points'
-import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
 import ServiceType from './ServiceType'
-import StartOver from './StartOver'
+import User from './User'
 
 export {
-  Account,
-  AccountSettings,
   Allergens,
   Back,
   ButtonBoth,
   CancelEdit,
-  Deals,
+  Cart,
   Favorite,
   GroupOrder,
+  GroupOrderIcon,
   GroupGuest,
-  Home,
+  Icon,
   LeaveGroup,
-  Locations,
-  Logout,
-  Menu,
+  LeaveGroupIcon,
   NavMenu,
-  OrderNow,
+  NavSiteMenu,
   Points,
-  Reopen,
   RequestedAt,
   RevenueCenter,
   ServiceType,
-  StartOver,
+  User,
 }

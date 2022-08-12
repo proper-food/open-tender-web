@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
+import propTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
   selectResetPassword,
@@ -50,10 +50,26 @@ const LoginModalIntro = styled('p')`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
+const LoginModalClose = styled.div`
+  label: LoginModalClose;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const LoginModalFooter = styled.div`
+  label: LoginModalFooter;
+
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+`
+
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { has_thanx } = useSelector(selectBrand)
   const customer = useSelector(selectCustomer)
   const { profile } = customer
@@ -99,7 +115,7 @@ const LoginModal = ({ callback }) => {
 
   const signUp = () => {
     dispatch(closeModal())
-    history.push(`/signup`)
+    navigate(`/signup`)
   }
 
   return (
@@ -128,18 +144,20 @@ const LoginModal = ({ callback }) => {
         }
         footer={
           !has_thanx && (
-            <div>
+            <LoginModalFooter>
               <ButtonLink onClick={resetSent ? toggleResetSent : toggleReset}>
                 {msg.reset}
               </ButtonLink>
-            </div>
+            </LoginModalFooter>
           )
         }
       >
         {resetSent ? (
-          <ButtonStyled onClick={() => dispatch(closeModal())}>
-            Close
-          </ButtonStyled>
+          <LoginModalClose>
+            <ButtonStyled onClick={() => dispatch(closeModal())}>
+              Close
+            </ButtonStyled>
+          </LoginModalClose>
         ) : isReset ? (
           <SendResetForm
             {...resetPassword}

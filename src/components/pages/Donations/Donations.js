@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { DonationForm, FormWrapper } from '@open-tender/components'
 import {
@@ -13,9 +13,7 @@ import {
   setAlert,
 } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectRecaptcha } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -24,18 +22,19 @@ import {
   HeaderDefault,
   PageContainer,
 } from '../..'
+import { cardIconMap } from '../../../assets/cardIcons'
 
 const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
 const Donations = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { donations: config } = useSelector(selectConfig)
   const { donations: includeRecaptcha } = useSelector(selectRecaptcha)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_donations } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const { success, loading, error, donation } = useSelector(selectDonation)
-  const { windowRef } = useContext(AppContext)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseDonation(data, callback)),
     [dispatch]
@@ -44,10 +43,12 @@ const Donations = () => {
   const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
+    if (!has_donations) return navigate('/account')
+  }, [has_donations, navigate])
+
+  useEffect(() => {
     return () => dispatch(resetDonation())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())
@@ -76,17 +77,17 @@ const Donations = () => {
                 donation={donation}
                 loading={loading}
                 error={error}
-                windowRef={windowRef}
                 recaptchaKey={includeRecaptcha ? recaptchaKey : null}
+                cardIconMap={cardIconMap}
               />
             </FormWrapper>
             {success && (
               <PageContent>
                 <p>
                   {customer ? (
-                    <Link to="/">Head back to your account page</Link>
+                    <Link to="/account">Head back to your account page</Link>
                   ) : (
-                    <Link to="/">
+                    <Link to="/account">
                       Head back to the home page to start an order
                     </Link>
                   )}

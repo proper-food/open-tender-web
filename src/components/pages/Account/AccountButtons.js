@@ -1,71 +1,75 @@
 import styled from '@emotion/styled'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { resetOrder, selectOrder } from '@open-tender/redux'
+import { ButtonLarge } from '../..'
+import { ArrowRight } from '../../icons'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { selectCustomerGroupOrders } from '@open-tender/redux'
 
-import { selectBrand, selectSettings } from '../../../slices'
-import iconMap from '../../iconMap'
-import { NavButtons } from '../..'
+export const AccountButtonsView = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    padding: ${(props) => props.theme.layout.paddingMobile};
+    background-color: ${(props) => props.theme.bgColors.primary};
+  }
 
-const AccountButtonsContainer = styled('div')`
-  // padding: 0 2.5rem 2.5rem;
+  button {
+    width: 25rem;
+    max-width: calc(50% - 1rem);
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  button + button {
+    margin: 0 2rem 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
 `
 
-const navButtons = [
-  {
-    icon: iconMap.Users,
-    title: 'Group Orders',
-    path: '/group-orders',
-  },
-  {
-    icon: iconMap.ShoppingBag,
-    title: 'Order History',
-    path: '/orders',
-  },
-  {
-    icon: iconMap.Heart,
-    title: 'Favorites',
-    path: '/favorites',
-  },
-  {
-    icon: iconMap.Award,
-    title: 'Rewards',
-    path: '/rewards',
-  },
-  {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/account/gift-cards',
-  },
-  {
-    icon: iconMap.User,
-    title: 'Account',
-    path: '/account',
-  },
-]
+const AccountButtons = React.forwardRef((props, ref) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const currentOrder = useSelector(selectOrder)
+  const { revenueCenter, serviceType, cart } = currentOrder
+  const isCurrentOrder = revenueCenter && serviceType && cart.length > 0
 
-const AccountButtons = () => {
-  const history = useHistory()
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const { accountSections } = useSelector(selectSettings)
-  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
-  const hasRewards = has_rewards || has_thanx || hasLevelUp
-  const { entities: groupOrders } = useSelector(selectCustomerGroupOrders)
-  let removed = !hasRewards ? ['/rewards'] : []
-  if (!groupOrders.length) removed.push('/group-orders')
-  const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
-  const buttons = filteredButtons.map((i) => ({
-    ...i,
-    onClick: () => history.push(i.path),
-  }))
+  const continueCurrent = () => {
+    navigate(revenueCenter ? `/menu/${revenueCenter.slug}` : '/order-type')
+  }
+
+  const startNewOrder = () => {
+    dispatch(resetOrder())
+    navigate(`/order-type`)
+  }
 
   return (
-    <AccountButtonsContainer>
-      <NavButtons buttons={buttons} />
-    </AccountButtonsContainer>
+    <AccountButtonsView ref={ref}>
+      <ButtonLarge
+        onClick={isCurrentOrder ? continueCurrent : startNewOrder}
+        text={isCurrentOrder ? 'Continue Order' : 'Order Now'}
+        color="primary"
+      >
+        <ArrowRight size={22} strokeWidth={2} />
+      </ButtonLarge>
+    </AccountButtonsView>
   )
-}
+})
 
 AccountButtons.displayName = 'AccountButtons'
+
 export default AccountButtons

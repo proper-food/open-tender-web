@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -16,10 +16,8 @@ import {
   Message,
   OrderRatingForm,
 } from '@open-tender/components'
-
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
+import { Star } from '../../icons'
 import {
   Content,
   HeaderDefault,
@@ -29,7 +27,6 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
-import iconMap from '../../iconMap'
 
 const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   if (unsubscribe) {
@@ -79,7 +76,6 @@ const Rating = () => {
   const title = orderRating
     ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
-  const { windowRef } = useContext(AppContext)
   const isSubmitted = submitted && !error && loading !== 'pending'
   const pageTitles = makePageTitles(
     orderRating,
@@ -98,11 +94,6 @@ const Rating = () => {
   )
 
   const callback = useCallback(() => setSubmitted(true), [setSubmitted])
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
 
   useEffect(() => {
     if (unsubscribe) {
@@ -135,9 +126,9 @@ const Rating = () => {
               ) : submitted ? (
                 <p>
                   {auth ? (
-                    <Link to="/">Head back to your account page</Link>
+                    <Link to="/account">Head back to your account page</Link>
                   ) : (
-                    <Link to="/">Head back to the home page</Link>
+                    <Link to="/account">Head back to the home page</Link>
                   )}
                 </p>
               ) : orderRating ? (
@@ -152,7 +143,7 @@ const Rating = () => {
                   <OrderRatingForm
                     orderId={ratingUuid}
                     orderRating={adjustedRating}
-                    icon={iconMap.Star}
+                    icon={<Star />}
                     updateRating={updateRating}
                     callback={callback}
                   />

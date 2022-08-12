@@ -1,13 +1,11 @@
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeCustomerGiftCard } from '@open-tender/redux'
 import { formatDateStr, dateStrToDate } from '@open-tender/js'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
-
-import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
+import { openModal, selectBrand } from '../../../slices'
 import { LinkSeparator, QRCode, Row } from '../..'
-import styled from '@emotion/styled'
 
 const GiftCardButton = styled('button')`
   width: 8rem;
@@ -15,6 +13,7 @@ const GiftCardButton = styled('button')`
 
 const GiftCardsList = ({ giftCards, isLoading }) => {
   const dispatch = useDispatch()
+  const { has_pos } = useSelector(selectBrand)
 
   const handleAddValue = (giftCard) => {
     dispatch(openModal({ type: 'giftCard', args: { giftCard } }))
@@ -49,18 +48,19 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
         const removeable = expired || giftCard.balance === '0.00'
         const src = giftCard.qr_code_url
         const alt = `Gift Card ${giftCard.card_number}`
-        const icon = src ? (
-          <GiftCardButton onClick={(evt) => expand(evt, src, alt)}>
-            <QRCode src={src} alt={alt} />
-          </GiftCardButton>
-        ) : null
+        const icon =
+          has_pos && src ? (
+            <GiftCardButton onClick={(evt) => expand(evt, src, alt)}>
+              <QRCode src={src} alt={alt} />
+            </GiftCardButton>
+          ) : null
         return (
           <Row
             key={giftCard.card_number}
             icon={icon}
             content={
               <>
-                <p>{giftCard.card_number}</p>
+                <p className="title">{giftCard.card_number}</p>
                 <p>${giftCard.balance} remaining balance</p>
                 {giftCard.expiration && (
                   <p>
@@ -93,7 +93,6 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
               !expired ? (
                 <ButtonStyled
                   onClick={() => handleAddValue(giftCard)}
-                  icon={iconMap.PlusCircle}
                   size="small"
                   disabled={isLoading}
                 >

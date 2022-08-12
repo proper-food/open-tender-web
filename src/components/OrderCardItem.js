@@ -1,4 +1,3 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -10,8 +9,6 @@ import {
 } from '@open-tender/redux'
 import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
-
-import iconMap from './iconMap'
 import { Favorite } from './buttons'
 import { Card } from '.'
 
@@ -70,12 +67,8 @@ const OrderCardItem = ({ item }) => {
       content={<OrderCardItemImage bgStyle={bgStyle} names={optionNames} />}
       footer={
         <>
-          <ButtonStyled
-            icon={iconMap.PlusCircle}
-            onClick={() => addToCart(item)}
-            size="small"
-          >
-            Add
+          <ButtonStyled onClick={() => addToCart(item)} size="small">
+            Add To Order
           </ButtonStyled>
           <Favorite item={item} favoriteId={favoriteId} />
         </>

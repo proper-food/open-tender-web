@@ -19,7 +19,7 @@ const PageHeaderView = styled('div')`
   }
 
   p {
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 0.5rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: 0.5rem 0 0;

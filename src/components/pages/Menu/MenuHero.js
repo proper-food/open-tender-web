@@ -10,7 +10,7 @@ const MenuHeroView = styled(BgImage)`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   padding: 6rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     min-height: 0;

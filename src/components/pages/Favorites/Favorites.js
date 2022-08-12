@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerFavorites,
@@ -12,13 +11,11 @@ import {
 } from '@open-tender/redux'
 import { getLastOrder, makeDisplayItem } from '@open-tender/js'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   ItemCards,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   OrderCardItem,
@@ -27,34 +24,27 @@ import {
   PageContainer,
   PageContent,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const Favorites = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const { entities: orders } = useSelector(selectCustomerOrders)
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   const [favorites, setFavorites] = useState(entities)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_favorites } = useSelector(selectBrand)
   const { favorites: config } = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const items = favorites.map((i) => ({ ...i.item }))
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
+    if (!auth || !has_favorites) return navigate('/account')
+  }, [auth, has_favorites, navigate])
 
   useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
-
-  useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   useEffect(() => {
     dispatch(fetchCustomerFavorites())
@@ -81,10 +71,9 @@ const Favorites = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '100%' }}>
+          <PageContainer style={{ maxWidth: '114rem' }}>
             <PageTitle {...config} />
             <PageError error={error} />
             {items.length ? (

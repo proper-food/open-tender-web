@@ -1,19 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerAddresses,
   selectCustomerAddresses,
 } from '@open-tender/redux'
-import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import Addresses from './Addresses'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -22,11 +18,10 @@ import {
   PageContent,
   PageTitle,
 } from '../..'
-import { AppContext } from '../../../App'
-import AccountTabs from '../Account/AccountTabs'
+import Addresses from './Addresses'
 
 const AccountAddresses = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { addresses: config } = useSelector(selectConfig)
@@ -34,16 +29,10 @@ const AccountAddresses = () => {
   const { entities, loading } = useSelector(selectCustomerAddresses)
   const isLoading = loading === 'pending'
   const limit = 50
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerAddresses(limit))
@@ -59,20 +48,14 @@ const AccountAddresses = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             {entities.length ? (
-              <>
-                <Addresses addresses={entities} isLoading={isLoading} />
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <Addresses addresses={entities} isLoading={isLoading} />
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading text="Retrieving your order history..." />
+                  <Loading text="Retrieving your addresses..." />
                 ) : (
                   <p>
                     Looks like you haven't added any addresses yet. Please place

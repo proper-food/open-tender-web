@@ -1,48 +1,43 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
+import { XCircle } from '../icons'
+import styled from '@emotion/styled'
 
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+const CancelEditView = styled.div`
+  button {
+    color: ${(props) => props.theme.colors.error};
+  }
+`
 
-const CancelEdit = ({
-  text = 'Cancel Edit',
-  icon = iconMap.XCircle,
-  style = null,
-  useButton = false,
-}) => {
-  const history = useHistory()
+const CancelEdit = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
 
   const cancel = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/account`)
   }
 
   if (!orderId) return null
 
   return (
-    <ButtonBoth
-      text={text}
-      label={`Cancel editing order ${orderId}`}
-      icon={icon}
-      onClick={cancel}
-      style={style}
-      useButton={useButton}
-    />
+    <CancelEditView>
+      <ButtonStyled
+        icon={<XCircle />}
+        onClick={cancel}
+        size="header"
+        color="header"
+      >
+        Cancel Edit
+      </ButtonStyled>
+    </CancelEditView>
   )
 }
 
 CancelEdit.displayName = 'CancelEdit'
-CancelEdit.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-  style: propTypes.object,
-  useButton: propTypes.bool,
-}
 
 export default CancelEdit

@@ -1,69 +1,78 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-
-import { NavButtons } from '../..'
+import { useNavigate } from 'react-router-dom'
 import { selectBrand } from '../../../slices'
-import iconMap from '../../iconMap'
+import {
+  CreditCard,
+  Gift,
+  Home,
+  Mail,
+  MapPin,
+  Sliders,
+  User,
+} from '../../icons'
+import { NavButtons } from '../..'
 
 const AccountButtonsView = styled('div')`
-  // padding: ${(props) => props.theme.layout.padding};
-  // padding-top: 0;
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   padding: 0;
-  // }
+  max-width: 54rem;
+  margin: 0 auto;
+
+  button {
+    height: 6rem;
+  }
 `
 
 const navButtons = [
   {
-    icon: iconMap.Sliders,
+    icon: <User />,
+    title: 'Profile',
+    path: '/account/profile',
+  },
+  {
+    icon: <Mail />,
+    title: 'Communicaton Preferences',
+    path: '/account/communications',
+  },
+  {
+    icon: <Sliders />,
     title: 'Dietary Preferences',
     path: '/account/allergens',
   },
   {
-    icon: iconMap.Gift,
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.CreditCard,
-    title: 'Credit Cards',
+    icon: <CreditCard />,
+    title: 'Payment Methods',
     path: '/account/credit-cards',
   },
   {
-    icon: iconMap.MapPin,
+    icon: <MapPin />,
     title: 'Addresses',
     path: '/account/addresses',
   },
   {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'House Accounts',
     path: '/account/house-accounts',
   },
-  {
-    icon: iconMap.User,
-    title: 'Profile & Preferences',
-    path: '/account/profile',
-  },
-  // {
-  //   icon: iconMap.UserX,
-  //   title: 'Logout',
-  //   func: logoutCustomer,
-  // },
 ]
 
 const AccountSettingsButtons = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const filteredButtons =
-    has_rewards || has_thanx
-      ? navButtons
-      : navButtons.filter((i) => i.path !== '/rewards')
+  const { has_allergens, has_house_accounts, has_gift_cards } =
+    useSelector(selectBrand)
+  let removed = []
+  if (!has_gift_cards) removed.push('/account/gift-cards')
+  if (!has_allergens) removed.push('/account/allergens')
+  if (!has_house_accounts) removed.push('/account/house-accounts')
+  const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
   const buttons = filteredButtons.map((i) => ({
     ...i,
-    onClick: i.path ? () => history.push(i.path) : () => dispatch(i.func()),
+    onClick: i.path ? () => navigate(i.path) : () => dispatch(i.func()),
   }))
 
   return (

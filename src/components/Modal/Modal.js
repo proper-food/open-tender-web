@@ -16,18 +16,24 @@ import {
   Closed,
   CreditCard,
   CreditCardLinked,
+  DeleteAccount,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,
   GroupOrder,
+  GroupOrderLeave,
+  GroupOrderType,
   LevelUp,
   Login,
   LoginThanx,
   LoyaltyTier,
+  MapsAutocomplete,
   MenuItem,
   OrderRating,
   OrderType,
   Points,
+  PrepType,
+  Profile,
   QRCode,
   RequestedAt,
   Reward,
@@ -61,8 +67,10 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GiftCardAssignOther windowRef={windowRef} {...args} />
     case 'groupOrder':
       return <GroupOrder {...args} />
-    case 'item':
-      return <MenuItem {...args} />
+    case 'groupOrderType':
+      return <GroupOrderType {...args} />
+    case 'groupOrderLeave':
+      return <GroupOrderLeave {...args} />
     case 'levelup':
       return <LevelUp windowRef={windowRef} {...args} />
     case 'login':
@@ -71,18 +79,28 @@ const makeModal = (type, windowRef, args = {}) => {
       return <LoginThanx {...args} />
     case 'loyaltyTier':
       return <LoyaltyTier {...args} />
+    case 'item':
+      return <MenuItem {...args} />
+    case 'mapsAutocomplete':
+      return <MapsAutocomplete {...args} />
     case 'orderType':
       return <OrderType {...args} />
     case 'qrCode':
       return <QRCode {...args} />
     case 'points':
       return <Points {...args} />
+    case 'prepType':
+      return <PrepType {...args} />
+    case 'profile':
+      return <Profile windowRef={windowRef} {...args} />
     case 'rating':
       return <OrderRating {...args} />
     case 'requestedAt':
       return <RequestedAt {...args} />
     case 'reward':
       return <Reward {...args} />
+    case 'deleteAccount':
+      return <DeleteAccount {...args} />
     case 'signUp':
       return <SignUp windowRef={windowRef} {...args} />
     case 'working':
@@ -95,19 +113,17 @@ const makeModal = (type, windowRef, args = {}) => {
 const containerStyleMap = {
   address: { alignItems: 'flex-start' },
   creditCard: { alignItems: 'flex-start' },
-  // requestedAt: { alignItems: 'flex-start' },
-  // allergens: { alignItems: 'flex-start' },
   cartErrors: { alignItems: 'flex-start' },
   cartCounts: { alignItems: 'flex-start' },
-  // groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
-  // reward: { alignItems: 'flex-start' },
-  loyaltyTier: { alignItems: 'flex-start' },
+  profile: { alignItems: 'flex-start' },
+  allergens: { alignItems: 'flex-start' },
+  groupOrder: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
   position: fixed;
-  z-index: 102;
+  z-index: 110;
   top: 0;
   bottom: 0;
   left: 0;
@@ -127,10 +143,13 @@ const Modal = () => {
   const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
   const focusFirst = args && args.focusFirst ? true : false
+  const skipClose = args && args.skipClose ? true : false
   const preventClose = args && args.preventClose ? true : false
+  const style = args && args.style ? args.style : {}
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
-  const containerStyle = containerStyleMap[type] || null
+  let containerStyle = containerStyleMap[type] || null
+  containerStyle = containerStyle ? { ...containerStyle, ...style } : style
   const isWorking = type === 'working'
 
   useEffect(() => {
@@ -171,7 +190,7 @@ const Modal = () => {
       !focusFirst && allInputs.length
         ? allInputs[0]
         : allElements
-        ? allElements[0]
+        ? allElements[skipClose ? 1 : 0]
         : null
     if (firstElement) firstElement.focus()
   }

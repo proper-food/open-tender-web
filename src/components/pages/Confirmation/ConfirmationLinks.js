@@ -1,7 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { resetCustomerOrder } from '@open-tender/redux'
+import { useNavigate } from 'react-router-dom'
 import { ButtonLink } from '@open-tender/components'
 import styled from '@emotion/styled'
 
@@ -9,23 +7,18 @@ const ConfirmationLinksView = styled('div')`
   margin: 1.5rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 1.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
   }
 `
 
 const ConfirmationLinks = ({ auth, brand }) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
-
-  const reviewAccount = () => {
-    dispatch(resetCustomerOrder())
-    history.push('/')
-  }
+  const navigate = useNavigate()
 
   return (
     <ConfirmationLinksView>
       <p>
         {auth ? (
-          <ButtonLink onClick={reviewAccount}>
+          <ButtonLink onClick={() => navigate('/account')}>
             Head back to your account
           </ButtonLink>
         ) : (
@@ -33,8 +26,8 @@ const ConfirmationLinks = ({ auth, brand }) => {
             Head back to our website
           </a>
         )}
-        {' or '}
-        <ButtonLink onClick={() => history.push('/')}>
+        <span> or </span>
+        <ButtonLink onClick={() => navigate('/account')}>
           start another order
         </ButtonLink>
       </p>

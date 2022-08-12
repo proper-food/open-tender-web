@@ -1,15 +1,30 @@
+import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { selectBrand, selectConfig } from '../../../slices'
-import { DealsSection } from '../..'
+import { Reward, ScrollableSection } from '../..'
+import { selectContentSection } from '../../../slices'
+import AccountSection from './AccountSection'
 
-const AccountDeals = () => {
-  const { has_deals } = useSelector(selectBrand)
-  const { account: config } = useSelector(selectConfig)
-  const { title, subtitle } = config.deals
+const AccountDeals = ({ deals }) => {
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.deals || {}
 
-  return has_deals ? <DealsSection title={title} subtitle={subtitle} /> : null
+  return (
+    <AccountSection>
+      <ScrollableSection
+        title={title}
+        to={deals.length > 2 ? '/deals' : null}
+        items={deals}
+        renderItem={Reward}
+        keyName="discount_id"
+      />
+    </AccountSection>
+  )
 }
 
 AccountDeals.displayName = 'AccountDeals'
+AccountDeals.propTypes = {
+  deals: propTypes.array,
+}
+
 export default AccountDeals

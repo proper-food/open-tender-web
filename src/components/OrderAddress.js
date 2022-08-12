@@ -1,10 +1,8 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { DeliveryLink } from '@open-tender/components'
+import { ExternalLink } from './icons'
 
-import iconMap from './iconMap'
-
-const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
+const OrderAddress = ({ address, delivery, status, isCard, children }) => {
   const { street, unit, city, state, postal_code, company, contact, phone } =
     address || {}
   const streetAddress = street ? `${street}${unit ? `, ${unit}` : ''}` : null
@@ -15,13 +13,13 @@ const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
     <>
       {company ? (
         <>
-          <p>{company}</p>
+          <p className={isCard ? 'title' : ''}>{company}</p>
           <p>{streetAddress}</p>
         </>
       ) : streetAddress ? (
-        <p>{streetAddress}</p>
+        <p className={isCard ? 'title' : ''}>{streetAddress}</p>
       ) : (
-        <p>{postal_code}</p>
+        <p className={isCard ? 'title' : ''}>{postal_code}</p>
       )}
       <p>
         {city}, {state} {postal_code}
@@ -32,7 +30,7 @@ const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
           <DeliveryLink
             text="Check delivery status"
             trackingUrl={trackingUrl}
-            newWindowIcon={iconMap.ExternalLink}
+            newWindowIcon={<ExternalLink />}
           />
         </p>
       )}
@@ -46,7 +44,7 @@ OrderAddress.propTypes = {
   address: propTypes.object,
   delivery: propTypes.object,
   status: propTypes.string,
-  isDefault: propTypes.bool,
+  isCard: propTypes.bool,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

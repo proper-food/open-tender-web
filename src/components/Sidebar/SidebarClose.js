@@ -1,31 +1,41 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
 import styled from '@emotion/styled'
-import { ButtonLink } from '@open-tender/components'
-
 import { toggleSidebar } from '../../slices'
+import { X } from '../icons'
 
-const SidebarCloseView = styled('div')`
+const SidebarCloseButton = styled.button`
   position: absolute;
   z-index: 1;
-  top: 0.7rem;
-  right: 0.7rem;
+  top: 10px;
+  right: 10px;
+  color: ${(props) => props.theme.links.dark.color};
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: ${(props) => props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.links.dark.color};
+    }
+  }
+
+  &:disabled {
+    color: ${(props) => props.theme.links.dark.color};
+    opacity: 0.5;
+  }
 `
 
 const SidebarClose = () => {
   const dispatch = useDispatch()
 
   return (
-    <SidebarCloseView>
-      <ButtonLink
-        onClick={() => dispatch(toggleSidebar())}
-        label="Close cart & return to current page"
-      >
-        <X size={20} />
-      </ButtonLink>
-    </SidebarCloseView>
+    <SidebarCloseButton
+      onClick={() => dispatch(toggleSidebar())}
+      aria-label="Close cart & return to current page"
+    >
+      <X size={20} />
+    </SidebarCloseButton>
   )
 }
 

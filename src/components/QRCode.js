@@ -1,8 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useImage } from '@open-tender/components'
-
-import iconMap from './iconMap'
+import { AlertCircle } from './icons'
 import { ImageSpinner } from '.'
 
 const QRCodeView = styled('div')`
@@ -15,6 +14,7 @@ const QRCodeView = styled('div')`
   border-radius: ${(props) => props.theme.border.radiusSmall};
   background-color: white;
   line-height: 0.1;
+  overflow: hidden;
 
   img {
     position: absolute;
@@ -61,7 +61,7 @@ const QRCode = ({ src, alt = '', isSmall = false }) => {
             {isSmall ? (
               <p>QR Code failed to load. Please close window and retry.</p>
             ) : (
-              iconMap.AlertCircle
+              <AlertCircle />
             )}
           </div>
         </Loading>

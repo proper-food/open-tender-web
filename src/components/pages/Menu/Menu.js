@@ -1,120 +1,90 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-} from 'react'
-import { useHistory } from 'react-router-dom'
+import { useEffect, createContext, useMemo, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Helmet } from 'react-helmet'
-import { isMobile } from 'react-device-detect'
-import { animateScroll as scroll } from 'react-scroll'
 import {
-  selectOrder,
-  selectMenuVars,
-  selectGroupOrderClosed,
-  selectGroupOrder,
-  selectMenu,
-  selectSelectedAllergenNames,
-  selectCustomer,
-  selectDeals,
-  resetRevenueCenter,
-  fetchRevenueCenter,
-  fetchMenu,
-  fetchAllergens,
-  fetchDeals,
   fetchAnnouncementPage,
-  selectAnnouncementsPage,
+  fetchAllergens,
+  fetchCustomerFavorites,
   fetchCustomerLoyalty,
+  fetchCustomerOrders,
+  fetchDeals,
+  fetchLocation,
+  fetchMenu,
+  selectAnnouncementsPage,
+  selectCustomer,
   selectCustomerPointsProgram,
+  selectDeals,
+  selectGroupOrder,
+  selectGroupOrderClosed,
+  selectMenu,
+  selectMenuVars,
+  selectOrder,
+  selectSelectedAllergenNames,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
-
-import { maybeRefreshVersion } from '../../../app/version'
 import {
+  openModal,
   selectBrand,
-  selectConfig,
-  selectTopOffset,
-  setTopOffset,
+  selectContentSection,
+  selectDisplaySettings,
+  selectIsGroupOrder,
+  setIsGroupOrder,
 } from '../../../slices'
-import { AppContext } from '../../../App'
-import { Content, Main, ScreenreaderTitle } from '../..'
-import MenuContent from './MenuContent'
-import MenuHeader from './MenuHeader'
-import MenuMobileMenu from './MenuMobileMenu'
 
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { windowRef } = useContext(AppContext)
-  const topOffset = useSelector(selectTopOffset)
   const [init, setInit] = useState(true)
-  const [showMenu, setShowMenu] = useState(false)
+  const [hasTop, setHasTop] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
-  const { menu: menuConfig } = useSelector(selectConfig)
-  const { loadingMessage } = menuConfig
-  const announcements = useSelector(selectAnnouncementsPage('MENU'))
+  const menuContent = useSelector(selectContentSection('menu'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
-  const { revenueCenterId, serviceType, requestedAt } = useSelector(
-    selectMenuVars
-  )
-  let { revenueCenters, categories, soldOut, error, loading } = useSelector(
-    selectMenu
-  )
+  const { revenueCenterId, serviceType, requestedAt } =
+    useSelector(selectMenuVars)
+  let { revenueCenters, categories, soldOut, error, loading } =
+    useSelector(selectMenu)
   const isLoading = loading === 'pending'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const { cartGuest } = useSelector(selectGroupOrder)
   const { profile } = useSelector(selectCustomer)
-  const { customer_id } = profile || {}
+  const { customer_id = null } = profile || {}
+  const [customerId, setCustomerId] = useState(null)
   const { entities } = useSelector(selectDeals)
   const deals = has_deals && entities.length ? entities : null
   const validDeals = useMemo(
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
-
-  useEffect(() => {
-    if (init) {
-      // windowRef.current.scrollTop = topOffset || 0
-      scroll.scrollTo(topOffset || 0, {
-        container: windowRef.current,
-        duration: 0,
-        smooth: false,
-      })
-    }
-    maybeRefreshVersion()
-  }, [windowRef, topOffset, init])
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
+  const displaySettings = useSelector(selectDisplaySettings)
+  const isGroupOrder = useSelector(selectIsGroupOrder)
 
   useEffect(() => {
     if (!revenueCenterId) {
-      return history.push('/locations')
+      return navigate('/locations')
     } else if (groupOrderClosed) {
-      return history.push('/review')
-    } else if (topOffset) {
-      dispatch(setTopOffset(null))
-      setInit(false)
+      return navigate('/review')
     } else if (init) {
+      setInit(false)
       dispatch(fetchAllergens())
-      dispatch(fetchRevenueCenter(revenueCenterId))
+      dispatch(fetchLocation(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAnnouncementPage('MENU'))
     }
   }, [
+    init,
     revenueCenterId,
     orderType,
     serviceType,
     requestedAt,
-    dispatch,
-    history,
     groupOrderClosed,
-    topOffset,
-    init,
+    dispatch,
+    navigate,
   ])
 
   useEffect(() => {
@@ -124,52 +94,49 @@ const MenuPage = () => {
   }, [has_deals, customer_id, isLoading, dispatch, cartGuest])
 
   useEffect(() => {
-    if (init && !topOffset && customer_id) {
-      dispatch(fetchCustomerLoyalty())
+    if (customer_id) {
+      if (customer_id !== customerId) {
+        setCustomerId(customer_id)
+        dispatch(fetchCustomerLoyalty())
+        dispatch(fetchCustomerFavorites())
+        dispatch(fetchCustomerOrders(20))
+      }
+    } else {
+      setCustomerId(null)
     }
-  }, [init, topOffset, customer_id, dispatch])
+  }, [customer_id, customerId, dispatch])
 
-  const changeRevenueCenter = () => {
-    dispatch(resetRevenueCenter())
-  }
+  useEffect(() => {
+    if (isGroupOrder) {
+      const reviewOrders = () => navigate(`/review`)
+      dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
+      dispatch(setIsGroupOrder(false))
+    }
+  }, [isGroupOrder, dispatch, navigate])
 
   return (
     <>
-      <Helmet>
-        <title>Menu | {siteTitle}</title>
-      </Helmet>
-      <Content>
-        <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} />
-        <Main>
-          <MenuContext.Provider
-            value={{
-              menuConfig,
-              revenueCenter,
-              categories,
-              revenueCenters,
-              changeRevenueCenter,
-              soldOut,
-              allergenAlerts,
-              isLoading,
-              loadingMessage,
-              error,
-              deals: validDeals,
-              announcements,
-              pointsProgram,
-            }}
-          >
-            {isMobile && (
-              <MenuMobileMenu
-                order={order}
-                showMenu={showMenu}
-                setShowMenu={setShowMenu}
-              />
-            )}
-            <ScreenreaderTitle>Menu</ScreenreaderTitle>
-            <MenuContent />
-          </MenuContext.Provider>
-        </Main>
-      </Content>
+      <MenuContext.Provider
+        value={{
+          siteTitle,
+          menuContent,
+          revenueCenter,
+          categories,
+          revenueCenters,
+          soldOut,
+          allergenAlerts,
+          isLoading,
+          error,
+          deals: validDeals,
+          pointsProgram,
+          announcements,
+          displaySettings,
+          hasTop,
+          setHasTop,
+        }}
+      >
+        <Outlet />
+      </MenuContext.Provider>
     </>
   )
 }

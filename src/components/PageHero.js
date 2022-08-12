@@ -1,85 +1,55 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
+import { useTheme } from '@emotion/react'
+import { isMobile } from 'react-device-detect'
+import { makeSlides } from '@open-tender/js'
 import { BackgroundImage, BackgroundLoading, Slider } from '.'
-import { isBrowser } from 'react-device-detect'
 
-const PageHeroView = styled('div')`
-  position: relative;
+const PageHeroView = styled.div`
+  label: PageHero;
+  flex-grow: 1;
   display: flex;
-  flex-direction: column;
+  min-height: 64rem;
+  height: 100vh;
+  ${(props) =>
+    props.isMobile ? `height: 100%; height: -webkit-fill-available;` : ''}
+  ${(props) =>
+    props.ht ? `height: ${props.ht}; min-height: ${props.ht};` : ''}
 `
 
-const PageHeroContent = styled('div')`
-  flex: 1 0 auto;
-  position: relative;
-  display: flex;
-  height: 50vh;
-  min-height: 44rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: auto;
-    min-height: 32rem;
-  }
-`
-
-const PageHeroGreeting = styled('div')`
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  margin: ${(props) => props.theme.layout.margin} 0;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
-`
-
-const makeImageUrl = (images, isBrowser) => {
-  return images.find((i) =>
-    i.type === isBrowser ? 'FEATURED_IMAGE' : 'SECONDARY_IMAGE'
-  ).url
-}
-
-const makeSlides = (items) => {
-  if (!items || !items.length) return null
-  return items.map((i) => ({
-    ...i,
-    imageUrl: makeImageUrl(i.images, isBrowser),
-  }))
-}
-
-const PageHero = ({ announcements, imageUrl, showHero, style, children }) => {
+const PageHero = ({ announcements, imageUrl, height, style, children }) => {
+  const theme = useTheme()
   const { settings, entities, loading, error } = announcements || {}
-  const slides = error ? null : makeSlides(entities)
+  const slides = error ? null : makeSlides(entities, isMobile)
   const isLoading = loading === 'pending'
-  // const isLoading = true
-  const hasHero = imageUrl && showHero
-  const hasImage = slides || hasHero
+  const hideHero = !slides && !imageUrl
+
+  if (hideHero) return null
 
   return (
-    <PageHeroView style={style} hasImage={hasImage}>
-      {hasImage && (
-        <PageHeroContent>
-          {isLoading ? (
-            <BackgroundLoading />
-          ) : slides ? (
-            <Slider settings={settings} slides={slides} />
-          ) : hasHero ? (
-            <BackgroundImage imageUrl={imageUrl} />
-          ) : null}
-        </PageHeroContent>
-      )}
-      {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
+    <PageHeroView ht={height} isMobile={isMobile} style={style}>
+      {isLoading ? (
+        <BackgroundLoading />
+      ) : slides ? (
+        <Slider
+          settings={settings}
+          slides={slides}
+          bgColor={theme.bgColors.dark}
+        />
+      ) : imageUrl ? (
+        <BackgroundImage imageUrl={imageUrl} bgColor={theme.bgColors.dark}>
+          {children}
+        </BackgroundImage>
+      ) : null}
     </PageHeroView>
   )
 }
 
 PageHero.displayName = 'PageHero'
 PageHero.propTypes = {
-  imageUrl: propTypes.string,
   announcements: propTypes.object,
-  showHero: propTypes.bool,
-  maxHeight: propTypes.string,
+  imageUrl: propTypes.string,
+  height: propTypes.string,
   style: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),

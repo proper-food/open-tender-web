@@ -1,7 +1,9 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const MainView = styled('main')`
+const MainView = styled.main`
+  label: Main;
+
   width: 100%;
   min-height: 100%;
   display: flex;

@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
 import {
   fetchAllergens,
   selectAllergens,
@@ -13,11 +12,8 @@ import {
 import { AllergenForm, FormWrapper } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
-  AccountBack,
   Content,
   HeaderUser,
   Loading,
@@ -27,23 +23,16 @@ import {
   PageTitle,
 } from '../..'
 import styled from '@emotion/styled'
-import AccountTabs from '../Account/AccountTabs'
 
-const AllergenFormView = styled('div')`
-  label {
-    padding: 1.25rem 0 1rem !important;
-
-    & > span > span:last-of-type {
-      text-align: right;
-      line-height: 1;
-    }
-  }
+const AllergenFormView = styled.div`
+  max-width: 48rem;
+  margin: 0 auto;
 `
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const navigate = useNavigate()
+  const { title: siteTitle, has_allergens } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { allergens: config } = useSelector(selectConfig)
   const brandAllergens = useSelector(selectAllergens)
@@ -60,16 +49,10 @@ const AccountAllergens = () => {
     (data) => dispatch(updateCustomerAllergens(data)),
     [dispatch]
   )
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth || !has_allergens) return navigate('/account')
+  }, [auth, has_allergens, navigate])
 
   useEffect(() => {
     dispatch(fetchAllergens())
@@ -85,28 +68,24 @@ const AccountAllergens = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />} />
+            <PageTitle {...config} />
             <PageContent>
               {brandAllergens.entities.length ? (
-                <>
+                <AllergenFormView>
                   <FormWrapper>
-                    <AllergenFormView>
-                      <AllergenForm
-                        allergens={brandAllergens.entities}
-                        selectedAllergens={customerAllergens.entities}
-                        isLoading={isLoading}
-                        error={error}
-                        setAllergens={setAllergens}
-                        updateAllergens={updateAllergens}
-                      />
-                    </AllergenFormView>
+                    <AllergenForm
+                      allergens={brandAllergens.entities}
+                      selectedAllergens={customerAllergens.entities}
+                      isLoading={isLoading}
+                      error={error}
+                      setAllergens={setAllergens}
+                      updateAllergens={updateAllergens}
+                    />
                   </FormWrapper>
-                  <AccountBack />
-                </>
+                </AllergenFormView>
               ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
+                <Loading text="Retrieving your dietary preferences..." />
               ) : (
                 <p>Allergens aren't currently listed on our menu.</p>
               )}

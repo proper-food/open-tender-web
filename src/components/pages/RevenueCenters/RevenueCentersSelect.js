@@ -1,48 +1,80 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { isMobileOnly } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
+import styled from '@emotion/styled'
 import {
   selectOrder,
   setRevenueCenter,
   selectAutoSelect,
   resetOrderType,
-  fetchRevenueCenters,
+  fetchLocations,
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'
-import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
-
-import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
 import {
-  Container,
-  Loading,
-  PageContent,
-  PageTitle,
-  RevenueCenter,
-} from '../..'
-import styled from '@emotion/styled'
-import iconMap from '../../iconMap'
+  makeDisplayedRevenueCenters,
+  renameLocation,
+  serviceTypeNamesMap,
+} from '@open-tender/js'
+import {
+  Body,
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Preface,
+} from '@open-tender/components'
+import {
+  selectConfig,
+  selectSettings,
+  selectGeoLatLng,
+  selectIsGroupOrder,
+} from '../../../slices'
+import { Container, Loading, PageContent, RevenueCenter } from '../..'
+import { useTheme } from '@emotion/react'
 
 const RevenueCentersSelectView = styled('div')`
   position: relative;
   z-index: 1;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.primary};
-  // padding: ${(props) => props.theme.layout.padding} 0;
+  padding: 1.5rem 0 0;
+  margin: ${(props) => props.theme.layout.navHeight} 0 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 44rem 0 0;
     padding: 3rem 0 0;
+    margin: 44rem 0 0;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 7.2rem 0 ${(props) => (props.showMap ? '25rem' : '0')};
-    padding: 1rem 0 0;
+    padding: 0;
+    margin: ${(props) => props.theme.layout.navHeightMobile} 0
+      ${(props) => (props.showMap ? '25rem' : '0')};
     transition: all 0.25s ease;
     transform: translateY(${(props) => (props.showMap ? '25rem' : '0')});
+  }
+`
+
+const RevenueCentersSelectTitle = styled('div')`
+  margin: 0 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0 3rem;
+  }
+
+  h2 {
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.big};
+    }
+  }
+
+  & > p {
+    margin: 1rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 1rem 0 0;
+      // font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -78,28 +110,39 @@ const RevenueCentersSelectList = styled('ul')`
   & > li {
     margin: ${(props) => props.theme.layout.padding} 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+      padding: 0 0
+        ${(props) => (props.hasBox ? '0' : props.theme.layout.paddingMobile)};
+      border-bottom: ${(props) =>
+          props.hasBox ? '0' : props.theme.border.width}
+        solid ${(props) => props.theme.border.color};
+      margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    }
+
+    &:last-of-type {
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        padding: 0;
+        border: 0;
+        margin: 0;
+      }
     }
   }
 `
 
 const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [showMap, setShowMap] = useState(false)
+  const theme = useTheme()
+  const hasBox = theme.cards.default.bgColor !== 'transparent'
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
-  const {
-    serviceType,
-    orderType,
-    isOutpost,
-    address,
-    requestedAt,
-  } = useSelector(selectOrder)
+  const { serviceType, orderType, isOutpost, address, requestedAt } =
+    useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
+  const isGroupOrder = useSelector(selectIsGroupOrder)
   const [title, setTitle] = useState(rcConfig.title)
   const [msg, setMsg] = useState(rcConfig.subtitle)
   const [error, setError] = useState(null)
@@ -112,6 +155,8 @@ const RevenueCentersSelect = () => {
   const renamedTitle = renameLocation(title, names)
   const renamedError = renameLocation(error, names)
   const renamedMsg = renameLocation(msg, names)
+  const groupOrderNA = isGroupOrder && !showRevenueCenters
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
 
   useEffect(() => {
     if (orderType) {
@@ -121,16 +166,16 @@ const RevenueCentersSelect = () => {
       if (orderType === 'CATERING' && requestedAt) {
         params = { ...params, requestedAt }
       }
-      dispatch(fetchRevenueCenters(params))
+      dispatch(fetchLocations(params))
     }
   }, [orderType, isOutpost, coords, requestedAt, dispatch])
 
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
-      return history.push(`/menu/${revenueCenter.slug}`)
+      return navigate(`/menu/${revenueCenter.slug}`)
     },
-    [dispatch, history]
+    [dispatch, navigate]
   )
 
   useEffect(() => {
@@ -139,7 +184,8 @@ const RevenueCentersSelect = () => {
       serviceType,
       address,
       geoLatLng,
-      maxDistance
+      maxDistance,
+      isGroupOrder
     )
     const count = displayed ? displayed.length : 0
     if (count && autoSelect && !error && !missingAddress) {
@@ -159,12 +205,13 @@ const RevenueCentersSelect = () => {
     autoSelect,
     autoRouteCallack,
     missingAddress,
+    isGroupOrder,
   ])
 
-  const handleStartOver = () => {
+  const startOver = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/order-type`)
   }
 
   return (
@@ -176,17 +223,31 @@ const RevenueCentersSelect = () => {
           </PageContent>
         ) : (
           <>
-            <PageTitle>
+            <RevenueCentersSelectTitle>
               <RevenueCentersSelectShowMap>
                 <ButtonLink onClick={() => setShowMap(!showMap)}>
                   <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
                 </ButtonLink>
               </RevenueCentersSelectShowMap>
-              <h2>{renamedTitle}</h2>
-              <p>{renamedError || renamedMsg}</p>
-            </PageTitle>
+              {groupOrderNA ? (
+                <>
+                  <Heading as="h2">
+                    We're sorry but Group Ordering {serviceTypeName} isn't
+                    available in your area at this time
+                  </Heading>
+                  <Body as="p">
+                    Please go back and choose a different order type
+                  </Body>
+                </>
+              ) : (
+                <>
+                  <Heading as="h2">{renamedTitle}</Heading>
+                  <Body as="p">{renamedError || renamedMsg}</Body>
+                </>
+              )}
+            </RevenueCentersSelectTitle>
             {showRevenueCenters ? (
-              <RevenueCentersSelectList>
+              <RevenueCentersSelectList hasBox={hasBox}>
                 {displayedRevenueCenters.map((revenueCenter) => (
                   <li
                     id={revenueCenter.slug}
@@ -194,19 +255,14 @@ const RevenueCentersSelect = () => {
                   >
                     <RevenueCenter
                       revenueCenter={revenueCenter}
-                      showImage={!isMobileOnly}
+                      showImage={true}
                     />
                   </li>
                 ))}
               </RevenueCentersSelectList>
             ) : (
-              <div style={{ margin: '3rem auto 0', textAlign: 'center' }}>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={handleStartOver}
-                >
-                  Start Over
-                </ButtonStyled>
+              <div style={{ margin: '3rem auto 0' }}>
+                <ButtonStyled onClick={startOver}>Start Over</ButtonStyled>
               </div>
             )}
           </>

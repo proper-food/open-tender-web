@@ -1,8 +1,13 @@
-import React from 'react'
+import styled from '@emotion/styled'
+
+const GroupOrderStepsView = styled.div`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
+`
 
 const GroupOrderSteps = () => {
   return (
-    <>
+    <GroupOrderStepsView>
       <p>How it works from here...</p>
       <ol>
         <li>
@@ -28,7 +33,7 @@ const GroupOrderSteps = () => {
         </li>
         <li>Submit your payment and you're all set!</li>
       </ol>
-    </>
+    </GroupOrderStepsView>
   )
 }
 

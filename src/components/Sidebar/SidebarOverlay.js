@@ -1,11 +1,9 @@
-import React from 'react'
+import styled from '@emotion/styled'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { selectSidebar, toggleSidebar } from '../../slices'
-import styled from '@emotion/styled'
 
-const SidebarOverlayView = styled('div')`
+const SidebarOverlayView = styled.div`
   position: fixed;
   z-index: 16;
   top: 0;

@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectOrder,
   selectGroupOrder,
   addCustomerGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Input, Text } from '@open-tender/components'
+import { Body, ButtonLink, ButtonStyled, Input } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
 import { ModalContent } from '../../Modal'
-import styled from '@emotion/styled'
 
 const formatOrderTime = (s) => {
   return s ? s.replace('Today', 'today').replace('Tomorrow', 'tomorrow') : ''
 }
+
+const GroupOrderSummary = styled.div`
+  & > p + p {
+    margin: 0 0 1.5em;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const SpendingLimitForm = styled('form')`
   margin: 0;
@@ -48,7 +54,20 @@ const GroupOrderStart = () => {
   const [spendingLimit, setSpendingLimit] = useState(null)
   // const [error, setError] = useState(null)
   const dispatch = useDispatch()
-  const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
+  const { requestedAt, revenueCenter, serviceType, orderType } =
+    useSelector(selectOrder)
+  const { order_times } = revenueCenter || {}
+  const orderTimes = order_times ? order_times[serviceType] : null
+  const args = {
+    focusFirst: true,
+    skipClose: true,
+    isGroupOrder: true,
+    style: orderTimes ? { alignItems: 'flex-start' } : {},
+    revenueCenter,
+    serviceType,
+    orderType,
+    requestedAt,
+  }
   const { loading } = useSelector(selectGroupOrder)
   const isLoading = loading === 'pending'
 
@@ -61,10 +80,10 @@ const GroupOrderStart = () => {
     setOrderTime(groupOrderTime)
   }, [revenueCenter, serviceType, requestedAt])
 
-  const adjust = (type) => {
+  const adjust = () => {
     dispatch(closeModal())
     setTimeout(() => {
-      dispatch(openModal({ type: 'requestedAt' }))
+      dispatch(openModal({ type: 'requestedAt', args }))
     }, 300)
   }
 
@@ -93,47 +112,45 @@ const GroupOrderStart = () => {
       }
       footer={
         <div>
-          <ButtonStyled
-            icon={iconMap.Users}
-            onClick={start}
-            color="cart"
-            disabled={isLoading}
-          >
+          <ButtonStyled onClick={start} color="primary" disabled={isLoading}>
             {isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
           </ButtonStyled>
-          <ButtonStyled onClick={cancel}>Nevermind</ButtonStyled>
+          <ButtonStyled color="secondary" onClick={cancel}>
+            Nevermind
+          </ButtonStyled>
         </div>
       }
     >
       {orderTime && (
         <>
           {orderTime.prepTime ? (
-            <div>
-              <Text as="p" color="primary" bold={true}>
+            <GroupOrderSummary>
+              <Body as="p">
                 The current wait time for group orders is {orderTime.prepTime}{' '}
                 minutes from the time the order is submitted.{' '}
+              </Body>
+              <Body as="p">
                 <ButtonLink onClick={adjust}>
-                  Choose a specific order time.
+                  Choose a specific order time
                 </ButtonLink>
-              </Text>
-            </div>
+              </Body>
+            </GroupOrderSummary>
           ) : (
-            <div>
-              <Text as="p" color="primary" bold={true}>
+            <GroupOrderSummary>
+              <Body as="p">
                 {orderTime.isAdjusted
                   ? 'The first available group order time is'
                   : 'Your currently selected group order time is'}{' '}
-                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                <Text color="alert">
-                  all orders must be submitted by{' '}
-                  {formatOrderTime(orderTime.cutoffDateStr)}
-                </Text>
-                .{' '}
+                {formatOrderTime(orderTime.dateStr)}, which means that all
+                orders must be submitted by{' '}
+                {formatOrderTime(orderTime.cutoffDateStr)}.
+              </Body>
+              <Body as="p">
                 <ButtonLink onClick={adjust}>
-                  Choose a different time.
+                  Choose a different time
                 </ButtonLink>
-              </Text>
-            </div>
+              </Body>
+            </GroupOrderSummary>
           )}
         </>
       )}
@@ -147,9 +164,7 @@ const GroupOrderStart = () => {
           error={null}
         />
       </SpendingLimitForm>
-      <Text as="div" size="small">
-        <GroupOrderSteps />
-      </Text>
+      <GroupOrderSteps />
     </ModalContent>
   )
 }

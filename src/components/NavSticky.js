@@ -1,12 +1,9 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { isMobile } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-
 import { ButtonStyled } from '@open-tender/components'
-
-import { AppContext } from '../App'
-import iconMap from './iconMap'
 import { NavScroll } from '.'
 
 const NavStickyView = styled('div')`
@@ -81,22 +78,25 @@ const NavStickyLogo = styled('div')`
 const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
   const [stuck, setStuck] = useState(false)
   const stickyRef = useRef(null)
-  const { windowRef } = useContext(AppContext)
-  const topOffset = isMobile ? 60 : 60
+  const theme = useTheme()
+  const { navHeight, navHeightMobile } = theme.layout
+  const height = isMobile ? navHeightMobile : navHeight
+  const heightInPixels = parseInt(height.replace('rem', '')) * 10
+  const topOffset = heightInPixels
+
   const showNav = !(isMobile && revenueCenter)
 
   useEffect(() => {
-    const winRef = windowRef.current
     const handleScroll = () => {
       if (stickyRef.current) {
         setStuck(stickyRef.current.getBoundingClientRect().top <= topOffset)
       }
     }
-    winRef.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      winRef.removeEventListener('scroll', () => handleScroll)
+      window.removeEventListener('scroll', () => handleScroll)
     }
-  }, [windowRef, topOffset])
+  }, [topOffset])
 
   return (
     <NavStickyView ref={stickyRef}>
@@ -112,7 +112,6 @@ const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
               </NavStickyLogo>
               <div>
                 <ButtonStyled
-                  icon={iconMap.RefreshCw}
                   onClick={() => change(null)}
                   size="small"
                   color="secondary"

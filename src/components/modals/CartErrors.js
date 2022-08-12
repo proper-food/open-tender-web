@@ -1,10 +1,7 @@
-import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectMenu, setCart, revertMenu } from '@open-tender/redux'
+import { fetchMenu, revertMenu, selectMenu, setCart } from '@open-tender/redux'
 import { CartErrors as CartErrorsComponent } from '@open-tender/components'
-
 import { closeModal, selectConfig } from '../../slices'
-import iconMap from '../iconMap'
 import { ModalContent, ModalView } from '..'
 
 const CartErrors = () => {
@@ -14,8 +11,9 @@ const CartErrors = () => {
   const { menu } = useSelector(selectConfig)
 
   const handleRevert = (menuVars) => {
-    dispatch(closeModal())
     dispatch(revertMenu(menuVars))
+    dispatch(fetchMenu({ ...menuVars }))
+    dispatch(closeModal())
   }
 
   const handleProceed = () => {
@@ -33,9 +31,7 @@ const CartErrors = () => {
           newCart={newCart}
           errors={errors}
           revert={handleRevert}
-          revertIcon={iconMap.ChevronLeft}
           proceed={handleProceed}
-          proceedIcon={iconMap.Trash2}
           previousMenuVars={previousMenuVars}
           menuVars={menuVars}
         />

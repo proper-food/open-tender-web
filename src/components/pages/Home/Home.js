@@ -1,29 +1,68 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
-import { useGeolocation } from '@open-tender/components'
-
-import { Account, Guest } from '..'
-import { setGeoLatLng, setGeoError, setGeoLoading } from '../../../slices'
+import { isBrowser } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+import { useTheme } from '@emotion/react'
+import {
+  fetchAnnouncementPage,
+  selectAnnouncementsPage,
+  selectCustomer,
+} from '@open-tender/redux'
+import { closeModal, selectBrand, selectContentSection } from '../../../slices'
+import { BackgroundContent, Content, HeaderSite, Main, PageIntro } from '../..'
+import PageHero from '../../PageHero'
 
 const Home = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { colors } = useTheme()
+  const brand = useSelector(selectBrand)
+  const { background, mobile, title, subtitle, content } = useSelector(
+    selectContentSection('home')
+  )
+  const hasContent = !!(content && content.length)
+  const announcements = useSelector(selectAnnouncementsPage('HOME'))
   const { auth } = useSelector(selectCustomer)
-  const { geoLatLng, geoError } = useGeolocation()
 
   useEffect(() => {
-    dispatch(setGeoLoading())
+    dispatch(closeModal())
   }, [dispatch])
 
   useEffect(() => {
-    if (geoLatLng) {
-      dispatch(setGeoLatLng(geoLatLng))
-    } else if (geoError) {
-      dispatch(setGeoError(geoError))
-    }
-  }, [geoLatLng, geoError, dispatch])
+    navigate(auth ? '/account' : '/guest')
+  }, [navigate, auth])
 
-  return auth ? <Account /> : <Guest />
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('HOME'))
+  }, [dispatch])
+
+  return (
+    <>
+      <Helmet>
+        <title>{brand.title}</title>
+      </Helmet>
+      <Content>
+        <HeaderSite />
+        <Main style={{ paddingTop: '0' }}>
+          <PageHero
+            announcements={announcements}
+            imageUrl={isBrowser ? background : mobile}
+          >
+            <BackgroundContent
+              title={title}
+              subtitle={subtitle}
+              title_color={colors.light}
+              subtitle_color={colors.light}
+              vertical="BOTTOM"
+              horizontal="LEFT"
+            />
+          </PageHero>
+          {hasContent && <PageIntro content={content} />}
+        </Main>
+      </Content>
+    </>
+  )
 }
 
 Home.displayName = 'Home'

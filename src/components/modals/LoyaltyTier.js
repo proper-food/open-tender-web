@@ -1,11 +1,9 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { Box, ButtonStyled } from '@open-tender/components'
-
+import { Box, ButtonStyled, Heading } from '@open-tender/components'
 import { closeModal } from '../../slices'
-import iconMap from '../iconMap'
+import { Award } from '../icons'
 import { ModalContent, ModalView } from '..'
 import Tag from '../Tag'
 
@@ -20,9 +18,7 @@ const TierDiscount = styled(Box)`
   }
 
   & > p:first-of-type {
-    font-weight: ${(props) => props.theme.boldWeight};
     font-size: ${(props) => props.theme.fonts.sizes.main};
-    // padding: 0 0 0.5rem;
   }
 `
 
@@ -69,9 +65,9 @@ const LoyaltyTier = ({ tier }) => {
           {tier.discount ? (
             <TierDiscount>
               <TierTagView>
-                <Tag icon={iconMap.Award} text="Reward" bgColor="dark" />
+                <Tag icon={<Award />} text="Reward" bgColor="dark" />
               </TierTagView>
-              <p>{tier.discount.title}</p>
+              <Heading as="p">{tier.discount.title}</Heading>
               <p>{tier.discount.description}</p>
             </TierDiscount>
           ) : null}

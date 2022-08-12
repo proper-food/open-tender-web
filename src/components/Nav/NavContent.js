@@ -1,36 +1,52 @@
 import React, { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
-import styled from '@emotion/styled'
-
 import { openModal, selectBrand, toggleNav } from '../../slices'
 import NavClose from './NavClose'
-import iconMap from '../iconMap'
+import {
+  Award,
+  CreditCard,
+  DollarSign,
+  Gift,
+  Heart,
+  Home,
+  LogOut,
+  Mail,
+  MapPin,
+  PlusCircle,
+  ShoppingBag,
+  Slash,
+  Sliders,
+  Tag,
+  User,
+  UserCircle,
+} from '../icons'
 
 const guestButtons = [
   {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'Home',
-    path: '/',
+    path: '/account',
   },
   {
-    icon: iconMap.Tag,
+    icon: <Tag />,
     title: 'Deals',
     path: '/deals',
   },
   {
-    icon: iconMap.Gift,
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/gift-cards',
   },
   {
-    icon: iconMap.DollarSign,
+    icon: <DollarSign />,
     title: 'Donations',
     path: '/donations',
   },
   {
-    icon: iconMap.PlusCircle,
+    icon: <PlusCircle />,
     title: 'Sign Up',
     path: '/signup',
   },
@@ -38,70 +54,80 @@ const guestButtons = [
 
 const navButtons = [
   {
-    icon: iconMap.Home,
-    title: 'Home',
-    path: '/',
+    icon: <UserCircle />,
+    title: 'Account',
+    path: '/account',
   },
   {
-    icon: iconMap.ShoppingBag,
+    icon: <ShoppingBag />,
     title: 'Order History',
     path: '/orders',
   },
+  // {
+  //   icon: <Heart />,
+  //   title: 'Favorites',
+  //   path: '/favorites',
+  // },
   {
-    icon: iconMap.Heart,
-    title: 'Favorites',
-    path: '/favorites',
+    icon: <Heart />,
+    title: 'Loyalty',
+    path: '/loyalty',
   },
   {
-    icon: iconMap.Award,
+    icon: <Award />,
     title: 'Rewards',
     path: '/rewards',
   },
   {
-    icon: iconMap.Tag,
+    icon: <Tag />,
     title: 'Deals',
     path: '/deals',
   },
   {
-    icon: iconMap.Gift,
+    icon: <User />,
+    title: 'Profile',
+    path: '/account/profile',
+  },
+  {
+    icon: <Mail />,
+    title: 'Communication Preferences',
+    path: '/account/communications',
+  },
+  {
+    icon: <Sliders />,
+    title: 'Dietary Preferences',
+    path: '/account/allergens',
+  },
+  {
+    icon: <CreditCard />,
+    title: 'Payment Methods',
+    path: '/account/credit-cards',
+  },
+  {
+    icon: <Gift />,
     title: 'Gift Cards',
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.DollarSign,
-    title: 'Donations',
-    path: '/donations',
-  },
-  {
-    icon: iconMap.Sliders,
-    title: 'Allergens',
-    path: '/account/allergens',
-  },
-  {
-    icon: iconMap.MapPin,
+    icon: <MapPin />,
     title: 'Addresses',
     path: '/account/addresses',
   },
   {
-    icon: iconMap.CreditCard,
-    title: 'Credit Cards',
-    path: '/account/credit-cards',
-  },
-  {
-    icon: iconMap.Home,
+    icon: <Home />,
     title: 'House Accounts',
     path: '/account/house-accounts',
   },
   {
-    icon: iconMap.Settings,
-    title: 'Profile & Preferences',
-    path: '/account/profile',
+    icon: <DollarSign />,
+    title: 'Donations',
+    path: '/donations',
   },
 ]
 
-const NavView = styled('nav')`
+const NavView = styled.nav`
   position: fixed;
-  z-index: 101;
+  z-index: 102;
   top: 0;
   bottom: 0;
   right: 0;
@@ -112,7 +138,7 @@ const NavView = styled('nav')`
   background-color: ${(props) => props.theme.bgColors.primary};
 `
 
-const NavContainer = styled('div')`
+const NavContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -120,36 +146,30 @@ const NavContainer = styled('div')`
   flex-direction: column;
 `
 
-// const NavHeader = styled('div')`
-//   width: 100%;
-//   padding: 2.5rem 0 1rem;
-
-//   button span {
-//     font-size: ${(props) => props.theme.fonts.sizes.h3};
-//   }
-// `
-
-const NavItems = styled('nav')`
+const NavItems = styled.nav`
   width: 100%;
   padding: 2rem 0 2rem;
 `
 
-const NavItem = styled('button')`
+const NavItem = styled.button`
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   text-align: left;
   line-height: 0;
-  padding: 1rem 1rem 1rem 3.5rem;
-  color: ${(props) => props.theme.fonts.headings.color};
+  padding: 1.25rem 1rem 1.25rem 3rem;
+  color: ${(props) => props.theme.links.dark.color};
 
-  span {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+  &:hover {
+    color: ${(props) => props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.links.dark.color};
+    }
   }
 `
 
-const NavIcon = styled('span')`
+const NavIcon = styled.span`
   display: block;
   line-height: 0;
   position: relative;
@@ -159,28 +179,48 @@ const NavIcon = styled('span')`
   line-height: 0;
 `
 
-const NavTitle = styled('p')`
+const NavTitle = styled.span`
+  display: block;
   flex-grow: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.main};
-  line-height: 1.2;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const NavFooter = styled('div')`
+const NavFooter = styled.div`
   width: 100%;
   padding: 0 0 2rem;
 `
 
 const Nav = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { profile } = useSelector(selectCustomer)
+  const navigate = useNavigate()
+  const { auth } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
-  const { has_rewards, has_thanx, has_levelup, has_deals } = brand
+  const {
+    has_rewards,
+    has_thanx,
+    has_levelup,
+    has_deals,
+    has_loyalty,
+    has_gift_cards,
+    has_donations,
+    has_allergens,
+    has_house_accounts,
+    has_favorites,
+  } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
+  if (!has_loyalty) removed.push('/loyalty')
   if (!has_deals) removed.push('/deals')
-  const buttons = profile ? navButtons : guestButtons
+  if (!has_gift_cards) {
+    removed.push('/gift-cards')
+    removed.push('/account/gift-cards')
+  }
+  if (!has_donations) removed.push('/donations')
+  if (!has_allergens) removed.push('/account/allergens')
+  if (!has_house_accounts) removed.push('/account/house-accounts')
+  if (!has_favorites) removed.push('/favorites')
+  const buttons = auth ? navButtons : guestButtons
   const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
   const callback = useCallback(
     () => dispatch(openModal({ type: 'loginThanx' })),
@@ -193,7 +233,7 @@ const Nav = React.forwardRef((props, ref) => {
     evt.preventDefault()
     evt.stopPropagation()
     dispatch(toggleNav())
-    history.push(path)
+    navigate(path)
   }
 
   const login = (evt) => {
@@ -216,18 +256,6 @@ const Nav = React.forwardRef((props, ref) => {
     <NavView ref={ref}>
       <NavContainer>
         <NavClose />
-        {/* <NavHeader>
-          {profile && (
-            <>
-              <NavItem onClick={(evt) => closeGo(evt, '/')}>
-                <NavIcon>{iconMap.Smile}</NavIcon>
-                <NavTitle style={{ marginLeft: '-0.2rem' }}>
-                  Hi, {profile.first_name}
-                </NavTitle>
-              </NavItem>
-            </>
-          )}
-        </NavHeader> */}
         <NavItems>
           {filteredButtons.map((i) => (
             <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
@@ -237,15 +265,27 @@ const Nav = React.forwardRef((props, ref) => {
           ))}
         </NavItems>
         <NavFooter>
-          {profile ? (
-            <NavItem onClick={logout}>
-              <NavIcon>{iconMap.LogOut}</NavIcon>
-              <NavTitle>Logout</NavTitle>
-            </NavItem>
+          {auth ? (
+            <>
+              <NavItem onClick={logout}>
+                <NavIcon>
+                  <LogOut />
+                </NavIcon>
+                <NavTitle>Sign Out</NavTitle>
+              </NavItem>
+              <NavItem onClick={(evt) => closeGo(evt, '/account/delete')}>
+                <NavIcon>
+                  <Slash />
+                </NavIcon>
+                <NavTitle>Delete Account</NavTitle>
+              </NavItem>
+            </>
           ) : (
             <NavItem onClick={login}>
-              <NavIcon>{iconMap.User}</NavIcon>
-              <NavTitle>Login</NavTitle>
+              <NavIcon>
+                <UserCircle />
+              </NavIcon>
+              <NavTitle>Sign In</NavTitle>
             </NavItem>
           )}
         </NavFooter>

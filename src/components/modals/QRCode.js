@@ -40,7 +40,7 @@ const QRCodeContent = styled('div')`
 
   & > div {
     width: 16rem;
-    margin: 0 auto;
+    margin: 2rem auto;
   }
 
   p {

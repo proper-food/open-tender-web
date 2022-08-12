@@ -1,14 +1,12 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { ShoppingBag } from 'react-feather'
 import styled from '@emotion/styled'
 import { contains } from '@open-tender/js'
 import { selectCartQuantity } from '@open-tender/redux'
-
 import { toggleSidebar } from '../slices'
+import { ShoppingBag } from './icons'
 
-const CartButtonView = styled('div')`
+const CartButtonView = styled.div`
   position: fixed;
   z-index: 10;
   bottom: 2rem;
@@ -19,7 +17,7 @@ const CartButtonView = styled('div')`
   }
 `
 
-const CartButtonContainer = styled('div')`
+const CartButtonContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -32,7 +30,7 @@ const CartButtonContainer = styled('div')`
   }
 `
 
-const CartButtonButton = styled('button')`
+const CartButtonButton = styled.button`
   display: block;
   width: 100%;
   height: 100%;
@@ -54,13 +52,7 @@ const CartButtonButton = styled('button')`
 
   &:focus {
     outline: none;
-    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 1);
-    // border: 0.2rem solid
-    //   ${(props) => props.theme.buttons.colors.cartHover.color};
-    // box-shadow: 0 5px 15px 0
-    //   ${(props) => props.theme.buttons.colors.cart.bgColor};
-    // box-shadow: 0 0 0 2px
-    //   ${(props) => props.theme.buttons.colors.cartHover.bgColor};
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.5);
   }
 
   &:disabled {
@@ -74,7 +66,7 @@ const CartButtonButton = styled('button')`
   }
 `
 
-const CartButtonIcon = styled('div')`
+const CartButtonIcon = styled.div`
   width: 3rem;
   height: 3rem;
   margin: 0 auto;
@@ -84,7 +76,7 @@ const CartButtonIcon = styled('div')`
   }
 `
 
-const CartButtonCount = styled('div')`
+const CartButtonCount = styled.div`
   position: absolute;
   top: -0.3rem;
   right: -0.2rem;
@@ -127,7 +119,7 @@ const CartButton = () => {
   const { pathname } = useLocation()
   const cartQuantity = useSelector(selectCartQuantity)
   const isItem = pathname.includes('/item/')
-  const showCart = contains(pathname, ['menu', 'checkout']) && !isItem
+  const showCart = contains(pathname, ['menu']) && !isItem
 
   const toggle = (evt) => {
     evt.preventDefault()
@@ -147,7 +139,7 @@ const CartButton = () => {
           aria-label="Open cart to review order, press escape key to access at any time"
         >
           <CartButtonIcon>
-            <ShoppingBag size={null} />
+            <ShoppingBag />
           </CartButtonIcon>
         </CartButtonButton>
       </CartButtonContainer>

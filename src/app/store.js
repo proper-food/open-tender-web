@@ -12,6 +12,7 @@ import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
 import sidebarModalReducer from '../slices/sidebarModalSlice'
 import navReducer from '../slices/navSlice'
+import navSiteReducer from '../slices/navSiteSlice'
 import miscReducer from '../slices/miscSlice'
 import postsReducer from '../slices/postsSlice'
 import { openTenderReducer } from '@open-tender/redux'
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   sidebar: sidebarReducer,
   sidebarModal: sidebarModalReducer,
   nav: navReducer,
+  navSite: navSiteReducer,
   misc: miscReducer,
   posts: postsReducer,
   data: openTenderReducer,

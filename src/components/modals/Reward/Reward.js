@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
@@ -11,11 +11,12 @@ import {
   Message,
 } from '@open-tender/components'
 
-import { closeModal, openModal, selectAPI, selectBrand } from '../../../slices'
+import { closeModal, openModal, selectApi, selectBrand } from '../../../slices'
 import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
+import { makeLimitations } from '../../Reward'
 
-const RewardView = styled('div')`
+const RewardView = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +25,7 @@ const RewardView = styled('div')`
   text-align: center;
 `
 
-const RewardHeader = styled('div')`
+const RewardHeader = styled.div`
   margin: 0 0 1rem;
 
   & > p {
@@ -33,31 +34,33 @@ const RewardHeader = styled('div')`
 
   p:first-of-type {
     font-size: ${(props) => props.theme.fonts.sizes.h3};
-    line-height: 1;
+    line-height: 1.1;
     margin: 0;
   }
 
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     margin: 1rem 0 0;
   }
 `
 
-const RewardFinePrint = styled('div')`
+const RewardFinePrint = styled.div`
   & > p {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     // margin: 0 !important;
   }
 `
 
-const RewardContent = styled('div')`
+const RewardContent = styled.div`
+  label: RewardContent;
+  width: 100%;
   margin: 1.5rem 0 1rem;
 
   p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
 
     button {
       margin: 1rem 0 0;
@@ -65,9 +68,23 @@ const RewardContent = styled('div')`
   }
 `
 
-const RewardQRCodeView = styled('div')`
+const RewardQRCodeView = styled.div`
   width: 16rem;
-  margin: 0 auto;
+  margin: 1rem auto;
+`
+
+const RewardNote = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.5rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+
+  span {
+    display: block;
+    line-height: 1.4;
+  }
 `
 
 const errors = {
@@ -83,7 +100,8 @@ const Reward = ({ reward }) => {
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(null)
   const { title, description, imageUrl, expiration, service_type } = reward
-  const api = useSelector(selectAPI)
+  const limitations = makeLimitations(reward)
+  const api = useSelector(selectApi)
   const { profile } = useSelector(selectCustomer)
   const { has_pos } = useSelector(selectBrand)
   const { customer_id, is_verified } = profile || {}
@@ -131,11 +149,7 @@ const Reward = ({ reward }) => {
               <Text color="alert" size="small" as="p">
                 Use by {expiration}
               </Text>
-            ) : (
-              <Text size="small" as="p">
-                Expires never!
-              </Text>
-            )}
+            ) : null}
             {reward.per_order === 1 && (
               <Text color="alert" size="small" as="p">
                 Cannot be used with any other discounts
@@ -170,10 +184,13 @@ const Reward = ({ reward }) => {
             ) : imageUrl ? (
               <RewardImage src={imageUrl} alt={title} />
             ) : null}
-            <p>
-              To redeem online, add the relevant items to your cart and apply
-              this reward on the Checkout page
-            </p>
+            <RewardNote>{limitations}</RewardNote>
+            {service_type !== 'WALKIN' && (
+              <p>
+                To redeem online, add the relevant items to your cart and apply
+                this reward on the Checkout page
+              </p>
+            )}
             {hasQRCode && !qrCodeUrl && (
               <>
                 {error && (
@@ -182,7 +199,11 @@ const Reward = ({ reward }) => {
                   </Message>
                 )}
                 <p>
-                  <ButtonStyled color="cart" onClick={scan} disabled={fetching}>
+                  <ButtonStyled
+                    color="primary"
+                    onClick={scan}
+                    disabled={fetching}
+                  >
                     {fetching ? 'Retrieving QR Code' : 'Scan In-store'}
                   </ButtonStyled>
                 </p>

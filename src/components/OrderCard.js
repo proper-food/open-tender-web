@@ -1,6 +1,5 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   setOrderServiceType,
@@ -16,12 +15,11 @@ import {
   makeOrderTypeName,
 } from '@open-tender/js'
 import { ButtonStyled, DeliveryLink } from '@open-tender/components'
-
-import iconMap from './iconMap'
 import { Card, OrderImages, OrderTag } from '.'
+import { ExternalLink } from './icons'
 
 const OrderCard = ({ order, isLast }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     order_id,
@@ -72,7 +70,7 @@ const OrderCard = ({ order, isLast }) => {
             <DeliveryLink
               text="Track your delivery"
               trackingUrl={trackingUrl}
-              newWindowIcon={iconMap.ExternalLink}
+              newWindowIcon={<ExternalLink />}
             />
           )}
         </>
@@ -90,7 +88,6 @@ const OrderCard = ({ order, isLast }) => {
         <>
           {order.is_editable && (
             <ButtonStyled
-              icon={iconMap.Edit}
               onClick={() => dispatch(editOrder(order))}
               size="small"
             >
@@ -99,7 +96,6 @@ const OrderCard = ({ order, isLast }) => {
           )}
           {!isMerch && (
             <ButtonStyled
-              icon={iconMap.RefreshCw}
               onClick={handleReorder}
               size="small"
               color={order.is_editable ? 'secondary' : 'primary'}
@@ -108,8 +104,7 @@ const OrderCard = ({ order, isLast }) => {
             </ButtonStyled>
           )}
           <ButtonStyled
-            icon={iconMap.FileText}
-            onClick={() => history.push(`/orders/${order_id}`)}
+            onClick={() => navigate(`/orders/${order_id}`)}
             size="small"
             color="secondary"
           >

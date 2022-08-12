@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerGiftCards,
@@ -10,9 +9,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderUser,
@@ -22,29 +19,21 @@ import {
   PageContainer,
   PageContent,
   PageTitleButtons,
-  AccountBack,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountGiftCards = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { giftCardsAccount: config } = useSelector(selectConfig)
   const { entities, loading } = useSelector(selectCustomerGiftCards)
   const isLoading = loading === 'pending'
   const { auth } = useSelector(selectCustomer)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth) return navigate('/account')
+  }, [auth, navigate])
 
   useEffect(() => {
     dispatch(fetchCustomerGiftCards())
@@ -60,11 +49,10 @@ const AccountGiftCards = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} preface={<AccountBack />}>
+            <PageTitle {...config}>
               <PageTitleButtons>
-                <ButtonStyled onClick={() => history.push('/gift-cards')}>
+                <ButtonStyled onClick={() => navigate('/gift-cards')}>
                   Buy Gift Cards For Others
                 </ButtonStyled>
                 <ButtonStyled
@@ -84,12 +72,7 @@ const AccountGiftCards = () => {
               </PageTitleButtons>
             </PageTitle>
             {entities.length ? (
-              <>
-                <GiftCardsList giftCards={entities} isLoading={isLoading} />
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <GiftCardsList giftCards={entities} isLoading={isLoading} />
             ) : (
               <PageContent>
                 {isLoading ? (

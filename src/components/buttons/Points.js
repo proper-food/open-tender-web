@@ -1,21 +1,15 @@
-import React from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectCustomerPoints } from '@open-tender/redux'
 import { formatQuantity } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
-
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
-import styled from '@emotion/styled'
+import { Star } from '../icons'
 
-const PointsTitle = styled('span')`
-  // font-family: ${(props) => props.theme.fonts.headings.family};
-  // font-weight: ${(props) => props.theme.fonts.headings.weight};
-  // font-size: ${(props) => props.theme.buttons.sizes.header.fontSize};
-`
+const PointsTitle = styled.span``
 
-const PointsIcon = styled('span')`
+const PointsIcon = styled.span`
   display: block;
   width: 1.6rem;
   height: 1.6rem;
@@ -44,7 +38,9 @@ const Points = ({ color = 'cart', size = 'small', style = defaultStyle }) => {
       style={style}
     >
       <PointsTitle>{formatQuantity(points)}</PointsTitle>
-      <PointsIcon>{iconMap.Star}</PointsIcon>
+      <PointsIcon>
+        <Star />
+      </PointsIcon>
     </ButtonStyled>
   ) : null
 }

@@ -1,165 +1,206 @@
-import React, { useEffect, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
-  selectCurrentItem,
-  setCurrentItem,
   addItemToCart,
-  selectSoldOut,
-  selectSelectedAllergenNames,
+  selectCartIds,
+  selectCurrentItem,
+  selectCustomerPointsProgram,
   selectGroupOrder,
+  selectOrder,
+  setCurrentItem,
   selectMenuSlug,
   showNotification,
-  selectOrder,
-  selectCustomerPointsProgram,
 } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { useBuilder } from '@open-tender/hooks'
+import { selectContentSection, selectMenuPath } from '../../../slices'
+import { Back, NavMenu } from '../../buttons'
+import { Star } from '../../icons'
+import {
+  BackgroundImage,
+  Content,
+  Header,
+  Main,
+  ScreenreaderTitle,
+} from '../..'
+import { MenuHeader } from '../Menu'
+import { MenuContext } from '../Menu/Menu'
+import MenuItemHeader from './MenuItemHeader'
+import MenuItemAccordion from './MenuItemAccordion'
+import MenuItemFooter from './MenuItemFooter'
+import MenuItemGroups from './MenuItemGroups'
+import MenuItemUpsell from './MenuItemUpsell'
 
-import { maybeRefreshVersion } from '../../../app/version'
-import { selectDisplaySettings } from '../../../slices'
-import { AppContext } from '../../../App'
-import { BackgroundImage, Content, Main, ScreenreaderTitle } from '../..'
-import MenuItemBuilder from './MenuItemBuilder'
-import iconMap from '../../iconMap'
-import MenuItemClose from './MenuItemClose'
-
-const MenuItemView = styled('div')`
+const MenuItemView = styled.div`
   position: relative;
   z-index: 2;
   display: flex;
   justify-content: flex-end;
 `
 
-const MenuItemBuilderView = styled('div')`
-  width: 64rem;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    margin: 24rem 0 0;
-  }
-`
-
-const MenuItemImage = styled('div')`
+const MenuItemImage = styled.div`
   position: fixed;
   display: flex;
   z-index: 1;
-  top: 0;
+  top: ${(props) => props.theme.layout.navHeight};
   bottom: 0;
   left: 0;
   right: 64rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    right: 0;
-    bottom: auto;
-    height: 24rem;
-  }
-`
-
-const MenuItemBack = styled('div')`
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  display: flex;
-  align-items: center;
-  left: ${(props) => props.theme.layout.padding};
-  height: ${(props) => props.theme.layout.navHeight};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: none;
   }
+`
 
-  button {
-    color: ${(props) => props.theme.colors.primary};
-    background-color: ${(props) => props.theme.bgColors.primary};
-
-    &:hover,
-    &:active,
-    &:focus {
-      color: ${(props) => props.theme.colors.primary};
-      background-color: ${(props) => props.theme.bgColors.secondary};
-    }
+const MenuItemContent = styled.div`
+  width: 64rem;
+  margin-bottom: ${(props) => props.footerHeight || '10rem'};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    margin-bottom: ${(props) => props.footerHeight || '10rem'};
   }
 `
 
 const MenuItem = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { windowRef } = useContext(AppContext)
+  const [showUpsell, setShowUpsell] = useState(false)
+  const [isCustomize, setIsCustomize] = useState(false)
+  const [footerHeight, setFooterHeight] = useState(null)
+  const footerHeightRem = footerHeight
+    ? `${(footerHeight / 10).toFixed(1)}rem`
+    : null
+  const { soldOut, siteTitle, displaySettings, allergenAlerts } =
+    useContext(MenuContext)
+  const menuPath = useSelector(selectMenuPath)
   const menuSlug = useSelector(selectMenuSlug)
   const item = useSelector(selectCurrentItem)
-  const soldOut = useSelector(selectSoldOut)
-  const allergens = useSelector(selectSelectedAllergenNames)
-  const displaySettings = useSelector(selectDisplaySettings)
+  const upsells = useSelector(selectContentSection('upsells')) || {}
+  const cartIds = useSelector(selectCartIds)
+  const upsellItems = item ? item.upsell_items || item.upsellItems : null
+  const upsellItemIds =
+    upsellItems && upsells?.item?.show
+      ? upsellItems.filter(
+          (id) => !cartIds.includes(id) && !soldOut.includes(id)
+        )
+      : []
+  const hasUpsell = upsellItemIds.length > 0
+  const { cartId } = useSelector(selectGroupOrder)
   const { orderType } = useSelector(selectOrder)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
-  const { cartId } = useSelector(selectGroupOrder)
-  const imageUrl = item
-    ? item.large_image_url ||
-      item.small_image_url ||
-      item.app_image_url ||
-      item.imageUrl
-    : null
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!item) history.push(menuSlug)
-  }, [item, history, menuSlug])
+  const hasPoints = !!pointsProgram
+  const pointsIcon = hasPoints ? <Star /> : null
+  const {
+    item: builtItem,
+    increment,
+    decrement,
+    setQuantity,
+    setMadeFor,
+    setNotes,
+    toggleOption,
+    incrementOption,
+    decrementOption,
+    setOptionQuantity,
+  } = useBuilder(item || {})
 
   const cancel = () => {
     dispatch(setCurrentItem(null))
   }
 
-  const addItem = (item) => {
-    dispatch(addItemToCart(item))
-    dispatch(showNotification(`${item.name} added to cart`))
-    dispatch(setCurrentItem(null))
-    // if (item.index) dispatch(toggleSidebar())
+  const addItem = (builtItem) => {
+    const cartItem = { ...builtItem }
+    if (cartItem.index === -1) delete cartItem.index
+    dispatch(addItemToCart(cartItem))
+    dispatch(showNotification(`${cartItem.name} added to cart`))
+    if (hasUpsell) {
+      setShowUpsell(true)
+    } else {
+      dispatch(setCurrentItem(null))
+    }
   }
+
+  const backClick = isCustomize ? () => setIsCustomize(false) : cancel
+
+  useEffect(() => {
+    if (!item) navigate(menuPath || menuSlug)
+  }, [item, navigate, menuSlug, menuPath])
 
   if (!item) return null
 
   return (
     <>
       <Helmet>
-        <title>Menu | {item.name}</title>
+        <title>
+          Menu - {item.name} | {siteTitle}
+        </title>
       </Helmet>
       <Content hasFooter={false}>
-        {isBrowser && (
-          <MenuItemBack>
-            <ButtonStyled
-              onClick={cancel}
-              icon={iconMap.ArrowLeft}
-              color="header"
-              size="small"
-            >
-              Back to Menu
-            </ButtonStyled>
-          </MenuItemBack>
+        {isMobile ? (
+          <Header
+            style={{ boxShadow: 'none' }}
+            left={<Back onClick={backClick} />}
+            right={<NavMenu />}
+          />
+        ) : (
+          <MenuHeader backClick={backClick} />
         )}
-        <Main style={{ padding: '0' }}>
+        {hasUpsell && (
+          <MenuItemUpsell
+            showUpsell={showUpsell}
+            setShowUpsell={setShowUpsell}
+            upsellItemIds={upsellItemIds}
+          />
+        )}
+        <Main>
           <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
-          <MenuItemImage>
-            <BackgroundImage imageUrl={imageUrl} />
-          </MenuItemImage>
           <MenuItemView>
-            <MenuItemClose onClick={cancel} isButton={!isBrowser} />
-            <MenuItemBuilderView>
-              <MenuItemBuilder
-                menuItem={item}
-                addItemToCart={addItem}
-                cancel={cancel}
-                soldOut={soldOut}
-                allergenAlerts={allergens}
+            <MenuItemImage>
+              <BackgroundImage imageUrl={builtItem.imageUrl} />
+            </MenuItemImage>
+            <MenuItemContent footerHeight={footerHeightRem}>
+              <MenuItemHeader
+                builtItem={builtItem}
                 displaySettings={displaySettings}
-                cartId={cartId}
-                hasPoints={!!pointsProgram}
+                pointsIcon={pointsIcon}
+                isCustomize={isCustomize}
+                setIsCustomize={setIsCustomize}
               />
-            </MenuItemBuilderView>
+              {isCustomize ? (
+                <MenuItemGroups
+                  builtItem={builtItem}
+                  allergenAlerts={allergenAlerts}
+                  displaySettings={displaySettings}
+                  toggleOption={toggleOption}
+                  incrementOption={incrementOption}
+                  decrementOption={decrementOption}
+                  setOptionQuantity={setOptionQuantity}
+                />
+              ) : (
+                <MenuItemAccordion
+                  builtItem={builtItem}
+                  setQuantity={setQuantity}
+                  increment={increment}
+                  decrement={decrement}
+                  toggleOption={toggleOption}
+                  setMadeFor={setMadeFor}
+                  setNotes={setNotes}
+                  displaySettings={displaySettings}
+                  cartId={cartId}
+                />
+              )}
+              <MenuItemFooter
+                builtItem={builtItem}
+                addItem={addItem}
+                cancel={cancel}
+                isCustomize={isCustomize}
+                setIsCustomize={setIsCustomize}
+                setFooterHeight={setFooterHeight}
+              />
+            </MenuItemContent>
           </MenuItemView>
         </Main>
       </Content>

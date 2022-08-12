@@ -1,50 +1,41 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import styled from '@emotion/styled'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
+import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
-import { Reward } from '.'
+import { selectBrand, selectConfig } from '../slices'
+import { Reward, ScrollableSection } from '.'
 
-const DealsView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin: -1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    margin: -0.5rem;
-    justify-content: center;
-  }
-`
+const Deals = () => {
+  const dispatch = useDispatch()
+  const { has_deals } = useSelector(selectBrand)
+  const { account: config } = useSelector(selectConfig)
+  const { title } = config.deals
+  const { profile } = useSelector(selectCustomer)
+  const { entities } = useSelector(selectDeals)
+  const { customer_id } = profile || {}
+  const displayed = !isMobile ? entities.slice(0, 2) : entities
+  const isMore = entities.length > 2
+  const hasDeals = has_deals && displayed.length
 
-const Deal = styled('div')`
-  width: 33.33333%;
-  padding: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 50%;
-    padding: 0.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: 0.5rem;
-  }
-`
+  useEffect(() => {
+    if (has_deals) {
+      dispatch(fetchDeals())
+    }
+  }, [has_deals, customer_id, dispatch])
 
-const Deals = ({ deals }) => {
+  if (!hasDeals) return null
+
   return (
-    <DealsView>
-      {deals.map((deal) => (
-        <Deal key={deal.discount_id}>
-          <Reward item={deal} />
-        </Deal>
-      ))}
-    </DealsView>
+    <ScrollableSection
+      title={title}
+      to={isMore ? '/deals' : null}
+      items={displayed}
+      renderItem={Reward}
+      keyName="discount_id"
+    />
   )
 }
 
 Deals.displayName = 'Deals'
-Deals.propTypes = {
-  deals: propTypes.array,
-}
-
 export default Deals

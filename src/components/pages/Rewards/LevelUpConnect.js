@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomerLevelUp,
@@ -7,9 +7,7 @@ import {
   showNotification,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
-
 import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import { Loading, PageContent, Row } from '../..'
 
 const LevelUpConnect = () => {
@@ -60,7 +58,6 @@ const LevelUpConnect = () => {
             }
             actions={
               <ButtonStyled
-                icon={iconMap.XCircle}
                 onClick={handleDisconnect}
                 size="small"
                 disabled={isLoading}
@@ -96,7 +93,6 @@ const LevelUpConnect = () => {
             }
             actions={
               <ButtonStyled
-                icon={iconMap.RefreshCw}
                 onClick={handleConnect}
                 size="small"
                 disabled={isLoading}
@@ -109,7 +105,7 @@ const LevelUpConnect = () => {
       ) : (
         <>
           <p>
-            <ButtonStyled icon={iconMap.Link} onClick={handleConnect}>
+            <ButtonStyled onClick={handleConnect}>
               Connect your LevelUp account
             </ButtonStyled>
           </p>

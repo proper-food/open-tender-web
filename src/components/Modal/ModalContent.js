@@ -1,14 +1,13 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Headline } from '@open-tender/components'
 
 import { ModalClose } from '.'
 
 const ModalContentView = styled('div')`
   padding: 3.5rem 3.5rem 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 2.5rem 2.5rem 3rem;
+    padding: 3rem 2.5rem 3rem;
   }
 `
 
@@ -16,16 +15,21 @@ const ModalHeader = styled('div')`
   margin: 0 0 2.5rem;
 `
 
-const ModalTitle = styled('p')`
-  margin: 0;
-  line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.h3};
+const ModalTitle = styled(Headline)`
+  margin: 0 0 0 -0.2rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+  }
 `
 
-const ModalSubtitle = styled('div')`
+const ModalSubtitle = styled.div`
   p {
     margin-top: 1rem;
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 
@@ -33,7 +37,7 @@ const ModalBody = styled('div')`
   & > div {
     & > p {
       margin: 1em 0;
-      line-height: ${(props) => props.theme.lineHeight};
+      line-height: ${(props) => props.theme.fonts.body.lineHeight};
 
       button {
         margin: 0 1rem 1rem 0;
@@ -43,10 +47,6 @@ const ModalBody = styled('div')`
       }
     }
   }
-
-  // > div + div {
-  //   margin: ${(props) => props.theme.layout.padding} 0 0;
-  // }
 `
 
 const ModalFooter = styled('div')`
@@ -96,8 +96,8 @@ const ModalContent = ({
         {hasHeader && (
           <ModalHeader>
             {title && (
-              <ModalTitle id="dialogTitle">
-                <Heading>{title}</Heading>
+              <ModalTitle as="p" id="dialogTitle">
+                {title}
               </ModalTitle>
             )}
             {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}

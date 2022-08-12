@@ -1,18 +1,19 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
 import {
   selectOrder,
   selectGroupOrder,
   selectAutoSelect,
+  setAddress,
+  setOrderServiceType,
+  setRequestedAt,
+  setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled, Message, Text } from '@open-tender/components'
-
-import { selectConfig } from '../../slices'
-import iconMap from '../iconMap'
+import { selectConfig, openModal, selectIsGroupOrder } from '../../slices'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 const RevenueCenterOrderView = styled('div')`
@@ -30,16 +31,16 @@ const RevenueCenterOrderView = styled('div')`
 `
 
 const RevenueCenterOrderMessage = styled('div')`
-  line-height: ${(props) => props.theme.lineHeight};
+  line-height: ${(props) => props.theme.fonts.body.lineHeight};
 
-  + div {
-    margin-top: 1.5rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin-top: 1rem;
-    }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 
-  p {
+  p span {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    }
   }
 `
 
@@ -50,16 +51,104 @@ const RevenueCenterOrderMessageMessage = styled('p')`
     border-radius: 0.3rem;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: inline-block;
+      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }
   }
 `
 
-export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
-  const history = useHistory()
-  const { serviceType, requestedAt } = useSelector(selectOrder)
+const RevenueCenterOrderButtons = styled('div')`
+  margin-top: 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 1.5rem;
+  }
+
+  button {
+    margin-bottom: 0;
+  }
+`
+
+const RevenueCenterChange = ({ autoSelect }) => {
+  const navigate = useNavigate()
+  if (autoSelect) return null
+
+  return (
+    <RevenueCenterOrderButtons>
+      <ButtonStyled onClick={() => navigate(`/locations`)} size="small">
+        Change Location
+      </ButtonStyled>
+    </RevenueCenterOrderButtons>
+  )
+}
+
+const RevenueCenterChoose = ({ revenueCenter, serviceType, orderType }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {
+    slug,
+    revenue_center_type: rcType,
+    is_outpost: isOutpost,
+    address,
+    first_times,
+    order_times,
+    status,
+  } = revenueCenter
+  const menuSlug = `/menu/${slug}`
+  const firstTimes = first_times ? first_times[serviceType] : null
+  const orderTimes = order_times ? order_times[serviceType] : null
   const { cartId } = useSelector(selectGroupOrder)
-  const hasGroupOrdering =
-    revenueCenter && revenueCenter.settings.group_ordering
+  const isGroupOrder = useSelector(selectIsGroupOrder)
+
+  if (!firstTimes && !orderTimes) return null
+
+  if (status !== 'OPEN') return null
+
+  const hasAsap = firstTimes && firstTimes.has_asap
+  const isCatering = rcType === 'CATERING'
+
+  const orderAsap = () => {
+    if (!hasAsap) return
+    dispatch(setRequestedAt('asap'))
+    dispatch(setRevenueCenter(revenueCenter))
+    dispatch(setOrderServiceType(rcType, serviceType, isOutpost))
+    if (isOutpost) dispatch(setAddress(address))
+    navigate(menuSlug)
+  }
+
+  const orderLater = () => {
+    const args = {
+      focusFirst: true,
+      skipClose: true,
+      isGroupOrder: isGroupOrder || cartId ? true : false,
+      style: orderTimes ? { alignItems: 'flex-start' } : {},
+      revenueCenter,
+      serviceType,
+      orderType,
+    }
+    dispatch(openModal({ type: 'requestedAt', args }))
+  }
+
+  return (
+    <RevenueCenterOrderButtons>
+      {!isCatering && firstTimes && (
+        <ButtonStyled onClick={orderAsap} disabled={!hasAsap} size="small">
+          Order Now
+        </ButtonStyled>
+      )}
+      <ButtonStyled
+        onClick={orderLater}
+        size="small"
+        color={isCatering || !firstTimes ? 'primary' : 'secondary'}
+      >
+        {isCatering ? 'Order from Here' : 'Order for Later'}
+      </ButtonStyled>
+    </RevenueCenterOrderButtons>
+  )
+}
+
+export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
+  const { orderType, serviceType, requestedAt } = useSelector(selectOrder)
+  const { cartId } = useSelector(selectGroupOrder)
+  const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering
   const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
@@ -69,6 +158,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
     requestedAt,
     statusMessages
   )
+  const showMsg = msg.message && !isMenu ? true : false
 
   return (
     <RevenueCenterOrderView>
@@ -82,11 +172,11 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
         </RevenueCenterOrderMessage>
       ) : (
         <>
-          {msg.message && (
+          {showMsg && (
             <RevenueCenterOrderMessage>
               <p>
                 <Text
-                  color={msg.color}
+                  color="alert"
                   size="small"
                   style={{ borderRadius: '0.3rem' }}
                 >
@@ -96,23 +186,17 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
             </RevenueCenterOrderMessage>
           )}
           {isMenu ? (
-            !autoSelect ? (
-              <div>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={() => history.push(`/locations`)}
-                >
-                  Change Location
-                </ButtonStyled>
-              </div>
-            ) : null
+            <RevenueCenterChange autoSelect={autoSelect} />
+          ) : isLanding ? (
+            <RevenueCenterOrderButtons>
+              <RevenueCenterButtons revenueCenter={revenueCenter} />
+            </RevenueCenterOrderButtons>
           ) : (
-            <div>
-              <RevenueCenterButtons
-                revenueCenter={revenueCenter}
-                isLanding={isLanding}
-              />
-            </div>
+            <RevenueCenterChoose
+              revenueCenter={revenueCenter}
+              serviceType={serviceType}
+              orderType={orderType}
+            />
           )}
         </>
       )}

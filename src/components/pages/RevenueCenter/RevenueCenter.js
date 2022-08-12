@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
-  fetchRevenueCenter,
+  fetchLocation,
   resetOrderType,
   setOrderServiceType,
 } from '@open-tender/redux'
-import { useGeolocation } from '@open-tender/components'
+import { BgImage, useGeolocation } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectConfig,
@@ -18,7 +18,6 @@ import {
   setGeoError,
   setGeoLoading,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Background,
   Container,
@@ -29,6 +28,7 @@ import {
   RevenueCenter as RevenueCenterCard,
   ScreenreaderTitle,
 } from '../..'
+import { isMobileOnly } from 'react-device-detect'
 
 const makeImageUrl = (images, defaultImageUrl) => {
   if (!images) return defaultImageUrl || null
@@ -38,6 +38,18 @@ const makeImageUrl = (images, defaultImageUrl) => {
   let imageUrl = largeImage ? largeImage.url : null
   return imageUrl || defaultImageUrl || null
 }
+
+const RevenueCenterView = styled.div`
+  margin: 4rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 2.5rem 0 0;
+  }
+`
+
+const RevenueCenterHero = styled(BgImage)`
+  height: 24rem;
+  background-image: url(${(props) => props.imageUrl});
+`
 
 const RevenueCenter = () => {
   const dispatch = useDispatch()
@@ -49,16 +61,13 @@ const RevenueCenter = () => {
   const order = useSelector(selectOrder)
   const { revenueCenter, loading } = order
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
   const title = revenueCenter ? revenueCenter.name : config.title
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
-    dispatch(fetchRevenueCenter(slug))
-  }, [dispatch, slug, windowRef])
+    dispatch(fetchLocation(slug))
+  }, [dispatch, slug])
 
   useEffect(() => {
     if (geoLatLng) {
@@ -70,14 +79,14 @@ const RevenueCenter = () => {
 
   useEffect(() => {
     if (revenueCenter) {
-      const { images, settings, revenue_center_type } = revenueCenter
+      const { images, service_types, revenue_center_type } = revenueCenter
       setImageUrl(makeImageUrl(images, config.background))
-      const { service_types } = settings
-      let serviceType = service_types.length
-        ? service_types.includes('PICKUP')
-          ? 'PICKUP'
-          : 'DELIVERY'
-        : null
+      let serviceType =
+        service_types && service_types.length
+          ? service_types.includes('PICKUP')
+            ? 'PICKUP'
+            : 'DELIVERY'
+          : null
       if (serviceType) {
         dispatch(setOrderServiceType(revenue_center_type, serviceType))
       }
@@ -95,24 +104,27 @@ const RevenueCenter = () => {
       <Content maxWidth="76.8rem">
         <HeaderDefault maxWidth="76.8rem" />
         <Main>
+          {isMobileOnly && imageUrl && (
+            <RevenueCenterHero imageUrl={imageUrl} />
+          )}
           <Container>
             <ScreenreaderTitle>{title}</ScreenreaderTitle>
-            <div style={{ margin: '4rem 0 0' }}>
+            <RevenueCenterView>
               {isLoading ? (
                 <Loading text="Retrieving nearest locations..." />
               ) : revenueCenter ? (
                 <RevenueCenterCard
                   revenueCenter={revenueCenter}
-                  showImage={true}
+                  showImage={isMobileOnly ? false : true}
                   isLanding={true}
                 />
               ) : (
                 <p>
                   Location not found. Please try a different URL or{' '}
-                  <Link to="/">head back to our home page</Link>.
+                  <Link to="/account">head back to our home page</Link>.
                 </p>
               )}
-            </div>
+            </RevenueCenterView>
           </Container>
         </Main>
       </Content>

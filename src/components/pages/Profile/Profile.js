@@ -1,22 +1,19 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
 import {
-  selectCustomer,
   fetchCustomer,
-  updateCustomer,
   resetLoginError,
+  selectCustomer,
+  updateCustomer,
 } from '@open-tender/redux'
 import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
-import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
-import { AppContext } from '../../../App'
+import { selectBrand, selectConfig } from '../../../slices'
 import {
-  AccountBack,
   Content,
+  DeleteAccount,
   HeaderUser,
   Loading,
   Main,
@@ -25,11 +22,10 @@ import {
   PageTitle,
   VerifyAccount,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { profile: config } = useSelector(selectConfig)
   const { profile, loading, error } = useSelector(selectCustomer)
@@ -40,23 +36,16 @@ const AccountProfile = () => {
     (data) => dispatch(updateCustomer(data)),
     [dispatch]
   )
-  const optIns = useSelector(selectOptIns)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
-
-  useEffect(() => {
-    if (!customer_id) return history.push('/')
+    if (!customer_id) return navigate('/account')
     dispatch(fetchCustomer())
     return () => dispatch(resetLoginError())
-  }, [customer_id, dispatch, history])
+  }, [customer_id, dispatch, navigate])
 
   return (
     <>
@@ -68,26 +57,20 @@ const AccountProfile = () => {
       <Content>
         <HeaderUser />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '72rem' }}>
-            <PageTitle {...config} preface={<AccountBack />}>
+            <PageTitle {...config}>
               <VerifyAccount style={{ margin: '2rem 0 0' }} />
             </PageTitle>
             {profile ? (
-              <>
-                <FormWrapper>
-                  <ProfileForm
-                    profile={profile}
-                    loading={loading}
-                    error={error}
-                    update={update}
-                    optIns={optIns}
-                  />
-                </FormWrapper>
-                <PageContent>
-                  <AccountBack />
-                </PageContent>
-              </>
+              <FormWrapper>
+                <ProfileForm
+                  profile={profile}
+                  loading={loading}
+                  error={error}
+                  update={update}
+                />
+                <DeleteAccount />
+              </FormWrapper>
             ) : (
               <PageContent>
                 {isLoading ? (

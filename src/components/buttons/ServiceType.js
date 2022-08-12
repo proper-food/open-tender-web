@@ -1,18 +1,17 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 import { makeServiceTypeName } from '@open-tender/js'
-
 import { openModal, selectOutpostName } from '../../slices'
-import iconMap from '../iconMap'
+import { Calendar, Coffee, ShoppingBag, Truck } from '../icons'
 import { ButtonBoth } from '.'
 
 const ServiceType = ({ style = null, useButton = false }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { orderType, serviceType, isOutpost } = useSelector(selectOrder)
+  const { orderType, serviceType, isOutpost, prepType } =
+    useSelector(selectOrder)
   const outpostName = useSelector(selectOutpostName)
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
@@ -21,14 +20,16 @@ const ServiceType = ({ style = null, useButton = false }) => {
     isOutpost,
     outpostName
   )
-  const icon =
-    iconMap[
-      isCatering
-        ? 'Calendar'
-        : serviceType === 'DELIVERY'
-        ? 'Truck'
-        : 'ShoppingBag'
-    ]
+  const name = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
+  const icon = isCatering ? (
+    <Calendar />
+  ) : serviceType === 'DELIVERY' ? (
+    <Truck />
+  ) : serviceType === 'WALKIN' && prepType !== 'TAKE_OUT' ? (
+    <Coffee />
+  ) : (
+    <ShoppingBag />
+  )
 
   if (!serviceType) return null
 
@@ -36,15 +37,24 @@ const ServiceType = ({ style = null, useButton = false }) => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
-  const handleCatering = () => {
-    history.push(`/catering`)
+  const handlePrepType = () => {
+    dispatch(openModal({ type: 'prepType' }))
   }
 
-  const change = isCatering ? handleCatering : handleServiceType
+  const handleCatering = () => {
+    navigate(`/catering-address`)
+  }
+
+  const change =
+    prepType !== null
+      ? handlePrepType
+      : isCatering
+      ? handleCatering
+      : handleServiceType
 
   return (
     <ButtonBoth
-      text={serviceTypeName}
+      text={name}
       icon={icon}
       onClick={change}
       style={style}

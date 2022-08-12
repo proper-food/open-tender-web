@@ -1,35 +1,29 @@
-import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { setAddress, selectOrder } from '@open-tender/redux'
-import { Box, GoogleMapsAutocomplete } from '@open-tender/components'
-
-import iconMap from './iconMap'
+import { GoogleMapsAutocomplete } from '@open-tender/components'
+import { Navigation } from './icons'
 
 const MapsAutocompleteView = styled('div')`
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  z-index: 15;
+  top: ${(props) => props.theme.layout.navHeight};
+  right: 0;
+  width: 76.8rem;
+  height: ${(props) => props.theme.layout.navHeight};
   padding: 0 ${(props) => props.theme.layout.padding};
-  margin: 0.2rem 0 ${(props) => props.theme.layout.padding};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    position: fixed;
-    z-index: 15;
-    top: 6rem;
-    left: 0;
-    right: 0;
-    height: 7.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    width: 100%;
+    top: ${(props) => props.theme.layout.navHeightMobile};
+    height: ${(props) => props.theme.layout.navHeightMobile};
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    background-color: 0 ${(props) => props.theme.bgColors.primary};
   }
-`
-
-const MapsAutocompleteInput = styled(Box)`
-  padding: ${(props) => props.theme.layout.paddingMobile};
 `
 
 const MapsAutocomplete = ({
@@ -49,19 +43,17 @@ const MapsAutocomplete = ({
 
   return (
     <MapsAutocompleteView>
-      <MapsAutocompleteInput>
-        <GoogleMapsAutocomplete
-          maps={maps}
-          map={map}
-          sessionToken={sessionToken}
-          autocomplete={autocomplete}
-          formattedAddress={formattedAddress}
-          setAddress={(address) => dispatch(setAddress(address))}
-          setCenter={setCenter}
-          icon={iconMap.Navigation}
-          placeholder={placeholder}
-        />
-      </MapsAutocompleteInput>
+      <GoogleMapsAutocomplete
+        maps={maps}
+        map={map}
+        sessionToken={sessionToken}
+        autocomplete={autocomplete}
+        formattedAddress={formattedAddress}
+        setAddress={(address) => dispatch(setAddress(address))}
+        setCenter={setCenter}
+        icon={<Navigation strokeWidth={2} />}
+        placeholder={placeholder}
+      />
     </MapsAutocompleteView>
   )
 }

@@ -1,79 +1,81 @@
-import React from 'react'
+import { useState } from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-import {
-  selectGroupOrder,
-  selectOrder,
-  selectCustomer,
-} from '@open-tender/redux'
+import { useTheme } from '@emotion/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
+import { selectGroupOrder, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
-
-import { Header } from '../..'
 import {
-  Account,
   Allergens,
-  CancelEdit,
-  GroupGuest,
-  GroupOrder,
-  Home,
-  LeaveGroup,
-  Points,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
+  Back,
+  Cart,
+  GroupOrderIcon,
+  LeaveGroupIcon,
+  NavMenu,
 } from '../../buttons'
-import iconMap from '../../iconMap'
+import { ChevronDown, ChevronUp } from '../../icons'
+import { Header } from '../..'
+import MenuMobileMenu from './MenuMobileMenu'
+import { openModal, selectDisplaySettings } from '../../../slices'
 
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
   line-height: 1;
   margin: 0.5rem 0 0;
+  color: ${(props) => props.theme.buttons.colors.header.color};
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  }
 `
 
-const MenuHeaderTitleRevenueCenter = styled('button')`
+const MenuHeaderTitleRevenueCenter = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0.4rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  color: ${(props) => props.theme.buttons.colors.header.color};
 
   > span {
     display: inline-block;
-
-    &:first-of-type {
-      margin: 0.3rem 0.4rem 0 0;
-      width: 1.6rem;
-      height: 1.6rem;
-    }
-
-    &:last-of-type {
-      margin: 0.2rem 0 0 0.5rem;
-      width: 1.6rem;
-      height: 1.6rem;
-      color: ${(props) => props.theme.fonts.headings.color};
-    }
+    color: ${(props) => props.theme.buttons.colors.header.color};
   }
 `
 
-const MenuHeaderName = styled('span')`
+const MenuHeaderName = styled.span`
   max-width: 20rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  span {
+    color: ${(props) => props.theme.buttons.colors.header.color};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+    }
+  }
+`
+
+const MenuHeaderDropdown = styled.span`
+  margin: 0.2rem 0 0 0.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
 `
 
 const MenuHeaderTitle = ({
-  serviceType,
-  revenueCenter,
+  order,
+  isGroupOrder,
+  cartGuest,
   showMenu,
   setShowMenu,
 }) => {
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const { serviceType, revenueCenter, prepType } = order
+  let serviceTypeName = serviceTypeNamesMap[serviceType]
+  serviceTypeName = prepType === 'TAKE_OUT' ? 'Take Out' : serviceTypeName
   const orderTypeName =
     revenueCenter && revenueCenter.revenue_center_type === 'CATERING'
       ? ' Catering '
@@ -87,84 +89,92 @@ const MenuHeaderTitle = ({
   return revenueCenter ? (
     <>
       <MenuHeaderTitleServiceType>
-        Ordering {orderTypeName}
+        {isGroupOrder ? 'Group Order ' : 'Ordering '} {orderTypeName}
         {serviceTypeName}
       </MenuHeaderTitleServiceType>
       <MenuHeaderTitleRevenueCenter onClick={toggle}>
-        <span>&nbsp;</span>
         <MenuHeaderName>
           <Heading>{revenueCenter.name}</Heading>
         </MenuHeaderName>
-        <span>{showMenu ? iconMap.ChevronUp : iconMap.ChevronDown}</span>
+        {!cartGuest ? (
+          <MenuHeaderDropdown>
+            {showMenu ? <ChevronUp /> : <ChevronDown />}
+          </MenuHeaderDropdown>
+        ) : null}
       </MenuHeaderTitleRevenueCenter>
     </>
   ) : null
 }
 
-const MenuHeader = ({
-  maxWidth = '100%',
-  bgColor,
-  borderColor,
-  showMenu,
-  setShowMenu,
-}) => {
-  const { auth } = useSelector(selectCustomer)
+MenuHeaderTitle.displayName = 'MenuHeaderTitle'
+MenuHeaderTitle.propTypes = {
+  order: propTypes.object,
+  isGroupOrder: propTypes.bool,
+  showMenu: propTypes.bool,
+  setShowMenu: propTypes.func,
+}
+
+const MenuHeader = ({ backPath = '/locations', backClick }) => {
+  const dispatch = useDispatch()
+  const { colors, border } = useTheme()
+  const [showMenu, setShowMenu] = useState(false)
+  const { allergens: displayAllergens } = useSelector(selectDisplaySettings)
   const order = useSelector(selectOrder)
-  const { cartGuest } = useSelector(selectGroupOrder)
-  const left = cartGuest ? <LeaveGroup /> : <Home />
+  const { revenueCenter } = order
+  const showGroupOrdering =
+    !isMobile && revenueCenter ? !!revenueCenter.group_ordering : false
+  const { isCartOwner, cartGuest, cartId } = useSelector(selectGroupOrder)
+  const showAllergens = displayAllergens && !isMobile ? true : false
+  const allowLeave = cartGuest && backPath === '/locations'
+
+  const leave = () => {
+    dispatch(openModal({ type: 'groupOrderLeave' }))
+  }
+
+  const onClick = allowLeave ? leave : backClick
 
   return (
-    <Header
-      title={
-        isBrowser ? null : (
+    <>
+      <Header
+        style={{ boxShadow: 'none' }}
+        title={
           <MenuHeaderTitle
-            {...order}
+            order={order}
+            cartGuest={cartGuest}
+            isGroupOrder={!!cartId}
             showMenu={showMenu}
             setShowMenu={setShowMenu}
           />
-        )
-      }
-      maxWidth={maxWidth}
-      bgColor={bgColor}
-      borderColor={showMenu ? 'secondary' : borderColor}
-      left={left}
-      right={
-        <>
-          {isBrowser ? (
-            <>
-              {cartGuest ? (
-                <>
-                  <Allergens />
-                  <GroupGuest />
-                </>
+        }
+        borderColor={border.color}
+        left={onClick ? <Back onClick={onClick} /> : <Back path={backPath} />}
+        right={
+          <>
+            {showAllergens && <Allergens />}
+            {showGroupOrdering ? (
+              cartGuest ? (
+                <LeaveGroupIcon />
               ) : (
-                <>
-                  {auth ? <Points /> : <Account />}
-                  <RevenueCenter />
-                  <ServiceType />
-                  <RequestedAt />
-                  <Allergens />
-                  <GroupOrder />
-                  <CancelEdit />
-                </>
-              )}
-            </>
-          ) : (
-            <Allergens />
-          )}
-        </>
-      }
-    />
+                <GroupOrderIcon fill={isCartOwner ? colors.alert : null} />
+              )
+            ) : null}
+            <Cart />
+            <NavMenu />
+          </>
+        }
+      />
+      <MenuMobileMenu
+        order={order}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+      />
+    </>
   )
 }
 
 MenuHeader.displayName = 'MenuHeader'
 MenuHeader.propTypes = {
-  maxWidth: propTypes.string,
-  bgColor: propTypes.string,
-  borderColor: propTypes.string,
-  showMenu: propTypes.bool,
-  setShowMenu: propTypes.func,
+  backPath: propTypes.string,
 }
 
 export default MenuHeader

@@ -1,12 +1,11 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import { useEffect, useCallback, useMemo } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
 import styled from '@emotion/styled'
 import { ButtonStyled } from '@open-tender/components'
 
 import { toggleSidebarModal } from '../../slices'
-import iconMap from '../iconMap'
+import { X } from '../../icons'
 
 const SidebarModalCloseX = styled('button')`
   position: absolute;
@@ -67,7 +66,7 @@ const SidebarModalClose = ({ onClick, isButton = false }) => {
   return isButton ? (
     <SidebarModalCloseButton>
       <ButtonStyled
-        icon={iconMap.X}
+        icon={<X />}
         onClick={handleClose}
         size="small"
         color="header"

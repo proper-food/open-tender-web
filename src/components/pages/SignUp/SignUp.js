@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback, useContext } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import propTypes from 'prop-types'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -13,15 +13,13 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import {
   openModal,
-  selectAPI,
+  selectApi,
   selectBrand,
   selectConfig,
   selectOptIns,
 } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   Main,
@@ -67,17 +65,16 @@ const useQuery = () => {
 }
 
 const SignUp = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const posToken = useQuery().get('pos-token')
-  const api = useSelector(selectAPI)
+  const api = useSelector(selectApi)
   const { signUp: signupConfig } = useSelector(selectConfig)
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
-  const { windowRef } = useContext(AppContext)
   const signUp = useCallback(
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
@@ -89,25 +86,23 @@ const SignUp = () => {
   const args = has_thanx ? { callback } : {}
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
     dispatch(resetSignUp())
     return () => dispatch(resetSignUp())
-  }, [windowRef, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     if (auth) {
       if (posToken) {
-        dispatch(linkPosToken(posToken)).finally(history.push('/'))
+        dispatch(linkPosToken(posToken)).finally(navigate('/account'))
       } else {
-        return history.push('/')
+        return navigate('/account')
       }
     }
-  }, [auth, history, posToken, token, api, dispatch])
+  }, [auth, navigate, posToken, token, api, dispatch])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (error) window.scrollTo(0, 0)
+  }, [error])
 
   const login = () => {
     dispatch(openModal({ type: 'login', args }))
@@ -142,7 +137,7 @@ const SignUp = () => {
             </FormWrapper>
             <PageContent>
               <p>
-                <Link to="/">{signupConfig.back}</Link>
+                <Link to="/account">{signupConfig.back}</Link>
               </p>
             </PageContent>
           </PageContainer>

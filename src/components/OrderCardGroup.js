@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   reopenGroupOrder,
@@ -15,13 +15,11 @@ import {
   makeOrderTypeName,
 } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
-
-import iconMap from './iconMap'
 import { Card } from '.'
 
 const OrderCardGroup = ({ order }) => {
   const [open, setOpen] = useState(false)
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const {
     cart_id,
@@ -46,11 +44,11 @@ const OrderCardGroup = ({ order }) => {
       : isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const menuSlug = useSelector(selectMenuSlug)
 
-  const handleDelete = () => {
+  const deleteOrder = () => {
     dispatch(removeCustomerGroupOrder(cart_id))
   }
 
-  const handleReopen = () => {
+  const reopenOrder = () => {
     const data = { orderId: null, orderType, serviceType, isOutpost, address }
     dispatch(updateOrder(data))
     dispatch(reopenGroupOrder(order)).then(() => setOpen(true))
@@ -59,9 +57,9 @@ const OrderCardGroup = ({ order }) => {
   useEffect(() => {
     if (open && menuSlug && menuSlug !== '/') {
       setOpen(false)
-      history.push(menuSlug)
+      navigate(menuSlug)
     }
-  }, [open, menuSlug, history])
+  }, [open, menuSlug, navigate])
 
   return (
     <Card
@@ -77,19 +75,10 @@ const OrderCardGroup = ({ order }) => {
       }
       footer={
         <>
-          <ButtonStyled
-            icon={iconMap.RefreshCw}
-            onClick={handleReopen}
-            size="small"
-          >
+          <ButtonStyled onClick={reopenOrder} size="small">
             Reopen
           </ButtonStyled>
-          <ButtonStyled
-            icon={iconMap.Trash2}
-            onClick={handleDelete}
-            size="small"
-            color="secondary"
-          >
+          <ButtonStyled onClick={deleteOrder} size="small" color="secondary">
             Delete
           </ButtonStyled>
         </>

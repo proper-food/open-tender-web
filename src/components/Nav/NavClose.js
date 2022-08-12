@@ -1,24 +1,27 @@
-import React, { useEffect, useCallback } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
-import { toggleNav } from '../../slices'
 import styled from '@emotion/styled'
+import { toggleNav } from '../../slices'
+import { X } from '../icons'
 
-const NavCloseButton = styled('button')`
+const NavCloseButton = styled.button`
   position: absolute;
   z-index: 1;
   top: 10px;
   right: 10px;
-  color: ${(props) => props.theme.fonts.headings.color};
+  color: ${(props) => props.theme.links.dark.color};
 
   &:hover,
   &:active,
   &:focus {
-    color: ${(props) => props.theme.fonts.headings.color};
+    color: ${(props) => props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.links.dark.color};
+    }
   }
 
   &:disabled {
-    color: ${(props) => props.theme.fonts.headings.color};
+    color: ${(props) => props.theme.links.dark.color};
     opacity: 0.5;
   }
 `

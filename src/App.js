@@ -1,36 +1,33 @@
 import React, { createContext, createRef } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { ThemeProvider } from '@emotion/react'
 import styled from '@emotion/styled'
 import TagManager from 'react-gtm-module'
 import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
-import Routes from './components/Routes'
+import AppRoutes from './components/AppRoutes'
 import {
   Alerts,
-  CartButton,
+  // CartButton,
   ErrorBoundary,
   Modal,
   Nav,
+  NavSite,
   Notifications,
   Sidebar,
 } from './components'
 import { ErrorFatal } from './components/pages'
-import './App.scss'
 
 export const AppContext = createContext(null)
 
 export const AppView = styled('div')`
+  label: AppView;
+
+  height: 100%;
   display: flex;
   justify-content: flex-end;
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 `
 
 class App extends React.Component {
@@ -58,6 +55,7 @@ class App extends React.Component {
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
+    // console.log(JSON.stringify(theme, null, 2))
     return (
       <>
         <ErrorFatal error={error} loading={loading} />
@@ -77,15 +75,16 @@ class App extends React.Component {
               </Helmet>
               <AppContext.Provider value={{ windowRef: this.windowRef }}>
                 <ErrorBoundary>
-                  <Router>
+                  <BrowserRouter>
                     <Modal />
                     <Alerts />
                     <Notifications />
-                    <CartButton />
-                    <Routes />
+                    {/* <CartButton /> */}
+                    <AppRoutes />
                     <Sidebar />
                     <Nav />
-                  </Router>
+                    <NavSite />
+                  </BrowserRouter>
                 </ErrorBoundary>
               </AppContext.Provider>
             </AppView>

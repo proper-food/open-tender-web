@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
-import { Box, FormRow, Preface } from '@open-tender/components'
+import { Preface } from '@open-tender/components'
 import { useSelector } from 'react-redux'
 import { selectAutoSelect, selectGroupOrder } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import {
-  Account,
   CancelEdit,
   GroupGuest,
   GroupOrder,
@@ -15,10 +14,11 @@ import {
   ServiceType,
 } from '../../buttons'
 
-const MenuMobileMenuView = styled('div')`
+const MenuMobileMenuView = styled.div`
+  label: MenuMobileMenuView;
   position: fixed;
   z-index: 12;
-  top: 6rem;
+  top: ${(props) => props.theme.layout.navHeight};
   left: 0;
   right: 0;
   padding: ${(props) => props.theme.layout.paddingMobile};
@@ -26,9 +26,12 @@ const MenuMobileMenuView = styled('div')`
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   transform: translateY(${(props) => (props.show ? '0' : '-100%')});
   background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
-const MenuMobileMenuOverlay = styled('div')`
+const MenuMobileMenuOverlay = styled.div`
   position: fixed;
   z-index: 11;
   top: 0;
@@ -38,88 +41,95 @@ const MenuMobileMenuOverlay = styled('div')`
   background-color: ${(props) => props.theme.overlay.dark};
 `
 
-const MenuMobileMenuContainer = styled(Box)`
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  margin-top: ${(props) => props.theme.layout.paddingMobile};
+const MenuMobileMenuContainer = styled.div`
+  width: 100%;
+  max-width: 48rem;
+  // padding: ${(props) => props.theme.layout.paddingMobile};
+  margin: 0 auto;
 `
 
-const MenuMobileMenuButtons = styled('div')`
-  padding: 0 ${(props) => props.theme.layout.paddingMobile};
+const MenuMobileMenuRow = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 0;
+  border-top-style: solid;
+  border-top-width: ${(props) => props.theme.border.width};
+  border-top-color: ${(props) => props.theme.border.color};
 
-  button {
-    display: block;
+  &:first-of-type {
+    border: 0;
+    padding-top: 0;
   }
 
-  button + button {
-    margin-left: 3rem;
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+
+  & > span {
+    display: block;
   }
 `
 
 const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
-  const { revenueCenter, serviceType, requestedAt } = order
+  const { orderId, revenueCenter, serviceType, requestedAt } = order
   const autoSelect = useSelector(selectAutoSelect)
-  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartGuest, isCartOwner } = useSelector(selectGroupOrder)
+  const settings = revenueCenter ? revenueCenter.settings || revenueCenter : {}
+  const hasGroupOrdering = settings.group_ordering
+
+  if (cartGuest) return null
 
   return (
     <>
       <MenuMobileMenuView show={showMenu}>
-        <MenuMobileMenuButtons>
+        <MenuMobileMenuContainer>
           {cartGuest ? (
             <>
-              <LeaveGroup useButton={true} />
-              <GroupGuest useButton={true} />
+              <MenuMobileMenuRow>
+                <Preface size="xSmall">Submit your order</Preface>
+                <GroupGuest />
+              </MenuMobileMenuRow>
+              <MenuMobileMenuRow>
+                <Preface size="xSmall">Change your mind?</Preface>
+                <LeaveGroup />
+              </MenuMobileMenuRow>
             </>
           ) : (
             <>
-              <Account useButton={true} />
-              <GroupOrder useButton={true} />
-              <CancelEdit useButton={true} />
+              {orderId && (
+                <MenuMobileMenuRow>
+                  <Preface size="xSmall">Editing Order #{orderId}</Preface>
+                  <CancelEdit />
+                </MenuMobileMenuRow>
+              )}
+              {revenueCenter && !autoSelect ? (
+                <MenuMobileMenuRow>
+                  <Preface size="xSmall">Location</Preface>
+                  <RevenueCenter useButton={true} />
+                </MenuMobileMenuRow>
+              ) : null}
+              {serviceType && !isCartOwner ? (
+                <MenuMobileMenuRow>
+                  <Preface size="xSmall">Service Type</Preface>
+                  <ServiceType useButton={true} />
+                </MenuMobileMenuRow>
+              ) : null}
+              {requestedAt && (
+                <MenuMobileMenuRow>
+                  <Preface size="xSmall">Requested Time</Preface>
+                  <RequestedAt useButton={true} />
+                </MenuMobileMenuRow>
+              )}
+              {hasGroupOrdering && (
+                <MenuMobileMenuRow>
+                  <Preface size="xSmall">Group Ordering</Preface>
+                  <GroupOrder />
+                </MenuMobileMenuRow>
+              )}
             </>
           )}
-        </MenuMobileMenuButtons>
-        {!cartGuest && (
-          <MenuMobileMenuContainer>
-            {revenueCenter && !autoSelect && (
-              <FormRow
-                as="div"
-                label={<Preface size="xSmall">Location</Preface>}
-                input={
-                  <RevenueCenter
-                    style={{ position: 'relative' }}
-                    useButton={true}
-                  />
-                }
-              />
-            )}
-            {serviceType && (
-              <FormRow
-                as="div"
-                label={<Preface size="xSmall">Service Type</Preface>}
-                input={
-                  <ServiceType
-                    style={{ position: 'relative' }}
-                    useButton={true}
-                  />
-                }
-              />
-            )}
-            {requestedAt && (
-              <FormRow
-                as="div"
-                label={<Preface size="xSmall">Requested Time</Preface>}
-                input={
-                  <RequestedAt
-                    style={{ position: 'relative' }}
-                    useButton={true}
-                  />
-                }
-              />
-            )}
-          </MenuMobileMenuContainer>
-        )}
+        </MenuMobileMenuContainer>
       </MenuMobileMenuView>
       <TransitionGroup component={null}>
         {showMenu ? (

@@ -1,12 +1,11 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
 import styled from '@emotion/styled'
 import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
+import { X } from '../../icons'
 
 const MenuItemCloseX = styled('button')`
   position: fixed;
@@ -15,16 +14,8 @@ const MenuItemCloseX = styled('button')`
   right: 1.5rem;
   display: inline;
   font-size: inherit;
-  color: ${(props) => props.theme.links.primary.color};
-
-  &:hover,
-  &:active,
-  &:focus {
-    color: ${(props) => props.theme.links.primary.hover};
-  }
 
   &:disabled {
-    color: ${(props) => props.theme.links.primary.color};
     opacity: 0.5;
   }
 `
@@ -49,15 +40,15 @@ const MenuItemCloseButton = styled('div')`
 
 const MenuItemClose = ({ onClick, isButton = false }) => {
   const dispatch = useDispatch()
-  const handleClose = useMemo(() => onClick || (() => dispatch(closeModal())), [
-    onClick,
-    dispatch,
-  ])
+  const handleClose = useMemo(
+    () => onClick || (() => dispatch(closeModal())),
+    [onClick, dispatch]
+  )
 
   return isButton ? (
     <MenuItemCloseButton>
       <ButtonStyled
-        icon={iconMap.X}
+        icon={<X />}
         onClick={handleClose}
         size="small"
         color="header"

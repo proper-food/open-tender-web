@@ -1,37 +1,37 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonLink, Heading } from '@open-tender/components'
 
 const CheckoutCancelView = styled('div')`
   margin: 3rem 0 0;
 
   p {
-    line-height: ${(props) => props.theme.lineHeight};
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
   }
 `
 
 const CheckoutCancelEdit = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
 
   const handleCancelEdit = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/`)
+    navigate(`/account`)
   }
 
   return orderId ? (
     <CheckoutCancelView>
-      <p>
+      <Heading as="p">
         You're currently editing order #{orderId}.{' '}
         <ButtonLink onClick={handleCancelEdit}>
           Click here to cancel this edit.
         </ButtonLink>
-      </p>
+      </Heading>
     </CheckoutCancelView>
   ) : null
 }

@@ -7,7 +7,9 @@ const PageTitleButtons = styled('div')`
   align-items: center;
   margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.padding} auto;
+    width: 100%;
+    align-items: flex-start;
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
   }
 
   button {

@@ -1,14 +1,19 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { selectCustomer, authCustomerThanx } from '@open-tender/redux'
+import {
+  authCustomerThanx,
+  selectCanOrder,
+  selectCartQuantity,
+  selectCartTotal,
+  selectCustomer,
+  selectMenuSlug,
+  selectOrderLimits,
+} from '@open-tender/redux'
 import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
-
-import { maybeRefreshVersion } from '../../../app/version'
-import { closeModal, selectBrand } from '../../../slices'
-import { AppContext } from '../../../App'
+import { selectBrand } from '../../../slices'
 import {
   Content,
   HeaderDefault,
@@ -21,9 +26,20 @@ import {
 
 const Thanx = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth, loading, error } = useSelector(selectCustomer)
+  const menuSlug = useSelector(selectMenuSlug)
+  const cartCount = useSelector(selectCartQuantity)
+  const cartTotal = useSelector(selectCartTotal)
+  const { orderMinimum, orderMaximum } = useSelector(selectOrderLimits)
+  const canOrder = useSelector(selectCanOrder)
+  const belowMinimum = orderMinimum && cartTotal < orderMinimum
+  const aboveMaximum = orderMaximum && cartTotal > orderMaximum
+  const canCheckout =
+    canOrder && cartCount !== 0 && !belowMinimum && !aboveMaximum
+  const canMenu = canOrder && cartCount !== 0 && menuSlug
+  const redirect = canCheckout ? '/checkout' : canMenu ? menuSlug : '/account'
   const isLoading = loading === 'pending'
   const errMsg = error
     ? isObject(error)
@@ -36,23 +52,16 @@ const Thanx = () => {
     : 'Please hang tight. This will only take a second.'
   const query = new URLSearchParams(useLocation().search)
   const code = query.get('code')
-  const { windowRef } = useContext(AppContext)
-
-  useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-    dispatch(closeModal())
-  }, [windowRef, dispatch])
 
   useEffect(() => {
     if (auth) {
-      history.push('/')
+      navigate(redirect)
     } else if (code) {
       dispatch(authCustomerThanx(code))
     } else {
-      history.push('/')
+      navigate('/account')
     }
-  }, [auth, code, history, dispatch])
+  }, [auth, code, redirect, navigate, dispatch])
 
   return (
     <>

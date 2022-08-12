@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
-const HeaderView = styled('div')`
+const HeaderContainer = styled.nav``
+
+const HeaderView = styled.div`
   position: fixed;
   z-index: 14;
   top: 0;
@@ -17,22 +18,23 @@ const HeaderView = styled('div')`
   justify-content: space-between;
   align-items: center;
   transition: all 0.25s ease;
-  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
+  background-color: ${(props) =>
+    props.theme.header[props.stuck ? 'stuck' : 'primary']};
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
   border: 0;
   border-bottom-width: 0.1rem;
   border-style: solid;
-  border-color: ${(props) => props.theme.bgColors[props.borderColor]};
-  padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
+  border-color: ${(props) =>
+    props.borderColor || props.theme.header[props.stuck ? 'stuck' : 'primary']};
+  padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
-    padding: ${(props) =>
-      props.isMobile ? '0' : props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
-const HeaderTitle = styled('div')`
+const HeaderTitle = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -56,27 +58,20 @@ const HeaderTitle = styled('div')`
     text-transform: ${(props) => props.theme.fonts.headings.textTransform};
     -webkit-font-smoothing: ${(props) =>
       props.theme.fonts.headings.fontSmoothing};
-    color: ${(props) => props.theme.fonts.headings.color};
     font-size: ${(props) => props.theme.fonts.sizes.big};
+    color: ${(props) => props.theme.buttons.colors.header.color};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+    }
   }
 `
 
-const HeaderNav = styled('div')`
+const HeaderNav = styled.div`
   position: relative;
   z-index: 2;
-
-  ${(props) =>
-    props.isBrowser
-      ? `
-    button {
-    margin: 0 0 0 ${props.theme.layout.padding};
-
-    &:first-of-type {
-      margin: 0
-    }
-    }
-  `
-      : `display: flex; align-items: center;`}
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `
 
 const Header = ({
@@ -84,7 +79,7 @@ const Header = ({
   title,
   right,
   bgColor = 'primary',
-  borderColor = 'primary',
+  borderColor = null,
   maxWidth = '100%',
   style = null,
 }) => {
@@ -93,31 +88,30 @@ const Header = ({
   const { navHeight, navHeightMobile } = theme.layout
   const height = isBrowser ? navHeight : navHeightMobile
   const [stuck, setStuck] = useState(false)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    const winRef = windowRef.current
     const handleScroll = () => {
       if (header.current) {
         setStuck(header.current.getBoundingClientRect().top < 0)
       }
     }
-    winRef.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
     return () => {
-      winRef.removeEventListener('scroll', () => handleScroll)
+      window.removeEventListener('scroll', () => handleScroll)
     }
-  }, [windowRef])
-
-  const adjustedBorderColor =
-    borderColor === 'primary' && stuck ? 'secondary' : borderColor
+  }, [])
 
   return (
-    <nav ref={header} role="navigation" aria-label="Primary Navigation">
+    <HeaderContainer
+      ref={header}
+      role="navigation"
+      aria-label="Primary Navigation"
+    >
       <HeaderView
         height={height}
         stuck={stuck}
         bgColor={bgColor}
-        borderColor={adjustedBorderColor}
+        borderColor={borderColor}
         maxWidth={maxWidth}
         isMobile={isMobile}
         style={style}
@@ -130,7 +124,7 @@ const Header = ({
         )}
         <HeaderNav isBrowser={isBrowser}>{right}</HeaderNav>
       </HeaderView>
-    </nav>
+    </HeaderContainer>
   )
 }
 

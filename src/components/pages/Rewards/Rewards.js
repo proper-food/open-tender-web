@@ -1,35 +1,32 @@
-import React, { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
-import { maybeRefreshVersion } from '../../../app/version'
-import { AppContext } from '../../../App'
-import { selectBrand, selectConfig } from '../../../slices'
-import { Content, HeaderUser, Main, PageContainer, PageTitle } from '../..'
-import AccountTabs from '../Account/AccountTabs'
+import { selectBrand, selectContentSection } from '../../../slices'
+import { Content, HeaderDefault, Main, PageContainer } from '../..'
 import LevelUpLoyalty from './LevelUpLoyalty'
 import ThanxLoyalty from './ThanxLoyalty'
-import LoyaltyRewards from './LoyaltyRewards'
+import RewardsList from './RewardsList'
+import PageContent from '../../PageContent'
+import PageTitle from '../../PageTitle'
 
 const Rewards = () => {
-  const history = useHistory()
-  const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
-  const { account, rewards } = useSelector(selectConfig)
-  const config = has_levelup ? account.levelup : rewards
+  const navigate = useNavigate()
+  const {
+    title: siteTitle,
+    has_thanx,
+    has_levelup,
+    has_rewards,
+  } = useSelector(selectBrand)
+  const hasRewards = has_rewards || has_thanx || has_levelup
   const { auth } = useSelector(selectCustomer)
-  const { windowRef } = useContext(AppContext)
+  const { title, subtitle } = useSelector(selectContentSection('rewards'))
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (!auth) return history.push('/')
-  }, [auth, history])
+    if (!auth || !hasRewards) return navigate('/account')
+  }, [auth, hasRewards, navigate])
 
   return auth ? (
     <>
@@ -37,18 +34,19 @@ const Rewards = () => {
         <title>Rewards | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser />
+        <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer>
-            <PageTitle {...config} />
-            {has_levelup ? (
-              <LevelUpLoyalty />
-            ) : has_thanx ? (
-              <ThanxLoyalty />
-            ) : (
-              <LoyaltyRewards />
-            )}
+            <PageTitle title={title} subtitle={subtitle} />
+            <PageContent style={has_rewards ? { maxWidth: '82rem' } : null}>
+              {has_levelup ? (
+                <LevelUpLoyalty />
+              ) : has_thanx ? (
+                <ThanxLoyalty />
+              ) : (
+                <RewardsList />
+              )}
+            </PageContent>
           </PageContainer>
         </Main>
       </Content>

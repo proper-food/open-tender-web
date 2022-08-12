@@ -1,17 +1,30 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
+import styled from '@emotion/styled'
 
 import { selectBrand } from '../slices'
-import styled from '@emotion/styled'
-import { isMobile } from 'react-device-detect'
+import { useNavigate } from 'react-router-dom'
 
-const HeaderLogoLink = styled('a')`
+const HeaderLogoLink = styled.a`
   display: block;
   max-width: 14rem;
   margin: 0.4rem 0 0;
-  margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    max-width: 14rem;
+    max-width: 13rem;
+  }
+
+  img {
+    pointer-events: none;
+  }
+`
+
+const HeaderLogoButton = styled.button`
+  display: block;
+  max-width: 14rem;
+  margin: 0.4rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 13rem;
   }
 
   img {
@@ -20,17 +33,18 @@ const HeaderLogoLink = styled('a')`
 `
 
 const HeaderLogo = ({ useLight = false }) => {
-  const brand = useSelector(selectBrand)
-  const logoUrl = useLight ? brand.logoLight : brand.logo
+  const navigate = useNavigate()
+  const { url, logo, logoLight } = useSelector(selectBrand)
+  const logoUrl = useLight ? logoLight : logo
 
-  return (
-    <HeaderLogoLink
-      isMobile={isMobile}
-      href={brand.url}
-      rel="noopener noreferrer"
-    >
+  return url ? (
+    <HeaderLogoLink isMobile={isMobile} href={url} rel="noopener noreferrer">
       <img src={logoUrl} alt="logo" />
     </HeaderLogoLink>
+  ) : (
+    <HeaderLogoButton onClick={() => navigate('/')}>
+      <img src={logoUrl} alt="logo" />
+    </HeaderLogoButton>
   )
 }
 

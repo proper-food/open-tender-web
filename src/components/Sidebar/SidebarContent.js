@@ -1,9 +1,12 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  resetOrder,
+  resetCheckout,
   selectCartQuantity,
   selectCartTotal,
+  selectCustomer,
   selectMenuSlug,
   selectCanOrder,
   selectGroupOrder,
@@ -11,17 +14,22 @@ import {
   selectOrderLimits,
   setCart,
   closeGroupOrder,
-  checkout,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import {
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Headline,
+} from '@open-tender/components'
 
 import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
+import { UpsellItems } from '..'
 
-const SidebarView = styled('aside')`
+const SidebarView = styled.aside`
   position: fixed;
   z-index: 17;
   top: 0;
@@ -42,24 +50,22 @@ const SidebarView = styled('aside')`
   }
 `
 
-const SidebarHeader = styled('div')`
+const SidebarHeader = styled.div`
   width: 100%;
   padding: 2rem;
   background-color: ${(props) => props.theme.bgColors.primary};
 
-  h2 {
-    margin: 0 0 1rem;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-  }
-
   p {
+    line-height: ${(props) => props.theme.fonts.body.lineHeight};
     font-size: ${(props) => props.theme.fonts.sizes.small};
 
     span {
-      padding: 0 0.2rem;
-      color: ${(props) => props.theme.fonts.headings.color};
-      font-weight: ${(props) => props.theme.boldWeight};
+      padding: 0;
     }
+  }
+
+  p + p {
+    margin: 1rem 0 0;
   }
 
   div {
@@ -71,47 +77,72 @@ const SidebarHeader = styled('div')`
   }
 `
 
-const SidebarCart = styled('div')`
-  width: 100%;
-  flex-grow: 1;
-  overflow-y: scroll;
-  padding: 0rem 2rem 1rem;
+const SidebarHeaderTitle = styled(Headline)`
+  margin: 0 0 1rem -0.1rem;
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
 `
 
-const SidebarFooter = styled('div')`
+const SidebarFooter = styled.div`
   flex-shrink: 0;
   width: 100%;
   height: 7rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-
-  button {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
 `
 
-const SidebarButtons = styled('div')`
+const SidebarButtons = styled.div`
   width: 100%;
   height: 7rem;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  button {
+    width: 100%;
+    height: 5rem;
+    padding: 0;
+  }
 `
 
-const SidebarBack = styled('div')`
+const SidebarBack = styled.div`
   width: 50%;
   padding: 0 0.5rem 0 2rem;
 `
 
-const SidebarCheckout = styled('div')`
+const SidebarCheckout = styled.div`
   width: 50%;
   padding: 0 2rem 0 0.5rem;
 `
 
+const SidebarCart = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 0 0 1rem;
+`
+
+const SidebarCartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+`
+
+const SidebarCartItems = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  padding: 0 2rem;
+`
+
+const SidebarUpsell = styled.div`
+  flex-grow: 0;
+  width: 100%;
+`
+
 const Sidebar = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
   const { orderId, cart } = useSelector(selectOrder)
   const groupOrder = useSelector(selectGroupOrder)
@@ -121,6 +152,7 @@ const Sidebar = React.forwardRef((props, ref) => {
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const { orderMinimum, orderMaximum } = useSelector(selectOrderLimits)
+  const { auth } = useSelector(selectCustomer)
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
   const isReview = pathname.includes('review')
@@ -131,32 +163,39 @@ const Sidebar = React.forwardRef((props, ref) => {
   const showReview = cartGuest || (isMenu && isCartOwner)
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
+  const hasUpsell = true
 
-  const handleBack = () => {
+  const back = () => {
     dispatch(toggleSidebar())
-    if (!isMenu) history.push(menuSlug)
+    if (!isMenu) navigate(menuSlug)
   }
 
-  const handleReview = () => {
+  const review = () => {
     dispatch(toggleSidebar())
-    if (!isReview) history.push(`/review`)
+    if (!isReview) navigate('/review')
   }
 
-  const handleCheckout = () => {
+  const checkout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
-      dispatch(checkout())
-      history.push(`/checkout`)
+      navigate(hasUpsell ? '/add-ons' : auth ? '/checkout' : '/checkout/guest')
     }
   }
 
-  const handleReopen = () => {
+  const reopen = () => {
     const customerCart = cart.filter((i) => i.customer_id)
     dispatch(setCart(customerCart))
     dispatch(toggleSidebar())
     dispatch(closeGroupOrder(cartId, false)).then(() => {
-      history.push('/review')
+      navigate('/review')
     })
+  }
+
+  const cancelEdit = () => {
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
+    dispatch(toggleSidebar())
+    navigate(`/account`)
   }
 
   return (
@@ -164,13 +203,15 @@ const Sidebar = React.forwardRef((props, ref) => {
       <div>
         <SidebarClose />
         <SidebarHeader>
-          <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
+          <SidebarHeaderTitle as="h2">
+            {orderId ? `Editing Order ${orderId}` : 'Your Order'}
+          </SidebarHeaderTitle>
           {!notEmpty ? (
             <p>Your cart is currently empty. Please add some items.</p>
           ) : (
             <p>
-              <span>{cartCount} items</span> for a total of{' '}
-              <span>${cartTotal.toFixed(2)}</span> before tax
+              <Heading>{cartCount} items</Heading> for a total of{' '}
+              <Heading>${cartTotal.toFixed(2)}</Heading> before tax
             </p>
           )}
           {cartCount !== 0 && belowMinimum && (
@@ -190,24 +231,42 @@ const Sidebar = React.forwardRef((props, ref) => {
               </p>
             </div>
           )}
+          {orderId ? (
+            <p>
+              <ButtonLink onClick={cancelEdit}>
+                Click here to cancel this edit.
+              </ButtonLink>
+            </p>
+          ) : null}
+          {isCartOwner && (
+            <div>
+              <p>
+                This view displays only the items you've added yourself. Click
+                the "Review All Orders" button to view items added by others.
+              </p>
+            </div>
+          )}
         </SidebarHeader>
         <SidebarCart>
-          <Cart />
+          <SidebarCartContainer>
+            <SidebarCartItems>
+              <Cart />
+            </SidebarCartItems>
+            <SidebarUpsell>
+              <UpsellItems />
+            </SidebarUpsell>
+          </SidebarCartContainer>
         </SidebarCart>
         <SidebarFooter>
           <SidebarButtons>
             <SidebarBack>
               {isCheckout && cartId ? (
-                <ButtonStyled
-                  onClick={handleReopen}
-                  size="big"
-                  color="secondary"
-                >
+                <ButtonStyled onClick={reopen} size="big" color="secondary">
                   Reopen
                 </ButtonStyled>
               ) : (
                 <ButtonStyled
-                  onClick={handleBack}
+                  onClick={back}
                   size="big"
                   color="secondary"
                   disabled={!canOrder}
@@ -224,7 +283,7 @@ const Sidebar = React.forwardRef((props, ref) => {
             <SidebarCheckout>
               {showReview ? (
                 <ButtonStyled
-                  onClick={handleReview}
+                  onClick={review}
                   size="big"
                   color="primary"
                   disabled={!canCheckout}
@@ -237,7 +296,7 @@ const Sidebar = React.forwardRef((props, ref) => {
                 </ButtonStyled>
               ) : (
                 <ButtonStyled
-                  onClick={handleCheckout}
+                  onClick={checkout}
                   size="big"
                   color="primary"
                   disabled={!canCheckout}

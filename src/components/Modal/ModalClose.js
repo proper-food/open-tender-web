@@ -1,28 +1,31 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import { useEffect, useCallback, useMemo } from 'react'
+import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
 import { ButtonStyled } from '@open-tender/components'
-
 import { closeModal } from '../../slices'
-import styled from '@emotion/styled'
-import iconMap from '../iconMap'
+import { X } from '../icons'
 
-const ModalCloseX = styled('button')`
+const ModalCloseX = styled.button`
   position: absolute;
   z-index: 2;
   top: 7px;
   right: 7px;
   display: inline;
   font-size: inherit;
-  color: ${(props) => props.color || props.theme.links.primary.color};
+  color: ${(props) => props.theme.links.dark.color};
+
   &:hover,
   &:active,
   &:focus {
-    color: ${(props) => props.hoverColor || props.theme.links.primary.hover};
+    color: ${(props) => props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.links.dark.color};
+    }
   }
+
   &:disabled {
-    color: ${(props) => props.color || props.theme.links.primary.color};
+    color: ${(props) => props.theme.links.dark.color};
     opacity: 0.5;
   }
 `
@@ -45,7 +48,7 @@ const ModalCloseButton = styled('div')`
   }
 `
 
-const ModalClose = ({ onClick, isButton = false, color, hoverColor }) => {
+const ModalClose = ({ onClick, isButton = false }) => {
   const dispatch = useDispatch()
   const handleClose = useMemo(
     () => onClick || (() => dispatch(closeModal())),
@@ -67,20 +70,20 @@ const ModalClose = ({ onClick, isButton = false, color, hoverColor }) => {
   return isButton ? (
     <ModalCloseButton>
       <ButtonStyled
-        icon={iconMap.X}
+        icon={<X />}
         onClick={handleClose}
         size="small"
         color="header"
+        id="modal-close"
       >
         Close
       </ButtonStyled>
     </ModalCloseButton>
   ) : (
     <ModalCloseX
+      id="modal-close"
       onClick={handleClose}
       aria-label="Close dialog"
-      color={color}
-      hoverColor={hoverColor}
     >
       <X size={20} />
     </ModalCloseX>
@@ -91,8 +94,6 @@ ModalClose.displayName = 'ModalClose'
 ModalClose.propTypes = {
   onClick: propTypes.func,
   isButton: propTypes.bool,
-  color: propTypes.string,
-  hoverColor: propTypes.string,
 }
 
 export default ModalClose

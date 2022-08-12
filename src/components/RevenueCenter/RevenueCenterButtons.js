@@ -1,34 +1,29 @@
-import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { isMobileOnly } from 'react-device-detect'
 import {
-  selectServiceType,
   setOrderServiceType,
   setAddress,
-  resetRevenueCenter,
   setRevenueCenter,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
+import { openModal } from '../../slices'
 
-import iconMap from '../iconMap'
-
-export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
+export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const {
     name,
     slug,
-    settings,
     revenue_center_type: rcType,
     is_outpost: isOutpost,
     address,
   } = revenueCenter
+  const settings = revenueCenter.settings || revenueCenter
   const { first_times: ft, order_times: ot } = settings
   const menuSlug = `/menu/${slug}`
-  const serviceType = useSelector(selectServiceType)
-  const serviceTypes =
-    isLanding || isOutpost ? ['PICKUP', 'DELIVERY'] : [serviceType]
+  const serviceTypes = ['PICKUP', 'DELIVERY']
   const hasPickup =
     ((ft && ft.PICKUP) || (ot && ot.PICKUP)) && serviceTypes.includes('PICKUP')
   const hasWalkin =
@@ -40,25 +35,26 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
   const handleWalkin = () => {
     dispatch(setOrderServiceType(rcType, 'WALKIN', false))
     dispatch(setRevenueCenter(revenueCenter))
-    history.push(menuSlug)
+    navigate(menuSlug)
   }
 
   const handlePickup = () => {
     dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
-    history.push(menuSlug)
+    navigate(menuSlug)
   }
 
   const handleDelivery = () => {
     dispatch(setOrderServiceType(rcType, 'DELIVERY', isOutpost))
-    if (isLanding) {
-      dispatch(resetRevenueCenter())
-      history.push('/locations')
-    } else {
-      if (isOutpost) dispatch(setAddress(address))
+    if (isOutpost) {
+      dispatch(setAddress(address))
       dispatch(setRevenueCenter(revenueCenter))
-      history.push(menuSlug)
+      navigate(menuSlug)
+    } else {
+      dispatch(setAddress(null))
+      dispatch(setRevenueCenter(revenueCenter))
+      dispatch(openModal({ type: 'mapsAutocomplete' }))
     }
   }
 
@@ -67,8 +63,8 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
       {hasWalkin && (
         <ButtonStyled
           label={`Order Dine-in from ${name}`}
-          icon={iconMap.Coffee}
           onClick={handleWalkin}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order {hasDelivery ? 'Dine-in' : 'Here'}
         </ButtonStyled>
@@ -76,8 +72,8 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
       {hasPickup && (
         <ButtonStyled
           label={`Order Pickup from ${name}`}
-          icon={iconMap.ShoppingBag}
           onClick={handlePickup}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order {hasDelivery ? 'Pickup' : 'Here'}
         </ButtonStyled>
@@ -85,8 +81,8 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
       {hasDelivery && (
         <ButtonStyled
           label={`Order Delivery from ${name}`}
-          icon={iconMap.Truck}
           onClick={handleDelivery}
+          size={isMobileOnly ? 'small' : 'default'}
         >
           Order Delivery
         </ButtonStyled>
@@ -98,7 +94,6 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
 RevenueCenterButtons.displayName = 'RevenueCenterButtons'
 RevenueCenterButtons.propTypes = {
   revenueCenter: propTypes.object,
-  isLanding: propTypes.bool,
 }
 
 export default RevenueCenterButtons

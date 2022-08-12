@@ -27,12 +27,8 @@ const geolocationSlice = createSlice({
   },
 })
 
-export const {
-  resetGeolocation,
-  setGeoLatLng,
-  setGeoError,
-  setGeoLoading,
-} = geolocationSlice.actions
+export const { resetGeolocation, setGeoLatLng, setGeoError, setGeoLoading } =
+  geolocationSlice.actions
 
 export const selectGeoLatLng = (state) => state.geolocation.latLng
 

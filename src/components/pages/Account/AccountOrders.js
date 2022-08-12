@@ -1,76 +1,38 @@
-import React from 'react'
+import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import styled from '@emotion/styled'
-import { selectCustomerOrders } from '@open-tender/redux'
+import { OrderCard, OrderCardSimple, ScrollableSection } from '../..'
+import { selectContentSection } from '../../../slices'
+import AccountSection from './AccountSection'
 
-import { Loading, OrderCard, PageContent, PageSection } from '../..'
-import { selectConfig } from '../../../slices'
+const OrderCardItem = ({ item }) => <OrderCard order={item} />
 
-const OrdersView = styled('div')`
-  margin: -1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -0.5rem;
-    justify-content: center;
-  }
-`
+const OrderCardSimpleItem = ({ item }) => <OrderCardSimple order={item} />
 
-const Order = styled('div')`
-  width: 33.33333%;
-  padding: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 50%;
-    padding: 0.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    padding: 0.5rem;
-  }
-`
-
-const AccountOrders = () => {
-  const { entities: orders, loading, error } = useSelector(selectCustomerOrders)
-  const { account } = useSelector(selectConfig)
-  const { title, subtitle, empty } = account.recentOrders
-  const hasOrders = orders.length > 0 && !error
+const AccountOrders = ({ orders }) => {
+  const account = useSelector(selectContentSection('account'))
+  const { title } = account?.recentOrders || {}
+  const useSimple = true
   const filtered = orders
     .map((i) => ({ ...i, key: i.order_id }))
     .filter((i) => i.order_type !== 'MERCH')
-  const displayed = filtered.slice(0, 3)
-  const isMore = filtered.length > displayed.length
-  const isLoading = loading === 'pending'
+  const displayed = filtered.slice(0, 5)
 
   return (
-    <PageSection
-      title={title}
-      subtitle={subtitle}
-      to={isMore ? '/orders' : null}
-    >
-      {isLoading ? (
-        <PageContent style={{ margin: '0 auto' }}>
-          <Loading text="Retrieving your recent orders..." />
-        </PageContent>
-      ) : hasOrders ? (
-        <OrdersView>
-          {displayed.map((order) => (
-            <Order key={order.order_id}>
-              <OrderCard order={order} />
-            </Order>
-          ))}
-        </OrdersView>
-      ) : (
-        <PageContent style={{ margin: '0 auto' }}>
-          <div>
-            <p>{empty}</p>
-          </div>
-        </PageContent>
-      )}
-    </PageSection>
+    <AccountSection>
+      <ScrollableSection
+        title={title}
+        to={displayed.length > 1 ? '/orders' : null}
+        items={displayed}
+        renderItem={useSimple ? OrderCardSimpleItem : OrderCardItem}
+        keyName="order_id"
+      />
+    </AccountSection>
   )
 }
 
 AccountOrders.displayName = 'AccountOrders'
+AccountOrders.propTypes = {
+  orders: propTypes.array,
+}
 
 export default AccountOrders

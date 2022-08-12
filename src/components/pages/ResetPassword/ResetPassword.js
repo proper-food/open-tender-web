@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, useContext } from 'react'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import React, { useEffect, useCallback } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
@@ -14,9 +14,7 @@ import {
   ResetPasswordForm,
 } from '@open-tender/components'
 
-import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
-import { AppContext } from '../../../App'
 import {
   Content,
   HeaderDefault,
@@ -27,7 +25,7 @@ import {
 } from '../..'
 
 const ResetPassword = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const { hash } = useLocation()
   const resetToken = hash.includes('#') ? hash.split('#')[1] : ''
@@ -35,7 +33,6 @@ const ResetPassword = () => {
   const { resetPassword: config } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
   const { success, loading, error } = useSelector(selectResetPassword)
-  const { windowRef } = useContext(AppContext)
   const reset = useCallback(
     (new_password, resetToken) =>
       dispatch(resetPassword(new_password, resetToken)),
@@ -44,19 +41,14 @@ const ResetPassword = () => {
   const resetForm = useCallback(() => dispatch(resetPasswordReset), [dispatch])
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
-
-  useEffect(() => {
-    if (auth) return history.push('/')
-    if (!resetToken) return history.push('/')
-  }, [auth, resetToken, history])
+    if (auth) return navigate('/account')
+    if (!resetToken) return navigate('/account')
+  }, [auth, resetToken, navigate])
 
   const handleLogin = () => {
     const args = {
       type: 'login',
-      args: { callback: () => history.push('/') },
+      args: { callback: () => navigate('/account') },
     }
     dispatch(openModal(args))
   }
@@ -98,7 +90,7 @@ const ResetPassword = () => {
                   </FormWrapper>
                   <div style={{ margin: '3rem 0' }}>
                     <p>
-                      <Link to="/">{config.back}</Link>
+                      <Link to="/account">{config.back}</Link>
                     </p>
                   </div>
                 </PageContent>

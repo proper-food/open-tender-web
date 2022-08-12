@@ -1,14 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Sentry from '@sentry/react'
 import { Helmet } from 'react-helmet'
 import { resetOrderType, resetCheckout } from '@open-tender/redux'
 import { ButtonStyled, ButtonLink } from '@open-tender/components'
-
 import { selectBrand, selectConfig } from '../../../slices'
-import { AppContext } from '../../../App'
-import iconMap from '../../iconMap'
 import {
   Content,
   Header,
@@ -50,16 +47,15 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
   const dispatch = useDispatch()
   const { error: config } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
-  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-  }, [windowRef])
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleReset = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
-    window.location.replace('/')
+    window.location.replace('/guest')
   }
 
   return (
@@ -76,9 +72,7 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
             <PageTitle {...config} />
             <PageContent>
               <p>
-                <ButtonStyled icon={iconMap.RefreshCw} onClick={handleReset}>
-                  Start Over
-                </ButtonStyled>
+                <ButtonStyled onClick={handleReset}>Start Over</ButtonStyled>
               </p>
               <ErrorReportView>
                 {eventId && (
