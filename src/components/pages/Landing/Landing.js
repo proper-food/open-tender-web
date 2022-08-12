@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
   fetchAnnouncementPage,
   selectAnnouncementsPage,
-  selectCustomer,
   setOrderServiceType,
 } from '@open-tender/redux'
 import { Box, ButtonStyled } from '@open-tender/components'
@@ -214,17 +213,13 @@ const Landing = () => {
   const { posts } = useSelector(selectPosts)
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
-  const { auth } = useSelector(selectCustomer)
   const { background, mobile, title, subtitle, showHero, orderTypes } = home
   const imageUrl = !showHero ? null : isBrowser ? background : mobile
+  const heroHeight = isMobile ? '24rem' : '44rem'
 
   useEffect(() => {
     dispatch(closeModal())
   }, [dispatch])
-
-  useEffect(() => {
-    if (auth) navigate('/account')
-  }, [navigate, auth])
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('HOME'))
@@ -266,7 +261,11 @@ const Landing = () => {
       <Content>
         <HeaderGuest maxWidth="100%" />
         <Main>
-          <PageHero announcements={announcements} imageUrl={imageUrl} />
+          <PageHero
+            announcements={announcements}
+            imageUrl={imageUrl}
+            height={heroHeight}
+          />
           <ScreenreaderTitle>Home</ScreenreaderTitle>
           <LandingContent>
             <Container style={{ maxWidth: '100%' }}>

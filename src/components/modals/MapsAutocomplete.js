@@ -91,7 +91,8 @@ const MapsAutocomplete = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { googleMaps } = useSelector(selectSettings)
-  const { apiKey, defaultCenter, zoom, styles } = googleMaps
+  const { defaultCenter, zoom, styles } = googleMaps
+  const apiKey = 'AIzaSyDppEzVoNi9BUW7EQctMvYJCJrO3pRlQtY'
   const [, setCenter] = useState(defaultCenter)
   const [hasAddress, setHasAdddres] = useState(false)
   const [error, setError] = useState(null)

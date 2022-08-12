@@ -37,7 +37,8 @@ const RevenueCenters = () => {
   const offset = headerHeight + 20
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps } = useSelector(selectSettings)
-  const { apiKey, defaultCenter, zoom, styles, icons } = googleMaps
+  const { defaultCenter, zoom, styles, icons } = googleMaps
+  const apiKey = 'AIzaSyDppEzVoNi9BUW7EQctMvYJCJrO3pRlQtY'
   const geoLatLng = useSelector(selectGeoLatLng)
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }

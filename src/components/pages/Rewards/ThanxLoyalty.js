@@ -35,8 +35,8 @@ const ThanxProgressContent = styled(Box)`
   }
 
   & > div {
-    width: 20rem;
-    height: 20rem;
+    width: 16rem;
+    height: 16rem;
     margin: ${(props) => props.theme.layout.paddingMobile} 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 12rem;
@@ -45,14 +45,14 @@ const ThanxProgressContent = styled(Box)`
   }
 
   & > p:first-of-type {
-    font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.big};
+      font-size: ${(props) => props.theme.fonts.sizes.main};
     }
   }
 
   & > p:last-of-type {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.fonts.sizes.main};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
@@ -74,7 +74,7 @@ const ThanxProgress = ({ progress, threshold }) => {
           <p>
             {remaining
               ? `You're ${remaining} away from your next ${towards}`
-              : `You're on your way to your next ${towards}`}
+              : `You're on your way to your next ${towards || 'reward'}`}
           </p>
         ) : (
           <p>Make your first purchase to start earning rewards!</p>
