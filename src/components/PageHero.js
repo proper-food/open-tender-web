@@ -9,11 +9,15 @@ const PageHeroView = styled.div`
   label: PageHero;
   flex-grow: 1;
   display: flex;
-  min-height: 64rem;
-  height: 100vh;
-  ${(props) =>
+  height: 50vh;
+  min-height: 44rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: auto;
+    min-height: 32rem;
+  }
+  // ${(props) =>
     props.isMobile ? `height: 100%; height: -webkit-fill-available;` : ''}
-  ${(props) =>
+  // ${(props) =>
     props.ht ? `height: ${props.ht}; min-height: ${props.ht};` : ''}
 `
 

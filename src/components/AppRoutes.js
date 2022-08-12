@@ -28,9 +28,10 @@ import {
   GroupOrderGuest,
   GroupOrderReview,
   GroupOrders,
-  Guest,
-  Home,
+  // Guest,
+  // Home,
   HouseAccounts,
+  Landing,
   LevelUp,
   Locations,
   Loyalty,
@@ -44,7 +45,7 @@ import {
   NotFound,
   Order,
   OrderHistory,
-  OrderType,
+  // OrderType,
   Profile,
   QR,
   Rating,
@@ -64,7 +65,7 @@ import MenuNew from './pages/Menu/MenuNew'
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route index element={<Landing />} />
       <Route path="levelup">
         <Route index element={<LevelUp />} />
         <Route path=":token" element={<LevelUp />} />
@@ -74,7 +75,7 @@ const AppRoutes = () => {
       <Route path="reset-password" element={<ResetPassword />} />
       <Route path="verify" element={<VerifyAccount />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="guest" element={<Guest />} />
+      <Route path="guest" element={<Landing />} />
       <Route element={<Geolocation />}>
         <Route path="menu" element={<MenuSite />} />
         <Route path="restaurants" element={<Locations />} />
@@ -82,7 +83,7 @@ const AppRoutes = () => {
         <Route path="about" element={<About />} />
       </Route>
       <Route element={<Geolocation />}>
-        <Route path="order-type" element={<OrderType />} />
+        <Route path="order-type" element={<Landing />} />
         <Route path="catering-address" element={<Catering />} />
         <Route path="locations" element={<RevenueCenters />} />
       </Route>

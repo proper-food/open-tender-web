@@ -30,6 +30,7 @@ import {
   PageIntro,
 } from '../..'
 import CateringSiteCategory from './CateringSiteCategory'
+import { useNavigate } from 'react-router-dom'
 
 const CateringSiteView = styled.div``
 
@@ -40,6 +41,7 @@ const CateringSiteMenu = styled.div`
 
 const CateringSite = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { colors } = useTheme()
   const { catering_id, timezone, title: siteTitle } = useSelector(selectBrand)
   const [revenueCenterId] = useState(catering_id)
@@ -68,6 +70,10 @@ const CateringSite = () => {
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch])
+
+  useEffect(() => {
+    navigate('/catering-address')
+  }, [navigate])
 
   useEffect(() => {
     dispatch(fetchAnnouncementPage('CATERING'))

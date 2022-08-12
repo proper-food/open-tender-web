@@ -29,6 +29,7 @@ import GroupOrders from './GroupOrders'
 import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
+import Landing from './Landing'
 import LevelUp from './LevelUp'
 import Locations from './Locations'
 import Loyalty from './Loyalty'
@@ -89,6 +90,7 @@ export {
   Guest,
   Home,
   HouseAccounts,
+  Landing,
   LevelUp,
   Locations,
   Loyalty,
