@@ -71,8 +71,7 @@ const CateringAutocomplete = () => {
   const { address } = useSelector(selectOrder)
   const formattedAddress = address ? address.formatted_address : ''
   const { googleMaps } = useSelector(selectSettings)
-  const { defaultCenter, zoom, styles } = googleMaps
-  const apiKey = 'AIzaSyDppEzVoNi9BUW7EQctMvYJCJrO3pRlQtY'
+  const { apiKey, defaultCenter, zoom, styles } = googleMaps
   const [, setCenter] = useState(defaultCenter)
   // const serviceTypeDisabled = !address ? true : false
 
