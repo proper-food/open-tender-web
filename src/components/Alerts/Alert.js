@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { removeMessage } from '@open-tender/redux'
+import { openModal } from '../../slices'
 import { X } from '../icons'
 
 const AlertView = styled.li`
@@ -44,14 +46,27 @@ const AlertView = styled.li`
   }
 `
 
+const thanxMsg = 'Thanks! Please check your email on this device.'
+
 const Alert = ({ message, id }) => {
   const dispatch = useDispatch()
+  const [skip, setSkip] = useState(false)
 
   const handleRemove = (evt) => {
     evt.preventDefault()
     dispatch(removeMessage(id))
     evt.target.blur()
   }
+
+  useEffect(() => {
+    if (message === thanxMsg) {
+      dispatch(removeMessage(id))
+      dispatch(openModal({ type: 'loginThanx' }))
+      setSkip(true)
+    }
+  }, [dispatch, message, id])
+
+  if (skip) return null
 
   return (
     <AlertView>

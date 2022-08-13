@@ -79,11 +79,6 @@ const SignUp = () => {
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
   )
-  const callback = useCallback(
-    () => dispatch(openModal({ type: 'loginThanx' })),
-    [dispatch]
-  )
-  const args = has_thanx ? { callback } : {}
 
   useEffect(() => {
     dispatch(resetSignUp())
@@ -105,7 +100,7 @@ const SignUp = () => {
   }, [error])
 
   const login = () => {
-    dispatch(openModal({ type: 'login', args }))
+    dispatch(openModal({ type: 'login' }))
   }
 
   return (
