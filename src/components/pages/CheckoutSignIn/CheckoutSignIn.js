@@ -25,7 +25,7 @@ const CheckoutSignIn = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
-  const config = checkoutFlow ? checkoutFlow.sections['signIn'] : defaultText
+  const config = checkoutFlow?.sections?.signIn || defaultText
   const { email } = useSelector(selectGuest)
   const { auth, loading, error } = useSelector(selectCustomer)
   const login = useCallback(

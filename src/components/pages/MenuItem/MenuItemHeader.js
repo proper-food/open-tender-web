@@ -78,7 +78,7 @@ const MenuItemName = styled(Heading)`
   &.isCustomize {
     font-size: ${(props) => props.theme.fonts.sizes.xBig};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.big};
+      font-size: ${(props) => props.theme.fonts.sizes.main};
     }
   }
 `

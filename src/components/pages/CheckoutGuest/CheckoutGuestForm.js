@@ -35,7 +35,7 @@ const CheckoutGuestForm = () => {
   const dispatch = useDispatch()
   const { has_thanx } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
-  const config = checkoutFlow ? checkoutFlow.sections['email'] : defaultText
+  const config = checkoutFlow?.sections?.email || defaultText
   const { auth } = useSelector(selectCustomer)
   const { form } = useSelector(selectCheckout)
   const { showMagicLink, email, loading, errors } = useSelector(selectGuest)

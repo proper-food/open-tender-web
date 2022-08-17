@@ -40,7 +40,7 @@ const CheckoutSignUp = () => {
   const navigate = useNavigate()
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { checkoutFlow } = useSelector(selectContent)
-  const config = checkoutFlow ? checkoutFlow.sections['signUp'] : defaultText
+  const config = checkoutFlow?.sections?.signUp || defaultText
   const { form } = useSelector(selectCheckout)
   const { email } = useSelector(selectGuest)
   const { loading, error } = useSelector(selectSignUp)
@@ -97,6 +97,7 @@ const CheckoutSignUp = () => {
                 loading={loading}
                 error={error}
                 signUp={signUp}
+                showGuest={config.showGuest}
                 submitGuest={submitGuest}
                 hasThanx={has_thanx}
               />

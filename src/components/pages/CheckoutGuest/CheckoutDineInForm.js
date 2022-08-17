@@ -37,7 +37,7 @@ const CheckoutDineInForm = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { checkoutFlow } = useSelector(selectContent)
-  const config = checkoutFlow ? checkoutFlow.sections['name'] : defaultText
+  const config = checkoutFlow?.sections?.name || defaultText
   const { auth } = useSelector(selectCustomer)
   const { form } = useSelector(selectCheckout)
   const { first_name, last_name } = form ? form.customer : {}
