@@ -97,6 +97,7 @@ const CheckoutSignUp = () => {
                 loading={loading}
                 error={error}
                 signUp={signUp}
+                showGuest={config.showGuest}
                 submitGuest={submitGuest}
                 hasThanx={has_thanx}
               />
