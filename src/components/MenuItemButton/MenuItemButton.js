@@ -30,7 +30,7 @@ const MenuItemContainer = styled.div`
 `
 
 const MenuItemContent = styled.div`
-  padding: ${(props) => (props.hasBox ? '1.1rem 1.1rem 0' : '1.1rem 0 0')};
+  padding: ${(props) => (props.hasBox ? '1.5rem 1.3rem 0' : '1.1rem 0 0')};
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -42,7 +42,7 @@ const MenuItemContent = styled.div`
 const MenuItemInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -145,7 +145,7 @@ const MenuItemTagsAllergens = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  margin: 0.8rem 0 0;
+  margin: 0.9rem 0 0;
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -216,7 +216,7 @@ const MenuItemButton = ({
         <MenuItemContent hasBox={hasBox}>
           <MenuItemInfo>
             <MenuItemName className="title">{name}</MenuItemName>
-            {price ? (
+            {price && price !== '$0.00' ? (
               <MenuItemPriceCals>
                 {price ? <MenuItemPrice>{price}</MenuItemPrice> : null}
                 {cals ? <MenuItemCals> &mdash; {cals} Cal</MenuItemCals> : null}

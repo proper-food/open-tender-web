@@ -37,7 +37,7 @@ const MenuItemView = styled(CardMenuItem)`
 
 const MenuItemButtons = styled.div`
   flex-grow: 0;
-  padding: ${(props) => (props.hasBox ? '0 1.1rem 1.1rem' : '0')};
+  padding: ${(props) => (props.hasBox ? '0 1.3rem 1.5rem' : '0')};
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
