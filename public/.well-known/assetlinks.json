@@ -29,15 +29,5 @@
         "F2:BD:CA:39:15:84:7C:72:60:03:7C:59:BE:3A:A4:42:19:30:52:E8:D6:51:30:EE:E4:5F:A0:F3:EF:F4:9E:F5"
       ]
     }
-  },
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "properfood.app",
-      "sha256_cert_fingerprints": [
-        "5A:FE:0E:66:AE:09:68:65:2E:48:0C:2F:B7:59:4A:CC:A1:18:37:80:09:A3:15:F4:86:57:7E:1F:CC:84:42:9A"
-      ]
-    }
   }
 ]

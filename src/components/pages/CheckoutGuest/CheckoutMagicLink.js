@@ -14,7 +14,7 @@ const CheckoutMagicLink = () => {
     <>
       <PageTitle
         title="Account found!"
-        subtitle="We just sent you a magic sign in link! Please open the email on this device and click to link to sign in and continue your order."
+        subtitle="We just sent you a magic sign in link! Please open your email on this device and click the link to sign in and continue your order."
       />
       <PageContent>
         <p>

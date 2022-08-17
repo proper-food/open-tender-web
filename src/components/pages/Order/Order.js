@@ -26,7 +26,7 @@ const Order = () => {
   const title = `Order #${orderId}`
 
   useEffect(() => {
-    if (!auth) return navigate('/account')
+    if (!auth) return navigate('/guest')
   }, [auth, navigate])
 
   useEffect(() => {

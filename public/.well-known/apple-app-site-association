@@ -19,12 +19,6 @@
         "paths": [
           "/qr/*"
         ]
-      },
-      {
-        "appID": "475TMGK7H2.properfood.app",
-        "paths": [
-          "/qr/*"
-        ]
       }
     ]
   }

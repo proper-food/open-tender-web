@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
@@ -21,6 +22,7 @@ const MenuFeatured = () => {
   const { categories, isLoading, siteTitle, displaySettings } =
     useContext(MenuContext)
   const { itemsTwoPerRowMobile: showTwo } = displaySettings
+  const isSimple = isMobile && showTwo ? true : false
   const menuSlug = useSelector(selectMenuSlug)
   const featured = makeFeatured(categories)
   const shouldRedirect = !isLoading && featured.length === 0
@@ -50,7 +52,7 @@ const MenuFeatured = () => {
                     <MenuItem
                       key={`${item.id}-${index}`}
                       item={item}
-                      isSimple={showTwo}
+                      isSimple={isSimple}
                     />
                   ))}
                 </MenuItems>

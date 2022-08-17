@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
@@ -30,6 +31,7 @@ const MenuFavorites = () => {
   const { categories, soldOut, siteTitle, displaySettings } =
     useContext(MenuContext)
   const { itemsTwoPerRowMobile: showTwo } = displaySettings
+  const isSimple = isMobile && showTwo ? true : false
   const { title, subtitle } = useSelector(selectContentSection('favorites'))
   const menuSlug = useSelector(selectMenuSlug)
   const { auth } = useSelector(selectCustomer)
@@ -83,7 +85,7 @@ const MenuFavorites = () => {
                     <MenuItem
                       key={`${item.id}-${index}`}
                       item={item}
-                      isSimple={showTwo}
+                      isSimple={isSimple}
                     />
                   ))}
                 </MenuItems>
