@@ -227,9 +227,11 @@ const MenuItemOption = ({
           </MenuItemOptionImage>
         )}
         <MenuItemOptionText showImage={showImage}>
-          <MenuItemOptionName>{name}</MenuItemOptionName>
+          <MenuItemOptionName as="p">{name}</MenuItemOptionName>
           {showDescription && description ? (
-            <MenuItemOptionDescription>{description}</MenuItemOptionDescription>
+            <MenuItemOptionDescription as="p">
+              {description}
+            </MenuItemOptionDescription>
           ) : null}
           <MenuItemPriceCals
             price={price}
