@@ -9,7 +9,17 @@ const MenuItemGroupsNavView = styled.div`
   label: MenuItemGroupsNavView;
   width: 100%;
   height: 4.5rem;
+  // flex-grow: 0;
+  // background-color: pink;
 `
+
+// const MenuItemGroupsNavInner = styled.div`
+//   width: 100%;
+//   border-bottom: ${(props) => props.theme.border.width} solid
+//     ${(props) => props.theme.border.color};
+//   background-color: ${(props) => props.theme.bgColors.primary};
+//   background-color: lightblue;
+// `
 
 const MenuItemGroupsNavInner = styled.div`
   width: 100%;

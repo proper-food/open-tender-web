@@ -9,26 +9,20 @@ import {
   makeItemSignature,
 } from '@open-tender/js'
 import { ClipLoader } from 'react-spinners'
-import {
-  Body,
-  ButtonLink,
-  Heading,
-  Points,
-  Preface,
-} from '@open-tender/components'
+import { Body, Heading, Points, Preface } from '@open-tender/components'
 import { MenuItemFavorite, MenuItemPriceCals } from '../..'
 import MenuItemImage from './MenuItemImage'
 import { isMobile } from 'react-device-detect'
+import MenuItemSelections from './MenuItemSelections'
+import MenuItemSelected from './MenuItemSelected'
 
 const MenuItemHeaderView = styled.div`
-  transition: ${(props) => props.theme.links.transition};
+  padding: ${(props) => props.theme.layout.padding} 0 0;
   background-color: ${(props) => props.theme.bgColors.primary};
-  padding: ${(props) => props.theme.layout.padding};
-  padding-bottom: 0;
+  // background-color: palegreen;
+  transition: ${(props) => props.theme.links.transition};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-bottom: 0;
-    padding-top: 0;
+    padding: 0;
   }
 
   &.isCustomize {
@@ -39,13 +33,24 @@ const MenuItemHeaderView = styled.div`
     width: 64rem;
     height: ${(props) => props.theme.layout.navHeight};
     padding-top: 1.5rem;
-    padding-bottom: 0rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-stretch;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       width: 100%;
       top: ${(props) => props.theme.layout.navHeightMobile};
       height: 6rem;
       padding-top: 0.5rem;
     }
+  }
+`
+
+const MenuItemHeaderContainer = styled.div`
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -120,47 +125,9 @@ const MenuItemDesc = styled(Body)`
   }
 `
 
-const MenuItemSelections = styled.p`
-  margin: 2rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-
-  &.isCustomize {
-    margin: 1rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    }
-  }
-`
-
-const MenuItemSelectionsEdit = styled.span`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0 0.5rem;
-  // background-color: palegreen;
-`
-
-const MenuItemSelectionsTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.main};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-`
-
-const MenuItemSelectionsOptions = styled(Body)``
-
-const MenuItemSelectionsIncomplete = styled.span`
-  color: ${(props) => props.theme.colors.error};
-`
-
 const MenuItemHeader = ({
   builtItem,
+  decrementOption,
   displaySettings,
   pointsIcon,
   isCustomize,
@@ -215,98 +182,84 @@ const MenuItemHeader = ({
   const requiresCustomization = isIncomplete && !missingSize
   const nonSizeGroups = groups.filter((i) => !i.isSize)
   const currentOptions = getItemOptions({ groups: nonSizeGroups })
-  const currentSelections = currentOptions
-    .map((i) => {
-      return i.quantity === 1 ? i.name : `${i.name} x ${i.quantity}`
-    })
-    .join(', ')
+  const hasSelections = currentOptions && currentOptions.length ? true : false
   const klass = isCustomize ? 'isCustomize' : ''
 
   return (
     <MenuItemHeaderView className={klass} showImage={showImage}>
-      {!isCustomize && displayImageUrl ? (
-        <MenuItemImage imageUrl={displayImageUrl}>
-          <ClipLoader size={30} loading={true} color={bgColors.primary} />
-        </MenuItemImage>
-      ) : null}
-      <MenuItemInfo className={klass}>
-        <MenuItemNameContainer>
-          <MenuItemName as="p" className={klass}>
-            {name}
-          </MenuItemName>
-          {auth && !isCustomize ? (
-            <MenuItemFavorite
-              size={isMobile ? 16 : 24}
-              favoriteId={favoriteId}
-              builtItem={builtItem}
-              disabled={isIncomplete}
-            />
-          ) : null}
-        </MenuItemNameContainer>
-        <MenuItemPriceCals
-          price={displayPrice}
-          cals={displayCals}
-          style={isCustomize ? {} : { margin: '1rem 0 0' }}
-        >
-          {totalPoints && (
-            <MenuItemPoints>
-              <Points
-                points={totalPoints}
-                icon={pointsIcon}
-                title="Points can be applied at checkout"
+      <MenuItemHeaderContainer>
+        {!isCustomize && displayImageUrl ? (
+          <MenuItemImage imageUrl={displayImageUrl}>
+            <ClipLoader size={30} loading={true} color={bgColors.primary} />
+          </MenuItemImage>
+        ) : null}
+        <MenuItemInfo className={klass}>
+          <MenuItemNameContainer>
+            <MenuItemName as="p" className={klass}>
+              {name}
+            </MenuItemName>
+            {auth && !isCustomize ? (
+              <MenuItemFavorite
+                size={isMobile ? 16 : 24}
+                favoriteId={favoriteId}
+                builtItem={builtItem}
+                disabled={isIncomplete}
               />
-            </MenuItemPoints>
-          )}
-        </MenuItemPriceCals>
-      </MenuItemInfo>
-      {!isCustomize && (
-        <>
-          {hasTagsAllergens && (
-            <MenuItemTagsAllergens>
-              {hasTags
-                ? tags.map((tag) => <MenuItemTag key={tag}>{tag}</MenuItemTag>)
-                : null}
-              {hasAllergens
-                ? allergens.map((allergen) => (
-                    <MenuItemAllergen key={allergen}>
-                      {allergen}
-                    </MenuItemAllergen>
-                  ))
-                : null}
-            </MenuItemTagsAllergens>
-          )}
-          {description && !currentSelections ? (
-            <MenuItemDesc as="p">{description}</MenuItemDesc>
-          ) : null}
-        </>
-      )}
-      {hasCustomize && (
-        <MenuItemSelections className={klass}>
-          {!isCustomize && (
-            <MenuItemSelectionsEdit>
-              <MenuItemSelectionsTitle>
-                Current Selections:{' '}
-              </MenuItemSelectionsTitle>
-              <ButtonLink onClick={() => setIsCustomize(true)}>
-                {currentSelections ? 'edit selections' : 'customize item'}
-              </ButtonLink>
-            </MenuItemSelectionsEdit>
-          )}
-          <MenuItemSelectionsOptions>
-            {currentSelections ? (
-              <span>{currentSelections}</span>
-            ) : isCustomize ? (
-              <span>please make your selections below</span>
-            ) : requiresCustomization ? (
-              <MenuItemSelectionsIncomplete>
-                requires customization
-              </MenuItemSelectionsIncomplete>
-            ) : (
-              <span>nothing selected</span>
+            ) : null}
+          </MenuItemNameContainer>
+          <MenuItemPriceCals
+            price={displayPrice}
+            cals={displayCals}
+            style={isCustomize ? {} : { margin: '1rem 0 0' }}
+          >
+            {totalPoints && (
+              <MenuItemPoints>
+                <Points
+                  points={totalPoints}
+                  icon={pointsIcon}
+                  title="Points can be applied at checkout"
+                />
+              </MenuItemPoints>
             )}
-          </MenuItemSelectionsOptions>
-        </MenuItemSelections>
-      )}
+          </MenuItemPriceCals>
+        </MenuItemInfo>
+        {!isCustomize && (
+          <>
+            {hasTagsAllergens && (
+              <MenuItemTagsAllergens>
+                {hasTags
+                  ? tags.map((tag) => (
+                      <MenuItemTag key={tag}>{tag}</MenuItemTag>
+                    ))
+                  : null}
+                {hasAllergens
+                  ? allergens.map((allergen) => (
+                      <MenuItemAllergen key={allergen}>
+                        {allergen}
+                      </MenuItemAllergen>
+                    ))
+                  : null}
+              </MenuItemTagsAllergens>
+            )}
+            {description && !hasSelections ? (
+              <MenuItemDesc as="p">{description}</MenuItemDesc>
+            ) : null}
+          </>
+        )}
+      </MenuItemHeaderContainer>
+      {isCustomize ? (
+        <MenuItemSelected
+          groups={nonSizeGroups}
+          decrementOption={decrementOption}
+        />
+      ) : hasCustomize ? (
+        <MenuItemSelections
+          currentOptions={currentOptions}
+          requiresCustomization={requiresCustomization}
+          isCustomize={isCustomize}
+          setIsCustomize={setIsCustomize}
+        />
+      ) : null}
     </MenuItemHeaderView>
   )
 }
@@ -314,6 +267,7 @@ const MenuItemHeader = ({
 MenuItemHeader.displayName = 'MenuItemHeader'
 MenuItemHeader.propTypes = {
   builtItem: propTypes.object,
+  decrementOption: propTypes.func,
   displaySettings: propTypes.object,
   pointsIcon: propTypes.element,
   isCustomize: propTypes.bool,
