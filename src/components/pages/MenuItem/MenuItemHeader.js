@@ -81,7 +81,7 @@ const MenuItemName = styled(Heading)`
   }
 
   &.isCustomize {
-    font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.main};
     }
@@ -210,7 +210,7 @@ const MenuItemHeader = ({
           <MenuItemPriceCals
             price={displayPrice}
             cals={displayCals}
-            style={isCustomize ? {} : { margin: '1rem 0 0' }}
+            style={isCustomize ? {} : { margin: '0.5rem 0 0' }}
           >
             {totalPoints && (
               <MenuItemPoints>
@@ -254,9 +254,9 @@ const MenuItemHeader = ({
         />
       ) : hasCustomize ? (
         <MenuItemSelections
-          currentOptions={currentOptions}
+          groups={nonSizeGroups}
+          decrementOption={decrementOption}
           requiresCustomization={requiresCustomization}
-          isCustomize={isCustomize}
           setIsCustomize={setIsCustomize}
         />
       ) : null}
