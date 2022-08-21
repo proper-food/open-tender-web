@@ -71,8 +71,8 @@ const MenuItemSelected = ({ groups, decrementOption }) => {
 
   return (
     <MenuItemSelectedView>
-      {reversed.map((option) => (
-        <MenuItemSelectedOption>
+      {reversed.map((option, index) => (
+        <MenuItemSelectedOption key={`${option.id}-${index}`}>
           {option.quantity > 1 ? (
             <MenuItemSelectedCount count={option.quantity} />
           ) : null}
