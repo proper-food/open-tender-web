@@ -46,11 +46,11 @@ const MenuItemGroupHeaderAlt = ({ group }) => {
         <MenuItemGroupHeaderAltName as="p">
           {group.name}
           <MenuItemGroupHeaderAltNameQuantity belowMin={belowMin}>
-            ({quantity}
+            ({quantity !== 0 || max !== 0 ? quantity : ''}
             {max ? `/${max}` : ' selected'}
             {min && belowMin
               ? `, ${min} required`
-              : included
+              : included && quantity < included
               ? `, ${included} included`
               : ''}
             )

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useSelector } from 'react-redux'
 import { selectSelectedAllergenNames } from '@open-tender/redux'
-import { BgImage, Body, Heading, Preface } from '@open-tender/components'
+import { BgImage, Body, Heading } from '@open-tender/components'
 import { formatDollars, formatQuantity } from '@open-tender/js'
 import { selectDisplaySettings } from '../../../../slices'
 import { Count, MenuItemPriceCals, MenuItemTagsAllergens } from '../../..'
@@ -134,14 +134,6 @@ const MenuItemOptionOverlayAlert = styled.div`
   color: ${(props) => props.theme.colors.light};
 `
 
-const MenuItemOptionSoldOutOverlay = () => (
-  <MenuItemOptionOverlay overlay="dark">
-    <div>
-      <Preface>Sold Out</Preface>
-    </div>
-  </MenuItemOptionOverlay>
-)
-
 const MenuItemOptionAllergenOverlay = () => (
   <MenuItemOptionOverlay overlay="alert">
     <MenuItemOptionOverlayAlert>
@@ -213,11 +205,7 @@ const MenuItemOptionSquare = ({
         {showImage && (
           <MenuItemOptionSquareImageContainer>
             <MenuItemOptionImage style={bgStyle}>
-              {isSoldOut ? (
-                <MenuItemOptionSoldOutOverlay />
-              ) : allergenAlert ? (
-                <MenuItemOptionAllergenOverlay />
-              ) : null}
+              {allergenAlert ? <MenuItemOptionAllergenOverlay /> : null}
             </MenuItemOptionImage>
           </MenuItemOptionSquareImageContainer>
         )}
