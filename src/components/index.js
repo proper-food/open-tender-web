@@ -15,6 +15,7 @@ import Content from './Content'
 import CommunicationPrefs from './CommunicationPrefs'
 import Container from './Container'
 import ContainerSite from './ContainerSite'
+import Count from './Count'
 import Deals from './Deals'
 import DeleteAccount from './DeleteAccount'
 import ErrorBoundary from './ErrorBoundary'
@@ -131,6 +132,7 @@ export {
   Container,
   ContainerSite,
   Content,
+  Count,
   Deals,
   DeleteAccount,
   ErrorBoundary,
