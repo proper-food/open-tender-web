@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
-import MenuItemGroupHeader from './MenuItemGroupHeader'
+import MenuItemGroupHeaderAlt from './MenuItemGroupHeaderAlt'
 import MenuItemGroupsNav from './MenuItemGroupsNav'
 import MenuItemOption from './MenuItemOption'
 
@@ -54,7 +54,7 @@ const MenuItemGroups = ({
       <MenuItemGroupsList>
         {nonSizeGroups.map((group) => (
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
-            <MenuItemGroupHeader group={group} />
+            <MenuItemGroupHeaderAlt group={group} />
             <MenuItemOptions>
               {group.options.map((option, index) => (
                 <MenuItemOption
