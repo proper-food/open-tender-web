@@ -22,7 +22,12 @@ const MenuItemGroupHeaderAltName = styled(Heading)`
 
 const MenuItemGroupHeaderAltNameQuantity = styled.span`
   padding: 0 0 0 0.5rem;
-  ${(props) => (props.belowMin ? `color: ${props.theme.colors.error};` : '')}
+  ${(props) =>
+    props.belowMin
+      ? `color: ${props.theme.colors.error};`
+      : props.belowIncluded
+      ? `color: ${props.theme.colors.success};`
+      : ''}
 `
 
 const MenuItemGroupHeaderAltDescription = styled.p`
@@ -45,8 +50,11 @@ const MenuItemGroupHeaderAlt = ({ group }) => {
       <div>
         <MenuItemGroupHeaderAltName as="p">
           {group.name}
-          <MenuItemGroupHeaderAltNameQuantity belowMin={belowMin}>
-            ({quantity !== 0 || max !== 0 ? quantity : ''}
+          <MenuItemGroupHeaderAltNameQuantity
+            belowMin={belowMin}
+            belowIncluded={quantity < included}
+          >
+            ({quantity}
             {max ? `/${max}` : ' selected'}
             {min && belowMin
               ? `, ${min} required`
