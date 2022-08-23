@@ -24,7 +24,9 @@ const NavButtonView = styled('button')`
   background-color: ${(props) => props.theme.buttons.colors.large.bgColor};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // height: 6.4rem;
+    ${(props) =>
+      !props.isButton
+        ? `
     padding: 0 0rem 0 1.75rem;
     margin: 0;
     border-top: 0;
@@ -32,8 +34,9 @@ const NavButtonView = styled('button')`
     border-left: 0;
     border-radius: 0;
     background-color: transparent;
-    border-bottom: ${(props) => props.theme.border.width} solid
-      ${(props) => props.theme.border.color};
+    border-bottom: ${props.theme.border.width} solid
+      ${props.theme.border.color};`
+        : 'height: auto; min-height: 6.5rem; padding: 0 1.5rem 0 2rem;'}
   }
 
   &:hover {
@@ -50,7 +53,7 @@ const NavButtonView = styled('button')`
   &:last-of-type {
     margin-bottom: 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      border-bottom: 0;
+      ${(props) => (!props.isButton ? `border-bottom: 0;` : '')}
     }
   }
 `
@@ -148,7 +151,8 @@ const NavButtonArrow = styled('span')`
 
 const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
   const theme = useTheme()
-  const { showSubtitle, showSubtitleMobile } = theme.buttons.sizes.large
+  const { showSubtitle, showSubtitleMobile, showButtonApp } =
+    theme.buttons.sizes.large
   const show = isMobile ? showSubtitleMobile : showSubtitle
 
   const onUp = (evt) => {
@@ -158,7 +162,7 @@ const NavButton = ({ title, subtitle, icon, onClick, delay = '0.125s' }) => {
   }
 
   return (
-    <NavButtonView onClick={onUp} delay={delay}>
+    <NavButtonView onClick={onUp} delay={delay} isButton={showButtonApp}>
       <NavButtonIcon>{icon}</NavButtonIcon>
       <NavButtonText>
         <NavButtonTitle>{title}</NavButtonTitle>
