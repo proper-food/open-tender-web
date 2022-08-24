@@ -48,17 +48,17 @@ const OrderProgressPointCheck = styled.div`
   }
 `
 
-const statusPercentages = {
-  TODO: 25,
-  IN_PROGRESS: 50,
-  DONE: 75,
-  COMPLETED: 100,
-}
-
-const OrderProgress = ({ prepStatus }) => {
-  const percent = statusPercentages[prepStatus]
+const OrderProgress = ({
+  prepStatus,
+  isFulfilled,
+  statusPercentages,
+  statusPercentagesFulfilled,
+}) => {
+  const percent = isFulfilled
+    ? statusPercentagesFulfilled[prepStatus]
+    : statusPercentages[prepStatus]
   const style = { height: `${percent || 0}%` }
-  const steps = [0, 25, 50, 75, 100]
+  const steps = isFulfilled ? [0, 20, 40, 60, 80, 100] : [0, 25, 50, 75, 100]
 
   return (
     <OrderProgressView>
@@ -83,6 +83,9 @@ const OrderProgress = ({ prepStatus }) => {
 OrderProgress.displayName = 'OrderProgress'
 OrderProgress.propTypes = {
   prepStatus: propTypes.string,
+  isFulfilled: propTypes.bool,
+  statusPercentages: propTypes.object,
+  statusPercentagesFulfilled: propTypes.object,
 }
 
 export default OrderProgress
