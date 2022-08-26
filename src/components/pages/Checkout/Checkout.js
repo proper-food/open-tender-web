@@ -18,7 +18,7 @@ import {
   setDeviceType,
   validateOrder,
 } from '@open-tender/redux'
-import { isEmpty } from '@open-tender/js'
+import { isEmpty, isString } from '@open-tender/js'
 import { FormError } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../../../slices'
@@ -183,6 +183,20 @@ const makeFormTitle = (check, serviceType) => {
   return { hasAddress, hasDetails, formTitle }
 }
 
+const makeAddressError = (errors) => {
+  if (!errors || !errors.address) return null
+  const addressError = isString(errors.address)
+    ? errors.address
+    : errors.address.address || null
+  if (!addressError) return null
+  const errMsg = addressError.includes('state')
+    ? 'your state or province appears to be invalid'
+    : addressError.includes('code')
+    ? 'your postal code appears to be invalid'
+    : addressError
+  return `There's something wrong with your address (${errMsg}). Please try changing your address.`
+}
+
 const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -199,6 +213,7 @@ const Checkout = () => {
   const hasCheck = check ? true : false
   const hasFormCustomer = !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
+  const addressError = makeAddressError(errors)
   const deviceTypeName = makeDeviceType(deviceType)
   const { formTitle, hasAddress } = makeFormTitle(check, serviceType)
 
@@ -260,6 +275,7 @@ const Checkout = () => {
                 <p>{config.subtitle}</p>
                 <CheckoutCancelEdit />
                 {formError && <FormError errMsg={formError} />}
+                {addressError && <FormError errMsg={addressError} />}
               </CheckoutTitle>
               <CheckoutInfo>
                 {auth ? <CheckoutCustomer /> : <CheckoutGuest />}
