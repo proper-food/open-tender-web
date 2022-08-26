@@ -30,7 +30,7 @@ const CheckoutHouseAccounts = ({ apply, remove, isPaid }) => {
           revenue_centers,
         } = houseAccount
         const isOrderType = order_type ? order_type === check.order_type : true
-        const isServiceType = order_type
+        const isServiceType = service_type
           ? service_type === check.service_type
           : true
         const revenueCenterId = check.revenue_center.revenue_center_id
