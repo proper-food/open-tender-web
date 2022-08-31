@@ -215,7 +215,11 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           </OrderButtons>
         )}
       </OrderHeader>
-      <OrderPrep orderId={order_id} orderPrep={order_prep} />
+      <OrderPrep
+        orderId={order_id}
+        orderPrep={order_prep}
+        serviceType={service_type}
+      />
       <OrderDetails>
         <OrderSection label="Location">
           <OrderRevenueCenter revenueCenter={revenue_center} />

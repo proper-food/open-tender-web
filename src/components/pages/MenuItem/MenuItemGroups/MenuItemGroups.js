@@ -1,9 +1,10 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
-import MenuItemGroupHeader from './MenuItemGroupHeader'
+import MenuItemGroupHeaderAlt from './MenuItemGroupHeaderAlt'
 import MenuItemGroupsNav from './MenuItemGroupsNav'
 import MenuItemOption from './MenuItemOption'
+import MenuItemOptionSquare from './MenuItemOptionSquare'
 
 const MenuItemGroupsView = styled.div`
   padding-top: ${(props) => props.theme.layout.navHeight};
@@ -31,8 +32,14 @@ const MenuItemGroup = styled.div`
 
 const MenuItemOptions = styled.div`
   width: 100%;
-  // border-radius: ${(props) => props.theme.border.radius};
-  // background-color: ${(props) => props.theme.bgColors.primary};
+`
+
+const MenuItemOptionsSquare = styled.div`
+  margin: 2rem -0.6rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-stretch;
 `
 
 const MenuItemGroups = ({
@@ -47,6 +54,8 @@ const MenuItemGroups = ({
   const { groups } = builtItem
   const nonSizeGroups = groups.filter((i) => !i.isSize)
   const navItems = nonSizeGroups.map(({ name }) => name)
+  const { modifiersType } = displaySettings
+  const showCards = modifiersType === 'CARDS'
 
   return (
     <MenuItemGroupsView>
@@ -54,21 +63,35 @@ const MenuItemGroups = ({
       <MenuItemGroupsList>
         {nonSizeGroups.map((group) => (
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
-            <MenuItemGroupHeader group={group} />
-            <MenuItemOptions>
-              {group.options.map((option, index) => (
-                <MenuItemOption
-                  key={`${group.id}-${option.id}`}
-                  index={index}
-                  group={group}
-                  option={option}
-                  toggleOption={toggleOption}
-                  incrementOption={incrementOption}
-                  decrementOption={decrementOption}
-                  setOptionQuantity={setOptionQuantity}
-                />
-              ))}
-            </MenuItemOptions>
+            <MenuItemGroupHeaderAlt group={group} />
+            {showCards ? (
+              <MenuItemOptionsSquare>
+                {group.options.map((option) => (
+                  <MenuItemOptionSquare
+                    key={`${group.id}-${option.id}`}
+                    group={group}
+                    option={option}
+                    incrementOption={incrementOption}
+                    decrementOption={decrementOption}
+                  />
+                ))}
+              </MenuItemOptionsSquare>
+            ) : (
+              <MenuItemOptions>
+                {group.options.map((option, index) => (
+                  <MenuItemOption
+                    key={`${group.id}-${option.id}`}
+                    index={index}
+                    group={group}
+                    option={option}
+                    toggleOption={toggleOption}
+                    incrementOption={incrementOption}
+                    decrementOption={decrementOption}
+                    setOptionQuantity={setOptionQuantity}
+                  />
+                ))}
+              </MenuItemOptions>
+            )}
           </MenuItemGroup>
         ))}
       </MenuItemGroupsList>

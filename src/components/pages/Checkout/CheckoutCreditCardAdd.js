@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { validateOrder } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectOrder, validateOrder } from '@open-tender/redux'
 
 import { openModal } from '../../../slices'
 import { cardIconMap } from '../../../assets/cardIcons'
@@ -8,10 +8,15 @@ import CheckoutButton from './CheckoutButton'
 
 const CheckoutCreditCardAdd = ({ isPaid }) => {
   const dispatch = useDispatch()
+  const { revenueCenter } = useSelector(selectOrder)
+  const { revenue_center_id = null } = revenueCenter || {}
 
   const onClick = (evt) => {
     evt.preventDefault()
-    const args = { callback: () => dispatch(validateOrder()) }
+    const args = {
+      callback: () => dispatch(validateOrder()),
+      revenue_center_id,
+    }
     dispatch(openModal({ type: 'creditCard', args }))
   }
 

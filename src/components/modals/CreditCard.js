@@ -14,7 +14,7 @@ import { cardIconMap } from '../../assets/cardIcons'
 
 const recaptchaKey = process.env.REACT_APP_RECAPTCHA_KEY
 
-const CreditCard = ({ windowRef, callback }) => {
+const CreditCard = ({ windowRef, callback, revenue_center_id }) => {
   const dispatch = useDispatch()
   const { addCard: includeRecaptcha } = useSelector(selectRecaptcha)
   const { loading, error } = useSelector(selectCustomerCreditCards)
@@ -54,6 +54,7 @@ const CreditCard = ({ windowRef, callback }) => {
           callback={addCallback}
           recaptchaKey={includeRecaptcha ? recaptchaKey : null}
           cardIconMap={cardIconMap}
+          revenue_center_id={revenue_center_id}
         />
       </ModalContent>
     </ModalView>
@@ -63,6 +64,8 @@ const CreditCard = ({ windowRef, callback }) => {
 CreditCard.displayName = 'CreditCard'
 CreditCard.propTypes = {
   windowRef: propTypes.shape({ current: propTypes.any }),
+  callback: propTypes.func,
+  revenue_center_id: propTypes.number,
 }
 
 export default CreditCard

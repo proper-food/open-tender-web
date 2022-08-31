@@ -34,7 +34,7 @@ const Addresses = ({ addresses, isLoading }) => {
 
   const handleReorder = (address) => {
     dispatch(setAddress(address))
-    navigate('/locations')
+    navigate('/order-type')
   }
 
   return (

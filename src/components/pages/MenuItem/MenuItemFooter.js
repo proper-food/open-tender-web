@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 const MenuItemFooterView = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   bottom: 0;
   right: 0;
   width: 64rem;

@@ -91,28 +91,48 @@ const statusPercentages = {
   COMPLETED: 100,
 }
 
-const OrderPrep = ({ orderId, orderPrep }) => {
+const statusPercentagesFulfilled = {
+  TODO: 20,
+  IN_PROGRESS: 40,
+  DONE: 60,
+  COMPLETED: 80,
+  FULFILLED: 100,
+}
+
+const OrderPrep = ({ orderId, orderPrep, serviceType }) => {
   const dispatch = useDispatch()
   const { order } = useSelector(selectCustomerOrder)
-  const { prep_status, created_at, fire_at, done_at, completed_at } =
+  const {
+    prep_status,
+    created_at,
+    fire_at,
+    done_at,
+    completed_at,
+    expected_at,
+  } =
     order && order.order_id === orderId
       ? order.order_prep || {}
       : orderPrep || {}
-  const isCompleted = prep_status === 'COMPLETED' || prep_status === 'FULFILLED'
-  const percent = statusPercentages[prep_status]
+  const { service_type } = order || {}
+  const orderServiceType = service_type || serviceType
+  const isDelivery = orderServiceType === 'DELIVERY'
+  const isFulfilled = prep_status === 'FULFILLED'
+  const percent = isFulfilled
+    ? statusPercentagesFulfilled[prep_status]
+    : statusPercentages[prep_status]
   const createdDate = parseIsoToDate(created_at)
   const fireDate = parseIsoToDate(fire_at)
   const progressAt = createdDate > fireDate ? created_at : fire_at
 
   useEffect(() => {
-    if (fire_at !== null && !isCompleted) {
+    if (fire_at !== null && !isFulfilled) {
       const update = setInterval(
         () => dispatch(fetchCustomerOrder(orderId)),
         15000
       )
       return () => clearInterval(update)
     }
-  }, [dispatch, orderId, fire_at, isCompleted])
+  }, [dispatch, orderId, fire_at, isFulfilled])
 
   if (!fire_at) return null
 
@@ -120,7 +140,12 @@ const OrderPrep = ({ orderId, orderPrep }) => {
     <OrderPrepView>
       <OrderPrepContainer>
         <OrderPrepProgress>
-          <OrderProgress prepStatus={prep_status} />
+          <OrderProgress
+            prepStatus={prep_status}
+            isFulfilled={isFulfilled}
+            statusPercentages={statusPercentages}
+            statusPercentagesFulfilled={statusPercentagesFulfilled}
+          />
         </OrderPrepProgress>
         <OrderPrepStep title="Order submitted" timestamp={created_at} />
         <OrderPrepStep
@@ -139,10 +164,23 @@ const OrderPrep = ({ orderId, orderPrep }) => {
           isActive={prep_status === 'DONE'}
         />
         <OrderPrepStep
-          title="Order ready for pickup!"
+          title={
+            isDelivery ? 'Order is on the way!' : 'Order ready for pickup!'
+          }
           timestamp={completed_at}
           isActive={prep_status === 'COMPLETED'}
         />
+        {isFulfilled && (
+          <OrderPrepStep
+            title={
+              isDelivery
+                ? 'Order has been delivered!'
+                : 'Order has been picked up!'
+            }
+            timestamp={expected_at}
+            isActive={prep_status === 'FULFILLED'}
+          />
+        )}
       </OrderPrepContainer>
     </OrderPrepView>
   )
@@ -152,6 +190,7 @@ OrderPrep.displayName = 'OrderPrep'
 OrderPrep.propTypes = {
   orderId: propTypes.number,
   orderPrep: propTypes.object,
+  serviceType: propTypes.string,
 }
 
 export default OrderPrep
