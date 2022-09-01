@@ -1611,10 +1611,10 @@
   resolved "https://registry.yarnpkg.com/@open-tender/hooks/-/hooks-1.0.1.tgz#568a541ff96340f3f3d7b0b70fc0493ee67e6b45"
   integrity sha512-7jN4D/9I1jHlOPy4HAJFw6jvhOToke01iW+E77vTtnwzGqxAiJISk/gGtoX+3HBplUFsfNrV4XvDHcw+wtQ7lw==
 
-"@open-tender/js@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.2.2.tgz#4ea9cd029c5020140d276653e37ffbfb156e6359"
-  integrity sha512-3HkLaHsZQNaIVeS3dCmBS4aWjqU8idHjqS5/nF0gYlAkTsN/4ppdXxXhc7Ch9RfLgG5r2Yl0Ck6JcQIjnrknww==
+"@open-tender/js@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.2.3.tgz#97c49d2676c7d7c1038bd39f4015856951820c93"
+  integrity sha512-T49ucGfEVDuBut/uuBuVMv/qqUfHcprLVm0YKbJI4cfq4+n9WSAP+TzTE3E4GAC8BY6L1Zfgh1+EV2XvNcYbUw==
   dependencies:
     date-fns "^2.29.1"
     date-fns-tz "^1.3.6"
