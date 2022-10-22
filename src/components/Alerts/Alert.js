@@ -15,9 +15,9 @@ const AlertView = styled.li`
   transition: all 500ms ease;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.colors.alert};
-  border-color: ${(props) => props.theme.colors.alert};
+  color: ${(props) => props.theme.colors.alert};
+  background-color: ${(props) => props.theme.bgColors.alert};
+  border-color: ${(props) => props.theme.bgColors.alert};
 
   > span {
     display: flex;
@@ -30,7 +30,7 @@ const AlertView = styled.li`
       position: relative;
       display: block;
       flex-shrink: 0;
-      color: ${(props) => props.theme.colors.light};
+      color: ${(props) => props.theme.colors.alert};
     }
 
     span {

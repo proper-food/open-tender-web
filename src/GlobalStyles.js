@@ -246,71 +246,72 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
-  input,
-  textarea,
-  select {
-    width: 100%;
-    line-height: ${theme.inputs.lineHeight};
-    padding: ${theme.inputs.padding};
-    padding-bottom: ${theme.inputs.paddingBottom};
-    border: ${theme.inputs.bottomBorderOnly
-      ? '0'
-      : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
-    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    border-radius: ${theme.inputs.bottomBorderOnly
-      ? '0'
-      : `${theme.inputs.radius}`};
-    font-family: ${theme.inputs.family};
-    font-size: ${theme.inputs.fontSize};
-    font-weight: ${theme.inputs.weight};
-    letter-spacing: ${theme.inputs.letterSpacing};
-    text-transform: ${theme.inputs.textTransform};
-    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
-    color: ${theme.inputs.color};
-    background-color: ${theme.inputs.bottomBorderOnly
-      ? 'transparent'
-      : `${theme.inputs.bgColor}`};
-    box-shadow: ${theme.inputs.boxShadow};
-    transition: ${theme.links.transition};
-    @media (max-width: ${theme.breakpoints.tablet}) {
-      font-size: ${theme.inputs.fontSizeMobile};
-    }
+  // input,
+  // textarea,
+  // select {
+  //   width: 100%;
+  //   line-height: ${theme.inputs.lineHeight};
+  //   padding: ${theme.inputs.padding};
+  //   padding-bottom: ${theme.inputs.paddingBottom};
+  //   border: ${theme.inputs.bottomBorderOnly
+    ? '0'
+    : `${theme.inputs.borderWidth} solid ${theme.inputs.borderColor}`};
+  //   border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs
+    .borderColor};
+  //   border-radius: ${theme.inputs.bottomBorderOnly
+    ? '0'
+    : `${theme.inputs.radius}`};
+  //   font-family: ${theme.inputs.family};
+  //   font-size: ${theme.inputs.fontSize};
+  //   font-weight: ${theme.inputs.weight};
+  //   letter-spacing: ${theme.inputs.letterSpacing};
+  //   text-transform: ${theme.inputs.textTransform};
+  //   -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
+  //   color: ${theme.inputs.color};
+  //   background-color: ${theme.inputs.bottomBorderOnly
+    ? 'transparent'
+    : `${theme.inputs.bgColor}`};
+  //   box-shadow: ${theme.inputs.boxShadow};
+  //   transition: ${theme.links.transition};
+  //   @media (max-width: ${theme.breakpoints.tablet}) {
+  //     font-size: ${theme.inputs.fontSizeMobile};
+  //   }
 
-    &::placeholder {
-      color: ${theme.inputs.placeholderColor};
-    }
+  //   &::placeholder {
+  //     color: ${theme.inputs.placeholderColor};
+  //   }
 
-    &::selection {
-      color: ${theme.colors.light};
-      background-color: ${theme.inputs.color};
-    }
+  //   &::selection {
+  //     color: ${theme.colors.light};
+  //     background-color: ${theme.inputs.color};
+  //   }
 
-    &:active,
-    &:focus {
-      color: ${theme.inputs.colorFocus};
-      background-color: ${theme.inputs.bgColorFocus};
-      border-color: ${theme.inputs.borderColorFocus};
-    }
+  //   &:active,
+  //   &:focus {
+  //     color: ${theme.inputs.colorFocus};
+  //     background-color: ${theme.inputs.bgColorFocus};
+  //     border-color: ${theme.inputs.borderColorFocus};
+  //   }
 
-    &:disabled,
-    &:read-only {
-      cursor: default;
-      opacity: 0.5;
-      color: ${theme.inputs.color};
-      background-color: ${theme.inputs.bgColor};
-      border-color: ${theme.inputs.borderColor};
-    }
-  }
+  //   &:disabled,
+  //   &:read-only {
+  //     cursor: default;
+  //     opacity: 0.5;
+  //     color: ${theme.inputs.color};
+  //     background-color: ${theme.inputs.bgColor};
+  //     border-color: ${theme.inputs.borderColor};
+  //   }
+  // }
 
-  input,
-  textarea {
-    box-shadow: ${theme.inputs.boxShadow};
+  // input,
+  // textarea {
+  //   box-shadow: ${theme.inputs.boxShadow};
 
-    &:active,
-    &:focus {
-      box-shadow: ${theme.inputs.boxShadow};
-    }
-  }
+  //   &:active,
+  //   &:focus {
+  //     box-shadow: ${theme.inputs.boxShadow};
+  //   }
+  // }
 
   textarea {
     border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};

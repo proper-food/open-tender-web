@@ -54,6 +54,54 @@ export const fetchConfig =
         }
       })
 
+const remsToInt = (rems) => {
+  return parseInt(parseFloat(rems.replace('rem', '')) * 10, 10)
+}
+
+const intToRems = (int) => {
+  return `${(int / 10).toFixed(2)}rem`
+}
+
+const adjustTheme = (theme) => {
+  const { inputs } = theme
+  const { bottomBorderOnly, paddingVertical } = inputs
+  const showLabel = true
+  const paddingVerticalInt = remsToInt(paddingVertical)
+  let paddingTop = paddingVertical
+  let paddingBottom = paddingVertical
+  let paddingTopActive = paddingVertical
+  let paddingBottomActive = paddingVertical
+  let offset = '0'
+  if (bottomBorderOnly) {
+    const bottom = paddingVerticalInt / 2
+    const top = paddingVerticalInt + bottom
+    offset = intToRems(-top)
+    paddingTop = intToRems(top)
+    paddingBottom = intToRems(bottom)
+    paddingTopActive = intToRems(top)
+    paddingBottomActive = intToRems(bottom)
+  } else if (showLabel) {
+    const bottom = paddingVerticalInt / 3
+    const top = paddingVerticalInt + paddingVerticalInt * (2 / 3)
+    offset = intToRems(bottom - paddingVerticalInt)
+    paddingTopActive = intToRems(top)
+    paddingBottomActive = intToRems(bottom)
+  }
+  const label = { fontSize: '1.2rem', fontSizeMobile: '1.0rem', offset }
+  const newInputs = {
+    ...inputs,
+    label,
+    showLabel,
+    showOutline: false,
+    paddingTop,
+    paddingBottom,
+    paddingTopActive,
+    paddingBottomActive,
+    borderStyle: 'solid',
+  }
+  return { ...theme, inputs: newInputs }
+}
+
 const configSlice = createSlice({
   name: 'config',
   initialState: initialState,
@@ -72,7 +120,7 @@ const configSlice = createSlice({
       state.app = app
       state.brand = brand
       state.content = content
-      state.theme = theme
+      state.theme = adjustTheme(theme)
       state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)
