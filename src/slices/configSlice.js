@@ -58,15 +58,40 @@ const remsToInt = (rems) => {
   return parseInt(parseFloat(rems.replace('rem', '')) * 10, 10)
 }
 
+const remsToFloat = (rems) => {
+  return parseFloat(rems.replace('rem', ''))
+}
+
 const intToRems = (int) => {
   return `${(int / 10).toFixed(2)}rem`
 }
 
+const flaotToRems = (n) => {
+  return `${n.toFixed(3)}rem`
+}
+
 const adjustTheme = (theme) => {
   const { inputs } = theme
-  const { bottomBorderOnly, paddingVertical } = inputs
+  const {
+    bottomBorderOnly,
+    paddingVertical,
+    paddingHorizontal,
+    fontSize,
+    fontSizeMobile,
+    lineHeight,
+    borderWidth,
+  } = inputs
+  const fontSizeFloat = remsToFloat(fontSize)
+  const fontSizeMobileFloat = remsToFloat(fontSizeMobile)
+  const selectSizeFloat = fontSizeFloat * parseFloat(lineHeight)
+  const selectSizeMobileFloat = fontSizeMobileFloat * parseFloat(lineHeight)
+  const selectSize = flaotToRems(selectSizeFloat)
+  const selectSizeMobile = flaotToRems(selectSizeMobileFloat)
   const showLabel = true
   const paddingVerticalInt = remsToInt(paddingVertical)
+  const paddingVerticalFloat = remsToFloat(paddingVertical)
+  const borderWidthFloat = remsToFloat(borderWidth)
+  let selectPaddingBottom = flaotToRems(paddingVerticalFloat + borderWidthFloat)
   let paddingTop = paddingVertical
   let paddingBottom = paddingVertical
   let paddingTopActive = paddingVertical
@@ -80,6 +105,8 @@ const adjustTheme = (theme) => {
     paddingBottom = intToRems(bottom)
     paddingTopActive = intToRems(top)
     paddingBottomActive = intToRems(bottom)
+    const paddingBottomFloat = remsToFloat(paddingBottom)
+    selectPaddingBottom = flaotToRems(paddingBottomFloat + borderWidthFloat)
   } else if (showLabel) {
     const bottom = paddingVerticalInt / 3
     const top = paddingVerticalInt + paddingVerticalInt * (2 / 3)
@@ -87,6 +114,19 @@ const adjustTheme = (theme) => {
     paddingTopActive = intToRems(top)
     paddingBottomActive = intToRems(bottom)
   }
+  const paddingLeftFloat = remsToFloat(paddingHorizontal)
+  const iconLeft = flaotToRems(
+    remsToFloat(paddingHorizontal) + remsToFloat(borderWidth)
+  )
+  const paddingLeftIcon = flaotToRems(
+    Math.max(paddingLeftFloat * 2.0 + selectSizeFloat, selectSizeFloat * 2.0)
+  )
+  const paddingLeftIconMobile = flaotToRems(
+    Math.max(
+      paddingLeftFloat * 2.0 + selectSizeMobileFloat,
+      selectSizeFloat * 2.0
+    )
+  )
   const label = { fontSize: '1.2rem', fontSizeMobile: '1.0rem', offset }
   const newInputs = {
     ...inputs,
@@ -98,6 +138,12 @@ const adjustTheme = (theme) => {
     paddingTopActive,
     paddingBottomActive,
     borderStyle: 'solid',
+    selectSize,
+    selectSizeMobile,
+    selectPaddingBottom,
+    paddingLeftIcon,
+    paddingLeftIconMobile,
+    iconLeft,
   }
   return { ...theme, inputs: newInputs }
 }
