@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -9,12 +9,7 @@ import {
   resetSignUp,
   linkPosToken,
 } from '@open-tender/redux'
-import {
-  ButtonLink,
-  FormWrapper,
-  Input,
-  SignUpForm,
-} from '@open-tender/components'
+import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
 
 import {
   openModal,
@@ -31,7 +26,6 @@ import {
   PageContainer,
   PageContent,
 } from '../..'
-import { User } from '../../icons'
 
 export const ThanxTerms = () => (
   <p>
@@ -63,7 +57,6 @@ const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const posToken = useQuery().get('pos-token')
-  const [value, setValue] = useState('')
   const api = useSelector(selectApi)
   const { signUp: signupConfig } = useSelector(selectConfig)
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
@@ -118,13 +111,6 @@ const SignUp = () => {
               {has_thanx && <ThanxTerms />}
             </PageTitle>
             <FormWrapper>
-              <Input
-                icon={<User />}
-                label="Name"
-                type="text"
-                value={value}
-                onChange={(evt) => setValue(evt.target.value)}
-              />
               <SignUpForm
                 loading={loading}
                 error={error}

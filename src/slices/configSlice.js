@@ -75,7 +75,6 @@ const adjustTheme = (theme) => {
   const {
     bottomBorderOnly,
     paddingVertical,
-    paddingHorizontal,
     fontSize,
     fontSizeMobile,
     lineHeight,
@@ -114,19 +113,9 @@ const adjustTheme = (theme) => {
     paddingTopActive = intToRems(top)
     paddingBottomActive = intToRems(bottom)
   }
-  const paddingLeftFloat = remsToFloat(paddingHorizontal)
-  const iconLeft = flaotToRems(
-    remsToFloat(paddingHorizontal) + remsToFloat(borderWidth)
-  )
-  const paddingLeftIcon = flaotToRems(
-    Math.max(paddingLeftFloat * 2.0 + selectSizeFloat, selectSizeFloat * 2.0)
-  )
-  const paddingLeftIconMobile = flaotToRems(
-    Math.max(
-      paddingLeftFloat * 2.0 + selectSizeMobileFloat,
-      selectSizeFloat * 2.0
-    )
-  )
+  const borderLeft = bottomBorderOnly ? 0.0 : remsToFloat(borderWidth)
+  const iconLeft = flaotToRems(borderLeft + 1.0)
+  const paddingIcon = '3.8rem'
   const label = { fontSize: '1.2rem', fontSizeMobile: '1.0rem', offset }
   const newInputs = {
     ...inputs,
@@ -141,8 +130,7 @@ const adjustTheme = (theme) => {
     selectSize,
     selectSizeMobile,
     selectPaddingBottom,
-    paddingLeftIcon,
-    paddingLeftIconMobile,
+    paddingIcon,
     iconLeft,
   }
   return { ...theme, inputs: newInputs }
