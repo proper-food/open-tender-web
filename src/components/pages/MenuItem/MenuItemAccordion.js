@@ -103,6 +103,7 @@ const MenuItemAccordionToggle = ({ isOpen, children }) => {
 }
 
 const MenuItemAccordionQuantity = styled.div`
+  height: 100%;
   margin-right: -0.8rem;
 `
 

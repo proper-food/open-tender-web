@@ -39,7 +39,7 @@ const MenuItemOptionsSquare = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: flex-stretch;
+  align-items: stretch;
 `
 
 const MenuItemGroups = ({

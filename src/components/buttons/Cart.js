@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { selectOrder, selectCartQuantity } from '@open-tender/redux'
 import { contains } from '@open-tender/js'
 import { toggleSidebar } from '../../slices'
@@ -68,15 +67,11 @@ const CartCount = styled.div`
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const theme = useTheme()
   const { pathname } = useLocation()
   const cartQuantity = useSelector(selectCartQuantity)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType } = currentOrder
   const isCurrentOrder = revenueCenter && serviceType && cartQuantity > 0
-  // const fill = isCurrentOrder
-  //   ? theme.buttons.colors.headerHover.color
-  //   : 'transparent'
   const hideCart = contains(pathname, ['/item/', 'review'])
   const showCart =
     (isCurrentOrder || contains(pathname, ['menu', 'checkout'])) && !hideCart

@@ -5,12 +5,10 @@ import { Heading } from '@open-tender/components'
 import { MinusCircle, Plus, PlusCircle } from '../../icons'
 
 const MenuItemQuantityView = styled.div`
+  height: 100%;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  // min-width: 9.2rem;
-  // min-height: 4rem;
-  // border-radius: 2rem;
   text-align: center;
 
   label {
@@ -45,12 +43,16 @@ const MenuItemQuantityInput = styled(Heading)`
   padding: 0;
   border: 0;
   text-align: center;
+  background-color: transparent;
 `
 
 const MenuItemQuantityIncrement = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 3.2rem;
-  height: 3.2rem;
-  padding: 0.8rem;
+  height: 100%;
+  padding: 0.1rem 0.6rem 0;
   color: ${(props) => props.theme.colors.secondary};
 `
 

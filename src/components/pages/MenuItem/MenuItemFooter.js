@@ -43,13 +43,13 @@ const MenuItemFooterButton = styled.div`
     padding-top: 0;
     padding-bottom: 0;
 
-    &:disabled {
-      opacity: 1;
-      color: ${(props) => props.theme.colors.primary};
-      background-color: ${(props) => props.theme.bgColors.tertiary};
-      border-color: ${(props) => props.theme.bgColors.tertiary};
-      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.05);
-    }
+    // &:disabled {
+    //   opacity: 1;
+    //   color: ${(props) => props.theme.colors.primary};
+    //   background-color: ${(props) => props.theme.bgColors.tertiary};
+    //   border-color: ${(props) => props.theme.bgColors.tertiary};
+    //   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.05);
+    // }
   }
 `
 

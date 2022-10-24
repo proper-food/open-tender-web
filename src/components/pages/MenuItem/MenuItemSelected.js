@@ -9,10 +9,10 @@ const MenuItemSelectedView = styled.div`
   justify-content: flex-start;
   align-items: center;
   overflow-x: auto;
-  padding: 0.5rem ${(props) => props.theme.layout.padding} 0;
+  padding: 0.5rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0;
-    padding: 0.5rem ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: 0.5rem ${(props) => props.theme.layout.paddingMobile};
   }
 
   &::-webkit-scrollbar {

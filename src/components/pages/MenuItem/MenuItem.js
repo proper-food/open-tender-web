@@ -56,14 +56,9 @@ const MenuItemImage = styled.div`
 `
 
 const MenuItemContent = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: flex-start;
-  // align-items: flex-stretch;
   width: 64rem;
   margin-bottom: ${(props) => props.footerHeight || '10rem'};
   background-color: ${(props) => props.theme.bgColors.primary};
-  // background-color: yellow;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     margin-bottom: ${(props) => props.footerHeight || '10rem'};

@@ -32,12 +32,12 @@ const MenuItemHeaderView = styled.div`
     right: 0;
     width: 64rem;
     height: ${(props) => props.theme.layout.navHeight};
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-stretch;
+    align-items: stretch;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       width: 100%;
       top: ${(props) => props.theme.layout.navHeightMobile};
