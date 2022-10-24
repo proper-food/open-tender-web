@@ -3,27 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
+  addItemToCart,
   selectCurrentItem,
   setCurrentItem,
-  addItemToCart,
-  selectSoldOut,
-  selectSelectedAllergenNames,
   showNotification,
-  selectGroupOrder,
-  selectOrder,
-  selectCustomerPointsProgram,
 } from '@open-tender/redux'
-import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
-import { closeModal, selectDisplaySettings } from '../../slices'
-import { Minus, Plus, Star } from '../icons'
-import { ModalClose, ImageSpinner } from '..'
+import { closeModal } from '../../slices'
+import { MenuItem as MenuItemComponent, ModalClose } from '..'
 
-const menuItemsIconMap = {
-  plus: <Plus strokeWidth={2} />,
-  minus: <Minus strokeWidth={2} />,
-}
-
-const MenuItemModalView = styled('div')`
+const MenuItemModalView = styled.div`
   position: relative;
   width: 90%;
   max-width: 64rem;
@@ -31,16 +19,15 @@ const MenuItemModalView = styled('div')`
   overflow: hidden;
   background-color: ${(props) => props.theme.bgColors.primary};
   border-radius: ${(props) => props.theme.border.radius};
-  margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     max-width: 100%;
     height: 100%;
-    margin: 0;
+    border-radius: 0;
   }
 `
 
-const MenuItemModalContent = styled('div')`
+const MenuItemModalContent = styled.div`
   padding: 0;
   height: 100%;
   overflow: hidden;
@@ -52,13 +39,6 @@ const MenuItemModalContent = styled('div')`
 const MenuItem = () => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
-  const soldOut = useSelector(selectSoldOut)
-  const allergens = useSelector(selectSelectedAllergenNames)
-  const displaySettings = useSelector(selectDisplaySettings)
-  const { orderType } = useSelector(selectOrder)
-  const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
-  const pointsIcon = pointsProgram ? <Star /> : null
-  const { cartId } = useSelector(selectGroupOrder)
 
   const cancel = () => {
     dispatch(closeModal())
@@ -67,20 +47,39 @@ const MenuItem = () => {
     }, 275)
   }
 
-  const addItem = (item) => {
-    dispatch(addItemToCart(item))
-    dispatch(showNotification(`${item.name} added to cart`))
+  // const addItem = (item) => {
+  //   dispatch(addItemToCart(item))
+  //   dispatch(showNotification(`${item.name} added to cart`))
+  //   dispatch(closeModal())
+  //   setTimeout(() => {
+  //     dispatch(setCurrentItem(null))
+  //   }, 275)
+  // }
+
+  const addItem = (builtItem) => {
+    const cartItem = { ...builtItem }
+    if (cartItem.index === -1) delete cartItem.index
+    dispatch(addItemToCart(cartItem))
+    dispatch(showNotification(`${cartItem.name} added to cart`))
+    // if (hasUpsell) {
+    //   setShowUpsell(true)
+    // } else {
+    //   dispatch(setCurrentItem(null))
+    // }
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
     }, 275)
   }
 
+  if (!item) return null
+
   return (
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
         <ModalClose onClick={cancel} isButton={isMobile} />
-        {item && (
+        <MenuItemComponent addItem={addItem} cancel={cancel} />
+        {/* {item && (
           <Builder
             menuItem={item}
             soldOut={soldOut}
@@ -96,7 +95,7 @@ const MenuItem = () => {
             spinner={<ImageSpinner />}
             pointsIcon={pointsIcon}
           />
-        )}
+        )} */}
       </MenuItemModalContent>
     </MenuItemModalView>
   )

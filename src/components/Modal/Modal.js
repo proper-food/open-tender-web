@@ -129,6 +129,10 @@ const ModalContainer = styled('div')`
   align-items: center;
   justify-content: center;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Modal = () => {
