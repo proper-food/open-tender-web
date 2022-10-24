@@ -88,7 +88,6 @@ const MenuItemGroupsNavScrollView = styled.div`
 
 // https://stackoverflow.com/questions/51229742/javascript-window-scroll-behavior-smooth-not-working-in-safari
 const smoothHorizontalScrolling = (container, time, amount, start) => {
-  console.log('amount', amount, 'start', start)
   let eAmt = amount / 100
   let curTime = 0
   let scrollCounter = 0
@@ -99,9 +98,8 @@ const smoothHorizontalScrolling = (container, time, amount, start) => {
   }
 }
 
-const shs = (e, sc, eAmt, start) => {
-  const scrolledAmount = eAmt * sc + start
-  console.log(scrolledAmount)
+const shs = (e, scrollCounter, eAmt, start) => {
+  const scrolledAmount = eAmt * scrollCounter + start
   e.scrollLeft = scrolledAmount
 }
 
@@ -121,6 +119,8 @@ const MenuItemGroupsNavScroll = ({ items }) => {
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
+  const [sections, setSections] = useState([])
+  const [current, setCurrent] = useState(null)
   const { navHeight, navHeightMobile } = theme.layout
   const headerHeight = isBrowser ? navHeight : navHeightMobile
   const headerHeightInPixels = parseInt(headerHeight.replace('rem', '')) * 10
@@ -145,22 +145,31 @@ const MenuItemGroupsNavScroll = ({ items }) => {
   }, [navOffset, elements, active])
 
   useEffect(() => {
-    if (active) {
-      const navActive = document.getElementById(`nav-${active.id}`)
-      if (navActive) {
-        const itemOffset = navActive.getBoundingClientRect().x
-        const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-        if (navRef.current) {
-          smoothHorizontalScrolling(
-            navRef.current,
-            250,
-            itemOffset,
-            -parentOffset
-          )
-        }
+    const navSections = Array.from(
+      document.getElementsByClassName('nav-section')
+    ).reduce((arr, i) => {
+      return [
+        ...arr,
+        { name: i.id.replace('nav-', ''), offset: i.getBoundingClientRect().x },
+      ]
+    }, [])
+    setSections(navSections)
+  }, [])
+
+  useEffect(() => {
+    if (active && sections.length) {
+      if (active.id === current) return
+      const currentSection =
+        sections.find((i) => i.name === current) || sections[0]
+      const activeSection = sections.find((i) => i.name === active.id)
+      const start = currentSection.offset - sections[0].offset
+      const amountToMove = activeSection.offset - currentSection.offset
+      if (navRef.current) {
+        smoothHorizontalScrolling(navRef.current, 250, amountToMove, start)
       }
+      setCurrent(active.id)
     }
-  }, [active])
+  }, [active, current, sections])
 
   return (
     <MenuItemGroupsNavScrollView ref={navRef}>
@@ -169,7 +178,11 @@ const MenuItemGroupsNavScroll = ({ items }) => {
           const sectionId = slugify(name)
           const activeId = active ? active.id : null
           return (
-            <li key={`${sectionId}-${index}`} id={`nav-${sectionId}`}>
+            <li
+              key={`${sectionId}-${index}`}
+              id={`nav-${sectionId}`}
+              className="nav-section"
+            >
               <MenuItemGroupsNavScrollButton
                 name={name}
                 offset={scrollOffset}
