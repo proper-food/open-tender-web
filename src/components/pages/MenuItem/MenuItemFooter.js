@@ -172,7 +172,7 @@ const MenuItemFooter = ({
               disabled={isIncomplete}
               size="big"
             >
-              Add to bag
+              Add To Order
             </ButtonStyled>
           </MenuItemFooterButton>
         </MenuItemFooterButtons>
