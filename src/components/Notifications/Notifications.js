@@ -9,8 +9,8 @@ import Notification from './Notification'
 const NotificationsView = styled('div')`
   position: fixed;
   z-index: 15;
-  // bottom: 12rem;
-  bottom: ${(props) => props.theme.layout.padding};
+  bottom: 12rem;
+  // bottom: ${(props) => props.theme.layout.padding};
   right: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     left: ${(props) => props.theme.layout.paddingMobile};

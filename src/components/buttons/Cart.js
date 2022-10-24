@@ -17,12 +17,35 @@ const CartIcon = styled.div`
   }
 
   button {
-    // margin: -0.2rem 0 0;
+    color: ${(props) =>
+      props.isFilled
+        ? props.theme.buttons.colors.cart.color
+        : props.theme.buttons.colors.header.color};
+
+    svg {
+      transition: ${(props) => props.theme.links.transition};
+      fill: ${(props) =>
+        props.isFilled
+          ? props.theme.buttons.colors.cart.bgColor
+          : 'transparent'};
+    }
 
     &:hover,
     &:active,
     &:focus {
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) =>
+        props.isFilled
+          ? props.theme.buttons.colors.cartHover.color
+          : props.theme.buttons.colors.headerHover.color};
+
+      svg {
+        // transform: scale(1.15);
+        fill: ${(props) =>
+          props.isFilled
+            ? props.theme.buttons.colors.cartHover.bgColor
+            : 'transparent'};
+      }
+    }
   }
 `
 
@@ -51,16 +74,18 @@ const Cart = () => {
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType } = currentOrder
   const isCurrentOrder = revenueCenter && serviceType && cartQuantity > 0
-  const fill = isCurrentOrder ? theme.colors.alert : 'transparent'
+  // const fill = isCurrentOrder
+  //   ? theme.buttons.colors.headerHover.color
+  //   : 'transparent'
   const hideCart = contains(pathname, ['/item/', 'review'])
   const showCart =
     (isCurrentOrder || contains(pathname, ['menu', 'checkout'])) && !hideCart
 
   return showCart ? (
-    <CartIcon>
+    <CartIcon isFilled={isCurrentOrder}>
       {cartQuantity > 0 && <CartCount>{cartQuantity}</CartCount>}
       <Icon onClick={() => dispatch(toggleSidebar())}>
-        <ShoppingBag size={isBrowser ? 24 : 24} fill={fill} />
+        <ShoppingBag size={isBrowser ? 24 : 24} />
       </Icon>
     </CartIcon>
   ) : null

@@ -10,7 +10,7 @@ import GlobalStyles from './GlobalStyles'
 import AppRoutes from './components/AppRoutes'
 import {
   Alerts,
-  // CartButton,
+  CartButton,
   ErrorBoundary,
   Modal,
   Nav,
@@ -55,7 +55,7 @@ class App extends React.Component {
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
-    if (theme) console.log(JSON.stringify(theme.inputs, null, 2))
+    // if (theme) console.log(JSON.stringify(theme.bgColors, null, 2))
     return (
       <>
         <ErrorFatal error={error} loading={loading} />
@@ -79,7 +79,7 @@ class App extends React.Component {
                     <Modal />
                     <Alerts />
                     <Notifications />
-                    {/* <CartButton /> */}
+                    <CartButton />
                     <AppRoutes />
                     <Sidebar />
                     <Nav />
