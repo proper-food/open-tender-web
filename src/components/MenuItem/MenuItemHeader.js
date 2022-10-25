@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -14,7 +14,8 @@ import MenuItemSelections from './MenuItemSelections'
 // import MenuItemSelected from './MenuItemSelected'
 
 const MenuItemHeaderView = styled.div`
-  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: ${(props) =>
+    props.stuck ? 'pink' : props.theme.bgColors.primary};
   transition: ${(props) => props.theme.links.transition};
 `
 
@@ -22,10 +23,10 @@ const MenuItemHeaderContainer = styled.div``
 
 const MenuItemInfo = styled.div`
   transition: ${(props) => props.theme.links.transition};
-  padding: ${(props) => props.theme.layout.padding};
+  padding: ${(props) => props.theme.layout.itemPadding};
   padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
+    padding: ${(props) => props.theme.layout.itemPaddingMobile};
     padding-bottom: 0;
   }
 
@@ -38,9 +39,9 @@ const MenuItemInfo = styled.div`
 `
 
 const MenuItemDetails = styled.div`
-  padding: 0 ${(props) => props.theme.layout.padding};
+  padding: 0 ${(props) => props.theme.layout.itemPadding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
   }
 `
 
@@ -109,11 +110,16 @@ const MenuItemHeader = ({
   decrementOption,
   displaySettings,
   pointsIcon,
+  hasCustomize,
   isCustomize,
   setIsCustomize,
   setHeaderOffset,
   setHeaderHeight,
+  topOffset,
+  scrollContainer,
 }) => {
+  const headerRef = useRef(null)
+  const [stuck, setStuck] = useState(false)
   const { bgColors } = useTheme()
   const { auth } = useSelector(selectCustomer)
   const { lookup } = useSelector(selectCustomerFavorites)
@@ -157,7 +163,7 @@ const MenuItemHeader = ({
   const missingSize = sizeGroup
     ? !sizeGroup.options.find((i) => i.quantity >= 1)
     : false
-  const hasCustomize = groups.filter((g) => !g.isSize).length > 0
+  const hasGroups = groups.filter((g) => !g.isSize).length > 0
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
   const requiresCustomization = isIncomplete && !missingSize
@@ -165,6 +171,7 @@ const MenuItemHeader = ({
   // const currentOptions = getItemOptions({ groups: nonSizeGroups })
   // const hasSelections = currentOptions && currentOptions.length ? true : false
   // const klass = isCustomize ? 'isCustomize' : ''
+  console.log('topOffset', topOffset)
 
   const onRefChange = useCallback(
     (node) => {
@@ -177,15 +184,28 @@ const MenuItemHeader = ({
     [setHeaderHeight, isCustomize]
   )
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef.current && topOffset !== null) {
+        console.log(headerRef.current.getBoundingClientRect().top)
+        setStuck(headerRef.current.getBoundingClientRect().top <= topOffset)
+      }
+    }
+    scrollContainer.addEventListener('scroll', handleScroll)
+    return () => {
+      scrollContainer.removeEventListener('scroll', () => handleScroll)
+    }
+  }, [topOffset, scrollContainer])
+
   return (
-    <MenuItemHeaderView ref={onRefChange} showImage={showImage}>
+    <MenuItemHeaderView ref={onRefChange} showImage={showImage} stuck={stuck}>
       <MenuItemHeaderContainer>
         {!isCustomize && displayImageUrl ? (
           <MenuItemImage imageUrl={displayImageUrl}>
             <ClipLoader size={30} loading={true} color={bgColors.primary} />
           </MenuItemImage>
         ) : null}
-        <MenuItemInfo>
+        <MenuItemInfo ref={headerRef}>
           <MenuItemNameContainer>
             <MenuItemName as="p">{name}</MenuItemName>
             {auth && !isCustomize ? (
@@ -243,7 +263,7 @@ const MenuItemHeader = ({
         groups={nonSizeGroups}
         decrementOption={decrementOption}
       /> */}
-      {isCustomize ? null : hasCustomize ? (
+      {hasCustomize && !isCustomize && hasGroups ? (
         <MenuItemSelections
           groups={nonSizeGroups}
           decrementOption={decrementOption}

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import {
@@ -44,9 +44,12 @@ const MenuItemContent = styled.div`
 `
 
 const MenuItem = ({ addItem, cancel }) => {
+  const itemRef = useRef(null)
   const itemScroll = useRef(null)
+  const hasCustomize = false
   const [showUpsell, setShowUpsell] = useState(false)
   const [isCustomize, setIsCustomize] = useState(false)
+  const [topOffset, setTopOffset] = useState(null)
   const [headerHeight, setHeaderHeight] = useState(null)
   const [headerOffset, setHeaderOffset] = useState(null)
   const [footerHeight, setFooterHeight] = useState(null)
@@ -85,11 +88,17 @@ const MenuItem = ({ addItem, cancel }) => {
     setOptionQuantity,
   } = useBuilder(item || {})
 
+  const onRefChange = useCallback((node) => {
+    if (node !== null) {
+      setTopOffset(node.getBoundingClientRect().top)
+    }
+  }, [])
+
   if (!item) return null
 
   return (
     <>
-      <MenuItemView>
+      <MenuItemView ref={onRefChange}>
         <MenuItemContent
           id="menu-item-content"
           ref={itemScroll}
@@ -100,12 +109,28 @@ const MenuItem = ({ addItem, cancel }) => {
             decrementOption={decrementOption}
             displaySettings={displaySettings}
             pointsIcon={pointsIcon}
+            hasCustomize={hasCustomize}
             isCustomize={isCustomize}
             setIsCustomize={setIsCustomize}
             setHeaderOffset={setHeaderOffset}
             setHeaderHeight={setHeaderHeight}
+            topOffset={topOffset}
+            scrollContainer={itemScroll.current}
           />
-          {isCustomize ? (
+          {!hasCustomize || !isCustomize ? (
+            <MenuItemAccordion
+              builtItem={builtItem}
+              setQuantity={setQuantity}
+              increment={increment}
+              decrement={decrement}
+              toggleOption={toggleOption}
+              setMadeFor={setMadeFor}
+              setNotes={setNotes}
+              displaySettings={displaySettings}
+              cartId={cartId}
+            />
+          ) : null}
+          {!hasCustomize || isCustomize ? (
             <MenuItemGroups
               builtItem={builtItem}
               allergenAlerts={allergenAlerts}
@@ -118,19 +143,7 @@ const MenuItem = ({ addItem, cancel }) => {
               headerOffset={headerOffset}
               headerHeight={headerHeight}
             />
-          ) : (
-            <MenuItemAccordion
-              builtItem={builtItem}
-              setQuantity={setQuantity}
-              increment={increment}
-              decrement={decrement}
-              toggleOption={toggleOption}
-              setMadeFor={setMadeFor}
-              setNotes={setNotes}
-              displaySettings={displaySettings}
-              cartId={cartId}
-            />
-          )}
+          ) : null}
         </MenuItemContent>
         <MenuItemFooter
           builtItem={builtItem}

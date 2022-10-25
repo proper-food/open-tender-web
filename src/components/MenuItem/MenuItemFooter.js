@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
-import { Body, ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 import { selectDisplaySettings } from '../../slices'
 
 const MenuItemFooterView = styled.div`
@@ -22,7 +22,6 @@ const MenuItemFooterView = styled.div`
 `
 
 const MenuItemFooterButtons = styled.div`
-  // height: 100%;
   margin: 0 -0.6rem;
   display: flex;
   justify-content: space-between;
@@ -40,35 +39,13 @@ const MenuItemFooterButton = styled.div`
   }
 `
 
-const MenuItemFooterWarning = styled.div`
-  // padding: 0 0 1.5rem;
-  text-align: center;
-  position: absolute;
-  top: -3rem;
-  left: 0;
-  right: 0;
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    display: block;
-    color: ${(props) => props.theme.colors.error};
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-    }
-  }
-`
-
 const MenuItemFooter = ({
   builtItem,
   addItem,
   cancel,
+  hasCustomize,
   isCustomize,
   setIsCustomize,
-  setFooterHeight,
 }) => {
   const [init, setInit] = useState(true)
   const { skipToCustomize, skipToCustomizeMobile } = useSelector(
@@ -80,12 +57,13 @@ const MenuItemFooter = ({
   const missingSize = sizeGroup
     ? !sizeGroup.options.find((i) => i.quantity >= 1)
     : false
-  const hasCustomize = groups.filter((g) => !g.isSize).length > 0
+  const hasGroups = groups.filter((g) => !g.isSize).length > 0
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
   const requiresCustomization = isIncomplete && !missingSize
-  const shouldSkip = (hasCustomize && skip) || requiresCustomization
-  // const shouldSkip = false
+  const shouldSkip = hasCustomize
+    ? (hasGroups && skip) || requiresCustomization
+    : false
 
   useEffect(() => {
     if (init) {
@@ -94,42 +72,26 @@ const MenuItemFooter = ({
     }
   }, [init, shouldSkip, setIsCustomize])
 
-  const onRefChange = useCallback(
-    (node) => {
-      if (node !== null) {
-        setFooterHeight(node.offsetHeight)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isIncomplete, setFooterHeight]
-  )
-
   return (
-    <MenuItemFooterView ref={onRefChange} isCustomize={isCustomize}>
-      {/* {isIncomplete ? (
-        <MenuItemFooterWarning>
-          {isCustomize ? (
-            <Body as="p">
-              Certain groups are below their minimums and require selections.
-            </Body>
-          ) : (
-            <Body as="p">
-              {missingSize
-                ? 'Please select a size to add to bag!'
-                : 'Item requires customization. Tap the Customize button.'}
-            </Body>
-          )}
-        </MenuItemFooterWarning>
-      ) : !isCustomize && !isMobile ? (
-        <MenuItemFooterWarning>
-          <p>
-            <ButtonLink onClick={cancel}>
-              Cancel and head back to menu
-            </ButtonLink>
-          </p>
-        </MenuItemFooterWarning>
-      ) : null} */}
-      {isCustomize ? (
+    <MenuItemFooterView>
+      {!hasCustomize ? (
+        <MenuItemFooterButtons>
+          <MenuItemFooterButton>
+            <ButtonStyled onClick={cancel} size="big" color="secondary">
+              Nevermind
+            </ButtonStyled>
+          </MenuItemFooterButton>
+          <MenuItemFooterButton>
+            <ButtonStyled
+              onClick={() => addItem(builtItem)}
+              disabled={isIncomplete}
+              size="big"
+            >
+              Add To Order
+            </ButtonStyled>
+          </MenuItemFooterButton>
+        </MenuItemFooterButtons>
+      ) : isCustomize ? (
         <MenuItemFooterButtons>
           <MenuItemFooterButton>
             <ButtonStyled
@@ -152,7 +114,7 @@ const MenuItemFooter = ({
         </MenuItemFooterButtons>
       ) : (
         <MenuItemFooterButtons>
-          {hasCustomize && (
+          {hasGroups && (
             <MenuItemFooterButton>
               <ButtonStyled
                 onClick={() => setIsCustomize(true)}
