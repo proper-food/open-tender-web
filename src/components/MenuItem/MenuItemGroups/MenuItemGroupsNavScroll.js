@@ -5,9 +5,25 @@ import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
 
 const MenuItemGroupsNavScrollButtonView = styled.button`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  padding: 1rem 0 0;
+  position: relative;
   height: 4.5rem;
+  padding: 1rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  // border-style: solid;
+  // border-color: transparent;
+  // border-top-width: 0.2rem;
+  // border-bottom-width: 0.2rem;
+  // border-bottom-color: ${(props) =>
+    props.active ? props.theme.border.color : 'transparent'};
+`
+
+const MenuItemGroupsNavScrollButtonActive = styled.span`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.2rem;
+  background-color: ${(props) => props.theme.colors.primary};
 `
 
 const MenuItemGroupsNavScrollButton = ({ name, active, offset = 0 }) => {
@@ -30,8 +46,9 @@ const MenuItemGroupsNavScrollButton = ({ name, active, offset = 0 }) => {
   }
 
   return (
-    <MenuItemGroupsNavScrollButtonView onClick={onClick}>
+    <MenuItemGroupsNavScrollButtonView onClick={onClick} active={active}>
       {name}
+      {active && <MenuItemGroupsNavScrollButtonActive />}
     </MenuItemGroupsNavScrollButtonView>
   )
 }
@@ -54,15 +71,15 @@ const MenuItemGroupsNavScrollView = styled.div`
     li {
       display: block;
       flex-shrink: 0;
-      padding: 0 0 0 ${(props) => props.theme.layout.padding};
+      padding: 0 0 0 ${(props) => props.theme.layout.itemPadding};
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        padding-left: ${(props) => props.theme.layout.paddingMobile};
+        padding-left: ${(props) => props.theme.layout.itemPaddingMobile};
       }
 
       &:last-child {
-        padding-right: ${(props) => props.theme.layout.padding};
+        padding-right: ${(props) => props.theme.layout.itemPadding};
         @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-          padding-right: ${(props) => props.theme.layout.paddingMobile};
+          padding-right: ${(props) => props.theme.layout.itemPaddingMobile};
         }
       }
     }
@@ -97,23 +114,18 @@ const getActiveElement = (elements, navOffset) => {
     }, null)
 }
 
-const MenuItemGroupsNavScroll = ({
-  items,
-  scrollContainer,
-  headerHeight,
-  headerOffset,
-}) => {
+const MenuItemGroupsNavScroll = ({ items, scrollContainer, scrollOffset }) => {
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
   const [sections, setSections] = useState([])
   const [current, setCurrent] = useState(null)
   const navBarHeight = navRef.current?.offsetHeight || 45
-  const topOffset = headerOffset + navBarHeight
+  const topOffset = scrollOffset + navBarHeight
   const paddingTop = 20
   const navOffset = topOffset + paddingTop
   const elements = Array.from(document.getElementsByName('section'))
-  const scrollOffset = (navBarHeight || 45) + paddingTop - 1
+  const buttonOffset = (navBarHeight || 45) + 45 + paddingTop - 1
 
   useEffect(() => {
     const handleScroll = () => {
@@ -169,7 +181,7 @@ const MenuItemGroupsNavScroll = ({
             >
               <MenuItemGroupsNavScrollButton
                 name={name}
-                offset={scrollOffset}
+                offset={buttonOffset}
                 active={activeId === sectionId}
               />
             </li>
@@ -184,8 +196,7 @@ MenuItemGroupsNavScroll.displayName = 'MenuItemGroupsNavScroll'
 MenuItemGroupsNavScroll.propTypes = {
   items: propTypes.array,
   scrollContainer: propTypes.any,
-  headerHeight: propTypes.number,
-  headerOffset: propTypes.number,
+  scrollOffset: propTypes.number,
 }
 
 export default MenuItemGroupsNavScroll

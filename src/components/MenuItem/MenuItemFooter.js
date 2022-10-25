@@ -10,14 +10,13 @@ const MenuItemFooterView = styled.div`
   label: MenuItemFooter;
   flex: 0 0 auto;
   position: relative;
-  padding: 1.5rem ${(props) => props.theme.layout.padding};
+  padding: ${(props) => props.theme.layout.itemPadding};
   background-color: ${(props) => props.theme.bgColors.primary};
   // box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
   box-shadow: 0 -15px 30px ${(props) => props.theme.overlay.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-top: 1rem;
+    padding: ${(props) => props.theme.layout.itemPaddingMobile};
   }
 `
 

@@ -44,18 +44,11 @@ const MenuItemContent = styled.div`
 `
 
 const MenuItem = ({ addItem, cancel }) => {
-  const itemRef = useRef(null)
-  const itemScroll = useRef(null)
+  const viewRef = useRef(null)
+  const scrollRef = useRef(null)
   const hasCustomize = false
   const [showUpsell, setShowUpsell] = useState(false)
   const [isCustomize, setIsCustomize] = useState(false)
-  const [topOffset, setTopOffset] = useState(null)
-  const [headerHeight, setHeaderHeight] = useState(null)
-  const [headerOffset, setHeaderOffset] = useState(null)
-  const [footerHeight, setFooterHeight] = useState(null)
-  const footerHeightRem = footerHeight
-    ? `${(footerHeight / 10).toFixed(1)}rem`
-    : null
   const soldOut = useSelector(selectSoldOut)
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const displaySettings = useSelector(selectDisplaySettings)
@@ -87,23 +80,17 @@ const MenuItem = ({ addItem, cancel }) => {
     decrementOption,
     setOptionQuantity,
   } = useBuilder(item || {})
-
-  const onRefChange = useCallback((node) => {
-    if (node !== null) {
-      setTopOffset(node.getBoundingClientRect().top)
-    }
-  }, [])
+  const scrollContainer = scrollRef.current
+  const topOffset = viewRef.current
+    ? viewRef.current.getBoundingClientRect().top
+    : null
 
   if (!item) return null
 
   return (
     <>
-      <MenuItemView ref={onRefChange}>
-        <MenuItemContent
-          id="menu-item-content"
-          ref={itemScroll}
-          footerHeight={footerHeightRem}
-        >
+      <MenuItemView ref={viewRef}>
+        <MenuItemContent id="menu-item-content" ref={scrollRef}>
           <MenuItemHeader
             builtItem={builtItem}
             decrementOption={decrementOption}
@@ -112,10 +99,8 @@ const MenuItem = ({ addItem, cancel }) => {
             hasCustomize={hasCustomize}
             isCustomize={isCustomize}
             setIsCustomize={setIsCustomize}
-            setHeaderOffset={setHeaderOffset}
-            setHeaderHeight={setHeaderHeight}
             topOffset={topOffset}
-            scrollContainer={itemScroll.current}
+            scrollContainer={scrollContainer}
           />
           {!hasCustomize || !isCustomize ? (
             <MenuItemAccordion
@@ -139,9 +124,9 @@ const MenuItem = ({ addItem, cancel }) => {
               incrementOption={incrementOption}
               decrementOption={decrementOption}
               setOptionQuantity={setOptionQuantity}
-              scrollContainer={itemScroll.current}
-              headerOffset={headerOffset}
-              headerHeight={headerHeight}
+              scrollContainer={scrollContainer}
+              topOffset={topOffset}
+              headerHeight={45}
             />
           ) : null}
         </MenuItemContent>
@@ -149,9 +134,9 @@ const MenuItem = ({ addItem, cancel }) => {
           builtItem={builtItem}
           addItem={addItem}
           cancel={cancel}
+          hasCustomize={hasCustomize}
           isCustomize={isCustomize}
           setIsCustomize={setIsCustomize}
-          setFooterHeight={setFooterHeight}
         />
       </MenuItemView>
       {/* {hasUpsell && (

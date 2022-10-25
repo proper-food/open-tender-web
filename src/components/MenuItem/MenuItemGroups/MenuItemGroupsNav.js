@@ -20,9 +20,9 @@ const MenuItemGroupsNavInner = styled.div`
     props.stuck &&
     `position: absolute;
       z-index: 10;
-      top: 0;
-      right: 0;
-      width: 100%;`}
+      top: 4.5rem;
+      left: 0;
+      right: 0;`}
 `
 
 const MenuItemGroupsNavContainer = styled.div`
@@ -36,26 +36,21 @@ const MenuItemGroupsNavContainer = styled.div`
   }
 `
 
-const MenuItemGroupsNav = ({
-  items,
-  scrollContainer,
-  headerOffset,
-  headerHeight,
-}) => {
+const MenuItemGroupsNav = ({ items, scrollContainer, scrollOffset }) => {
   const [stuck, setStuck] = useState(false)
   const stickyRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (stickyRef.current && headerOffset !== null) {
-        setStuck(stickyRef.current.getBoundingClientRect().top <= headerOffset)
+      if (stickyRef.current && scrollOffset !== null) {
+        setStuck(stickyRef.current.getBoundingClientRect().top <= scrollOffset)
       }
     }
     scrollContainer.addEventListener('scroll', handleScroll)
     return () => {
       scrollContainer.removeEventListener('scroll', () => handleScroll)
     }
-  }, [headerOffset, scrollContainer])
+  }, [scrollOffset, scrollContainer])
 
   return (
     <MenuItemGroupsNavView ref={stickyRef}>
@@ -64,8 +59,7 @@ const MenuItemGroupsNav = ({
           <MenuItemGroupsNavScroll
             items={items}
             scrollContainer={scrollContainer}
-            headerOffset={headerOffset}
-            headerHeight={headerHeight}
+            scrollOffset={scrollOffset}
           />
         </MenuItemGroupsNavContainer>
       </MenuItemGroupsNavInner>
@@ -77,8 +71,7 @@ MenuItemGroupsNav.displayName = 'MenuItemGroupsNav'
 MenuItemGroupsNav.propTypes = {
   items: propTypes.array,
   scrollContainer: propTypes.any,
-  headerHeight: propTypes.number,
-  headerOffset: propTypes.number,
+  scrollOffset: propTypes.number,
 }
 
 export default MenuItemGroupsNav

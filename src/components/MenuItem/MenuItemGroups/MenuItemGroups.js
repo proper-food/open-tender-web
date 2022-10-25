@@ -6,18 +6,13 @@ import MenuItemGroupsNav from './MenuItemGroupsNav'
 import MenuItemOption from './MenuItemOption'
 import MenuItemOptionSquare from './MenuItemOptionSquare'
 
-const MenuItemGroupsView = styled.div`
-  // padding-top: ${(props) => props.theme.layout.navHeight};
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   padding-top: 6rem;
-  // }
-`
+const MenuItemGroupsView = styled.div``
 
 const MenuItemGroupsList = styled.div`
-  padding: 0 ${(props) => props.theme.layout.padding};
+  padding: 0 ${(props) => props.theme.layout.itemPadding};
   margin: 4.5rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
     margin: 4.5rem 0;
   }
 `
@@ -44,14 +39,13 @@ const MenuItemOptionsSquare = styled.div`
 
 const MenuItemGroups = ({
   builtItem,
-  allergenAlerts,
   displaySettings,
   toggleOption,
   incrementOption,
   decrementOption,
   setOptionQuantity,
   scrollContainer,
-  headerOffset,
+  topOffset,
   headerHeight,
 }) => {
   const { groups } = builtItem
@@ -59,17 +53,17 @@ const MenuItemGroups = ({
   const navItems = nonSizeGroups.map(({ name }) => name)
   const { modifiersType } = displaySettings
   const showCards = modifiersType === 'CARDS'
+  const scrollOffset = topOffset + headerHeight
 
   return (
     <MenuItemGroupsView>
-      {scrollContainer && (
+      {scrollContainer && scrollOffset ? (
         <MenuItemGroupsNav
           items={navItems}
           scrollContainer={scrollContainer}
-          headerOffset={headerOffset}
-          headerHeight={headerHeight}
+          scrollOffset={scrollOffset}
         />
-      )}
+      ) : null}
       <MenuItemGroupsList>
         {nonSizeGroups.map((group) => (
           <MenuItemGroup key={group.id} id={slugify(group.name)} name="section">
@@ -112,15 +106,14 @@ const MenuItemGroups = ({
 MenuItemGroups.displayName = 'MenuItemGroups'
 MenuItemGroups.propTypes = {
   builtItem: propTypes.object,
-  allergenAlerts: propTypes.array,
   displaySettings: propTypes.object,
   toggleOption: propTypes.func,
   incrementOption: propTypes.func,
   decrementOption: propTypes.func,
   setOptionQuantity: propTypes.func,
   scrollContainer: propTypes.any,
+  topOffset: propTypes.number,
   headerHeight: propTypes.number,
-  headerOffset: propTypes.number,
 }
 
 export default MenuItemGroups

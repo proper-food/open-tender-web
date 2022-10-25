@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -14,12 +14,39 @@ import MenuItemSelections from './MenuItemSelections'
 // import MenuItemSelected from './MenuItemSelected'
 
 const MenuItemHeaderView = styled.div`
-  background-color: ${(props) =>
-    props.stuck ? 'pink' : props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors.primary};
   transition: ${(props) => props.theme.links.transition};
 `
 
 const MenuItemHeaderContainer = styled.div``
+
+const MenuItemScroll = styled.div`
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  padding: 0 ${(props) => props.theme.layout.itemPadding};
+  transition: ${(props) => props.theme.links.transition};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  opacity: ${(props) => (props.stuck ? '1' : '0')};
+  visibility: ${(props) => (props.stuck ? 'visible' : 'hidden')};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
+  }
+`
+
+const MenuItemScrollInfo = styled.div``
+
+const MenuItemScrollName = styled(Heading)`
+  display: block;
+`
+
+const MenuItemScrollPrice = styled.div``
 
 const MenuItemInfo = styled.div`
   transition: ${(props) => props.theme.links.transition};
@@ -113,8 +140,6 @@ const MenuItemHeader = ({
   hasCustomize,
   isCustomize,
   setIsCustomize,
-  setHeaderOffset,
-  setHeaderHeight,
   topOffset,
   scrollContainer,
 }) => {
@@ -171,40 +196,54 @@ const MenuItemHeader = ({
   // const currentOptions = getItemOptions({ groups: nonSizeGroups })
   // const hasSelections = currentOptions && currentOptions.length ? true : false
   // const klass = isCustomize ? 'isCustomize' : ''
-  console.log('topOffset', topOffset)
-
-  const onRefChange = useCallback(
-    (node) => {
-      if (node !== null) {
-        setHeaderOffset(node.getBoundingClientRect().top)
-        setHeaderHeight(node.offsetHeight)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setHeaderHeight, isCustomize]
-  )
 
   useEffect(() => {
     const handleScroll = () => {
       if (headerRef.current && topOffset !== null) {
-        console.log(headerRef.current.getBoundingClientRect().top)
+        // console.log(headerRef.current.getBoundingClientRect().top)
         setStuck(headerRef.current.getBoundingClientRect().top <= topOffset)
       }
     }
-    scrollContainer.addEventListener('scroll', handleScroll)
+    scrollContainer && scrollContainer.addEventListener('scroll', handleScroll)
     return () => {
-      scrollContainer.removeEventListener('scroll', () => handleScroll)
+      scrollContainer &&
+        scrollContainer.removeEventListener('scroll', () => handleScroll)
     }
   }, [topOffset, scrollContainer])
 
+  const priceCals = (style = {}) => (
+    <MenuItemPriceCals
+      price={displayPrice}
+      cals={displayCals}
+      size="main"
+      style={style}
+    >
+      {totalPoints && (
+        <MenuItemPoints>
+          <Points
+            points={totalPoints}
+            icon={pointsIcon}
+            title="Points can be applied at checkout"
+          />
+        </MenuItemPoints>
+      )}
+    </MenuItemPriceCals>
+  )
+
   return (
-    <MenuItemHeaderView ref={onRefChange} showImage={showImage} stuck={stuck}>
+    <MenuItemHeaderView showImage={showImage}>
       <MenuItemHeaderContainer>
         {!isCustomize && displayImageUrl ? (
           <MenuItemImage imageUrl={displayImageUrl}>
             <ClipLoader size={30} loading={true} color={bgColors.primary} />
           </MenuItemImage>
         ) : null}
+        <MenuItemScroll stuck={stuck}>
+          <MenuItemScrollInfo>
+            <MenuItemScrollName size="big">{name}</MenuItemScrollName>
+          </MenuItemScrollInfo>
+          <MenuItemScrollPrice>{priceCals()}</MenuItemScrollPrice>
+        </MenuItemScroll>
         <MenuItemInfo ref={headerRef}>
           <MenuItemNameContainer>
             <MenuItemName as="p">{name}</MenuItemName>
@@ -217,23 +256,7 @@ const MenuItemHeader = ({
               />
             ) : null}
           </MenuItemNameContainer>
-          <MenuItemPriceCals
-            price={displayPrice}
-            cals={displayCals}
-            size="main"
-            style={{ margin: '1rem 0 0' }}
-            // style={isCustomize ? {} : { margin: '0.5rem 0 0' }}
-          >
-            {totalPoints && (
-              <MenuItemPoints>
-                <Points
-                  points={totalPoints}
-                  icon={pointsIcon}
-                  title="Points can be applied at checkout"
-                />
-              </MenuItemPoints>
-            )}
-          </MenuItemPriceCals>
+          {priceCals({ margin: '1rem 0 0' })}
         </MenuItemInfo>
         {!isCustomize && (
           <MenuItemDetails>
@@ -283,8 +306,6 @@ MenuItemHeader.propTypes = {
   pointsIcon: propTypes.element,
   isCustomize: propTypes.bool,
   setIsCustomize: propTypes.func,
-  setHeaderOffset: propTypes.func,
-  setHeaderHeight: propTypes.func,
 }
 
 export default MenuItemHeader
