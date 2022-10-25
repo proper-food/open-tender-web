@@ -155,8 +155,8 @@ const MenuItemHeader = ({
   hasCustomize,
   isCustomize,
   setIsCustomize,
-  topOffset,
   scrollContainer,
+  topOffset,
 }) => {
   const headerRef = useRef(null)
   const [stuck, setStuck] = useState(false)
@@ -165,7 +165,6 @@ const MenuItemHeader = ({
   const signature = makeItemSignature(builtItem)
   const favoriteId = lookup && signature ? lookup[signature] : null
   const {
-    builderImages: showImage,
     calories: showCals,
     tags: showTags,
     allergens: showAllergens,
@@ -243,20 +242,20 @@ const MenuItemHeader = ({
   )
 
   return (
-    <MenuItemHeaderView showImage={showImage}>
+    <MenuItemHeaderView ref={headerRef}>
+      <MenuItemScroll stuck={stuck}>
+        <MenuItemScrollInfo>
+          <MenuItemScrollName size="big">{name}</MenuItemScrollName>
+        </MenuItemScrollInfo>
+        <MenuItemScrollPrice>
+          {priceCals()}
+          <MenuItemScrollClose onClick={cancel}>
+            <XCircle size={24} />
+          </MenuItemScrollClose>
+        </MenuItemScrollPrice>
+      </MenuItemScroll>
       <MenuItemHeaderContainer>
-        <MenuItemScroll stuck={stuck}>
-          <MenuItemScrollInfo>
-            <MenuItemScrollName size="big">{name}</MenuItemScrollName>
-          </MenuItemScrollInfo>
-          <MenuItemScrollPrice>
-            {priceCals()}
-            <MenuItemScrollClose onClick={cancel}>
-              <XCircle size={24} />
-            </MenuItemScrollClose>
-          </MenuItemScrollPrice>
-        </MenuItemScroll>
-        <MenuItemInfo ref={headerRef}>
+        <MenuItemInfo>
           <MenuItemNameContainer>
             <MenuItemName size="xBig" as="p">
               {name}
@@ -295,31 +294,31 @@ const MenuItemHeader = ({
             ) : null}
           </MenuItemDetails>
         )}
+        {hasCustomize && !isCustomize && hasGroups ? (
+          <MenuItemSelections
+            groups={nonSizeGroups}
+            decrementOption={decrementOption}
+            requiresCustomization={requiresCustomization}
+            setIsCustomize={setIsCustomize}
+          />
+        ) : null}
       </MenuItemHeaderContainer>
-      {/* <MenuItemSelected
-        groups={nonSizeGroups}
-        decrementOption={decrementOption}
-      /> */}
-      {hasCustomize && !isCustomize && hasGroups ? (
-        <MenuItemSelections
-          groups={nonSizeGroups}
-          decrementOption={decrementOption}
-          requiresCustomization={requiresCustomization}
-          setIsCustomize={setIsCustomize}
-        />
-      ) : null}
     </MenuItemHeaderView>
   )
 }
 
 MenuItemHeader.displayName = 'MenuItemHeader'
 MenuItemHeader.propTypes = {
+  cancel: propTypes.func,
   builtItem: propTypes.object,
   decrementOption: propTypes.func,
   displaySettings: propTypes.object,
   pointsIcon: propTypes.element,
+  hasCustomize: propTypes.bool,
   isCustomize: propTypes.bool,
   setIsCustomize: propTypes.func,
+  scrollContainer: propTypes.any,
+  topOffset: propTypes.number,
 }
 
 export default MenuItemHeader
