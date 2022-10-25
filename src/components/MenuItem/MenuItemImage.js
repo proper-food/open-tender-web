@@ -1,13 +1,17 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { BgImage, useImage } from '@open-tender/components'
+import { ClipLoader } from 'react-spinners'
+import { useTheme } from '@emotion/react'
 
 const MenuItemImageView = styled.div`
   // display: none;
   position: relative;
   z-index: 1;
   width: 100%;
-  height: 240px;
+  height: 45%;
+  min-height: 180px;
+  max-height: 240px;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   // margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -40,15 +44,18 @@ const MenuItemBackgroundImage = styled(BgImage)`
   animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
-const MenuItemImage = ({ imageUrl, spinner }) => {
+const MenuItemImage = ({ imageUrl }) => {
+  const { bgColors } = useTheme()
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
   return (
     <MenuItemImageView>
-      {spinner && isLoading && (
-        <MenuItemImageLoading>{spinner}</MenuItemImageLoading>
+      {isLoading && (
+        <MenuItemImageLoading>
+          <ClipLoader size={30} loading={true} color={bgColors.primary} />
+        </MenuItemImageLoading>
       )}
       {hasLoaded && (
         <MenuItemBackgroundImage style={bgStyle}>

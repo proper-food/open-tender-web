@@ -10,6 +10,7 @@ import {
 } from '@open-tender/redux'
 import { closeModal } from '../../slices'
 import { MenuItem as MenuItemComponent, ModalClose } from '..'
+import { XCircle } from '../icons'
 
 const MenuItemModalView = styled.div`
   position: relative;
@@ -24,6 +25,30 @@ const MenuItemModalView = styled.div`
     max-width: 100%;
     height: 100%;
     border-radius: 0;
+  }
+`
+
+const MenuItemModalClose = styled.button`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  // border-radius: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.links.light.color};
+  // color: ${(props) => props.theme.bgColors.primary};
+  // background-color: ${(props) => props.theme.colors.primary};
+  // background: radial-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 80%);
+  // box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    color: ${(props) => props.theme.links.light.hover};
+    // color: ${(props) => props.theme.colors.primary};
+    // background-color: ${(props) => props.theme.bgColors.primary};
   }
 `
 
@@ -77,7 +102,10 @@ const MenuItem = () => {
   return (
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        <ModalClose onClick={cancel} isButton={isMobile} />
+        {/* <ModalClose onClick={cancel} isButton={isMobile} /> */}
+        <MenuItemModalClose onClick={cancel}>
+          <XCircle size={24} />
+        </MenuItemModalClose>
         <MenuItemComponent addItem={addItem} cancel={cancel} />
         {/* {item && (
           <Builder

@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 import { useSelector } from 'react-redux'
 import { selectCustomer, selectCustomerFavorites } from '@open-tender/redux'
 import { formatDollars, makeItemSignature } from '@open-tender/js'
 import { isMobile } from 'react-device-detect'
-import { ClipLoader } from 'react-spinners'
 import { Body, Heading, Points, Preface } from '@open-tender/components'
 import { MenuItemFavorite, MenuItemPriceCals } from '..'
-import MenuItemImage from './MenuItemImage'
 import MenuItemSelections from './MenuItemSelections'
+import { XCircle } from '../icons'
 // import MenuItemSelected from './MenuItemSelected'
 
 const MenuItemHeaderView = styled.div`
@@ -27,7 +25,7 @@ const MenuItemScroll = styled.div`
   left: 0;
   right: 0;
   height: 4.5rem;
-  padding: 0 ${(props) => props.theme.layout.itemPadding};
+  padding: 0 0 0 ${(props) => props.theme.layout.itemPadding};
   transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.primary};
   opacity: ${(props) => (props.stuck ? '1' : '0')};
@@ -36,7 +34,7 @@ const MenuItemScroll = styled.div`
   justify-content: space-between;
   align-items: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: 0 0 0 ${(props) => props.theme.layout.itemPaddingMobile};
   }
 `
 
@@ -44,9 +42,29 @@ const MenuItemScrollInfo = styled.div``
 
 const MenuItemScrollName = styled(Heading)`
   display: block;
+  margin-left: -0.2rem;
 `
 
-const MenuItemScrollPrice = styled.div``
+const MenuItemScrollPrice = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`
+
+const MenuItemScrollClose = styled.button`
+  display: block;
+  width: 4.5rem;
+  margin: 0 0 0 1rem;
+  height: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.links.dark.color};
+
+  &:hover {
+    color: ${(props) => props.theme.links.dark.hover};
+  }
+`
 
 const MenuItemInfo = styled.div`
   transition: ${(props) => props.theme.links.transition};
@@ -82,17 +100,6 @@ const MenuItemNameContainer = styled.div`
 const MenuItemName = styled(Heading)`
   display: block;
   transition: ${(props) => props.theme.links.transition};
-  font-size: ${(props) => props.theme.fonts.sizes.xBig};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
-
-  &.isCustomize {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.main};
-    }
-  }
 `
 
 const MenuItemPoints = styled.span`
@@ -133,6 +140,7 @@ const MenuItemDesc = styled(Body)`
 `
 
 const MenuItemHeader = ({
+  cancel,
   builtItem,
   decrementOption,
   displaySettings,
@@ -145,7 +153,6 @@ const MenuItemHeader = ({
 }) => {
   const headerRef = useRef(null)
   const [stuck, setStuck] = useState(false)
-  const { bgColors } = useTheme()
   const { auth } = useSelector(selectCustomer)
   const { lookup } = useSelector(selectCustomerFavorites)
   const signature = makeItemSignature(builtItem)
@@ -164,7 +171,6 @@ const MenuItemHeader = ({
     totalPrice,
     cals,
     totalCals,
-    imageUrl,
     totalPoints,
     tags,
     allergens,
@@ -184,7 +190,6 @@ const MenuItemHeader = ({
     : price
   const displayPrice = formatDollars(currentPrice)
   const displayCals = showCals ? (totalPrice ? totalCals : cals) : null
-  const displayImageUrl = showImage && imageUrl ? imageUrl : null
   const missingSize = sizeGroup
     ? !sizeGroup.options.find((i) => i.quantity >= 1)
     : false
@@ -233,20 +238,22 @@ const MenuItemHeader = ({
   return (
     <MenuItemHeaderView showImage={showImage}>
       <MenuItemHeaderContainer>
-        {!isCustomize && displayImageUrl ? (
-          <MenuItemImage imageUrl={displayImageUrl}>
-            <ClipLoader size={30} loading={true} color={bgColors.primary} />
-          </MenuItemImage>
-        ) : null}
         <MenuItemScroll stuck={stuck}>
           <MenuItemScrollInfo>
-            <MenuItemScrollName size="big">{name}</MenuItemScrollName>
+            <MenuItemScrollName size="xBig">{name}</MenuItemScrollName>
           </MenuItemScrollInfo>
-          <MenuItemScrollPrice>{priceCals()}</MenuItemScrollPrice>
+          <MenuItemScrollPrice>
+            {priceCals()}
+            <MenuItemScrollClose onClick={cancel}>
+              <XCircle size={24} />
+            </MenuItemScrollClose>
+          </MenuItemScrollPrice>
         </MenuItemScroll>
         <MenuItemInfo ref={headerRef}>
           <MenuItemNameContainer>
-            <MenuItemName as="p">{name}</MenuItemName>
+            <MenuItemName size="xBig" as="p">
+              {name}
+            </MenuItemName>
             {auth && !isCustomize ? (
               <MenuItemFavorite
                 size={isMobile ? 16 : 24}

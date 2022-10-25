@@ -272,6 +272,7 @@ const MenuItemAccordionInstructions = ({
 }
 
 const MenuItemAccordion = ({
+  hasCustomize,
   builtItem,
   setQuantity,
   increment,
@@ -358,17 +359,19 @@ const MenuItemAccordion = ({
             </MenuItemAccordionSection>
           </>
         )}
-        <MenuItemAccordionRow>
-          <MenuItemAccordionLabel>Quantity</MenuItemAccordionLabel>
-          <MenuItemAccordionQuantity>
-            <MenuItemQuantity
-              item={builtItem}
-              adjust={setQuantity}
-              increment={increment}
-              decrement={decrement}
-            />
-          </MenuItemAccordionQuantity>
-        </MenuItemAccordionRow>
+        {hasCustomize && (
+          <MenuItemAccordionRow>
+            <MenuItemAccordionLabel>Quantity</MenuItemAccordionLabel>
+            <MenuItemAccordionQuantity>
+              <MenuItemQuantity
+                item={builtItem}
+                adjust={setQuantity}
+                increment={increment}
+                decrement={decrement}
+              />
+            </MenuItemAccordionQuantity>
+          </MenuItemAccordionRow>
+        )}
         {!!hasInstructions && (
           <>
             <MenuItemAccordionRowButton

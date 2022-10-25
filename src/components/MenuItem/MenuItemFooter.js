@@ -3,8 +3,10 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
-import { ButtonStyled } from '@open-tender/components'
+import { formatDollars } from '@open-tender/js'
+import { ButtonStyled, Heading } from '@open-tender/components'
 import { selectDisplaySettings } from '../../slices'
+import { Minus, Plus, X } from '../icons'
 
 const MenuItemFooterView = styled.div`
   label: MenuItemFooter;
@@ -12,11 +14,11 @@ const MenuItemFooterView = styled.div`
   position: relative;
   padding: ${(props) => props.theme.layout.itemPadding};
   background-color: ${(props) => props.theme.bgColors.primary};
-  // box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
   box-shadow: 0 -15px 30px ${(props) => props.theme.overlay.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    // padding-bottom: 2rem;
   }
 `
 
@@ -38,8 +40,78 @@ const MenuItemFooterButton = styled.div`
   }
 `
 
+const MenuItemFooterDefault = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const MenuItemFooterDefaultCircle = styled.div`
+  flex: 0 0 5rem;
+  width: 5rem;
+  height: 5rem;
+  margin-right: ${(props) => props.theme.layout.itemPadding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-right: ${(props) => props.theme.layout.itemPaddingMobile};
+    flex: 0 0 4rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 2.5rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-radius: 2rem;
+    }
+  }
+`
+
+const MenuItemFooterDefaultQuantity = styled.div`
+  min-width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    min-width: 4rem;
+    height: 4rem;
+  }
+`
+
+const MenuItemFooterDefaultCount = styled(Heading)`
+  display: block;
+`
+
+const MenuItemFooterDefaultButton = styled.div`
+  flex: 1 1 auto;
+
+  button {
+    width: 100%;
+    padding: 0;
+    height: 5rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      height: 4rem;
+    }
+  }
+`
+
+const MenuItemFooterDefaultPrice = styled.span`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
+
+  span {
+    padding: 0 0.5rem;
+  }
+`
+
 const MenuItemFooter = ({
   builtItem,
+  increment,
+  decrement,
   addItem,
   cancel,
   hasCustomize,
@@ -74,22 +146,41 @@ const MenuItemFooter = ({
   return (
     <MenuItemFooterView>
       {!hasCustomize ? (
-        <MenuItemFooterButtons>
-          <MenuItemFooterButton>
+        <MenuItemFooterDefault>
+          <MenuItemFooterDefaultCircle>
             <ButtonStyled onClick={cancel} size="big" color="secondary">
-              Nevermind
+              <X size={25} />
             </ButtonStyled>
-          </MenuItemFooterButton>
-          <MenuItemFooterButton>
+          </MenuItemFooterDefaultCircle>
+          <MenuItemFooterDefaultCircle style={{ margin: 0 }}>
+            <ButtonStyled onClick={decrement} size="big" color="primary">
+              <Minus size={25} />
+            </ButtonStyled>
+          </MenuItemFooterDefaultCircle>
+          <MenuItemFooterDefaultQuantity>
+            <MenuItemFooterDefaultCount size="xBig">
+              {quantity}
+            </MenuItemFooterDefaultCount>
+          </MenuItemFooterDefaultQuantity>
+          <MenuItemFooterDefaultCircle>
+            <ButtonStyled onClick={increment} size="big" color="primary">
+              <Plus size={25} />
+            </ButtonStyled>
+          </MenuItemFooterDefaultCircle>
+          <MenuItemFooterDefaultButton>
             <ButtonStyled
               onClick={() => addItem(builtItem)}
               disabled={isIncomplete}
               size="big"
             >
               Add To Order
+              <MenuItemFooterDefaultPrice>
+                <span>&mdash;</span>
+                {formatDollars(totalPrice)}
+              </MenuItemFooterDefaultPrice>
             </ButtonStyled>
-          </MenuItemFooterButton>
-        </MenuItemFooterButtons>
+          </MenuItemFooterDefaultButton>
+        </MenuItemFooterDefault>
       ) : isCustomize ? (
         <MenuItemFooterButtons>
           <MenuItemFooterButton>

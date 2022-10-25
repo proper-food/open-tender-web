@@ -18,6 +18,8 @@ import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
 import MenuItemUpsell from './MenuItemUpsell'
+import { ClipLoader } from 'react-spinners'
+import MenuItemImage from './MenuItemImage'
 
 const MenuItemView = styled.div`
   label: MenuItemView;
@@ -84,6 +86,8 @@ const MenuItem = ({ addItem, cancel }) => {
   const topOffset = viewRef.current
     ? viewRef.current.getBoundingClientRect().top
     : null
+  const { builderImages } = displaySettings
+  const showImage = !isCustomize && builderImages ? true : false
 
   if (!item) return null
 
@@ -91,7 +95,9 @@ const MenuItem = ({ addItem, cancel }) => {
     <>
       <MenuItemView ref={viewRef}>
         <MenuItemContent id="menu-item-content" ref={scrollRef}>
+          {showImage && <MenuItemImage imageUrl={builtItem.imageUrl} />}
           <MenuItemHeader
+            cancel={cancel}
             builtItem={builtItem}
             decrementOption={decrementOption}
             displaySettings={displaySettings}
@@ -104,6 +110,7 @@ const MenuItem = ({ addItem, cancel }) => {
           />
           {!hasCustomize || !isCustomize ? (
             <MenuItemAccordion
+              hasCustomize={hasCustomize}
               builtItem={builtItem}
               setQuantity={setQuantity}
               increment={increment}
@@ -132,6 +139,8 @@ const MenuItem = ({ addItem, cancel }) => {
         </MenuItemContent>
         <MenuItemFooter
           builtItem={builtItem}
+          increment={increment}
+          decrement={decrement}
           addItem={addItem}
           cancel={cancel}
           hasCustomize={hasCustomize}
