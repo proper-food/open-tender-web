@@ -5,9 +5,11 @@ import { Body, ButtonLink, Heading } from '@open-tender/components'
 import MenuItemSelectedOption from './MenuItemSelectedOption'
 
 const MenuItemSelectionsView = styled.div`
-  margin: 2rem 0 0;
+  padding: ${(props) => props.theme.layout.itemPadding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1.5rem 0 0;
+    padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    padding-bottom: 0;
   }
 `
 
@@ -15,10 +17,8 @@ const MenuItemSelectionsEdit = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 ${(props) => props.theme.layout.padding};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -32,10 +32,8 @@ const MenuItemSelectionsTitle = styled(Heading)`
 
 const MenuItemSelectionsContainer = styled.div`
   margin: 0.6rem 0 0;
-  padding: 0 ${(props) => props.theme.layout.padding};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -46,10 +44,6 @@ const MenuItemSelectionsOptions = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin: 1.1rem 0 0;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  }
 
   & > span {
     margin-bottom: 0.6rem;

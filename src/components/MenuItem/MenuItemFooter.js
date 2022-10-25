@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { formatDollars } from '@open-tender/js'
-import { ButtonStyled, Heading } from '@open-tender/components'
+import { ButtonStyled, Heading, Preface } from '@open-tender/components'
 import { selectDisplaySettings } from '../../slices'
 import { Minus, Plus, X } from '../icons'
 
@@ -111,6 +111,28 @@ const MenuItemFooterDefaultPrice = styled.span`
   }
 `
 
+const MenuItemFooterRequired = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+  }
+
+  span {
+    display: block;
+    padding: 0 0.3rem;
+  }
+`
+
+const MenuItemFooterRequiredAlert = styled(Preface)`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0.2rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
 const MenuItemFooter = ({
   builtItem,
   increment,
@@ -135,9 +157,7 @@ const MenuItemFooter = ({
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete = totalPrice === 0 || quantity === '' || groupsBelowMin
   const requiresCustomization = isIncomplete && !missingSize
-  const shouldSkip = hasCustomize
-    ? (hasGroups && skip) || requiresCustomization
-    : false
+  const shouldSkip = hasCustomize ? hasGroups && skip : false
 
   useEffect(() => {
     if (init) {
@@ -214,7 +234,16 @@ const MenuItemFooter = ({
                 size="big"
                 color={requiresCustomization ? 'primary' : 'secondary'}
               >
-                Customize
+                {requiresCustomization ? (
+                  <MenuItemFooterRequired>
+                    <span>Customize</span>
+                    <MenuItemFooterRequiredAlert color="error">
+                      (required)
+                    </MenuItemFooterRequiredAlert>
+                  </MenuItemFooterRequired>
+                ) : (
+                  'Customize'
+                )}
               </ButtonStyled>
             </MenuItemFooterButton>
           )}
@@ -225,6 +254,12 @@ const MenuItemFooter = ({
               size="big"
             >
               Add To Order
+              {!isIncomplete && (
+                <MenuItemFooterDefaultPrice>
+                  <span>&mdash;</span>
+                  {formatDollars(totalPrice)}
+                </MenuItemFooterDefaultPrice>
+              )}
             </ButtonStyled>
           </MenuItemFooterButton>
         </MenuItemFooterButtons>
@@ -239,7 +274,6 @@ MenuItemFooter.propTypes = {
   addItem: propTypes.func,
   isCustomize: propTypes.bool,
   setIsCustomize: propTypes.func,
-  setFooterHeight: propTypes.func,
 }
 
 export default MenuItemFooter

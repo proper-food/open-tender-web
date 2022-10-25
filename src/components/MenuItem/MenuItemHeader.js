@@ -7,9 +7,8 @@ import { formatDollars, makeItemSignature } from '@open-tender/js'
 import { isMobile } from 'react-device-detect'
 import { Body, Heading, Points, Preface } from '@open-tender/components'
 import { MenuItemFavorite, MenuItemPriceCals } from '..'
-import MenuItemSelections from './MenuItemSelections'
 import { XCircle } from '../icons'
-// import MenuItemSelected from './MenuItemSelected'
+import MenuItemSelections from './MenuItemSelections'
 
 const MenuItemHeaderView = styled.div`
   background-color: ${(props) => props.theme.bgColors.primary};
@@ -17,6 +16,10 @@ const MenuItemHeaderView = styled.div`
 `
 
 const MenuItemHeaderContainer = styled.div``
+
+const MenuItemHeaderPlaceholder = styled.div`
+  height: 4.5rem;
+`
 
 const MenuItemScroll = styled.div`
   position: absolute;
@@ -212,7 +215,7 @@ const MenuItemHeader = ({
     const handleScroll = () => {
       if (headerRef.current && topOffset !== null) {
         // console.log(headerRef.current.getBoundingClientRect().top)
-        setStuck(headerRef.current.getBoundingClientRect().top <= topOffset)
+        setStuck(headerRef.current.getBoundingClientRect().top <= topOffset - 1)
       }
     }
     scrollContainer && scrollContainer.addEventListener('scroll', handleScroll)
@@ -220,7 +223,7 @@ const MenuItemHeader = ({
       scrollContainer &&
         scrollContainer.removeEventListener('scroll', () => handleScroll)
     }
-  }, [topOffset, scrollContainer])
+  }, [topOffset, scrollContainer, isCustomize])
 
   const priceCals = (style = {}) => (
     <MenuItemPriceCals
@@ -243,7 +246,7 @@ const MenuItemHeader = ({
 
   return (
     <MenuItemHeaderView ref={headerRef}>
-      <MenuItemScroll stuck={stuck}>
+      <MenuItemScroll stuck={hasCustomize ? isCustomize : stuck}>
         <MenuItemScrollInfo>
           <MenuItemScrollName size="big">{name}</MenuItemScrollName>
         </MenuItemScrollInfo>
@@ -254,24 +257,24 @@ const MenuItemHeader = ({
           </MenuItemScrollClose>
         </MenuItemScrollPrice>
       </MenuItemScroll>
-      <MenuItemHeaderContainer>
-        <MenuItemInfo>
-          <MenuItemNameContainer>
-            <MenuItemName size="xBig" as="p">
-              {name}
-            </MenuItemName>
-            {auth && !isCustomize ? (
-              <MenuItemFavorite
-                size={isMobile ? 16 : 24}
-                favoriteId={favoriteId}
-                builtItem={builtItem}
-                disabled={isIncomplete}
-              />
-            ) : null}
-          </MenuItemNameContainer>
-          {priceCals({ margin: '1rem 0 0' })}
-        </MenuItemInfo>
-        {!isCustomize && (
+      {!isCustomize ? (
+        <MenuItemHeaderContainer>
+          <MenuItemInfo>
+            <MenuItemNameContainer>
+              <MenuItemName size="xBig" as="p">
+                {name}
+              </MenuItemName>
+              {auth && (
+                <MenuItemFavorite
+                  size={isMobile ? 16 : 24}
+                  favoriteId={favoriteId}
+                  builtItem={builtItem}
+                  disabled={isIncomplete}
+                />
+              )}
+            </MenuItemNameContainer>
+            {priceCals({ margin: '1rem 0 0' })}
+          </MenuItemInfo>
           <MenuItemDetails>
             {hasTagsAllergens && (
               <MenuItemTagsAllergens>
@@ -293,16 +296,18 @@ const MenuItemHeader = ({
               <MenuItemDesc as="p">{description}</MenuItemDesc>
             ) : null}
           </MenuItemDetails>
-        )}
-        {hasCustomize && !isCustomize && hasGroups ? (
-          <MenuItemSelections
-            groups={nonSizeGroups}
-            decrementOption={decrementOption}
-            requiresCustomization={requiresCustomization}
-            setIsCustomize={setIsCustomize}
-          />
-        ) : null}
-      </MenuItemHeaderContainer>
+          {hasGroups && (
+            <MenuItemSelections
+              groups={nonSizeGroups}
+              decrementOption={decrementOption}
+              requiresCustomization={requiresCustomization}
+              setIsCustomize={setIsCustomize}
+            />
+          )}
+        </MenuItemHeaderContainer>
+      ) : hasCustomize ? (
+        <MenuItemHeaderPlaceholder />
+      ) : null}
     </MenuItemHeaderView>
   )
 }
