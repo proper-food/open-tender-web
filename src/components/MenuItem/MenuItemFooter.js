@@ -18,7 +18,10 @@ const MenuItemFooterView = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: ${(props) => props.theme.layout.itemPaddingMobile};
-    // padding-bottom: 2rem;
+    // padding-bottom: env(
+    //   safe-area-inset-bottom,
+    //   ${(props) => props.theme.layout.itemPaddingMobile}
+    // );
   }
 `
 

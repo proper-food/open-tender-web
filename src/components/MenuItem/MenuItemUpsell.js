@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import { selectMenu, setCurrentItem } from '@open-tender/redux'
+import { selectMenu } from '@open-tender/redux'
 import { makeMenuItemLookup, makeUpsellItems } from '@open-tender/js'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Body, ButtonLink, Heading } from '@open-tender/components'
@@ -101,8 +101,12 @@ const MenuItemUpsellItem = styled.div`
   }
 `
 
-const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
-  const dispatch = useDispatch()
+const MenuItemUpsell = ({
+  showUpsell,
+  setShowUpsell,
+  upsellItemIds,
+  cancel,
+}) => {
   const { categories } = useSelector(selectMenu)
   const upsells = useSelector(selectContentSection('upsells'))
   const { show, title, subtitle, decline } = upsells?.item || {}
@@ -112,15 +116,15 @@ const MenuItemUpsell = ({ showUpsell, setShowUpsell, upsellItemIds }) => {
 
   const backToMenu = () => {
     setShowUpsell(false)
-    setTimeout(() => dispatch(setCurrentItem(null)), 200)
+    cancel()
   }
 
   useEffect(() => {
     if (showUpsell && skipUpsell) {
       setShowUpsell(false)
-      dispatch(setCurrentItem(null))
+      cancel()
     }
-  }, [showUpsell, skipUpsell, setShowUpsell, dispatch])
+  }, [showUpsell, skipUpsell, setShowUpsell, cancel])
 
   if (skipUpsell) return null
 
@@ -171,6 +175,7 @@ MenuItemUpsell.propTypes = {
   showUpsell: propTypes.bool,
   setShowUpsell: propTypes.func,
   upsellItemIds: propTypes.array,
+  cancel: propTypes.func,
 }
 
 export default MenuItemUpsell

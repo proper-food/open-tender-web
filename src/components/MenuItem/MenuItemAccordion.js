@@ -34,6 +34,9 @@ const MenuItemAccordionRow = styled.div`
   align-items: center;
   border-top: ${(props) => props.theme.border.width} solid
     ${(props) => props.theme.border.color};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    height: 3.6rem;
+  }
 `
 
 const MenuItemAccordionRowButton = ({ name, open, setOpen, children }) => {
@@ -52,9 +55,9 @@ const MenuItemAccordionLabel = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //   font-size: ${(props) => props.theme.fonts.sizes.small};
-  // }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 
   span {
     display: block;

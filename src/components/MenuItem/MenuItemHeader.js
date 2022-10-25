@@ -38,14 +38,18 @@ const MenuItemScroll = styled.div`
   }
 `
 
-const MenuItemScrollInfo = styled.div``
+const MenuItemScrollInfo = styled.div`
+  flex: 1 1 auto;
+`
 
 const MenuItemScrollName = styled(Heading)`
   display: block;
   margin-left: -0.2rem;
+  line-height: 1;
 `
 
 const MenuItemScrollPrice = styled.div`
+  flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -60,6 +64,9 @@ const MenuItemScrollClose = styled.button`
   justify-content: center;
   align-items: center;
   color: ${(props) => props.theme.links.dark.color};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0;
+  }
 
   &:hover {
     color: ${(props) => props.theme.links.dark.hover};
@@ -240,7 +247,7 @@ const MenuItemHeader = ({
       <MenuItemHeaderContainer>
         <MenuItemScroll stuck={stuck}>
           <MenuItemScrollInfo>
-            <MenuItemScrollName size="xBig">{name}</MenuItemScrollName>
+            <MenuItemScrollName size="big">{name}</MenuItemScrollName>
           </MenuItemScrollInfo>
           <MenuItemScrollPrice>
             {priceCals()}

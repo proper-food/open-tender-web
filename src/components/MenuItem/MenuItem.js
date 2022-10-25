@@ -1,7 +1,8 @@
-import { useCallback, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import {
+  addItemToCart,
   selectCartIds,
   selectCurrentItem,
   selectCustomerPointsProgram,
@@ -9,6 +10,7 @@ import {
   selectOrder,
   selectSelectedAllergenNames,
   selectSoldOut,
+  showNotification,
 } from '@open-tender/redux'
 import { useBuilder } from '@open-tender/hooks'
 import { selectContentSection, selectDisplaySettings } from '../../slices'
@@ -18,7 +20,6 @@ import MenuItemAccordion from './MenuItemAccordion'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
 import MenuItemUpsell from './MenuItemUpsell'
-import { ClipLoader } from 'react-spinners'
 import MenuItemImage from './MenuItemImage'
 
 const MenuItemView = styled.div`
@@ -45,7 +46,8 @@ const MenuItemContent = styled.div`
   }
 `
 
-const MenuItem = ({ addItem, cancel }) => {
+const MenuItem = ({ cancel }) => {
+  const dispatch = useDispatch()
   const viewRef = useRef(null)
   const scrollRef = useRef(null)
   const hasCustomize = false
@@ -88,6 +90,14 @@ const MenuItem = ({ addItem, cancel }) => {
     : null
   const { builderImages } = displaySettings
   const showImage = !isCustomize && builderImages ? true : false
+
+  const addItem = (builtItem) => {
+    const cartItem = { ...builtItem }
+    if (cartItem.index === -1) delete cartItem.index
+    dispatch(addItemToCart(cartItem))
+    dispatch(showNotification(`${cartItem.name} added to cart`))
+    hasUpsell ? setShowUpsell(true) : cancel()
+  }
 
   if (!item) return null
 
@@ -148,13 +158,14 @@ const MenuItem = ({ addItem, cancel }) => {
           setIsCustomize={setIsCustomize}
         />
       </MenuItemView>
-      {/* {hasUpsell && (
+      {hasUpsell && (
         <MenuItemUpsell
           showUpsell={showUpsell}
           setShowUpsell={setShowUpsell}
           upsellItemIds={upsellItemIds}
+          cancel={cancel}
         />
-      )} */}
+      )}
     </>
   )
 }
