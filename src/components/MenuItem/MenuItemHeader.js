@@ -23,8 +23,10 @@ const MenuItemHeaderContainer = styled.div``
 const MenuItemInfo = styled.div`
   transition: ${(props) => props.theme.links.transition};
   padding: ${(props) => props.theme.layout.padding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: 0;
   }
 
   &.isCustomize {
@@ -198,7 +200,7 @@ const MenuItemHeader = ({
           <MenuItemPriceCals
             price={displayPrice}
             cals={displayCals}
-            size="medium"
+            size="main"
             style={{ margin: '1rem 0 0' }}
             // style={isCustomize ? {} : { margin: '0.5rem 0 0' }}
           >

@@ -9,10 +9,11 @@ import { selectDisplaySettings } from '../../slices'
 const MenuItemFooterView = styled.div`
   label: MenuItemFooter;
   flex: 0 0 auto;
+  position: relative;
+  padding: 1.5rem ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.primary};
-  padding: ${(props) => props.theme.layout.padding};
-  padding-top: 1rem;
-  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
+  // box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 -15px 30px ${(props) => props.theme.overlay.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: ${(props) => props.theme.layout.paddingMobile};
@@ -40,10 +41,19 @@ const MenuItemFooterButton = styled.div`
 `
 
 const MenuItemFooterWarning = styled.div`
-  padding: 0 0 1.5rem;
+  // padding: 0 0 1.5rem;
   text-align: center;
+  position: absolute;
+  top: -3rem;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   p {
+    display: block;
     color: ${(props) => props.theme.colors.error};
     font-size: ${(props) => props.theme.fonts.sizes.small};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -96,7 +106,7 @@ const MenuItemFooter = ({
 
   return (
     <MenuItemFooterView ref={onRefChange} isCustomize={isCustomize}>
-      {isIncomplete ? (
+      {/* {isIncomplete ? (
         <MenuItemFooterWarning>
           {isCustomize ? (
             <Body as="p">
@@ -118,7 +128,7 @@ const MenuItemFooter = ({
             </ButtonLink>
           </p>
         </MenuItemFooterWarning>
-      ) : null}
+      ) : null} */}
       {isCustomize ? (
         <MenuItemFooterButtons>
           <MenuItemFooterButton>
