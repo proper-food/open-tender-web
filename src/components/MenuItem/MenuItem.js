@@ -46,7 +46,7 @@ const MenuItemContent = styled.div`
   }
 `
 
-const MenuItem = ({ cancel }) => {
+const MenuItem = ({ cancel, showImage = true }) => {
   const dispatch = useDispatch()
   const viewRef = useRef(null)
   const scrollRef = useRef(null)
@@ -89,7 +89,7 @@ const MenuItem = ({ cancel }) => {
     ? viewRef.current.getBoundingClientRect().top
     : null
   const { builderImages } = displaySettings
-  const showImage = !isCustomize && builderImages ? true : false
+  const displayImage = showImage && !isCustomize && builderImages ? true : false
 
   const addItem = (builtItem) => {
     const cartItem = { ...builtItem }
@@ -105,7 +105,7 @@ const MenuItem = ({ cancel }) => {
     <>
       <MenuItemView ref={viewRef}>
         <MenuItemContent id="menu-item-content" ref={scrollRef}>
-          {showImage && <MenuItemImage imageUrl={builtItem.imageUrl} />}
+          {displayImage && <MenuItemImage imageUrl={builtItem.imageUrl} />}
           <MenuItemHeader
             cancel={cancel}
             builtItem={builtItem}

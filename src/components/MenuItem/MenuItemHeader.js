@@ -296,14 +296,14 @@ const MenuItemHeader = ({
               <MenuItemDesc as="p">{description}</MenuItemDesc>
             ) : null}
           </MenuItemDetails>
-          {hasGroups && (
+          {hasCustomize && hasGroups ? (
             <MenuItemSelections
               groups={nonSizeGroups}
               decrementOption={decrementOption}
               requiresCustomization={requiresCustomization}
               setIsCustomize={setIsCustomize}
             />
-          )}
+          ) : null}
         </MenuItemHeaderContainer>
       ) : hasCustomize ? (
         <MenuItemHeaderPlaceholder />
