@@ -10,10 +10,10 @@ const MenuItemGroupsView = styled.div``
 
 const MenuItemGroupsList = styled.div`
   padding: 0 ${(props) => props.theme.layout.itemPadding};
-  margin: 4.5rem 0;
+  margin: 4.5rem 0 ${(props) => props.theme.layout.itemPadding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
-    margin: 4.5rem 0;
+    margin: 4.5rem 0 ${(props) => props.theme.layout.itemPaddingMobile};
   }
 `
 

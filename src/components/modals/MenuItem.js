@@ -5,6 +5,8 @@ import { selectCurrentItem, setCurrentItem } from '@open-tender/redux'
 import { closeModal } from '../../slices'
 import { MenuItem as MenuItemComponent } from '..'
 import { XCircle } from '../icons'
+import { useTheme } from '@emotion/react'
+import { isMobile } from 'react-device-detect'
 
 const MenuItemModalView = styled.div`
   position: relative;
@@ -32,12 +34,28 @@ const MenuItemModalClose = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.links.light.color};
-  // background: radial-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 80%);
-  // box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  color: ${(props) =>
+    props.theme.item.desktop.imagePadding === '0'
+      ? props.theme.links.light.color
+      : props.theme.links.dark.color};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    color: ${(props) =>
+      props.theme.item.mobile.imagePadding === '0'
+        ? props.theme.links.light.color
+        : props.theme.links.dark.color};
+  }
 
   &:hover {
-    color: ${(props) => props.theme.links.light.hover};
+    color: ${(props) =>
+      props.theme.item.desktop.imagePadding === '0'
+        ? props.theme.links.light.hover
+        : props.theme.links.dark.hover};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) =>
+        props.theme.item.mobile.imagePadding === '0'
+          ? props.theme.links.light.hover
+          : props.theme.links.dark.hover};
+    }
   }
 `
 
@@ -51,6 +69,10 @@ const MenuItemModalContent = styled.div`
 `
 
 const MenuItem = () => {
+  const theme = useTheme()
+  const styles = isMobile ? theme.item.mobile : theme.item.desktop
+  const hasPadding = styles.imagePadding !== '0'
+  const fill = hasPadding ? theme.bgColors.primary : 'none'
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
 
@@ -67,7 +89,7 @@ const MenuItem = () => {
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
         <MenuItemModalClose onClick={cancel}>
-          <XCircle size={24} />
+          <XCircle size={24} fill={fill} />
         </MenuItemModalClose>
         <MenuItemComponent cancel={cancel} />
       </MenuItemModalContent>

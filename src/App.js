@@ -54,7 +54,7 @@ class App extends React.Component {
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
-    // if (theme) console.log(JSON.stringify(theme.layout, null, 2))
+    if (theme) console.log(JSON.stringify(theme.item, null, 2))
     return (
       <>
         <ErrorFatal error={error} loading={loading} />

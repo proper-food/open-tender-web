@@ -21,6 +21,7 @@ import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
 import MenuItemUpsell from './MenuItemUpsell'
 import MenuItemImage from './MenuItemImage'
+import { Back, NavMenu } from '../buttons'
 
 const MenuItemView = styled.div`
   label: MenuItemView;
@@ -46,7 +47,17 @@ const MenuItemContent = styled.div`
   }
 `
 
-const MenuItem = ({ cancel, showImage = true }) => {
+const MenuItemBack = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 ${(props) => props.theme.layout.itemPadding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
+  }
+`
+
+const MenuItem = ({ cancel, showBack = false, showImage = true }) => {
   const dispatch = useDispatch()
   const hasCustomize = false
   const [scrollContainer, setScrollContainer] = useState(null)
@@ -113,7 +124,15 @@ const MenuItem = ({ cancel, showImage = true }) => {
     <>
       <MenuItemView ref={onViewRef}>
         <MenuItemContent id="menu-item-content" ref={onScrollRef}>
-          {displayImage && <MenuItemImage imageUrl={builtItem.imageUrl} />}
+          {showBack && (
+            <MenuItemBack>
+              <Back onClick={cancel} />
+              <NavMenu />
+            </MenuItemBack>
+          )}
+          {displayImage && (
+            <MenuItemImage imageUrl={builtItem.imageUrl} hasBack={showBack} />
+          )}
           <MenuItemHeader
             cancel={cancel}
             builtItem={builtItem}

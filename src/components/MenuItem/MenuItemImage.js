@@ -8,13 +8,21 @@ const MenuItemImageView = styled.div`
   position: relative;
   z-index: 1;
   width: 100%;
-  height: 45%;
-  min-height: 180px;
-  max-height: 240px;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
+  height: ${(props) => props.theme.item.desktop.imageHeight};
+  min-height: ${(props) => props.theme.item.desktop.imageMinHeight};
+  max-height: ${(props) => props.theme.item.desktop.imageMaxHeight};
+  padding: ${(props) => props.theme.item.desktop.imagePadding};
+  padding-top: ${(props) =>
+    props.hasBack ? '0' : props.theme.item.desktop.imagePadding};
+  padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: auto;
-    padding: 33% 0;
+    height: ${(props) => props.theme.item.mobile.imageHeight};
+    min-height: ${(props) => props.theme.item.mobile.imageMinHeight};
+    max-height: ${(props) => props.theme.item.mobile.imageMaxHeight};
+    padding: ${(props) => props.theme.item.mobile.imagePadding};
+    padding-top: ${(props) =>
+      props.hasBack ? '0' : props.theme.item.mobile.imagePadding};
+    padding-bottom: 0;
   }
 `
 
@@ -30,6 +38,13 @@ const MenuItemImageLoading = styled.div`
   align-items: center;
 `
 
+const MenuItemBackgroundImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
+`
+
 const MenuItemBackgroundImage = styled(BgImage)`
   position: absolute;
   z-index: 2;
@@ -41,23 +56,27 @@ const MenuItemBackgroundImage = styled(BgImage)`
   animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
-const MenuItemImage = ({ imageUrl }) => {
+const MenuItemImage = ({ imageUrl, hasBack }) => {
   const { bgColors } = useTheme()
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
   return (
-    <MenuItemImageView>
+    <MenuItemImageView hasBack={hasBack}>
       {isLoading && (
-        <MenuItemImageLoading>
-          <ClipLoader size={30} loading={true} color={bgColors.primary} />
-        </MenuItemImageLoading>
+        <MenuItemBackgroundImageContainer>
+          <MenuItemImageLoading>
+            <ClipLoader size={30} loading={true} color={bgColors.primary} />
+          </MenuItemImageLoading>
+        </MenuItemBackgroundImageContainer>
       )}
       {hasLoaded && (
-        <MenuItemBackgroundImage style={bgStyle}>
-          &nbsp;
-        </MenuItemBackgroundImage>
+        <MenuItemBackgroundImageContainer>
+          <MenuItemBackgroundImage style={bgStyle}>
+            &nbsp;
+          </MenuItemBackgroundImage>
+        </MenuItemBackgroundImageContainer>
       )}
     </MenuItemImageView>
   )
@@ -66,7 +85,7 @@ const MenuItemImage = ({ imageUrl }) => {
 MenuItemImage.displayName = 'MenuItemImage'
 MenuItemImage.propTypes = {
   imageUrl: propTypes.string,
-  spinner: propTypes.oneOfType([propTypes.node, propTypes.element]),
+  hasBack: propTypes.bool,
 }
 
 export default MenuItemImage
