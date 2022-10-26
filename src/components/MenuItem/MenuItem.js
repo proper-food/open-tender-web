@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import {
@@ -48,9 +48,9 @@ const MenuItemContent = styled.div`
 
 const MenuItem = ({ cancel, showImage = true }) => {
   const dispatch = useDispatch()
-  const viewRef = useRef(null)
-  const scrollRef = useRef(null)
   const hasCustomize = false
+  const [scrollContainer, setScrollContainer] = useState(null)
+  const [topOffset, setTopOffset] = useState(null)
   const [showUpsell, setShowUpsell] = useState(false)
   const [isCustomize, setIsCustomize] = useState(false)
   const soldOut = useSelector(selectSoldOut)
@@ -84,10 +84,6 @@ const MenuItem = ({ cancel, showImage = true }) => {
     decrementOption,
     setOptionQuantity,
   } = useBuilder(item || {})
-  const scrollContainer = scrollRef.current
-  const topOffset = viewRef.current
-    ? viewRef.current.getBoundingClientRect().top
-    : null
   const { builderImages } = displaySettings
   const displayImage = showImage && !isCustomize && builderImages ? true : false
 
@@ -99,12 +95,24 @@ const MenuItem = ({ cancel, showImage = true }) => {
     hasUpsell ? setShowUpsell(true) : cancel()
   }
 
+  const onViewRef = useCallback((node) => {
+    if (node !== null) {
+      setTopOffset(node.getBoundingClientRect().top)
+    }
+  }, [])
+
+  const onScrollRef = useCallback((node) => {
+    if (node !== null) {
+      setScrollContainer(node)
+    }
+  }, [])
+
   if (!item) return null
 
   return (
     <>
-      <MenuItemView ref={viewRef}>
-        <MenuItemContent id="menu-item-content" ref={scrollRef}>
+      <MenuItemView ref={onViewRef}>
+        <MenuItemContent id="menu-item-content" ref={onScrollRef}>
           {displayImage && <MenuItemImage imageUrl={builtItem.imageUrl} />}
           <MenuItemHeader
             cancel={cancel}

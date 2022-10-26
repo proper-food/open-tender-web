@@ -22,9 +22,8 @@ import { ErrorFatal } from './components/pages'
 
 export const AppContext = createContext(null)
 
-export const AppView = styled('div')`
+export const AppView = styled.div`
   label: AppView;
-
   height: 100%;
   display: flex;
   justify-content: flex-end;
@@ -55,7 +54,7 @@ class App extends React.Component {
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
-    if (theme) console.log(JSON.stringify(theme.layout, null, 2))
+    // if (theme) console.log(JSON.stringify(theme.layout, null, 2))
     return (
       <>
         <ErrorFatal error={error} loading={loading} />

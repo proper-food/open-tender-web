@@ -13,11 +13,9 @@ const MenuItemImageView = styled.div`
   min-height: 180px;
   max-height: 240px;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  // margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     height: auto;
     padding: 33% 0;
-    // margin: 0 0 1.5rem;
   }
 `
 
