@@ -38,7 +38,6 @@ import MenuDeals from './MenuDeals'
 import MenuFavorites from './MenuFavorites'
 import MenuFeatured from './MenuFeatured'
 import MenuRecents from './MenuRecents'
-import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
 import NotFound from './NotFound'
 import Order from './Order'
@@ -99,7 +98,6 @@ export {
   MenuFavorites,
   MenuFeatured,
   MenuRecents,
-  MenuItem,
   MenuSite,
   NotFound,
   Order,
