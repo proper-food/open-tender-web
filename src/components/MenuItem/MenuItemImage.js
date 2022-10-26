@@ -5,7 +5,6 @@ import { ClipLoader } from 'react-spinners'
 import { useTheme } from '@emotion/react'
 
 const MenuItemImageView = styled.div`
-  // display: none;
   position: relative;
   z-index: 1;
   width: 100%;

@@ -134,12 +134,18 @@ const MenuItemTagsAllergens = styled.div`
 `
 
 const MenuItemTag = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  }
 `
 
 const MenuItemAllergen = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
   color: ${(props) => props.theme.colors.allergens};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  }
 `
 
 const MenuItemDesc = styled(Body)`

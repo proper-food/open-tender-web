@@ -3,18 +3,47 @@ import propTypes from 'prop-types'
 import { animateScroll as scroll } from 'react-scroll'
 import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
+import Count from '../../Count'
+import { useTheme } from '@emotion/react'
+import { Check } from '../../icons'
 
 const MenuItemGroupsNavScrollButtonView = styled.button`
   position: relative;
   height: 4.5rem;
   padding: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  // border-style: solid;
-  // border-color: transparent;
-  // border-top-width: 0.2rem;
-  // border-bottom-width: 0.2rem;
-  // border-bottom-color: ${(props) =>
-    props.active ? props.theme.border.color : 'transparent'};
+  color: ${(props) =>
+    props.belowMin ? props.theme.colors.error : props.theme.colors.primary};
+`
+
+const MenuItemGroupsNavScrollButtonContainer = styled.span`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  span {
+    display: block;
+  }
+
+  span + span {
+    margin-left: 0.5rem;
+  }
+`
+
+const MenuItemGroupsNavScrollButtonCompleted = styled.span`
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.8rem;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.success};
+
+  & > span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const MenuItemGroupsNavScrollButtonActive = styled.span`
@@ -23,13 +52,20 @@ const MenuItemGroupsNavScrollButtonActive = styled.span`
   left: 0;
   right: 0;
   height: 0.2rem;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) =>
+    props.belowMin ? props.theme.colors.error : props.theme.colors.primary};
 `
 
-const MenuItemGroupsNavScrollButton = ({ name, active, offset = 0 }) => {
+const MenuItemGroupsNavScrollButton = ({ item, active, offset = 0 }) => {
+  const { colors } = useTheme()
+  const { name, quantity, min } = item
   const id = slugify(name)
+  const belowMin = quantity < min
+  const remaining = min - quantity
+  const isCompleted = min > 0 && quantity >= min
 
   const onClick = (evt) => {
+    console.log(item)
     evt.preventDefault()
     evt.target.blur()
     const element = document.getElementById(id)
@@ -46,9 +82,33 @@ const MenuItemGroupsNavScrollButton = ({ name, active, offset = 0 }) => {
   }
 
   return (
-    <MenuItemGroupsNavScrollButtonView onClick={onClick} active={active}>
-      {name}
-      {active && <MenuItemGroupsNavScrollButtonActive />}
+    <MenuItemGroupsNavScrollButtonView
+      onClick={onClick}
+      active={active}
+      belowMin={belowMin}
+    >
+      <MenuItemGroupsNavScrollButtonContainer>
+        <span>{name}</span>
+        {belowMin && (
+          <span>
+            <Count
+              count={remaining}
+              size={16}
+              color={colors.light}
+              bgColor={colors.error}
+              fontSize="xxSmall"
+            />
+          </span>
+        )}
+        {isCompleted && (
+          <MenuItemGroupsNavScrollButtonCompleted>
+            <span>
+              <Check size={10} strokeWidth={3} />
+            </span>
+          </MenuItemGroupsNavScrollButtonCompleted>
+        )}
+      </MenuItemGroupsNavScrollButtonContainer>
+      {active && <MenuItemGroupsNavScrollButtonActive belowMin={belowMin} />}
     </MenuItemGroupsNavScrollButtonView>
   )
 }
@@ -170,8 +230,8 @@ const MenuItemGroupsNavScroll = ({ items, scrollContainer, scrollOffset }) => {
   return (
     <MenuItemGroupsNavScrollView ref={navRef}>
       <ul ref={listRef}>
-        {items.map((name, index) => {
-          const sectionId = slugify(name)
+        {items.map((i, index) => {
+          const sectionId = slugify(i.name)
           const activeId = active ? active.id : null
           return (
             <li
@@ -180,7 +240,7 @@ const MenuItemGroupsNavScroll = ({ items, scrollContainer, scrollOffset }) => {
               className="nav-section"
             >
               <MenuItemGroupsNavScrollButton
-                name={name}
+                item={i}
                 offset={buttonOffset}
                 active={activeId === sectionId}
               />

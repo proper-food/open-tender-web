@@ -50,7 +50,6 @@ const MenuItemGroups = ({
 }) => {
   const { groups } = builtItem
   const nonSizeGroups = groups.filter((i) => !i.isSize)
-  const navItems = nonSizeGroups.map(({ name }) => name)
   const { modifiersType } = displaySettings
   const showCards = modifiersType === 'CARDS'
   const scrollOffset = topOffset + headerHeight
@@ -59,7 +58,7 @@ const MenuItemGroups = ({
     <MenuItemGroupsView>
       {scrollContainer && scrollOffset ? (
         <MenuItemGroupsNav
-          items={navItems}
+          items={nonSizeGroups}
           scrollContainer={scrollContainer}
           scrollOffset={scrollOffset}
         />
