@@ -131,15 +131,15 @@ const MenuItemGroupsNavScrollView = styled.div`
     li {
       display: block;
       flex-shrink: 0;
-      padding: 0 3rem 0 ${(props) => props.theme.layout.itemPadding};
+      padding: 0 3rem 0 ${(props) => props.theme.item.desktop.padding};
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        padding: 0 2rem 0 ${(props) => props.theme.layout.itemPaddingMobile};
+        padding: 0 2rem 0 ${(props) => props.theme.item.mobile.padding};
       }
 
       &:last-of-type {
-        padding-right: ${(props) => props.theme.layout.itemPadding};
+        padding-right: ${(props) => props.theme.item.desktop.padding};
         @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-          padding-right: ${(props) => props.theme.layout.itemPaddingMobile};
+          padding-right: ${(props) => props.theme.item.mobile.padding};
         }
       }
     }

@@ -9,11 +9,11 @@ import MenuItemOptionSquare from './MenuItemOptionSquare'
 const MenuItemGroupsView = styled.div``
 
 const MenuItemGroupsList = styled.div`
-  padding: 0 ${(props) => props.theme.layout.itemPadding};
-  margin: 4.5rem 0 ${(props) => props.theme.layout.itemPadding};
+  padding: 0 ${(props) => props.theme.item.desktop.padding};
+  margin: 4.5rem 0 ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
-    margin: 4.5rem 0 ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: 0 ${(props) => props.theme.item.mobile.padding};
+    margin: 4.5rem 0 ${(props) => props.theme.item.mobile.padding};
   }
 `
 

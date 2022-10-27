@@ -5,10 +5,10 @@ import { Body, ButtonLink, Heading } from '@open-tender/components'
 import MenuItemSelectedOption from './MenuItemSelectedOption'
 
 const MenuItemSelectionsView = styled.div`
-  padding: ${(props) => props.theme.layout.itemPadding};
+  padding: ${(props) => props.theme.item.desktop.padding};
   padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: ${(props) => props.theme.item.mobile.padding};
     padding-bottom: 0;
   }
 `

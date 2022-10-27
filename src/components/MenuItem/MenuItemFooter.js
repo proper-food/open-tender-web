@@ -12,15 +12,15 @@ const MenuItemFooterView = styled.div`
   label: MenuItemFooter;
   flex: 0 0 auto;
   position: relative;
-  padding: ${(props) => props.theme.layout.itemPadding};
+  padding: ${(props) => props.theme.item.desktop.padding};
   background-color: ${(props) => props.theme.bgColors.primary};
   box-shadow: 0 -15px 30px ${(props) => props.theme.overlay.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
-    padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: ${(props) => props.theme.item.mobile.padding};
     // padding-bottom: env(
     //   safe-area-inset-bottom,
-    //   ${(props) => props.theme.layout.itemPaddingMobile}
+    //   ${(props) => props.theme.item.mobile.padding}
     // );
   }
 `
@@ -53,9 +53,9 @@ const MenuItemFooterDefaultCircle = styled.div`
   flex: 0 0 5rem;
   width: 5rem;
   height: 5rem;
-  margin-right: ${(props) => props.theme.layout.itemPadding};
+  margin-right: ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-right: ${(props) => props.theme.layout.itemPaddingMobile};
+    margin-right: ${(props) => props.theme.item.mobile.padding};
     flex: 0 0 4rem;
     width: 4rem;
     height: 4rem;

@@ -51,9 +51,9 @@ const MenuItemBack = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 ${(props) => props.theme.layout.itemPadding};
+  padding: 0 ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: 0 ${(props) => props.theme.item.mobile.padding};
   }
 `
 

@@ -28,7 +28,7 @@ const MenuItemScroll = styled.div`
   left: 0;
   right: 0;
   height: 4.5rem;
-  padding: 0 0 0 ${(props) => props.theme.layout.itemPadding};
+  padding: 0 0 0 ${(props) => props.theme.item.desktop.padding};
   transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.primary};
   opacity: ${(props) => (props.stuck ? '1' : '0')};
@@ -37,7 +37,7 @@ const MenuItemScroll = styled.div`
   justify-content: space-between;
   align-items: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 0 ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: 0 0 0 ${(props) => props.theme.item.mobile.padding};
   }
 `
 
@@ -47,7 +47,7 @@ const MenuItemScrollInfo = styled.div`
 
 const MenuItemScrollName = styled(Heading)`
   display: block;
-  margin-left: -0.2rem;
+  margin-left: -0.1rem;
   line-height: 1;
 `
 
@@ -78,10 +78,10 @@ const MenuItemScrollClose = styled.button`
 
 const MenuItemInfo = styled.div`
   transition: ${(props) => props.theme.links.transition};
-  padding: ${(props) => props.theme.layout.itemPadding};
+  padding: ${(props) => props.theme.item.desktop.padding};
   padding-bottom: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: ${(props) => props.theme.item.mobile.padding};
     padding-bottom: 0;
   }
 
@@ -94,9 +94,9 @@ const MenuItemInfo = styled.div`
 `
 
 const MenuItemDetails = styled.div`
-  padding: 0 ${(props) => props.theme.layout.itemPadding};
+  padding: 0 ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: 0 ${(props) => props.theme.item.mobile.padding};
   }
 `
 
@@ -109,6 +109,7 @@ const MenuItemNameContainer = styled.div`
 
 const MenuItemName = styled(Heading)`
   display: block;
+  margin-left: -0.1rem;
   transition: ${(props) => props.theme.links.transition};
 `
 

@@ -15,9 +15,9 @@ import { MenuItemIngredients, MenuItemNutrition, MenuItemPriceCals } from '..'
 import MenuItemQuantity from './MenuItemQuantity'
 
 const MenuItemAccordionView = styled.div`
-  padding: ${(props) => props.theme.layout.itemPadding};
+  padding: ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: ${(props) => props.theme.layout.itemPaddingMobile};
+    padding: ${(props) => props.theme.item.mobile.padding};
   }
 `
 
