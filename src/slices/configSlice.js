@@ -72,6 +72,7 @@ const flaotToRems = (n) => {
 
 const adjustTheme = (theme) => {
   const { inputs } = theme
+  console.log('BEFORE', JSON.stringify(inputs, null, 2))
   const {
     bottomBorderOnly,
     paddingVertical,
@@ -115,7 +116,7 @@ const adjustTheme = (theme) => {
   }
   const borderLeft = bottomBorderOnly ? 0.0 : remsToFloat(borderWidth)
   const iconLeft = flaotToRems(borderLeft + 1.0)
-  const paddingIcon = '3.8rem'
+  const iconPadding = '3.8rem'
   const label = { fontSize: '1.2rem', fontSizeMobile: '1.0rem', offset }
   const newInputs = {
     ...inputs,
@@ -130,9 +131,10 @@ const adjustTheme = (theme) => {
     selectSize,
     selectSizeMobile,
     selectPaddingBottom,
-    paddingIcon,
     iconLeft,
+    iconPadding,
   }
+  console.log('AFTER', JSON.stringify(newInputs, null, 2))
   return { ...theme, inputs: newInputs }
 }
 
@@ -154,7 +156,8 @@ const configSlice = createSlice({
       state.app = app
       state.brand = brand
       state.content = content
-      state.theme = adjustTheme(theme)
+      // state.theme = adjustTheme(theme)
+      state.theme = theme
       state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)
