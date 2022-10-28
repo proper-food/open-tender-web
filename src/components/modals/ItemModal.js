@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectCurrentItem, setCurrentItem } from '@open-tender/redux'
 import { closeModal } from '../../slices'
-import { MenuItem as MenuItemComponent } from '..'
+import { MenuItem } from '..'
 import { XCircle } from '../icons'
 import { useTheme } from '@emotion/react'
 import { isMobile } from 'react-device-detect'
 
-const MenuItemModalView = styled.div`
+const ItemModalView = styled.div`
   position: relative;
   width: 90%;
   max-width: 64rem;
@@ -24,7 +24,7 @@ const MenuItemModalView = styled.div`
   }
 `
 
-const MenuItemModalClose = styled.button`
+const ItemModalClose = styled.button`
   position: absolute;
   z-index: 2;
   top: 0;
@@ -59,7 +59,7 @@ const MenuItemModalClose = styled.button`
   }
 `
 
-const MenuItemModalContent = styled.div`
+const ItemModalContent = styled.div`
   padding: 0;
   height: 100%;
   overflow: hidden;
@@ -68,7 +68,7 @@ const MenuItemModalContent = styled.div`
   }
 `
 
-const MenuItem = () => {
+const ItemModal = () => {
   const theme = useTheme()
   const styles = isMobile ? theme.item.mobile : theme.item.desktop
   const hasPadding = styles.imagePadding !== '0'
@@ -86,17 +86,17 @@ const MenuItem = () => {
   if (!item) return null
 
   return (
-    <MenuItemModalView>
-      <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        <MenuItemModalClose onClick={cancel}>
+    <ItemModalView>
+      <ItemModalContent role="dialog" aria-labelledby="dialogTitle">
+        <ItemModalClose onClick={cancel}>
           <XCircle size={24} fill={fill} />
-        </MenuItemModalClose>
-        <MenuItemComponent cancel={cancel} />
-      </MenuItemModalContent>
-    </MenuItemModalView>
+        </ItemModalClose>
+        <MenuItem cancel={cancel} />
+      </ItemModalContent>
+    </ItemModalView>
   )
 }
 
-MenuItem.displayName = 'MenuItem'
+ItemModal.displayName = 'ItemModal'
 
-export default MenuItem
+export default ItemModal

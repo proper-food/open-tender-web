@@ -1,3 +1,3 @@
 import ItemSidebar from './ItemSidebar'
 
-export { ItemSidebar }
+export default ItemSidebar
