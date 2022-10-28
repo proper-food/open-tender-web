@@ -11,9 +11,12 @@ const ItemSidebarView = styled.aside`
   top: 0;
   bottom: 0;
   right: 0;
-  width: 64rem;
+  width: ${(props) => props.theme.item.desktop.maxWidth};
   max-width: 100%;
   background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: ${(props) => props.theme.item.mobile.maxWidth};
+  }
 
   > div {
     position: relative;

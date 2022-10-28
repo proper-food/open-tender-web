@@ -8,14 +8,14 @@ import { MenuItem } from '..'
 const ItemModalView = styled.div`
   position: relative;
   width: 90%;
-  max-width: 64rem;
+  max-width: ${(props) => props.theme.item.desktop.maxWidth};
   height: 90%;
   overflow: hidden;
   background-color: ${(props) => props.theme.bgColors.primary};
   border-radius: ${(props) => props.theme.border.radius};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    max-width: 100%;
+    max-width: ${(props) => props.theme.item.mobile.maxWidth};
     height: 100%;
     border-radius: 0;
   }
@@ -25,9 +25,6 @@ const ItemModalContent = styled.div`
   padding: 0;
   height: 100%;
   overflow: hidden;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0;
-  }
 `
 
 const ItemModal = () => {

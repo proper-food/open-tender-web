@@ -15,14 +15,14 @@ import {
 import { useBuilder } from '@open-tender/hooks'
 import { selectContentSection, selectDisplaySettings } from '../../slices'
 import { Star } from '../icons'
-import MenuItemHeader from './MenuItemHeader'
+import { Back, NavMenu } from '../buttons'
 import MenuItemAccordion from './MenuItemAccordion'
+import MenuItemClose from './MenuItemClose'
 import MenuItemFooter from './MenuItemFooter'
 import MenuItemGroups from './MenuItemGroups'
-import MenuItemUpsell from './MenuItemUpsell'
+import MenuItemHeader from './MenuItemHeader'
 import MenuItemImage from './MenuItemImage'
-import { Back, NavMenu } from '../buttons'
-import MenuItemClose from './MenuItemClose'
+import MenuItemUpsell from './MenuItemUpsell'
 
 const MenuItemView = styled.div`
   label: MenuItemView;
@@ -65,7 +65,6 @@ const MenuItem = ({
   showImage = true,
 }) => {
   const dispatch = useDispatch()
-  const hasCustomize = false
   const [scrollContainer, setScrollContainer] = useState(null)
   const [topOffset, setTopOffset] = useState(null)
   const [showUpsell, setShowUpsell] = useState(false)
@@ -101,7 +100,7 @@ const MenuItem = ({
     decrementOption,
     setOptionQuantity,
   } = useBuilder(item || {})
-  const { builderImages } = displaySettings
+  const { builderImages, hasCustomize } = displaySettings
   const displayImage = showImage && !isCustomize && builderImages ? true : false
 
   const addItem = (builtItem) => {
