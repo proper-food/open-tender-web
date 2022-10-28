@@ -93,6 +93,7 @@ const Item = () => {
               <MenuItem
                 cancel={cancel}
                 showBack={isMobile}
+                showClose={false}
                 showImage={isMobile}
               />
             </ItemPageContent>

@@ -1,35 +1,29 @@
-import { useMemo } from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { ButtonStyled } from '@open-tender/components'
-import { closeModal } from '../../slices'
 import { X } from '../icons'
 
-const MenuItemCloseX = styled('button')`
-  position: fixed;
+const MenuItemCloseButton = styled.div`
+  position: absolute;
   z-index: 2;
-  top: 1.5rem;
-  right: 1.5rem;
-  display: inline;
-  font-size: inherit;
-
-  &:disabled {
-    opacity: 0.5;
+  margin: 1rem;
+  top: ${(props) => props.theme.item.desktop.imagePadding};
+  right: ${(props) => props.theme.item.desktop.imagePadding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: ${(props) => props.theme.item.mobile.imagePadding};
+    right: ${(props) => props.theme.item.mobile.imagePadding};
   }
-`
-
-const MenuItemCloseButton = styled('div')`
-  position: fixed;
-  z-index: 2;
-  top: 1.5rem;
-  right: 1.5rem;
 
   button {
     padding: 0.7rem 1.2rem 0.7rem 1rem;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.4);
     color: ${(props) => props.theme.colors.primary};
     background-color: ${(props) => props.theme.bgColors.primary};
-    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.4);
+
+    &:hover {
+      color: ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.bgColors.tertiary};
+    }
 
     > span > span {
       margin-right: 0.4rem;
@@ -37,35 +31,19 @@ const MenuItemCloseButton = styled('div')`
   }
 `
 
-const MenuItemClose = ({ onClick, isButton = false }) => {
-  const dispatch = useDispatch()
-  const handleClose = useMemo(
-    () => onClick || (() => dispatch(closeModal())),
-    [onClick, dispatch]
-  )
-
-  return isButton ? (
+const MenuItemClose = ({ onClick }) => {
+  return (
     <MenuItemCloseButton>
-      <ButtonStyled
-        icon={<X />}
-        onClick={handleClose}
-        size="small"
-        color="header"
-      >
+      <ButtonStyled icon={<X />} onClick={onClick} size="small" color="header">
         Close
       </ButtonStyled>
     </MenuItemCloseButton>
-  ) : (
-    <MenuItemCloseX onClick={handleClose} aria-label="Close dialog">
-      <X size={20} />
-    </MenuItemCloseX>
   )
 }
 
 MenuItemClose.displayName = 'MenuItemClose'
 MenuItemClose.propTypes = {
   onClick: propTypes.func,
-  isButton: propTypes.bool,
 }
 
 export default MenuItemClose

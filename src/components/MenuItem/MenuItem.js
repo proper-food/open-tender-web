@@ -22,6 +22,7 @@ import MenuItemGroups from './MenuItemGroups'
 import MenuItemUpsell from './MenuItemUpsell'
 import MenuItemImage from './MenuItemImage'
 import { Back, NavMenu } from '../buttons'
+import MenuItemClose from './MenuItemClose'
 
 const MenuItemView = styled.div`
   label: MenuItemView;
@@ -57,7 +58,12 @@ const MenuItemBack = styled.div`
   }
 `
 
-const MenuItem = ({ cancel, showBack = false, showImage = true }) => {
+const MenuItem = ({
+  cancel,
+  showBack = false,
+  showClose = true,
+  showImage = true,
+}) => {
   const dispatch = useDispatch()
   const hasCustomize = false
   const [scrollContainer, setScrollContainer] = useState(null)
@@ -123,6 +129,7 @@ const MenuItem = ({ cancel, showBack = false, showImage = true }) => {
   return (
     <>
       <MenuItemView ref={onViewRef}>
+        {showClose && <MenuItemClose onClick={cancel} />}
         <MenuItemContent id="menu-item-content" ref={onScrollRef}>
           {showBack && (
             <MenuItemBack>

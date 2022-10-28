@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { selectCurrentItem, setCurrentItem } from '@open-tender/redux'
 import { toggleSidebarModal } from '../../../slices'
-import { SidebarModalClose } from '../../SidebarModal'
 import { MenuItem } from '../..'
 
 const ItemSidebarView = styled.aside`
@@ -48,11 +46,6 @@ const ItemSidebar = React.forwardRef((props, ref) => {
   return (
     <ItemSidebarView ref={ref}>
       <div>
-        <SidebarModalClose
-          label="Cancel"
-          onClick={cancel}
-          isButton={isMobile}
-        />
         <MenuItem cancel={cancel} />
       </div>
     </ItemSidebarView>
