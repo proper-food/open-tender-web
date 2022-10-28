@@ -54,90 +54,6 @@ export const fetchConfig =
         }
       })
 
-const remsToInt = (rems) => {
-  return parseInt(parseFloat(rems.replace('rem', '')) * 10, 10)
-}
-
-const remsToFloat = (rems) => {
-  return parseFloat(rems.replace('rem', ''))
-}
-
-const intToRems = (int) => {
-  return `${(int / 10).toFixed(2)}rem`
-}
-
-const flaotToRems = (n) => {
-  return `${n.toFixed(3)}rem`
-}
-
-const adjustTheme = (theme) => {
-  const { inputs } = theme
-  console.log('BEFORE', JSON.stringify(inputs, null, 2))
-  const {
-    bottomBorderOnly,
-    paddingVertical,
-    fontSize,
-    fontSizeMobile,
-    lineHeight,
-    borderWidth,
-  } = inputs
-  const fontSizeFloat = remsToFloat(fontSize)
-  const fontSizeMobileFloat = remsToFloat(fontSizeMobile)
-  const selectSizeFloat = fontSizeFloat * parseFloat(lineHeight)
-  const selectSizeMobileFloat = fontSizeMobileFloat * parseFloat(lineHeight)
-  const selectSize = flaotToRems(selectSizeFloat)
-  const selectSizeMobile = flaotToRems(selectSizeMobileFloat)
-  const showLabel = true
-  const paddingVerticalInt = remsToInt(paddingVertical)
-  const paddingVerticalFloat = remsToFloat(paddingVertical)
-  const borderWidthFloat = remsToFloat(borderWidth)
-  let selectPaddingBottom = flaotToRems(paddingVerticalFloat + borderWidthFloat)
-  let paddingTop = paddingVertical
-  let paddingBottom = paddingVertical
-  let paddingTopActive = paddingVertical
-  let paddingBottomActive = paddingVertical
-  let offset = '0'
-  if (bottomBorderOnly) {
-    const bottom = paddingVerticalInt / 2
-    const top = paddingVerticalInt + bottom
-    offset = intToRems(-top)
-    paddingTop = intToRems(top)
-    paddingBottom = intToRems(bottom)
-    paddingTopActive = intToRems(top)
-    paddingBottomActive = intToRems(bottom)
-    const paddingBottomFloat = remsToFloat(paddingBottom)
-    selectPaddingBottom = flaotToRems(paddingBottomFloat + borderWidthFloat)
-  } else if (showLabel) {
-    const bottom = paddingVerticalInt / 3
-    const top = paddingVerticalInt + paddingVerticalInt * (2 / 3)
-    offset = intToRems(bottom - paddingVerticalInt)
-    paddingTopActive = intToRems(top)
-    paddingBottomActive = intToRems(bottom)
-  }
-  const borderLeft = bottomBorderOnly ? 0.0 : remsToFloat(borderWidth)
-  const iconLeft = flaotToRems(borderLeft + 1.0)
-  const iconPadding = '3.8rem'
-  const label = { fontSize: '1.2rem', fontSizeMobile: '1.0rem', offset }
-  const newInputs = {
-    ...inputs,
-    label,
-    showLabel,
-    showOutline: false,
-    paddingTop,
-    paddingBottom,
-    paddingTopActive,
-    paddingBottomActive,
-    borderStyle: 'solid',
-    selectSize,
-    selectSizeMobile,
-    selectPaddingBottom,
-    iconLeft,
-    iconPadding,
-  }
-  console.log('AFTER', JSON.stringify(newInputs, null, 2))
-  return { ...theme, inputs: newInputs }
-}
-
 const configSlice = createSlice({
   name: 'config',
   initialState: initialState,
@@ -156,7 +72,6 @@ const configSlice = createSlice({
       state.app = app
       state.brand = brand
       state.content = content
-      // state.theme = adjustTheme(theme)
       state.theme = theme
       state.settings = settings
       state.loading = 'idle'
