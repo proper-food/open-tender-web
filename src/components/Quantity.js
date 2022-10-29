@@ -43,7 +43,6 @@ const QuantityAdd = styled.button`
 const QuantityRemove = styled(QuantityAdd)`
   border-color: ${(props) => props.theme.colors.error};
   color: ${(props) => props.theme.colors.error};
-  // background-color: ${(props) => props.theme.bgColors.error};
 `
 
 const QuantityInput = styled.input`

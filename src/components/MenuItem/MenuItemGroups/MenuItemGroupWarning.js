@@ -13,11 +13,11 @@ const MenuItemGroupWarningView = styled.div`
   border-width: 0.1rem;
   border-style: solid;
   color: ${(props) =>
-    props.belowMin ? props.theme.colors.alert : props.theme.colors.secondary};
+    props.belowMin ? props.theme.alert.color : props.theme.colors.secondary};
   border-color: ${(props) =>
-    props.belowMin ? props.theme.colors.alert : props.theme.border.color};
+    props.belowMin ? props.theme.alert.color : props.theme.border.color};
   background-color: ${(props) =>
-    props.belowMin ? props.theme.bgColors.alert : props.theme.bgColors.primary};
+    props.belowMin ? props.theme.alert.bgColor : props.theme.bgColors.primary};
   border-radius: ${(props) => props.theme.border.radiusSmall};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

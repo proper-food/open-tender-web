@@ -147,11 +147,10 @@ const MenuItemAccordionOptionButton = styled.button`
   margin: 0.6rem 0 0;
   border-style: solid;
   border-width: ${(props) => props.theme.border.width};
-  // border-color: ${(props) => props.theme.border.color};
-  border-color: ${(props) => props.theme.bgColors.success};
+  border-color: ${(props) => props.theme.bgColors.highlight};
   color: ${(props) => props.theme.colors.primary};
   background-color: ${(props) =>
-    props.checked ? props.theme.bgColors.success : 'transparent'};
+    props.checked ? props.theme.bgColors.highlight : 'transparent'};
 
   &:first-of-type {
     margin: 0;
@@ -164,8 +163,8 @@ const MenuItemAccordionOptionButton = styled.button`
 
   &:hover,
   &:active {
-    border-color: ${(props) => props.theme.bgColors.success};
-    background-color: ${(props) => props.theme.bgColors.success};
+    border-color: ${(props) => props.theme.bgColors.highlight};
+    background-color: ${(props) => props.theme.bgColors.highlight};
 
     span {
       color: ${(props) => props.theme.colors.primary};
