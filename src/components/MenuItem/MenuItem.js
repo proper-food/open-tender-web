@@ -102,6 +102,8 @@ const MenuItem = ({
   } = useBuilder(item || {})
   const { builderImages, hasCustomize } = displaySettings
   const displayImage = showImage && !isCustomize && builderImages ? true : false
+  const hasGroups = builtItem.groups.filter((g) => !g.isSize).length > 0
+  const showGroups = hasGroups && (!hasCustomize || isCustomize)
 
   const addItem = (builtItem) => {
     const cartItem = { ...builtItem }
@@ -165,7 +167,7 @@ const MenuItem = ({
               cartId={cartId}
             />
           ) : null}
-          {!hasCustomize || isCustomize ? (
+          {showGroups ? (
             <MenuItemGroups
               builtItem={builtItem}
               allergenAlerts={allergenAlerts}

@@ -6,7 +6,9 @@ import MenuItemGroupsNav from './MenuItemGroupsNav'
 import MenuItemOption from './MenuItemOption'
 import MenuItemOptionSquare from './MenuItemOptionSquare'
 
-const MenuItemGroupsView = styled.div``
+const MenuItemGroupsView = styled.div`
+  label: MenuItemGroups;
+`
 
 const MenuItemGroupsList = styled.div`
   padding: 0 ${(props) => props.theme.item.desktop.padding};
