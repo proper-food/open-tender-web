@@ -23,12 +23,12 @@ import {
   GroupOrder,
   GroupOrderLeave,
   GroupOrderType,
+  ItemModal,
   LevelUp,
   Login,
   LoginThanx,
   LoyaltyTier,
   MapsAutocomplete,
-  MenuItem,
   OrderRating,
   OrderType,
   Points,
@@ -80,7 +80,7 @@ const makeModal = (type, windowRef, args = {}) => {
     case 'loyaltyTier':
       return <LoyaltyTier {...args} />
     case 'item':
-      return <MenuItem {...args} />
+      return <ItemModal {...args} />
     case 'mapsAutocomplete':
       return <MapsAutocomplete {...args} />
     case 'orderType':
@@ -132,6 +132,10 @@ const ModalContainer = styled('div')`
   align-items: center;
   justify-content: center;
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Modal = () => {

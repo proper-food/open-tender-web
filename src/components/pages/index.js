@@ -29,7 +29,11 @@ import GroupOrders from './GroupOrders'
 import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
+<<<<<<< HEAD
 import Landing from './Landing'
+=======
+import Item from './Item'
+>>>>>>> upstream/main
 import LevelUp from './LevelUp'
 import Locations from './Locations'
 import Loyalty from './Loyalty'
@@ -38,7 +42,6 @@ import MenuDeals from './MenuDeals'
 import MenuFavorites from './MenuFavorites'
 import MenuFeatured from './MenuFeatured'
 import MenuRecents from './MenuRecents'
-import MenuItem from './MenuItem'
 import MenuSite from './MenuSite'
 import NotFound from './NotFound'
 import Order from './Order'
@@ -90,7 +93,11 @@ export {
   Guest,
   Home,
   HouseAccounts,
+<<<<<<< HEAD
   Landing,
+=======
+  Item,
+>>>>>>> upstream/main
   LevelUp,
   Locations,
   Loyalty,
@@ -99,7 +106,6 @@ export {
   MenuFavorites,
   MenuFeatured,
   MenuRecents,
-  MenuItem,
   MenuSite,
   NotFound,
   Order,
