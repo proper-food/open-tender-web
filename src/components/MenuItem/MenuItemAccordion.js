@@ -310,6 +310,10 @@ const MenuItemAccordion = ({
   const selectedSize = sizeGroup
     ? sizeGroup.options.find((i) => i.quantity >= 1)
     : null
+  const showAccordion =
+    sizeGroup || hasCustomize || hasInstructions || hasIngredients || hasCals
+
+  if (!showAccordion) return null
 
   const toggleSize = (optionId) => {
     toggleOption(sizeGroup.id, optionId)
