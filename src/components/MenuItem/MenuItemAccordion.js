@@ -14,6 +14,13 @@ import { ChevronDown, ChevronUp } from '../icons'
 import { MenuItemIngredients, MenuItemNutrition, MenuItemPriceCals } from '..'
 import MenuItemQuantity from './MenuItemQuantity'
 
+const MenuItemAccordionPlaceholder = styled.div`
+  padding-top: ${(props) => props.theme.item.desktop.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding-top: ${(props) => props.theme.item.mobile.padding};
+  }
+`
+
 const MenuItemAccordionView = styled.div`
   padding: ${(props) => props.theme.item.desktop.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -313,7 +320,7 @@ const MenuItemAccordion = ({
   const showAccordion =
     sizeGroup || hasCustomize || hasInstructions || hasIngredients || hasCals
 
-  if (!showAccordion) return null
+  if (!showAccordion) return <MenuItemAccordionPlaceholder />
 
   const toggleSize = (optionId) => {
     toggleOption(sizeGroup.id, optionId)
