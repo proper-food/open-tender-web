@@ -78,7 +78,7 @@ const CategoryNavScrollView = styled.div`
   ul {
     position: relative;
     display: inline-flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     height: ${(props) => props.theme.layout.navHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
