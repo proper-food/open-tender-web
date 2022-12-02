@@ -107,7 +107,7 @@ const MenuItemPriceCals = styled.div`
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.1rem 0 0;
+      margin: 0.3rem 0 0;
       text-align: left;
     }
   }
