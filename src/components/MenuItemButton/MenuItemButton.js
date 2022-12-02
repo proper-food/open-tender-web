@@ -101,6 +101,9 @@ const MenuItemPriceCals = styled.div`
   flex-grow: 0;
   flex-shrink: 0;
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -117,6 +120,18 @@ const MenuItemPriceCals = styled.div`
       margin: 0.1rem 0 0;
     }
   }
+`
+
+const MenuItemPriceSep = styled.span`
+  display: block;
+  width: 8px;
+  height: 1px;
+  margin: 0 3px;
+  background-color: ${(props) => props.theme.fonts.body.color};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `background-color: ${props.theme.cards.menuItem.textColor};`
+      : ''};
 `
 
 const MenuItemPrice = styled(Heading)`
@@ -146,7 +161,7 @@ const MenuItemPrice = styled(Heading)`
   }
 `
 
-const MenuItemCals = styled(Body)`
+const MenuItemCals = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
   ${(props) =>
     props.theme.cards.menuItem.overrideFontColors
@@ -260,7 +275,9 @@ const MenuItemButton = ({
             {price && price !== '$0.00' ? (
               <MenuItemPriceCals>
                 {price ? <MenuItemPrice>{price}</MenuItemPrice> : null}
-                {cals ? <MenuItemCals> &mdash; {cals} Cal</MenuItemCals> : null}
+                {/* {price && cals ? <span> &mdash; </span> : null} */}
+                {price && cals ? <MenuItemPriceSep /> : null}
+                {cals ? <MenuItemCals>{cals} Cal</MenuItemCals> : null}
               </MenuItemPriceCals>
             ) : null}
           </MenuItemInfo>
