@@ -88,7 +88,7 @@ const MenuItem = ({
   const { orderType } = useSelector(selectOrder)
   const pointsProgram = useSelector(selectCustomerPointsProgram(orderType))
   const hasPoints = !!pointsProgram
-  const pointsIcon = hasPoints ? <Star /> : null
+  const pointsIcon = hasPoints ? <Star strokeWidth={2} /> : null
   const {
     item: builtItem,
     increment,

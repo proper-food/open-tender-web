@@ -1597,24 +1597,24 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@open-tender/components@^5.1.3":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-5.1.3.tgz#915a09560da2140b99df628a50df5ba46b68c7d5"
-  integrity sha512-4AKln/SuwAZi+D/QXBWFqvaPDmjp3SzZoZVIZ5EvNYcVv4V6qqXA8kZSc/N7fUe0164Sz4zAWw6GEBORWwcs9Q==
+"@open-tender/components@^5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-5.1.4.tgz#088400162bf9d4f946f12e2c9b5f5cdaa2301ded"
+  integrity sha512-LLRDl5mpma6isqV7Wot6XUvt7ZCpg/cY5Ykuo0C5CcdQcWJ3L/iKdHtgsuipbOGehtdBncVJ1s4bjHkPfOSpLg==
   dependencies:
     "@google-pay/button-react" "^3.0.0"
     "@googlemaps/js-api-loader" "^1.14.3"
     react-google-recaptcha "^2.1.0"
 
-"@open-tender/hooks@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/hooks/-/hooks-1.0.1.tgz#568a541ff96340f3f3d7b0b70fc0493ee67e6b45"
-  integrity sha512-7jN4D/9I1jHlOPy4HAJFw6jvhOToke01iW+E77vTtnwzGqxAiJISk/gGtoX+3HBplUFsfNrV4XvDHcw+wtQ7lw==
+"@open-tender/hooks@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/hooks/-/hooks-1.0.2.tgz#ffafd0e2a06f764573870d75b57809195695bc39"
+  integrity sha512-nHsX/vY1q1MHFoIOr3bGJcLWDPH1SqixczI9kkVCkk4YRXJY4zQHacWf7oI/s37YEsQbIkS2Gr7orRbopFwQ4w==
 
-"@open-tender/js@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.2.4.tgz#2bab58e56d8b9c1d0f83ed07b189698e033a235f"
-  integrity sha512-AIaRNMVzZua6Tvy+hAHeO1mUExG/wjbmEaNga4PKq1DNFYsMZacc1HNdMXbeCEK+vE5lA61jAK4m+faUs4TwCg==
+"@open-tender/js@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-2.2.6.tgz#542b3cdaaa54c78ea31d69373cb9f0f4461acc59"
+  integrity sha512-KZW/huF/678z3KouTI2AB/qfADR6BwlwrMUmtc9dyUoy8hpDAhCowPgbbSDJ76nT7pSopp/RpQVXgcew9RKKaw==
   dependencies:
     date-fns "^2.29.1"
     date-fns-tz "^1.3.6"
@@ -3568,9 +3568,9 @@ date-fns-tz@^1.3.6:
   integrity sha512-1t1b8zyJo+UI8aR+g3iqr5fkUHWpd58VBx8J/ZSQ+w7YrGlw80Ag4sA86qkfCXRBLmMc4I2US+aPMd4uKvwj5g==
 
 date-fns@^2.29.1:
-  version "2.29.2"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.2.tgz#0d4b3d0f3dff0f920820a070920f0d9662c51931"
-  integrity sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 debug@2.6.9, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"

@@ -8,7 +8,8 @@ import {
   setCurrentCategory,
   setCurrentVendor,
 } from '@open-tender/redux'
-import { CardMenuItem, BgImage, Body, Heading } from '@open-tender/components'
+import { BgImage, Body, Heading } from '@open-tender/components'
+import { CardMenuItem } from '../..'
 
 const MenuBrowseSquareView = styled(CardMenuItem)`
   position: relative;

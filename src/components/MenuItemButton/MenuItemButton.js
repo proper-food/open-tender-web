@@ -42,7 +42,7 @@ const MenuItemContent = styled.div`
 const MenuItemInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -67,8 +67,19 @@ const MenuItemInfo = styled.div`
 const MenuItemName = styled(Heading)`
   display: block;
   flex: 1 1 auto;
-  padding: 0 0.5rem 0 0;
+  padding: 0 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.big};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `color: ${props.theme.cards.menuItem.titleColor};  font-size: ${props.theme.cards.menuItem.titleSize};`
+      : ''};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    ${(props) =>
+      props.theme.cards.menuItem.overrideFontColors
+        ? `font-size: ${props.theme.cards.menuItem.titleSizeMobile};`
+        : ''};
+  }
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -109,7 +120,18 @@ const MenuItemPriceCals = styled.div`
 `
 
 const MenuItemPrice = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `color: ${props.theme.cards.menuItem.priceColor}; font-size: ${props.theme.cards.menuItem.priceSize};`
+      : ''};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    ${(props) =>
+      props.theme.cards.menuItem.overrideFontColors
+        ? `font-size: ${props.theme.cards.menuItem.priceSizeMobile};`
+        : ''};
+  }
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -126,6 +148,17 @@ const MenuItemPrice = styled(Heading)`
 
 const MenuItemCals = styled(Body)`
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `color: ${props.theme.cards.menuItem.caloriesColor}; font-size: ${props.theme.cards.menuItem.priceSize};`
+      : ''};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    ${(props) =>
+      props.theme.cards.menuItem.overrideFontColors
+        ? `font-size: ${props.theme.cards.menuItem.priceSizeMobile};`
+        : ''};
+  }
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -168,6 +201,10 @@ const MenuItemTagsAllergens = styled.div`
 
 const MenuItemTag = styled(Preface)`
   font-size: ${(props) => props.theme.fonts.sizes.xxSmall};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `color: ${props.theme.cards.menuItem.textColor};`
+      : ''};
 `
 
 const MenuItemAllergen = styled(Preface)`
@@ -179,6 +216,10 @@ const MenuItemDescription = styled(Body)`
   display: block;
   margin: 0.8rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  ${(props) =>
+    props.theme.cards.menuItem.overrideFontColors
+      ? `color: ${props.theme.cards.menuItem.textColor};`
+      : ''};
 
   .compact & {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
