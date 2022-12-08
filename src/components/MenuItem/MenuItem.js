@@ -74,6 +74,7 @@ const MenuItem = ({
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const displaySettings = useSelector(selectDisplaySettings)
   const item = useSelector(selectCurrentItem)
+  // console.log('item', item)
   const upsells = useSelector(selectContentSection('upsells')) || {}
   const cartIds = useSelector(selectCartIds)
   const upsellItems = item ? item.upsell_items || item.upsellItems : null
