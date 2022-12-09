@@ -1,10 +1,8 @@
-import { useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import MenuItemPizzaWhole from './MenuItemPizzaWhole'
 import MenuItemPizzaLeft from './MenuItemPizzaLeft'
 import MenuItemPizzaRight from './MenuItemPizzaRight'
-// import { Minus, Plus, X } from './icons'
+import MenuItemPizzaWhole from './MenuItemPizzaWhole'
 
 const MenuItemPizzaView = styled.div`
   display: flex;
@@ -26,46 +24,63 @@ const makeNestedLookup = (options) => {
   }, {})
 }
 
-const MenuItemPizza = ({ option, adjust }) => {
-  const [toggle, setToggle] = useState(null)
-  const pizzaGroup = option.groups.find((g) => g.isPizza)
+const toggleOption = (groups, groupId, optionId) => {
+  return groups.map((group) => {
+    if (group.id === groupId) {
+      const options = group.options.map((option) => {
+        const newQuantity = option.id === optionId ? 1 : 0
+        return { ...option, quantity: newQuantity }
+      })
+      return { ...group, options }
+    }
+    return group
+  })
+}
+
+const removeOption = (groups, groupId) => {
+  return groups.map((group) => {
+    if (group.id === groupId) {
+      const options = group.options.map((option) => {
+        return { ...option, quantity: 0 }
+      })
+      return { ...group, options }
+    }
+    return group
+  })
+}
+
+const MenuItemPizza = ({ groups, adjust }) => {
+  const pizzaGroup = groups.find((g) => g.isPizza)
   if (!pizzaGroup) return null
   const groupId = pizzaGroup.id
   const nestedLookup = makeNestedLookup(pizzaGroup.options)
-  console.log(pizzaGroup.options.map((i) => `${i.name} x ${i.quantity}`))
+  const selected = pizzaGroup.options.find((i) => i.quantity === 1)
+  const selectedId = selected ? selected.id : null
+  // console.log(pizzaGroup.options.map((i) => `${i.name} x ${i.quantity}`))
 
-  const toggleOption = (arg) => {
-    const optionId = nestedLookup[arg]
-    if (arg === toggle) {
-      const nested = { groupId, optionId, quantity: 0 }
-      adjust(0, nested)
-      setToggle(null)
+  const handleOption = (optionId) => {
+    if (selectedId === optionId) {
+      const adjustedGroups = removeOption(groups, groupId)
+      adjust(0, adjustedGroups)
     } else {
-      // TODO: need to set other quantities to 0
-      if (toggle) {
-        const optionIdReset = nestedLookup[toggle]
-        const nestedReset = { groupId, optionId: optionIdReset, quantity: 0 }
-        adjust(0, nestedReset)
-      }
-      const nested = { groupId, optionId, quantity: 1 }
-      adjust(1, nested)
-      setToggle(arg)
+      const adjustedGroups = toggleOption(groups, groupId, optionId)
+      adjust(1, adjustedGroups)
     }
   }
 
   return (
     <MenuItemPizzaView>
       <MenuItemPizzaLeft
-        onClick={() => toggleOption('LEFT')}
-        isSelected={toggle === 'LEFT'}
+        onClick={() => handleOption(nestedLookup.LEFT)}
+        isSelected={selectedId === nestedLookup.LEFT}
       />
       <MenuItemPizzaWhole
-        onClick={() => toggleOption('WHOLE')}
-        isSelected={toggle === 'WHOLE'}
+        onClick={() => handleOption(nestedLookup.WHOLE)}
+        isSelected={selectedId === nestedLookup.WHOLE}
       />
       <MenuItemPizzaRight
-        onClick={() => toggleOption('RIGHT')}
-        isSelected={toggle === 'RIGHT'}
+        onClick={() => handleOption(nestedLookup.RIGHT)}
+        isSelected={selectedId === nestedLookup.RIGHT}
       />
     </MenuItemPizzaView>
   )
@@ -73,13 +88,8 @@ const MenuItemPizza = ({ option, adjust }) => {
 
 MenuItemPizza.displayName = 'MenuItemPizza'
 MenuItemPizza.propTypes = {
-  item: propTypes.object,
+  groups: propTypes.array,
   adjust: propTypes.func,
-  increment: propTypes.func,
-  decrement: propTypes.func,
-  incrementDisabled: propTypes.bool,
-  decrementDisabled: propTypes.bool,
-  showAdd: propTypes.bool,
 }
 
 export default MenuItemPizza

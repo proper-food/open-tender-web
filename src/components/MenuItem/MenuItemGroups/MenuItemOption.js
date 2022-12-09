@@ -267,10 +267,7 @@ const MenuItemOption = ({
           {isSoldOut ? (
             <MenuItemOptionSoldOut>Out of stock</MenuItemOptionSoldOut>
           ) : group.isPizza && option.groups ? (
-            <>
-              <span>{option.quantity}</span>
-              <MenuItemPizza option={option} adjust={adjust} />
-            </>
+            <MenuItemPizza groups={option.groups} adjust={adjust} />
           ) : isRadio ? (
             <MenuItemRadio option={option} handler={toggle} />
           ) : (

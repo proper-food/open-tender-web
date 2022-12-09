@@ -12,6 +12,7 @@ import {
   selectSoldOut,
   showNotification,
 } from '@open-tender/redux'
+// import { makeSimpleCart } from '@open-tender/js'
 import { useBuilder } from '@open-tender/hooks'
 import { selectContentSection, selectDisplaySettings } from '../../slices'
 import { Star } from '../icons'
@@ -112,6 +113,8 @@ const MenuItem = ({
 
   const addItem = (builtItem) => {
     const cartItem = { ...builtItem }
+    // const simpleItem = makeSimpleCart([cartItem])
+    // console.log(JSON.stringify(simpleItem[0], null, 2))
     if (cartItem.index === -1) delete cartItem.index
     dispatch(addItemToCart(cartItem))
     dispatch(showNotification(`${cartItem.name} added to cart`))
