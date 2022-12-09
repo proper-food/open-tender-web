@@ -32,15 +32,21 @@ const MenuItemPizza = ({ option, adjust }) => {
   if (!pizzaGroup) return null
   const groupId = pizzaGroup.id
   const nestedLookup = makeNestedLookup(pizzaGroup.options)
+  console.log(pizzaGroup.options.map((i) => `${i.name} x ${i.quantity}`))
 
   const toggleOption = (arg) => {
-    // TODO: need to set other quantities to 0
     const optionId = nestedLookup[arg]
     if (arg === toggle) {
       const nested = { groupId, optionId, quantity: 0 }
       adjust(0, nested)
       setToggle(null)
     } else {
+      // TODO: need to set other quantities to 0
+      if (toggle) {
+        const optionIdReset = nestedLookup[toggle]
+        const nestedReset = { groupId, optionId: optionIdReset, quantity: 0 }
+        adjust(0, nestedReset)
+      }
       const nested = { groupId, optionId, quantity: 1 }
       adjust(1, nested)
       setToggle(arg)
