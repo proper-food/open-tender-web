@@ -76,12 +76,11 @@ const MenuItemButtonsCustomize = styled.div`
     padding-left: 0;
     padding-right: 0;
     background-color: transparent;
-    color: ${(props) => props.theme.buttons.colors.primary.color};
+    color: ${(props) => props.theme.links.customize.color};
   }
 
   button:hover {
-    // color: ${(props) => props.theme.links.primary.color};
-    color: ${(props) => props.theme.buttons.colors.primary.bgColor};
+    color: ${(props) => props.theme.links.customize.hover};
   }
 `
 
