@@ -3,15 +3,15 @@ import styled from '@emotion/styled'
 import MenuCard from './MenuCard'
 
 const MenuCardsView = styled.div`
-  max-width: 112rem;
   margin: 0 auto;
+  max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
 `
 
 const MenuCardsContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: -1rem;
   flex-wrap: wrap;
+  margin: -${(props) => props.theme.categories.mobile.gap};
 `
 
 const MenuCards = ({ categories }) => {

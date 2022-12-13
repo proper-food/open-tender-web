@@ -1,8 +1,10 @@
 import { useContext } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { Heading } from '@open-tender/components'
+import { selectCategoryType } from '../../../slices'
 import { Container } from '../..'
 import { MenuContext } from './Menu'
 import MenuCards from './MenuCards'
@@ -34,7 +36,9 @@ const MenuBrowseTitle = styled(Heading)`
 
 const MenuBrowse = ({ categories, isRcs }) => {
   const { hasTop } = useContext(MenuContext)
-  const displayType = 'LIST'
+  const displayType = useSelector(selectCategoryType(isMobile))
+  console.log('displayType', displayType)
+  // const displayType = 'LIST'
 
   if (!categories || !categories.length) return null
 

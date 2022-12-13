@@ -12,37 +12,60 @@ import { BgImage, Body, Heading } from '@open-tender/components'
 
 const MenuCardView = styled.div`
   position: relative;
-  width: 33.33333%;
-  // max-width: 36rem;
-  // aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: ${(props) => props.theme.categories.desktop.width};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: ${(props) => props.theme.categories.mobile.width};
+  }
 `
 
 const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
-  margin: 1rem;
+  margin: ${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.categories.mobile.gap};
+  }
 `
 
 const MenuCardContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: transparent;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   overflow: hidden;
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  background-color: ${(props) =>
+    props.theme.categories.desktop.backgroundColor};
+  border-radius: ${(props) => props.theme.categories.desktop.borderRadius};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    background-color: ${(props) =>
+      props.theme.categories.mobile.backgroundColor};
+    border-radius: ${(props) => props.theme.categories.mobile.borderRadius};
+  }
+
+  button:hover & {
+    background-color: ${(props) =>
+      props.theme.categories.desktop.backgroundColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      background-color: ${(props) =>
+        props.theme.categories.mobile.backgroundColorHover};
+    }
+  }
 `
 
 const MenuCardImageContainer = styled.div`
   position: relative;
   width: 100%;
-  padding: 33.33333% 0;
-  // flex-grow: 1;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
   overflow: hidden;
+  border-radius: ${(props) => props.theme.categories.desktop.imageBorderRadius};
+  padding: ${(props) => props.theme.categories.desktop.imagePadding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    border-radius: ${(props) =>
+      props.theme.categories.mobile.imageBorderRadius};
+    padding: ${(props) => props.theme.categories.mobile.imagePadding} 0;
+  }
 `
 
 const MenuCardImage = styled(BgImage)`
@@ -52,12 +75,17 @@ const MenuCardImage = styled(BgImage)`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.theme.bgColors.tertiary};
-  transition: ${(props) => props.theme.links.transition};
-  transform: scale(1);
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  transform: scale(${(props) => props.theme.categories.desktop.imageScale});
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: ${(props) => props.theme.categories.mobile.transition};
+    transform: scale(1);
+  }
 
   button:hover & {
-    transform: scale(1.1);
+    transform: scale(
+      ${(props) => props.theme.categories.desktop.imageScaleHover}
+    );
 
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: scale(1);
@@ -72,39 +100,81 @@ const MenuCardOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.theme.bgColors.dark};
-  transition: ${(props) => props.theme.links.transition};
-  opacity: 0;
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  background-color: ${(props) => props.theme.categories.desktop.overlayColor};
+  opacity: ${(props) => props.theme.categories.desktop.overlayOpacity};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: ${(props) => props.theme.categories.mobile.transition};
+    background-color: ${(props) => props.theme.categories.mobile.overlayColor};
+    opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
+  }
 
   button:hover & {
-    opacity: 0.5;
+    opacity: ${(props) => props.theme.categories.desktop.overlayOpacityHover};
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
+    }
   }
 `
 
 const MenuCardContent = styled.div`
   flex-grow: 0;
-  padding: 2rem 1rem;
-  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  text-align: ${(props) => props.theme.categories.desktop.textAlign};
+  padding-top: ${(props) => props.theme.categories.desktop.paddingTop};
+  padding-bottom: ${(props) => props.theme.categories.desktop.paddingBottom};
+  padding-left: ${(props) => props.theme.categories.desktop.paddingHorizontal};
+  padding-right: ${(props) => props.theme.categories.desktop.paddingHorizontal};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: ${(props) => props.theme.categories.mobile.textAlign};
+    padding-top: ${(props) => props.theme.categories.mobile.paddingTop};
+    padding-bottom: ${(props) => props.theme.categories.mobile.paddingBottom};
+    padding-left: ${(props) => props.theme.categories.mobile.paddingHorizontal};
+    padding-right: ${(props) =>
+      props.theme.categories.mobile.paddingHorizontal};
+  }
 `
 
 const MenuCardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  font-size: ${(props) => props.theme.categories.desktop.titleSize};
+  color: ${(props) => props.theme.categories.desktop.titleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    font-size: ${(props) => props.theme.categories.mobile.titleSize};
+    color: ${(props) => props.theme.categories.mobile.titleColor};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.categories.desktop.titleColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.categories.mobile.titleColorHover};
+    }
   }
 `
 
 const MenuCardDescription = styled(Body)`
   margin: 0.5rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  display: ${(props) =>
+    props.theme.categories.desktop.showDescription ? 'block' : 'none'};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  font-size: ${(props) => props.theme.categories.desktop.subtitleSize};
+  color: ${(props) => props.theme.categories.desktop.subtitleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
-    margin: 0.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    display: ${(props) =>
+      props.theme.categories.mobile.showDescription ? 'block' : 'none'};
+    font-size: ${(props) => props.theme.categories.mobile.subtitleSize};
+    color: ${(props) => props.theme.categories.mobile.subtitleColor};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.categories.desktop.subtitleColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.categories.mobile.subtitleColorHover};
+    }
   }
 `
 
