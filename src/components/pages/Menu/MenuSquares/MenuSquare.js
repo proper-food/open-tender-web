@@ -13,7 +13,7 @@ import { BgImage, Body, Heading } from '@open-tender/components'
 const MenuSquareView = styled.div`
   position: relative;
   width: 33.33333%;
-  max-width: 36rem;
+  // max-width: 36rem;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
@@ -78,6 +78,7 @@ const MenuSquareContent = styled.div`
   z-index: 3;
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
@@ -95,6 +96,7 @@ const MenuSquareTitle = styled(Heading)`
 
 const MenuSquareDescription = styled(Body)`
   margin: 0.5rem 0 0;
+  color: ${(props) => props.theme.colors.light};
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;

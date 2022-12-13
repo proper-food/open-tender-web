@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import MenuSquare from './MenuSquare'
 
 const MenuSquaresView = styled.div`
+  max-width: 112rem;
   margin: 0 auto;
 `
 

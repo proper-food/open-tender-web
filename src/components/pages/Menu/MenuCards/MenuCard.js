@@ -13,8 +13,8 @@ import { BgImage, Body, Heading } from '@open-tender/components'
 const MenuCardView = styled.div`
   position: relative;
   width: 33.33333%;
-  max-width: 36rem;
-  aspect-ratio: 1;
+  // max-width: 36rem;
+  // aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,13 +31,16 @@ const MenuCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: transparent;
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   overflow: hidden;
 `
 
 const MenuCardImageContainer = styled.div`
   position: relative;
-  flex-grow: 1;
+  width: 100%;
+  padding: 33.33333% 0;
+  // flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.tertiary};
   overflow: hidden;
 `
@@ -49,7 +52,7 @@ const MenuCardImage = styled(BgImage)`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.theme.bgColors.dark};
+  background-color: ${(props) => props.theme.bgColors.tertiary};
   transition: ${(props) => props.theme.links.transition};
   transform: scale(1);
 
@@ -82,6 +85,10 @@ const MenuCardContent = styled.div`
   flex-grow: 0;
   padding: 2rem 1rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const MenuCardTitle = styled(Heading)`

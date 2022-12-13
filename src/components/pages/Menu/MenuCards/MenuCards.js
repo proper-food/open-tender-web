@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import MenuCard from './MenuCard'
 
 const MenuCardsView = styled.div`
+  max-width: 112rem;
   margin: 0 auto;
 `
 

@@ -34,7 +34,7 @@ const MenuBrowseTitle = styled(Heading)`
 
 const MenuBrowse = ({ categories, isRcs }) => {
   const { hasTop } = useContext(MenuContext)
-  const displayType = 'SQUARES'
+  const displayType = 'LIST'
 
   if (!categories || !categories.length) return null
 
