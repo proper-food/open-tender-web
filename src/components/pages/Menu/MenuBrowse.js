@@ -7,6 +7,7 @@ import { Container } from '../..'
 import { MenuContext } from './Menu'
 import MenuCards from './MenuCards'
 import MenuList from './MenuList'
+import MenuSquares from './MenuSquares'
 
 const MenuBrowseView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -49,7 +50,10 @@ const MenuBrowse = ({ categories, isRcs }) => {
           </MenuBrowseHeader>
         )}
         {displayType === 'VERTICAL' ? (
-          <MenuCards categories={categories} />
+          <>
+            {/* <MenuCards categories={categories} /> */}
+            <MenuSquares categories={categories} />
+          </>
         ) : (
           <MenuList categories={categories} />
         )}
