@@ -14,10 +14,10 @@ const MenuListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
-  margin: -${(props) => props.theme.categories.desktop.gap};
+  margin: 0 -${(props) => props.theme.categories.desktop.gapDouble};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
-    margin: -${(props) => props.theme.categories.mobile.gap};
+    margin: 0 -${(props) => props.theme.categories.mobile.gapDouble};
   }
 `
 

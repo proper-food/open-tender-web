@@ -12,14 +12,6 @@ import { BgImage, Heading } from '@open-tender/components'
 import { ArrowRight } from '../../../icons'
 
 const MenuListItemView = styled.div`
-  // width: 33.3333%;
-  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //   width: 50%;
-  // }
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   width: 100%;
-  //   padding: 0;
-  // }
   display: flex;
   width: ${(props) => props.theme.categories.desktop.width};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -30,16 +22,15 @@ const MenuListItemView = styled.div`
 const MenuListItemButton = styled.button`
   display: block;
   flex-grow: 1;
-  // background-color: red;
-  // padding-bottom: ${(props) => props.theme.categories.desktop.gap};
-  margin: ${(props) => props.theme.categories.desktop.gap};
+  margin: ${(props) => props.theme.categories.desktop.gapDouble};
+  margin-top: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.categories.mobile.gap};
+    margin: ${(props) => props.theme.categories.mobile.gapDouble};
+    margin-top: 0;
   }
 `
 
 const MenuListItemContainer = styled.div`
-  // width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,7 +40,7 @@ const MenuListItemContainer = styled.div`
   border-color: ${(props) => props.theme.border.color};
   border-bottom-width: ${(props) => props.theme.border.width};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) => props.theme.categories.mobile.gap} 0;
+    padding-bottom: ${(props) => props.theme.categories.mobile.gapDouble};
     ${(props) => (props.isLast ? 'border: 0;' : '')}
   }
 `
@@ -64,8 +55,8 @@ const MenuListItemImage = styled(BgImage)`
   transition: ${(props) => props.theme.categories.desktop.transition};
   transform: scale(${(props) => props.theme.categories.desktop.imageScale});
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    transition: ${(props) => props.theme.categories.mobile.transition};
     transform: scale(1);
+    transition: none;
     border-radius: ${(props) =>
       props.theme.categories.mobile.imageBorderRadius};
   }
@@ -88,9 +79,9 @@ const MenuListItemText = styled.span`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 2.5rem;
+  padding: 0 ${(props) => props.theme.categories.desktop.gapDouble};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0 2rem;
+    padding: 0 ${(props) => props.theme.categories.mobile.gapDouble};
   }
 `
 
@@ -159,7 +150,7 @@ const MenuListItem = ({ category, isLast = false }) => {
   return (
     <MenuListItemView>
       <MenuListItemButton onClick={view} isLast={isLast}>
-        <MenuListItemContainer>
+        <MenuListItemContainer isLast={isLast}>
           <MenuListItemImage style={bgStyle} />
           <MenuListItemText>
             <MenuListItemTitle>{name}</MenuListItemTitle>
