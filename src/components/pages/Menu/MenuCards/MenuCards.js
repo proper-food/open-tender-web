@@ -5,13 +5,20 @@ import MenuCard from './MenuCard'
 const MenuCardsView = styled.div`
   margin: 0 auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
+  }
 `
 
 const MenuCardsContainer = styled.div`
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  margin: -${(props) => props.theme.categories.mobile.gap};
+  justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
+  margin: -${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
+    margin: -${(props) => props.theme.categories.mobile.gap};
+  }
 `
 
 const MenuCards = ({ categories }) => {

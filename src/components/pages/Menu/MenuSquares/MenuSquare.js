@@ -12,19 +12,24 @@ import { BgImage, Body, Heading } from '@open-tender/components'
 
 const MenuSquareView = styled.div`
   position: relative;
-  width: 33.33333%;
-  // max-width: 36rem;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: ${(props) => props.theme.categories.desktop.width};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: ${(props) => props.theme.categories.mobile.width};
+  }
 `
 
 const MenuSquareButton = styled.button`
   flex: 1;
-  margin: 1rem;
   display: flex;
   flex-direction: column;
+  margin: ${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.categories.mobile.gap};
+  }
 `
 
 const MenuSquareContainer = styled.div`
@@ -33,8 +38,15 @@ const MenuSquareContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   overflow: hidden;
+  background-color: ${(props) =>
+    props.theme.categories.desktop.backgroundColor};
+  border-radius: ${(props) => props.theme.categories.desktop.borderRadius};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    background-color: ${(props) =>
+      props.theme.categories.mobile.backgroundColor};
+    border-radius: ${(props) => props.theme.categories.mobile.borderRadius};
+  }
 `
 
 const MenuSquareImage = styled(BgImage)`
@@ -44,12 +56,17 @@ const MenuSquareImage = styled(BgImage)`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.theme.bgColors.dark};
-  transition: ${(props) => props.theme.links.transition};
-  transform: scale(1);
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  transform: scale(${(props) => props.theme.categories.desktop.imageScale});
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: ${(props) => props.theme.categories.mobile.transition};
+    transform: scale(1);
+  }
 
   button:hover & {
-    transform: scale(1.1);
+    transform: scale(
+      ${(props) => props.theme.categories.desktop.imageScaleHover}
+    );
 
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: scale(1);
@@ -64,12 +81,21 @@ const MenuSquareOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.theme.bgColors.dark};
-  transition: ${(props) => props.theme.links.transition};
-  opacity: 0.5;
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  background-color: ${(props) => props.theme.categories.desktop.overlayColor};
+  opacity: ${(props) => props.theme.categories.desktop.overlayOpacity};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: ${(props) => props.theme.categories.mobile.transition};
+    background-color: ${(props) => props.theme.categories.mobile.overlayColor};
+    opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
+  }
 
   button:hover & {
-    opacity: 0.75;
+    opacity: ${(props) => props.theme.categories.desktop.overlayOpacityHover};
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
+    }
   }
 `
 
@@ -80,28 +106,58 @@ const MenuSquareContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  text-align: center;
-  // background-color: rgba(0, 0, 0, 0.6);
+  align-items: stretch;
+  text-align: ${(props) => props.theme.categories.desktop.textAlign};
+  padding-top: ${(props) => props.theme.categories.desktop.paddingTop};
+  padding-bottom: ${(props) => props.theme.categories.desktop.paddingBottom};
+  padding-left: ${(props) => props.theme.categories.desktop.paddingHorizontal};
+  padding-right: ${(props) => props.theme.categories.desktop.paddingHorizontal};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: ${(props) => props.theme.categories.mobile.textAlign};
+    padding-top: ${(props) => props.theme.categories.mobile.paddingTop};
+    padding-bottom: ${(props) => props.theme.categories.mobile.paddingBottom};
+    padding-left: ${(props) => props.theme.categories.mobile.paddingHorizontal};
+    padding-right: ${(props) =>
+      props.theme.categories.mobile.paddingHorizontal};
+  }
 `
 
 const MenuSquareTitle = styled(Heading)`
-  color: ${(props) => props.theme.colors.light};
-  font-size: ${(props) => props.theme.fonts.sizes.xBig};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  font-size: ${(props) => props.theme.categories.desktop.titleSize};
+  color: ${(props) => props.theme.categories.desktop.titleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    font-size: ${(props) => props.theme.categories.mobile.titleSize};
+    color: ${(props) => props.theme.categories.mobile.titleColor};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.categories.desktop.titleColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.categories.mobile.titleColorHover};
+    }
   }
 `
 
 const MenuSquareDescription = styled(Body)`
   margin: 0.5rem 0 0;
-  color: ${(props) => props.theme.colors.light};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  display: ${(props) =>
+    props.theme.categories.desktop.showDescription ? 'block' : 'none'};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  font-size: ${(props) => props.theme.categories.desktop.subtitleSize};
+  color: ${(props) => props.theme.categories.desktop.subtitleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
-    margin: 0.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    display: ${(props) =>
+      props.theme.categories.mobile.showDescription ? 'block' : 'none'};
+    font-size: ${(props) => props.theme.categories.mobile.subtitleSize};
+    color: ${(props) => props.theme.categories.mobile.subtitleColor};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.categories.desktop.subtitleColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.categories.mobile.subtitleColorHover};
+    }
   }
 `
 

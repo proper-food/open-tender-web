@@ -3,15 +3,23 @@ import styled from '@emotion/styled'
 import MenuSquare from './MenuSquare'
 
 const MenuSquaresView = styled.div`
-  max-width: 112rem;
   margin: 0 auto;
+  max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
+  }
 `
 
 const MenuSquaresContainer = styled.div`
   display: flex;
-  justify-content: center;
-  margin: -1rem;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
+  margin: -${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
+    margin: -${(props) => props.theme.categories.mobile.gap};
+  }
 `
 
 const MenuSquares = ({ categories }) => {
