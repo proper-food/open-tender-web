@@ -22,9 +22,11 @@ const MenuSquareView = styled.div`
 
 const MenuSquareButton = styled.button`
   flex: 1;
-  padding: 1rem;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
+  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
+  overflow: hidden;
 `
 
 // const MenuSquareContainer = styled.div`
@@ -36,6 +38,7 @@ const MenuSquareButton = styled.button`
 // `
 
 const MenuSquareImage = styled(BgImage)`
+  position: relative;
   width: 100%;
   flex: 1;
   display: flex;
@@ -43,18 +46,44 @@ const MenuSquareImage = styled(BgImage)`
   // justify-content: center;
   // align-items: stretch;
   background-color: ${(props) => props.theme.bgColors.dark};
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
-  overflow: hidden;
+  transition: ${(props) => props.theme.links.transition};
+  transform: scale(1);
+
+  button:hover & {
+    transform: scale(1.1);
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      transform: scale(1);
+    }
+  }
+`
+
+const MenuSquareOverlay = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: ${(props) => props.theme.bgColors.dark};
+  transition: ${(props) => props.theme.links.transition};
+  opacity: 0.5;
+
+  // button:hover & {
+  //   opacity: 0.8;
+  // }
 `
 
 const MenuSquareContent = styled.div`
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  // background-color: rgba(0, 0, 0, 0.6);
 `
 
 const MenuSquareTitle = styled(Heading)`
@@ -106,6 +135,7 @@ const MenuSquare = ({ category }) => {
     <MenuSquareView>
       <MenuSquareButton onClick={view}>
         <MenuSquareImage style={bgStyle}>
+          <MenuSquareOverlay />
           <MenuSquareContent>
             <MenuSquareTitle as="p">{name}</MenuSquareTitle>
             {desc && (
