@@ -33,9 +33,8 @@ const MenuBrowseTitle = styled(Heading)`
 `
 
 const MenuBrowse = ({ categories, isRcs }) => {
-  const { hasTop, displaySettings } = useContext(MenuContext)
-  const { categoryType, categoryTypeMobile } = displaySettings
-  const displayType = isMobile ? categoryTypeMobile : categoryType
+  const { hasTop } = useContext(MenuContext)
+  const displayType = 'SQUARES'
 
   if (!categories || !categories.length) return null
 
@@ -49,11 +48,10 @@ const MenuBrowse = ({ categories, isRcs }) => {
             </MenuBrowseTitle>
           </MenuBrowseHeader>
         )}
-        {displayType === 'VERTICAL' ? (
-          <>
-            {/* <MenuCards categories={categories} /> */}
-            <MenuSquares categories={categories} />
-          </>
+        {displayType === 'CARDS' ? (
+          <MenuCards categories={categories} />
+        ) : displayType === 'SQUARES' ? (
+          <MenuSquares categories={categories} />
         ) : (
           <MenuList categories={categories} />
         )}

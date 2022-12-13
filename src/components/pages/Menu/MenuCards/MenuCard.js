@@ -23,21 +23,59 @@ const MenuCardView = styled.div`
 const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
-  padding: 1rem;
+  margin: 1rem;
 `
 
 const MenuCardContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  // background-color: ${(props) => props.theme.bgColors.tertiary};
+  background-color: transparent;
   border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
   overflow: hidden;
 `
 
-const MenuCardImage = styled(BgImage)`
+const MenuCardImageContainer = styled.div`
+  position: relative;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.tertiary};
+  overflow: hidden;
+`
+
+const MenuCardImage = styled(BgImage)`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: ${(props) => props.theme.bgColors.dark};
+  transition: ${(props) => props.theme.links.transition};
+  transform: scale(1);
+
+  button:hover & {
+    transform: scale(1.1);
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      transform: scale(1);
+    }
+  }
+`
+
+const MenuCardOverlay = styled.div`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: ${(props) => props.theme.bgColors.dark};
+  transition: ${(props) => props.theme.links.transition};
+  opacity: 0;
+
+  button:hover & {
+    opacity: 0.5;
+  }
 `
 
 const MenuCardContent = styled.div`
@@ -62,33 +100,6 @@ const MenuCardDescription = styled(Body)`
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
-
-// const styleSettings = {
-//   desktop: {
-//     perRow: 3,
-//     maxWidth: 360,
-//     gap: 20,
-//     backgroundColor: 'tranparent',
-//     content: {
-//       paddingVertical: 20,
-//       titleSize: 24,
-//       subtitleSize: 16,
-//       showDesc: false,
-//     },
-//   },
-//   mobile: {
-//     perRow: 2,
-//     maxWidth: 240,
-//     gap: 10,
-//     backgroundColor: 'tranparent',
-//     content: {
-//       paddingVertical: 10,
-//       titleSize: 18,
-//       subtitleSize: 12,
-//       showDesc: false,
-//     },
-//   },
-// }
 
 const MenuCard = ({ category }) => {
   const dispatch = useDispatch()
@@ -121,7 +132,10 @@ const MenuCard = ({ category }) => {
     <MenuCardView>
       <MenuCardButton onClick={view}>
         <MenuCardContainer>
-          <MenuCardImage style={bgStyle} />
+          <MenuCardImageContainer>
+            <MenuCardImage style={bgStyle} />
+            <MenuCardOverlay />
+          </MenuCardImageContainer>
           <MenuCardContent>
             <MenuCardTitle as="p">{name}</MenuCardTitle>
             {desc && <MenuCardDescription as="p">{desc}</MenuCardDescription>}

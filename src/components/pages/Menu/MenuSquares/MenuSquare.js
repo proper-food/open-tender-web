@@ -25,26 +25,25 @@ const MenuSquareButton = styled.button`
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
-  overflow: hidden;
 `
 
-// const MenuSquareContainer = styled.div`
-//   flex-grow: 1;
-//   display: flex;
-//   flex-direction: column;
-//   border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
-//   overflow: hidden;
-// `
-
-const MenuSquareImage = styled(BgImage)`
+const MenuSquareContainer = styled.div`
   position: relative;
   width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
-  // align-items: stretch;
+  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
+  overflow: hidden;
+`
+
+const MenuSquareImage = styled(BgImage)`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: ${(props) => props.theme.bgColors.dark};
   transition: ${(props) => props.theme.links.transition};
   transform: scale(1);
@@ -60,7 +59,7 @@ const MenuSquareImage = styled(BgImage)`
 
 const MenuSquareOverlay = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   bottom: 0;
   left: 0;
@@ -69,14 +68,14 @@ const MenuSquareOverlay = styled.div`
   transition: ${(props) => props.theme.links.transition};
   opacity: 0.5;
 
-  // button:hover & {
-  //   opacity: 0.8;
-  // }
+  button:hover & {
+    opacity: 0.75;
+  }
 `
 
 const MenuSquareContent = styled.div`
   position: relative;
-  z-index: 2;
+  z-index: 3;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -134,7 +133,8 @@ const MenuSquare = ({ category }) => {
   return (
     <MenuSquareView>
       <MenuSquareButton onClick={view}>
-        <MenuSquareImage style={bgStyle}>
+        <MenuSquareContainer>
+          <MenuSquareImage style={bgStyle} />
           <MenuSquareOverlay />
           <MenuSquareContent>
             <MenuSquareTitle as="p">{name}</MenuSquareTitle>
@@ -142,7 +142,7 @@ const MenuSquare = ({ category }) => {
               <MenuSquareDescription as="p">{desc}</MenuSquareDescription>
             )}
           </MenuSquareContent>
-        </MenuSquareImage>
+        </MenuSquareContainer>
       </MenuSquareButton>
     </MenuSquareView>
   )
