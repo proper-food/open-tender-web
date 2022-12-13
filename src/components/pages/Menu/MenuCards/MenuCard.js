@@ -9,11 +9,12 @@ import {
   setCurrentVendor,
 } from '@open-tender/redux'
 import { BgImage, Body, Heading } from '@open-tender/components'
-import CardMenuItem from '../../../CardMenuItem'
 
-const MenuCardView = styled(CardMenuItem)`
+const MenuCardView = styled.div`
   position: relative;
-  flex: 1;
+  width: 33.33333%;
+  max-width: 36rem;
+  aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,40 +23,31 @@ const MenuCardView = styled(CardMenuItem)`
 const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
-  text-align: left;
-  width: 100%;
+  padding: 1rem;
 `
 
 const MenuCardContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  // background-color: ${(props) => props.theme.bgColors.tertiary};
+  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
+  overflow: hidden;
 `
 
 const MenuCardImage = styled(BgImage)`
-  width: 100%;
-  padding: 33.33333% 0;
+  flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  border-radius: ${(props) => props.theme.cards.menuItem.borderRadius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
 `
 
 const MenuCardContent = styled.div`
-  padding: ${(props) =>
-    props.theme.cards.default.bgColor === 'transparent'
-      ? '1.1rem 0 0'
-      : '1.3rem 1.3rem 1.2rem'};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: ${(props) =>
-      props.theme.cards.default.bgColor === 'transparent'
-        ? '0.8rem 0 0'
-        : '1rem 1rem 0.8rem'};
-  }
+  flex-grow: 0;
+  padding: 2rem 1rem;
+  text-align: center;
 `
 
 const MenuCardTitle = styled(Heading)`
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
@@ -70,6 +62,33 @@ const MenuCardDescription = styled(Body)`
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
+
+// const styleSettings = {
+//   desktop: {
+//     perRow: 3,
+//     maxWidth: 360,
+//     gap: 20,
+//     backgroundColor: 'tranparent',
+//     content: {
+//       paddingVertical: 20,
+//       titleSize: 24,
+//       subtitleSize: 16,
+//       showDesc: false,
+//     },
+//   },
+//   mobile: {
+//     perRow: 2,
+//     maxWidth: 240,
+//     gap: 10,
+//     backgroundColor: 'tranparent',
+//     content: {
+//       paddingVertical: 10,
+//       titleSize: 18,
+//       subtitleSize: 12,
+//       showDesc: false,
+//     },
+//   },
+// }
 
 const MenuCard = ({ category }) => {
   const dispatch = useDispatch()
