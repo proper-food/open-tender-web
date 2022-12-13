@@ -5,8 +5,8 @@ import { isMobile } from 'react-device-detect'
 import { Heading } from '@open-tender/components'
 import { Container } from '../..'
 import { MenuContext } from './Menu'
-import MenuBrowseCategory from './MenuBrowseCategory'
-import MenuBrowseSquare from './MenuBrowseSquare'
+import MenuCards from './MenuCards'
+import MenuList from './MenuList'
 
 const MenuBrowseView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -21,13 +21,6 @@ const MenuBrowseView = styled.div`
 
 const MenuBrowseHeader = styled.div`
   padding: 0 0 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // border: 0;
-    // border-style: solid;
-    // border-color: ${(props) => props.theme.buttons.colors.large.borderColor};
-    // border-bottom-width: ${(props) =>
-      props.theme.buttons.sizes.large.borderWidth};
-  }
 `
 
 const MenuBrowseTitle = styled(Heading)`
@@ -35,42 +28,6 @@ const MenuBrowseTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
-`
-
-const MenuBrowseCategories = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 0 -2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0;
-  }
-`
-
-const MenuBrowseVertical = styled.div`
-  display: grid;
-  justify-content: center;
-  padding: 0;
-  margin: 2rem 0 0;
-  gap: ${(props) => props.theme.layout.padding};
-  grid-template-columns: repeat(4, 1fr);
-  @media (max-width: 1350px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //   grid-template-columns: repeat(2, 1fr);
-  // }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: ${(props) => props.theme.layout.paddingMobile};
-  }
-  @media (max-width: 650px) {
-    margin: 1rem 0 0;
-    column-gap: 1.5rem;
-    row-gap: ${(props) => props.theme.layout.paddingMobile};
-    grid-template-columns: repeat(2, 1fr);
   }
 `
 
@@ -92,25 +49,9 @@ const MenuBrowse = ({ categories, isRcs }) => {
           </MenuBrowseHeader>
         )}
         {displayType === 'VERTICAL' ? (
-          <MenuBrowseVertical>
-            {categories.map((category, index) => (
-              <MenuBrowseSquare
-                key={category.name}
-                category={category}
-                isLast={categories.length - 1 === index}
-              />
-            ))}
-          </MenuBrowseVertical>
+          <MenuCards categories={categories} />
         ) : (
-          <MenuBrowseCategories>
-            {categories.map((category, index) => (
-              <MenuBrowseCategory
-                key={category.name}
-                category={category}
-                isLast={categories.length - 1 === index}
-              />
-            ))}
-          </MenuBrowseCategories>
+          <MenuList categories={categories} />
         )}
       </MenuBrowseView>
     </Container>

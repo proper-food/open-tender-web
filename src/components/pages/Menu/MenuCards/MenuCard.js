@@ -9,9 +9,9 @@ import {
   setCurrentVendor,
 } from '@open-tender/redux'
 import { BgImage, Body, Heading } from '@open-tender/components'
-import { CardMenuItem } from '../..'
+import CardMenuItem from '../../../CardMenuItem'
 
-const MenuBrowseSquareView = styled(CardMenuItem)`
+const MenuCardView = styled(CardMenuItem)`
   position: relative;
   flex: 1;
   display: flex;
@@ -19,20 +19,20 @@ const MenuBrowseSquareView = styled(CardMenuItem)`
   justify-content: space-between;
 `
 
-const MenuBrowseSquareButton = styled.button`
+const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
   text-align: left;
   width: 100%;
 `
 
-const MenuBrowseSquareContainer = styled.div`
+const MenuCardContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
 `
 
-const MenuBrowseSquareImage = styled(BgImage)`
+const MenuCardImage = styled(BgImage)`
   width: 100%;
   padding: 33.33333% 0;
   background-color: ${(props) => props.theme.bgColors.tertiary};
@@ -41,7 +41,7 @@ const MenuBrowseSquareImage = styled(BgImage)`
   border-bottom-right-radius: 0 !important;
 `
 
-const MenuBrowseSquareContent = styled.div`
+const MenuCardContent = styled.div`
   padding: ${(props) =>
     props.theme.cards.default.bgColor === 'transparent'
       ? '1.1rem 0 0'
@@ -54,14 +54,14 @@ const MenuBrowseSquareContent = styled.div`
   }
 `
 
-const MenuBrowseSquareTitle = styled(Heading)`
+const MenuCardTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.big};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 `
 
-const MenuBrowseSquareDescription = styled(Body)`
+const MenuCardDescription = styled(Body)`
   margin: 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -71,7 +71,7 @@ const MenuBrowseSquareDescription = styled(Body)`
   }
 `
 
-const MenuBrowseSquare = ({ category, isLast = false }) => {
+const MenuCard = ({ category }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const menuSlug = useSelector(selectMenuSlug)
@@ -99,26 +99,23 @@ const MenuBrowseSquare = ({ category, isLast = false }) => {
   }
 
   return (
-    <MenuBrowseSquareView>
-      <MenuBrowseSquareButton onClick={view}>
-        <MenuBrowseSquareContainer>
-          <MenuBrowseSquareImage style={bgStyle} />
-          <MenuBrowseSquareContent>
-            <MenuBrowseSquareTitle as="p">{name}</MenuBrowseSquareTitle>
-            {desc && (
-              <MenuBrowseSquareDescription as="p">
-                {desc}
-              </MenuBrowseSquareDescription>
-            )}
-          </MenuBrowseSquareContent>
-        </MenuBrowseSquareContainer>
-      </MenuBrowseSquareButton>
-    </MenuBrowseSquareView>
+    <MenuCardView>
+      <MenuCardButton onClick={view}>
+        <MenuCardContainer>
+          <MenuCardImage style={bgStyle} />
+          <MenuCardContent>
+            <MenuCardTitle as="p">{name}</MenuCardTitle>
+            {desc && <MenuCardDescription as="p">{desc}</MenuCardDescription>}
+          </MenuCardContent>
+        </MenuCardContainer>
+      </MenuCardButton>
+    </MenuCardView>
   )
 }
 
-MenuBrowseSquare.displayName = 'MenuBrowseSquare'
-MenuBrowseSquare.propTypes = {
+MenuCard.displayName = 'MenuCard'
+MenuCard.propTypes = {
   category: propTypes.object,
 }
-export default MenuBrowseSquare
+
+export default MenuCard

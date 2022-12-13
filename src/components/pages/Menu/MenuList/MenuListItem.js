@@ -9,9 +9,9 @@ import {
   setCurrentVendor,
 } from '@open-tender/redux'
 import { BgImage, Heading } from '@open-tender/components'
-import { ArrowRight } from '../../icons'
+import { ArrowRight } from '../../../icons'
 
-const MenuBrowseCategoryView = styled.div`
+const MenuListItemView = styled.div`
   width: 33.3333%;
   padding: 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
@@ -23,7 +23,7 @@ const MenuBrowseCategoryView = styled.div`
   }
 `
 
-const MenuBrowseCategoryButton = styled.button`
+const MenuListItemButton = styled.button`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -39,7 +39,7 @@ const MenuBrowseCategoryButton = styled.button`
   }
 `
 
-const MenuBrowseCategoryImage = styled(BgImage)`
+const MenuListItemImage = styled(BgImage)`
   flex-shrink: 0;
   width: 7rem;
   height: 7rem;
@@ -58,7 +58,7 @@ const MenuBrowseCategoryImage = styled(BgImage)`
   }
 `
 
-const MenuBrowseCategoryText = styled.span`
+const MenuListItemText = styled.span`
   flex-grow: 1;
   line-height: ${(props) => props.theme.fonts.body.lineHeight};
   text-align: left;
@@ -71,7 +71,7 @@ const MenuBrowseCategoryText = styled.span`
   }
 `
 
-const MenuBrowseCategoryTitle = styled(Heading)`
+const MenuListItemTitle = styled(Heading)`
   display: block;
   margin: 0 0 0 -0.1rem;
   transition: ${(props) => props.theme.links.transition};
@@ -81,7 +81,7 @@ const MenuBrowseCategoryTitle = styled(Heading)`
   }
 `
 
-const MenuBrowseCategoryArrow = styled.span`
+const MenuListItemArrow = styled.span`
   position: relative;
   width: 2.2rem;
   height: 2.2rem;
@@ -100,7 +100,7 @@ const MenuBrowseCategoryArrow = styled.span`
   }
 `
 
-const MenuBrowseCategory = ({ category, isLast = false }) => {
+const MenuListItem = ({ category, isLast = false }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const menuSlug = useSelector(selectMenuSlug)
@@ -126,23 +126,23 @@ const MenuBrowseCategory = ({ category, isLast = false }) => {
   }
 
   return (
-    <MenuBrowseCategoryView>
-      <MenuBrowseCategoryButton onClick={view} isLast={isLast}>
-        <MenuBrowseCategoryImage style={bgStyle} />
-        <MenuBrowseCategoryText>
-          <MenuBrowseCategoryTitle>{name}</MenuBrowseCategoryTitle>
-          {/* <MenuBrowseCategorySubtitle>{description}</MenuBrowseCategorySubtitle> */}
-        </MenuBrowseCategoryText>
-        <MenuBrowseCategoryArrow>
+    <MenuListItemView>
+      <MenuListItemButton onClick={view} isLast={isLast}>
+        <MenuListItemImage style={bgStyle} />
+        <MenuListItemText>
+          <MenuListItemTitle>{name}</MenuListItemTitle>
+        </MenuListItemText>
+        <MenuListItemArrow>
           <ArrowRight strokeWidth={2} />
-        </MenuBrowseCategoryArrow>
-      </MenuBrowseCategoryButton>
-    </MenuBrowseCategoryView>
+        </MenuListItemArrow>
+      </MenuListItemButton>
+    </MenuListItemView>
   )
 }
 
-MenuBrowseCategory.displayName = 'MenuBrowseCategory'
-MenuBrowseCategory.propTypes = {
+MenuListItem.displayName = 'MenuListItem'
+MenuListItem.propTypes = {
   category: propTypes.object,
 }
-export default MenuBrowseCategory
+
+export default MenuListItem
