@@ -12,29 +12,44 @@ import { BgImage, Heading } from '@open-tender/components'
 import { ArrowRight } from '../../../icons'
 
 const MenuListItemView = styled.div`
-  width: 33.3333%;
-  padding: 0 2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 50%;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: 0;
+  // width: 33.3333%;
+  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  //   width: 50%;
+  // }
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   width: 100%;
+  //   padding: 0;
+  // }
+  display: flex;
+  width: ${(props) => props.theme.categories.desktop.width};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: ${(props) => props.theme.categories.mobile.width};
   }
 `
 
 const MenuListItemButton = styled.button`
-  width: 100%;
+  display: block;
+  flex-grow: 1;
+  // background-color: red;
+  // padding-bottom: ${(props) => props.theme.categories.desktop.gap};
+  margin: ${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.categories.mobile.gap};
+  }
+`
+
+const MenuListItemContainer = styled.div`
+  // width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
+  padding-bottom: ${(props) => props.theme.categories.desktop.gapDouble};
   border: 0;
   border-style: solid;
   border-color: ${(props) => props.theme.border.color};
   border-bottom-width: ${(props) => props.theme.border.width};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 1rem 0;
+    padding: ${(props) => props.theme.categories.mobile.gap} 0;
     ${(props) => (props.isLast ? 'border: 0;' : '')}
   }
 `
@@ -44,13 +59,21 @@ const MenuListItemImage = styled(BgImage)`
   width: 7rem;
   height: 7rem;
   background-size: cover;
-  transition: ${(props) => props.theme.links.transition};
   background-color: ${(props) => props.theme.bgColors.tertiary};
-  border-radius: ${(props) => props.theme.border.radiusSmall};
-  transform: scale(1);
+  border-radius: ${(props) => props.theme.categories.desktop.imageBorderRadius};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  transform: scale(${(props) => props.theme.categories.desktop.imageScale});
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: ${(props) => props.theme.categories.mobile.transition};
+    transform: scale(1);
+    border-radius: ${(props) =>
+      props.theme.categories.mobile.imageBorderRadius};
+  }
 
   button:hover & {
-    transform: scale(1.05);
+    transform: scale(
+      ${(props) => props.theme.categories.desktop.imageScaleHover}
+    );
 
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       transform: scale(1);
@@ -73,11 +96,19 @@ const MenuListItemText = styled.span`
 
 const MenuListItemTitle = styled(Heading)`
   display: block;
-  margin: 0 0 0 -0.1rem;
-  transition: ${(props) => props.theme.links.transition};
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  transition: ${(props) => props.theme.categories.desktop.transition};
+  font-size: ${(props) => props.theme.categories.desktop.titleSize};
+  color: ${(props) => props.theme.categories.desktop.titleColor};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.categories.mobile.titleSize};
+    color: ${(props) => props.theme.categories.mobile.titleColor};
+  }
+
+  button:hover & {
+    color: ${(props) => props.theme.categories.desktop.titleColorHover};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.categories.mobile.titleColorHover};
+    }
   }
 `
 
@@ -128,13 +159,15 @@ const MenuListItem = ({ category, isLast = false }) => {
   return (
     <MenuListItemView>
       <MenuListItemButton onClick={view} isLast={isLast}>
-        <MenuListItemImage style={bgStyle} />
-        <MenuListItemText>
-          <MenuListItemTitle>{name}</MenuListItemTitle>
-        </MenuListItemText>
-        <MenuListItemArrow>
-          <ArrowRight strokeWidth={2} />
-        </MenuListItemArrow>
+        <MenuListItemContainer>
+          <MenuListItemImage style={bgStyle} />
+          <MenuListItemText>
+            <MenuListItemTitle>{name}</MenuListItemTitle>
+          </MenuListItemText>
+          <MenuListItemArrow>
+            <ArrowRight strokeWidth={2} />
+          </MenuListItemArrow>
+        </MenuListItemContainer>
       </MenuListItemButton>
     </MenuListItemView>
   )

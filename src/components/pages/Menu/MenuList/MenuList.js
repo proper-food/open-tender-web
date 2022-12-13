@@ -3,13 +3,21 @@ import styled from '@emotion/styled'
 import MenuListItem from './MenuListItem'
 
 const MenuListView = styled.div`
+  margin: 0 auto;
+  max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
+  }
+`
+
+const MenuListContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   flex-wrap: wrap;
-  margin: 0 -2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0;
+  justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
+  margin: -${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
+    margin: -${(props) => props.theme.categories.mobile.gap};
   }
 `
 
@@ -18,13 +26,15 @@ const MenuList = ({ categories }) => {
 
   return (
     <MenuListView>
-      {categories.map((category, index) => (
-        <MenuListItem
-          key={category.name}
-          category={category}
-          isLast={categories.length - 1 === index}
-        />
-      ))}
+      <MenuListContainer>
+        {categories.map((category, index) => (
+          <MenuListItem
+            key={category.name}
+            category={category}
+            isLast={categories.length - 1 === index}
+          />
+        ))}
+      </MenuListContainer>
     </MenuListView>
   )
 }
