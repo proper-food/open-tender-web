@@ -1,33 +1,63 @@
+import { Children } from 'react'
 import styled from '@emotion/styled'
 
-const MenuItems = styled.div`
-  display: grid;
-  justify-content: center;
-  padding: 0;
-  gap: ${(props) => props.theme.layout.padding};
-  grid-template-columns: repeat(4, 1fr);
-  @media (max-width: 1350px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    gap: ${(props) => props.theme.layout.paddingMobile};
-  }
-  @media (max-width: 650px) {
-    column-gap: 1.5rem;
-    row-gap: ${(props) => props.theme.layout.paddingMobile};
-    grid-template-columns: repeat(${(props) => props.perRow || '1'}, 1fr);
-  }
-
-  & > div {
-    margin: 0 0 2rem;
-
-    @media (max-width: 650px) {
-      margin: ${(props) => (props.perRow === 1 ? '0 0 2rem' : '0')};
-    }
+const MenuItemsView = styled.div`
+  max-width: 100%;
+  margin: 0 auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
   }
 `
+
+const MenuItemsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: -1rem;
+`
+
+const MenuItemsChild = styled.div`
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 25%;
+  min-width: 30rem;
+  padding: 1rem;
+  display: flex;
+`
+
+const makeNumbers = (n) => {
+  let numbers = []
+  for (let i = 2; i <= n; i++) {
+    numbers.push(i)
+  }
+  return numbers
+}
+
+const makeEmpty = (perRow, count) => {
+  const numbers = makeNumbers(perRow)
+  return numbers.reduce((arr, i, index) => {
+    const leftOver = count % i
+    return leftOver ? [...arr, index] : arr
+  }, [])
+}
+
+const MenuItems = ({ children }) => {
+  const perRow = 5
+  const arrayChildren = Children.toArray(children)
+  const count = arrayChildren.length
+  const empty = makeEmpty(perRow, count)
+  return (
+    <MenuItemsView>
+      <MenuItemsContainer>
+        {Children.map(arrayChildren, (child) => (
+          <MenuItemsChild>{child}</MenuItemsChild>
+        ))}
+        {empty.map((idx) => (
+          <MenuItemsChild key={idx} />
+        ))}
+      </MenuItemsContainer>
+    </MenuItemsView>
+  )
+}
 
 export default MenuItems
