@@ -14,18 +14,18 @@ import { ArrowRight } from '../../../icons'
 const MenuListItemView = styled.div`
   display: flex;
   width: ${(props) => props.theme.categories.desktop.width};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: ${(props) => props.theme.categories.mobile.width};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
   }
 `
 
 const MenuListItemButton = styled.button`
   display: block;
   flex-grow: 1;
-  margin: ${(props) => props.theme.categories.desktop.gapDouble};
+  margin: ${(props) => props.theme.categories.desktop.gap};
   margin-top: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.categories.mobile.gapDouble};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.categories.mobile.gap};
     margin-top: 0;
   }
 `
@@ -34,13 +34,13 @@ const MenuListItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: ${(props) => props.theme.categories.desktop.gapDouble};
+  padding-bottom: ${(props) => props.theme.categories.desktop.gap};
   border: 0;
   border-style: solid;
   border-color: ${(props) => props.theme.border.color};
   border-bottom-width: ${(props) => props.theme.border.width};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding-bottom: ${(props) => props.theme.categories.mobile.gapDouble};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding-bottom: ${(props) => props.theme.categories.mobile.gap};
     ${(props) => (props.isLast ? 'border: 0;' : '')}
   }
 `
@@ -54,7 +54,7 @@ const MenuListItemImage = styled(BgImage)`
   border-radius: ${(props) => props.theme.categories.desktop.imageBorderRadius};
   transition: ${(props) => props.theme.categories.desktop.transition};
   transform: scale(${(props) => props.theme.categories.desktop.imageScale});
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     transform: scale(1);
     transition: none;
     border-radius: ${(props) =>
@@ -66,7 +66,7 @@ const MenuListItemImage = styled(BgImage)`
       ${(props) => props.theme.categories.desktop.imageScaleHover}
     );
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       transform: scale(1);
     }
   }
@@ -79,25 +79,26 @@ const MenuListItemText = styled.span`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 ${(props) => props.theme.categories.desktop.gapDouble};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  padding: 0 ${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.categories.mobile.gapDouble};
   }
 `
 
 const MenuListItemTitle = styled(Heading)`
   display: block;
+  margin-left: -0.1rem;
   transition: ${(props) => props.theme.categories.desktop.transition};
   font-size: ${(props) => props.theme.categories.desktop.titleSize};
   color: ${(props) => props.theme.categories.desktop.titleColor};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: ${(props) => props.theme.categories.mobile.titleSize};
     color: ${(props) => props.theme.categories.mobile.titleColor};
   }
 
   button:hover & {
     color: ${(props) => props.theme.categories.desktop.titleColorHover};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.categories.mobile.titleColorHover};
     }
   }
@@ -116,7 +117,7 @@ const MenuListItemArrow = styled.span`
   button:hover & {
     transform: translateX(1rem);
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       transform: translateX(0);
     }
   }

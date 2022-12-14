@@ -24,6 +24,11 @@ const MenuBrowseView = styled.div`
 
 const MenuBrowseHeader = styled.div`
   padding: 0 0 1rem;
+  margin: 0 auto;
+  max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
+  }
 `
 
 const MenuBrowseTitle = styled(Heading)`

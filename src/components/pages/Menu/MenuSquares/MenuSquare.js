@@ -26,9 +26,9 @@ const MenuSquareButton = styled.button`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: ${(props) => props.theme.categories.desktop.gap};
+  margin: ${(props) => props.theme.categories.desktop.gapHalf};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.categories.mobile.gap};
+    margin: ${(props) => props.theme.categories.mobile.gapHalf};
   }
 `
 

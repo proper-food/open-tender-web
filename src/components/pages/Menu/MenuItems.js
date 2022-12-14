@@ -2,10 +2,10 @@ import { Children } from 'react'
 import styled from '@emotion/styled'
 
 const MenuItemsView = styled.div`
-  max-width: 100%;
   margin: 0 auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    max-width: 100%;
+  max-width: ${(props) => props.theme.items.desktop.containerMaxWidth};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: ${(props) => props.theme.items.mobile.containerMaxWidth};
   }
 `
 
@@ -13,16 +13,29 @@ const MenuItemsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: -1rem;
+  margin: -${(props) => props.theme.items.desktop.gapHalf};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: -${(props) => props.theme.items.mobile.gapHalf};
+  }
 `
 
 const MenuItemsChild = styled.div`
+  display: flex;
   flex-grow: 1;
   flex-shrink: 0;
-  flex-basis: 25%;
-  min-width: 30rem;
-  padding: 1rem;
-  display: flex;
+  flex-basis: ${(props) => props.theme.items.desktop.width};
+  min-width: ${(props) =>
+    props.minWidth ? props.minWidth : props.theme.items.desktop.minWidth};
+  padding: ${(props) => props.theme.items.desktop.gapHalf};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-basis: 50%;
+    min-width: ${(props) =>
+      props.minWidth ? props.minWidth : props.theme.items.mobile.minWidth};
+    padding: ${(props) => props.theme.items.mobile.gapHalf};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-basis: ${(props) => props.theme.items.mobile.width};
+  }
 `
 
 const makeNumbers = (n) => {
@@ -41,7 +54,7 @@ const makeEmpty = (perRow, count) => {
   }, [])
 }
 
-const MenuItems = ({ children }) => {
+const MenuItems = ({ children, minWidth }) => {
   const perRow = 5
   const arrayChildren = Children.toArray(children)
   const count = arrayChildren.length
@@ -50,10 +63,10 @@ const MenuItems = ({ children }) => {
     <MenuItemsView>
       <MenuItemsContainer>
         {Children.map(arrayChildren, (child) => (
-          <MenuItemsChild>{child}</MenuItemsChild>
+          <MenuItemsChild minWidth={minWidth}>{child}</MenuItemsChild>
         ))}
         {empty.map((idx) => (
-          <MenuItemsChild key={idx} />
+          <MenuItemsChild minWidth={minWidth} key={idx} />
         ))}
       </MenuItemsContainer>
     </MenuItemsView>

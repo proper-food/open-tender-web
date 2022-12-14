@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import MenuListItem from './MenuListItem'
 
 const MenuListView = styled.div`
-  margin: 0 auto;
+  margin: 4.5rem auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
     max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
   }
 `
@@ -14,10 +15,10 @@ const MenuListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
-  margin: 0 -${(props) => props.theme.categories.desktop.gapDouble};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  margin: 0 -${(props) => props.theme.categories.desktop.gap};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
-    margin: 0 -${(props) => props.theme.categories.mobile.gapDouble};
+    margin: 0 -${(props) => props.theme.categories.mobile.gap};
   }
 `
 

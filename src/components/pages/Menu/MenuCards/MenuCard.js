@@ -24,9 +24,9 @@ const MenuCardView = styled.div`
 const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
-  margin: ${(props) => props.theme.categories.desktop.gap};
+  margin: ${(props) => props.theme.categories.desktop.gapHalf};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.categories.mobile.gap};
+    margin: ${(props) => props.theme.categories.mobile.gapHalf};
   }
 `
 

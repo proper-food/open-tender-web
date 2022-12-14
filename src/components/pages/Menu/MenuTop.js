@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { animateScroll as scroll } from 'react-scroll'
 import {
   selectCustomerFavorites,
@@ -24,11 +24,14 @@ import { Container, Loading, Reward, SeeMoreLink } from '../..'
 import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
 import MenuScrollable from './MenuScrollable'
+import MenuItems from './MenuItems'
 
 const MenuTopView = styled.div`
-  margin: ${(props) => props.theme.layout.margin} 0;
+  margin: ${(props) => props.theme.layout.margin} auto;
+  max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.layout.marginMobile} 0;
+    margin: ${(props) => props.theme.layout.marginMobile} auto;
+    max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
   }
 `
 
@@ -114,8 +117,10 @@ const MenuTopItems = styled.div`
   align-items: stretch;
   overflow-x: auto;
   margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
+  margin: 0 0 -1.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
+    margin: 0 0 -1.5rem;
   }
 
   &::-webkit-scrollbar {
@@ -254,8 +259,8 @@ const MenuTop = () => {
   ) : isScrollable ? (
     <MenuScrollable displayedSections={displayedSections} />
   ) : (
-    <MenuTopView className="compact">
-      <Container>
+    <Container>
+      <MenuTopView className="compact">
         <MenuTopHeader>
           <MenuTopNav marginRight={marginRight} fontSize={fontSize}>
             {displayedKeys.map((section) => (
@@ -286,23 +291,36 @@ const MenuTop = () => {
           </MenuTopMore>
         </MenuTopHeader>
         {currentDisplayed.length > 0 ? (
-          <MenuTopItems>
-            {currentDisplayed.map((item, index) => (
-              <MenuTopItem
-                count={currentDisplayed.length}
-                key={`${menuSection}-${item[itemKey]}-${index}`}
-              >
-                {isDeals ? <Reward item={item} /> : <MenuItem item={item} />}
-              </MenuTopItem>
-            ))}
-          </MenuTopItems>
+          <>
+            {isMobile ? (
+              <MenuTopItems>
+                {currentDisplayed.map((item, index) => (
+                  <MenuTopItem
+                    count={currentDisplayed.length}
+                    key={`${menuSection}-${item[itemKey]}-${index}`}
+                  >
+                    {isDeals ? (
+                      <Reward item={item} />
+                    ) : (
+                      <MenuItem item={item} />
+                    )}
+                  </MenuTopItem>
+                ))}
+              </MenuTopItems>
+            ) : (
+              <MenuItems minWidth="28rem">
+                {currentDisplayed.map((item, index) =>
+                  isDeals ? <Reward item={item} /> : <MenuItem item={item} />
+                )}
+              </MenuItems>
+            )}
+          </>
         ) : null}
-      </Container>
-    </MenuTopView>
+      </MenuTopView>
+    </Container>
   )
 }
 
 MenuTop.displayName = 'MenuTop'
-MenuTop.propTypes = {}
 
 export default MenuTop
