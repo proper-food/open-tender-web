@@ -16,7 +16,7 @@ const MenuCardView = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: ${(props) => props.theme.categories.desktop.width};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: ${(props) => props.theme.categories.mobile.width};
   }
 `
@@ -25,7 +25,7 @@ const MenuCardButton = styled.button`
   flex-grow: 1;
   display: block;
   margin: ${(props) => props.theme.categories.desktop.gapHalf};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.categories.mobile.gapHalf};
   }
 `
@@ -39,7 +39,7 @@ const MenuCardContainer = styled.div`
   background-color: ${(props) =>
     props.theme.categories.desktop.backgroundColor};
   border-radius: ${(props) => props.theme.categories.desktop.borderRadius};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: ${(props) =>
       props.theme.categories.mobile.backgroundColor};
     border-radius: ${(props) => props.theme.categories.mobile.borderRadius};
@@ -48,7 +48,7 @@ const MenuCardContainer = styled.div`
   button:hover & {
     background-color: ${(props) =>
       props.theme.categories.desktop.backgroundColorHover};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       background-color: ${(props) =>
         props.theme.categories.mobile.backgroundColorHover};
     }
@@ -61,7 +61,7 @@ const MenuCardImageContainer = styled.div`
   overflow: hidden;
   border-radius: ${(props) => props.theme.categories.desktop.imageBorderRadius};
   padding: ${(props) => props.theme.categories.desktop.imagePadding} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     border-radius: ${(props) =>
       props.theme.categories.mobile.imageBorderRadius};
     padding: ${(props) => props.theme.categories.mobile.imagePadding} 0;
@@ -77,7 +77,7 @@ const MenuCardImage = styled(BgImage)`
   right: 0;
   transition: ${(props) => props.theme.categories.desktop.transition};
   transform: scale(${(props) => props.theme.categories.desktop.imageScale});
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     transition: ${(props) => props.theme.categories.mobile.transition};
     transform: scale(1);
   }
@@ -87,7 +87,7 @@ const MenuCardImage = styled(BgImage)`
       ${(props) => props.theme.categories.desktop.imageScaleHover}
     );
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       transform: scale(1);
     }
   }
@@ -103,7 +103,7 @@ const MenuCardOverlay = styled.div`
   transition: ${(props) => props.theme.categories.desktop.transition};
   background-color: ${(props) => props.theme.categories.desktop.overlayColor};
   opacity: ${(props) => props.theme.categories.desktop.overlayOpacity};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     transition: ${(props) => props.theme.categories.mobile.transition};
     background-color: ${(props) => props.theme.categories.mobile.overlayColor};
     opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
@@ -112,7 +112,7 @@ const MenuCardOverlay = styled.div`
   button:hover & {
     opacity: ${(props) => props.theme.categories.desktop.overlayOpacityHover};
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
     }
   }

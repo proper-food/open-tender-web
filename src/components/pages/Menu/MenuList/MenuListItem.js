@@ -91,14 +91,14 @@ const MenuListItemTitle = styled(Heading)`
   transition: ${(props) => props.theme.categories.desktop.transition};
   font-size: ${(props) => props.theme.categories.desktop.titleSize};
   color: ${(props) => props.theme.categories.desktop.titleColor};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.categories.mobile.titleSize};
     color: ${(props) => props.theme.categories.mobile.titleColor};
   }
 
   button:hover & {
     color: ${(props) => props.theme.categories.desktop.titleColorHover};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       color: ${(props) => props.theme.categories.mobile.titleColorHover};
     }
   }

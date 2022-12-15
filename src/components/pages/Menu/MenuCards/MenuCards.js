@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import MenuCard from './MenuCard'
 
 const MenuCardsView = styled.div`
-  margin: 0 auto;
+  margin: ${(props) => props.theme.layout.padding} auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
     max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
   }
 `
@@ -15,7 +16,7 @@ const MenuCardsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
   margin: -${(props) => props.theme.categories.desktop.gapHalf};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
     margin: -${(props) => props.theme.categories.mobile.gapHalf};
   }

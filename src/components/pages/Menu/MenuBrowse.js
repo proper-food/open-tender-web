@@ -13,8 +13,6 @@ import MenuSquares from './MenuSquares'
 
 const MenuBrowseView = styled.div`
   margin: ${(props) => props.theme.layout.margin} 0;
-  ${(props) =>
-    props.hasTop ? '' : `margin-top: ${props.theme.layout.padding};`}
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
     ${(props) =>
@@ -27,6 +25,7 @@ const MenuBrowseHeader = styled.div`
   margin: 0 auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
     max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
   }
 `
@@ -34,7 +33,7 @@ const MenuBrowseHeader = styled.div`
 const MenuBrowseTitle = styled(Heading)`
   line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.xBig};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 `

@@ -17,7 +17,10 @@ const MenuSquareView = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: ${(props) => props.theme.categories.desktop.width};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 33.33333%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: ${(props) => props.theme.categories.mobile.width};
   }
 `
@@ -27,7 +30,7 @@ const MenuSquareButton = styled.button`
   display: flex;
   flex-direction: column;
   margin: ${(props) => props.theme.categories.desktop.gapHalf};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.categories.mobile.gapHalf};
   }
 `
@@ -42,7 +45,7 @@ const MenuSquareContainer = styled.div`
   background-color: ${(props) =>
     props.theme.categories.desktop.backgroundColor};
   border-radius: ${(props) => props.theme.categories.desktop.borderRadius};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: ${(props) =>
       props.theme.categories.mobile.backgroundColor};
     border-radius: ${(props) => props.theme.categories.mobile.borderRadius};
@@ -58,7 +61,7 @@ const MenuSquareImage = styled(BgImage)`
   right: 0;
   transition: ${(props) => props.theme.categories.desktop.transition};
   transform: scale(${(props) => props.theme.categories.desktop.imageScale});
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     transition: ${(props) => props.theme.categories.mobile.transition};
     transform: scale(1);
   }
@@ -68,7 +71,7 @@ const MenuSquareImage = styled(BgImage)`
       ${(props) => props.theme.categories.desktop.imageScaleHover}
     );
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       transform: scale(1);
     }
   }
@@ -84,7 +87,7 @@ const MenuSquareOverlay = styled.div`
   transition: ${(props) => props.theme.categories.desktop.transition};
   background-color: ${(props) => props.theme.categories.desktop.overlayColor};
   opacity: ${(props) => props.theme.categories.desktop.overlayOpacity};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     transition: ${(props) => props.theme.categories.mobile.transition};
     background-color: ${(props) => props.theme.categories.mobile.overlayColor};
     opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
@@ -93,7 +96,7 @@ const MenuSquareOverlay = styled.div`
   button:hover & {
     opacity: ${(props) => props.theme.categories.desktop.overlayOpacityHover};
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       opacity: ${(props) => props.theme.categories.mobile.overlayOpacity};
     }
   }
@@ -112,7 +115,7 @@ const MenuSquareContent = styled.div`
   padding-bottom: ${(props) => props.theme.categories.desktop.paddingBottom};
   padding-left: ${(props) => props.theme.categories.desktop.paddingHorizontal};
   padding-right: ${(props) => props.theme.categories.desktop.paddingHorizontal};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     text-align: ${(props) => props.theme.categories.mobile.textAlign};
     padding-top: ${(props) => props.theme.categories.mobile.paddingTop};
     padding-bottom: ${(props) => props.theme.categories.mobile.paddingBottom};
