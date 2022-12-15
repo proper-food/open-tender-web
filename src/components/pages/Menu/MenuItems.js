@@ -27,6 +27,7 @@ const MenuItemsChild = styled.div`
   min-width: ${(props) =>
     props.minWidth ? props.minWidth : props.theme.items.desktop.minWidth};
   padding: ${(props) => props.theme.items.desktop.gapHalf};
+  margin-bottom: ${(props) => props.theme.items.desktop.marginBottom};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-basis: 50%;
     min-width: ${(props) =>
@@ -35,6 +36,7 @@ const MenuItemsChild = styled.div`
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-basis: ${(props) => props.theme.items.mobile.width};
+    margin-bottom: ${(props) => props.theme.items.mobile.marginBottom};
   }
 `
 
