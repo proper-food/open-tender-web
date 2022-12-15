@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import MenuListItem from './MenuListItem'
 
 const MenuListView = styled.div`
-  margin: 4.5rem auto;
+  margin: ${(props) => props.theme.layout.padding} auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.paddingMobile} auto;

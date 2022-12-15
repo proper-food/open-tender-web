@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import { animateScroll as scroll } from 'react-scroll'
 import {
   selectCustomerFavorites,
@@ -24,7 +24,6 @@ import { Container, Loading, Reward, SeeMoreLink } from '../..'
 import { MenuContext } from './Menu'
 import MenuItem from './MenuItem'
 import MenuScrollable from './MenuScrollable'
-import MenuItems from './MenuItems'
 
 const MenuTopView = styled.div`
   margin: ${(props) => props.theme.layout.margin} auto;
@@ -117,10 +116,10 @@ const MenuTopItems = styled.div`
   align-items: stretch;
   overflow-x: auto;
   margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
-  margin: 0 0 -1.5rem;
+  // margin: 0 0 -1.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
-    margin: 0 0 -1.5rem;
+    // margin: 0 0 -1.5rem;
   }
 
   &::-webkit-scrollbar {
@@ -223,7 +222,6 @@ const MenuTop = () => {
   const displayMore = currentSection.length > 4
   const isDeals = menuSection === 'DEALS'
   const itemKey = isDeals ? 'discount_id' : 'id'
-
   const isLoading = loadingRecents || loadingFavs
   const hasItems = displayedKeys.length > 0
   const showLoading = isLoading && !hasItems
@@ -291,30 +289,16 @@ const MenuTop = () => {
           </MenuTopMore>
         </MenuTopHeader>
         {currentDisplayed.length > 0 ? (
-          <>
-            {isMobile ? (
-              <MenuTopItems>
-                {currentDisplayed.map((item, index) => (
-                  <MenuTopItem
-                    count={currentDisplayed.length}
-                    key={`${menuSection}-${item[itemKey]}-${index}`}
-                  >
-                    {isDeals ? (
-                      <Reward item={item} />
-                    ) : (
-                      <MenuItem item={item} />
-                    )}
-                  </MenuTopItem>
-                ))}
-              </MenuTopItems>
-            ) : (
-              <MenuItems minWidth="28rem">
-                {currentDisplayed.map((item, index) =>
-                  isDeals ? <Reward item={item} /> : <MenuItem item={item} />
-                )}
-              </MenuItems>
-            )}
-          </>
+          <MenuTopItems>
+            {currentDisplayed.map((item, index) => (
+              <MenuTopItem
+                count={currentDisplayed.length}
+                key={`${menuSection}-${item[itemKey]}-${index}`}
+              >
+                {isDeals ? <Reward item={item} /> : <MenuItem item={item} />}
+              </MenuTopItem>
+            ))}
+          </MenuTopItems>
         ) : null}
       </MenuTopView>
     </Container>
