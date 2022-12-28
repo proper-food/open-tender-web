@@ -11,6 +11,7 @@ import {
   selectOrder,
   selectCheckout,
   resetCheck,
+  resetConfirmation,
   resetErrors,
   resetTip,
   selectConfirmationOrder,
@@ -226,6 +227,7 @@ const Checkout = () => {
 
   useEffect(() => {
     dispatch(setSubmitting(false))
+    dispatch(resetConfirmation())
     dispatch(setDeviceType(deviceTypeName))
     return () => {
       dispatch(resetErrors())
