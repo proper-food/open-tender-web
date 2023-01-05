@@ -116,6 +116,7 @@ const MenuItemPriceCals = styled.div`
     width: 100%;
     margin: 0.4rem 0 0;
     text-align: center;
+    justify-content: center;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: 0.1rem 0 0;
     }
@@ -155,6 +156,7 @@ const MenuItemPrice = styled(Heading)`
   }
 
   .centered & {
+    font-size: ${(props) => props.theme.fonts.sizes.main};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.xSmall};
     }

@@ -197,7 +197,7 @@ const MenuCard = ({ category }) => {
     app_image_url,
     revenue_center_id,
   } = category
-  const imageUrl = app_image_url || small_image_url || large_image_url
+  const imageUrl = large_image_url || app_image_url || small_image_url
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   const desc = description ? stripTags(description) : null
 
