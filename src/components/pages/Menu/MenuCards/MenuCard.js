@@ -15,10 +15,15 @@ const MenuCardView = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
   width: ${(props) => props.theme.categories.desktop.width};
+  min-width: ${(props) => props.theme.categories.desktop.minWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: ${(props) => props.theme.categories.mobile.width};
+    min-width: ${(props) => props.theme.categories.mobile.minWidth};
   }
+
+  ${(props) => (props.isEmpty ? 'height: 0; overflow: hidden;' : null)}
 `
 
 const MenuCardButton = styled.button`
@@ -39,10 +44,12 @@ const MenuCardContainer = styled.div`
   background-color: ${(props) =>
     props.theme.categories.desktop.backgroundColor};
   border-radius: ${(props) => props.theme.categories.desktop.borderRadius};
+  box-shadow: ${(props) => props.theme.categories.desktop.boxShadow};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: ${(props) =>
       props.theme.categories.mobile.backgroundColor};
     border-radius: ${(props) => props.theme.categories.mobile.borderRadius};
+    box-shadow: ${(props) => props.theme.categories.mobile.boxShadow};
   }
 
   button:hover & {
@@ -206,7 +213,7 @@ const MenuCard = ({ category }) => {
   }
 
   return (
-    <MenuCardView>
+    <MenuCardView isEmpty={!name}>
       <MenuCardButton onClick={view}>
         <MenuCardContainer>
           <MenuCardImageContainer>
