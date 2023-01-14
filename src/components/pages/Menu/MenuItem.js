@@ -132,6 +132,7 @@ const MenuItem = ({
     isMobile
   )
   const { builderType } = displaySettings
+  const adjBuilderType = isMobile ? 'PAGE' : builderType
   const isBig = !isSimple && !isCentered ? true : false
   const showButtons = !displayOnly && isBig && showQuickAdd ? true : false
   const addDisabled = isIncomplete || isSoldOut
@@ -141,9 +142,9 @@ const MenuItem = ({
     if (!isSoldOut) {
       dispatch(setMenuPath(pathname || menuSlug))
       dispatch(setCurrentItem(orderItem))
-      if (builderType === 'PAGE') {
+      if (adjBuilderType === 'PAGE') {
         navigate(`${menuSlug}/item/${slugify(name)}`)
-      } else if (builderType === 'SIDEBAR') {
+      } else if (adjBuilderType === 'SIDEBAR') {
         dispatch(toggleSidebarModal())
       } else {
         dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
