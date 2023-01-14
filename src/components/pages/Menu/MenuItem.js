@@ -17,14 +17,19 @@ import {
 } from '@open-tender/redux'
 import { makeOrderItem, rehydrateOrderItem, slugify } from '@open-tender/js'
 import { useOrderItem } from '@open-tender/hooks'
-import { Body, ButtonStyled, CardMenuItem } from '@open-tender/components'
+import { Body, ButtonStyled } from '@open-tender/components'
 import {
   selectDisplaySettings,
   openModal,
   toggleSidebarModal,
   setMenuPath,
 } from '../../../slices'
-import { MenuItemButton, MenuItemOverlay, MenuItemTagAlert } from '../..'
+import {
+  CardMenuItem,
+  MenuItemButton,
+  MenuItemOverlay,
+  MenuItemTagAlert,
+} from '../..'
 import MenuItemCount from './MenuItemCount'
 
 const MenuItemView = styled(CardMenuItem)`
@@ -71,14 +76,11 @@ const MenuItemButtonsCustomize = styled.div`
     padding-left: 0;
     padding-right: 0;
     background-color: transparent;
-    color: ${(props) =>
-      props.theme.cards.menuItem.overrideFontColors
-        ? props.theme.cards.menuItem.titleColor
-        : props.theme.fonts.headings.color};
+    color: ${(props) => props.theme.links.customize.color};
   }
 
   button:hover {
-    color: ${(props) => props.theme.links.primary.color};
+    color: ${(props) => props.theme.links.customize.hover};
   }
 `
 
@@ -129,12 +131,12 @@ const MenuItem = ({
     cartCounts,
     isMobile
   )
-  // const builderType = 'PAGE'
   const { builderType } = displaySettings
   const isBig = !isSimple && !isCentered ? true : false
   const showButtons = !displayOnly && isBig && showQuickAdd ? true : false
   const addDisabled = isIncomplete || isSoldOut
   const customizeIsPrimary = addDisabled && !isSoldOut
+
   const view = () => {
     if (!isSoldOut) {
       dispatch(setMenuPath(pathname || menuSlug))
@@ -209,7 +211,6 @@ const MenuItem = ({
                 disabled={isSoldOut}
                 size="small"
                 color="secondary"
-                // color={customizeIsPrimary ? 'primary' : 'secondary'}
               >
                 {sizeOnly ? 'Choose Size' : 'Customize'}
               </ButtonStyled>

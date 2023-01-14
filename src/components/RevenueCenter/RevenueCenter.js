@@ -109,6 +109,11 @@ const RevenueCenterActions = styled.div`
   }
 `
 
+const RevenueCenterDistance = styled.span`
+  color: ${(props) => props.theme.fonts.headings.color};
+  font-weight: ${(props) => props.theme.boldWeight};
+`
+
 const RevenueCenterDesc = styled.div`
   margin: 0.75rem 0 0;
 
@@ -257,9 +262,9 @@ const RevenueCenter = ({
                         <span>
                           {address.street}{' '}
                           {distance !== null && (
-                            <Heading>
+                            <RevenueCenterDistance>
                               &bull; {distance.toFixed(2)} miles away
-                            </Heading>
+                            </RevenueCenterDistance>
                           )}
                         </span>
                       }
