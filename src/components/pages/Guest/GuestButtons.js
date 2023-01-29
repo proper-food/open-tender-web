@@ -12,7 +12,7 @@ const GuestButtonsView = styled.div`
   justify-content: flex-end;
   flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: fixed;
     z-index: 10;
     bottom: 0;
@@ -27,7 +27,7 @@ const GuestButtonsView = styled.div`
   button {
     min-width: 25rem;
     max-width: calc(50% - 1rem);
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
@@ -37,8 +37,9 @@ const GuestButtonsView = styled.div`
 
   button + button {
     margin: 0 2rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+    }
   }
 `
 

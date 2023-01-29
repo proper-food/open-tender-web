@@ -15,6 +15,9 @@ import { FormSection, Loading } from '.'
 const OrderFulfillmentView = styled.div`
   max-width: 54rem;
   margin: 4rem auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+  }
 `
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {

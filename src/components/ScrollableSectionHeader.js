@@ -11,7 +11,7 @@ const ScrollableSectionHeaderView = styled.div`
   width: 100%;
   padding: 0 ${(props) => props.theme.layout.padding};
   margin: 0 0 1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0 0 0.7rem;
   }

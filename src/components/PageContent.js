@@ -7,6 +7,7 @@ const PageContent = styled.div`
   max-width: ${(props) => props.theme.layout.maxWidth};
   margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
     margin: ${(props) => props.theme.layout.paddingMobile} auto;
     font-size: ${(props) => props.theme.fonts.sizes.small};
     text-align: left;

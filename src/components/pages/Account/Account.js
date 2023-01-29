@@ -45,6 +45,7 @@ import AccountOrders from './AccountOrders'
 import AccountSlider from './AccountSlider'
 
 export const AccountWrapper = styled.div`
+  label: AccountWrapper;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -52,16 +53,18 @@ export const AccountWrapper = styled.div`
 `
 
 export const AccountView = styled.div`
+  label: AccountView;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0 0 ${(props) => props.theme.layout.margin};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 10rem;
   }
 `
 
 export const AccountMobile = styled.div`
+  label: AccountMobile;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -70,6 +73,7 @@ export const AccountMobile = styled.div`
 `
 
 export const AccountHero = styled.div`
+  label: AccountHero;
   flex: 1;
   width: 100%;
   display: flex;
@@ -77,6 +81,9 @@ export const AccountHero = styled.div`
   min-height: 32rem;
   padding: 0 ${(props) => props.theme.layout.padding};
   margin: ${(props) => props.theme.layout.margin} 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 4rem 0;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     min-height: 16rem;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};

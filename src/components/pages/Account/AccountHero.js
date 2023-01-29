@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { BackgroundImage } from '../..'
 
 const AccountHeroView = styled.div`
+  label: AccountHero;
   display: flex;
   width: 100%;
   height: 80vh;

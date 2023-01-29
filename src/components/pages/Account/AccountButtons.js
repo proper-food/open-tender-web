@@ -1,17 +1,18 @@
+import React from 'react'
 import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { resetOrder, selectOrder } from '@open-tender/redux'
 import { ButtonLarge } from '../..'
 import { ArrowRight } from '../../icons'
-import React from 'react'
 
 export const AccountButtonsView = styled.div`
+  label: AccountButtons;
   display: flex;
   justify-content: flex-end;
   flex-direction: row-reverse;
   padding: 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: fixed;
     z-index: 10;
     bottom: 0;
@@ -26,7 +27,7 @@ export const AccountButtonsView = styled.div`
   button {
     width: 25rem;
     max-width: calc(50% - 1rem);
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       width: 100%;
       min-width: 100%;
       max-width: 100%;
@@ -36,8 +37,9 @@ export const AccountButtonsView = styled.div`
 
   button + button {
     margin: 0 2rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+    }
   }
 `
 
