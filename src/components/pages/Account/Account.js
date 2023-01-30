@@ -82,9 +82,6 @@ export const AccountHero = styled.div`
   padding: 0 ${(props) => props.theme.layout.padding};
   margin: ${(props) => props.theme.layout.margin} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 4rem 0;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     min-height: 16rem;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 2rem 0;

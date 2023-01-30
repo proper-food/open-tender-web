@@ -31,7 +31,7 @@ const OrderTypeView = styled('div')`
   margin: ${(props) =>
       props.showGuest ? props.theme.layout.padding : props.theme.layout.margin}
     0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
