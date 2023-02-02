@@ -11,3 +11,11 @@ export const cardIconsMap = {
   VISA: <Visa />,
   OTHER: <CreditCard />,
 }
+
+export const cardIconsMapWidth = {
+  AMEX: <Amex size="30px" />,
+  DISC: <Discover size="30px" />,
+  MC: <Mastercard size="30px" />,
+  VISA: <Visa size="30px" />,
+  OTHER: <CreditCard size="30px" />,
+}

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectCheckout } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
 import CheckoutButton from './CheckoutButton'
-import { cardIconsMap } from '../../cardIcons'
+import { cardIconsMapWidth } from '../../cardIcons'
 
 const CheckoutCreditCardsView = styled.div``
 
@@ -71,7 +71,7 @@ const CheckoutCreditCards = ({ apply, remove, isPaid }) => {
         return (
           <CheckoutButton
             key={customer_card_id}
-            icon={cardIconsMap[card_type]}
+            icon={cardIconsMapWidth[card_type]}
             title={title}
             subtitle={subtitle}
             onPress={onPress}
