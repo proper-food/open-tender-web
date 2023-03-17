@@ -6,7 +6,9 @@ const MenuListView = styled.div`
   margin: ${(props) => props.theme.layout.padding} auto;
   max-width: ${(props) => props.theme.categories.desktop.containerMaxWidth};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} auto;
+    width: 100%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: ${(props) => props.theme.categories.mobile.containerMaxWidth};
   }
 `
@@ -17,8 +19,13 @@ const MenuListContainer = styled.div`
   justify-content: ${(props) => props.theme.categories.desktop.justifyContent};
   margin: 0 -${(props) => props.theme.categories.desktop.gap};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    margin: 0;
+    // margin: 0 -${(props) => props.theme.categories.mobile.gap};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     justify-content: ${(props) => props.theme.categories.mobile.justifyContent};
-    margin: 0 -${(props) => props.theme.categories.mobile.gap};
+    // margin: 0 -${(props) => props.theme.categories.mobile.gap};
   }
 `
 

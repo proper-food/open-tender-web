@@ -9,8 +9,10 @@ const WelcomeView = styled.div`
   margin-top: ${(props) => props.theme.welcome.desktop.marginTop};
   margin-bottom: ${(props) => props.theme.welcome.desktop.marginBottom};
   text-align: ${(props) => props.theme.welcome.desktop.textAlign};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin-top: ${(props) => props.theme.welcome.mobile.marginTop};
     margin-bottom: ${(props) => props.theme.welcome.mobile.marginBottom};
     text-align: ${(props) => props.theme.welcome.mobile.textAlign};

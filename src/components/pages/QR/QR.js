@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 import {
@@ -14,7 +13,7 @@ import {
   setRequestedAt,
   setTable,
 } from '@open-tender/redux'
-import { ButtonStyled, Text } from '@open-tender/components'
+import { Body, ButtonStyled, Text } from '@open-tender/components'
 
 import { selectBrand } from '../../../slices'
 import { NavMenu } from '../../buttons'
@@ -25,13 +24,35 @@ import {
   Main,
   PageContainer,
   PageContent,
-  PageTitle,
   Loading,
 } from '../..'
 
+const QRView = styled.div``
+
+const QRHeader = styled.div`
+  text-align: center;
+
+  h1 {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizesMobile.xBig};
+    }
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  p {
+    margin: 1rem 0 0;
+  }
+`
+
 const QRButtons = styled.div`
   label: QRButtons;
-  margin: 2rem 0 0;
+  margin: 3rem 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   button + button {
     margin: 0 0 0 1rem;
@@ -59,7 +80,6 @@ const QR = () => {
   const order = useSelector(selectOrder)
   const { prepType, revenueCenter, loading, error } = order
   const { revenue_center_type: orderType, name } = revenueCenter || {}
-  const title = name ? `Welcome to ${name}` : 'Welcome'
   const isLoading = loading === 'pending'
   const errMsg = error && error.includes('exist') ? notFoundMsg : error
   const query = new URLSearchParams(useLocation().search)
@@ -110,26 +130,35 @@ const QR = () => {
                   {errMsg}
                 </Text>
               ) : (
-                <>
-                  <PageTitle
-                    title={title}
-                    subtitle="Please choose an order type"
-                  />
+                <QRView>
+                  <QRHeader>
+                    {name ? (
+                      <h1>
+                        <span>Welcome to</span>
+                        <span>{name}</span>
+                      </h1>
+                    ) : (
+                      <h1>Welcome</h1>
+                    )}
+                    <Body as="p" size="main">
+                      Please choose an order type
+                    </Body>
+                  </QRHeader>
                   <QRButtons>
                     <ButtonStyled
                       onClick={() => dispatch(setPrepType('EAT_HERE'))}
-                      size={isMobile ? 'small' : 'default'}
+                      size="default"
                     >
                       Eat Here
                     </ButtonStyled>
                     <ButtonStyled
                       onClick={() => dispatch(setPrepType('TAKE_OUT'))}
-                      size={isMobile ? 'small' : 'default'}
+                      size="default"
                     >
                       Take Out
                     </ButtonStyled>
                   </QRButtons>
-                </>
+                </QRView>
               )}
             </PageContent>
           </PageContainer>

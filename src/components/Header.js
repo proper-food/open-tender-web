@@ -27,8 +27,15 @@ const HeaderView = styled.div`
   border-style: solid;
   border-color: ${(props) =>
     props.borderColor || props.theme.header[props.stuck ? 'stuck' : 'primary']};
-  padding: 0 ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
+  // padding: 0 ${(props) =>
+    props.isMobile ? '0' : props.theme.layout.padding};
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+    height: ${(props) => props.theme.layout.navHeightMobile};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: ${(props) => props.theme.layout.navHeightMobile};
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }

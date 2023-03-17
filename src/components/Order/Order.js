@@ -40,6 +40,7 @@ const OrderView = styled.div`
   margin: 4rem auto;
   max-width: 54rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
     margin: 3rem auto;
   }
 `
@@ -101,6 +102,9 @@ const OrderCentered = styled.div`
   max-width: 54rem;
   margin: 4rem auto;
   text-align: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+  }
 `
 
 const handleOrderError = (error) => {

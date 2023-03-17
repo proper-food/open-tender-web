@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, validateOrder } from '@open-tender/redux'
 
 import { openModal } from '../../../slices'
-import { cardIconsMap } from '../../cardIcons'
+import { cardIconsMapWidth } from '../../cardIcons'
 import CheckoutButton from './CheckoutButton'
 
 const CheckoutCreditCardAdd = ({ isPaid }) => {
@@ -22,7 +22,7 @@ const CheckoutCreditCardAdd = ({ isPaid }) => {
 
   return (
     <CheckoutButton
-      icon={cardIconsMap['OTHER']}
+      icon={cardIconsMapWidth['OTHER']}
       title="Add new credit card"
       onPress={onClick}
       isApplied={false}

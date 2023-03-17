@@ -31,6 +31,10 @@ const CheckoutDineInFormView = styled.div`
   & > div:first-of-type p {
     margin: 2rem 0 0;
   }
+
+  form {
+    margin: 3rem 0 0;
+  }
 `
 
 const CheckoutDineInForm = () => {

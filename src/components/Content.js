@@ -6,12 +6,15 @@ import { SkipLink, Footer } from '.'
 import { maybeRefreshVersion } from '../app/version'
 
 const ContentView = styled('div')`
-  label: ContentView;
+  label: Content;
 
   width: 100%;
   height: 100%;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+  }
 `
 
 const Content = ({

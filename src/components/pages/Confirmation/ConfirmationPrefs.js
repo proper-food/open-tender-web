@@ -5,6 +5,9 @@ import { CommunicationPrefs, FormSection } from '../..'
 const ConfirmationPrefsView = styled.div`
   max-width: 54rem;
   margin: 4rem auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+  }
 `
 
 const ConfirmationPrefs = () => {

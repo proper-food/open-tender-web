@@ -25,8 +25,7 @@ const MenuListItemButton = styled.button`
   margin: ${(props) => props.theme.categories.desktop.gap};
   margin-top: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.categories.mobile.gap};
-    margin-top: 0;
+    margin: 0 0 ${(props) => props.theme.categories.mobile.gap};
   }
 `
 

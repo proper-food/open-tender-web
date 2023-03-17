@@ -1,5 +1,4 @@
 import propTypes from 'prop-types'
-import { isMobileOnly } from 'react-device-detect'
 import styled from '@emotion/styled'
 import { isMobile } from 'react-device-detect'
 import { makeSlides } from '@open-tender/js'
@@ -21,7 +20,7 @@ const Background = ({ imageUrl, announcements, children, style }) => {
   const isLoading = loading === 'pending'
   const hideHero = !slides && !imageUrl
 
-  if (isMobileOnly || hideHero) return null
+  if (isMobile || hideHero) return null
 
   return (
     <BackgroundView isSlides={!!slides} style={style}>

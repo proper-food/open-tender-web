@@ -29,8 +29,10 @@ const ScrollableSectionItem = styled.div`
   padding: 1.5rem 0;
   margin-right: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 20rem;
     margin-right: ${(props) => props.theme.layout.paddingMobile};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 20rem;
   }
 
   &:first-of-type {

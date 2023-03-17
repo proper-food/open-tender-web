@@ -116,10 +116,8 @@ const MenuTopItems = styled.div`
   align-items: stretch;
   overflow-x: auto;
   margin: 0 -${(props) => props.theme.layout.padding} -1.5rem;
-  // margin: 0 0 -1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 -${(props) => props.theme.layout.paddingMobile} -1.5rem;
-    // margin: 0 0 -1.5rem;
   }
 
   &::-webkit-scrollbar {
@@ -134,14 +132,16 @@ const MenuTopItem = styled.div`
   @media (max-width: 1390px) {
     flex: 0 0 31rem;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin-right: ${(props) => props.theme.layout.paddingMobile};
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex: 0 0 20rem;
-    margin-right: ${(props) => props.theme.layout.paddingMobile};
   }
 
   &:first-of-type {
     margin-left: ${(props) => props.theme.layout.padding};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin-left: ${(props) => props.theme.layout.paddingMobile};
     }
   }
