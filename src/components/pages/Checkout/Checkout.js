@@ -230,6 +230,8 @@ const Checkout = () => {
   const formError = errors ? errors.form || null : null
   const addressError = makeAddressError(errors)
   const customerError = makeCustomerError(errors)
+  console.log('errors', errors)
+  console.log('customerError', customerError)
   const deviceTypeName = makeDeviceType(deviceType)
   const { formTitle, hasAddress } = makeFormTitle(check, serviceType)
 
