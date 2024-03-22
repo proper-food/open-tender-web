@@ -199,16 +199,16 @@ const makeAddressError = (errors) => {
   return `There's something wrong with your address (${errMsg}). Please try changing your address.`
 }
 
-export const makeCustomerError = (errors) => {
-  const err = errors?.customer
-  if (!err || typeof err === 'string') return err
-  if (err?.account === 'string') {
-    return err.account
-  } else if (err?.email === 'string') {
-    return err.email
-  }
-  return null
-}
+// export const makeCustomerError = (errors) => {
+//   const err = errors?.customer
+//   if (!err || typeof err === 'string') return err
+//   if (err?.account === 'string') {
+//     return err.account
+//   } else if (err?.email === 'string') {
+//     return err.email
+//   }
+//   return null
+// }
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -228,8 +228,8 @@ const Checkout = () => {
   const hasCheck = check ? true : false
   const hasFormCustomer = !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
+  const customerError = errors?.customer?.email
   const addressError = makeAddressError(errors)
-  const customerError = makeCustomerError(errors)
   console.log('errors', errors)
   console.log('customerError', customerError)
   const deviceTypeName = makeDeviceType(deviceType)
