@@ -199,6 +199,17 @@ const makeAddressError = (errors) => {
   return `There's something wrong with your address (${errMsg}). Please try changing your address.`
 }
 
+export const makeCustomerError = (errors) => {
+  const err = errors?.customer
+  if (!err || typeof err === 'string') return err
+  if (err?.account === 'string') {
+    return err.account
+  } else if (err?.email === 'string') {
+    return err.email
+  }
+  return null
+}
+
 const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -218,6 +229,7 @@ const Checkout = () => {
   const hasFormCustomer = !isEmpty(form.customer) ? true : false
   const formError = errors ? errors.form || null : null
   const addressError = makeAddressError(errors)
+  const customerError = makeCustomerError(errors)
   const deviceTypeName = makeDeviceType(deviceType)
   const { formTitle, hasAddress } = makeFormTitle(check, serviceType)
 
@@ -284,6 +296,7 @@ const Checkout = () => {
                 <CheckoutCancelEdit />
                 {formError && <FormError errMsg={formError} />}
                 {addressError && <FormError errMsg={addressError} />}
+                {customerError && <FormError errMsg={customerError} />}
               </CheckoutTitle>
               <CheckoutInfo>
                 {auth ? <CheckoutCustomer /> : <CheckoutGuest />}
